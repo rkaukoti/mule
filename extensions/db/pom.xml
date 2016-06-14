@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <groupId>org.mule.extensions</groupId>
+        <artifactId>mule-extensions</artifactId>
+        <version>4.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.mule.modules</groupId>
+    <artifactId>mule-module-db</artifactId>
+    <packaging>mule-extension</packaging>
+
+    <name>Mule DB Connector</name>
+    <description>A Mule extension that provides functionality for connecting to Databases through the JDBC standard</description>
+
+</project>
