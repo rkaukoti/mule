@@ -7,9 +7,9 @@
 
 package org.mule.extension.db.internal.resolver.query;
 
+import org.mule.extension.db.internal.domain.connection.DbConnection;
+import org.mule.extension.db.internal.domain.query.Query;
 import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
-import org.mule.runtime.module.db.internal.domain.query.Query;
 
 /**
  * Resolves a {@link Query} for a given {@link MuleEvent}

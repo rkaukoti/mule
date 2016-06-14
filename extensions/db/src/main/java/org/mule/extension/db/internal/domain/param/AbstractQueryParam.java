@@ -7,7 +7,7 @@
 
 package org.mule.extension.db.internal.domain.param;
 
-import org.mule.runtime.module.db.internal.domain.type.DbType;
+import org.mule.extension.db.internal.domain.type.DbType;
 
 /**
  * Defines a base class for implementing different kind of { @link QueryParam}

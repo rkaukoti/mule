@@ -7,13 +7,13 @@
 
 package org.mule.extension.db.internal.resolver.param;
 
-import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
-import org.mule.runtime.module.db.internal.domain.param.QueryParam;
-import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
-import org.mule.runtime.module.db.internal.domain.type.DbType;
-import org.mule.runtime.module.db.internal.domain.type.DbTypeManager;
-import org.mule.runtime.module.db.internal.domain.type.DynamicDbType;
-import org.mule.runtime.module.db.internal.domain.type.UnknownDbType;
+import org.mule.extension.db.internal.domain.connection.DbConnection;
+import org.mule.extension.db.internal.domain.param.QueryParam;
+import org.mule.extension.db.internal.domain.query.QueryTemplate;
+import org.mule.extension.db.internal.domain.type.DbType;
+import org.mule.extension.db.internal.domain.type.DbTypeManager;
+import org.mule.extension.db.internal.domain.type.DynamicDbType;
+import org.mule.extension.db.internal.domain.type.UnknownDbType;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -36,7 +36,7 @@ public class DefaultParamTypeResolver implements ParamTypeResolver
 
     public Map<Integer, DbType> getParameterTypes(DbConnection connection, QueryTemplate queryTemplate) throws SQLException
     {
-        Map<Integer, DbType> resolvedParamTypes = new HashMap<Integer, DbType>();
+        Map<Integer, DbType> resolvedParamTypes = new HashMap<>();
 
         Map<Integer, DbType> metadataParamTypes = null;
 

@@ -7,7 +7,7 @@
 
 package org.mule.extension.db.internal.domain.type;
 
-import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
+import org.mule.extension.db.internal.domain.connection.DbConnection;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.Map;
 public class StaticDbTypeManager implements DbTypeManager
 {
 
-    private Map<String, DbType> vendorTypes = new HashMap<String, DbType>();
+    private Map<String, DbType> vendorTypes = new HashMap<>();
 
     public StaticDbTypeManager(List<DbType> vendorTypes)
     {

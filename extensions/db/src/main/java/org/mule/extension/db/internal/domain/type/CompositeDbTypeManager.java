@@ -7,7 +7,7 @@
 
 package org.mule.extension.db.internal.domain.type;
 
-import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
+import org.mule.extension.db.internal.domain.connection.DbConnection;
 
 import java.util.List;
 

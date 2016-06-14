@@ -6,8 +6,8 @@
  */
 package org.mule.extension.db.internal.domain.xa;
 
+import org.mule.extension.db.api.config.DbPoolingProfile;
 import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.module.db.internal.domain.connection.DbPoolingProfile;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -20,7 +20,7 @@ import javax.sql.DataSource;
 public class CompositeDataSourceDecorator implements DataSourceDecorator
 {
 
-    private final LinkedList<DataSourceDecorator> decorators = new LinkedList<DataSourceDecorator>();
+    private final LinkedList<DataSourceDecorator> decorators = new LinkedList<>();
 
     public CompositeDataSourceDecorator()
     {
@@ -49,9 +49,6 @@ public class CompositeDataSourceDecorator implements DataSourceDecorator
     public void init(MuleContext muleContext)
     {
         Collection<DataSourceDecorator> connectionFactoryDecorators = muleContext.getRegistry().lookupObjects(DataSourceDecorator.class);
-        for (DataSourceDecorator connectionFactoryDecorator : connectionFactoryDecorators)
-        {
-            decorators.addFirst(connectionFactoryDecorator);
-        }
+        connectionFactoryDecorators.forEach(decorators::addFirst);
     }
 }

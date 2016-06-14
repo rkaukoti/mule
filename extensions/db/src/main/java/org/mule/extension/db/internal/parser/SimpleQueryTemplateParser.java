@@ -7,12 +7,12 @@
 
 package org.mule.extension.db.internal.parser;
 
+import org.mule.extension.db.internal.domain.param.DefaultInputQueryParam;
+import org.mule.extension.db.internal.domain.param.QueryParam;
+import org.mule.extension.db.internal.domain.query.QueryTemplate;
+import org.mule.extension.db.internal.domain.query.QueryType;
+import org.mule.extension.db.internal.domain.type.UnknownDbType;
 import org.mule.runtime.core.util.StringUtils;
-import org.mule.runtime.module.db.internal.domain.param.DefaultInputQueryParam;
-import org.mule.runtime.module.db.internal.domain.param.QueryParam;
-import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
-import org.mule.runtime.module.db.internal.domain.query.QueryType;
-import org.mule.runtime.module.db.internal.domain.type.UnknownDbType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,7 +126,7 @@ public class SimpleQueryTemplateParser implements QueryTemplateParser
         }
 
         String sqlToUse = "";
-        List<QueryParam> parameterList = new ArrayList<QueryParam>();
+        List<QueryParam> parameterList = new ArrayList<>();
 
         char[] sqlTextChars = sqlText.toCharArray();
         int tokenStart = 0;

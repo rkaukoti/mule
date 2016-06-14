@@ -7,7 +7,7 @@
 
 package org.mule.extension.db.internal.domain.param;
 
-import org.mule.runtime.module.db.internal.domain.type.DbType;
+import org.mule.extension.db.internal.domain.type.DbType;
 
 public class DefaultInputQueryParam extends AbstractQueryParam implements InputQueryParam
 {

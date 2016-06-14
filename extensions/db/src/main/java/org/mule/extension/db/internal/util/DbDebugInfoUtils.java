@@ -5,12 +5,12 @@
  * LICENSE.txt file.
  */
 
-package org.mule.extension.db.internal.processor;
+package org.mule.extension.db.internal.util;
 
 import static org.mule.runtime.core.api.debug.FieldDebugInfoFactory.createFieldDebugInfo;
+import org.mule.extension.db.internal.domain.query.Query;
+import org.mule.extension.db.internal.domain.query.QueryTemplate;
 import org.mule.runtime.core.api.debug.FieldDebugInfo;
-import org.mule.runtime.module.db.internal.domain.query.Query;
-import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
 
 import java.util.ArrayList;
 import java.util.List;

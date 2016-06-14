@@ -6,8 +6,8 @@
  */
 package org.mule.extension.db.internal.domain.xa;
 
+import org.mule.extension.db.api.config.DbPoolingProfile;
 import org.mule.runtime.core.api.MuleContext;
-import org.mule.runtime.module.db.internal.domain.connection.DbPoolingProfile;
 
 import javax.sql.DataSource;
 

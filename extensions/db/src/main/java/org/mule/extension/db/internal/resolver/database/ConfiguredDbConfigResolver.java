@@ -7,8 +7,8 @@
 
 package org.mule.extension.db.internal.resolver.database;
 
+import org.mule.extension.db.internal.domain.database.DbConfig;
 import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.module.db.internal.domain.database.DbConfig;
 
 /**
  * Resolves a {@link DbConfig} delegating to the {@link DbConfigResolver}

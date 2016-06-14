@@ -7,15 +7,13 @@
 
 package org.mule.extension.db.internal.resolver.query;
 
+import static java.util.Collections.emptyList;
+import org.mule.extension.db.internal.domain.connection.DbConnection;
+import org.mule.extension.db.internal.domain.query.Query;
+import org.mule.extension.db.internal.domain.query.QueryTemplate;
+import org.mule.extension.db.internal.parser.QueryTemplateParser;
 import org.mule.runtime.core.api.MuleEvent;
 import org.mule.runtime.core.api.expression.ExpressionManager;
-import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
-import org.mule.runtime.module.db.internal.domain.query.Query;
-import org.mule.runtime.module.db.internal.domain.query.QueryParamValue;
-import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
-import org.mule.runtime.module.db.internal.parser.QueryTemplateParser;
-
-import java.util.Collections;
 
 /**
  * Resolves a dynamic query evaluating expressions using a given event
@@ -43,7 +41,7 @@ public class DynamicQueryResolver implements QueryResolver
             String resolvedSqlText = expressionManager.parse(queryTemplate.getSqlText(), muleEvent);
             queryTemplate = queryTemplateParser.parse(resolvedSqlText);
 
-            return new Query(queryTemplate, Collections.<QueryParamValue>emptyList());
+            return new Query(queryTemplate, emptyList());
         }
         catch (RuntimeException e)
         {

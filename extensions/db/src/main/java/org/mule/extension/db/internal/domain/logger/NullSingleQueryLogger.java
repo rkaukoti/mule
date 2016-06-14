@@ -7,13 +7,13 @@
 
 package org.mule.extension.db.internal.domain.logger;
 
-import org.mule.runtime.module.db.internal.domain.param.InputQueryParam;
+import org.mule.extension.db.internal.domain.param.InputQueryParam;
 
 /**
  * Null implementation of {@link SingleQueryLogger}
  */
 
-public class NullSingleQueryLogger extends AbstractNullQueryLogger  implements SingleQueryLogger
+public class NullSingleQueryLogger extends AbstractNullQueryLogger implements SingleQueryLogger
 {
 
     @Override

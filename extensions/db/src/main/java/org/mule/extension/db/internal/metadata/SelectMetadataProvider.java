@@ -15,9 +15,9 @@ import org.mule.common.metadata.DefaultListMetaDataModel;
 import org.mule.common.metadata.DefaultMetaData;
 import org.mule.common.metadata.MetaData;
 import org.mule.common.metadata.MetaDataModel;
-import org.mule.runtime.module.db.internal.domain.query.Query;
-import org.mule.runtime.module.db.internal.resolver.database.DbConfigResolver;
-import org.mule.runtime.module.db.internal.result.resultset.ResultSetIterator;
+import org.mule.extension.db.internal.domain.query.Query;
+import org.mule.extension.db.internal.resolver.database.DbConfigResolver;
+import org.mule.extension.db.internal.result.resultset.ResultSetIterator;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSetMetaData;
@@ -57,15 +57,15 @@ public class SelectMetadataProvider extends AbstractQueryMetadataProvider
         }
         catch (SQLException e)
         {
-            return new DefaultResult<MetaData>(null, Result.Status.FAILURE, e.getMessage(), FailureType.UNSPECIFIED, e);
+            return new DefaultResult<>(null, Result.Status.FAILURE, e.getMessage(), FailureType.UNSPECIFIED, e);
         }
 
         if (statementMetaData == null)
         {
-            return new DefaultResult<MetaData>(null, Result.Status.FAILURE, "Driver did not return metadata for the provided SQL");
+            return new DefaultResult<>(null, Result.Status.FAILURE, "Driver did not return metadata for the provided SQL");
         }
 
-        Map<String, MetaDataModel> recordModels = new HashMap<String, MetaDataModel>();
+        Map<String, MetaDataModel> recordModels = new HashMap<>();
         try
         {
             for (int i = 1; i <= statementMetaData.getColumnCount(); i++)
@@ -76,12 +76,12 @@ public class SelectMetadataProvider extends AbstractQueryMetadataProvider
 
             if (statementMetaData.getColumnCount() != recordModels.size())
             {
-                return new DefaultResult<MetaData>(null, Result.Status.FAILURE, DUPLICATE_COLUMN_LABEL_ERROR);
+                return new DefaultResult<>(null, Result.Status.FAILURE, DUPLICATE_COLUMN_LABEL_ERROR);
             }
         }
         catch (SQLException e)
         {
-            return new DefaultResult<MetaData>(null, Result.Status.FAILURE, e.getMessage(), FailureType.UNSPECIFIED, e);
+            return new DefaultResult<>(null, Result.Status.FAILURE, e.getMessage(), FailureType.UNSPECIFIED, e);
         }
 
 

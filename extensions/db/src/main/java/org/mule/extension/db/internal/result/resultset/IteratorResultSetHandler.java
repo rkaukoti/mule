@@ -7,9 +7,9 @@
 
 package org.mule.extension.db.internal.result.resultset;
 
-import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
-import org.mule.runtime.module.db.internal.result.row.RowHandler;
-import org.mule.runtime.module.db.internal.result.statement.StatementStreamingResultSetCloser;
+import org.mule.extension.db.internal.domain.connection.DbConnection;
+import org.mule.extension.db.internal.result.row.RowHandler;
+import org.mule.extension.db.internal.result.statement.StatementStreamingResultSetCloser;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

@@ -7,7 +7,7 @@
 
 package org.mule.extension.db.internal.resolver.param;
 
-import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
+import org.mule.extension.db.internal.domain.query.QueryTemplate;
 
 /**
  * Creates {@link ParamTypeResolver} instances

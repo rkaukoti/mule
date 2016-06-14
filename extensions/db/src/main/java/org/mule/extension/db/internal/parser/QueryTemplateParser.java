@@ -7,7 +7,7 @@
 
 package org.mule.extension.db.internal.parser;
 
-import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
+import org.mule.extension.db.internal.domain.query.QueryTemplate;
 
 /**
  * Parses a SQL queries

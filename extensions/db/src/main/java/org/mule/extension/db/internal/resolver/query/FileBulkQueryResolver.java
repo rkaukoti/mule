@@ -7,9 +7,9 @@
 
 package org.mule.extension.db.internal.resolver.query;
 
+import org.mule.extension.db.internal.parser.QueryTemplateParser;
+import org.mule.extension.db.internal.util.FileReader;
 import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.module.db.internal.parser.QueryTemplateParser;
-import org.mule.runtime.module.db.internal.util.FileReader;
 
 import java.io.IOException;
 

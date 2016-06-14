@@ -7,10 +7,10 @@
 
 package org.mule.extension.db.internal.resolver.param;
 
-import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
-import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
-import org.mule.runtime.module.db.internal.domain.type.DbType;
-import org.mule.runtime.module.db.internal.domain.type.UnknownDbTypeException;
+import org.mule.extension.db.internal.domain.connection.DbConnection;
+import org.mule.extension.db.internal.domain.query.QueryTemplate;
+import org.mule.extension.db.internal.domain.type.DbType;
+import org.mule.extension.db.internal.domain.type.UnknownDbTypeException;
 
 import java.sql.SQLException;
 import java.util.Map;

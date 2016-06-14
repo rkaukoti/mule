@@ -7,10 +7,10 @@
 
 package org.mule.extension.db.internal.resolver.query;
 
+import org.mule.extension.db.internal.domain.query.BulkQuery;
+import org.mule.extension.db.internal.domain.query.QueryTemplate;
+import org.mule.extension.db.internal.parser.QueryTemplateParser;
 import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.module.db.internal.domain.query.BulkQuery;
-import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
-import org.mule.runtime.module.db.internal.parser.QueryTemplateParser;
 
 /**
  * Base class for {@link BulkQueryResolver} implementations

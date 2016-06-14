@@ -7,10 +7,10 @@
 
 package org.mule.extension.db.internal.domain.type;
 
-import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
-import org.mule.runtime.module.db.internal.result.resultset.ResultSetIterator;
-import org.mule.runtime.module.db.internal.result.resultset.SingleResultResultSetCloser;
-import org.mule.runtime.module.db.internal.result.row.InsensitiveMapRowHandler;
+import org.mule.extension.db.internal.domain.connection.DbConnection;
+import org.mule.extension.db.internal.result.resultset.ResultSetIterator;
+import org.mule.extension.db.internal.result.resultset.SingleResultResultSetCloser;
+import org.mule.extension.db.internal.result.row.InsensitiveMapRowHandler;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -33,7 +33,7 @@ public class MetadataDbTypeManager implements DbTypeManager
 
     private final Log logger = LogFactory.getLog(MetadataDbTypeManager.class);
 
-    private final Map<String, DbType> typesById = new HashMap<String, DbType>();
+    private final Map<String, DbType> typesById = new HashMap<>();
     private final Object lock = new Object();
     private boolean initialised;
 
@@ -130,9 +130,9 @@ public class MetadataDbTypeManager implements DbTypeManager
      */
     private boolean isUserDefinedType(DbType dbType)
     {
-        return isTypeDerivedFrom(dbType, JdbcTypes.STRUCT_DB_TYPE) ||
-               isTypeDerivedFrom(dbType, JdbcTypes.DISTINCT_DB_TYPE) ||
-               isTypeDerivedFrom(dbType, JdbcTypes.ARRAY_DB_TYPE);
+        return isTypeDerivedFrom(dbType, JdbcType.STRUCT_DB_TYPE.getDbType()) ||
+               isTypeDerivedFrom(dbType, JdbcType.DISTINCT_DB_TYPE.getDbType()) ||
+               isTypeDerivedFrom(dbType, JdbcType.ARRAY_DB_TYPE.getDbType());
     }
 
     private boolean isTypeDerivedFrom(DbType type, DbType baseType)

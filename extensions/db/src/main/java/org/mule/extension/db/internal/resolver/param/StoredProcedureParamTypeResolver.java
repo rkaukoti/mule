@@ -7,12 +7,12 @@
 
 package org.mule.extension.db.internal.resolver.param;
 
-import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
-import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
-import org.mule.runtime.module.db.internal.domain.type.DbType;
-import org.mule.runtime.module.db.internal.domain.type.DbTypeManager;
-import org.mule.runtime.module.db.internal.domain.type.ResolvedDbType;
-import org.mule.runtime.module.db.internal.domain.type.UnknownDbTypeException;
+import org.mule.extension.db.internal.domain.connection.DbConnection;
+import org.mule.extension.db.internal.domain.query.QueryTemplate;
+import org.mule.extension.db.internal.domain.type.DbType;
+import org.mule.extension.db.internal.domain.type.DbTypeManager;
+import org.mule.extension.db.internal.domain.type.ResolvedDbType;
+import org.mule.extension.db.internal.domain.type.UnknownDbTypeException;
 
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
@@ -68,7 +68,7 @@ public class StoredProcedureParamTypeResolver implements ParamTypeResolver
 
     private Map<Integer, DbType> getStoredProcedureParamTypes(DbConnection connection, String storedProcedureName, ResultSet procedureColumns) throws SQLException
     {
-        Map<Integer, DbType> paramTypes = new HashMap<Integer, DbType>();
+        Map<Integer, DbType> paramTypes = new HashMap<>();
 
         int position = 1;
 

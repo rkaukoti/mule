@@ -7,22 +7,22 @@
 
 package org.mule.extension.db.internal.resolver.query;
 
+import org.mule.extension.db.internal.domain.connection.DbConnection;
+import org.mule.extension.db.internal.domain.param.DefaultInOutQueryParam;
+import org.mule.extension.db.internal.domain.param.DefaultInputQueryParam;
+import org.mule.extension.db.internal.domain.param.DefaultOutputQueryParam;
+import org.mule.extension.db.internal.domain.param.InOutQueryParam;
+import org.mule.extension.db.internal.domain.param.InputQueryParam;
+import org.mule.extension.db.internal.domain.param.OutputQueryParam;
+import org.mule.extension.db.internal.domain.param.QueryParam;
+import org.mule.extension.db.internal.domain.query.Query;
+import org.mule.extension.db.internal.domain.query.QueryParamValue;
+import org.mule.extension.db.internal.domain.query.QueryTemplate;
+import org.mule.extension.db.internal.domain.type.DbType;
+import org.mule.extension.db.internal.domain.type.DynamicDbType;
+import org.mule.extension.db.internal.domain.type.UnknownDbType;
+import org.mule.extension.db.internal.resolver.param.ParamValueResolver;
 import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
-import org.mule.runtime.module.db.internal.domain.param.DefaultInOutQueryParam;
-import org.mule.runtime.module.db.internal.domain.param.DefaultInputQueryParam;
-import org.mule.runtime.module.db.internal.domain.param.DefaultOutputQueryParam;
-import org.mule.runtime.module.db.internal.domain.param.InOutQueryParam;
-import org.mule.runtime.module.db.internal.domain.param.InputQueryParam;
-import org.mule.runtime.module.db.internal.domain.param.OutputQueryParam;
-import org.mule.runtime.module.db.internal.domain.param.QueryParam;
-import org.mule.runtime.module.db.internal.domain.query.Query;
-import org.mule.runtime.module.db.internal.domain.query.QueryParamValue;
-import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
-import org.mule.runtime.module.db.internal.domain.type.DbType;
-import org.mule.runtime.module.db.internal.domain.type.DynamicDbType;
-import org.mule.runtime.module.db.internal.domain.type.UnknownDbType;
-import org.mule.runtime.module.db.internal.resolver.param.ParamValueResolver;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -88,7 +88,7 @@ public class ParametrizedQueryResolver implements QueryResolver
 
     private QueryTemplate resolveQueryTemplate(QueryTemplate queryTemplate, Map<Integer, DbType> paramTypes)
     {
-        List<QueryParam> newParams = new ArrayList<QueryParam>();
+        List<QueryParam> newParams = new ArrayList<>();
 
         for (QueryParam originalParam : queryTemplate.getParams())
         {

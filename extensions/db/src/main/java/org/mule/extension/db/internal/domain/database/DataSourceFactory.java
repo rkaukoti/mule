@@ -7,12 +7,12 @@
 
 package org.mule.extension.db.internal.domain.database;
 
+import org.mule.extension.db.api.config.DbPoolingProfile;
+import org.mule.extension.db.internal.domain.xa.CompositeDataSourceDecorator;
 import org.mule.runtime.core.api.MuleContext;
 import org.mule.runtime.core.api.context.MuleContextAware;
 import org.mule.runtime.core.api.lifecycle.Disposable;
 import org.mule.runtime.core.util.concurrent.ConcurrentHashSet;
-import org.mule.runtime.module.db.internal.domain.connection.DbPoolingProfile;
-import org.mule.runtime.module.db.internal.domain.xa.CompositeDataSourceDecorator;
 
 import com.mchange.v2.c3p0.DataSources;
 
@@ -131,7 +131,7 @@ public class DataSourceFactory implements MuleContextAware, Disposable
         config.put("maxPoolSize", poolingProfile.getMaxPoolSize());
         config.put("minPoolSize", poolingProfile.getMinPoolSize());
         config.put("initialPoolSize", poolingProfile.getMinPoolSize());
-        config.put("checkoutTimeout", poolingProfile.getMaxWaitMillis());
+        config.put("checkoutTimeout", poolingProfile.getMaxWaitUnit().toMinutes(poolingProfile.getMaxWait()));
         config.put("acquireIncrement", poolingProfile.getAcquireIncrement());
         config.put("maxStatements", 0);
         config.put("maxStatementsPerConnection", poolingProfile.getPreparedStatementCacheSize());

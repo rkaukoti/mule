@@ -7,9 +7,9 @@
 
 package org.mule.extension.db.internal.domain.database;
 
-import org.mule.runtime.module.db.internal.domain.type.DbType;
-import org.mule.runtime.module.db.internal.domain.type.ResolvedDbType;
-import org.mule.runtime.module.db.internal.domain.type.oracle.OracleXmlType;
+import org.mule.extension.db.internal.domain.type.DbType;
+import org.mule.extension.db.internal.domain.type.ResolvedDbType;
+import org.mule.extension.db.internal.domain.type.oracle.OracleXmlType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +26,7 @@ public class OracleDbConfigFactory extends GenericDbConfigFactory
     @Override
     protected List<DbType> getVendorDataTypes()
     {
-        List<DbType> dbTypes = new ArrayList<DbType>();
+        List<DbType> dbTypes = new ArrayList<>();
         dbTypes.add(new ResolvedDbType(CURSOR_TYPE_ID, CURSOR_TYPE_NAME));
         dbTypes.add(new OracleXmlType());
 

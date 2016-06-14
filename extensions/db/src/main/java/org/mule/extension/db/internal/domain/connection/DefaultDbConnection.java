@@ -7,8 +7,8 @@
 
 package org.mule.extension.db.internal.domain.connection;
 
-import org.mule.runtime.module.db.internal.domain.transaction.TransactionalAction;
-import org.mule.runtime.module.db.internal.resolver.param.ParamTypeResolverFactory;
+import org.mule.extension.db.internal.domain.transaction.TransactionalAction;
+import org.mule.extension.db.internal.resolver.param.ParamTypeResolverFactory;
 
 import java.sql.Array;
 import java.sql.Blob;

@@ -7,8 +7,8 @@
 
 package org.mule.extension.db.internal.resolver.param;
 
+import org.mule.extension.db.internal.domain.query.QueryParamValue;
 import org.mule.runtime.core.api.MuleEvent;
-import org.mule.runtime.module.db.internal.domain.query.QueryParamValue;
 
 import java.util.List;
 

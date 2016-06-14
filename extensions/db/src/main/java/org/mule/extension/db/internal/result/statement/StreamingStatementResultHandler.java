@@ -7,7 +7,7 @@
 
 package org.mule.extension.db.internal.result.statement;
 
-import org.mule.runtime.module.db.internal.result.resultset.ResultSetHandler;
+import org.mule.extension.db.internal.result.resultset.ResultSetHandler;
 
 import java.util.Map;
 
@@ -25,6 +25,6 @@ public class StreamingStatementResultHandler extends AbstractMapStatementResultH
     @Override
     protected Map<String, Object> createResultMap()
     {
-        return new CloseableMap<String, Object>();
+        return new CloseableMap<>();
     }
 }

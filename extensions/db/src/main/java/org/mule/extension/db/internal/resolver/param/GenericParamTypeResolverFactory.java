@@ -7,9 +7,9 @@
 
 package org.mule.extension.db.internal.resolver.param;
 
-import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
-import org.mule.runtime.module.db.internal.domain.query.QueryType;
-import org.mule.runtime.module.db.internal.domain.type.DbTypeManager;
+import org.mule.extension.db.internal.domain.query.QueryTemplate;
+import org.mule.extension.db.internal.domain.query.QueryType;
+import org.mule.extension.db.internal.domain.type.DbTypeManager;
 
 /**
  * Creates {@link ParamTypeResolver} for generic databases

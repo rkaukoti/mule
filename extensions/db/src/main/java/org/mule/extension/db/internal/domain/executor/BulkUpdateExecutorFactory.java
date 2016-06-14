@@ -7,7 +7,7 @@
 
 package org.mule.extension.db.internal.domain.executor;
 
-import org.mule.runtime.module.db.internal.domain.statement.StatementFactory;
+import org.mule.extension.db.internal.domain.statement.StatementFactory;
 
 /**
  * Creates {@link BulkUpdateExecutor} instances

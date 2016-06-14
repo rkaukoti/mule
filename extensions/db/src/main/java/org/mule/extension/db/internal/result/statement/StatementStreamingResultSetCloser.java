@@ -7,7 +7,7 @@
 
 package org.mule.extension.db.internal.result.statement;
 
-import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
+import org.mule.extension.db.internal.domain.connection.DbConnection;
 
 import java.sql.ResultSet;
 import java.util.ConcurrentModificationException;
@@ -20,9 +20,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class StatementStreamingResultSetCloser extends AbstractStreamingResultSetCloser
 {
-    private final ConcurrentHashMap<DbConnection, Set<ResultSet>> connectionResultSets = new ConcurrentHashMap<DbConnection, Set<ResultSet>>();
+    private final ConcurrentHashMap<DbConnection, Set<ResultSet>> connectionResultSets = new ConcurrentHashMap<>();
 
-    private final ConcurrentHashMap<DbConnection, Object> connectionLocks = new ConcurrentHashMap<DbConnection, Object>();
+    private final ConcurrentHashMap<DbConnection, Object> connectionLocks = new ConcurrentHashMap<>();
 
     /**
      * Closes all tracked {@link ResultSet}s for the passed {@code connection}.

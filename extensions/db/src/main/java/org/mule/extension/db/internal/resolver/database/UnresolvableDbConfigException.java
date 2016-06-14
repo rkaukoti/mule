@@ -7,7 +7,7 @@
 
 package org.mule.extension.db.internal.resolver.database;
 
-import org.mule.runtime.module.db.internal.domain.database.DbConfig;
+import org.mule.extension.db.internal.domain.database.DbConfig;
 
 /**
  * Thrown to indicate that is not possible to resolve a {@link DbConfig}

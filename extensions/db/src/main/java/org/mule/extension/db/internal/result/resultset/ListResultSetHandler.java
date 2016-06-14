@@ -7,8 +7,8 @@
 
 package org.mule.extension.db.internal.result.resultset;
 
-import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
-import org.mule.runtime.module.db.internal.result.row.RowHandler;
+import org.mule.extension.db.internal.domain.connection.DbConnection;
+import org.mule.extension.db.internal.result.row.RowHandler;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -34,7 +34,7 @@ public class ListResultSetHandler implements ResultSetHandler
     @Override
     public List<Map<String, Object>> processResultSet(DbConnection connection, ResultSet resultSet) throws SQLException
     {
-        List<Map<String, Object>> results = new LinkedList<Map<String, Object>>();
+        List<Map<String, Object>> results = new LinkedList<>();
         try
         {
             while (resultSet.next())

@@ -7,14 +7,14 @@
 
 package org.mule.extension.db.internal.domain.connection;
 
-import org.mule.runtime.module.db.internal.domain.query.QueryTemplate;
-import org.mule.runtime.module.db.internal.domain.transaction.TransactionalAction;
-import org.mule.runtime.module.db.internal.domain.type.DbType;
-import org.mule.runtime.module.db.internal.resolver.param.ParamTypeResolver;
-import org.mule.runtime.module.db.internal.resolver.param.ParamTypeResolverFactory;
-import org.mule.runtime.module.db.internal.result.resultset.ResultSetHandler;
-import org.mule.runtime.module.db.internal.result.statement.GenericStatementResultIteratorFactory;
-import org.mule.runtime.module.db.internal.result.statement.StatementResultIteratorFactory;
+import org.mule.extension.db.internal.domain.query.QueryTemplate;
+import org.mule.extension.db.internal.domain.transaction.TransactionalAction;
+import org.mule.extension.db.internal.domain.type.DbType;
+import org.mule.extension.db.internal.resolver.param.ParamTypeResolver;
+import org.mule.extension.db.internal.resolver.param.ParamTypeResolverFactory;
+import org.mule.extension.db.internal.result.resultset.ResultSetHandler;
+import org.mule.extension.db.internal.result.statement.GenericStatementResultIteratorFactory;
+import org.mule.extension.db.internal.result.statement.StatementResultIteratorFactory;
 
 import java.sql.Connection;
 import java.sql.SQLException;

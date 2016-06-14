@@ -7,8 +7,10 @@
 
 package org.mule.extension.db.internal.metadata;
 
+import static org.mule.common.FailureType.CONNECTION_FAILURE;
+import static org.mule.common.FailureType.INVALID_CONFIGURATION;
+import static org.mule.extension.db.internal.domain.transaction.TransactionalAction.NOT_SUPPORTED;
 import org.mule.common.DefaultResult;
-import org.mule.common.FailureType;
 import org.mule.common.Result;
 import org.mule.common.metadata.DefaultDefinedMapMetaDataModel;
 import org.mule.common.metadata.DefaultListMetaDataModel;
@@ -19,12 +21,11 @@ import org.mule.common.metadata.DefaultUnknownMetaDataModel;
 import org.mule.common.metadata.MetaData;
 import org.mule.common.metadata.MetaDataModel;
 import org.mule.common.metadata.datatype.DataType;
-import org.mule.runtime.module.db.internal.domain.connection.DbConnection;
-import org.mule.runtime.module.db.internal.domain.database.DbConfig;
-import org.mule.runtime.module.db.internal.domain.param.InputQueryParam;
-import org.mule.runtime.module.db.internal.domain.query.Query;
-import org.mule.runtime.module.db.internal.domain.transaction.TransactionalAction;
-import org.mule.runtime.module.db.internal.resolver.database.DbConfigResolver;
+import org.mule.extension.db.internal.domain.connection.DbConnection;
+import org.mule.extension.db.internal.domain.database.DbConfig;
+import org.mule.extension.db.internal.domain.param.InputQueryParam;
+import org.mule.extension.db.internal.domain.query.Query;
+import org.mule.extension.db.internal.resolver.database.DbConfigResolver;
 
 import java.net.URL;
 import java.sql.Blob;
@@ -93,7 +94,7 @@ public abstract class AbstractQueryMetadataProvider implements QueryMetadataProv
             return null;
         }
 
-        List<String> fieldNames = new ArrayList<String>();
+        List<String> fieldNames = new ArrayList<>();
         for (InputQueryParam inputParam : inputParams)
         {
             String field = getReferencedField(inputParam);
@@ -321,11 +322,11 @@ public abstract class AbstractQueryMetadataProvider implements QueryMetadataProv
         {
             try
             {
-                connection = dbConfig.getConnectionFactory().createConnection(TransactionalAction.NOT_SUPPORTED);
+                connection = dbConfig.getConnectionFactory().createConnection(NOT_SUPPORTED);
             }
             catch (SQLException e)
             {
-                return new DefaultResult<MetaData>(null, Result.Status.FAILURE, e.getMessage(), FailureType.CONNECTION_FAILURE, e);
+                return new DefaultResult<>(null, Result.Status.FAILURE, e.getMessage(), CONNECTION_FAILURE, e);
             }
 
             PreparedStatement preparedStatement;
@@ -335,7 +336,7 @@ public abstract class AbstractQueryMetadataProvider implements QueryMetadataProv
             }
             catch (SQLException e)
             {
-                return new DefaultResult<MetaData>(null, Result.Status.FAILURE, e.getMessage(), FailureType.INVALID_CONFIGURATION, e);
+                return new DefaultResult<>(null, Result.Status.FAILURE, e.getMessage(), INVALID_CONFIGURATION, e);
             }
 
             return metadataResolver.resolveMetaData(preparedStatement, query);
