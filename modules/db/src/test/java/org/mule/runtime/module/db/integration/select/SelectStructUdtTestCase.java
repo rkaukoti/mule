@@ -52,11 +52,11 @@ public class SelectStructUdtTestCase extends AbstractDbIntegrationTestCase {
     final MuleMessage response = responseEvent.getMessage();
 
     assertRecords(response.getPayload(),
-        new Record(new Field("REGION_NAME", SOUTHWEST_MANAGER.getRegionName()),
-            new Field("MANAGER_NAME", SOUTHWEST_MANAGER.getName()),
-            new Field("DETAILS", SOUTHWEST_MANAGER.getContactDetails().asObjectArray())),
-        new Record(new Field("REGION_NAME", NORTHWEST_MANAGER.getRegionName()),
-            new Field("MANAGER_NAME", NORTHWEST_MANAGER.getName()),
-            new Field("DETAILS", NORTHWEST_MANAGER.getContactDetails().asObjectArray())));
+                  new Record(new Field("REGION_NAME", SOUTHWEST_MANAGER.getRegionName()),
+                             new Field("MANAGER_NAME", SOUTHWEST_MANAGER.getName()),
+                             new Field("DETAILS", SOUTHWEST_MANAGER.getContactDetails().asObjectArray())),
+                  new Record(new Field("REGION_NAME", NORTHWEST_MANAGER.getRegionName()),
+                             new Field("MANAGER_NAME", NORTHWEST_MANAGER.getName()),
+                             new Field("DETAILS", NORTHWEST_MANAGER.getContactDetails().asObjectArray())));
   }
 }

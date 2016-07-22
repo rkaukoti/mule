@@ -30,8 +30,8 @@ public class PerAppCopyNativeLibraryFinder extends PerAppNativeLibraryFinder {
       cleanNativeLibs();
     } else {
       if (!this.perAppNativeLibs.mkdirs()) {
-        throw new IllegalStateException(
-            String.format("Unable to create application '%s' folder", this.perAppNativeLibs.getAbsolutePath()));
+        throw new IllegalStateException(String.format("Unable to create application '%s' folder",
+                                                      this.perAppNativeLibs.getAbsolutePath()));
       }
     }
   }
@@ -79,9 +79,9 @@ public class PerAppCopyNativeLibraryFinder extends PerAppNativeLibraryFinder {
 
       return tempLibrary;
     } catch (IOException e) {
-      throw new IllegalStateException(
-          String.format("Unable to generate copy for native library '%s' at '%s'", nativeLibName, tempLibrary.getAbsolutePath()),
-          e);
+      throw new IllegalStateException(String.format("Unable to generate copy for native library '%s' at '%s'", nativeLibName,
+                                                    tempLibrary.getAbsolutePath()),
+                                      e);
     }
   }
 }

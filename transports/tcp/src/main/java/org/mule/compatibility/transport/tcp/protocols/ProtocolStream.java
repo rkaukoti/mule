@@ -24,8 +24,8 @@ public class ProtocolStream extends OutputStream {
 
   private void assertStreamOk() {
     if (!streamOk) {
-      throw new IllegalArgumentException(
-          "TCP protocol " + ClassUtils.getSimpleName(protocol.getClass()) + " does not support streaming output");
+      throw new IllegalArgumentException("TCP protocol " + ClassUtils.getSimpleName(protocol.getClass())
+          + " does not support streaming output");
     }
   }
 

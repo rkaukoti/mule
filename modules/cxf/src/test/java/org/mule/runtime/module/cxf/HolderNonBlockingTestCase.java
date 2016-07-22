@@ -46,7 +46,7 @@ public class HolderNonBlockingTestCase extends FunctionalTestCase {
     MuleMessage request = MuleMessage.builder().payload("TEST").build();
     MuleClient client = muleContext.getClient();
     MuleMessage received = client.send("http://localhost:" + dynamicPort.getNumber() + "/echoClient", request,
-        newOptions().method(POST.name()).disableStatusCodeValidation().build());
+                                       newOptions().method(POST.name()).disableStatusCodeValidation().build());
     assertNotNull(received);
     Object[] payload = deserializeResponse(received);
     assertEquals("one-response", payload[0]);
@@ -61,7 +61,7 @@ public class HolderNonBlockingTestCase extends FunctionalTestCase {
     MuleMessage request = MuleMessage.builder().payload("TEST").build();
     MuleClient client = muleContext.getClient();
     MuleMessage received = client.send("http://localhost:" + dynamicPort.getNumber() + "/echoClientProxy", request,
-        newOptions().method(POST.name()).disableStatusCodeValidation().build());
+                                       newOptions().method(POST.name()).disableStatusCodeValidation().build());
     assertNotNull(received);
     Object[] payload = deserializeResponse(received);
     assertEquals("one-response", payload[0]);
@@ -75,7 +75,7 @@ public class HolderNonBlockingTestCase extends FunctionalTestCase {
     MuleMessage request = MuleMessage.builder().payload("TEST").build();
     MuleClient client = muleContext.getClient();
     MuleMessage received = client.send("http://localhost:" + dynamicPort.getNumber() + "/echo2Client", request,
-        newOptions().method(POST.name()).disableStatusCodeValidation().build());
+                                       newOptions().method(POST.name()).disableStatusCodeValidation().build());
     assertNotNull(received);
     Object[] payload = deserializeResponse(received);
     assertEquals("one-response", payload[0]);
@@ -89,7 +89,7 @@ public class HolderNonBlockingTestCase extends FunctionalTestCase {
     MuleMessage request = MuleMessage.builder().payload("TEST").build();
     MuleClient client = muleContext.getClient();
     MuleMessage received = client.send("http://localhost:" + dynamicPort.getNumber() + "/echo2ClientProxy", request,
-        newOptions().method(POST.name()).disableStatusCodeValidation().build());
+                                       newOptions().method(POST.name()).disableStatusCodeValidation().build());
     assertNotNull(received);
     Object[] payload = deserializeResponse(received);
     assertEquals("one-response", payload[0]);
@@ -102,7 +102,7 @@ public class HolderNonBlockingTestCase extends FunctionalTestCase {
     MuleMessage request = MuleMessage.builder().payload("TEST").build();
     MuleClient client = muleContext.getClient();
     MuleMessage received = client.send("http://localhost:" + dynamicPort.getNumber() + "/echo3Client", request,
-        newOptions().method(POST.name()).disableStatusCodeValidation().build());
+                                       newOptions().method(POST.name()).disableStatusCodeValidation().build());
     assertNotNull(received);
     Object[] payload = deserializeResponse(received);
     assertEquals(null, payload[0]);
@@ -115,7 +115,7 @@ public class HolderNonBlockingTestCase extends FunctionalTestCase {
     MuleMessage request = MuleMessage.builder().payload("TEST").build();
     MuleClient client = muleContext.getClient();
     MuleMessage received = client.send("http://localhost:" + dynamicPort.getNumber() + "/echo3ClientProxy", request,
-        newOptions().method(POST.name()).disableStatusCodeValidation().build());
+                                       newOptions().method(POST.name()).disableStatusCodeValidation().build());
     assertNotNull(received);
     Object[] payload = deserializeResponse(received);
     assertEquals(null, payload[0]);

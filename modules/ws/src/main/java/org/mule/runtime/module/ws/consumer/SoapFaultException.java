@@ -22,7 +22,7 @@ public class SoapFaultException extends MessagingException {
   private final Element detail;
 
   public SoapFaultException(MuleEvent event, QName faultCode, QName subCode, String message, Element detail,
-      MessageProcessor failingMessageProcessor) {
+                            MessageProcessor failingMessageProcessor) {
     super(CoreMessages.createStaticMessage(message), event, failingMessageProcessor);
     this.faultCode = faultCode;
     this.subCode = subCode;

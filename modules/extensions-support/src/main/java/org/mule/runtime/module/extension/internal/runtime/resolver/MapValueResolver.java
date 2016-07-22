@@ -42,7 +42,7 @@ public final class MapValueResolver<K, V> implements ValueResolver<Map<K, V>> {
    * @param valueResolvers a not {@code null} {@link List} of resolvers for map value params
    */
   public MapValueResolver(Class<? extends Map> mapType, List<ValueResolver<K>> keyResolvers,
-      List<ValueResolver<V>> valueResolvers) {
+                          List<ValueResolver<V>> valueResolvers) {
     checkInstantiable(mapType);
     checkArgument(keyResolvers != null && valueResolvers != null, "resolvers cannot be null");
     checkArgument(keyResolvers.size() == valueResolvers.size(), "exactly one valueResolver for each keyResolver is required");
@@ -53,7 +53,7 @@ public final class MapValueResolver<K, V> implements ValueResolver<Map<K, V>> {
   }
 
   public static <K, V> MapValueResolver<K, V> of(Class<? extends Map> mapType, List<ValueResolver<K>> keyResolvers,
-      List<ValueResolver<V>> valueResolvers) {
+                                                 List<ValueResolver<V>> valueResolvers) {
     if (ConcurrentMap.class.equals(mapType)) {
       return new MapValueResolver<>(ConcurrentHashMap.class, keyResolvers, valueResolvers);
     } else if (Map.class.equals(mapType)) {

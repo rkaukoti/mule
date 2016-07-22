@@ -32,10 +32,10 @@ public class OAuthContextFunctionAsserter {
   public OAuthContextFunctionAsserter assertAccessTokenIs(String expectedAccessToken) {
     if (userId != null) {
       assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s','%s').accessToken", configName, userId)),
-          Is.<Object>is(expectedAccessToken));
+                 Is.<Object>is(expectedAccessToken));
     } else {
       assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s').accessToken", configName)),
-          Is.<Object>is(expectedAccessToken));
+                 Is.<Object>is(expectedAccessToken));
     }
     return this;
   }
@@ -43,10 +43,10 @@ public class OAuthContextFunctionAsserter {
   public OAuthContextFunctionAsserter assertRefreshTokenIs(String expectedRefreshToken) {
     if (userId != null) {
       assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s','%s').refreshToken", configName, userId)),
-          Is.<Object>is(expectedRefreshToken));
+                 Is.<Object>is(expectedRefreshToken));
     } else {
       assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s').refreshToken", configName)),
-          Is.<Object>is(expectedRefreshToken));
+                 Is.<Object>is(expectedRefreshToken));
     }
     return this;
   }
@@ -54,10 +54,10 @@ public class OAuthContextFunctionAsserter {
   public OAuthContextFunctionAsserter assertState(String expectedState) {
     if (userId != null) {
       assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s','%s').state", configName, userId)),
-          Is.<Object>is(expectedState));
+                 Is.<Object>is(expectedState));
     } else {
       assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s').state", configName)),
-          Is.<Object>is(expectedState));
+                 Is.<Object>is(expectedState));
     }
     return this;
   }
@@ -65,24 +65,23 @@ public class OAuthContextFunctionAsserter {
   public OAuthContextFunctionAsserter assertExpiresInIs(String expectedExpiresIs) {
     if (userId != null) {
       assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s','%s').expiresIn", configName, userId)),
-          Is.<Object>is(expectedExpiresIs));
+                 Is.<Object>is(expectedExpiresIs));
     } else {
       assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s').expiresIn", configName)),
-          Is.<Object>is(expectedExpiresIs));
+                 Is.<Object>is(expectedExpiresIs));
     }
     return this;
   }
 
   public OAuthContextFunctionAsserter assertContainsCustomTokenResponseParam(String paramName, String paramValue) {
     if (userId != null) {
-      assertThat(
-          expressionLanguage
-              .evaluate(String.format("oauthContext('%s','%s').tokenResponseParameters['%s']", configName, userId, paramName)),
-          Is.<Object>is(paramValue));
+      assertThat(expressionLanguage
+          .evaluate(String.format("oauthContext('%s','%s').tokenResponseParameters['%s']", configName, userId, paramName)),
+                 Is.<Object>is(paramValue));
     } else {
-      assertThat(
-          expressionLanguage.evaluate(String.format("oauthContext('%s').tokenResponseParameters['%s']", configName, paramName)),
-          Is.<Object>is(paramValue));
+      assertThat(expressionLanguage
+          .evaluate(String.format("oauthContext('%s').tokenResponseParameters['%s']", configName, paramName)),
+                 Is.<Object>is(paramValue));
     }
     return this;
   }

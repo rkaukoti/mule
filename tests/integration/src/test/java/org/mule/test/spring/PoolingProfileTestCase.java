@@ -30,7 +30,7 @@ public class PoolingProfileTestCase extends FunctionalTestCase {
   @Test
   public void testDefault() {
     doTest("default", PoolingProfile.DEFAULT_POOL_EXHAUSTED_ACTION, PoolingProfile.DEFAULT_POOL_INITIALISATION_POLICY,
-        PoolingProfile.DEFAULT_MAX_POOL_ACTIVE, PoolingProfile.DEFAULT_MAX_POOL_IDLE, PoolingProfile.DEFAULT_MAX_POOL_WAIT);
+           PoolingProfile.DEFAULT_MAX_POOL_ACTIVE, PoolingProfile.DEFAULT_MAX_POOL_IDLE, PoolingProfile.DEFAULT_MAX_POOL_WAIT);
   }
 
   @Test

@@ -167,9 +167,10 @@ public class MuleExtensionUtils {
       return null;
     } else if (connectionTypes.size() > 1) {
       throw new IllegalModelDefinitionException(String.format(
-          "Extension '%s' has operation which require connections of different types ([%s]). "
-              + "Please standarize on one single connection type to ensure that all operations work with any compatible %s",
-          extensionModel.getName(), Joiner.on(", ").join(connectionTypes), ConnectionProvider.class.getSimpleName()));
+                                                              "Extension '%s' has operation which require connections of different types ([%s]). "
+                                                                  + "Please standarize on one single connection type to ensure that all operations work with any compatible %s",
+                                                              extensionModel.getName(), Joiner.on(", ").join(connectionTypes),
+                                                              ConnectionProvider.class.getSimpleName()));
     } else {
       return connectionTypes.stream().findFirst().get();
     }
@@ -331,9 +332,9 @@ public class MuleExtensionUtils {
       final Field configNameField = property.getConfigNameField();
 
       if (!configNameField.getDeclaringClass().isInstance(target)) {
-        throw new IllegalConfigurationModelDefinitionException(
-            String.format("field '%s' is annotated with @%s but not defined on an instance of type '%s'",
-                configNameField.toString(), ConfigName.class.getSimpleName(), target.getClass().getName()));
+        throw new IllegalConfigurationModelDefinitionException(String
+            .format("field '%s' is annotated with @%s but not defined on an instance of type '%s'", configNameField.toString(),
+                    ConfigName.class.getSimpleName(), target.getClass().getName()));
       }
 
       configNameField.setAccessible(true);

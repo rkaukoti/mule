@@ -64,12 +64,12 @@ public class ComponentWithBindingsDefinitionParserFlowTestCase extends AbstractM
     validateCorrectServiceCreation(flow);
     assertEquals(DefaultJavaWithBindingComponent.class, flow.getMessageProcessors().get(0).getClass());
     assertEquals(PrototypeObjectFactory.class,
-        ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
+                 ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
     assertEquals(1, ((JavaWithBindingsComponent) flow.getMessageProcessors().get(0)).getInterfaceBindings().size());
     assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
     assertEquals(2,
-        (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
-            .getEntryPointResolvers().size()));
+                 (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
+                     .getEntryPointResolvers().size()));
     assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
         .getEntryPointResolvers().toArray()[0] instanceof ArrayEntryPointResolver));
     assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
@@ -85,12 +85,12 @@ public class ComponentWithBindingsDefinitionParserFlowTestCase extends AbstractM
     validateCorrectServiceCreation(flow);
     assertEquals(DefaultJavaWithBindingComponent.class, flow.getMessageProcessors().get(0).getClass());
     assertEquals(PrototypeObjectFactory.class,
-        ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
+                 ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
     assertEquals(1, ((JavaWithBindingsComponent) flow.getMessageProcessors().get(0)).getInterfaceBindings().size());
     assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
     assertEquals(1,
-        (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
-            .getEntryPointResolvers().size()));
+                 (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
+                     .getEntryPointResolvers().size()));
     assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
         .getEntryPointResolvers().toArray()[0] instanceof CallableEntryPointResolver));
   }
@@ -104,12 +104,12 @@ public class ComponentWithBindingsDefinitionParserFlowTestCase extends AbstractM
     validateCorrectServiceCreation(flow);
     assertEquals(DefaultJavaWithBindingComponent.class, flow.getMessageProcessors().get(0).getClass());
     assertEquals(SingletonObjectFactory.class,
-        ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
+                 ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
     assertEquals(1, ((JavaWithBindingsComponent) flow.getMessageProcessors().get(0)).getInterfaceBindings().size());
     assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
     assertEquals(1,
-        (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
-            .getEntryPointResolvers().size()));
+                 (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
+                     .getEntryPointResolvers().size()));
     assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
         .getEntryPointResolvers().toArray()[0] instanceof ExplicitMethodEntryPointResolver));
 
@@ -124,12 +124,12 @@ public class ComponentWithBindingsDefinitionParserFlowTestCase extends AbstractM
     validateCorrectServiceCreation(flow);
     assertEquals(DefaultJavaWithBindingComponent.class, flow.getMessageProcessors().get(0).getClass());
     assertEquals(SpringBeanLookup.class,
-        ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
+                 ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
     assertEquals(1, ((JavaWithBindingsComponent) flow.getMessageProcessors().get(0)).getInterfaceBindings().size());
     assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
     assertEquals(1,
-        (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
-            .getEntryPointResolvers().size()));
+                 (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
+                     .getEntryPointResolvers().size()));
     assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
         .getEntryPointResolvers().toArray()[0] instanceof NoArgumentsEntryPointResolver));
   }
@@ -156,13 +156,13 @@ public class ComponentWithBindingsDefinitionParserFlowTestCase extends AbstractM
     validateCorrectServiceCreation(flow);
     assertEquals(PooledJavaWithBindingsComponent.class, flow.getMessageProcessors().get(0).getClass());
     assertEquals(PrototypeObjectFactory.class,
-        ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
+                 ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
     assertEquals(1, ((JavaWithBindingsComponent) flow.getMessageProcessors().get(0)).getInterfaceBindings().size());
     validatePoolingProfile(flow);
     assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
     assertEquals(1,
-        (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
-            .getEntryPointResolvers().size()));
+                 (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
+                     .getEntryPointResolvers().size()));
     assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
         .getEntryPointResolvers().toArray()[0] instanceof MethodHeaderPropertyEntryPointResolver));
 
@@ -177,13 +177,13 @@ public class ComponentWithBindingsDefinitionParserFlowTestCase extends AbstractM
     validateCorrectServiceCreation(flow);
     assertEquals(PooledJavaWithBindingsComponent.class, flow.getMessageProcessors().get(0).getClass());
     assertEquals(PrototypeObjectFactory.class,
-        ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
+                 ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
     assertEquals(1, ((JavaWithBindingsComponent) flow.getMessageProcessors().get(0)).getInterfaceBindings().size());
     validatePoolingProfile(flow);
     assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
     assertEquals(1,
-        (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
-            .getEntryPointResolvers().size()));
+                 (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
+                     .getEntryPointResolvers().size()));
     assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
         .getEntryPointResolvers().toArray()[0] instanceof ReflectionEntryPointResolver));
 
@@ -198,13 +198,13 @@ public class ComponentWithBindingsDefinitionParserFlowTestCase extends AbstractM
     validateCorrectServiceCreation(flow);
     assertEquals(PooledJavaWithBindingsComponent.class, flow.getMessageProcessors().get(0).getClass());
     assertEquals(SingletonObjectFactory.class,
-        ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
+                 ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
     assertEquals(1, ((JavaWithBindingsComponent) flow.getMessageProcessors().get(0)).getInterfaceBindings().size());
     validatePoolingProfile(flow);
     assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
     assertEquals(1,
-        (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
-            .getEntryPointResolvers().size()));
+                 (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
+                     .getEntryPointResolvers().size()));
     assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
         .getEntryPointResolvers().toArray()[0] instanceof ReflectionEntryPointResolver));
 
@@ -219,7 +219,7 @@ public class ComponentWithBindingsDefinitionParserFlowTestCase extends AbstractM
     validateCorrectServiceCreation(flow);
     assertEquals(PooledJavaWithBindingsComponent.class, flow.getMessageProcessors().get(0).getClass());
     assertEquals(SpringBeanLookup.class,
-        ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
+                 ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
     assertEquals(1, ((JavaWithBindingsComponent) flow.getMessageProcessors().get(0)).getInterfaceBindings().size());
     validatePoolingProfile(flow);
     assertNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());

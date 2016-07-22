@@ -95,12 +95,12 @@ public class UntilSuccessfulTestCase extends FunctionalTestCase {
     ExceptionPayload dlqExceptionPayload = CustomMP.getProcessedMessages().get(0).getExceptionPayload();
     assertThat(dlqExceptionPayload, is(notNullValue()));
     assertThat(dlqExceptionPayload.getException(), instanceOf(RetryPolicyExhaustedException.class));
-    assertThat(dlqExceptionPayload.getException().getMessage(), containsString(
-        "until-successful retries exhausted. Last exception message was: Failure expression positive when processing event"));
+    assertThat(dlqExceptionPayload.getException().getMessage(),
+               containsString("until-successful retries exhausted. Last exception message was: Failure expression positive when processing event"));
 
     assertThat(dlqExceptionPayload.getException().getCause(), instanceOf(MuleRuntimeException.class));
     assertThat(dlqExceptionPayload.getException().getMessage(),
-        containsString("Failure expression positive when processing event"));
+               containsString("Failure expression positive when processing event"));
   }
 
   @Test
@@ -161,10 +161,10 @@ public class UntilSuccessfulTestCase extends FunctionalTestCase {
       @Override
       public String describeFailure() {
         return String.format(
-            "Expecting %d executions of counter in until-successful and got %d \n "
-                + "Expecting %d execution of counter in exception strategy and got %d",
-            expectedCounterExecutions, executionOfCountInUntilSuccessful, expectedCounterInExceptionStrategyExecutions,
-            executionOfCountInExceptionStrategy);
+                             "Expecting %d executions of counter in until-successful and got %d \n "
+                                 + "Expecting %d execution of counter in exception strategy and got %d",
+                             expectedCounterExecutions, executionOfCountInUntilSuccessful,
+                             expectedCounterInExceptionStrategyExecutions, executionOfCountInExceptionStrategy);
       }
     });
   }

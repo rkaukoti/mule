@@ -266,8 +266,8 @@ public class TransientRegistry extends AbstractRegistry {
 
   protected void checkDisposed() throws RegistrationException {
     if (getLifecycleManager().isPhaseComplete(Disposable.PHASE_NAME)) {
-      throw new RegistrationException(
-          MessageFactory.createStaticMessage("Cannot register objects on the registry as the context is disposed"));
+      throw new RegistrationException(MessageFactory
+          .createStaticMessage("Cannot register objects on the registry as the context is disposed"));
     }
   }
 
@@ -357,8 +357,8 @@ public class TransientRegistry extends AbstractRegistry {
           // throw new RegistrationException("TransientRegistry already contains an object named '" + key + "'. The previous
           // object would be
           // overwritten.");
-          logger.warn(
-              "TransientRegistry already contains an object named '" + key + "'.  The previous object will be overwritten.");
+          logger.warn("TransientRegistry already contains an object named '" + key
+              + "'.  The previous object will be overwritten.");
         }
       } finally {
         writeLock.unlock();

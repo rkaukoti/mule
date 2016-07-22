@@ -324,9 +324,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
     try {
       return new File(parent, child).getCanonicalFile();
     } catch (IOException e) {
-      throw new MuleRuntimeException(
-          MessageFactory.createStaticMessage("Unable to create a canonical file for parent: " + parent + " and child: " + child),
-          e);
+      throw new MuleRuntimeException(MessageFactory
+          .createStaticMessage("Unable to create a canonical file for parent: " + parent + " and child: " + child), e);
     }
   }
 
@@ -342,9 +341,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
     try {
       return new File(parent, child).getCanonicalFile();
     } catch (IOException e) {
-      throw new MuleRuntimeException(
-          MessageFactory.createStaticMessage("Unable to create a canonical file for parent: " + parent + " and child: " + child),
-          e);
+      throw new MuleRuntimeException(MessageFactory
+          .createStaticMessage("Unable to create a canonical file for parent: " + parent + " and child: " + child), e);
     }
   }
 

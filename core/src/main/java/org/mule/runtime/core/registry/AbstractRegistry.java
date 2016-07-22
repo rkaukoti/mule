@@ -160,8 +160,8 @@ public abstract class AbstractRegistry implements Registry {
     if (objects.size() == 1) {
       return objects.iterator().next();
     } else if (objects.size() > 1) {
-      throw new RegistrationException(
-          MessageFactory.createStaticMessage("More than one object of type " + type + " registered but only one expected."));
+      throw new RegistrationException(MessageFactory
+          .createStaticMessage("More than one object of type " + type + " registered but only one expected."));
     } else {
       return null;
     }

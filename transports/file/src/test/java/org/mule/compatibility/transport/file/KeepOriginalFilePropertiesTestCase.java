@@ -53,7 +53,7 @@ public class KeepOriginalFilePropertiesTestCase extends FunctionalTestCase {
 
   private void assertPropertiesAvailableAtPatternResolution(MuleMessage msg) {
     assertTrue(new File(getFileInsideWorkingDirectory(OUTPUT_DIRECTORY),
-        PROCESSED_PREFIX + getProperty(msg, CUSTOM_PROPERTY_ORIGINAL_FILENAME)).exists());
+                        PROCESSED_PREFIX + getProperty(msg, CUSTOM_PROPERTY_ORIGINAL_FILENAME)).exists());
   }
 
   private void assertOriginalDirectoryIsCorrectlySet(MuleMessage msg) throws IOException {

@@ -74,7 +74,7 @@ public class DynamicConfigurationProviderTestCase extends AbstractConfigurationP
     expirationPolicy = new ImmutableExpirationPolicy(5, TimeUnit.MINUTES, timeSupplier);
 
     provider = new DynamicConfigurationProvider(CONFIG_NAME, configurationModel, resolverSet, new StaticValueResolver<>(null),
-        expirationPolicy);
+                                                expirationPolicy);
 
     super.before();
     provider.initialise();

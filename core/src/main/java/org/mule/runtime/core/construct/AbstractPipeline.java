@@ -132,15 +132,17 @@ public abstract class AbstractPipeline extends AbstractFlowConstruct implements 
 
       @Override
       protected MuleEvent processRequest(MuleEvent event) throws MuleException {
-        muleContext.getNotificationManager().fireNotification(
-            new PipelineMessageNotification(AbstractPipeline.this, event, PipelineMessageNotification.PROCESS_START));
+        muleContext.getNotificationManager()
+            .fireNotification(new PipelineMessageNotification(AbstractPipeline.this, event,
+                                                              PipelineMessageNotification.PROCESS_START));
         return super.processRequest(event);
       }
 
       @Override
       protected void processFinally(MuleEvent event, MessagingException exception) {
-        muleContext.getNotificationManager().fireNotification(new PipelineMessageNotification(AbstractPipeline.this, event,
-            PipelineMessageNotification.PROCESS_COMPLETE, exception));
+        muleContext.getNotificationManager()
+            .fireNotification(new PipelineMessageNotification(AbstractPipeline.this, event,
+                                                              PipelineMessageNotification.PROCESS_COMPLETE, exception));
       }
     });
   }
@@ -150,8 +152,9 @@ public abstract class AbstractPipeline extends AbstractFlowConstruct implements 
 
       @Override
       public MuleEvent process(MuleEvent event) throws MuleException {
-        muleContext.getNotificationManager().fireNotification(
-            new PipelineMessageNotification(AbstractPipeline.this, event, PipelineMessageNotification.PROCESS_END));
+        muleContext.getNotificationManager()
+            .fireNotification(new PipelineMessageNotification(AbstractPipeline.this, event,
+                                                              PipelineMessageNotification.PROCESS_END));
         return event;
       }
     });
@@ -249,24 +252,24 @@ public abstract class AbstractPipeline extends AbstractFlowConstruct implements 
     boolean isCompatibleWithAsync = sourceCompatibleWithAsync.evaluate(messageSource);
     if (userConfiguredAsyncProcessingStrategy
         && (!(messageSource == null || isCompatibleWithAsync) || redeliveryHandlerConfigured)) {
-      throw new FlowConstructInvalidException(
-          CoreMessages.createStaticMessage("One of the message sources configured on this Flow is not "
+      throw new FlowConstructInvalidException(CoreMessages
+          .createStaticMessage("One of the message sources configured on this Flow is not "
               + "compatible with an asynchronous processing strategy.  Either "
-              + "because it is request-response, has a transaction defined, or " + "messaging redelivered is configured."),
-          this);
+              + "because it is request-response, has a transaction defined, or " + "messaging redelivered is configured."), this);
     }
 
     if (processingStrategy instanceof NonBlockingProcessingStrategy && messageSource != null
         && !(messageSource instanceof NonBlockingMessageSource)) {
-      throw new FlowConstructInvalidException(CoreMessages.createStaticMessage(
-          "The non-blocking processing strategy currently only supports " + "non-blocking messages sources"), this);
+      throw new FlowConstructInvalidException(CoreMessages
+          .createStaticMessage("The non-blocking processing strategy currently only supports " + "non-blocking messages sources"),
+                                              this);
     }
 
     if (!userConfiguredProcessingStrategy && redeliveryHandlerConfigured) {
       setProcessingStrategy(new SynchronousProcessingStrategy());
       if (LOGGER.isWarnEnabled()) {
-        LOGGER.warn(
-            "Using message redelivery and rollback-exception-strategy requires synchronous processing strategy. Processing strategy re-configured to synchronous");
+        LOGGER
+            .warn("Using message redelivery and rollback-exception-strategy requires synchronous processing strategy. Processing strategy re-configured to synchronous");
       }
     }
   }

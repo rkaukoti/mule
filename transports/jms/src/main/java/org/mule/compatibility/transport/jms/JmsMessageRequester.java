@@ -116,8 +116,8 @@ public class JmsMessageRequester extends AbstractMessageRequester {
       if (durableName == null && durable && topic) {
         durableName = "mule." + connector.getName() + "." + endpoint.getEndpointURI().getAddress();
         if (logger.isDebugEnabled()) {
-          logger.debug(
-              "Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: " + durableName);
+          logger.debug("Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: "
+              + durableName);
         }
       }
 

@@ -103,7 +103,8 @@ public abstract class AbstractOutboundRouter extends AbstractMessageProcessorOwn
   protected abstract MuleEvent route(MuleEvent event) throws MessagingException;
 
   protected final MuleEvent sendRequest(final MuleEvent originalEvent, final MuleEvent eventToRoute, final MessageProcessor route,
-      boolean awaitResponse) throws MuleException {
+                                        boolean awaitResponse)
+      throws MuleException {
     if (awaitResponse && replyTo != null) {
       logger.debug("event was dispatched synchronously, but there is a ReplyTo route set, so using asynchronous dispatch");
       awaitResponse = false;
@@ -280,7 +281,8 @@ public abstract class AbstractOutboundRouter extends AbstractMessageProcessorOwn
    * Send message event to destination.
    */
   protected MuleEvent sendRequestEvent(MuleEvent originalEvent, MuleEvent eventToRoute, MessageProcessor route,
-      boolean awaitResponse) throws MuleException {
+                                       boolean awaitResponse)
+      throws MuleException {
     if (route == null) {
       throw new DispatchException(CoreMessages.objectIsNull("connector operation"), originalEvent, null);
     }

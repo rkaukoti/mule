@@ -41,9 +41,9 @@ public class HttpRequestWildcardFilterTestCase extends FunctionalTestCase {
   @Test
   public void testReference() throws Exception {
     MuleClient client = muleContext.getClient();
-    MuleMessage result = client.send(
-        ((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("reference")).getMessageSource()).getAddress(),
-        TEST_HTTP_MESSAGE, null);
+    MuleMessage result = client
+        .send(((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("reference")).getMessageSource()).getAddress(),
+              TEST_HTTP_MESSAGE, null);
 
     assertEquals(TEST_HTTP_MESSAGE, getPayloadAsString(result));
   }
@@ -53,7 +53,7 @@ public class HttpRequestWildcardFilterTestCase extends FunctionalTestCase {
     MuleClient client = muleContext.getClient();
     MuleMessage result =
         client.send(((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("httpIn")).getMessageSource()).getAddress(),
-            TEST_HTTP_MESSAGE, null);
+                    TEST_HTTP_MESSAGE, null);
 
     assertEquals(TEST_HTTP_MESSAGE, getPayloadAsString(result));
   }

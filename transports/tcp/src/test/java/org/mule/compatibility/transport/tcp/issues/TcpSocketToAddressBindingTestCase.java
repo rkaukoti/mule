@@ -64,7 +64,7 @@ public class TcpSocketToAddressBindingTestCase extends AbstractTcpSocketToAddres
       // Request not using loopback address to endpoint listening at 127.0.0.1 should timeout.
       try {
         result = client.send(getTransportName() + "://" + inetAddress.getHostAddress() + ":" + dynamicPort1.getNumber(),
-            TEST_MESSAGE, null);
+                             TEST_MESSAGE, null);
         assertNull(result);
       } catch (DispatchException ex) {
         ex.printStackTrace();
@@ -83,7 +83,7 @@ public class TcpSocketToAddressBindingTestCase extends AbstractTcpSocketToAddres
        * Request not using loopback address to endpoint listening at all local addresses should get an appropriate response.
        */
       result = client.send(getTransportName() + "://" + inetAddress.getHostAddress() + ":" + dynamicPort3.getNumber(),
-          getTestMuleMessage(TEST_MESSAGE));
+                           getTestMuleMessage(TEST_MESSAGE));
       assertEquals(TEST_MESSAGE + " Received", getPayloadAsString(result));
     }
   }

@@ -124,7 +124,7 @@ public class ManagedObjectStore<T extends Serializable> implements ListableObjec
       }
       if (maxEntries != 0) {
         store = (ListableObjectStore<T>) objectStoreManager.getObjectStore(storeName, isPersistent, maxEntries, entryTTL,
-            expirationInterval);
+                                                                           expirationInterval);
       } else {
         store = (ListableObjectStore<T>) objectStoreManager.getObjectStore(storeName, isPersistent);
       }

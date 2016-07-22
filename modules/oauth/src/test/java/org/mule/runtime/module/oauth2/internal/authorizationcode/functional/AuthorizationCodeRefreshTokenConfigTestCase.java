@@ -34,6 +34,7 @@ public class AuthorizationCodeRefreshTokenConfigTestCase extends AbstractAuthori
   public void afterFailureWithRefreshTokenNotIssuedThrowAuthenticationException() throws Exception {
     expectedException.expect(ResponseValidatorException.class);
     executeRefreshTokenUsingOldRefreshTokenOnTokenCallAndRevokedByUsers("testFlow", SINGLE_TENANT_OAUTH_CONFIG,
-        ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID, 403, 400);
+                                                                        ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID, 403,
+                                                                        400);
   }
 }

@@ -38,7 +38,7 @@ public final class LocalListCommand extends LocalFileCommand implements ListComm
    */
   @Override
   public TreeNode list(FileConnectorConfig config, String directoryPath, boolean recursive, MuleMessage message,
-      Predicate<FileAttributes> matcher) {
+                       Predicate<FileAttributes> matcher) {
     Path path = resolveExistingPath(config, directoryPath);
     if (!Files.isDirectory(path)) {
       throw cannotListFileException(path);
@@ -51,10 +51,10 @@ public final class LocalListCommand extends LocalFileCommand implements ListComm
   }
 
   private void doList(FileConnectorConfig config, File parent, TreeNode.Builder treeNodeBuilder, boolean recursive,
-      MuleMessage message, Predicate<FileAttributes> matcher) {
+                      MuleMessage message, Predicate<FileAttributes> matcher) {
     if (!parent.canRead()) {
       throw exception(format("Could not list files from directory '%s' because access was denied by the operating system",
-          parent.getAbsolutePath()));
+                             parent.getAbsolutePath()));
     }
 
     for (File child : parent.listFiles()) {

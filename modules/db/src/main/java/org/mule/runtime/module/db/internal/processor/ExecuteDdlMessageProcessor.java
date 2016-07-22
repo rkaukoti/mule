@@ -29,7 +29,7 @@ public class ExecuteDdlMessageProcessor extends AbstractSingleQueryDbMessageProc
   private final List<QueryType> validQueryTypes;
 
   public ExecuteDdlMessageProcessor(DbConfigResolver dbConfigResolver, QueryResolver queryResolver,
-      QueryExecutorFactory queryExecutorFactory, TransactionalAction transactionalAction) {
+                                    QueryExecutorFactory queryExecutorFactory, TransactionalAction transactionalAction) {
     super(dbConfigResolver, queryResolver, transactionalAction);
     this.queryExecutorFactory = queryExecutorFactory;
     validQueryTypes = new ArrayList<QueryType>();

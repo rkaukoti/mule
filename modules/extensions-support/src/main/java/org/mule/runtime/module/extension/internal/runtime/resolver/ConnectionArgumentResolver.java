@@ -42,11 +42,10 @@ public class ConnectionArgumentResolver implements ArgumentResolver<Object> {
     try {
       return connectionHandler.getConnection();
     } catch (ConnectionException e) {
-      throw new MuleRuntimeException(MessageFactory.createStaticMessage(
-          String.format("Error was found trying to obtain a connection to execute operation '%s' of extension '%s'",
-              operationContext.getOperationModel().getName(),
-              operationContext.getConfiguration().getModel().getExtensionModel().getName())),
-          e);
+      throw new MuleRuntimeException(MessageFactory.createStaticMessage(String
+          .format("Error was found trying to obtain a connection to execute operation '%s' of extension '%s'",
+                  operationContext.getOperationModel().getName(),
+                  operationContext.getConfiguration().getModel().getExtensionModel().getName())), e);
     }
   }
 }

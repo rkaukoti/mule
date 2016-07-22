@@ -62,8 +62,8 @@ public class XmlToJson extends AbstractToFromXmlTransformer {
       } else {
         inputs = new TransformerInputs(this, src);
         if (inputs.getInputStream() != null) {
-          source = new StAXSource(
-              inputFactory.createXMLStreamReader(inputs.getInputStream(), enc == null ? UTF_8.name() : enc.name()));
+          source = new StAXSource(inputFactory.createXMLStreamReader(inputs.getInputStream(),
+                                                                     enc == null ? UTF_8.name() : enc.name()));
         } else {
           source = new StAXSource(inputFactory.createXMLStreamReader(inputs.getReader()));
         }

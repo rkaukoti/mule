@@ -59,16 +59,17 @@ public class ClientCredentialsFailureTestCase extends AbstractMuleTestCase {
   public void accessTokenNotRetrieve() throws Exception {
     wireMockRule.stubFor(post(urlEqualTo(TOKEN_PATH)).willReturn(aResponse().withBody(EMPTY)));
     testWithSystemProperty(TOKEN_PATH_PROPERTY_NAME, format("http://localhost:%s%s", wireMockRule.port(), TOKEN_PATH),
-        new MuleTestUtils.TestCallback() {
+                           new MuleTestUtils.TestCallback() {
 
-          @Override
-          public void run() throws Exception {
-            ApplicationContextBuilder applicationContextBuilder = new ApplicationContextBuilder()
-                .setApplicationResources(new String[] {"client-credentials/client-credentials-minimal-config.xml"});
-            expectedException.expectCause(isA(TokenNotFoundException.class));
-            applicationContextBuilder.build();
-          }
-        });
+                             @Override
+                             public void run() throws Exception {
+                               ApplicationContextBuilder applicationContextBuilder =
+                                   new ApplicationContextBuilder().setApplicationResources(new String[] {
+                                       "client-credentials/client-credentials-minimal-config.xml"});
+                               expectedException.expectCause(isA(TokenNotFoundException.class));
+                               applicationContextBuilder.build();
+                             }
+                           });
   }
 
 }

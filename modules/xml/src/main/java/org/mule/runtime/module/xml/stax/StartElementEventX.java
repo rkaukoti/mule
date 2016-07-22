@@ -18,7 +18,7 @@ public class StartElementEventX extends StartElementEvent {
   private final List namespaces2;
 
   public StartElementEventX(QName name, List attributes, List namespaces, NamespaceContext namespaceCtx, Location location,
-      QName schemaType) {
+                            QName schemaType) {
     super(name, attributes.iterator(), namespaces.iterator(), namespaceCtx, location, schemaType);
     attributes2 = attributes;
     namespaces2 = namespaces;

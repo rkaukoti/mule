@@ -89,7 +89,7 @@ public class HttpListenerConfigFunctionalTestCase extends AbstractHttpTestCase {
   @Test
   public void listenerConfigOverridesListenerConfig() throws Exception {
     final String url = String.format("http://%s:%s/%s/%s", nonLocalhostIp.getValue(), fullConfigPort.getNumber(),
-        basePath.getValue(), path.getValue());
+                                     basePath.getValue(), path.getValue());
     callAndAssertStatus(url, SC_OK);
   }
 

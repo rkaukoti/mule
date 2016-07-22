@@ -34,7 +34,7 @@ public abstract class LocationExecutionContextProvider implements ExceptionConte
    * @param xmlContent the xml representation of the element definition.
    */
   public static void addMetadataAnnotationsFromXml(Map<QName, Object> beanAnnotations, String fileName, int lineNumber,
-      String xmlContent) {
+                                                   String xmlContent) {
     beanAnnotations.put(SOURCE_FILE_ANNOTATION_KEY, fileName);
     beanAnnotations.put(SOURCE_FILE_LINE_ANNOTATION_KEY, lineNumber);
     beanAnnotations.put(SOURCE_ELEMENT_ANNOTATION_KEY, xmlContent);
@@ -47,11 +47,11 @@ public abstract class LocationExecutionContextProvider implements ExceptionConte
     String docName = getDocName(element);
     if (docName != null) {
       return String.format("%s @ %s:%s:%d (%s)", processorPath, appId, getSourceFile((AnnotatedObject) element),
-          getSourceFileLine((AnnotatedObject) element), docName);
+                           getSourceFileLine((AnnotatedObject) element), docName);
     } else {
       if (element instanceof AnnotatedObject) {
         return String.format("%s @ %s:%s:%d", processorPath, appId, getSourceFile((AnnotatedObject) element),
-            getSourceFileLine((AnnotatedObject) element));
+                             getSourceFileLine((AnnotatedObject) element));
       } else {
         return String.format("%s @ %s", processorPath, appId);
       }

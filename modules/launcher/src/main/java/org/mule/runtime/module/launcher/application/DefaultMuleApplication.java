@@ -59,7 +59,7 @@ public class DefaultMuleApplication implements Application {
   private ServerNotificationListener<MuleContextNotification> statusListener;
 
   public DefaultMuleApplication(ApplicationDescriptor descriptor, MuleApplicationClassLoader deploymentClassLoader,
-      List<ArtifactPlugin> artifactPlugins, DomainRepository domainRepository) {
+                                List<ArtifactPlugin> artifactPlugins, DomainRepository domainRepository) {
     this.descriptor = descriptor;
     this.domainRepository = domainRepository;
     this.deploymentListener = new NullDeploymentListener();

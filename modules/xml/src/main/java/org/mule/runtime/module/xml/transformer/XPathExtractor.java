@@ -59,8 +59,8 @@ public class XPathExtractor extends AbstractTransformer implements MuleContextAw
     super.initialise();
 
     if (expression == null) {
-      throw new InitialisationException(
-          MessageFactory.createStaticMessage("An expression must be supplied to the StandardXPathExtractor"), this);
+      throw new InitialisationException(MessageFactory
+          .createStaticMessage("An expression must be supplied to the StandardXPathExtractor"), this);
     }
 
     if (xpathEvaluator == null) {

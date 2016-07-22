@@ -142,7 +142,7 @@ public class TlsConfigurationTestCase extends AbstractMuleTestCase {
 
   private File createDefaultConfigFile() throws IOException {
     String contents = String.format("enabledCipherSuites=UNSUPPORTED,%s\n" + "enabledProtocols=UNSUPPORTED,%s",
-        SUPPORTED_CIPHER_SUITE, SUPPORTED_PROTOCOL);
+                                    SUPPORTED_CIPHER_SUITE, SUPPORTED_PROTOCOL);
 
     return createConfigFile(TlsConfiguration.DEFAULT_SECURITY_MODEL, contents);
   }

@@ -27,7 +27,7 @@ public class CompositeApplicationClassLoader extends CompositeArtifactClassLoade
    * @param lookupPolicy policy used to guide the lookup process. Non null
    */
   public CompositeApplicationClassLoader(String appName, ClassLoader parent, List<ArtifactClassLoader> artifactClassLoaders,
-      ClassLoaderLookupPolicy lookupPolicy) {
+                                         ClassLoaderLookupPolicy lookupPolicy) {
     super(appName, parent, artifactClassLoaders, lookupPolicy);
   }
 }

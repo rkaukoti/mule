@@ -139,8 +139,7 @@ public class ImplicitConfigTestCase extends ExtensionFunctionalTestCase {
     }
 
     @Override
-    public ConnectionHandlingStrategy<Apple> getHandlingStrategy(
-        ConnectionHandlingStrategyFactory<Apple> handlingStrategyFactory) {
+    public ConnectionHandlingStrategy<Apple> getHandlingStrategy(ConnectionHandlingStrategyFactory<Apple> handlingStrategyFactory) {
       return handlingStrategyFactory.none();
     }
   }

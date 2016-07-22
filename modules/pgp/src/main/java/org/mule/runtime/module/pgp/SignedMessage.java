@@ -17,7 +17,8 @@ public class SignedMessage implements Message {
   private LazyTransformedInputStream encryptedMessage;
 
   public SignedMessage(InputStream toBeDecrypted, PGPPublicKey publicKey, PGPSecretKey secretKey, String password,
-      Provider provider) throws IOException {
+                       Provider provider)
+      throws IOException {
     StreamTransformer transformer = new DecryptStreamTransformer(toBeDecrypted, publicKey, secretKey, password, provider);
     this.encryptedMessage = new LazyTransformedInputStream(new TransformContinuouslyPolicy(), transformer);
   }

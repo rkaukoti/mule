@@ -68,7 +68,7 @@ public final class DefaultExecutionMediator implements ExecutionMediator {
   private final ExecutionTemplate<?> defaultExecutionTemplate = callback -> callback.process();
 
   public DefaultExecutionMediator(RuntimeExtensionModel extensionModel, RuntimeOperationModel operationModel,
-      ConnectionManagerAdapter connectionManager) {
+                                  ConnectionManagerAdapter connectionManager) {
     this.connectionManager = connectionManager;
     this.exceptionEnricherManager = new ExceptionEnricherManager(extensionModel, operationModel);
   }
@@ -97,7 +97,8 @@ public final class DefaultExecutionMediator implements ExecutionMediator {
   }
 
   private Object executeWithRetryPolicy(OperationExecutor executor, OperationContextAdapter context,
-      List<Interceptor> interceptors) throws Throwable {
+                                        List<Interceptor> interceptors)
+      throws Throwable {
     RetryPolicyTemplate retryPolicyTemplate = getRetryPolicyTemplate(context.getConfiguration().getConnectionProvider());
 
     ExecutionTemplate<RetryContext> executionTemplate = getExecutionTemplate(context);
@@ -115,7 +116,8 @@ public final class DefaultExecutionMediator implements ExecutionMediator {
   }
 
   private OperationExecutionResult executeWithInterceptors(OperationExecutor executor, OperationContextAdapter context,
-      List<Interceptor> interceptors, ValueHolder<InterceptorsRetryRequest> retryRequestHolder) {
+                                                           List<Interceptor> interceptors,
+                                                           ValueHolder<InterceptorsRetryRequest> retryRequestHolder) {
     Object result = null;
     Throwable exception = null;
 
@@ -157,15 +159,15 @@ public final class DefaultExecutionMediator implements ExecutionMediator {
   }
 
   private void onSuccess(OperationContext operationContext, Object result, List<Interceptor> interceptors) {
-    intercept(interceptors, interceptor -> interceptor.onSuccess(operationContext, result),
-        interceptor -> format(
-            "Interceptor %s threw exception executing 'onSuccess' phase. Exception will be ignored. Next interceptors (if any)"
-                + "will be executed and the operation's result will be returned",
-            interceptor));
+    intercept(interceptors,
+              interceptor -> interceptor.onSuccess(operationContext, result), interceptor -> format(
+                                                                                                    "Interceptor %s threw exception executing 'onSuccess' phase. Exception will be ignored. Next interceptors (if any)"
+                                                                                                        + "will be executed and the operation's result will be returned",
+                                                                                                    interceptor));
   }
 
   private Throwable onError(OperationContext operationContext, ValueHolder<InterceptorsRetryRequest> retryRequestHolder,
-      Throwable e, List<Interceptor> interceptors) {
+                            Throwable e, List<Interceptor> interceptors) {
     ValueHolder<Throwable> exceptionHolder = new ValueHolder<>(e);
 
     intercept(interceptors, interceptor -> {
@@ -176,26 +178,24 @@ public final class DefaultExecutionMediator implements ExecutionMediator {
       if (decoratedException != null) {
         exceptionHolder.set(decoratedException);
       }
-    }, interceptor -> format(
-        "Interceptor %s threw exception executing 'onError' phase. Exception will be ignored. Next interceptors (if any)"
-            + "will be executed and the operation's exception will be returned",
-        interceptor));
+    }, interceptor -> format("Interceptor %s threw exception executing 'onError' phase. Exception will be ignored. Next interceptors (if any)"
+        + "will be executed and the operation's exception will be returned", interceptor));
 
     return exceptionHolder.get();
   }
 
   private void after(OperationContext operationContext, Object result, List<Interceptor> interceptors) {
     {
-      intercept(interceptors, interceptor -> interceptor.after(operationContext, result),
-          interceptor -> format(
-              "Interceptor %s threw exception executing 'after' phase. Exception will be ignored. Next interceptors (if any)"
-                  + "will be executed and the operation's result be returned",
-              interceptor));
+      intercept(interceptors,
+                interceptor -> interceptor.after(operationContext, result), interceptor -> format(
+                                                                                                  "Interceptor %s threw exception executing 'after' phase. Exception will be ignored. Next interceptors (if any)"
+                                                                                                      + "will be executed and the operation's result be returned",
+                                                                                                  interceptor));
     }
   }
 
   private void intercept(List<Interceptor> interceptors, Consumer<Interceptor> closure,
-      Function<Interceptor, String> exceptionMessageFunction) {
+                         Function<Interceptor, String> exceptionMessageFunction) {
     interceptors.forEach(interceptor -> {
       try {
         closure.accept(interceptor);
@@ -248,7 +248,7 @@ public final class DefaultExecutionMediator implements ExecutionMediator {
     private OperationExecutionResult operationExecutionResult;
 
     private OperationRetryCallBack(OperationExecutor operationExecutor, OperationContextAdapter context,
-        List<Interceptor> interceptorList) {
+                                   List<Interceptor> interceptorList) {
       this.operationExecutor = operationExecutor;
       this.context = context;
       this.interceptorList = interceptorList;
@@ -277,7 +277,8 @@ public final class DefaultExecutionMediator implements ExecutionMediator {
     @Override
     public String getWorkDescription() {
       return String.format("Extension [%s] with configuration [%s]",
-          context.getConfiguration().getModel().getExtensionModel().getName(), context.getConfiguration().getName());
+                           context.getConfiguration().getModel().getExtensionModel().getName(),
+                           context.getConfiguration().getName());
     }
 
     @Override

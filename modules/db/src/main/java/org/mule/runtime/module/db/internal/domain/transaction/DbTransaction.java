@@ -30,8 +30,8 @@ public class DbTransaction extends AbstractSingleResourceTransaction {
   @Override
   public void bindResource(Object key, Object resource) throws TransactionException {
     if (!(key instanceof DataSource) || !(resource instanceof Connection)) {
-      throw new IllegalTransactionStateException(
-          CoreMessages.transactionCanOnlyBindToResources("javax.sql.DataSource/java.sql.Connection"));
+      throw new IllegalTransactionStateException(CoreMessages
+          .transactionCanOnlyBindToResources("javax.sql.DataSource/java.sql.Connection"));
     }
     Connection con = (Connection) resource;
     try {

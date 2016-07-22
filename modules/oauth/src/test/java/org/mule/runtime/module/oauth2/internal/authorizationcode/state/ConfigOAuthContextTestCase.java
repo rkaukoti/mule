@@ -29,7 +29,7 @@ public class ConfigOAuthContextTestCase extends AbstractMuleTestCase {
   public void nonExistentUserIdReturnNewConfig() throws Exception {
     Mockito.when(mockObjectStore.contains(anyString())).thenReturn(false);
     assertThat(new ConfigOAuthContext(mockLockFactory, mockObjectStore, TEST_CONFIG_NAME).getContextForResourceOwner(USER_ID),
-        notNullValue());
+               notNullValue());
   }
 
 }

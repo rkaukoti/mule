@@ -40,9 +40,9 @@ abstract class AbstractCallAndExpectIllegalArgumentException implements CallAndE
     } catch (MuleException e) {
       e.printStackTrace();
       assertTrue(here() + ", exception {" + e + "} must be a " + DispatchException.class.getSimpleName(),
-          e instanceof DispatchException);
+                 e instanceof DispatchException);
       assertTrue(here() + ", exception.getCause() {" + e + "} must be a " + IllegalArgumentException.class.getName(),
-          e.getCause() instanceof IllegalArgumentException);
+                 e.getCause() instanceof IllegalArgumentException);
       assertEquals(here(), expectedIllegalArgumentExceptionMessage(), e.getCause().getMessage());
     }
   }

@@ -84,12 +84,12 @@ public class JsonSchemaValidator {
       report = schema.validate(jsonNode);
     } catch (Exception e) {
       throw new JsonSchemaValidationException("Exception was found while trying to validate json schema",
-          jsonNode == null ? StringUtils.EMPTY : jsonNode.toString(), e);
+                                              jsonNode == null ? StringUtils.EMPTY : jsonNode.toString(), e);
     }
 
     if (!report.isSuccess()) {
       throw new JsonSchemaValidationException("Json content is not compliant with schema\n" + report.toString(),
-          jsonNode.toString());
+                                              jsonNode.toString());
     }
   }
 

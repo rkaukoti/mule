@@ -50,8 +50,8 @@ public class FilePackageDiscoverer implements PackageDiscoverer {
         try (ZipInputStream zip = new ZipInputStream(new FileInputStream(libraryFile))) {
           for (ZipEntry entry = zip.getNextEntry(); entry != null; entry = zip.getNextEntry()) {
             if (!entry.isDirectory() && entry.getName().endsWith(CLASS_EXTENSION)) {
-              final String packageName = getPackageName(
-                  entry.getName().substring(0, entry.getName().length() - CLASS_EXTENSION.length()).replace("/", "."));
+              final String packageName = getPackageName(entry.getName()
+                  .substring(0, entry.getName().length() - CLASS_EXTENSION.length()).replace("/", "."));
               packageNames.add(packageName);
             }
           }

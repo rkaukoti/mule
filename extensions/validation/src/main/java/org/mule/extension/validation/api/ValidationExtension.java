@@ -101,10 +101,10 @@ public class ValidationExtension extends AbstractAnnotatedObject implements Conf
     try {
       ObjectNameHelper objectNameHelper = new ObjectNameHelper(muleContext);
       muleContext.getRegistry().registerObject(objectNameHelper.getUniqueName(EXCEPTION_FACTORY_PARAMETER_NAME),
-          exceptionFactory);
+                                               exceptionFactory);
     } catch (RegistrationException e) {
-      throw new MuleRuntimeException(
-          createStaticMessage("Could not register ExceptionFactory of class " + exceptionFactory.getClass().getName()), e);
+      throw new MuleRuntimeException(createStaticMessage("Could not register ExceptionFactory of class "
+          + exceptionFactory.getClass().getName()), e);
     }
   }
 

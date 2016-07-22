@@ -128,8 +128,8 @@ public class FlowProcessingStrategyConfigTestCase extends FunctionalTestCase {
 
     @Override
     public void configureProcessors(List<MessageProcessor> processors,
-        org.mule.runtime.core.api.processor.StageNameSource nameSource, MessageProcessorChainBuilder chainBuilder,
-        MuleContext muleContext) {
+                                    org.mule.runtime.core.api.processor.StageNameSource nameSource,
+                                    MessageProcessorChainBuilder chainBuilder, MuleContext muleContext) {
       // Nothing to do
     }
 

@@ -21,7 +21,7 @@ public class XaQueueTypeTransactionContextAdapter extends AbstractXaTransactionC
   private final Xid xid;
 
   public XaQueueTypeTransactionContextAdapter(XaTxQueueTransactionJournal xaTxQueueTransactionJournal,
-      QueueProvider queueProvider, Xid xid) {
+                                              QueueProvider queueProvider, Xid xid) {
     this.xaTxQueueTransactionJournal = xaTxQueueTransactionJournal;
     this.queueProvider = queueProvider;
     this.xid = xid;

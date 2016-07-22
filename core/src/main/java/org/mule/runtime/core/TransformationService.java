@@ -56,7 +56,8 @@ public class TransformationService {
    *         with the message payload
    */
   public MuleMessage applyTransformers(final MuleMessage message, final MuleEvent event,
-      final List<? extends Transformer> transformers) throws MuleException {
+                                       final List<? extends Transformer> transformers)
+      throws MuleException {
     return applyAllTransformers(message, event, transformers);
   }
 
@@ -134,7 +135,8 @@ public class TransformationService {
   }
 
   private MuleMessage applyAllTransformers(final MuleMessage message, final MuleEvent event,
-      final List<? extends Transformer> transformers) throws MuleException {
+                                           final List<? extends Transformer> transformers)
+      throws MuleException {
     MuleMessage result = message;
     if (!transformers.isEmpty()) {
       for (int index = 0; index < transformers.size(); index++) {

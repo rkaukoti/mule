@@ -103,8 +103,8 @@ public class MetadataDbTypeManagerTestCase extends AbstractMuleTestCase {
     List<ColumnMetadata> columns = new ArrayList<ColumnMetadata>();
     columns
         .add(new ColumnMetadata(MetadataDbTypeManager.METADATA_TYPE_ID_COLUMN, MetadataDbTypeManager.METADATA_TYPE_ID_COLUMN, 1));
-    columns.add(
-        new ColumnMetadata(MetadataDbTypeManager.METADATA_TYPE_NAME_COLUMN, MetadataDbTypeManager.METADATA_TYPE_NAME_COLUMN, 2));
+    columns.add(new ColumnMetadata(MetadataDbTypeManager.METADATA_TYPE_NAME_COLUMN,
+                                   MetadataDbTypeManager.METADATA_TYPE_NAME_COLUMN, 2));
     return columns;
   }
 

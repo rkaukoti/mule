@@ -137,7 +137,7 @@ public class CxfOutboundMessageProcessor extends AbstractInterceptingMessageProc
       return new DispatchException(MessageFactory.createStaticMessage(fault.getMessage()), event, this, fault);
     }
     return new DispatchException(MessageFactory.createStaticMessage(ExceptionHelper.getRootException(ex).getMessage()), event,
-        this, ex);
+                                 this, ex);
   }
 
   private MessagingException wrapException(MuleEvent event, Throwable ex) {

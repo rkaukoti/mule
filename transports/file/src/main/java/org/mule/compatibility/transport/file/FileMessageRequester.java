@@ -179,8 +179,8 @@ public class FileMessageRequester extends AbstractMessageRequester {
       try {
         FileUtils.moveFile(sourceFile, destinationFile);
       } catch (IOException e) {
-        throw new DefaultMuleException(
-            FileMessages.failedToMoveFile(sourceFile.getAbsolutePath(), destinationFile.getAbsolutePath()));
+        throw new DefaultMuleException(FileMessages.failedToMoveFile(sourceFile.getAbsolutePath(),
+                                                                     destinationFile.getAbsolutePath()));
       }
     }
     if (fileConnector.isAutoDelete()) {

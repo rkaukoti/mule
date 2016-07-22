@@ -29,7 +29,8 @@ public abstract class AbstractDbConnection implements DbConnection {
   private final ParamTypeResolverFactory paramTypeResolverFactory;
 
   public AbstractDbConnection(Connection delegate, TransactionalAction transactionalAction,
-      DefaultDbConnectionReleaser connectionReleaseListener, ParamTypeResolverFactory paramTypeResolverFactory) {
+                              DefaultDbConnectionReleaser connectionReleaseListener,
+                              ParamTypeResolverFactory paramTypeResolverFactory) {
     this.delegate = delegate;
     this.transactionalAction = transactionalAction;
     this.connectionReleaseListener = connectionReleaseListener;

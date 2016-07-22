@@ -90,7 +90,7 @@ public class HttpConnectorClientAuthorizationTestCase extends AbstractMuleContex
     connector.setupClientAuthorization(mockMuleEvent, mockHttpMethod, mockHttpClient, mockImmutableEndpoint);
 
     verify(mockHttpClient.getState(), atLeast(1)).setCredentials(isA(AuthScope.class),
-        isA(org.apache.commons.httpclient.Credentials.class));
+                                                                 isA(org.apache.commons.httpclient.Credentials.class));
   }
 
   @Test

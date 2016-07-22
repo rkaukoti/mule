@@ -18,7 +18,7 @@ import static org.mule.runtime.module.db.integration.TestRecordUtil.getAllPlanet
 public abstract class AbstractStoredProcedureReturningStreamingResultsetsTestCase extends AbstractDbIntegrationTestCase {
 
   public AbstractStoredProcedureReturningStreamingResultsetsTestCase(String dataSourceConfigResource,
-      AbstractTestDatabase testDatabase) {
+                                                                     AbstractTestDatabase testDatabase) {
     super(dataSourceConfigResource, testDatabase);
   }
 

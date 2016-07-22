@@ -30,7 +30,7 @@ public class RoundRobinRoutingStrategy extends AbstractRoutingStrategy {
   private Map<String, Short> roundRobinState = new HashMap<>();
 
   public RoundRobinRoutingStrategy(final MuleContext muleContext,
-      final IdentifiableDynamicRouteResolver identifiableDynamicRouteResolver) {
+                                   final IdentifiableDynamicRouteResolver identifiableDynamicRouteResolver) {
     super(muleContext);
     this.identifiableDynamicRouteResolver = identifiableDynamicRouteResolver;
   }

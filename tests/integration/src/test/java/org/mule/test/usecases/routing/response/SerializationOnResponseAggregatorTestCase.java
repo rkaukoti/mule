@@ -37,10 +37,10 @@ public class SerializationOnResponseAggregatorTestCase extends FunctionalTestCas
   @Test
   public void testSyncResponse() throws Exception {
     muleContext.getRegistry().registerObject(MuleProperties.OBJECT_STORE_DEFAULT_IN_MEMORY_NAME,
-        new TestObjectStore(muleContext));
+                                             new TestObjectStore(muleContext));
     MuleClient client = muleContext.getClient();
     MuleMessage message = client.send("http://localhost:" + dynamicPort.getNumber(), getTestMuleMessage("request"),
-        newOptions().method(POST.name()).build());
+                                      newOptions().method(POST.name()).build());
     assertNotNull(message);
     assertThat(new String(getPayloadAsBytes(message)), is("request processed"));
   }

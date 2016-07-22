@@ -100,7 +100,7 @@ public class NotificationHelperTestCase extends AbstractMuleTestCase {
   }
 
   private void assertConnectorMessageNotification(ServerNotificationHandler notificationHandler, MessageSource messageSource,
-      String uri, FlowConstruct flowConstruct, int action) {
+                                                  String uri, FlowConstruct flowConstruct, int action) {
     ArgumentCaptor<ConnectorMessageNotification> notificationCaptor = ArgumentCaptor.forClass(ConnectorMessageNotification.class);
     verify(notificationHandler).fireNotification(notificationCaptor.capture());
 

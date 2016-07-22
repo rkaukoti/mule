@@ -28,10 +28,10 @@ public class ExpressionTransformerDefinitionParser extends ParentContextDefiniti
     otherwise(new ExpressionTransformerChildDefinitionParser("messageProcessor", messageProcessor));
 
     registerPreProcessor(new CheckRequiredAttributesWhenNoChildren(new String[][] {{"expression"}}, "return-argument",
-        "http://www.mulesoft.org/schema/mule/core"))
-            .registerPreProcessor(
-                new CheckExclusiveAttributesAndChildren(new String[] {"expression"}, new String[] {"return-argument"}))
-            .addIgnored("expression");
+                                                                   "http://www.mulesoft.org/schema/mule/core"))
+                                                                       .registerPreProcessor(new CheckExclusiveAttributesAndChildren(new String[] {
+                                                                           "expression"}, new String[] {"return-argument"}))
+                                                                       .addIgnored("expression");
   }
 
   protected static void addExpressionArgumentFromAttributes(Element element, BeanDefinitionBuilder builder) {

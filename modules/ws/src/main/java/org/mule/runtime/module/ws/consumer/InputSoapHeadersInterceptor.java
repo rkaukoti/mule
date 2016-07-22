@@ -61,7 +61,7 @@ public class InputSoapHeadersInterceptor extends AbstractSoapInterceptor {
           MuleEvent event = (MuleEvent) message.getExchange().get(CxfConstants.MULE_EVENT);
           throw new Fault(new TransformerMessagingException(CoreMessages
               .createStaticMessage("Cannot find transformer to convert outbound property %s to XML", outboundProperty), event,
-              transformer, e.getCause()));
+                                                            transformer, e.getCause()));
         }
 
         try {
@@ -74,9 +74,9 @@ public class InputSoapHeadersInterceptor extends AbstractSoapInterceptor {
         } catch (TransformerException e) {
           MuleEvent event = (MuleEvent) message.getExchange().get(CxfConstants.MULE_EVENT);
 
-          throw new Fault(new TransformerMessagingException(
-              CoreMessages.createStaticMessage("Outbound property %s contains an invalid XML string", outboundProperty), event,
-              transformer, e.getCause()));
+          throw new Fault(new TransformerMessagingException(CoreMessages
+              .createStaticMessage("Outbound property %s contains an invalid XML string", outboundProperty), event, transformer,
+                                                            e.getCause()));
         }
       }
     }

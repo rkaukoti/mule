@@ -39,7 +39,7 @@ public class HttpRequestFormParamsTestCase extends AbstractHttpRequestTestCase {
     assertThat(uri, equalTo("/testPath"));
     assertThat(body, equalTo("testName1=testValue1&testName2=testValue2"));
     assertThat(getFirstReceivedHeader(HttpHeaders.Names.CONTENT_TYPE),
-        equalTo(HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED.toRfcString()));
+               equalTo(HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED.toRfcString()));
   }
 
 

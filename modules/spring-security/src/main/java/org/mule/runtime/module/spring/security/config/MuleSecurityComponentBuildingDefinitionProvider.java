@@ -53,7 +53,7 @@ public class MuleSecurityComponentBuildingDefinitionProvider implements Componen
         .withSetterParameterDefinition("securityProperties", fromChildCollectionConfiguration(SecurityProperty.class).build())
         .withSetterParameterDefinition("delegate", fromSimpleReferenceParameter("delegate-ref").build())
         .withSetterParameterDefinition("authenticationProvider",
-            fromSimpleReferenceParameter("authenticationProvider-ref").build())
+                                       fromSimpleReferenceParameter("authenticationProvider-ref").build())
         .build());
 
     componentBuildingDefinitions
@@ -61,12 +61,12 @@ public class MuleSecurityComponentBuildingDefinitionProvider implements Componen
             .withConstructorParameterDefinition(fromSimpleParameter("name").build())
             .withConstructorParameterDefinition(fromSimpleParameter("value").build()).build());
 
-    componentBuildingDefinitions
-        .add(baseDefinition.copy().withIdentifier("authorization-filter").withTypeDefinition(fromType(AuthorizationFilter.class))
-            .withSetterParameterDefinition("requiredAuthorities",
-                fromSimpleParameter("requiredAuthorities",
-                    (value) -> asList(((String) value).split(",")).stream().map(String::trim).collect(toList())).build())
-            .build());
+    componentBuildingDefinitions.add(baseDefinition.copy().withIdentifier("authorization-filter")
+        .withTypeDefinition(fromType(AuthorizationFilter.class))
+        .withSetterParameterDefinition("requiredAuthorities",
+                                       fromSimpleParameter("requiredAuthorities", (value) -> asList(((String) value).split(","))
+                                           .stream().map(String::trim).collect(toList())).build())
+        .build());
     return componentBuildingDefinitions;
   }
 }

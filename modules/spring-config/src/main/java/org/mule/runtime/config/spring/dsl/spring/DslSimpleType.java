@@ -17,8 +17,9 @@ public class DslSimpleType {
 
   public static final String SIMPLE_TYPE_VALUE_PARAMETER_NAME = "value";
 
-  private final static Set<Class<?>> simpleTypes = of(Byte.class, byte.class, Short.class, short.class, Integer.class, int.class,
-      Long.class, long.class, Character.class, char.class, Float.class, float.class, Double.class, double.class, String.class);
+  private final static Set<Class<?>> simpleTypes =
+      of(Byte.class, byte.class, Short.class, short.class, Integer.class, int.class, Long.class, long.class, Character.class,
+         char.class, Float.class, float.class, Double.class, double.class, String.class);
 
   /**
    * @param type the value type.

@@ -43,8 +43,8 @@ public final class LifecycleTransitionResult {
   private static void processSingleNoRetry(Object target, Method method, Class<?> exception, Class<?> iface)
       throws LifecycleException {
     if (!iface.isAssignableFrom(target.getClass())) {
-      throw new IllegalArgumentException(
-          ClassUtils.getSimpleName(target.getClass()) + " is not an " + ClassUtils.getSimpleName(iface));
+      throw new IllegalArgumentException(ClassUtils.getSimpleName(target.getClass()) + " is not an "
+          + ClassUtils.getSimpleName(iface));
     }
     try {
       method.invoke(target);

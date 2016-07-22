@@ -42,7 +42,7 @@ public class HttpListenerStaticResourcesTestCase extends FunctionalTestCase {
   public DynamicPort port3 = new DynamicPort("port3");
   @Rule
   public SystemProperty testRoot = new SystemProperty(TESTING_ROOT_FOLDER_SYSTEM_PROPERTY,
-      getClassPathRoot(HttpListenerStaticResourcesTestCase.class).getPath());
+                                                      getClassPathRoot(HttpListenerStaticResourcesTestCase.class).getPath());
 
   private int responseCode;
   private String payload;

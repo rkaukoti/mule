@@ -97,7 +97,7 @@ public class PollingMessageSource
    * @param schedulerFactory factory for the scheduler
    */
   public PollingMessageSource(MuleContext muleContext, MessageProcessor sourceMessageProcessor,
-      MessageProcessorPollingOverride override, SchedulerFactory<Runnable> schedulerFactory) {
+                              MessageProcessorPollingOverride override, SchedulerFactory<Runnable> schedulerFactory) {
     this.muleContext = muleContext;
     this.sourceMessageProcessor = sourceMessageProcessor;
     this.override = override;
@@ -204,8 +204,9 @@ public class PollingMessageSource
 
           MuleEvent sourceEvent = sourceMessageProcessor.process(event);
           if (isNewMessage(sourceEvent)) {
-            muleContext.getNotificationManager().fireNotification(new ConnectorMessageNotification(this, sourceEvent.getMessage(),
-                getPollingUniqueName(), flowConstruct, ConnectorMessageNotification.MESSAGE_RECEIVED));
+            muleContext.getNotificationManager()
+                .fireNotification(new ConnectorMessageNotification(this, sourceEvent.getMessage(), getPollingUniqueName(),
+                                                                   flowConstruct, ConnectorMessageNotification.MESSAGE_RECEIVED));
             event = interceptor.prepareRouting(sourceEvent, new DefaultMuleEvent(sourceEvent.getMessage(), sourceEvent));
             listener.process(event);
             interceptor.postProcessRouting(event);
@@ -265,7 +266,8 @@ public class PollingMessageSource
         ((Disposable) override).dispose();
       } catch (Exception e) {
         logger.warn(String.format("Could not dispose polling override of class %s. Message receiver will continue to dispose",
-            override.getClass().getCanonicalName()), e);
+                                  override.getClass().getCanonicalName()),
+                    e);
       }
     }
 

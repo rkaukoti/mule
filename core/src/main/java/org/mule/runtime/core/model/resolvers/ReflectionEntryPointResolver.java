@@ -48,8 +48,9 @@ public class ReflectionEntryPointResolver extends AbstractEntryPointResolver {
 
   protected WildcardFilter filter;
   // we don't want to match these methods when looking for a service method
-  private Set<String> ignoredMethods = new HashSet<String>(Arrays.asList("equals", "getInvocationHandler", "set*", "toString",
-      "getClass", "notify", "notifyAll", "wait", "hashCode", "clone", "is*", "get*"));
+  private Set<String> ignoredMethods =
+      new HashSet<String>(Arrays.asList("equals", "getInvocationHandler", "set*", "toString", "getClass", "notify", "notifyAll",
+                                        "wait", "hashCode", "clone", "is*", "get*"));
 
   public ReflectionEntryPointResolver() {
     updateFilter();

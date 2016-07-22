@@ -177,8 +177,8 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
 
     Connector connector = getConnector();
     if (connector != null && !connector.supportsProtocol(endpointURI.getFullScheme())) {
-      throw new IllegalArgumentException(
-          TransportCoreMessages.connectorSchemeIncompatibleWithEndpointScheme(connector.getProtocol(), endpointURI).getMessage());
+      throw new IllegalArgumentException(TransportCoreMessages
+          .connectorSchemeIncompatibleWithEndpointScheme(connector.getProtocol(), endpointURI).getMessage());
     }
 
     checkInboundExchangePattern();
@@ -199,12 +199,15 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
   }
 
   protected InboundEndpoint createInboundEndpoint(EndpointURI endpointURI, List<MessageProcessor> mergedProcessors,
-      List<MessageProcessor> mergedResponseProcessors, Connector connector) throws EndpointException {
+                                                  List<MessageProcessor> mergedResponseProcessors, Connector connector)
+      throws EndpointException {
     return new DefaultInboundEndpoint(connector, endpointURI, getName(endpointURI), getProperties(), getTransactionConfig(),
-        getDefaultDeleteUnacceptedMessages(connector), messageExchangePattern, getResponseTimeout(connector),
-        getInitialState(connector), getEndpointEncoding(connector), name, muleContext, getRetryPolicyTemplate(connector),
-        getRedeliveryPolicy(), getMessageProcessorsFactory(), mergedProcessors, mergedResponseProcessors,
-        isDisableTransportTransformer(), mimeType != null ? DataType.builder().mediaType(mimeType).build().getMediaType() : null);
+                                      getDefaultDeleteUnacceptedMessages(connector), messageExchangePattern,
+                                      getResponseTimeout(connector), getInitialState(connector), getEndpointEncoding(connector),
+                                      name, muleContext, getRetryPolicyTemplate(connector), getRedeliveryPolicy(),
+                                      getMessageProcessorsFactory(), mergedProcessors, mergedResponseProcessors,
+                                      isDisableTransportTransformer(),
+                                      mimeType != null ? DataType.builder().mediaType(mimeType).build().getMediaType() : null);
   }
 
   protected OutboundEndpoint doBuildOutboundEndpoint() throws InitialisationException, EndpointException {
@@ -232,8 +235,8 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
 
     Connector connector = getConnector();
     if (connector != null && !connector.supportsProtocol(getScheme())) {
-      throw new IllegalArgumentException(
-          TransportCoreMessages.connectorSchemeIncompatibleWithEndpointScheme(connector.getProtocol(), endpointURI).getMessage());
+      throw new IllegalArgumentException(TransportCoreMessages
+          .connectorSchemeIncompatibleWithEndpointScheme(connector.getProtocol(), endpointURI).getMessage());
     }
 
     checkOutboundExchangePattern();
@@ -248,14 +251,15 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
   }
 
   protected OutboundEndpoint createOutboundEndpoint(EndpointURI endpointURI, List<MessageProcessor> messageProcessors,
-      List<MessageProcessor> responseMessageProcessors, Connector connector) {
+                                                    List<MessageProcessor> responseMessageProcessors, Connector connector) {
 
     return new DefaultOutboundEndpoint(connector, endpointURI, getName(endpointURI), getProperties(), getTransactionConfig(),
-        getDefaultDeleteUnacceptedMessages(connector), messageExchangePattern, getResponseTimeout(connector),
-        getInitialState(connector), getEndpointEncoding(connector), name, muleContext, getRetryPolicyTemplate(connector),
-        getRedeliveryPolicy(), responsePropertiesList, getMessageProcessorsFactory(), messageProcessors,
-        responseMessageProcessors, isDisableTransportTransformer(),
-        mimeType != null ? DataType.builder().mediaType(mimeType).build().getMediaType() : null);
+                                       getDefaultDeleteUnacceptedMessages(connector), messageExchangePattern,
+                                       getResponseTimeout(connector), getInitialState(connector), getEndpointEncoding(connector),
+                                       name, muleContext, getRetryPolicyTemplate(connector), getRedeliveryPolicy(),
+                                       responsePropertiesList, getMessageProcessorsFactory(), messageProcessors,
+                                       responseMessageProcessors, isDisableTransportTransformer(),
+                                       mimeType != null ? DataType.builder().mediaType(mimeType).build().getMediaType() : null);
   }
 
   private String getDynamicUriFrom(String uri) {
@@ -325,7 +329,7 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
 
     if (!serviceDescriptor.getInboundExchangePatterns().contains(messageExchangePattern)) {
       throw new EndpointException(TransportCoreMessages.exchangePatternForEndpointNotSupported(messageExchangePattern, "inbound",
-          uriBuilder.getEndpoint()));
+                                                                                               uriBuilder.getEndpoint()));
     }
   }
 
@@ -335,7 +339,7 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
 
     if (!serviceDescriptor.getOutboundExchangePatterns().contains(messageExchangePattern)) {
       throw new EndpointException(TransportCoreMessages.exchangePatternForEndpointNotSupported(messageExchangePattern, "outbound",
-          uriBuilder.getEndpoint()));
+                                                                                               uriBuilder.getEndpoint()));
     }
   }
 
@@ -373,8 +377,9 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
   private TransportServiceDescriptor getNonNullServiceDescriptor(Connector conn) throws ServiceException {
     String scheme = uriBuilder.getEndpoint().getSchemeMetaInfo();
     Properties overrides = getOverrides(conn);
-    TransportServiceDescriptor sd = (TransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(),
-        LegacyServiceType.TRANSPORT, scheme, overrides);
+    TransportServiceDescriptor sd =
+        (TransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(), LegacyServiceType.TRANSPORT, scheme,
+                                                             overrides);
     if (null != sd) {
       return sd;
     } else {
@@ -552,8 +557,8 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
       if (uriBuilder.getEndpoint().getConnectorName() != null) {
         connector = lookupConnector(muleContext.getRegistry(), uriBuilder.getEndpoint().getConnectorName());
         if (connector == null) {
-          throw new TransportFactoryException(
-              CoreMessages.objectNotRegistered("Connector", uriBuilder.getEndpoint().getConnectorName()));
+          throw new TransportFactoryException(CoreMessages.objectNotRegistered("Connector",
+                                                                               uriBuilder.getEndpoint().getConnectorName()));
         }
       } else if (isAlwaysCreateConnector()) {
         connector = factory.createConnector(endpointURI);

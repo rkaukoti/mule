@@ -25,7 +25,7 @@ public class EncryptionNotSupportedException extends SecurityException {
   }
 
   public EncryptionNotSupportedException(Message message, MuleEvent event, Throwable cause,
-      MessageProcessor failingMessageProcessor) {
+                                         MessageProcessor failingMessageProcessor) {
     super(message, event, cause, failingMessageProcessor);
   }
 }

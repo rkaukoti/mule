@@ -36,7 +36,7 @@ public final class AnnotationProcessorResourceGenerator extends AbstractResource
    * @param processingEnv the current {@link ProcessingEnvironment}
    */
   public AnnotationProcessorResourceGenerator(List<GeneratedResourceFactory> resourceFactories,
-      ProcessingEnvironment processingEnv) {
+                                              ProcessingEnvironment processingEnv) {
     super(resourceFactories);
     this.processingEnv = processingEnv;
   }

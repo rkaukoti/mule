@@ -128,7 +128,9 @@ public final class EmailConnectorUtils {
    * @return a {@link List} of {@link EmailAttachment}.
    */
   public static List<EmailAttachment> mapToEmailAttachments(Map<String, DataHandler> attachments) {
-    return attachments.entrySet().stream().map(e -> new EmailAttachment(e.getKey(), e.getValue(),
-        DataType.builder().mediaType(e.getValue().getContentType()).build().getMediaType())).collect(toList());
+    return attachments.entrySet().stream()
+        .map(e -> new EmailAttachment(e.getKey(), e.getValue(),
+                                      DataType.builder().mediaType(e.getValue().getContentType()).build().getMediaType()))
+        .collect(toList());
   }
 }

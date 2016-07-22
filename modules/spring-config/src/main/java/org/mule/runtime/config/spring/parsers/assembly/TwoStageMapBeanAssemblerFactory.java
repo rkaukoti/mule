@@ -17,7 +17,7 @@ public class TwoStageMapBeanAssemblerFactory implements BeanAssemblerFactory {
   }
 
   public BeanAssembler newBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
-      PropertyConfiguration targetConfig, BeanDefinition target) {
+                                        PropertyConfiguration targetConfig, BeanDefinition target) {
     return new TwoStageMapBeanAssembler(store, beanConfig, bean, targetConfig, target);
   }
 

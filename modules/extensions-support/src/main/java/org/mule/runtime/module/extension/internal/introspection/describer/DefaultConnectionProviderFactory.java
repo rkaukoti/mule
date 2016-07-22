@@ -37,9 +37,9 @@ final class DefaultConnectionProviderFactory<Connection> implements ConnectionPr
   DefaultConnectionProviderFactory(Class<?> providerClass, ClassLoader extensionClassLoader) {
     this.extensionClassLoader = extensionClassLoader;
     if (!ConnectionProvider.class.isAssignableFrom(providerClass)) {
-      throw new IllegalConnectionProviderModelDefinitionException(
-          String.format("Class '%s' was specified as a connection provider but it doesn't implement the '%s' interface",
-              providerClass.getName(), ConnectionProvider.class.getName()));
+      throw new IllegalConnectionProviderModelDefinitionException(String
+          .format("Class '%s' was specified as a connection provider but it doesn't implement the '%s' interface",
+                  providerClass.getName(), ConnectionProvider.class.getName()));
     }
 
     checkInstantiable(providerClass);
@@ -54,8 +54,8 @@ final class DefaultConnectionProviderFactory<Connection> implements ConnectionPr
     try {
       return (ConnectionProvider) withContextClassLoader(extensionClassLoader, providerClass::newInstance);
     } catch (Exception e) {
-      throw new MuleRuntimeException(
-          createStaticMessage("Could not create connection provider of type " + providerClass.getName()), e);
+      throw new MuleRuntimeException(createStaticMessage("Could not create connection provider of type "
+          + providerClass.getName()), e);
     }
   }
 

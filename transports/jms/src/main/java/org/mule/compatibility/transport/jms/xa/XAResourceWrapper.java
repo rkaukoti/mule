@@ -16,7 +16,7 @@ public class XAResourceWrapper implements XAResource {
 
 
   public XAResourceWrapper(XAResource xaResource, SessionInvocationHandler sessionInvocationHandler,
-      Boolean sameRMOverrideValue) {
+                           Boolean sameRMOverrideValue) {
     this.xaResource = xaResource;
     this.sessionInvocationHandler = sessionInvocationHandler;
     this.sameRMOverrideValue = sameRMOverrideValue;

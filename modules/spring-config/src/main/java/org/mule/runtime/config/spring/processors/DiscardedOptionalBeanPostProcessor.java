@@ -24,7 +24,7 @@ public class DiscardedOptionalBeanPostProcessor implements InstantiationAwareBea
   private final DefaultListableBeanFactory beanFactory;
 
   public DiscardedOptionalBeanPostProcessor(OptionalObjectsController optionalObjectsController,
-      DefaultListableBeanFactory beanFactory) {
+                                            DefaultListableBeanFactory beanFactory) {
     this.optionalObjectsController = optionalObjectsController;
     this.beanFactory = beanFactory;
   }

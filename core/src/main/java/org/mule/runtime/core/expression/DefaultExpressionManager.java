@@ -185,7 +185,7 @@ public class DefaultExpressionManager implements ExpressionManager, MuleContextA
       throw new InvalidExpressionException(expression, message.toString());
     } else if (!match.get()) {
       throw new InvalidExpressionException(expression,
-          "Expression string is not an expression.  Use isExpression(String) to validate first");
+                                           "Expression string is not an expression.  Use isExpression(String) to validate first");
     }
   }
 

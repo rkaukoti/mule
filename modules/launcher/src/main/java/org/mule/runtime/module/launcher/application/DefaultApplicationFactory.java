@@ -39,8 +39,8 @@ public class DefaultApplicationFactory implements ArtifactFactory<Application> {
   protected DeploymentListener deploymentListener;
 
   public DefaultApplicationFactory(ApplicationClassLoaderBuilderFactory applicationClassLoaderBuilderFactory,
-      ApplicationDescriptorFactory applicationDescriptorFactory, ArtifactPluginRepository artifactPluginRepository,
-      DomainRepository domainRepository) {
+                                   ApplicationDescriptorFactory applicationDescriptorFactory,
+                                   ArtifactPluginRepository artifactPluginRepository, DomainRepository domainRepository) {
     checkArgument(applicationClassLoaderBuilderFactory != null, "Application classloader builder factory cannot be null");
     checkArgument(applicationDescriptorFactory != null, "Application descriptor factory cannot be null");
     checkArgument(artifactPluginRepository != null, "Artifact plugin repository cannot be null");
@@ -76,8 +76,8 @@ public class DefaultApplicationFactory implements ArtifactFactory<Application> {
     Domain domain = domainRepository.getDomain(descriptor.getDomain());
 
     if (domain == null) {
-      throw new DeploymentException(createStaticMessage(format(
-          "Domain '%s' has to be deployed in order to deploy Application '%s'", descriptor.getDomain(), descriptor.getName())));
+      throw new DeploymentException(createStaticMessage(format("Domain '%s' has to be deployed in order to deploy Application '%s'",
+                                                               descriptor.getDomain(), descriptor.getName())));
     }
 
     MuleApplicationClassLoader applicationClassLoader = applicationClassLoaderBuilderFactory.createArtifactClassLoaderBuilder()
@@ -102,12 +102,12 @@ public class DefaultApplicationFactory implements ArtifactFactory<Application> {
   }
 
   private List<ArtifactPlugin> createArtifactPluginList(MuleApplicationClassLoader applicationClassLoader,
-      List<ArtifactPluginDescriptor> plugins) {
+                                                        List<ArtifactPluginDescriptor> plugins) {
     return plugins.stream()
-        .map(artifactPluginDescriptor -> new DefaultArtifactPlugin(artifactPluginDescriptor,
-            applicationClassLoader.getArtifactPluginClassLoaders().stream()
-                .filter(artifactClassLoader -> artifactClassLoader.getArtifactName().endsWith(artifactPluginDescriptor.getName()))
-                .findFirst().get()))
+        .map(artifactPluginDescriptor -> new DefaultArtifactPlugin(artifactPluginDescriptor, applicationClassLoader
+            .getArtifactPluginClassLoaders().stream().filter(artifactClassLoader -> artifactClassLoader.getArtifactName()
+                .endsWith(artifactPluginDescriptor.getName()))
+            .findFirst().get()))
         .collect(toList());
   }
 

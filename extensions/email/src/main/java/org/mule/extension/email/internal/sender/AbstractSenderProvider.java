@@ -39,8 +39,7 @@ public abstract class AbstractSenderProvider extends AbstractEmailConnectionProv
    * {@inheritDoc}
    */
   @Override
-  public ConnectionHandlingStrategy<SenderConnection> getHandlingStrategy(
-      ConnectionHandlingStrategyFactory<SenderConnection> handlingStrategyFactory) {
+  public ConnectionHandlingStrategy<SenderConnection> getHandlingStrategy(ConnectionHandlingStrategyFactory<SenderConnection> handlingStrategyFactory) {
     return handlingStrategyFactory.supportsPooling();
   }
 }

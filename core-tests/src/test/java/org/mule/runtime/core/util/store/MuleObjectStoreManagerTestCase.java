@@ -64,8 +64,9 @@ public class MuleObjectStoreManagerTestCase extends AbstractMuleTestCase {
   @Test
   public void disposePartitionableStore() throws ObjectStoreException {
     @SuppressWarnings("unchecked")
-    ObjectStorePartition<Serializable> store = mock(ObjectStorePartition.class,
-        withSettings().extraInterfaces(Disposable.class).defaultAnswer(Mockito.RETURNS_DEEP_STUBS));
+    ObjectStorePartition<Serializable> store =
+        mock(ObjectStorePartition.class,
+             withSettings().extraInterfaces(Disposable.class).defaultAnswer(Mockito.RETURNS_DEEP_STUBS));
 
     when(store.getPartitionName()).thenReturn(TEST_PARTITION_NAME);
 

@@ -55,13 +55,15 @@ public class SenderOperations {
    */
   @Summary("Sends an email message")
   public void send(@Connection SenderConnection connection, @UseConfig SMTPConfiguration configuration, EmailContent content,
-      // TODO: create a transformer from string to EmailContent when the sdk have support for it - MULE-9181.
-      @Optional(defaultValue = "[No Subject]") String subject, List<String> toAddresses, @Optional List<String> ccAddresses,
-      @Optional List<String> bccAddresses, @DisplayName("Additional Headers") @Optional Map<String, String> headers,
-      @Optional List<EmailAttachment> attachments) {
+                   // TODO: create a transformer from string to EmailContent when the sdk have support for it - MULE-9181.
+                   @Optional(defaultValue = "[No Subject]") String subject, List<String> toAddresses,
+                   @Optional List<String> ccAddresses, @Optional List<String> bccAddresses,
+                   @DisplayName("Additional Headers") @Optional Map<String, String> headers,
+                   @Optional List<EmailAttachment> attachments) {
     sendOperation.send(connection, content, subject, toAddresses, configuration.getFrom(), configuration.getDefaultCharset(),
-        ccAddresses != null ? ccAddresses : new ArrayList<>(), bccAddresses != null ? bccAddresses : new ArrayList<>(),
-        headers != null ? headers : new HashMap<>(), attachments);
+                       ccAddresses != null ? ccAddresses : new ArrayList<>(),
+                       bccAddresses != null ? bccAddresses : new ArrayList<>(), headers != null ? headers : new HashMap<>(),
+                       attachments);
   }
 
   /**
@@ -82,11 +84,12 @@ public class SenderOperations {
    */
   @Summary("Forwards an email message")
   public void forward(@Connection SenderConnection connection, @UseConfig SMTPConfiguration configuration,
-      MuleMessage muleMessage, @Optional @DisplayName("Email Content") EmailContent content, @Optional String subject,
-      List<String> toAddresses, @Optional List<String> ccAddresses, @Optional List<String> bccAddresses,
-      @DisplayName("Additional Headers") @Optional Map<String, String> headers) {
+                      MuleMessage muleMessage, @Optional @DisplayName("Email Content") EmailContent content,
+                      @Optional String subject, List<String> toAddresses, @Optional List<String> ccAddresses,
+                      @Optional List<String> bccAddresses,
+                      @DisplayName("Additional Headers") @Optional Map<String, String> headers) {
     forwardCommand.forward(connection, muleMessage, content, subject, configuration.getFrom(), configuration.getDefaultCharset(),
-        toAddresses, ccAddresses, bccAddresses, headers);
+                           toAddresses, ccAddresses, bccAddresses, headers);
   }
 
   /**
@@ -106,10 +109,10 @@ public class SenderOperations {
    */
   @Summary("Replies an email message")
   public void reply(@Connection SenderConnection connection, @UseConfig SMTPConfiguration configuration, MuleMessage muleMessage,
-      @DisplayName("Email Content") EmailContent content, @Optional String subject,
-      @Optional @DisplayName("Additional Headers") Map<String, String> headers,
-      @Optional(defaultValue = "false") Boolean replyToAll) {
+                    @DisplayName("Email Content") EmailContent content, @Optional String subject,
+                    @Optional @DisplayName("Additional Headers") Map<String, String> headers,
+                    @Optional(defaultValue = "false") Boolean replyToAll) {
     replyOperation.reply(connection, muleMessage, content, subject, configuration.getFrom(), configuration.getDefaultCharset(),
-        headers, replyToAll);
+                         headers, replyToAll);
   }
 }

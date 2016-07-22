@@ -26,14 +26,14 @@ public class FilterDefinitionParser extends ParentContextDefinitionParser
   public FilterDefinitionParser(Class filter) {
     super(MuleOrphanDefinitionParser.ROOT_ELEMENT, new OrphanDefinitionParser(filter, false));
     otherwise(new WrappingChildDefinitionParser("messageProcessor", filter, Filter.class, false, MessageFilter.class, FILTER,
-        FILTER, this));
+                                                FILTER, this));
     addIgnored(ATTRIBUTE_NAME);
   }
 
   public FilterDefinitionParser() {
     super(MuleOrphanDefinitionParser.ROOT_ELEMENT, new OrphanDefinitionParser(false));
     otherwise(new WrappingChildDefinitionParser("messageProcessor", null, Filter.class, true, MessageFilter.class, FILTER, FILTER,
-        this));
+                                                this));
     addIgnored(ATTRIBUTE_NAME);
   }
 

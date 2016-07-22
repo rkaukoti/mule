@@ -108,7 +108,8 @@ public class DefaultHttpRequesterDebugInfoTestCase extends AbstractMuleContextTe
   }
 
   private void doDebugInfoTest(MuleMessage message, DefaultMuleEvent event,
-      List<Matcher<FieldDebugInfo<?>>> securityFieldMatchers) throws InitialisationException {
+                               List<Matcher<FieldDebugInfo<?>>> securityFieldMatchers)
+      throws InitialisationException {
     configureRequesterExpressions();
     addRequesterProperties(message);
 

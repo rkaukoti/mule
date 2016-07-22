@@ -52,7 +52,7 @@ public class EndpointMuleUniversalConduit extends MuleUniversalConduit {
   private Map<String, OutboundEndpoint> endpoints = new HashMap<String, OutboundEndpoint>();
 
   public EndpointMuleUniversalConduit(MuleUniversalTransport transport, CxfConfiguration configuration, EndpointInfo ei,
-      EndpointReferenceType t) {
+                                      EndpointReferenceType t) {
     super(transport, configuration, ei, t);
   }
 

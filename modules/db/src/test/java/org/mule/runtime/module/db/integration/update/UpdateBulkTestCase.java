@@ -96,8 +96,8 @@ public class UpdateBulkTestCase extends AbstractDbIntegrationTestCase {
 
     List<Map<String, String>> result = selectData("select * from PLANET order by ID", getDefaultDataSource());
     assertRecords(result, new Record(new Field("NAME", "Mercury"), new Field("POSITION", 2)),
-        new Record(new Field("NAME", "Mercury"), new Field("POSITION", 3)),
-        new Record(new Field("NAME", "Mercury"), new Field("POSITION", 4)));
+                  new Record(new Field("NAME", "Mercury"), new Field("POSITION", 3)),
+                  new Record(new Field("NAME", "Mercury"), new Field("POSITION", 4)));
   }
 
   private List<String> getPlanetNames() {

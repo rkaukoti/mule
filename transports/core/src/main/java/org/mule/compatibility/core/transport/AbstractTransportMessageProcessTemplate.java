@@ -101,9 +101,9 @@ public abstract class AbstractTransportMessageProcessTemplate<MessageReceiverTyp
     final Object remoteSyncProperty = message.getInboundProperty(MULE_REMOTE_SYNC_PROPERTY);
     messageBuilder.removeInboundProperty(MULE_REMOTE_SYNC_PROPERTY);
     if (ObjectUtils.getBoolean(remoteSyncProperty, false) && !messageReceiver.getEndpoint().getExchangePattern().hasResponse()) {
-      logger.warn(
-          "MuleClient.send() was used but inbound endpoint " + messageReceiver.getEndpoint().getEndpointURI().getUri().toString()
-              + " is not 'request-response'.  No response will be returned.");
+      logger.warn("MuleClient.send() was used but inbound endpoint "
+          + messageReceiver.getEndpoint().getEndpointURI().getUri().toString()
+          + " is not 'request-response'.  No response will be returned.");
     }
     return messageBuilder.build();
   }

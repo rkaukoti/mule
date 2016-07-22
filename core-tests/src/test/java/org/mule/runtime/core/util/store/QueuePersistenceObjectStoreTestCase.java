@@ -203,7 +203,7 @@ public class QueuePersistenceObjectStoreTestCase extends AbstractObjectStoreCont
 
   private File createStoreFile(String id) {
     String path = String.format("%1s/%2s/%3s/%4s.msg", persistenceFolder.getAbsolutePath(),
-        QueuePersistenceObjectStore.DEFAULT_QUEUE_STORE, QUEUE_NAME, id);
+                                QueuePersistenceObjectStore.DEFAULT_QUEUE_STORE, QUEUE_NAME, id);
     return FileUtils.newFile(path);
   }
 

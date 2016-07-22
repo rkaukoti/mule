@@ -31,9 +31,10 @@ public class TestService {
   @WebResult(name = "text")
   @WebMethod(action = "echoWithHeaders")
   public String echoWithHeaders(@WebParam(name = "headerIn", header = true, mode = WebParam.Mode.IN) String headerIn,
-      @WebParam(name = "headerOut", header = true, mode = WebParam.Mode.OUT) Holder<String> headerOut,
-      @WebParam(name = "headerInOut", header = true, mode = WebParam.Mode.INOUT) Holder<String> headerInOut,
-      @WebParam(name = "text") String s) {
+                                @WebParam(name = "headerOut", header = true, mode = WebParam.Mode.OUT) Holder<String> headerOut,
+                                @WebParam(name = "headerInOut", header = true,
+                                    mode = WebParam.Mode.INOUT) Holder<String> headerInOut,
+                                @WebParam(name = "text") String s) {
     headerOut.value = headerIn + " OUT";
     headerInOut.value = headerInOut.value + " INOUT";
     return s;

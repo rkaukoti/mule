@@ -586,11 +586,11 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
           // Wait a while for tasks to respond to being cancelled
           if (!scheduler.awaitTermination(SCHEDULER_FORCED_SHUTDOWN_TIMEOUT, TimeUnit.MILLISECONDS)) {
             logger.warn(MessageFormat.format("Pool {0} did not terminate in time; {1} work items were cancelled.", name,
-                outstanding.isEmpty() ? "No" : Integer.toString(outstanding.size())));
+                                             outstanding.isEmpty() ? "No" : Integer.toString(outstanding.size())));
           } else {
             if (!outstanding.isEmpty()) {
               logger.warn(MessageFormat.format("Pool {0} terminated; {1} work items were cancelled.", name,
-                  Integer.toString(outstanding.size())));
+                                               Integer.toString(outstanding.size())));
             }
           }
 
@@ -633,8 +633,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
     }
     if (requesterWorkManager.get() == null) {
       final String threadPrefix = ThreadNameHelper.requester(muleContext, getName());
-      WorkManager newWorkManager = this.getRequesterThreadingProfile().createWorkManager(threadPrefix,
-          muleContext.getConfiguration().getShutdownTimeout());
+      WorkManager newWorkManager = this.getRequesterThreadingProfile()
+          .createWorkManager(threadPrefix, muleContext.getConfiguration().getShutdownTimeout());
 
       if (requesterWorkManager.compareAndSet(null, newWorkManager)) {
         newWorkManager.start();
@@ -863,8 +863,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
 
   protected MessageDispatcher borrowDispatcher(OutboundEndpoint endpoint) throws MuleException {
     if (!isStarted()) {
-      throw new LifecycleException(
-          TransportCoreMessages.lifecycleErrorCannotUseConnector(getName(), lifecycleManager.getCurrentPhase()), this);
+      throw new LifecycleException(TransportCoreMessages
+          .lifecycleErrorCannotUseConnector(getName(), lifecycleManager.getCurrentPhase()), this);
     }
 
     if (endpoint == null) {
@@ -913,8 +913,9 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
       } catch (Exception e) {
         // ignore - if the dispatcher is broken, it will likely get cleaned
         // up by the factory
-        logger.error(
-            "Failed to dispose dispatcher for endpoint: " + endpoint + ". This will cause a memory leak. Please report to", e);
+        logger
+            .error("Failed to dispose dispatcher for endpoint: " + endpoint + ". This will cause a memory leak. Please report to",
+                   e);
       }
 
     }
@@ -945,8 +946,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
 
   private MessageRequester getRequester(InboundEndpoint endpoint) throws MuleException {
     if (!isStarted()) {
-      throw new LifecycleException(
-          TransportCoreMessages.lifecycleErrorCannotUseConnector(getName(), lifecycleManager.getCurrentPhase()), this);
+      throw new LifecycleException(TransportCoreMessages
+          .lifecycleErrorCannotUseConnector(getName(), lifecycleManager.getCurrentPhase()), this);
     }
 
     if (endpoint == null) {
@@ -995,8 +996,9 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
       } catch (Exception e) {
         // ignore - if the requester is broken, it will likely get cleaned
         // up by the factory
-        logger.error(
-            "Failed to dispose requester for endpoint: " + endpoint + ". This will cause a memory leak. Please report to", e);
+        logger
+            .error("Failed to dispose requester for endpoint: " + endpoint + ". This will cause a memory leak. Please report to",
+                   e);
       }
     }
 
@@ -1285,8 +1287,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
   @Override
   public void connect() throws Exception {
     if (lifecycleManager.getState().isDisposed()) {
-      throw new LifecycleException(
-          TransportCoreMessages.lifecycleErrorCannotUseConnector(getName(), lifecycleManager.getCurrentPhase()), this);
+      throw new LifecycleException(TransportCoreMessages
+          .lifecycleErrorCannotUseConnector(getName(), lifecycleManager.getCurrentPhase()), this);
     }
     if (isConnected()) {
       return;
@@ -1302,9 +1304,9 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
           if (validateConnections && context.getLastFailure() instanceof EndpointConnectException) {
             Connectable failed = ((EndpointConnectException) context.getLastFailure()).getFailed();
             if (!failed.validateConnection(context).isOk()) {
-              throw new EndpointConnectException(
-                  MessageFactory.createStaticMessage("Still unable to connect to resource " + failed.getClass().getName()),
-                  context.getLastFailure(), failed);
+              throw new EndpointConnectException(MessageFactory
+                  .createStaticMessage("Still unable to connect to resource " + failed.getClass().getName()),
+                                                 context.getLastFailure(), failed);
             }
           }
           connectConnectorAndReceivers();
@@ -1414,8 +1416,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
       if (logger.isInfoEnabled()) {
         logger.info("Disconnected: " + this.getConnectionDescription());
       }
-      this.fireNotification(
-          new ConnectionNotification(this, getConnectEventId(), ConnectionNotification.CONNECTION_DISCONNECTED));
+      this.fireNotification(new ConnectionNotification(this, getConnectEventId(),
+                                                       ConnectionNotification.CONNECTION_DISCONNECTED));
     } catch (Exception e) {
       logger.error(e.getMessage());
     } finally {
@@ -1695,8 +1697,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
         if (currentTx.supports(this.getOperationResourceFactory(), connectionResource)) {
           currentTx.bindResource(this.getOperationResourceFactory(), connectionResource);
         } else if (endpoint.getTransactionConfig().isTransacted()) {
-          throw new TransactionException(
-              TransportCoreMessages.createStaticMessage("Endpoint is transactional but transaction does not support it"));
+          throw new TransactionException(TransportCoreMessages
+              .createStaticMessage("Endpoint is transactional but transaction does not support it"));
         }
         return (T) connectionResource;
       }
@@ -1813,8 +1815,9 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
    */
   public void initialiseFromUrl(EndpointURI endpointUri) throws InitialisationException {
     if (!supportsProtocol(endpointUri.getFullScheme())) {
-      throw new InitialisationException(
-          TransportCoreMessages.schemeNotCompatibleWithConnector(endpointUri.getFullScheme(), this.getClass()), this);
+      throw new InitialisationException(TransportCoreMessages.schemeNotCompatibleWithConnector(endpointUri.getFullScheme(),
+                                                                                               this.getClass()),
+                                        this);
     }
     Properties props = new Properties();
     props.putAll(endpointUri.getParams());
@@ -1850,8 +1853,9 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
    */
   protected synchronized void initFromServiceDescriptor() throws InitialisationException {
     try {
-      serviceDescriptor = (TransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(),
-          LegacyServiceType.TRANSPORT, getProtocol().toLowerCase(), serviceOverrides);
+      serviceDescriptor =
+          (TransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(), LegacyServiceType.TRANSPORT,
+                                                               getProtocol().toLowerCase(), serviceOverrides);
       if (serviceDescriptor == null) {
         throw new ServiceException(TransportCoreMessages.noServiceTransportDescriptor(getProtocol()));
       }

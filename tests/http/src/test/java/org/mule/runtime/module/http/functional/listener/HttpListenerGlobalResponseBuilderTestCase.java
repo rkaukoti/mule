@@ -83,7 +83,7 @@ public class HttpListenerGlobalResponseBuilderTestCase extends AbstractHttpTestC
     });
     assertThat(userAgentHeaders.length, is(userAgentHeaderValues.size()));
     assertThat(headerValues,
-        Matchers.containsInAnyOrder(userAgentHeaderValues.toArray(new String[userAgentHeaderValues.size()])));
+               Matchers.containsInAnyOrder(userAgentHeaderValues.toArray(new String[userAgentHeaderValues.size()])));
   }
 
 

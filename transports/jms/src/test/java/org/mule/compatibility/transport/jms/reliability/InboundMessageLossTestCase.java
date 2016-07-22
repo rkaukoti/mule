@@ -115,9 +115,9 @@ public class InboundMessageLossTestCase extends AbstractJmsReliabilityTestCase {
     if (!exceptionStrategyListener.await(RECEIVE_TIMEOUT, TimeUnit.MILLISECONDS)) {
       fail("Message should have been redelivered");
     }
-    assertThat(
-        muleContext.getClient().request("jms://rollbackOnException?connector=jmsConnectorNoRedelivery", RECEIVE_TIMEOUT / 10),
-        IsNull.<Object>nullValue());
+    assertThat(muleContext.getClient().request("jms://rollbackOnException?connector=jmsConnectorNoRedelivery",
+                                               RECEIVE_TIMEOUT / 10),
+               IsNull.<Object>nullValue());
   }
 
   @Test

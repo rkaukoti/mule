@@ -26,7 +26,7 @@ public class MessagingExceptionLocationProvider extends LocationExecutionContext
     Map<String, Object> contextInfo = new HashMap<String, Object>();
 
     contextInfo.put(INFO_LOCATION_KEY, resolveProcessorRepresentation(event.getMuleContext().getConfiguration().getId(),
-        getProcessorPath(event, lastProcessed), lastProcessed));
+                                                                      getProcessorPath(event, lastProcessed), lastProcessed));
     if (lastProcessed instanceof AnnotatedObject) {
       String sourceXML = getSourceXML((AnnotatedObject) lastProcessed);
       if (sourceXML != null) {

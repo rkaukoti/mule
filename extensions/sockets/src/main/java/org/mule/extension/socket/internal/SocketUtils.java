@@ -43,7 +43,8 @@ public final class SocketUtils {
   }
 
   public static byte[] getByteArray(Object data, boolean payloadOnly, boolean streamingIsAllowed, String encoding,
-      ObjectSerializer objectSerializer) throws IOException {
+                                    ObjectSerializer objectSerializer)
+      throws IOException {
     if (data instanceof InputStream && !streamingIsAllowed) {
       throw new IOException("Streaming is not allowed with this configuration");
     } else if (data instanceof MuleMessage) {

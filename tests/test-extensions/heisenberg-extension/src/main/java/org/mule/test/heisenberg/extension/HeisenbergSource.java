@@ -66,7 +66,7 @@ public class HeisenbergSource extends Source<Void, Attributes> implements Initia
 
     executor = newScheduledThreadPool(1);
     executor.scheduleAtFixedRate(() -> sourceContext.getMessageHandler().handle(makeMessage(sourceContext), completionHandler()),
-        0, 100, TimeUnit.MILLISECONDS);
+                                 0, 100, TimeUnit.MILLISECONDS);
   }
 
   private CompletionHandler<MuleEvent, Exception, MuleEvent> completionHandler() {

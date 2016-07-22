@@ -22,9 +22,9 @@ public class DefaultDataSourceDecorator implements DataSourceDecorator {
 
   @Override
   public DataSource decorate(DataSource dataSource, String dataSourceName, DbPoolingProfile dbPoolingProfile,
-      MuleContext muleContext) {
+                             MuleContext muleContext) {
     Preconditions.checkState(appliesTo(dataSource, muleContext),
-        "DefaultDataSourceDecorator cannot be applied to data source " + dataSource);
+                             "DefaultDataSourceDecorator cannot be applied to data source " + dataSource);
     if (dbPoolingProfile != null) {
       logger.warn("Pooling profile configuration cannot be used with current transaction manager and XADataSource");
     }

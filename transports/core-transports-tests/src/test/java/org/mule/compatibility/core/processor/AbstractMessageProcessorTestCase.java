@@ -81,12 +81,14 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
   }
 
   protected InboundEndpoint createTestInboundEndpoint(Filter filter, SecurityFilter securityFilter,
-      MessageExchangePattern exchangePattern, TransactionConfig txConfig) throws InitialisationException, EndpointException {
+                                                      MessageExchangePattern exchangePattern, TransactionConfig txConfig)
+      throws InitialisationException, EndpointException {
     return createTestInboundEndpoint(filter, securityFilter, null, null, exchangePattern, txConfig);
   }
 
   protected InboundEndpoint createTestInboundEndpoint(Filter filter, SecurityFilter securityFilter, Transformer transformer,
-      Transformer responseTransformer, MessageExchangePattern exchangePattern, TransactionConfig txConfig)
+                                                      Transformer responseTransformer, MessageExchangePattern exchangePattern,
+                                                      TransactionConfig txConfig)
       throws EndpointException, InitialisationException {
     EndpointURIEndpointBuilder endpointBuilder = new EndpointURIEndpointBuilder(TEST_URI, muleContext);
     if (filter != null) {
@@ -110,7 +112,7 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
   protected MuleEvent createTestInboundEvent(InboundEndpoint endpoint) throws Exception {
     final DefaultMuleEvent event =
         new DefaultMuleEvent(MuleMessage.builder().payload(TEST_MESSAGE).addOutboundProperty("prop1", "value1").build(),
-            getTestFlow(), getTestSession(null, muleContext));
+                             getTestFlow(), getTestSession(null, muleContext));
     DefaultMuleEventEndpointUtils.populateFieldsFromInboundEndpoint(event, endpoint);
     return event;
   }
@@ -118,24 +120,27 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
   protected OutboundEndpoint createTestOutboundEndpoint(Transformer transformer, Transformer responseTransformer)
       throws EndpointException, InitialisationException {
     return createTestOutboundEndpoint(null, null, transformer, responseTransformer, MessageExchangePattern.REQUEST_RESPONSE,
-        null);
+                                      null);
   }
 
   protected OutboundEndpoint createTestOutboundEndpoint(Filter filter, EndpointSecurityFilter securityFilter,
-      MessageExchangePattern exchangePattern, TransactionConfig txConfig) throws InitialisationException, EndpointException {
+                                                        MessageExchangePattern exchangePattern, TransactionConfig txConfig)
+      throws InitialisationException, EndpointException {
     return createTestOutboundEndpoint(filter, securityFilter, null, null, exchangePattern, txConfig);
   }
 
   protected OutboundEndpoint createTestOutboundEndpoint(Filter filter, EndpointSecurityFilter securityFilter,
-      Transformer transformer, Transformer responseTransformer, MessageExchangePattern exchangePattern,
-      TransactionConfig txConfig) throws EndpointException, InitialisationException {
+                                                        Transformer transformer, Transformer responseTransformer,
+                                                        MessageExchangePattern exchangePattern, TransactionConfig txConfig)
+      throws EndpointException, InitialisationException {
     return createTestOutboundEndpoint("test://test", filter, securityFilter, transformer, responseTransformer, exchangePattern,
-        txConfig);
+                                      txConfig);
   }
 
   protected OutboundEndpoint createTestOutboundEndpoint(String uri, Filter filter, SecurityFilter securityFilter,
-      Transformer transformer, Transformer responseTransformer, MessageExchangePattern exchangePattern,
-      TransactionConfig txConfig) throws EndpointException, InitialisationException {
+                                                        Transformer transformer, Transformer responseTransformer,
+                                                        MessageExchangePattern exchangePattern, TransactionConfig txConfig)
+      throws EndpointException, InitialisationException {
     EndpointURIEndpointBuilder endpointBuilder = new EndpointURIEndpointBuilder(uri, muleContext);
     if (filter != null) {
       endpointBuilder.addMessageProcessor(new MessageFilter(filter));
@@ -172,10 +177,11 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
     if (exceptionListener != null) {
       flow.setExceptionListener(exceptionListener);
     }
-    final DefaultMuleEvent event = new DefaultMuleEvent(
-        MuleMessage.builder().payload(TEST_MESSAGE).outboundProperties(props).build(), flow, getTestSession(null, muleContext));
-    DefaultMuleEventEndpointUtils.populateFieldsFromInboundEndpoint(event,
-        getTestInboundEndpoint(MessageExchangePattern.REQUEST_RESPONSE));
+    final DefaultMuleEvent event =
+        new DefaultMuleEvent(MuleMessage.builder().payload(TEST_MESSAGE).outboundProperties(props).build(), flow,
+                             getTestSession(null, muleContext));
+    DefaultMuleEventEndpointUtils
+        .populateFieldsFromInboundEndpoint(event, getTestInboundEndpoint(MessageExchangePattern.REQUEST_RESPONSE));
     return event;
   }
 
@@ -264,8 +270,8 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
     @Override
     public MuleEvent handleException(Exception exception, MuleEvent event) {
       sensedException = exception;
-      event.setMessage(
-          MuleMessage.builder(event.getMessage()).nullPayload().exceptionPayload(new DefaultExceptionPayload(exception)).build());
+      event.setMessage(MuleMessage.builder(event.getMessage()).nullPayload()
+          .exceptionPayload(new DefaultExceptionPayload(exception)).build());
       return event;
     }
   }

@@ -189,9 +189,8 @@ public class JmsNamespaceHandlerTestCase extends FunctionalTestCase {
   @Test
   public void testJndiConnectorAtributes() throws Exception {
     JmsConnector connector = (JmsConnector) muleContext.getRegistry().lookupObject("jmsJndiConnector");
-    assertThat(
-        "connection factory must be created only after connect so reconnection works when JNDI context is not yet available during start",
-        connector.getConnectionFactory(), nullValue());
+    assertThat("connection factory must be created only after connect so reconnection works when JNDI context is not yet available during start",
+               connector.getConnectionFactory(), nullValue());
     connector.connect();
     assertNotNull(connector);
 
@@ -199,7 +198,7 @@ public class JmsNamespaceHandlerTestCase extends FunctionalTestCase {
     assertEquals("jndi://test", connector.getJndiProviderUrl());
     assertEquals("jms/connectionFactory", connector.getConnectionFactoryJndiName());
     assertEquals("org.mule.compatibility.transport.jms.test.TestConnectionFactory",
-        connector.getConnectionFactory().getClass().getName());
+                 connector.getConnectionFactory().getClass().getName());
     assertTrue(connector.isJndiDestinations());
     assertTrue(connector.isForceJndiDestinations());
     assertEquals("value", connector.getJndiProviderProperties().get("key"));

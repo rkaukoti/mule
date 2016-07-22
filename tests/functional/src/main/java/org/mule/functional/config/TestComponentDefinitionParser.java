@@ -63,7 +63,7 @@ public class TestComponentDefinitionParser extends ComponentDefinitionParser {
     AbstractBeanDefinition objectFactoryBeanDefinition = new GenericBeanDefinition();
     objectFactoryBeanDefinition.setBeanClass(OBJECT_FACTORY_TYPE);
     objectFactoryBeanDefinition.getPropertyValues().addPropertyValue(AbstractObjectFactory.ATTRIBUTE_OBJECT_CLASS,
-        componentInstanceClass);
+                                                                     componentInstanceClass);
     objectFactoryBeanDefinition.setInitMethodName(Initialisable.PHASE_NAME);
     objectFactoryBeanDefinition.setDestroyMethodName(Disposable.PHASE_NAME);
     Map<String, Object> props = new HashMap<String, Object>();

@@ -44,7 +44,8 @@ public class HttpRequestInboundAttachmentsTestCase extends AbstractHttpRequestTe
   }
 
   private void assertAttachment(Map<String, DataHandler> parts, String attachmentName, String attachmentContents,
-      String contentType) throws IOException {
+                                String contentType)
+      throws IOException {
     assertTrue(parts.keySet().contains(attachmentName));
 
     DataHandler handler = parts.get(attachmentName);

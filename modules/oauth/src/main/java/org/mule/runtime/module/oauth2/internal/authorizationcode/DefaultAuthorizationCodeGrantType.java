@@ -142,14 +142,15 @@ public class DefaultAuthorizationCodeGrantType extends AbstractGrantType
   public void authenticate(MuleEvent muleEvent, HttpRequestBuilder builder) throws MuleException {
     final String resourceOwnerId = resourceOwnerIdEvaluator.resolveStringValue(muleEvent);
     if (resourceOwnerId == null) {
-      throw new RequestAuthenticationException(createStaticMessage(String.format(
-          "Evaluation of %s return an empty resourceOwnerId", localAuthorizationUrlResourceOwnerIdEvaluator.getRawValue())));
+      throw new RequestAuthenticationException(createStaticMessage(String
+          .format("Evaluation of %s return an empty resourceOwnerId",
+                  localAuthorizationUrlResourceOwnerIdEvaluator.getRawValue())));
     }
     final String accessToken = getUserOAuthContext().getContextForResourceOwner(resourceOwnerId).getAccessToken();
     if (accessToken == null) {
       throw new RequestAuthenticationException(createStaticMessage(String.format(
-          "No access token for the %s user. Verify that you have authenticated the user before trying to execute an operation to the API.",
-          resourceOwnerId)));
+                                                                                 "No access token for the %s user. Verify that you have authenticated the user before trying to execute an operation to the API.",
+                                                                                 resourceOwnerId)));
     }
     builder.addHeader(HttpHeaders.Names.AUTHORIZATION, buildAuthorizationHeaderContent(accessToken));
   }
@@ -159,8 +160,8 @@ public class DefaultAuthorizationCodeGrantType extends AbstractGrantType
     if (!StringUtils.isBlank(getRefreshTokenWhen())) {
       final Object value = muleContext.getExpressionManager().evaluate(getRefreshTokenWhen(), firstAttemptResponseEvent);
       if (!(value instanceof Boolean)) {
-        throw new MuleRuntimeException(
-            createStaticMessage("Expression %s should return a boolean but return %s", getRefreshTokenWhen(), value));
+        throw new MuleRuntimeException(createStaticMessage("Expression %s should return a boolean but return %s",
+                                                           getRefreshTokenWhen(), value));
       }
       Boolean shouldRetryRequest = (Boolean) value;
       if (shouldRetryRequest) {

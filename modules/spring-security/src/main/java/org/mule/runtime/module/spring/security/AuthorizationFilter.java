@@ -66,9 +66,9 @@ public class AuthorizationFilter extends AbstractSecurityFilter {
     }
 
     if (!authorized) {
-      logger.info(
-          MessageFormat.format("Could not find required authorities for {0}. Required authorities: {1}. Authorities found: {2}.",
-              principalName, Arrays.toString(requiredAuthorities.toArray()), Arrays.toString(authorities)));
+      logger.info(MessageFormat
+          .format("Could not find required authorities for {0}. Required authorities: {1}. Authorities found: {2}.",
+                  principalName, Arrays.toString(requiredAuthorities.toArray()), Arrays.toString(authorities)));
       throw new NotPermittedException(SpringSecurityMessages.noGrantedAuthority(principalName));
     }
   }

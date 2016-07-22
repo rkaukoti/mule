@@ -333,7 +333,7 @@ public class HttpServerConnection implements HandshakeCompletedListener {
     }
     InetSocketAddress localSocketAddress = (InetSocketAddress) socket.getLocalSocketAddress();
     return String.format("%s://%s:%d%s", scheme, localSocketAddress.getHostName(), localSocketAddress.getPort(),
-        readRequest().getUrlWithoutParams());
+                         readRequest().getUrlWithoutParams());
   }
 
   /**

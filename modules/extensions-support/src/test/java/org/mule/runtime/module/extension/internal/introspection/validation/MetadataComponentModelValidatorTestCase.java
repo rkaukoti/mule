@@ -113,8 +113,9 @@ public class MetadataComponentModelValidatorTestCase extends AbstractMuleTestCas
   @Test
   public void sourceReturnsObjectTypeWithDefinedOutputResolver() {
     when(sourceModel.getOutput()).thenReturn(new ImmutableOutputModel("", toMetadataType(Object.class), false, emptySet()));
-    when(sourceModel.getMetadataResolverFactory()).thenReturn(new DefaultMetadataResolverFactory(NullMetadataResolver.class,
-        NullMetadataResolver.class, SimpleOutputResolver.class, SimpleOutputResolver.class));
+    when(sourceModel.getMetadataResolverFactory())
+        .thenReturn(new DefaultMetadataResolverFactory(NullMetadataResolver.class, NullMetadataResolver.class,
+                                                       SimpleOutputResolver.class, SimpleOutputResolver.class));
     validator.validate(extensionModel);
   }
 
@@ -122,8 +123,9 @@ public class MetadataComponentModelValidatorTestCase extends AbstractMuleTestCas
   public void sourceReturnsDictionaryTypeWithDefinedOutputResolver() {
     when(dictionaryType.getValueType()).thenReturn(toMetadataType(Object.class));
     when(sourceModel.getOutput()).thenReturn(new ImmutableOutputModel("", dictionaryType, false, emptySet()));
-    when(sourceModel.getMetadataResolverFactory()).thenReturn(new DefaultMetadataResolverFactory(NullMetadataResolver.class,
-        NullMetadataResolver.class, SimpleOutputResolver.class, SimpleOutputResolver.class));
+    when(sourceModel.getMetadataResolverFactory())
+        .thenReturn(new DefaultMetadataResolverFactory(NullMetadataResolver.class, NullMetadataResolver.class,
+                                                       SimpleOutputResolver.class, SimpleOutputResolver.class));
     validator.validate(extensionModel);
   }
 

@@ -23,12 +23,12 @@ public class SpringAuthenticationAdapter implements Authentication {
   }
 
   public SpringAuthenticationAdapter(org.springframework.security.core.Authentication authentication,
-      Map<String, Object> properties) {
+                                     Map<String, Object> properties) {
     this(authentication, properties, null);
   }
 
   public SpringAuthenticationAdapter(org.springframework.security.core.Authentication authentication,
-      Map<String, Object> properties, MuleEvent event) {
+                                     Map<String, Object> properties, MuleEvent event) {
     this.delegate = authentication;
     this.properties = properties;
     this.event = event;

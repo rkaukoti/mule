@@ -137,7 +137,7 @@ public abstract class AbstractSerialDelegatingDefinitionParser extends AbstractD
   }
 
   protected AbstractBeanDefinition doSingleBean(int index, MuleDefinitionParser parser, Element element,
-      ParserContext parserContext) {
+                                                ParserContext parserContext) {
     return parser.muleParse(element, parserContext);
   }
 

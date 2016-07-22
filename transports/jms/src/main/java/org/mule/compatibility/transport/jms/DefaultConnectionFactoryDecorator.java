@@ -17,7 +17,7 @@ public class DefaultConnectionFactoryDecorator extends AbstractConnectionFactory
 
   @Override
   protected ConnectionFactory doDecorate(ConnectionFactory connectionFactory, JmsConnector jmsConnector,
-      MuleContext muleContext) {
+                                         MuleContext muleContext) {
     return new DefaultXAConnectionFactoryWrapper(connectionFactory, jmsConnector.getSameRMOverrideValue());
   }
 

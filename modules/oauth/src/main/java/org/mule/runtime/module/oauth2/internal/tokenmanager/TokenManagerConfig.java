@@ -80,8 +80,8 @@ public class TokenManagerConfig implements Initialisable, MuleContextAware {
    */
   public Object processOauthContextFunctionACall(Object[] params) {
     if (params.length > 1) {
-      throw new IllegalArgumentException(
-          String.format("oauthContext for config type %s does not accepts more than two arguments", "authorization-code"));
+      throw new IllegalArgumentException(String.format("oauthContext for config type %s does not accepts more than two arguments",
+                                                       "authorization-code"));
     }
     String resourceOwnerId = ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID;
     if (params.length == 1) {

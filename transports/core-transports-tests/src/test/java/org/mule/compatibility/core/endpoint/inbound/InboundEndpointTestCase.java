@@ -180,9 +180,9 @@ public class InboundEndpointTestCase extends AbstractMessageProcessorTestCase {
 
     assertTrue(securityNotificationListener.latch.await(RECEIVE_TIMEOUT, TimeUnit.MILLISECONDS));
     assertEquals(SecurityNotification.SECURITY_AUTHENTICATION_FAILED,
-        securityNotificationListener.securityNotification.getAction());
+                 securityNotificationListener.securityNotification.getAction());
     assertEquals(securityNotificationListener.securityNotification.getResourceIdentifier(),
-        TestSecurityFilter.StaticMessageUnauthorisedException.class.getName());
+                 TestSecurityFilter.StaticMessageUnauthorisedException.class.getName());
   }
 
   /**
@@ -192,7 +192,7 @@ public class InboundEndpointTestCase extends AbstractMessageProcessorTestCase {
   public void testFilterFirstThenSecurityFilter() throws Exception {
     TestSecurityFilter securityFilter = new TestSecurityFilter(false);
     endpoint = createTestInboundEndpoint(new TestFilter(false), securityFilter, null, null,
-        MessageExchangePattern.REQUEST_RESPONSE, null);
+                                         MessageExchangePattern.REQUEST_RESPONSE, null);
     endpoint.setListener(inboundListener);
     requestEvent = createTestRequestEvent(endpoint);
     responseEvent = createTestResponseEvent(endpoint);
@@ -231,7 +231,7 @@ public class InboundEndpointTestCase extends AbstractMessageProcessorTestCase {
   @Test
   public void testResponseTransformerExceptionDetailAfterRequestFlowInterupt() throws Exception {
     endpoint = createTestInboundEndpoint(null, new TestSecurityFilter(false), null, new ResponseAppendTransformer(),
-        MessageExchangePattern.REQUEST_RESPONSE, null);
+                                         MessageExchangePattern.REQUEST_RESPONSE, null);
     endpoint.setListener(inboundListener);
     requestEvent = createTestRequestEvent(endpoint);
     responseEvent = createTestResponseEvent(endpoint);
@@ -276,7 +276,7 @@ public class InboundEndpointTestCase extends AbstractMessageProcessorTestCase {
   @Test
   public void testTransformers() throws Exception {
     endpoint = createTestInboundEndpoint(null, null, new InboundAppendTransformer(), new ResponseAppendTransformer(),
-        MessageExchangePattern.REQUEST_RESPONSE, null);
+                                         MessageExchangePattern.REQUEST_RESPONSE, null);
     endpoint.setListener(inboundListener);
     requestEvent = createTestRequestEvent(endpoint);
     responseEvent = createTestResponseEvent(endpoint);
@@ -321,7 +321,7 @@ public class InboundEndpointTestCase extends AbstractMessageProcessorTestCase {
 
   protected MuleEvent createTestResponseEvent(InboundEndpoint ep) throws Exception {
     final DefaultMuleEvent event = new DefaultMuleEvent(MuleMessage.builder().payload(RESPONSE_MESSAGE).build(), getTestFlow(),
-        getTestSession(null, muleContext));
+                                                        getTestSession(null, muleContext));
     DefaultMuleEventEndpointUtils.populateFieldsFromInboundEndpoint(event, ep);
     return event;
   }

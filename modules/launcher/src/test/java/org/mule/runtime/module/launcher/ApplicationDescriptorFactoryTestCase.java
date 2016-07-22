@@ -71,8 +71,9 @@ public class ApplicationDescriptorFactoryTestCase extends AbstractMuleTestCase {
 
     final ArtifactPluginDescriptorFactory pluginDescriptorFactory = mock(ArtifactPluginDescriptorFactory.class);
 
-    final ApplicationDescriptorFactory applicationDescriptorFactory = new ApplicationDescriptorFactory(
-        new ArtifactPluginDescriptorLoader(pluginDescriptorFactory), applicationPluginRepository);
+    final ApplicationDescriptorFactory applicationDescriptorFactory =
+        new ApplicationDescriptorFactory(new ArtifactPluginDescriptorLoader(pluginDescriptorFactory),
+                                         applicationPluginRepository);
     final ArtifactPluginDescriptor expectedPluginDescriptor1 = mock(ArtifactPluginDescriptor.class);
     when(expectedPluginDescriptor1.getName()).thenReturn("plugin1");
     when(expectedPluginDescriptor1.getClassLoaderFilter()).thenReturn(ArtifactClassLoaderFilter.NULL_CLASSLOADER_FILTER);
@@ -95,9 +96,9 @@ public class ApplicationDescriptorFactoryTestCase extends AbstractMuleTestCase {
     pluginLibDir.mkdirs();
 
     copyResourceAs("test-jar-with-resources.jar", pluginLibDir, JAR_FILE_NAME);
-    ApplicationDescriptor desc = new ApplicationDescriptorFactory(
-        new ArtifactPluginDescriptorLoader(new ArtifactPluginDescriptorFactory(new DefaultArtifactClassLoaderFilterFactory())),
-        applicationPluginRepository).create(getAppFolder(APP_NAME));
+    ApplicationDescriptor desc =
+        new ApplicationDescriptorFactory(new ArtifactPluginDescriptorLoader(new ArtifactPluginDescriptorFactory(new DefaultArtifactClassLoaderFilterFactory())),
+                                         applicationPluginRepository).create(getAppFolder(APP_NAME));
 
     File sharedPluginFolder = desc.getSharedPluginFolder();
 
@@ -145,8 +146,9 @@ public class ApplicationDescriptorFactoryTestCase extends AbstractMuleTestCase {
   private void doPackageValidationTest(ArtifactPluginRepository applicationPluginRepository) {
     final ArtifactPluginDescriptorFactory pluginDescriptorFactory =
         new ArtifactPluginDescriptorFactory(new DefaultArtifactClassLoaderFilterFactory());
-    final ApplicationDescriptorFactory applicationDescriptorFactory = new ApplicationDescriptorFactory(
-        new ArtifactPluginDescriptorLoader(pluginDescriptorFactory), applicationPluginRepository);
+    final ApplicationDescriptorFactory applicationDescriptorFactory =
+        new ApplicationDescriptorFactory(new ArtifactPluginDescriptorLoader(pluginDescriptorFactory),
+                                         applicationPluginRepository);
 
     try {
       applicationDescriptorFactory.create(getAppFolder(APP_NAME));

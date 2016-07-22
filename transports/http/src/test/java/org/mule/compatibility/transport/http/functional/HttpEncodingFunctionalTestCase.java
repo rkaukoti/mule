@@ -47,8 +47,9 @@ public class HttpEncodingFunctionalTestCase extends HttpFunctionalTestCase {
   public void testSend() throws Exception {
     MuleClient client = muleContext.getClient();
 
-    MuleMessage reply = client.send("clientEndpoint",
-        MuleMessage.builder().payload(TEST_MESSAGE).mediaType(MediaType.parse(getSendEncoding())).build());
+    MuleMessage reply =
+        client.send("clientEndpoint",
+                    MuleMessage.builder().payload(TEST_MESSAGE).mediaType(MediaType.parse(getSendEncoding())).build());
     assertNotNull(reply);
     assertEquals("200", reply.getInboundProperty(HttpConnector.HTTP_STATUS_PROPERTY));
     assertEquals("text/baz; charset=UTF-16BE", reply.getDataType().getMediaType().toRfcString());
@@ -132,8 +133,9 @@ public class HttpEncodingFunctionalTestCase extends HttpFunctionalTestCase {
     MuleClient client = muleContext.getClient();
     String endpointUri = "clientEndpoint." + encoding.name();
     MuleMessage reply = client.send(endpointUri,
-        MuleMessage.builder().payload(payload).mediaType(MediaType.parse("text/plain; charset=" + encoding.name()))
-            .outboundProperties(createMessageProperties(httpMethod)).build());
+                                    MuleMessage.builder().payload(payload)
+                                        .mediaType(MediaType.parse("text/plain; charset=" + encoding.name()))
+                                        .outboundProperties(createMessageProperties(httpMethod)).build());
 
     assertNotNull(reply);
     assertEquals("200", reply.getInboundProperty(HttpConnector.HTTP_STATUS_PROPERTY));

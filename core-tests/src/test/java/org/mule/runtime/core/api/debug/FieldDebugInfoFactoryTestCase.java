@@ -159,7 +159,7 @@ public class FieldDebugInfoFactoryTestCase extends AbstractMuleTestCase {
   }
 
   private void assertCreatedFieldDebugInfo(FieldDebugInfo<?> debugInfo, Class type, Object value,
-      Class<? extends FieldDebugInfo> debugInfoClass) {
+                                           Class<? extends FieldDebugInfo> debugInfoClass) {
     assertThat(debugInfo, instanceOf(debugInfoClass));
     assertThat(debugInfo, fieldLike(FIELD_NAME, type, value));
   }

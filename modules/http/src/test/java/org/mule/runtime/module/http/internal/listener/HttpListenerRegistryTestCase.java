@@ -88,50 +88,58 @@ public class HttpListenerRegistryTestCase extends AbstractMuleTestCase {
   public void validateSimplePathAndAllMethodAllowedCollision() {
     final HttpListenerRegistry httpListenerRegister = new HttpListenerRegistry();
     httpListenerRegister.addRequestHandler(testServer, mock(RequestHandler.class),
-        new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), ANOTHER_PATH));
+                                           new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), ANOTHER_PATH));
     expectedException.expect(MuleRuntimeException.class);
     httpListenerRegister.addRequestHandler(testServer, mock(RequestHandler.class),
-        new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), ANOTHER_PATH));
+                                           new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), ANOTHER_PATH));
   }
 
   @Test
   public void validateUriParamPathAndAllMethodAllowedCollision() {
     final HttpListenerRegistry httpListenerRegister = new HttpListenerRegistry();
-    httpListenerRegister.addRequestHandler(testServer, mock(RequestHandler.class),
-        new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), SECOND_LEVEL_URI_PARAM));
+    httpListenerRegister
+        .addRequestHandler(testServer, mock(RequestHandler.class),
+                           new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), SECOND_LEVEL_URI_PARAM));
     expectedException.expect(MuleRuntimeException.class);
-    httpListenerRegister.addRequestHandler(testServer, mock(RequestHandler.class),
-        new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), SECOND_LEVEL_URI_PARAM));
+    httpListenerRegister
+        .addRequestHandler(testServer, mock(RequestHandler.class),
+                           new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), SECOND_LEVEL_URI_PARAM));
   }
 
   @Test
   public void validateCatchAllPathAndAllMethodAllowedCollision() {
     final HttpListenerRegistry httpListenerRegister = new HttpListenerRegistry();
-    httpListenerRegister.addRequestHandler(testServer, mock(RequestHandler.class),
-        new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), SECOND_LEVEL_CATCH_ALL));
+    httpListenerRegister
+        .addRequestHandler(testServer, mock(RequestHandler.class),
+                           new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), SECOND_LEVEL_CATCH_ALL));
     expectedException.expect(MuleRuntimeException.class);
-    httpListenerRegister.addRequestHandler(testServer, mock(RequestHandler.class),
-        new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), SECOND_LEVEL_CATCH_ALL));
+    httpListenerRegister
+        .addRequestHandler(testServer, mock(RequestHandler.class),
+                           new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), SECOND_LEVEL_CATCH_ALL));
   }
 
   @Test
   public void validateCatchAllPathAndMethodAllowedCollision() {
     final HttpListenerRegistry httpListenerRegister = new HttpListenerRegistry();
-    httpListenerRegister.addRequestHandler(testServer, mock(RequestHandler.class),
-        new ListenerRequestMatcher(new MethodRequestMatcher(GET_METHOD), SECOND_LEVEL_CATCH_ALL));
+    httpListenerRegister
+        .addRequestHandler(testServer, mock(RequestHandler.class),
+                           new ListenerRequestMatcher(new MethodRequestMatcher(GET_METHOD), SECOND_LEVEL_CATCH_ALL));
     expectedException.expect(MuleRuntimeException.class);
-    httpListenerRegister.addRequestHandler(testServer, mock(RequestHandler.class),
-        new ListenerRequestMatcher(new MethodRequestMatcher(GET_METHOD), SECOND_LEVEL_CATCH_ALL));
+    httpListenerRegister
+        .addRequestHandler(testServer, mock(RequestHandler.class),
+                           new ListenerRequestMatcher(new MethodRequestMatcher(GET_METHOD), SECOND_LEVEL_CATCH_ALL));
   }
 
   @Test
   public void validateCatchAllPathAndMethodIntersectionAllowedCollision() {
     final HttpListenerRegistry httpListenerRegister = new HttpListenerRegistry();
-    httpListenerRegister.addRequestHandler(testServer, mock(RequestHandler.class),
-        new ListenerRequestMatcher(new MethodRequestMatcher(GET_METHOD, POST_METHOD), SECOND_LEVEL_CATCH_ALL));
+    httpListenerRegister
+        .addRequestHandler(testServer, mock(RequestHandler.class),
+                           new ListenerRequestMatcher(new MethodRequestMatcher(GET_METHOD, POST_METHOD), SECOND_LEVEL_CATCH_ALL));
     expectedException.expect(MuleRuntimeException.class);
-    httpListenerRegister.addRequestHandler(testServer, mock(RequestHandler.class),
-        new ListenerRequestMatcher(new MethodRequestMatcher(PUT_METHOD, POST_METHOD), SECOND_LEVEL_CATCH_ALL));
+    httpListenerRegister
+        .addRequestHandler(testServer, mock(RequestHandler.class),
+                           new ListenerRequestMatcher(new MethodRequestMatcher(PUT_METHOD, POST_METHOD), SECOND_LEVEL_CATCH_ALL));
   }
 
   @Test
@@ -260,7 +268,7 @@ public class HttpListenerRegistryTestCase extends AbstractMuleTestCase {
   public void noPathFound() {
     httpListenerRegistry = new HttpListenerRegistry();
     httpListenerRegistry.addRequestHandler(testServer, mock(RequestHandler.class),
-        new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), ROOT_PATH));
+                                           new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), ROOT_PATH));
     RequestHandler requestHandler =
         httpListenerRegistry.getRequestHandler(TEST_IP, TEST_PORT, createMockRequestWithPath(ANOTHER_PATH));
     assertThat(requestHandler, is(instanceOf(NoListenerRequestHandler.class)));
@@ -268,7 +276,7 @@ public class HttpListenerRegistryTestCase extends AbstractMuleTestCase {
 
   private void routePath(String requestPath, String listenerPath) {
     assertThat(httpListenerRegistry.getRequestHandler(TEST_IP, TEST_PORT, createMockRequestWithPath(requestPath)),
-        is(requestHandlerPerPath.get(listenerPath)));
+               is(requestHandlerPerPath.get(listenerPath)));
   }
 
   private void routePath(String requestPath, String requestMethod, RequestHandler expectedRequestHandler) {
@@ -298,20 +306,20 @@ public class HttpListenerRegistryTestCase extends AbstractMuleTestCase {
     requestHandlerPerPath.put(SEVERAL_CATCH_ALL, mock(RequestHandler.class));
     for (String path : requestHandlerPerPath.keySet()) {
       httpListenerRegistry.addRequestHandler(testServer, requestHandlerPerPath.get(path),
-          new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), path));
+                                             new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), path));
     }
     httpListenerRegistry.addRequestHandler(testServer, methodPathUriParamGetRequestHandler,
-        new ListenerRequestMatcher(new MethodRequestMatcher("GET"), METHOD_PATH_URI_PARAM));
+                                           new ListenerRequestMatcher(new MethodRequestMatcher("GET"), METHOD_PATH_URI_PARAM));
     httpListenerRegistry.addRequestHandler(testServer, methodPathUriParamPostRequestHandler,
-        new ListenerRequestMatcher(new MethodRequestMatcher("POST"), METHOD_PATH_URI_PARAM));
+                                           new ListenerRequestMatcher(new MethodRequestMatcher("POST"), METHOD_PATH_URI_PARAM));
     httpListenerRegistry.addRequestHandler(testServer, methodPathCatchAllGetRequestHandler,
-        new ListenerRequestMatcher(new MethodRequestMatcher("GET"), METHOD_PATH_CATCH_ALL));
+                                           new ListenerRequestMatcher(new MethodRequestMatcher("GET"), METHOD_PATH_CATCH_ALL));
     httpListenerRegistry.addRequestHandler(testServer, methodPathCatchAllPostRequestHandler,
-        new ListenerRequestMatcher(new MethodRequestMatcher("POST"), METHOD_PATH_CATCH_ALL));
+                                           new ListenerRequestMatcher(new MethodRequestMatcher("POST"), METHOD_PATH_CATCH_ALL));
     httpListenerRegistry.addRequestHandler(testServer, methodPathWildcardGetRequestHandler,
-        new ListenerRequestMatcher(new MethodRequestMatcher("GET"), METHOD_PATH_WILDCARD));
+                                           new ListenerRequestMatcher(new MethodRequestMatcher("GET"), METHOD_PATH_WILDCARD));
     httpListenerRegistry.addRequestHandler(testServer, methodPathWildcardPostRequestHandler,
-        new ListenerRequestMatcher(new MethodRequestMatcher("POST"), METHOD_PATH_WILDCARD));
+                                           new ListenerRequestMatcher(new MethodRequestMatcher("POST"), METHOD_PATH_WILDCARD));
     return httpListenerRegistry;
   }
 
@@ -319,18 +327,18 @@ public class HttpListenerRegistryTestCase extends AbstractMuleTestCase {
     final HttpListenerRegistry httpListenerRegistry = new HttpListenerRegistry();
     for (String path : paths) {
       httpListenerRegistry.addRequestHandler(testServer, mockRequestHandler,
-          new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), path));
+                                             new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), path));
     }
   }
 
   private void validateCollision(String firstPath, String secondPath) {
     final HttpListenerRegistry httpListenerRegistry = new HttpListenerRegistry();
     httpListenerRegistry.addRequestHandler(testServer, mockRequestHandler,
-        new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), firstPath));
+                                           new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), firstPath));
 
     expectedException.expect(MuleRuntimeException.class);
     httpListenerRegistry.addRequestHandler(testServer, mockRequestHandler,
-        new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), secondPath));
+                                           new ListenerRequestMatcher(AcceptsAllMethodsRequestMatcher.instance(), secondPath));
   }
 
 }

@@ -65,7 +65,7 @@ public class DefaultInterfaceBinding implements InterfaceBinding, MessagingExcep
   public Object createProxy(Object target) {
     try {
       Object proxy = Proxy.newProxyInstance(getInterface().getClassLoader(), new Class[] {getInterface()},
-          new BindingInvocationHandler(this));
+                                            new BindingInvocationHandler(this));
       if (logger.isDebugEnabled()) {
         logger.debug("Have proxy?: " + (null != proxy));
       }

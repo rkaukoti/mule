@@ -31,7 +31,7 @@ public class ConfigurationProcessingStrategyParserTestCase extends FunctionalTes
   public SystemProperty processingStrategyProperty;
 
   public ConfigurationProcessingStrategyParserTestCase(String defaultProcessingStrategy,
-      Class<? extends ProcessingStrategy> expectedStrategyType) {
+                                                       Class<? extends ProcessingStrategy> expectedStrategyType) {
     this.expectedStrategyType = expectedStrategyType;
     processingStrategyProperty = new SystemProperty("processingStrategy", defaultProcessingStrategy);
   }

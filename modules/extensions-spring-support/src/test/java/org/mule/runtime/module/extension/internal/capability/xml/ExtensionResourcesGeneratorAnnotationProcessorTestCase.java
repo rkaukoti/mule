@@ -79,24 +79,24 @@ public class ExtensionResourcesGeneratorAnnotationProcessorTestCase extends Abst
 
     assertXpath(generatedSchema, "//xs:element[@name='operation']/xs:annotation/xs:documentation", "Test Operation");
     assertXpath(generatedSchema,
-        "//xs:complexType[@name='OperationType']/xs:complexContent/xs:extension/xs:attribute[@name='value']/xs:annotation/xs:documentation",
-        "test value");
+                "//xs:complexType[@name='OperationType']/xs:complexContent/xs:extension/xs:attribute[@name='value']/xs:annotation/xs:documentation",
+                "test value");
     assertXpath(generatedSchema,
-        "//xs:complexType[@name='OperationType']/xs:complexContent/xs:extension/xs:attribute[@name='value1']/xs:annotation/xs:documentation",
-        GROUP_PARAMETER_1);
+                "//xs:complexType[@name='OperationType']/xs:complexContent/xs:extension/xs:attribute[@name='value1']/xs:annotation/xs:documentation",
+                GROUP_PARAMETER_1);
     assertXpath(generatedSchema,
-        "//xs:complexType[@name='OperationType']/xs:complexContent/xs:extension/xs:attribute[@name='value2']/xs:annotation/xs:documentation",
-        GROUP_PARAMETER_2);
+                "//xs:complexType[@name='OperationType']/xs:complexContent/xs:extension/xs:attribute[@name='value2']/xs:annotation/xs:documentation",
+                GROUP_PARAMETER_2);
 
     assertXpath(generatedSchema, "//xs:element[@name='ignore-operation-should-be-ignored']/xs:annotation/xs:documentation", "");
     assertXpath(generatedSchema, "//xs:element[@name='private-operation-should-be-ignored']/xs:annotation/xs:documentation", "");
 
     assertXpath(generatedSchema,
-        "//xs:element[@name='operation-with-blank-parameter-description']/xs:annotation/xs:documentation",
-        "Test Operation with blank parameter description");
+                "//xs:element[@name='operation-with-blank-parameter-description']/xs:annotation/xs:documentation",
+                "Test Operation with blank parameter description");
     assertXpath(generatedSchema,
-        "//xs:complexType[@name='OperationWithBlankParameterDescriptionType']/xs:complexContent/xs:extension/xs:attribute[@name='value']/xs:annotation/xs:documentation",
-        "");
+                "//xs:complexType[@name='OperationWithBlankParameterDescriptionType']/xs:complexContent/xs:extension/xs:attribute[@name='value']/xs:annotation/xs:documentation",
+                "");
   }
 
   private void assertXpath(String input, String expression, String expected) throws Exception {

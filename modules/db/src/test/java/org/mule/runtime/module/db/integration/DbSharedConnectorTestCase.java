@@ -39,8 +39,8 @@ public class DbSharedConnectorTestCase extends DomainFunctionalTestCase {
 
   @Parameterized.Parameters
   public static Collection<Object[]> parameters() {
-    return Arrays.asList(
-        new Object[][] {{"integration/domain/db-shared-connnector.xml"}, {"integration/domain/db-derby-shared-connnector.xml"}});
+    return Arrays.asList(new Object[][] {{"integration/domain/db-shared-connnector.xml"},
+        {"integration/domain/db-derby-shared-connnector.xml"}});
   }
 
   @Override

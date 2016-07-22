@@ -38,7 +38,7 @@ public class ApplicationExtensionsManagerConfigurationBuilder extends AbstractCo
   }
 
   public ApplicationExtensionsManagerConfigurationBuilder(List<ArtifactPlugin> artifactPlugins,
-      ExtensionManagerAdapterFactory extensionManagerAdapterFactory) {
+                                                          ExtensionManagerAdapterFactory extensionManagerAdapterFactory) {
     this.artifactPlugins = artifactPlugins;
     this.extensionManagerAdapterFactory = extensionManagerAdapterFactory;
   }

@@ -11,8 +11,8 @@ import org.mule.runtime.config.spring.parsers.processors.CheckExclusiveAttribute
 public class TrustStoreDefinitionParser extends ParentDefinitionParser {
 
   public TrustStoreDefinitionParser() {
-    registerPreProcessor(new CheckExclusiveAttributes(
-        new String[][] {new String[] {AbstractMuleBeanDefinitionParser.ATTRIBUTE_CLASS}, new String[] {"type"}}));
+    registerPreProcessor(new CheckExclusiveAttributes(new String[][] {
+        new String[] {AbstractMuleBeanDefinitionParser.ATTRIBUTE_CLASS}, new String[] {"type"}}));
     addAlias("path", "trustStore");
     addAlias("storePassword", "trustStorePassword");
     // these used by server trust store type

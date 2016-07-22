@@ -15,5 +15,6 @@ import org.mule.runtime.core.api.model.EntryPointResolverSet;
 public interface LifecycleAdapterFactory<JC extends JavaComponent> {
 
   LifecycleAdapter create(Object pojoService, JC component, FlowConstruct flowConstruct, EntryPointResolverSet resolver,
-      MuleContext muleContext) throws MuleException;
+                          MuleContext muleContext)
+      throws MuleException;
 }

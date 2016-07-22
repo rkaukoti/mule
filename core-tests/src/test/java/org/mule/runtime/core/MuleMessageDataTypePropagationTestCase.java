@@ -106,7 +106,7 @@ public class MuleMessageDataTypePropagationTestCase extends AbstractMuleTestCase
     MuleMessage muleMessage = MuleMessage.builder().payload(TEST).build();
 
     assertDataType(MuleMessage.builder(muleMessage).nullPayload().mediaType(APPLICATION_XML_CUSTOM).build(), Object.class,
-        APPLICATION_XML, CUSTOM_ENCODING);
+                   APPLICATION_XML, CUSTOM_ENCODING);
   }
 
   @Test
@@ -114,7 +114,7 @@ public class MuleMessageDataTypePropagationTestCase extends AbstractMuleTestCase
     MuleMessage muleMessage = MuleMessage.builder().payload(TEST).build();
 
     assertDataType(MuleMessage.builder(muleMessage).payload(1).mediaType(APPLICATION_XML_CUSTOM).build(), Integer.class,
-        APPLICATION_XML, CUSTOM_ENCODING);
+                   APPLICATION_XML, CUSTOM_ENCODING);
   }
 
   @Test

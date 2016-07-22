@@ -68,7 +68,7 @@ public class DomainClassLoaderFactory implements DeployableArtifactClassLoaderFa
 
   @Override
   public ArtifactClassLoader create(ArtifactClassLoader parent, DomainDescriptor descriptor,
-      List<ArtifactClassLoader> artifactClassLoaders) {
+                                    List<ArtifactClassLoader> artifactClassLoaders) {
     String domain = descriptor.getName();
     Preconditions.checkArgument(domain != null, "Domain name cannot be null");
 
@@ -153,7 +153,7 @@ public class DomainClassLoaderFactory implements DeployableArtifactClassLoaderFa
 
   private ArtifactClassLoader getDefaultDomainClassLoader(ClassLoaderLookupPolicy containerLookupPolicy) {
     return new MuleSharedDomainClassLoader(DEFAULT_DOMAIN_NAME, parentClassLoader, containerLookupPolicy.extend(emptyMap()),
-        emptyList());
+                                           emptyList());
   }
 
   private void validateDomain(String domain) {

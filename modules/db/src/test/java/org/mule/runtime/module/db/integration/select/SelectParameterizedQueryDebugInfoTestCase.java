@@ -66,8 +66,8 @@ public class SelectParameterizedQueryDebugInfoTestCase extends AbstractDbIntegra
 
     assertThat(debugInfo, is(not(nullValue())));
     assertThat(debugInfo.size(), equalTo(3));
-    assertThat(debugInfo,
-        hasItem(fieldLike(SQL_TEXT_DEBUG_FIELD, String.class, "SELECT * FROM PLANET WHERE POSITION = ? AND NAME = 'Earth'")));
+    assertThat(debugInfo, hasItem(fieldLike(SQL_TEXT_DEBUG_FIELD, String.class,
+                                            "SELECT * FROM PLANET WHERE POSITION = ? AND NAME = 'Earth'")));
     assertThat(debugInfo, hasItem(fieldLike(TYPE_DEBUG_FIELD, String.class, "SELECT")));
 
     final List<Matcher<FieldDebugInfo<?>>> paramMatchers = new ArrayList<>();

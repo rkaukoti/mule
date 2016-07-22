@@ -86,7 +86,7 @@ public class MuleServerTestCase extends AbstractMuleTestCase {
           }
         };
     assertEquals("mule-config.xml,org/mule/test/spring/config1/test-xml-mule2-config.xml",
-        muleServer.getConfigurationResources());
+                 muleServer.getConfigurationResources());
     assertEquals(MuleServer.CLASSNAME_DEFAULT_CONFIG_BUILDER, MuleServer.getConfigBuilderClassName());
     muleServer.initialize();
   }
@@ -122,8 +122,8 @@ public class MuleServerTestCase extends AbstractMuleTestCase {
   @Ignore("MULE-6926: Flaky test - fails on build server")
   @Test
   public void testMuleServerAppConfig() throws Exception {
-    muleServer = new MuleServer(
-        new String[] {"-config", "mule-config.xml", "-appconfig", "org/mule/test/spring/config1/test-app-config.properties"}) {
+    muleServer = new MuleServer(new String[] {"-config", "mule-config.xml", "-appconfig",
+        "org/mule/test/spring/config1/test-app-config.properties"}) {
 
       @Override
       public void shutdown() {

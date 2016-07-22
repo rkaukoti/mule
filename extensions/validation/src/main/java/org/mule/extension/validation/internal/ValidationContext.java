@@ -29,7 +29,7 @@ public final class ValidationContext {
   }
 
   public ValidationContext(ValidationMessages messages, ValidationOptions options, MuleEvent muleEvent,
-      ValidationExtension config) {
+                           ValidationExtension config) {
     this.messages = messages;
     this.options = options;
     this.muleEvent = muleEvent;

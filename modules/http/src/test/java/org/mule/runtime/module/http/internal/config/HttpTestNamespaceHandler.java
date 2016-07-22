@@ -15,7 +15,7 @@ public class HttpTestNamespaceHandler extends HttpNamespaceHandler {
 
   public void init() {
     registerBeanDefinitionParser("header",
-        new HttpMessageSingleParamDefinitionParser(HttpSingleParam.class, HttpParamType.HEADER));
+                                 new HttpMessageSingleParamDefinitionParser(HttpSingleParam.class, HttpParamType.HEADER));
     registerBeanDefinitionParser("response-builder", new HttpResponseBuilderDefinitionParser("responseBuilder"));
     registerBeanDefinitionParser("error-response-builder", new HttpResponseBuilderDefinitionParser("errorResponseBuilder"));
     super.init();

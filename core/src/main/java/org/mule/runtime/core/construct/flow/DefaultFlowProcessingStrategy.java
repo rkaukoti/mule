@@ -22,7 +22,7 @@ public class DefaultFlowProcessingStrategy extends AsynchronousProcessingStrateg
     ThreadingProfile threadingProfile = createThreadingProfile(muleContext);
     String stageName = nameSource.getName();
     return new LaxAsyncInterceptingMessageProcessor(threadingProfile, getThreadPoolName(stageName, muleContext),
-        muleContext.getConfiguration().getShutdownTimeout());
+                                                    muleContext.getConfiguration().getShutdownTimeout());
   }
 
 }

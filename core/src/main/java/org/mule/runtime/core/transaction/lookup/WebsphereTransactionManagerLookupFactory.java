@@ -59,10 +59,9 @@ public class WebsphereTransactionManagerLookupFactory implements TransactionMana
           logger.info("Found WebSphere 4: " + FACTORY_CLASS_4);
         } catch (ClassNotFoundException ex3) {
           logger.debug("Could not find WebSphere 4 TransactionManager factory class", ex3);
-          throw new MuleRuntimeException(
-              CoreMessages.createStaticMessage("Couldn't find any WebSphere TransactionManager factory class, "
-                  + "neither for WebSphere version 5.1 nor 5.0 nor 4"),
-              ex);
+          throw new MuleRuntimeException(CoreMessages
+              .createStaticMessage("Couldn't find any WebSphere TransactionManager factory class, "
+                  + "neither for WebSphere version 5.1 nor 5.0 nor 4"), ex);
         }
       }
     }

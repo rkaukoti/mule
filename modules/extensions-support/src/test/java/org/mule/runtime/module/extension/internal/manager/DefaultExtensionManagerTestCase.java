@@ -181,7 +181,7 @@ public class DefaultExtensionManagerTestCase extends AbstractMuleTestCase {
   public void getExtensionByNameAndVendor() {
     assertThat(extensionsManager.getExtension(EXTENSION2_NAME, MULESOFT).get(), is(sameInstance(extensionModel2)));
     assertThat(extensionsManager.getExtension(EXTENSION2_NAME, OTHER_VENDOR).get(),
-        is(sameInstance(extensionModel3WithRepeatedName)));
+               is(sameInstance(extensionModel3WithRepeatedName)));
     assertThat(extensionsManager.getExtension(EXTENSION1_NAME, OTHER_VENDOR).isPresent(), is(false));
   }
 

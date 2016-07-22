@@ -40,8 +40,9 @@ import java.util.concurrent.atomic.AtomicLong;
 public class ExpressionFilenameParser implements FilenameParser, MuleContextAware {
 
   public static final String DEFAULT_DATE_FORMAT = "dd-MM-yy_HH-mm-ss.SSS";
-  public static final String DEFAULT_EXPRESSION = MessageFormat.format("{0}org.mule.runtime.core.util.UUID.getUUID(){1}.dat",
-      ExpressionManager.DEFAULT_EXPRESSION_PREFIX, ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
+  public static final String DEFAULT_EXPRESSION =
+      MessageFormat.format("{0}org.mule.runtime.core.util.UUID.getUUID(){1}.dat", ExpressionManager.DEFAULT_EXPRESSION_PREFIX,
+                           ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
   /**
    * A local counter that will increment for each call. If the server is re-started the counter will return to zero
    */

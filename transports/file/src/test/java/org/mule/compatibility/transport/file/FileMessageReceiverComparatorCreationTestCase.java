@@ -36,7 +36,7 @@ public class FileMessageReceiverComparatorCreationTestCase extends AbstractMuleC
     InboundEndpoint endpoint = createEndpoint();
 
     FileMessageReceiver receiver = new FileMessageReceiver(endpoint.getConnector(), mock(Flow.class), endpoint,
-        readFolder.getRoot().getAbsolutePath(), null, null, RECEIVE_TIMEOUT);
+                                                           readFolder.getRoot().getAbsolutePath(), null, null, RECEIVE_TIMEOUT);
 
     receiver.connect();
 

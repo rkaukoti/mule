@@ -32,7 +32,8 @@ public interface JmsSupport {
   MessageProducer createProducer(Session session, Destination destination, boolean topic) throws JMSException;
 
   MessageConsumer createConsumer(Session session, Destination destination, String messageSelector, boolean noLocal,
-      String durableName, boolean topic, ImmutableEndpoint endpoint) throws JMSException;
+                                 String durableName, boolean topic, ImmutableEndpoint endpoint)
+      throws JMSException;
 
   MessageConsumer createConsumer(Session session, Destination destination, boolean topic, ImmutableEndpoint endpoint)
       throws JMSException;
@@ -46,11 +47,13 @@ public interface JmsSupport {
   void send(MessageProducer producer, Message message, boolean topic, ImmutableEndpoint endpoint) throws JMSException;
 
   void send(MessageProducer producer, Message message, boolean persistent, int priority, long ttl, boolean topic,
-      ImmutableEndpoint endpoint) throws JMSException;
+            ImmutableEndpoint endpoint)
+      throws JMSException;
 
   void send(MessageProducer producer, Message message, Destination dest, boolean topic, ImmutableEndpoint endpoint)
       throws JMSException;
 
   void send(MessageProducer producer, Message message, Destination dest, boolean persistent, int priority, long ttl,
-      boolean topic, ImmutableEndpoint endpoint) throws JMSException;
+            boolean topic, ImmutableEndpoint endpoint)
+      throws JMSException;
 }

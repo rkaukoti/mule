@@ -83,8 +83,8 @@ public abstract class AbstractMessageTransformer extends AbstractTransformer imp
     DataType sourceType = DataType.fromType(src.getClass());
     if (!isSourceDataTypeSupported(sourceType)) {
       if (isIgnoreBadInput()) {
-        logger.debug(
-            "Source type is incompatible with this transformer and property 'ignoreBadInput' is set to true, so the transformer chain will continue.");
+        logger
+            .debug("Source type is incompatible with this transformer and property 'ignoreBadInput' is set to true, so the transformer chain will continue.");
         return src;
       } else {
         Message msg = CoreMessages.transformOnObjectUnsupportedTypeOfEndpoint(getName(), src.getClass());
@@ -118,7 +118,7 @@ public abstract class AbstractMessageTransformer extends AbstractTransformer imp
     // TODO MULE-9342 Clean up transformer vs message transformer confusion
     if (event == null) {
       event = new DefaultMuleEvent(message, MessageExchangePattern.REQUEST_RESPONSE,
-          new DefaultLocalMuleClient.MuleClientFlowConstruct(muleContext));
+                                   new DefaultLocalMuleClient.MuleClientFlowConstruct(muleContext));
     }
     try {
       result = transformMessage(event, enc);

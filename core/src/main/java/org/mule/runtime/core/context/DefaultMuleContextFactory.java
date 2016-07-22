@@ -70,7 +70,8 @@ public class DefaultMuleContextFactory implements MuleContextFactory {
    * {@inheritDoc}
    */
   public MuleContext createMuleContext(final List<ConfigurationBuilder> configurationBuilders,
-      MuleContextBuilder muleContextBuilder) throws InitialisationException, ConfigurationException {
+                                       MuleContextBuilder muleContextBuilder)
+      throws InitialisationException, ConfigurationException {
     return doCreateMuleContext(muleContextBuilder, new ContextConfigurator() {
 
       @Override
@@ -153,7 +154,8 @@ public class DefaultMuleContextFactory implements MuleContextFactory {
    * "property placeholder" value in configuration files.
    */
   public MuleContext createMuleContext(final ConfigurationBuilder configurationBuilder, final Properties properties,
-      MuleConfiguration configuration) throws InitialisationException, ConfigurationException {
+                                       MuleConfiguration configuration)
+      throws InitialisationException, ConfigurationException {
     // Create MuleContext
     DefaultMuleContextBuilder contextBuilder = createMuleContextBuilder();
     contextBuilder.setMuleConfiguration(configuration);

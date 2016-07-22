@@ -24,8 +24,8 @@ public class ExternalXaTransaction extends XaTransaction {
 
   protected void doBegin() throws TransactionException {
     if (txManager == null) {
-      throw new IllegalStateException(
-          CoreMessages.objectNotRegistered("javax.transaction.TransactionManager", "Transaction Manager").getMessage());
+      throw new IllegalStateException(CoreMessages
+          .objectNotRegistered("javax.transaction.TransactionManager", "Transaction Manager").getMessage());
     }
 
     try {
@@ -65,9 +65,9 @@ public class ExternalXaTransaction extends XaTransaction {
           rollback();
         }
       } catch (TransactionException ex) {
-        logger.warn(
-            MessageFormat.format("Exception while {0} an external transaction {1}", commit ? "committing" : "rolling back", this),
-            ex);
+        logger.warn(MessageFormat.format("Exception while {0} an external transaction {1}",
+                                         commit ? "committing" : "rolling back", this),
+                    ex);
       }
     }
 

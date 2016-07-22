@@ -60,7 +60,7 @@ public class ConvertersNotRegisteredTwiceTestCase extends FunctionalTestCase {
 
     ArgumentCaptor<Converter> converterArgumentCaptor = ArgumentCaptor.forClass(Converter.class);
     verify(registryHelper, atLeastOnce()).notifyTransformerResolvers(converterArgumentCaptor.capture(),
-        same(TransformerResolver.RegistryAction.ADDED));
+                                                                     same(TransformerResolver.RegistryAction.ADDED));
     assertNoDuplicatesNorEmpty(converterArgumentCaptor.getAllValues());
   }
 

@@ -72,10 +72,10 @@ public class LocatedMuleException extends MuleException {
     if (component instanceof NamedObject) {
       // Cannot currently get the application name without an event/context.
       return LocationExecutionContextProvider.resolveProcessorRepresentation("app", "/" + ((NamedObject) component).getName(),
-          component);
+                                                                             component);
     } else {
       return LocationExecutionContextProvider.resolveProcessorRepresentation("app", ObjectUtils.toString(component, "null"),
-          component);
+                                                                             component);
     }
   }
 }

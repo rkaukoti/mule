@@ -44,7 +44,8 @@ public final class TcpListenerConnection extends AbstractTcpConnection implement
   private ServerSocket serverSocket;
 
   public TcpListenerConnection(ConnectionSettings connectionSettings, TcpProtocol protocol,
-      TcpServerSocketProperties socketProperties, SimpleServerSocketFactory serverSocketFactory) throws ConnectionException {
+                               TcpServerSocketProperties socketProperties, SimpleServerSocketFactory serverSocketFactory)
+      throws ConnectionException {
     super(connectionSettings, protocol);
     this.socketProperties = socketProperties;
     this.serverSocketFactory = serverSocketFactory;
@@ -105,9 +106,9 @@ public final class TcpListenerConnection extends AbstractTcpConnection implement
     try {
       serverSocket.bind(address, socketProperties.getReceiveBacklog());
     } catch (IOException e) {
-      throw new ConnectionException(
-          format("Could not bind socket to host '%s' and port '%d'", connectionSettings.getHost(), connectionSettings.getPort()),
-          e);
+      throw new ConnectionException(format("Could not bind socket to host '%s' and port '%d'", connectionSettings.getHost(),
+                                           connectionSettings.getPort()),
+                                    e);
     }
 
   }

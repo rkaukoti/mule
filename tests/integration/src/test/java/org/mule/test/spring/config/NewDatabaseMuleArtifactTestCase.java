@@ -20,8 +20,8 @@ public class NewDatabaseMuleArtifactTestCase extends XmlConfigurationMuleArtifac
 
   @Test(expected = MuleArtifactFactoryException.class)
   public void detectsMissingAttribute() throws SAXException, IOException, MuleArtifactFactoryException {
-    Document document = XMLUnit.buildControlDocument(
-        "<db:select xmlns:db=\"http://www.mulesoft.org/schema/mule/db\"><db:template-query-ref name=\"template\"/></db:select>");
+    Document document = XMLUnit
+        .buildControlDocument("<db:select xmlns:db=\"http://www.mulesoft.org/schema/mule/db\"><db:template-query-ref name=\"template\"/></db:select>");
     XmlConfigurationCallback callback = new DatabaseConfigurationCallback();
 
     lookupArtifact().getArtifactForMessageProcessor(document.getDocumentElement(), callback);
@@ -29,8 +29,8 @@ public class NewDatabaseMuleArtifactTestCase extends XmlConfigurationMuleArtifac
 
   @Test(expected = MuleArtifactFactoryException.class)
   public void detectsMissingDependentElement() throws SAXException, IOException, MuleArtifactFactoryException {
-    Document document = XMLUnit.buildControlDocument(
-        "<db:select config-ref=\"mysql-config\" xmlns:db=\"http://www.mulesoft.org/schema/mule/db\"><db:template-query-ref name=\"template\"/></db:select>");
+    Document document = XMLUnit
+        .buildControlDocument("<db:select config-ref=\"mysql-config\" xmlns:db=\"http://www.mulesoft.org/schema/mule/db\"><db:template-query-ref name=\"template\"/></db:select>");
     XmlConfigurationCallback callback = new DatabaseConfigurationCallback();
 
     lookupArtifact().getArtifactForMessageProcessor(document.getDocumentElement(), callback);

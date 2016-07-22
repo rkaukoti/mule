@@ -177,7 +177,8 @@ public class HttpKeepAliveFunctionalTestCase extends FunctionalTestCase {
   }
 
   private void runHttpMethodAndAssertConnectionHeader(HttpMethod request, String expectedConnectionHeaderValue,
-      HttpClient httpClient) throws Exception {
+                                                      HttpClient httpClient)
+      throws Exception {
     int status = httpClient.executeMethod(request);
     assertEquals(HttpStatus.SC_OK, status);
 

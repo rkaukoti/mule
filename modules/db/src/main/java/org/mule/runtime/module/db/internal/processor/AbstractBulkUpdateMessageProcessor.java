@@ -30,7 +30,8 @@ public abstract class AbstractBulkUpdateMessageProcessor extends AbstractDbMessa
   protected String source;
 
   public AbstractBulkUpdateMessageProcessor(DbConfigResolver dbConfigResolver, TransactionalAction transactionalAction,
-      List<QueryType> validQueryTypes, QueryResolver queryResolver, BulkQueryExecutorFactory bulkUpdateExecutorFactory) {
+                                            List<QueryType> validQueryTypes, QueryResolver queryResolver,
+                                            BulkQueryExecutorFactory bulkUpdateExecutorFactory) {
     super(dbConfigResolver, transactionalAction);
     this.validQueryTypes = validQueryTypes;
     this.queryResolver = queryResolver;
@@ -57,7 +58,7 @@ public abstract class AbstractBulkUpdateMessageProcessor extends AbstractDbMessa
       return (Iterator<Object>) bulkData;
     } else {
       throw new IllegalArgumentException(String.format("Bulk mode operations require Iterable/Iterator as input. Got %s instead",
-          bulkData != null ? bulkData.getClass().getCanonicalName() : "null"));
+                                                       bulkData != null ? bulkData.getClass().getCanonicalName() : "null"));
     }
   }
 

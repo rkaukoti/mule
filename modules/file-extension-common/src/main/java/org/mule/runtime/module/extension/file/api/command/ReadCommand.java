@@ -31,5 +31,5 @@ public interface ReadCommand {
    * @throws IllegalArgumentException if the file at the given path doesn't exists
    */
   OperationResult<InputStream, FileAttributes> read(FileConnectorConfig config, MuleMessage message, String filePath,
-      boolean lock);
+                                                    boolean lock);
 }

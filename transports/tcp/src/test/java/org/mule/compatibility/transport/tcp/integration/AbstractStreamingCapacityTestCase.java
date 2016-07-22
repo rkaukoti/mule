@@ -72,9 +72,8 @@ public abstract class AbstractStreamingCapacityTestCase extends FunctionalTestCa
     BigInputStream stream = new BigInputStream(size, MESSAGES);
     MuleClient client = muleContext.getClient();
     // dynamically get the endpoint to send to
-    client.dispatch(
-        ((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("testComponent")).getMessageSource()).getAddress(),
-        MuleMessage.builder().payload(stream).build());
+    client.dispatch(((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("testComponent")).getMessageSource())
+        .getAddress(), MuleMessage.builder().payload(stream).build());
 
     // if we assume 1MB/sec then we need at least...
     long pause = Math.max(size / ONE_MB, 60 * 10) + 10;

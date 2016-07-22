@@ -45,8 +45,9 @@ public class BulkUpdateMessageProcessorFactoryBean implements FactoryBean<Messag
   private MuleContext muleContext;
 
   public BulkUpdateMessageProcessorFactoryBean(DbConfigResolver dbConfigResolver, QueryResolver queryResolver,
-      BulkQueryExecutorFactory bulkUpdateExecutorFactory, TransactionalAction transactionalAction,
-      List<QueryType> validQueryTypes, Query query) {
+                                               BulkQueryExecutorFactory bulkUpdateExecutorFactory,
+                                               TransactionalAction transactionalAction, List<QueryType> validQueryTypes,
+                                               Query query) {
     this.dbConfigResolver = dbConfigResolver;
     this.queryResolver = queryResolver;
     this.bulkUpdateExecutorFactory = bulkUpdateExecutorFactory;
@@ -60,12 +61,14 @@ public class BulkUpdateMessageProcessorFactoryBean implements FactoryBean<Messag
     AbstractBulkUpdateMessageProcessor bulkUpdateMessageProcessor;
 
     if (query.isDynamic()) {
-      bulkUpdateMessageProcessor = new DynamicBulkUpdateMessageProcessor(dbConfigResolver, queryResolver,
-          bulkUpdateExecutorFactory, transactionalAction, validQueryTypes);
+      bulkUpdateMessageProcessor =
+          new DynamicBulkUpdateMessageProcessor(dbConfigResolver, queryResolver, bulkUpdateExecutorFactory, transactionalAction,
+                                                validQueryTypes);
     } else {
       bulkUpdateMessageProcessor =
           new PreparedBulkUpdateMessageProcessor(dbConfigResolver, queryResolver, bulkUpdateExecutorFactory, transactionalAction,
-              validQueryTypes, new DynamicParamValueResolver(muleContext.getExpressionManager()));
+                                                 validQueryTypes, new DynamicParamValueResolver(muleContext
+                                                     .getExpressionManager()));
     }
 
     bulkUpdateMessageProcessor.setSource(source);

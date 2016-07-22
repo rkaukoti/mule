@@ -39,9 +39,9 @@ public class ResponseCompletionHandler extends BaseResponseCompletionHandler {
   private boolean contentSend;
 
   public ResponseCompletionHandler(final FilterChainContext ctx, final HttpRequestPacket httpRequestPacket,
-      final HttpResponse httpResponse, ResponseStatusCallback responseStatusCallback) {
+                                   final HttpResponse httpResponse, ResponseStatusCallback responseStatusCallback) {
     Preconditions.checkArgument((!(httpResponse.getEntity() instanceof InputStreamHttpEntity)),
-        "response entity cannot be input stream");
+                                "response entity cannot be input stream");
     this.ctx = ctx;
     this.httpResponsePacket = buildHttpResponsePacket(httpRequestPacket, httpResponse);
     this.httpResponseContent = buildResponseContent(httpResponse);

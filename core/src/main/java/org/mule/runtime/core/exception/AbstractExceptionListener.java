@@ -164,8 +164,8 @@ public abstract class AbstractExceptionListener extends AbstractMessageProcessor
     if (!messageProcessors.isEmpty()) {
       try {
         if (logger.isDebugEnabled()) {
-          logger.debug(
-              "Message being processed is: " + (muleContext.getTransformationService().getPayloadForLogging(event.getMessage())));
+          logger.debug("Message being processed is: "
+              + (muleContext.getTransformationService().getPayloadForLogging(event.getMessage())));
         }
         String component = "Unknown";
         if (event.getFlowConstruct() != null) {

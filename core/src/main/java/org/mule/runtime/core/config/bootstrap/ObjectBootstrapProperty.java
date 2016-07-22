@@ -28,7 +28,7 @@ public class ObjectBootstrapProperty extends AbstractBootstrapProperty {
    * @param className className of the bootstrapped object. Not empty.
    */
   public ObjectBootstrapProperty(BootstrapService service, ArtifactType artifactType, Boolean optional, String key,
-      String className) {
+                                 String className) {
     super(service, artifactType, optional);
     checkArgument(!StringUtils.isEmpty(key), "key cannot be empty");
     checkArgument(!StringUtils.isEmpty(className), "className cannot be empty");

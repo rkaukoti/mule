@@ -31,7 +31,7 @@ public class RoutingFailedMessagingException extends MessagingException {
   }
 
   public RoutingFailedMessagingException(Message message, MuleEvent event, Throwable cause,
-      MessageProcessor failingMessageProcessor) {
+                                         MessageProcessor failingMessageProcessor) {
     super(message, event, cause, failingMessageProcessor);
   }
 

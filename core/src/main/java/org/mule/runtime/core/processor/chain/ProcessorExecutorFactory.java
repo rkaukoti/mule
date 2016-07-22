@@ -20,7 +20,7 @@ import java.util.List;
 public class ProcessorExecutorFactory {
 
   public ProcessorExecutor createProcessorExecutor(MuleEvent event, List<MessageProcessor> processors,
-      MessageProcessorExecutionTemplate executionTemplate, boolean copyOnVoidEvent) {
+                                                   MessageProcessorExecutionTemplate executionTemplate, boolean copyOnVoidEvent) {
     if (event.isAllowNonBlocking()) {
       return new NonBlockingProcessorExecutor(event, processors, executionTemplate, copyOnVoidEvent);
     } else {

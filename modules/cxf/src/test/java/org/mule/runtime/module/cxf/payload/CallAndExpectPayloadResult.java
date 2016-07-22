@@ -19,7 +19,7 @@ class CallAndExpectPayloadResult implements CallAndExpect {
   private Object payload;
 
   public CallAndExpectPayloadResult(String outputEndpointName, Object payload, Object expectedPayloadResult,
-      MuleContext muleContext) {
+                                    MuleContext muleContext) {
     this.expectedPayloadResult = expectedPayloadResult;
     this.outputEndpointName = outputEndpointName;
     this.payload = payload;

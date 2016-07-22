@@ -36,7 +36,7 @@ public class DefaultArtifactPluginFactoryTestCase extends AbstractMuleTestCase {
     when(descriptor.getRuntimeClassesDir()).thenReturn(getClass().getClassLoader().getResource("org/foo/"));
 
     ArtifactClassLoader parentClassLoader = new MuleArtifactClassLoader("mule", new URL[0], getClass().getClassLoader(),
-        new MuleClassLoaderLookupPolicy(emptyMap(), emptySet()));
+                                                                        new MuleClassLoaderLookupPolicy(emptyMap(), emptySet()));
     ArtifactPlugin appPlugin =
         new DefaultArtifactPluginFactory(new ArtifactPluginClassLoaderFactory()).create(descriptor, parentClassLoader);
 

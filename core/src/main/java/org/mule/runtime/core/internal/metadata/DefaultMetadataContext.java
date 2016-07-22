@@ -33,7 +33,7 @@ public class DefaultMetadataContext implements MetadataContext {
    * @param cache instance of the {@link MetadataCache} for this context
    */
   public DefaultMetadataContext(ConfigurationInstance<Object> configInstance, ConnectionManager connectionManager,
-      MetadataCache cache) {
+                                MetadataCache cache) {
     this.configInstance = configInstance;
     this.connectionManager = connectionManager;
     this.cache = cache;

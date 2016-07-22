@@ -210,8 +210,8 @@ public abstract class AbstractTransportMessageHandler<O> implements Connectable,
     if (logger.isDebugEnabled()) {
       logger.debug("Disconnected: " + this);
     }
-    connector.fireNotification(
-        new ConnectionNotification(this, getConnectEventId(endpoint), ConnectionNotification.CONNECTION_DISCONNECTED));
+    connector.fireNotification(new ConnectionNotification(this, getConnectEventId(endpoint),
+                                                          ConnectionNotification.CONNECTION_DISCONNECTED));
   }
 
   protected String getConnectEventId(ImmutableEndpoint endpoint) {

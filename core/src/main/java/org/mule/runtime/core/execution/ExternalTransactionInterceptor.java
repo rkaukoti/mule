@@ -19,7 +19,7 @@ class ExternalTransactionInterceptor<T> implements ExecutionInterceptor<T> {
   private MuleContext muleContext;
 
   public ExternalTransactionInterceptor(ExecutionInterceptor<T> next, TransactionConfig transactionConfig,
-      MuleContext muleContext) {
+                                        MuleContext muleContext) {
     this.next = next;
     this.transactionConfig = transactionConfig;
     this.muleContext = muleContext;

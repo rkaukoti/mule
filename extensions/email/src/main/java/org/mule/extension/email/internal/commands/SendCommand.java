@@ -42,13 +42,14 @@ public final class SendCommand {
    * @param attachments the attachments that are bounded in the content of the email.
    */
   public void send(SenderConnection connection, EmailContent content, String subject, List<String> toAddresses,
-      String fromAddress, String defaultCharset, List<String> ccAddresses, List<String> bccAddresses, Map<String, String> headers,
-      List<EmailAttachment> attachments) {
+                   String fromAddress, String defaultCharset, List<String> ccAddresses, List<String> bccAddresses,
+                   Map<String, String> headers, List<EmailAttachment> attachments) {
     try {
       Message message = MessageBuilder.newMessage(connection.getSession()).withSentDate(Calendar.getInstance().getTime())
           .fromAddresses(fromAddress).to(toAddresses).cc(ccAddresses).bcc(bccAddresses).withSubject(subject)
-          .withAttachments(attachments != null ? attachments : new ArrayList<>()).withContent(content.getBody(),
-              content.getContentType(), content.getCharset() == null ? defaultCharset : content.getCharset())
+          .withAttachments(attachments != null ? attachments : new ArrayList<>())
+          .withContent(content.getBody(), content.getContentType(),
+                       content.getCharset() == null ? defaultCharset : content.getCharset())
           .withHeaders(headers).build();
 
       Transport.send(message);

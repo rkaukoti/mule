@@ -31,8 +31,9 @@ public class AbstractAuthorizationCodeRefreshTokenConfigTestCase extends Abstrac
   public static final String REFRESHED_ACCESS_TOKEN = "rbBQLgJXBEYo83K4Fqs4guasdfsdfa";
   private static final String RESOURCE_PATH = "/resource";
   @Rule
-  public SystemProperty localAuthorizationUrl = new SystemProperty("local.authorization.url",
-      String.format("http://localhost:%d/authorization", localHostPort.getNumber()));
+  public SystemProperty localAuthorizationUrl =
+      new SystemProperty("local.authorization.url",
+                         String.format("http://localhost:%d/authorization", localHostPort.getNumber()));
   @Rule
   public SystemProperty authorizationUrl =
       new SystemProperty("authorization.url", String.format("http://localhost:%d" + AUTHORIZE_PATH, oauthServerPort.getNumber()));
@@ -62,10 +63,10 @@ public class AbstractAuthorizationCodeRefreshTokenConfigTestCase extends Abstrac
     assertThat(getPayloadAsString(result.getMessage()), is(RESOURCE_RESULT));
 
     wireMockRule.verify(postRequestedFor(urlEqualTo(TOKEN_PATH))
-        .withRequestBody(containing(
-            OAuthConstants.CLIENT_ID_PARAMETER + "=" + URLEncoder.encode(clientId.getValue(), StandardCharsets.UTF_8.name())))
-        .withRequestBody(containing(
-            OAuthConstants.REFRESH_TOKEN_PARAMETER + "=" + URLEncoder.encode(REFRESH_TOKEN, StandardCharsets.UTF_8.name())))
+        .withRequestBody(containing(OAuthConstants.CLIENT_ID_PARAMETER + "="
+            + URLEncoder.encode(clientId.getValue(), StandardCharsets.UTF_8.name())))
+        .withRequestBody(containing(OAuthConstants.REFRESH_TOKEN_PARAMETER + "="
+            + URLEncoder.encode(REFRESH_TOKEN, StandardCharsets.UTF_8.name())))
         .withRequestBody(containing(OAuthConstants.CLIENT_SECRET_PARAMETER + "="
             + URLEncoder.encode(clientSecret.getValue(), StandardCharsets.UTF_8.name())))
         .withRequestBody(containing(OAuthConstants.GRANT_TYPE_PARAMETER + "="
@@ -73,7 +74,9 @@ public class AbstractAuthorizationCodeRefreshTokenConfigTestCase extends Abstrac
   }
 
   protected void executeRefreshTokenUsingOldRefreshTokenOnTokenCallAndRevokedByUsers(String flowName, String oauthConfigName,
-      String userId, int resourceFailureStatusCode, int tokenFailureStatusCode) throws Exception {
+                                                                                     String userId, int resourceFailureStatusCode,
+                                                                                     int tokenFailureStatusCode)
+      throws Exception {
     configureResourceResponsesForRefreshToken(oauthConfigName, userId, resourceFailureStatusCode);
 
     wireMockRule

@@ -27,11 +27,11 @@ public class ParamMapMatcher {
         assertThat(parameterMap.size(), Is.is(parameters.size()));
         for (String key : parameters.keySet()) {
           assertThat(parameterMap.keySet(),
-              Matchers.containsInAnyOrder(parameters.keySet().toArray(new String[parameterMap.size()])));
+                     Matchers.containsInAnyOrder(parameters.keySet().toArray(new String[parameterMap.size()])));
           final List<String> parameterKeyValues = parameters.get(key);
           final List<String> parameterMapValues = parameterMap.getAll(key);
           assertThat(parameterMapValues,
-              Matchers.containsInAnyOrder(parameterKeyValues.toArray(new String[parameterKeyValues.size()])));
+                     Matchers.containsInAnyOrder(parameterKeyValues.toArray(new String[parameterKeyValues.size()])));
         }
         return true;
       }

@@ -41,7 +41,7 @@ public final class Multicaster {
 
   public static Object create(Class<?>[] interfaces, Collection<?> objects, InvokeListener listener) {
     return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), interfaces,
-        new CastingHandler(objects, listener));
+                                  new CastingHandler(objects, listener));
   }
 
   public static interface InvokeListener {

@@ -246,9 +246,9 @@ public class ParameterizedConfigParserTestCase extends AbstractConfigParserTestC
     assertThat(heisenberg.getPersonalInfo().getLifetimeInfo().getDateOfDeath().get(YEAR), equalTo(getDateOfDeath().get(YEAR)));
 
     assertThat(heisenberg.getPersonalInfo().getLifetimeInfo().getDateOfConception().getYear(),
-        is(getDateOfConception().getYear()));
+               is(getDateOfConception().getYear()));
     assertThat(heisenberg.getPersonalInfo().getLifetimeInfo().getDateOfConception().getMonth(),
-        is(getDateOfConception().getMonth()));
+               is(getDateOfConception().getMonth()));
 
     assertThat(heisenberg.getMoney(), equalTo(new BigDecimal(MONEY)));
   }

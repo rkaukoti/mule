@@ -80,7 +80,8 @@ public class IOUtils extends org.apache.commons.io.IOUtils {
    * @throws java.io.IOException IO error
    */
   public static InputStream getResourceAsStream(final String resourceName, final Class callingClass, boolean tryAsFile,
-      boolean tryAsUrl) throws IOException {
+                                                boolean tryAsUrl)
+      throws IOException {
 
     URL url = getResourceAsUrl(resourceName, callingClass, tryAsFile, tryAsUrl);
 

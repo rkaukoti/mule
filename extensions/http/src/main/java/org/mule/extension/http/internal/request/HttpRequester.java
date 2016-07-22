@@ -56,7 +56,8 @@ public class HttpRequester {
   private final MuleEventToHttpRequest eventToHttpRequest;
 
   public HttpRequester(MuleEventToHttpRequest eventToHttpRequest, boolean followRedirects, HttpAuthentication authentication,
-      boolean parseResponse, int responseTimeout, ResponseValidator responseValidator, HttpRequesterConfig config) {
+                       boolean parseResponse, int responseTimeout, ResponseValidator responseValidator,
+                       HttpRequesterConfig config) {
     this.followRedirects = followRedirects;
     this.authentication = authentication;
     this.parseResponse = parseResponse;
@@ -69,13 +70,14 @@ public class HttpRequester {
   }
 
   public MuleMessage doRequest(MuleEvent muleEvent, HttpClient client, HttpRequesterRequestBuilder requestBuilder,
-      boolean checkRetry) throws MuleException {
+                               boolean checkRetry)
+      throws MuleException {
     HttpRequest httpRequest = eventToHttpRequest.create(muleEvent, requestBuilder, authentication);
 
     HttpResponse response;
     try {
       notificationHelper.fireNotification(this, muleEvent, httpRequest.getUri(), muleEvent.getFlowConstruct(),
-          MESSAGE_REQUEST_BEGIN);
+                                          MESSAGE_REQUEST_BEGIN);
       response = client.send(httpRequest, responseTimeout, followRedirects, resolveAuthentication(authentication));
     } catch (Exception e) {
       checkIfRemotelyClosed(e, client.getDefaultUriParameters());
@@ -87,7 +89,7 @@ public class HttpRequester {
 
     // Create a new muleEvent based on the old and the response so that the auth can use it
     MuleEvent responseEvent = new DefaultMuleEvent(org.mule.runtime.core.api.MuleMessage.builder(responseMessage).build(),
-        muleEvent, muleEvent.isSynchronous());
+                                                   muleEvent, muleEvent.isSynchronous());
     if (resendRequest(responseEvent, checkRetry, authentication)) {
       consumePayload(responseEvent);
       responseMessage = doRequest(responseEvent, client, requestBuilder, false);
@@ -122,8 +124,8 @@ public class HttpRequester {
   private void checkIfRemotelyClosed(Exception exception, UriParameters uriParameters) {
     if (HTTPS.getScheme().equals(uriParameters.getScheme())
         && StringUtils.containsIgnoreCase(exception.getMessage(), REMOTELY_CLOSED)) {
-      logger.error(
-          "Remote host closed connection. Possible SSL/TLS handshake issue. Check protocols, cipher suites and certificate set up. Use -Djavax.net.debug=handshake for further debugging.");
+      logger
+          .error("Remote host closed connection. Possible SSL/TLS handshake issue. Check protocols, cipher suites and certificate set up. Use -Djavax.net.debug=handshake for further debugging.");
     }
   }
 
@@ -202,7 +204,7 @@ public class HttpRequester {
       MuleEventToHttpRequest eventToHttpRequest =
           new MuleEventToHttpRequest(config, uri, method, requestStreamingMode, sendBodyMode, source);
       return new HttpRequester(eventToHttpRequest, followRedirects, authentication, parseResponse, responseTimeout,
-          responseValidator, config);
+                               responseValidator, config);
     }
   }
 }

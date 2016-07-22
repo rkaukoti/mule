@@ -204,7 +204,7 @@ public class InvokerMessageProcessorTestCase extends AbstractMuleContextTestCase
   private class TestInvokeObject {
 
     public void testMethod(Integer arg1, int arg2, Long arg3, long arg4, Double arg5, double arg6, Float arg7, float arg8,
-        Boolean arg9, boolean arg10, String arg11) {}
+                           Boolean arg9, boolean arg10, String arg11) {}
 
     public void testNoArgs() {}
 

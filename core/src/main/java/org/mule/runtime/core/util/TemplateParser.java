@@ -41,9 +41,9 @@ public final class TemplateParser {
 
     // Support for 6 levels (5 nested)
     patterns.put(WIGGLY_MULE_TEMPLATE_STYLE,
-        new PatternInfo(WIGGLY_MULE_TEMPLATE_STYLE,
-            "#\\[((?:#?\\[(?:#?\\[(?:#?\\[(?:#?\\[(?:#?\\[.*?\\]|[^\\[\\]])*?\\]|[^\\[\\]])*?\\]|[^\\[\\]])*?\\]|[^\\[\\]])*?\\]|[^\\[\\]])*?)\\]",
-            "#[", "]"));
+                 new PatternInfo(WIGGLY_MULE_TEMPLATE_STYLE,
+                                 "#\\[((?:#?\\[(?:#?\\[(?:#?\\[(?:#?\\[(?:#?\\[.*?\\]|[^\\[\\]])*?\\]|[^\\[\\]])*?\\]|[^\\[\\]])*?\\]|[^\\[\\]])*?\\]|[^\\[\\]])*?)\\]",
+                                 "#[", "]"));
   }
 
   private final Pattern pattern;

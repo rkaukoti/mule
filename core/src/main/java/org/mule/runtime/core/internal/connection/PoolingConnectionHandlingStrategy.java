@@ -48,7 +48,7 @@ final class PoolingConnectionHandlingStrategy<Connection> extends ConnectionHand
    * @param muleContext the application's {@link MuleContext}
    */
   PoolingConnectionHandlingStrategy(ConnectionProvider<Connection> connectionProvider, PoolingProfile poolingProfile,
-      PoolingListener<Connection> poolingListener, MuleContext muleContext) {
+                                    PoolingListener<Connection> poolingListener, MuleContext muleContext) {
     super(connectionProvider, muleContext);
     this.poolingProfile = poolingProfile;
     this.poolingListener = poolingListener;

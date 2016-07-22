@@ -311,8 +311,9 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
   @Override
   public MuleMessage build() {
     return new MuleMessageImplementation(id != null ? id : UUID.getUUID(), rootId, new TypedValue(payload, resolveDataType()),
-        attributes, inboundProperties, outboundProperties, inboundAttachments, outboundAttachments, correlationId,
-        correlationGroupSize, correlationSequence, replyTo, exceptionPayload);
+                                         attributes, inboundProperties, outboundProperties, inboundAttachments,
+                                         outboundAttachments, correlationId, correlationGroupSize, correlationSequence, replyTo,
+                                         exceptionPayload);
   }
 
   private DataType resolveDataType() {
@@ -363,9 +364,11 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
     private Map<String, TypedValue<Serializable>> outboundMap = new CaseInsensitiveMapWrapper<>(HashMap.class);
 
     private MuleMessageImplementation(String id, String rootId, TypedValue typedValue, Attributes attributes,
-        Map<String, TypedValue<Serializable>> inboundProperties, Map<String, TypedValue<Serializable>> outboundProperties,
-        Map<String, DataHandler> inboundAttachments, Map<String, DataHandler> outboundAttachments, String correlationId,
-        Integer correlationGroupSize, Integer correlationSequence, Object replyTo, ExceptionPayload exceptionPayload) {
+                                      Map<String, TypedValue<Serializable>> inboundProperties,
+                                      Map<String, TypedValue<Serializable>> outboundProperties,
+                                      Map<String, DataHandler> inboundAttachments, Map<String, DataHandler> outboundAttachments,
+                                      String correlationId, Integer correlationGroupSize, Integer correlationSequence,
+                                      Object replyTo, ExceptionPayload exceptionPayload) {
       this.id = id;
       this.rootId = rootId != null ? rootId : id;
       this.typedValue = typedValue;
@@ -666,8 +669,8 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
         else if (defaultValue.getClass().isAssignableFrom(value.getClass())) {
           return value;
         } else {
-          throw new IllegalArgumentException(
-              CoreMessages.objectNotOfCorrectType(value.getClass(), defaultValue.getClass()).getMessage());
+          throw new IllegalArgumentException(CoreMessages.objectNotOfCorrectType(value.getClass(), defaultValue.getClass())
+              .getMessage());
         }
       }
     }
@@ -697,7 +700,7 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
             } catch (TransformerException ex) {
               String message =
                   String.format("Unable to serialize the attachment %s, which is of type %s with contents of type %s", name,
-                      handler.getClass(), theContent.getClass());
+                                handler.getClass(), theContent.getClass());
               logger.error(message);
               throw new IOException(message);
             }

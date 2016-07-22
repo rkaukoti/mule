@@ -63,7 +63,7 @@ public class AnnotationUtils {
    * @throws IllegalStateException if the method is not defined in the annotation
    */
   public static <T> List<T> getAnnotationAttributeFromHierarchy(Class<?> klass, Class<? extends Annotation> annotationClass,
-      String methodName) {
+                                                                String methodName) {
     List<T> extensions = new ArrayList<>();
     Class<?> currentClass = klass;
     while (currentClass != Object.class) {

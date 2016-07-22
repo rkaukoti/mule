@@ -24,7 +24,7 @@ public class LocalTxQueueTransactionContext extends AbstractTransactionContext
   private final Lock transactionContextAccessLock;
 
   public LocalTxQueueTransactionContext(LocalTxQueueTransactionJournal localTxQueueTransactionJournal,
-      QueueProvider queueProvider, Lock transactionContextAccessLock) {
+                                        QueueProvider queueProvider, Lock transactionContextAccessLock) {
     this.localTxQueueTransactionJournal = localTxQueueTransactionJournal;
     this.queueProvider = queueProvider;
     this.transactionContextAccessLock = transactionContextAccessLock;

@@ -15,8 +15,8 @@ public class DatasourceWithConnectionPropertiesBeanConfigTestCase extends Abstra
   @Test(expected = InitialisationException.class)
   public void expectFailure() throws Exception {
     // TODO MULE-10061 - Review once the MuleContext lifecycle is clearly defined
-    new DefaultMuleContextFactory().createMuleContext(
-        new SpringXmlConfigurationBuilder("integration/config/bean-datasource-with-connection-properties-config.xml"));
+    new DefaultMuleContextFactory()
+        .createMuleContext(new SpringXmlConfigurationBuilder("integration/config/bean-datasource-with-connection-properties-config.xml"));
   }
 
 }

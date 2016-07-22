@@ -64,7 +64,8 @@ public class DynamicPipelineMessageProcessor extends AbstractInterceptingMessage
   }
 
   private String resetAndUpdatePipeline(String id, List<MessageProcessor> preMessageProcessors,
-      List<MessageProcessor> postMessageProcessors) throws MuleException {
+                                        List<MessageProcessor> postMessageProcessors)
+      throws MuleException {
     checkPipelineId(id);
 
     // build new dynamic chains

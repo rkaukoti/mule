@@ -42,9 +42,9 @@ public class ChoiceExceptionStrategyTestCase extends FunctionalTestCase {
 
   @Test
   public void testMatchesCorrectExceptionStrategyUsingWrapperAndCause() throws Exception {
-    callAndThrowException(
-        new ResolverException(CoreMessages.createStaticMessage(""), new RuntimeException(new IllegalStateException())),
-        "0 catch-2");
+    callAndThrowException(new ResolverException(CoreMessages.createStaticMessage(""),
+                                                new RuntimeException(new IllegalStateException())),
+                          "0 catch-2");
   }
 
   @Test

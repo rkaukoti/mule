@@ -26,14 +26,14 @@ public class SecurityFilterDefinitionParser extends ParentContextDefinitionParse
   public SecurityFilterDefinitionParser(Class filter) {
     super(MuleOrphanDefinitionParser.ROOT_ELEMENT, new OrphanDefinitionParser(filter, false));
     otherwise(new WrappingChildDefinitionParser("messageProcessor", filter, SecurityFilter.class, false,
-        SecurityFilterMessageProcessor.class, SECURITY_FILTER, SECURITY_FILTER, this));
+                                                SecurityFilterMessageProcessor.class, SECURITY_FILTER, SECURITY_FILTER, this));
     addIgnored(ATTRIBUTE_NAME);
   }
 
   public SecurityFilterDefinitionParser() {
     super(MuleOrphanDefinitionParser.ROOT_ELEMENT, new OrphanDefinitionParser(false));
     otherwise(new WrappingChildDefinitionParser("messageProcessor", null, SecurityFilter.class, true,
-        SecurityFilterMessageProcessor.class, SECURITY_FILTER, SECURITY_FILTER, this));
+                                                SecurityFilterMessageProcessor.class, SECURITY_FILTER, SECURITY_FILTER, this));
     addIgnored(ATTRIBUTE_NAME);
   }
 

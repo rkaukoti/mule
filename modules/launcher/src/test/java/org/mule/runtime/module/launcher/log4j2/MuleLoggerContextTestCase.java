@@ -50,8 +50,10 @@ public class MuleLoggerContextTestCase extends AbstractMuleTestCase {
     testAppender = new TestAppender(TEST_APPENDER, null, null);
     context.getConfiguration().addAppender(testAppender);
 
-    LoggerConfig loggerConfig = AsyncLoggerConfig.createLogger("false", LEVEL.name(), CATEGORY, "true",
-        new AppenderRef[] {AppenderRef.createAppenderRef(TEST_APPENDER, null, null)}, null, context.getConfiguration(), null);
+    LoggerConfig loggerConfig =
+        AsyncLoggerConfig.createLogger("false", LEVEL.name(), CATEGORY, "true",
+                                       new AppenderRef[] {AppenderRef.createAppenderRef(TEST_APPENDER, null, null)}, null,
+                                       context.getConfiguration(), null);
 
     loggerConfig.addAppender(testAppender, null, null);
     context.getConfiguration().addLogger(CATEGORY, loggerConfig);
@@ -97,6 +99,6 @@ public class MuleLoggerContextTestCase extends AbstractMuleTestCase {
 
   private MuleLoggerContext getDefaultContext() {
     return new MuleLoggerContext(DEFAULT_CONTEXT_NAME, null, Thread.currentThread().getContextClassLoader(), contextSelector,
-        true);
+                                 true);
   }
 }

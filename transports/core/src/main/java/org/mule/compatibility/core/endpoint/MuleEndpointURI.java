@@ -64,7 +64,7 @@ public class MuleEndpointURI implements EndpointURI {
   private String password;
 
   MuleEndpointURI(String address, String endpointName, String connectorName, String transformers, String responseTransformers,
-      Properties properties, URI uri, String userInfo, MuleContext muleContext) {
+                  Properties properties, URI uri, String userInfo, MuleContext muleContext) {
     this(address, endpointName, connectorName, transformers, responseTransformers, properties, uri, muleContext);
     if (userInfo != null) {
       this.userInfo = userInfo;
@@ -72,7 +72,7 @@ public class MuleEndpointURI implements EndpointURI {
   }
 
   public MuleEndpointURI(String address, String endpointName, String connectorName, String transformers,
-      String responseTransformers, Properties properties, URI uri, MuleContext muleContext) {
+                         String responseTransformers, Properties properties, URI uri, MuleContext muleContext) {
     this.address = address;
     this.endpointName = endpointName;
     this.connectorName = connectorName;
@@ -176,7 +176,7 @@ public class MuleEndpointURI implements EndpointURI {
       String scheme = getFullScheme();
       TransportServiceDescriptor sd;
       sd = (TransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(), LegacyServiceType.TRANSPORT, scheme,
-          serviceOverrides);
+                                                                serviceOverrides);
       if (sd == null) {
         throw new ServiceException(TransportCoreMessages.noServiceTransportDescriptor(scheme));
       }

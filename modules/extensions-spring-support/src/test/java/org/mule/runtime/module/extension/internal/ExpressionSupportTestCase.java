@@ -36,8 +36,8 @@ public class ExpressionSupportTestCase extends ExtensionFunctionalTestCase {
 
   @Parameters(name = "{0}")
   public static Collection<Object[]> data() {
-    return Arrays.asList(
-        new Object[][] {{"heisenberg-invalid-expression-parameter.xml"}, {"heisenberg-fixed-parameter-with-expression.xml"}});
+    return Arrays.asList(new Object[][] {{"heisenberg-invalid-expression-parameter.xml"},
+        {"heisenberg-fixed-parameter-with-expression.xml"}});
   }
 
   @Override

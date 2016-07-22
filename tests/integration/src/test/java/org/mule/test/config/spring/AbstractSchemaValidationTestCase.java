@@ -59,8 +59,8 @@ public abstract class AbstractSchemaValidationTestCase extends AbstractMuleTestC
       Schema schema = schemaFactory.newSchema(getSchemasAsSources());
       schema.newValidator().validate(load(config));
     } catch (SAXParseException ex) {
-      System.err.println(
-          MessageFormat.format("SAX parsing exception occurs at line {0}, column {1}", ex.getLineNumber(), ex.getColumnNumber()));
+      System.err.println(MessageFormat.format("SAX parsing exception occurs at line {0}, column {1}", ex.getLineNumber(),
+                                              ex.getColumnNumber()));
       throw ex;
     }
   }

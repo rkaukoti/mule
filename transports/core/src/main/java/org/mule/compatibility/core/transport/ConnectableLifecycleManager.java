@@ -26,7 +26,7 @@ public class ConnectableLifecycleManager<O> extends SimpleLifecycleManager<O> {
     checkPhase(Initialisable.PHASE_NAME);
     if (logger.isInfoEnabled()) {
       logger.info(String.format("Initialising: '%s'. Object is: %s", lifecycleManagerId,
-          getLifecycleObject().getClass().getSimpleName()));
+                                getLifecycleObject().getClass().getSimpleName()));
     }
     invokePhase(Initialisable.PHASE_NAME, getLifecycleObject(), callback);
   }
@@ -35,8 +35,8 @@ public class ConnectableLifecycleManager<O> extends SimpleLifecycleManager<O> {
   public void fireStartPhase(LifecycleCallback<O> callback) throws MuleException {
     checkPhase(Startable.PHASE_NAME);
     if (logger.isInfoEnabled()) {
-      logger.info(
-          String.format("Starting: '%s'. Object is: %s", lifecycleManagerId, getLifecycleObject().getClass().getSimpleName()));
+      logger.info(String.format("Starting: '%s'. Object is: %s", lifecycleManagerId,
+                                getLifecycleObject().getClass().getSimpleName()));
     }
     invokePhase(Startable.PHASE_NAME, getLifecycleObject(), callback);
   }
@@ -49,8 +49,8 @@ public class ConnectableLifecycleManager<O> extends SimpleLifecycleManager<O> {
     }
     checkPhase(Stoppable.PHASE_NAME);
     if (logger.isInfoEnabled()) {
-      logger.info(
-          String.format("Stopping: '%s'. Object is: %s", lifecycleManagerId, getLifecycleObject().getClass().getSimpleName()));
+      logger.info(String.format("Stopping: '%s'. Object is: %s", lifecycleManagerId,
+                                getLifecycleObject().getClass().getSimpleName()));
     }
     invokePhase(Stoppable.PHASE_NAME, getLifecycleObject(), callback);
   }
@@ -59,8 +59,8 @@ public class ConnectableLifecycleManager<O> extends SimpleLifecycleManager<O> {
   public void fireDisposePhase(LifecycleCallback<O> callback) throws MuleException {
     checkPhase(Disposable.PHASE_NAME);
     if (logger.isInfoEnabled()) {
-      logger.info(
-          String.format("Disposing: '%s'. Object is: %s", lifecycleManagerId, getLifecycleObject().getClass().getSimpleName()));
+      logger.info(String.format("Disposing: '%s'. Object is: %s", lifecycleManagerId,
+                                getLifecycleObject().getClass().getSimpleName()));
     }
     invokePhase(Disposable.PHASE_NAME, getLifecycleObject(), callback);
   }

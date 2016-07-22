@@ -234,7 +234,7 @@ public class GenericsUtils {
    */
   private static Class<?> getGenericParameterType(MethodParameter methodParam, Class<?> source, int typeIndex) {
     return extractType(methodParam, GenericTypeResolver.getTargetType(methodParam), source, typeIndex,
-        methodParam.getNestingLevel(), 1);
+                       methodParam.getNestingLevel(), 1);
   }
 
   /**
@@ -275,7 +275,7 @@ public class GenericsUtils {
    * @return the generic type as Class, or <code>null</code> if none
    */
   private static Class<?> extractType(MethodParameter methodParam, Type type, Class<?> source, int typeIndex, int nestingLevel,
-      int currentLevel) {
+                                      int currentLevel) {
     Type resolvedType = type;
     if (type instanceof TypeVariable<?> && methodParam != null && methodParam.typeVariableMap != null) {
       Type mappedType = methodParam.typeVariableMap.get(type);
@@ -285,7 +285,7 @@ public class GenericsUtils {
     }
     if (resolvedType instanceof ParameterizedType) {
       return extractTypeFromParameterizedType(methodParam, (ParameterizedType) resolvedType, source, typeIndex, nestingLevel,
-          currentLevel);
+                                              currentLevel);
     } else if (resolvedType instanceof Class<?>) {
       Class<?> resolvedClass = (Class<?>) resolvedType;
       return extractTypeFromClass(methodParam, resolvedClass, source, typeIndex, nestingLevel, currentLevel);
@@ -306,7 +306,7 @@ public class GenericsUtils {
    * @return the generic type as Class, or <code>null</code> if none
    */
   private static Class<?> extractTypeFromParameterizedType(MethodParameter methodParam, ParameterizedType ptype, Class<?> source,
-      int typeIndex, int nestingLevel, int currentLevel) {
+                                                           int typeIndex, int nestingLevel, int currentLevel) {
 
     if (!(ptype.getRawType() instanceof Class<?>)) {
       return null;
@@ -393,7 +393,7 @@ public class GenericsUtils {
    * @return the generic type as Class, or <code>null</code> if none
    */
   private static Class<?> extractTypeFromClass(MethodParameter methodParam, Class<?> clazz, Class<?> source, int typeIndex,
-      int nestingLevel, int currentLevel) {
+                                               int nestingLevel, int currentLevel) {
 
     if (clazz.getName().startsWith("java.util.")) {
       return null;

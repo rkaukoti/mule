@@ -18,13 +18,14 @@ public abstract class AbstractConnectionFactoryDecorator implements ConnectionFa
 
   @Override
   public ConnectionFactory decorate(ConnectionFactory connectionFactory, JmsConnector jmsConnector, MuleContext muleContext) {
-    Preconditions.checkState(appliesTo(connectionFactory, muleContext),
-        "DefaultConnectionFactoryDecorator invoked but it shouldn't be called since it does not applies to the ConnectionFactory");
+    Preconditions
+        .checkState(appliesTo(connectionFactory, muleContext),
+                    "DefaultConnectionFactoryDecorator invoked but it shouldn't be called since it does not applies to the ConnectionFactory");
     return doDecorate(connectionFactory, jmsConnector, muleContext);
   }
 
   protected abstract ConnectionFactory doDecorate(ConnectionFactory connectionFactory, JmsConnector jmsConnector,
-      MuleContext muleContext);
+                                                  MuleContext muleContext);
 
   protected boolean isXaConnectionFactory(ConnectionFactory connectionFactory) {
     return connectionFactory instanceof XAConnectionFactory;

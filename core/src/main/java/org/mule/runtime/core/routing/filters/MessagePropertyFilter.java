@@ -102,8 +102,8 @@ public class MessagePropertyFilter implements Filter {
     int i = expression.indexOf('=');
 
     if (i == -1) {
-      throw new IllegalArgumentException(
-          "Pattern is malformed - it should be a key value pair, i.e. property=value: " + expression);
+      throw new IllegalArgumentException("Pattern is malformed - it should be a key value pair, i.e. property=value: "
+          + expression);
     }
 
     if (x > -1 && x < i) {

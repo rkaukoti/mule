@@ -55,7 +55,7 @@ public class DefaultOperationContext implements OperationContextAdapter {
    * @param event the current {@link MuleEvent}
    */
   public DefaultOperationContext(ConfigurationInstance<Object> configuration, ResolverSetResult parameters,
-      RuntimeOperationModel operationModel, MuleEvent event, MuleContext muleContext) {
+                                 RuntimeOperationModel operationModel, MuleEvent event, MuleContext muleContext) {
     this.configuration = configuration;
     this.event = event;
     this.operationModel = operationModel;
@@ -113,7 +113,7 @@ public class DefaultOperationContext implements OperationContextAdapter {
 
     if (!expectedType.isInstance(value)) {
       throw new IllegalArgumentException(String.format("'%s' was expected to be of type '%s' but type '%s' was found instead",
-          parameterName, expectedType.getName(), value.getClass().getName()));
+                                                       parameterName, expectedType.getName(), value.getClass().getName()));
     }
 
     return (T) value;
@@ -191,9 +191,9 @@ public class DefaultOperationContext implements OperationContextAdapter {
     OperationTransactionalAction action =
         getTypeSafeParameter(TRANSACTIONAL_ACTION_PARAMETER_NAME, OperationTransactionalAction.class);
     if (action == null) {
-      throw new IllegalArgumentException(
-          format("Operation '%s' from extension '%s' is transactional but no transactional action defined",
-              operationModel.getName(), configuration.getModel().getExtensionModel().getName()));
+      throw new IllegalArgumentException(format("Operation '%s' from extension '%s' is transactional but no transactional action defined",
+                                                operationModel.getName(),
+                                                configuration.getModel().getExtensionModel().getName()));
     }
 
     return action;

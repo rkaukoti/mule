@@ -47,7 +47,7 @@ public class TestConnectorMessageProcessorProviderTestCase extends AbstractMuleT
 
     assertThat(messageProcessor, is(not(nullValue())));
     assertThat(messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), REQUEST_RESPONSE),
-        is(messageProcessor));
+               is(messageProcessor));
   }
 
   @Test

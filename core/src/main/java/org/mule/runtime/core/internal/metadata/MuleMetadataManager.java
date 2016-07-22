@@ -100,7 +100,7 @@ public class MuleMetadataManager implements MetadataManager, Initialisable {
   @Override
   public MetadataResult<ComponentMetadataDescriptor> getMetadata(ComponentId componentId, MetadataKey key) {
     return exceptionHandledMetadataFetch(componentId, processor -> processor.getMetadata(key),
-        format(EXCEPTION_RESOLVING_COMPONENT_METADATA, componentId));
+                                         format(EXCEPTION_RESOLVING_COMPONENT_METADATA, componentId));
   }
 
   /**
@@ -109,7 +109,7 @@ public class MuleMetadataManager implements MetadataManager, Initialisable {
   @Override
   public MetadataResult<ComponentMetadataDescriptor> getMetadata(ComponentId componentId) {
     return exceptionHandledMetadataFetch(componentId, MetadataAware::getMetadata,
-        format(EXCEPTION_RESOLVING_COMPONENT_METADATA, componentId));
+                                         format(EXCEPTION_RESOLVING_COMPONENT_METADATA, componentId));
   }
 
   /**
@@ -133,7 +133,7 @@ public class MuleMetadataManager implements MetadataManager, Initialisable {
   }
 
   private <T> MetadataResult<T> exceptionHandledMetadataFetch(ComponentId componentId, MetadataDelegate<T> metadataSupplier,
-      String failureMessage) {
+                                                              String failureMessage) {
     try {
       return metadataSupplier.get(findMetadataAwareComponent(componentId));
     } catch (InvalidComponentIdException e) {
@@ -155,7 +155,7 @@ public class MuleMetadataManager implements MetadataManager, Initialisable {
           return ((MetadataAware) flow.getMessageProcessors().get(Integer.parseInt(componentId.getComponentPath())));
         } catch (IndexOutOfBoundsException | NumberFormatException e) {
           throw new InvalidComponentIdException(createStaticMessage(format(PROCESSOR_NOT_FOUND, componentId.getComponentPath())),
-              e);
+                                                e);
         }
       } else {
         final MessageSource messageSource = flow.getMessageSource();

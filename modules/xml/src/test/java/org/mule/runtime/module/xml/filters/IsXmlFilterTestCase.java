@@ -34,8 +34,8 @@ public class IsXmlFilterTestCase extends AbstractMuleTestCase {
 
   @Test
   public void testFilterFalse2() throws Exception {
-    assertFalse(
-        filter.accept(MuleMessage.builder().payload("<line>This is almost XML</line><line>This is almost XML</line>").build()));
+    assertFalse(filter
+        .accept(MuleMessage.builder().payload("<line>This is almost XML</line><line>This is almost XML</line>").build()));
   }
 
   @Test

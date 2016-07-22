@@ -100,8 +100,7 @@ public class ReflectionMuleCoreExtensionDependencyResolver implements MuleCoreEx
 
           coreExtensionAwareExtensions.add(muleCoreExtension);
         } else {
-          throw new IllegalDependencyInjectionException(
-              "A class cannot implement CoreExtensionAware when is also using MuleCoreExtensionDependency");
+          throw new IllegalDependencyInjectionException("A class cannot implement CoreExtensionAware when is also using MuleCoreExtensionDependency");
         }
       }
     }
@@ -119,7 +118,7 @@ public class ReflectionMuleCoreExtensionDependencyResolver implements MuleCoreEx
   }
 
   private void injectDependencies(MuleCoreExtension muleCoreExtension, List<MuleCoreExtension> resolvedExtensions,
-      List<LinkedMuleCoreExtensionDependency> dependencies) {
+                                  List<LinkedMuleCoreExtensionDependency> dependencies) {
     for (LinkedMuleCoreExtensionDependency linkedMuleCoreExtensionDependency : dependencies) {
       final MuleCoreExtension dependencyInstance =
           findDependencyInstance(resolvedExtensions, linkedMuleCoreExtensionDependency.getDependencyClass());
@@ -133,7 +132,7 @@ public class ReflectionMuleCoreExtensionDependencyResolver implements MuleCoreEx
   }
 
   private MuleCoreExtension findDependencyInstance(List<MuleCoreExtension> resolvedExtensions,
-      Class<? extends MuleCoreExtension> dependencyClass) {
+                                                   Class<? extends MuleCoreExtension> dependencyClass) {
     for (MuleCoreExtension coreExtension : resolvedExtensions) {
       if (dependencyClass.isAssignableFrom(coreExtension.getClass())) {
         return coreExtension;
@@ -144,7 +143,7 @@ public class ReflectionMuleCoreExtensionDependencyResolver implements MuleCoreEx
   }
 
   private boolean satisfiedDependencies(List<LinkedMuleCoreExtensionDependency> dependencies,
-      List<MuleCoreExtension> resolvedExtensions) {
+                                        List<MuleCoreExtension> resolvedExtensions) {
     for (LinkedMuleCoreExtensionDependency dependency : dependencies) {
       boolean isResolved = false;
 

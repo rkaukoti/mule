@@ -49,8 +49,8 @@ public class RmiRegistryAgent extends AbstractAgent {
 
   public void start() throws MuleException {
     if (serverUri == null) {
-      throw new InitialisationException(
-          MessageFactory.createStaticMessage("serverUri has not been set, this agent has not been initialized properly."), this);
+      throw new InitialisationException(MessageFactory
+          .createStaticMessage("serverUri has not been set, this agent has not been initialized properly."), this);
     }
 
     URI uri;

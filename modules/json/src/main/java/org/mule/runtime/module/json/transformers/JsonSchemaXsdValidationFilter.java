@@ -38,8 +38,7 @@ public class JsonSchemaXsdValidationFilter extends SchemaValidationFilter implem
 
   @Override
   public boolean accept(MuleMessage message) {
-    throw new UnsupportedOperationException(
-        "MULE-9341 Remove Filters that are not needed.  This method will be removed when filters are cleaned up.");
+    throw new UnsupportedOperationException("MULE-9341 Remove Filters that are not needed.  This method will be removed when filters are cleaned up.");
   }
 
   @Override
@@ -54,7 +53,7 @@ public class JsonSchemaXsdValidationFilter extends SchemaValidationFilter implem
         if (transformerInputs.getInputStream() != null) {
           jsonWriter = new StringWriter();
           IOUtils.copy(transformerInputs.getInputStream(), jsonWriter,
-              msg.getDataType().getMediaType().getCharset().orElse(getDefaultEncoding(muleContext)));
+                       msg.getDataType().getMediaType().getCharset().orElse(getDefaultEncoding(muleContext)));
         } else {
           IOUtils.copy(transformerInputs.getReader(), jsonWriter);
         }
@@ -62,8 +61,8 @@ public class JsonSchemaXsdValidationFilter extends SchemaValidationFilter implem
         msg = MuleMessage.builder(msg).payload(jsonString).build();
         event.setMessage(msg);
       }
-      String xmlString = (String) jToX.transform(msg.getPayload(),
-          msg.getDataType().getMediaType().getCharset().orElse(getDefaultEncoding(muleContext)));
+      String xmlString = (String) jToX
+          .transform(msg.getPayload(), msg.getDataType().getMediaType().getCharset().orElse(getDefaultEncoding(muleContext)));
       MuleMessage xmlMessage = MuleMessage.builder().payload(xmlString).build();
       boolean accepted = super.accept(new DefaultMuleEvent(xmlMessage, event.getFlowConstruct()));
       if (jsonString != null) {

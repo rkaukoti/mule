@@ -40,7 +40,7 @@ public class QueueInfo {
   }
 
   public static synchronized void registerDelegateFactory(Class<? extends ObjectStore> storeType,
-      QueueInfoDelegateFactory factory) {
+                                                          QueueInfoDelegateFactory factory) {
     delegateFactories.put(storeType, factory);
   }
 

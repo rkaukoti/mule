@@ -52,7 +52,7 @@ public class XmlModelEnricherTestCase extends AbstractMuleTestCase {
     assertThat(xmlProperty.getNamespaceUri(), is(NAMESPACE_LOCATION));
     assertThat(xmlProperty.getXsdFileName(), is(String.format(XSD_FILENAME_MASK, NAMESPACE)));
     assertThat(xmlProperty.getSchemaLocation(),
-        is(String.format(DEFAULT_SCHEMA_LOCATION_MASK, NAMESPACE_LOCATION, String.format(XSD_FILENAME_MASK, NAMESPACE))));
+               is(String.format(DEFAULT_SCHEMA_LOCATION_MASK, NAMESPACE_LOCATION, String.format(XSD_FILENAME_MASK, NAMESPACE))));
   }
 
   @Test
@@ -66,8 +66,9 @@ public class XmlModelEnricherTestCase extends AbstractMuleTestCase {
     assertThat(xmlProperty.getNamespaceUri(), equalTo(String.format(DEFAULT_NAMESPACE_LOCATION_MASK, EXTENSION_HYPHENAZED_NAME)));
     assertThat(xmlProperty.getXsdFileName(), is(String.format(XSD_FILENAME_MASK, EXTENSION_HYPHENAZED_NAME)));
     assertThat(xmlProperty.getSchemaLocation(),
-        is(String.format(DEFAULT_SCHEMA_LOCATION_MASK, String.format(DEFAULT_NAMESPACE_LOCATION_MASK, EXTENSION_HYPHENAZED_NAME),
-            String.format(XSD_FILENAME_MASK, EXTENSION_HYPHENAZED_NAME))));
+               is(String.format(DEFAULT_SCHEMA_LOCATION_MASK,
+                                String.format(DEFAULT_NAMESPACE_LOCATION_MASK, EXTENSION_HYPHENAZED_NAME),
+                                String.format(XSD_FILENAME_MASK, EXTENSION_HYPHENAZED_NAME))));
   }
 
   @Test
@@ -80,8 +81,9 @@ public class XmlModelEnricherTestCase extends AbstractMuleTestCase {
     assertThat(xmlProperty.getNamespace(), is(NAMESPACE));
     assertThat(xmlProperty.getNamespaceUri(), equalTo(String.format(DEFAULT_NAMESPACE_LOCATION_MASK, NAMESPACE)));
     assertThat(xmlProperty.getXsdFileName(), is(String.format(XSD_FILENAME_MASK, NAMESPACE)));
-    assertThat(xmlProperty.getSchemaLocation(), is(String.format(DEFAULT_SCHEMA_LOCATION_MASK,
-        String.format(DEFAULT_NAMESPACE_LOCATION_MASK, NAMESPACE), String.format(XSD_FILENAME_MASK, NAMESPACE))));
+    assertThat(xmlProperty.getSchemaLocation(),
+               is(String.format(DEFAULT_SCHEMA_LOCATION_MASK, String.format(DEFAULT_NAMESPACE_LOCATION_MASK, NAMESPACE),
+                                String.format(XSD_FILENAME_MASK, NAMESPACE))));
   }
 
   @Test
@@ -94,8 +96,8 @@ public class XmlModelEnricherTestCase extends AbstractMuleTestCase {
     assertThat(xmlProperty.getNamespace(), is(EXTENSION.toLowerCase()));
     assertThat(xmlProperty.getNamespaceUri(), equalTo(NAMESPACE_LOCATION));
     assertThat(xmlProperty.getXsdFileName(), is(String.format(XSD_FILENAME_MASK, hyphenize(EXTENSION))));
-    assertThat(xmlProperty.getSchemaLocation(), is(
-        String.format(DEFAULT_SCHEMA_LOCATION_MASK, NAMESPACE_LOCATION, String.format(XSD_FILENAME_MASK, hyphenize(EXTENSION)))));
+    assertThat(xmlProperty.getSchemaLocation(), is(String.format(DEFAULT_SCHEMA_LOCATION_MASK, NAMESPACE_LOCATION,
+                                                                 String.format(XSD_FILENAME_MASK, hyphenize(EXTENSION)))));
   }
 
   private XmlModelProperty enrich(Class<?> type) {

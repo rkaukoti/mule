@@ -41,7 +41,8 @@ public class BulkExecuteMessageProcessor extends AbstractDbMessageProcessor {
   private final List<QueryType> validQueryTypes;
 
   public BulkExecuteMessageProcessor(DbConfigResolver dbConfigResolver, BulkQueryResolver bulkQueryResolver,
-      BulkQueryExecutorFactory bulkUpdateExecutorFactory, TransactionalAction transactionalAction) {
+                                     BulkQueryExecutorFactory bulkUpdateExecutorFactory,
+                                     TransactionalAction transactionalAction) {
     super(dbConfigResolver, transactionalAction);
     this.bulkQueryResolver = bulkQueryResolver;
     this.bulkUpdateExecutorFactory = bulkUpdateExecutorFactory;

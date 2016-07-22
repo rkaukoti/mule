@@ -66,9 +66,9 @@ public class HeisenbergConnection implements Lifecycle {
 
   private void verifyLifecycle(String phaseName, int value, int expected) {
     if (value != expected) {
-      throw new IllegalStateException(
-          String.format("lifecycle phase '%s' wrongfully applied. Was expecting to be applied %d times but %d found instead",
-              phaseName, expected, value));
+      throw new IllegalStateException(String.format(
+                                                    "lifecycle phase '%s' wrongfully applied. Was expecting to be applied %d times but %d found instead",
+                                                    phaseName, expected, value));
     }
   }
 }

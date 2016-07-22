@@ -99,8 +99,10 @@ public class ResponseAssertionMessageProcessor extends AssertionMessageProcessor
   private MuleEvent processNext(MuleEvent event) throws MuleException {
     if (event != null || event instanceof VoidMuleEvent) {
       try {
-        return new ProcessorExecutorFactory().createProcessorExecutor(event, Collections.singletonList(next),
-            MessageProcessorExecutionTemplate.createExceptionTransformerExecutionTemplate(), false).execute();
+        return new ProcessorExecutorFactory()
+            .createProcessorExecutor(event, Collections.singletonList(next),
+                                     MessageProcessorExecutionTemplate.createExceptionTransformerExecutionTemplate(), false)
+            .execute();
       } catch (MessagingException e) {
         event.getSession().setValid(false);
         throw e;

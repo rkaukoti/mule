@@ -96,8 +96,9 @@ public class ConnectionListener {
    * @throws IllegalStateException if there were less than two notifications received
    */
   public void assertMinimumTimeBetweenNotifications(long expectedTimeBetweenNotifications) {
-    Preconditions.checkState(minimumTimeBetweenNotifications.isPresent(),
-        "At least two notifications must be received in order to get the minimum time between notifications");
+    Preconditions
+        .checkState(minimumTimeBetweenNotifications.isPresent(),
+                    "At least two notifications must be received in order to get the minimum time between notifications");
     assertThat(minimumTimeBetweenNotifications.get(), greaterThanOrEqualTo(expectedTimeBetweenNotifications));
   }
 }

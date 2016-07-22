@@ -75,8 +75,8 @@ public class DeploymentDirectoryWatcher implements Runnable {
   private ScheduledExecutorService artifactDirMonitorTimer;
 
   public DeploymentDirectoryWatcher(final ArchiveDeployer<Domain> domainArchiveDeployer,
-      final ArchiveDeployer<Application> applicationArchiveDeployer, ObservableList<Domain> domains,
-      ObservableList<Application> applications, final ReentrantLock deploymentLock) {
+                                    final ArchiveDeployer<Application> applicationArchiveDeployer, ObservableList<Domain> domains,
+                                    ObservableList<Application> applications, final ReentrantLock deploymentLock) {
     this.appsDir = applicationArchiveDeployer.getDeploymentDirectory();
     this.domainsDir = domainArchiveDeployer.getDeploymentDirectory();
     this.deploymentLock = deploymentLock;
@@ -322,7 +322,7 @@ public class DeploymentDirectoryWatcher implements Runnable {
   }
 
   private void undeployRemovedArtifacts(File artifactDir, ObservableList<? extends Artifact> artifacts,
-      ArchiveDeployer<? extends Artifact> archiveDeployer) {
+                                        ArchiveDeployer<? extends Artifact> archiveDeployer) {
     // we care only about removed anchors
     String[] currentAnchors = artifactDir.list(new SuffixFileFilter(ARTIFACT_ANCHOR_SUFFIX));
     if (logger.isDebugEnabled()) {
@@ -432,12 +432,14 @@ public class DeploymentDirectoryWatcher implements Runnable {
   }
 
   private <T extends DeployableArtifact> Collection getArtifactsToRedeploy(Collection<T> collection) {
-    return CollectionUtils.select(collection,
-        object -> ((DeployableArtifactDescriptor) ((DeployableArtifact) object).getDescriptor()).isRedeploymentEnabled());
+    return CollectionUtils
+        .select(collection,
+                object -> ((DeployableArtifactDescriptor) ((DeployableArtifact) object).getDescriptor()).isRedeploymentEnabled());
   }
 
   private <T extends Artifact> void redeployModifiedArtifacts(Collection<T> artifacts,
-      ArtifactTimestampListener<T> artifactTimestampListener, ArchiveDeployer<T> artifactArchiveDeployer) {
+                                                              ArtifactTimestampListener<T> artifactTimestampListener,
+                                                              ArchiveDeployer<T> artifactArchiveDeployer) {
     for (T artifact : artifacts) {
       if (artifactTimestampListener.isArtifactResourceUpdated(artifact)) {
         try {

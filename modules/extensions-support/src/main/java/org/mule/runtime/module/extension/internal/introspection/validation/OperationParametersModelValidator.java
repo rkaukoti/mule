@@ -44,9 +44,9 @@ public final class OperationParametersModelValidator implements ModelValidator {
 
 
     if (!offenses.isEmpty()) {
-      StringBuilder message = new StringBuilder(format(
-          "Extension '%s' defines operations which have parameters named after reserved words. Offending operations are:\n",
-          extensionModel.getName()));
+      StringBuilder message =
+          new StringBuilder(format("Extension '%s' defines operations which have parameters named after reserved words. Offending operations are:\n",
+                                   extensionModel.getName()));
 
       offenses.asMap().forEach((key, values) -> message.append(format("%s: [%s]", key, Joiner.on(", ").join(values))));
 

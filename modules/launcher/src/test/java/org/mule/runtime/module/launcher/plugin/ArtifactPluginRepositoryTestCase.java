@@ -103,8 +103,9 @@ public class ArtifactPluginRepositoryTestCase extends AbstractMuleTestCase {
 
     File zipFile = new File(pluginsLibFolder, pluginName + ".zip");
     ZipUtils.compress(zipFile,
-        new ZipResource[] {new ZipResource(dummyJar.getAbsolutePath(), PLUGIN_LIB_FOLDER + separator + libraryJarName),
-            new ZipResource(pluginPropertiesFile.getAbsolutePath(), pluginPropertiesFile.getName())});
+                      new ZipResource[] {
+                          new ZipResource(dummyJar.getAbsolutePath(), PLUGIN_LIB_FOLDER + separator + libraryJarName),
+                          new ZipResource(pluginPropertiesFile.getAbsolutePath(), pluginPropertiesFile.getName())});
 
     FileUtils.forceDelete(pluginFolder);
 

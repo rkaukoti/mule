@@ -46,7 +46,8 @@ import static org.mule.runtime.module.http.internal.util.HttpToMuleMessage.getMe
 public class HttpRequestToMuleEvent {
 
   public static MuleEvent transform(final HttpRequestContext requestContext, final MuleContext muleContext,
-      final FlowConstruct flowConstruct, Boolean parseRequest, ListenerPath listenerPath) throws HttpRequestParsingException {
+                                    final FlowConstruct flowConstruct, Boolean parseRequest, ListenerPath listenerPath)
+      throws HttpRequestParsingException {
     final HttpRequest request = requestContext.getRequest();
     final Collection<String> headerNames = request.getHeaderNames();
     Map<String, Serializable> inboundProperties = new HashMap<>();
@@ -82,7 +83,7 @@ public class HttpRequestToMuleEvent {
             if (mediaType.matches(HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED)) {
               try {
                 payload = decodeUrlEncodedBody(IOUtils.toString(((InputStreamHttpEntity) entity).getInputStream()),
-                    mediaType.getCharset().get());
+                                               mediaType.getCharset().get());
               } catch (IllegalArgumentException e) {
                 throw new HttpRequestParsingException("Cannot decode x-www-form-urlencoded payload", e);
               }

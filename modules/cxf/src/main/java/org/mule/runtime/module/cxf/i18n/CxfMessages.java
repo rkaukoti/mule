@@ -88,7 +88,7 @@ public class CxfMessages extends MessageFactory {
 
   public static Message invalidOrMissingNamespace(QName serviceQName, List<QName> probableServices, List<QName> allServices) {
     return factory.createMessage(BUNDLE_PATH, 25, String.valueOf(serviceQName), String.valueOf(probableServices),
-        String.valueOf(allServices));
+                                 String.valueOf(allServices));
   }
 
   public static Message onlyServiceOrClientClassIsValid() {
@@ -97,7 +97,7 @@ public class CxfMessages extends MessageFactory {
 
   public static Message couldNotFindEndpoint(QName endpointNameThatCannotBeFound, List<QName> availableEndpoingNames) {
     return factory.createMessage(BUNDLE_PATH, 27, String.valueOf(endpointNameThatCannotBeFound),
-        String.valueOf(availableEndpoingNames));
+                                 String.valueOf(availableEndpoingNames));
   }
 }
 

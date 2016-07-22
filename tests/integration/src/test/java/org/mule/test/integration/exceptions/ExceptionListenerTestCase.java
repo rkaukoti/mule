@@ -79,7 +79,7 @@ public class ExceptionListenerTestCase extends FunctionalTestCase {
     assertThat(exceptionStrategyStartNotification.getResourceIdentifier(), is(not(nullValue())));
     assertThat(exceptionStrategyStartNotification.getResourceIdentifier(), is("mycomponent"));
     assertThat(exceptionStrategyStartNotification.getResourceIdentifier(),
-        is(exceptionStrategyEndNotification.getResourceIdentifier()));
+               is(exceptionStrategyEndNotification.getResourceIdentifier()));
   }
 
   private void assertNotificationsArrived() {

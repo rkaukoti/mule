@@ -26,8 +26,9 @@ public class ArtifactClassLoaderBuilder extends AbstractArtifactClassLoaderBuild
    * {@inheritDoc}
    */
   public ArtifactClassLoaderBuilder(DeployableArtifactClassLoaderFactory artifactClassLoaderFactory,
-      ArtifactPluginRepository artifactPluginRepository, ArtifactPluginFactory artifactPluginFactory,
-      ArtifactPluginDescriptorLoader artifactPluginDescriptorLoader) {
+                                    ArtifactPluginRepository artifactPluginRepository,
+                                    ArtifactPluginFactory artifactPluginFactory,
+                                    ArtifactPluginDescriptorLoader artifactPluginDescriptorLoader) {
     super(artifactClassLoaderFactory, artifactPluginRepository, artifactPluginFactory, artifactPluginDescriptorLoader);
   }
 

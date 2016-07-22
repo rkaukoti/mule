@@ -41,7 +41,7 @@ public abstract class AbstractVarExpressionDataTypeResolverTestCase extends Abst
   private final String variableName;
 
   protected AbstractVarExpressionDataTypeResolverTestCase(ExpressionDataTypeResolver expressionDataTypeResolver,
-      String variableName) {
+                                                          String variableName) {
     this.expressionDataTypeResolver = expressionDataTypeResolver;
     this.variableName = variableName;
   }
@@ -79,7 +79,7 @@ public abstract class AbstractVarExpressionDataTypeResolverTestCase extends Abst
   }
 
   protected MVELExpressionLanguageContext createMvelExpressionLanguageContext(MuleEvent testEvent,
-      ParserConfiguration parserConfiguration) {
+                                                                              ParserConfiguration parserConfiguration) {
     final MVELExpressionLanguageContext context = new MVELExpressionLanguageContext(parserConfiguration, muleContext);
     final StaticVariableResolverFactory staticContext = new StaticVariableResolverFactory(parserConfiguration, muleContext);
     final GlobalVariableResolverFactory globalContext =
@@ -87,10 +87,11 @@ public abstract class AbstractVarExpressionDataTypeResolverTestCase extends Abst
 
     context
         .setNextFactory(new CachedMapVariableResolverFactory(Collections.EMPTY_MAP,
-            new DelegateVariableResolverFactory(staticContext,
-                new MessageVariableResolverFactory(parserConfiguration, muleContext, testEvent,
-                    new DelegateVariableResolverFactory(globalContext,
-                        new VariableVariableResolverFactory(parserConfiguration, muleContext, testEvent))))));
+                                                             new DelegateVariableResolverFactory(staticContext,
+                                                                                                 new MessageVariableResolverFactory(parserConfiguration,
+                                                                                                                                    muleContext, testEvent, new DelegateVariableResolverFactory(globalContext,
+                                                                                                                                                                                                new VariableVariableResolverFactory(parserConfiguration,
+                                                                                                                                                                                                                                    muleContext, testEvent))))));
     return context;
   }
 

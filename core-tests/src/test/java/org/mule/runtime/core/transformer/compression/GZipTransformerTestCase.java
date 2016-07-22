@@ -76,8 +76,8 @@ public class GZipTransformerTestCase extends AbstractTransformerTestCase {
     // Decompress the test data.
     Object decompressedData = decompressorTransformer.transform(compressedData);
 
-    assertTrue(
-        String.format("Compress and decompress process failed. Expected '%s', but got '%s'", getTestData(), decompressedData),
-        compareResults(getTestData(), decompressedData));
+    assertTrue(String.format("Compress and decompress process failed. Expected '%s', but got '%s'", getTestData(),
+                             decompressedData),
+               compareResults(getTestData(), decompressedData));
   }
 }

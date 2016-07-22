@@ -105,8 +105,9 @@ public class DefaultEndpointFactory implements EndpointFactory {
     } else {
       logger.debug("Named EndpointBuilder not found, creating endpoint builder for uri");
       EndpointURI epURI = new MuleEndpointURI(uri, muleContext);
-      TransportServiceDescriptor tsd = (TransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(),
-          LegacyServiceType.TRANSPORT, epURI.getFullScheme(), null);
+      TransportServiceDescriptor tsd =
+          (TransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(), LegacyServiceType.TRANSPORT,
+                                                               epURI.getFullScheme(), null);
       endpointBuilder = tsd.createEndpointBuilder(uri, muleContext);
     }
     return endpointBuilder;

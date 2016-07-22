@@ -39,7 +39,7 @@ public class GenericConnectorTestCase extends AbstractMuleContextEndpointTestCas
 
   private WorkEvent getTestWorkEvent() {
     WorkEvent event = new WorkEvent(this, // source
-        WorkEvent.WORK_REJECTED, getTestWork(), new WorkException(new Throwable("testThrowable")));
+                                    WorkEvent.WORK_REJECTED, getTestWork(), new WorkException(new Throwable("testThrowable")));
     return event;
   }
 

@@ -31,9 +31,9 @@ public class TcpSyncTestCase extends FunctionalTestCase {
 
   protected MuleMessage send(Object payload) throws Exception {
     MuleClient client = muleContext.getClient();
-    return client.send(
-        ((InboundEndpoint) (((Flow) muleContext.getRegistry().lookupObject("service"))).getMessageSource()).getAddress(), payload,
-        null);
+    return client
+        .send(((InboundEndpoint) (((Flow) muleContext.getRegistry().lookupObject("service"))).getMessageSource()).getAddress(),
+              payload, null);
   }
 
   @Test

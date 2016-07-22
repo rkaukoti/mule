@@ -66,10 +66,10 @@ public class ParameterizedQueryTemplateFactoryBean implements FactoryBean<QueryT
 
     if (queryParam instanceof InOutQueryParam) {
       overriddenParam = new DefaultInOutQueryParam(templateParam.getIndex(), paramType, templateParam.getName(),
-          ((InOutQueryParam) queryParam).getValue());
+                                                   ((InOutQueryParam) queryParam).getValue());
     } else if (queryParam instanceof InputQueryParam) {
       overriddenParam = new DefaultInputQueryParam(templateParam.getIndex(), paramType, ((InputQueryParam) queryParam).getValue(),
-          templateParam.getName());
+                                                   templateParam.getName());
     } else {
       overriddenParam = new DefaultOutputQueryParam(templateParam.getIndex(), paramType, templateParam.getName());
     }

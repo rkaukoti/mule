@@ -106,7 +106,8 @@ public class HttpRequestOptionsBuilder extends AbstractBaseOptionsBuilder<HttpRe
   @Override
   public HttpRequestOptions build() {
     return new DefaultHttpRequestOptions(method, followsRedirect, requestStreamingMode, requestConfig,
-        disableStatusCodeValidation, disableParseResponse, tlsContextFactory, getResponseTimeout());
+                                         disableStatusCodeValidation, disableParseResponse, tlsContextFactory,
+                                         getResponseTimeout());
   }
 
 }

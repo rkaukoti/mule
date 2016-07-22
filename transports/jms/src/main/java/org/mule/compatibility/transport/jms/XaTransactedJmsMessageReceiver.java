@@ -215,8 +215,8 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
     if (logger.isDebugEnabled()) {
       logger.debug("Message received it is of type: " + ClassUtils.getSimpleName(message.getClass()));
       if (message.getJMSDestination() != null) {
-        logger.debug(
-            "Message received on " + message.getJMSDestination() + " (" + message.getJMSDestination().getClass().getName() + ")");
+        logger.debug("Message received on " + message.getJMSDestination() + " ("
+            + message.getJMSDestination().getClass().getName() + ")");
       } else {
         logger.debug("Message received on unknown destination");
       }
@@ -226,8 +226,8 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
 
     if (message.getJMSRedelivered()) {
       if (logger.isDebugEnabled()) {
-        logger.debug(
-            "Message with correlationId: " + message.getJMSCorrelationID() + " is redelivered. handing off to Exception Handler");
+        logger.debug("Message with correlationId: " + message.getJMSCorrelationID()
+            + " is redelivered. handing off to Exception Handler");
       }
       redeliveryHandler.get().handleRedelivery(message, (InboundEndpoint) endpoint, flowConstruct);
     }
@@ -244,8 +244,8 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
 
     if (localTimeout > timeout) {
       logger.warn(String.format(
-          "Transaction timeout ('%s') must be greater than the timeout used for polling messages ('%s'). Using transaction timeout",
-          localTimeout, timeout));
+                                "Transaction timeout ('%s') must be greater than the timeout used for polling messages ('%s'). Using transaction timeout",
+                                localTimeout, timeout));
       localTimeout = timeout;
     }
 
@@ -359,8 +359,8 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
       String durableName = (String) endpoint.getProperties().get("durableName");
       if (durableName == null && durable && topic) {
         durableName = "mule." + connector.getName() + "." + endpoint.getEndpointURI().getAddress();
-        logger.debug(
-            "Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: " + durableName);
+        logger.debug("Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: "
+            + durableName);
       }
 
       // Create consumer

@@ -152,7 +152,7 @@ public class DateTimeTimeTestCase extends AbstractMuleTestCase {
   @Test
   public void testToString() {
     assertThat(now.getTime().withTimeZone("UTC").toString().substring(0, 8),
-        is(DatatypeConverter.printTime(Calendar.getInstance(TimeZone.getTimeZone("UTC"))).substring(0, 8)));
+               is(DatatypeConverter.printTime(Calendar.getInstance(TimeZone.getTimeZone("UTC"))).substring(0, 8)));
   }
 
   @Test

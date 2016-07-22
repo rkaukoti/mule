@@ -24,7 +24,7 @@ public class ApplicationService extends FlowConstructService implements FlowCons
   public void postRegister(Boolean registrationDone) {
     try {
       statsName = jmxSupport.getObjectName(String.format("%s:type=org.mule.Statistics,%s=%s", objectName.getDomain(),
-          statistics.getFlowConstructType(), jmxSupport.escape(getName())));
+                                                         statistics.getFlowConstructType(), jmxSupport.escape(getName())));
 
       // unregister old version if exists
       if (this.server.isRegistered(statsName)) {

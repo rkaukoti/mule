@@ -50,25 +50,27 @@ public class DualRandomAccessFileQueueStoreDelegate extends AbstractQueueStoreDe
   private RandomAccessFileQueueStore randomAccessFileQueueStore2;
 
   public DualRandomAccessFileQueueStoreDelegate(String queueName, String workingDirectory, MuleContext muleContext,
-      int capacity) {
+                                                int capacity) {
     super(capacity);
     this.muleContext = muleContext;
     serializer = muleContext.getObjectSerializer();
     File queuesDirectory = getQueuesDirectory(workingDirectory);
     if (!queuesDirectory.exists()) {
       Preconditions.checkState(queuesDirectory.mkdirs(),
-          "Could not create queue store directory " + queuesDirectory.getAbsolutePath());
+                               "Could not create queue store directory " + queuesDirectory.getAbsolutePath());
     }
     randomAccessFileQueueStore1 =
         new RandomAccessFileQueueStore(new QueueFileProvider(queuesDirectory, queueName + QUEUE_STORE_1_SUFFIX));
     randomAccessFileQueueStore2 =
         new RandomAccessFileQueueStore(new QueueFileProvider(queuesDirectory, queueName + QUEUE_STORE_2_SUFFIX));
     queueControlDataFile = new QueueControlDataFile(new QueueFileProvider(queuesDirectory, queueName + QUEUE_DATA_CONTROL_SUFFIX),
-        randomAccessFileQueueStore1.getFile(), randomAccessFileQueueStore2.getFile());
-    writeFile = queueControlDataFile.getCurrentWriteFile().getAbsolutePath().equals(
-        randomAccessFileQueueStore1.getFile().getAbsolutePath()) ? randomAccessFileQueueStore1 : randomAccessFileQueueStore2;
-    readFile = queueControlDataFile.getCurrentReadFile().getAbsolutePath().equals(
-        randomAccessFileQueueStore1.getFile().getAbsolutePath()) ? randomAccessFileQueueStore1 : randomAccessFileQueueStore2;
+                                                    randomAccessFileQueueStore1.getFile(), randomAccessFileQueueStore2.getFile());
+    writeFile = queueControlDataFile.getCurrentWriteFile().getAbsolutePath()
+        .equals(randomAccessFileQueueStore1.getFile().getAbsolutePath()) ? randomAccessFileQueueStore1
+            : randomAccessFileQueueStore2;
+    readFile = queueControlDataFile.getCurrentReadFile().getAbsolutePath()
+        .equals(randomAccessFileQueueStore1.getFile().getAbsolutePath()) ? randomAccessFileQueueStore1
+            : randomAccessFileQueueStore2;
     filesLock = new ReentrantReadWriteLock();
 
     if (logger.isDebugEnabled()) {

@@ -67,8 +67,8 @@ public class NTLMScheme implements AuthScheme {
     try {
       return (NTCredentials) credentials;
     } catch (ClassCastException e) {
-      throw new InvalidCredentialsException(
-          "Credentials cannot be used for NTLM authentication: " + credentials.getClass().getName());
+      throw new InvalidCredentialsException("Credentials cannot be used for NTLM authentication: "
+          + credentials.getClass().getName());
     }
   }
 

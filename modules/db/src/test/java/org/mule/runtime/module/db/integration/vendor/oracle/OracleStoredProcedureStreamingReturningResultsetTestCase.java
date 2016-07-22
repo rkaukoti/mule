@@ -16,7 +16,7 @@ public class OracleStoredProcedureStreamingReturningResultsetTestCase
     extends AbstractStoredProcedureStreamingReturningResultsetTestCase {
 
   public OracleStoredProcedureStreamingReturningResultsetTestCase(String dataSourceConfigResource,
-      AbstractTestDatabase testDatabase) {
+                                                                  AbstractTestDatabase testDatabase) {
     super(dataSourceConfigResource, testDatabase);
   }
 

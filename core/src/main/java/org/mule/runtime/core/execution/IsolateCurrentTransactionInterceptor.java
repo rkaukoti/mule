@@ -15,7 +15,7 @@ public class IsolateCurrentTransactionInterceptor<T> implements ExecutionInterce
   private TransactionConfig transactionConfig;
 
   public IsolateCurrentTransactionInterceptor(ExecutionInterceptor<T> nextProcessingInterceptor,
-      TransactionConfig transactionConfig) {
+                                              TransactionConfig transactionConfig) {
     this.next = nextProcessingInterceptor;
     this.transactionConfig = transactionConfig;
   }

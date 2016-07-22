@@ -73,8 +73,8 @@ public class DelegateTransaction extends AbstractTransaction {
   @Override
   public void bindResource(Object key, Object resource) throws TransactionException {
     if (!(this.delegate instanceof NullTransaction)) {
-      throw new TransactionException(
-          CoreMessages.createStaticMessage("Single resource transaction has already a resource bound"));
+      throw new TransactionException(CoreMessages
+          .createStaticMessage("Single resource transaction has already a resource bound"));
     }
     TransactionFactory transactionFactory = muleContext.getTransactionFactoryManager().getTransactionFactoryFor(key.getClass());
     this.unbindTransaction();

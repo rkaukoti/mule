@@ -87,7 +87,7 @@ public class FileConnectorTestCase extends AbstractConnectorTestCase {
     Flow flow = getTestFlow();
     MessageReceiver receiver = connector.createReceiver(flow, endpoint);
     assertEquals("Connector's polling frequency must not be ignored.", POLLING_FREQUENCY,
-        ((FileMessageReceiver) receiver).getFrequency());
+                 ((FileMessageReceiver) receiver).getFrequency());
   }
 
   /**
@@ -107,7 +107,7 @@ public class FileConnectorTestCase extends AbstractConnectorTestCase {
     Flow flow = getTestFlow();
     MessageReceiver receiver = connector.createReceiver(flow, endpoint);
     assertEquals("Polling frequency endpoint override must not be ignored.", POLLING_FREQUENCY_OVERRIDE,
-        ((FileMessageReceiver) receiver).getFrequency());
+                 ((FileMessageReceiver) receiver).getFrequency());
   }
 
   @Test

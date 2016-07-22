@@ -30,8 +30,9 @@ public class ArtifactClassLoaderBuilderFactory {
    * @param artifactPluginDescriptorLoader factory for loading the artifact plugin descriptor from a file
    */
   public ArtifactClassLoaderBuilderFactory(DeployableArtifactClassLoaderFactory artifactClassLoaderFactory,
-      ArtifactPluginRepository applicationPluginRepository, ArtifactPluginFactory artifactPluginFactory,
-      ArtifactPluginDescriptorLoader artifactPluginDescriptorLoader) {
+                                           ArtifactPluginRepository applicationPluginRepository,
+                                           ArtifactPluginFactory artifactPluginFactory,
+                                           ArtifactPluginDescriptorLoader artifactPluginDescriptorLoader) {
     this.artifactClassLoaderFactory = artifactClassLoaderFactory;
     this.applicationPluginRepository = applicationPluginRepository;
     this.artifactPluginFactory = artifactPluginFactory;
@@ -45,7 +46,7 @@ public class ArtifactClassLoaderBuilderFactory {
    */
   public ArtifactClassLoaderBuilder createArtifactClassLoaderBuilder() {
     return new ArtifactClassLoaderBuilder(artifactClassLoaderFactory, applicationPluginRepository, artifactPluginFactory,
-        artifactPluginDescriptorLoader);
+                                          artifactPluginDescriptorLoader);
   }
 
 }

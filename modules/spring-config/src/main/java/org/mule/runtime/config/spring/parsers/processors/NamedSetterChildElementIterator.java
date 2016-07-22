@@ -25,7 +25,7 @@ public class NamedSetterChildElementIterator extends AbstractChildElementIterato
   private String setter;
 
   public NamedSetterChildElementIterator(String setter, BeanAssemblerFactory beanAssemblerFactory,
-      PropertyConfiguration configuration) {
+                                         PropertyConfiguration configuration) {
     super(beanAssemblerFactory, configuration);
     this.setter = setter;
   }

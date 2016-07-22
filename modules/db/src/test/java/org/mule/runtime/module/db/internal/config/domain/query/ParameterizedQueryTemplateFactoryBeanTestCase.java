@@ -62,8 +62,9 @@ public class ParameterizedQueryTemplateFactoryBeanTestCase extends AbstractMuleT
 
   @Test
   public void createsQueryWithDefaultParams() throws Exception {
-    List<QueryParam> defaultParams = Collections.<QueryParam>singletonList(
-        new DefaultInputQueryParam(1, JdbcTypes.INTEGER_DB_TYPE, TEMPLATE_PARAM_VALUE, POSITION_PARAM_NAME));
+    List<QueryParam> defaultParams =
+        Collections.<QueryParam>singletonList(new DefaultInputQueryParam(1, JdbcTypes.INTEGER_DB_TYPE, TEMPLATE_PARAM_VALUE,
+                                                                         POSITION_PARAM_NAME));
     QueryTemplate queryTemplate = new QueryTemplate(PARSED_PARAMETERIZED_QUERY, QueryType.SELECT, defaultParams);
 
     QueryTemplateParser queryParser = mock(QueryTemplateParser.class);
@@ -83,8 +84,9 @@ public class ParameterizedQueryTemplateFactoryBeanTestCase extends AbstractMuleT
 
   @Test
   public void createsQueryWithOverriddenParams() throws Exception {
-    QueryTemplate createdQueryTemplate = doOverriddenParamTest(JdbcTypes.INTEGER_DB_TYPE,
-        new DefaultInputQueryParam(1, JdbcTypes.INTEGER_DB_TYPE, OVERRIDDEN_PARAM_VALUE, POSITION_PARAM_NAME));
+    QueryTemplate createdQueryTemplate =
+        doOverriddenParamTest(JdbcTypes.INTEGER_DB_TYPE, new DefaultInputQueryParam(1, JdbcTypes.INTEGER_DB_TYPE,
+                                                                                    OVERRIDDEN_PARAM_VALUE, POSITION_PARAM_NAME));
 
     assertThat(createdQueryTemplate.getSqlText(), equalTo(PARSED_PARAMETERIZED_QUERY));
     assertThat(createdQueryTemplate.getType(), equalTo(QueryType.SELECT));

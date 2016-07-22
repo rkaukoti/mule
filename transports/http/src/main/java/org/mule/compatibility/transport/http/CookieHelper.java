@@ -141,7 +141,7 @@ enum CookieStorageType {
       }
 
       return concatenateCookies(preExistentCookiesArray,
-          cookiesThatAreReallyNew.toArray(new Cookie[cookiesThatAreReallyNew.size()]));
+                                cookiesThatAreReallyNew.toArray(new Cookie[cookiesThatAreReallyNew.size()]));
     }
 
     @Override
@@ -275,8 +275,8 @@ enum CookieStorageType {
     } else if (cookiesObject instanceof Map) {
       return CookieStorageType.MAP_STRING_STRING;
     } else {
-      throw new IllegalArgumentException(
-          "Invalid cookiesObject. Only " + Cookie.class + "[] and " + Map.class + " are supported: " + cookiesObject);
+      throw new IllegalArgumentException("Invalid cookiesObject. Only " + Cookie.class + "[] and " + Map.class
+          + " are supported: " + cookiesObject);
     }
   }
 
@@ -304,7 +304,7 @@ enum CookieStorageType {
    * @see CookieHelper#addCookiesToClient(HttpClient, Object, String, MuleEvent, URI)
    */
   public abstract void addCookiesToClient(HttpClient client, Object cookiesObject, String policy, MuleEvent event,
-      URI destinationUri);
+                                          URI destinationUri);
 
   /**
    * @see CookieHelper#asArrayOfCookies(Object)
@@ -515,7 +515,7 @@ public class CookieHelper {
   protected static Cookie transformServerCookieToClientCookie(ServerCookie serverCookie) {
     Cookie clientCookie =
         new Cookie(serverCookie.getDomain().toString(), serverCookie.getName().toString(), serverCookie.getValue().toString(),
-            serverCookie.getPath().toString(), serverCookie.getMaxAge(), serverCookie.getSecure());
+                   serverCookie.getPath().toString(), serverCookie.getMaxAge(), serverCookie.getSecure());
     clientCookie.setComment(serverCookie.getComment().toString());
     clientCookie.setVersion(serverCookie.getVersion());
     return clientCookie;
@@ -528,7 +528,7 @@ public class CookieHelper {
   public static String formatCookieForASetCookieHeader(Cookie cookie) {
     StringBuffer sb = new StringBuffer();
     ServerCookie.appendCookieValue(sb, cookie.getVersion(), cookie.getName(), cookie.getValue(), cookie.getPath(),
-        cookie.getDomain(), cookie.getComment(), -1, cookie.getSecure(), false);
+                                   cookie.getDomain(), cookie.getComment(), -1, cookie.getSecure(), false);
 
     Date expiryDate = cookie.getExpiryDate();
     if (expiryDate != null) {
@@ -549,9 +549,9 @@ public class CookieHelper {
    * @param destinationUri the host, port and path of this {@link URI} will be used as the data of the cookies that are added.
    */
   public static void addCookiesToClient(HttpClient client, Object cookiesObject, String policy, MuleEvent event,
-      URI destinationUri) {
+                                        URI destinationUri) {
     CookieStorageType.resolveCookieStorageType(cookiesObject).addCookiesToClient(client, cookiesObject, policy, event,
-        destinationUri);
+                                                                                 destinationUri);
   }
 
   /**
@@ -571,7 +571,7 @@ public class CookieHelper {
    */
   public static Object putAndMergeCookie(Object preExistentCookies, String cookieName, String cookieValue) {
     return CookieStorageType.resolveCookieStorageType(preExistentCookies).putAndMergeCookie(preExistentCookies, cookieName,
-        cookieValue);
+                                                                                            cookieValue);
   }
 
   /**

@@ -56,7 +56,7 @@ public class OutputSoapHeadersInterceptor extends AbstractSoapInterceptor {
         } catch (TransformerException e) {
           throw new Fault(new TransformerMessagingException(CoreMessages
               .createStaticMessage("Cannot parse content of SOAP header %s in the response", header.getName().getLocalPart()),
-              event, transformer, e.getCause()));
+                                                            event, transformer, e.getCause()));
         }
       }
     }

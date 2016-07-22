@@ -74,11 +74,11 @@ public class HttpMessageReceiver extends AbstractMessageReceiver {
       factory = (HttpMuleMessageFactory) super.createMuleMessageFactory();
 
       boolean enableCookies = MapUtils.getBooleanValue(endpoint.getProperties(), HttpConnector.HTTP_ENABLE_COOKIES_PROPERTY,
-          ((HttpConnector) connector).isEnableCookies());
+                                                       ((HttpConnector) connector).isEnableCookies());
       factory.setEnableCookies(enableCookies);
 
       String cookieSpec = MapUtils.getString(endpoint.getProperties(), HttpConnector.HTTP_COOKIE_SPEC_PROPERTY,
-          ((HttpConnector) connector).getCookieSpec());
+                                             ((HttpConnector) connector).getCookieSpec());
       factory.setCookieSpec(cookieSpec);
 
       factory.setExchangePattern(endpoint.getExchangePattern());

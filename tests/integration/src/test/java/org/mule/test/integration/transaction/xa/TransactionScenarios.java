@@ -17,7 +17,7 @@ public class TransactionScenarios {
   private int verificationTimeout = 1000;
 
   public TransactionScenarios(InboundMessagesGenerator inboundMessagesGenerator,
-      OutboundMessagesCounter outboundMessagesVerifier) {
+                              OutboundMessagesCounter outboundMessagesVerifier) {
     this.inboundMessagesGenerator = inboundMessagesGenerator;
     this.outboundMessagesVerifier = outboundMessagesVerifier;
   }
@@ -73,7 +73,7 @@ public class TransactionScenarios {
           public String describeFailure() {
             try {
               return String.format("Not all the messages arrived. Only %d of %s arrived",
-                  outboundMessagesVerifier.numberOfMessagesThatArrived(), numberOfMessagesCreated);
+                                   outboundMessagesVerifier.numberOfMessagesThatArrived(), numberOfMessagesCreated);
             } catch (Exception e) {
               return String.format("Not all messages arrived.");
             }

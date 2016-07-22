@@ -74,13 +74,14 @@ public abstract class AbstractExtensionObjectFactory<T> implements ObjectFactory
     if (value instanceof ValueResolver) {
       resolver = (ValueResolver<?>) value;
     } else if (value instanceof Collection) {
-      resolver = CollectionValueResolver.of((Class<? extends Collection>) value.getClass(),
-          (List) ((Collection) value).stream().map(this::toValueResolver).collect(new ImmutableListCollector()));
+      resolver = CollectionValueResolver
+          .of((Class<? extends Collection>) value.getClass(),
+              (List) ((Collection) value).stream().map(this::toValueResolver).collect(new ImmutableListCollector()));
     } else if (value instanceof Map) {
       Map<Object, Object> map = (Map<Object, Object>) value;
       Map<ValueResolver<Object>, ValueResolver<Object>> normalizedMap = new LinkedHashMap<>(map.size());
       map.forEach((key, entryValue) -> normalizedMap.put((ValueResolver<Object>) toValueResolver(key),
-          (ValueResolver<Object>) toValueResolver(entryValue)));
+                                                         (ValueResolver<Object>) toValueResolver(entryValue)));
       resolver = MapValueResolver.of(map.getClass(), copyOf(normalizedMap.keySet()), copyOf(normalizedMap.values()));
     } else {
       resolver = new StaticValueResolver<>(value);

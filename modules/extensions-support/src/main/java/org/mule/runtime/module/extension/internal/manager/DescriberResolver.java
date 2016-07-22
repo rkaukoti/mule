@@ -49,7 +49,7 @@ final class DescriberResolver {
     DescriberResolverDelegate delegate = delegates.get(manifest.getDescriberManifest().getId());
     if (delegate == null) {
       throw new IllegalArgumentException(format("Manifest for extension '%s' references describer '%s' which is not supported",
-          manifest.getName(), manifest.getDescriberManifest().getId()));
+                                                manifest.getName(), manifest.getDescriberManifest().getId()));
     }
 
     return delegate.resolve(manifest, classLoader);
@@ -60,8 +60,8 @@ final class DescriberResolver {
 
       String type = manifest.getDescriberManifest().getProperties().get(TYPE_PROPERTY_NAME);
       if (isBlank(type)) {
-        throw new IllegalArgumentException(
-            format("Manifest for extension '%s' has no '%s' property", manifest.getName(), TYPE_PROPERTY_NAME));
+        throw new IllegalArgumentException(format("Manifest for extension '%s' has no '%s' property", manifest.getName(),
+                                                  TYPE_PROPERTY_NAME));
       }
 
       Class<?> extensionType;

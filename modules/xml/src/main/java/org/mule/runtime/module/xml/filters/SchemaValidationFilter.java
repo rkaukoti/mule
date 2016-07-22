@@ -55,8 +55,7 @@ public class SchemaValidationFilter extends AbstractJaxpFilter implements Filter
 
   @Override
   public boolean accept(MuleMessage message) {
-    throw new UnsupportedOperationException(
-        "MULE-9341 Remove Filters that are not needed.  This method will be removed when filters are cleaned up.");
+    throw new UnsupportedOperationException("MULE-9341 Remove Filters that are not needed.  This method will be removed when filters are cleaned up.");
   }
 
   /**

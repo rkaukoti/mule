@@ -185,9 +185,9 @@ public class XPath3Function implements ExpressionLanguageFunction {
     }
 
     if (node == null) {
-      throw new IllegalArgumentException(
-          String.format("Could not transform input of type '%s' to a supported one. Supported types are '%s'",
-              input.getClass().getName(), SUPPORTED_TYPES_AS_STRING));
+      throw new IllegalArgumentException(String.format(
+                                                       "Could not transform input of type '%s' to a supported one. Supported types are '%s'",
+                                                       input.getClass().getName(), SUPPORTED_TYPES_AS_STRING));
     }
 
     return node;
@@ -203,7 +203,7 @@ public class XPath3Function implements ExpressionLanguageFunction {
 
   private void validateParams(Object[] params) {
     checkArgument(params.length > 0 && params.length <= 3,
-        String.format("xpath3() function accepts up to 3 arguments, but %s were provided instead", params.length));
+                  String.format("xpath3() function accepts up to 3 arguments, but %s were provided instead", params.length));
   }
 
   private String getXpathExpression(Object[] params) {

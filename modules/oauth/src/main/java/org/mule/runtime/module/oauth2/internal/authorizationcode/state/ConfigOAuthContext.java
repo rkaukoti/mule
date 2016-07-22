@@ -20,7 +20,7 @@ public class ConfigOAuthContext {
   private final ObjectStoreToMapAdapter<ResourceOwnerOAuthContext> oauthContextStore;
 
   public ConfigOAuthContext(final LockFactory lockFactory, ListableObjectStore<ResourceOwnerOAuthContext> objectStore,
-      final String configName) {
+                            final String configName) {
     this.lockFactory = lockFactory;
     this.oauthContextStore = new ObjectStoreToMapAdapter(objectStore);
     this.configName = configName;

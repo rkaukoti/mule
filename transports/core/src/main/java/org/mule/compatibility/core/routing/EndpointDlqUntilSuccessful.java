@@ -19,9 +19,8 @@ public class EndpointDlqUntilSuccessful extends UntilSuccessful {
 
         dlqMP = ((EndpointBuilder) deadLetterQueue).buildOutboundEndpoint();
       } catch (final EndpointException ee) {
-        throw new InitialisationException(
-            MessageFactory.createStaticMessage("deadLetterQueue-ref is not a valid endpoint builder: " + deadLetterQueue), ee,
-            this);
+        throw new InitialisationException(MessageFactory
+            .createStaticMessage("deadLetterQueue-ref is not a valid endpoint builder: " + deadLetterQueue), ee, this);
       }
     } else {
       super.resolveDlqMessageProcessor();

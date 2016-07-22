@@ -108,25 +108,23 @@ public final class NameClashModelValidator implements ModelValidator {
       }.walk(extensionModel);
 
       validateNameClashes(namedObjects, topLevelParameters.values(),
-          topLevelParameters.values().stream().map(TypedTopLevelParameter::new).collect(toSet()));
+                          topLevelParameters.values().stream().map(TypedTopLevelParameter::new).collect(toSet()));
     }
 
     private void validateOperation(OperationModel operation) {
       validateParameterNames(operation);
       // Check clash between each operation and its parameters type
-      operation.getParameterModels().stream().forEach(parameterModel -> validateClash(operation.getName(),
-          getType(parameterModel.getType()).getName(), "operation", "argument"));
+      operation.getParameterModels().stream()
+          .forEach(parameterModel -> validateClash(operation.getName(), getType(parameterModel.getType()).getName(), "operation",
+                                                   "argument"));
     }
 
     private void validateParameterNames(ParameterizedModel model) {
       Set<String> repeatedParameters = collectRepeatedNames(model.getParameterModels());
       if (!repeatedParameters.isEmpty()) {
-        throw new IllegalModelDefinitionException(
-            format(
-                "Extension '%s' defines the %s '%s' which has parameters "
-                    + "with repeated names. Offending parameters are: [%s]",
-                extensionModel.getName(), model.getClass().getSimpleName(), model.getName(),
-                Joiner.on(",").join(repeatedParameters)));
+        throw new IllegalModelDefinitionException(format("Extension '%s' defines the %s '%s' which has parameters "
+            + "with repeated names. Offending parameters are: [%s]", extensionModel.getName(), model.getClass().getSimpleName(),
+                                                         model.getName(), Joiner.on(",").join(repeatedParameters)));
       }
     }
 
@@ -148,10 +146,10 @@ public final class NameClashModelValidator implements ModelValidator {
 
         if (repeated.isPresent()) {
           TopLevelParameter tp = repeated.get();
-          throw new IllegalModelDefinitionException(format(
-              "Extension '%s' defines a %s of name '%s' which contains a parameter of complex type '%s'. However, "
-                  + "%s of name '%s' defines a parameter of the same name but type '%s'. Complex parameter of different types cannot have the same name.",
-              extensionModel.getName(), ownerType, ownerName, parameterType, tp.ownerType, tp.owner, tp.type.getName()));
+          throw new IllegalModelDefinitionException(format("Extension '%s' defines a %s of name '%s' which contains a parameter of complex type '%s'. However, "
+              + "%s of name '%s' defines a parameter of the same name but type '%s'. Complex parameter of different types cannot have the same name.",
+                                                           extensionModel.getName(), ownerType, ownerName, parameterType,
+                                                           tp.ownerType, tp.owner, tp.type.getName()));
         }
       }
     }
@@ -196,10 +194,11 @@ public final class NameClashModelValidator implements ModelValidator {
     }
 
     private void validateClash(String existingNamingModel, String newNamingModel, String typeOfExistingNamingModel,
-        String typeOfNewNamingModel) {
+                               String typeOfNewNamingModel) {
       if (StringUtils.equalsIgnoreCase(existingNamingModel, newNamingModel)) {
         throw new IllegalModelDefinitionException(format("Extension '%s' has a %s named '%s' with an %s type named equally.",
-            extensionModel.getName(), typeOfExistingNamingModel, existingNamingModel, typeOfNewNamingModel));
+                                                         extensionModel.getName(), typeOfExistingNamingModel, existingNamingModel,
+                                                         typeOfNewNamingModel));
       }
     }
   }

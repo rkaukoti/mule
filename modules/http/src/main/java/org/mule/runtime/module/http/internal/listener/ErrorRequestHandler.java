@@ -31,22 +31,22 @@ public class ErrorRequestHandler implements RequestHandler {
   @Override
   public void handleRequest(HttpRequestContext requestContext, HttpResponseReadyCallback responseCallback) {
     String resolvedEntity = String.format(entityFormat, requestContext.getRequest().getUri());
-    responseCallback.responseReady(
-        new org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder().setStatusCode(statusCode)
-            .setReasonPhrase(reasonPhrase)
-            .setEntity(new InputStreamHttpEntity(new ByteArrayInputStream(resolvedEntity.getBytes()))).build(),
-        new ResponseStatusCallback() {
+    responseCallback.responseReady(new org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder()
+        .setStatusCode(statusCode).setReasonPhrase(reasonPhrase)
+        .setEntity(new InputStreamHttpEntity(new ByteArrayInputStream(resolvedEntity.getBytes()))).build(),
+                                   new ResponseStatusCallback() {
 
-          @Override
-          public void responseSendFailure(Throwable exception) {
-            logger.warn(String.format("Error while sending %s response %s", statusCode, exception.getMessage()));
-            if (logger.isDebugEnabled()) {
-              logger.debug("exception thrown", exception);
-            }
-          }
+                                     @Override
+                                     public void responseSendFailure(Throwable exception) {
+                                       logger.warn(String.format("Error while sending %s response %s", statusCode,
+                                                                 exception.getMessage()));
+                                       if (logger.isDebugEnabled()) {
+                                         logger.debug("exception thrown", exception);
+                                       }
+                                     }
 
-          @Override
-          public void responseSendSuccessfully() {}
-        });
+                                     @Override
+                                     public void responseSendSuccessfully() {}
+                                   });
   }
 }

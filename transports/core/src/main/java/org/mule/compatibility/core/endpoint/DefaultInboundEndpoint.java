@@ -44,14 +44,17 @@ public class DefaultInboundEndpoint extends AbstractEndpoint implements InboundE
   private ExceptionListener exceptionListener;
 
   public DefaultInboundEndpoint(Connector connector, EndpointURI endpointUri, String name, Map properties,
-      TransactionConfig transactionConfig, boolean deleteUnacceptedMessage, MessageExchangePattern messageExchangePattern,
-      int responseTimeout, String initialState, Charset endpointEncoding, String endpointBuilderName, MuleContext muleContext,
-      RetryPolicyTemplate retryPolicyTemplate, AbstractRedeliveryPolicy redeliveryPolicy,
-      EndpointMessageProcessorChainFactory messageProcessorsFactory, List<MessageProcessor> messageProcessors,
-      List<MessageProcessor> responseMessageProcessors, boolean disableTransportTransformer, MediaType mimeType) {
+                                TransactionConfig transactionConfig, boolean deleteUnacceptedMessage,
+                                MessageExchangePattern messageExchangePattern, int responseTimeout, String initialState,
+                                Charset endpointEncoding, String endpointBuilderName, MuleContext muleContext,
+                                RetryPolicyTemplate retryPolicyTemplate, AbstractRedeliveryPolicy redeliveryPolicy,
+                                EndpointMessageProcessorChainFactory messageProcessorsFactory,
+                                List<MessageProcessor> messageProcessors, List<MessageProcessor> responseMessageProcessors,
+                                boolean disableTransportTransformer, MediaType mimeType) {
     super(connector, endpointUri, name, properties, transactionConfig, deleteUnacceptedMessage, messageExchangePattern,
-        responseTimeout, initialState, endpointEncoding, endpointBuilderName, muleContext, retryPolicyTemplate, redeliveryPolicy,
-        messageProcessorsFactory, messageProcessors, responseMessageProcessors, disableTransportTransformer, mimeType);
+          responseTimeout, initialState, endpointEncoding, endpointBuilderName, muleContext, retryPolicyTemplate,
+          redeliveryPolicy, messageProcessorsFactory, messageProcessors, responseMessageProcessors, disableTransportTransformer,
+          mimeType);
   }
 
   @Override

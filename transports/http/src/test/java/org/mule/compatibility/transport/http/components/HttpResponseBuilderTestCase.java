@@ -213,9 +213,9 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase {
     Map<String, String> responseCookies = getHeaderCookie(response.getHeaders());
     assertNotNull(responseCookies);
     assertEquals("userName=John_Galt; Version=1; Domain=localhost; Path=/; Secure; Expires=Sun, 15-Dec-2013 16:00:00 GMT",
-        responseCookies.get("userName"));
+                 responseCookies.get("userName"));
     assertEquals("userId=1; Version=1; Domain=localhost; Path=/; Secure; Expires=Sun, 1-Dec-2013 16:00:00 GMT",
-        responseCookies.get("userId"));
+                 responseCookies.get("userId"));
   }
 
   @Test
@@ -223,8 +223,8 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase {
     HttpResponseBuilder httpResponseBuilder = createHttpResponseBuilder();
 
     List<CookieWrapper> cookies = new ArrayList<>();
-    cookies.add(
-        createCookie(HEADER_NAME, HEADER_VALUE, HEADER_DOMAIN, HEADER_PATH, HEADER_EXPIRY_DATE, HEADER_SECURE, HEADER_VERSION));
+    cookies.add(createCookie(HEADER_NAME, HEADER_VALUE, HEADER_DOMAIN, HEADER_PATH, HEADER_EXPIRY_DATE, HEADER_SECURE,
+                             HEADER_VERSION));
     httpResponseBuilder.setCookies(cookies);
 
     when(mockExpressionManager.parse(HEADER_NAME, mockEvent)).thenReturn("userName");
@@ -242,7 +242,7 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase {
     Map<String, String> responseCookies = getHeaderCookie(response.getHeaders());
     assertNotNull(responseCookies);
     assertEquals("userName=John_Galt; Version=1; Domain=localhost; Path=/; Secure; Expires=Sun, 15-Dec-2013 16:00:00 GMT",
-        responseCookies.get("userName"));
+                 responseCookies.get("userName"));
   }
 
   @Test
@@ -294,7 +294,7 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase {
     HttpResponse response = new HttpResponse();
     httpResponseBuilder.setCacheControl(response, mockEvent);
     assertEquals("public,no-cache,no-store,must-revalidate,max-age=3600",
-        response.getFirstHeader(HttpConstants.HEADER_CACHE_CONTROL).getValue());
+                 response.getFirstHeader(HttpConstants.HEADER_CACHE_CONTROL).getValue());
   }
 
   @Test
@@ -317,7 +317,7 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase {
     HttpResponse response = new HttpResponse();
     httpResponseBuilder.setCacheControl(response, mockEvent);
     assertEquals("public,no-cache,no-store,must-revalidate,max-age=3600",
-        response.getFirstHeader(HttpConstants.HEADER_CACHE_CONTROL).getValue());
+                 response.getFirstHeader(HttpConstants.HEADER_CACHE_CONTROL).getValue());
   }
 
   @Test
@@ -371,7 +371,7 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase {
 
       } else if (header.getName().startsWith(HttpConstants.CUSTOM_HEADER_PREFIX)) {
         assertEquals(outboundProperties.get(header.getName().substring(HttpConstants.CUSTOM_HEADER_PREFIX.length())),
-            header.getValue());
+                     header.getValue());
       } else {
         assertEquals(outboundProperties.get(header.getName()), header.getValue());
       }
@@ -475,7 +475,7 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase {
   }
 
   private CookieWrapper createCookie(String name, String value, String domain, String path, String expiryDate, String secure,
-      String version) {
+                                     String version) {
     CookieWrapper cookie = new CookieWrapper();
     cookie.setName(name);
     cookie.setValue(value);

@@ -40,8 +40,7 @@ public class EndpointBindsToCorrectWdslPortTestCase extends FunctionalTestCase {
     Server server = cxfProcessor.getServer();
     EndpointInfo endpointInfo = server.getEndpoint().getEndpointInfo();
 
-    assertEquals(
-        "The local part of the endpoint name must be the one supplied as the endpointName parameter on the cxf:inbound-endpoint",
-        "ListsSoap", endpointInfo.getName().getLocalPart());
+    assertEquals("The local part of the endpoint name must be the one supplied as the endpointName parameter on the cxf:inbound-endpoint",
+                 "ListsSoap", endpointInfo.getName().getLocalPart());
   }
 }

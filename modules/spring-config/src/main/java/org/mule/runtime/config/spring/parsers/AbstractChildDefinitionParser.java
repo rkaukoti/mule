@@ -58,7 +58,7 @@ public abstract class AbstractChildDefinitionParser extends AbstractHierarchical
         assembler.insertBeanInTarget(propertyName);
       } else {
         assembler.insertSingletonBeanInTarget(propertyName,
-            element.getAttribute(AbstractMuleBeanDefinitionParser.ATTRIBUTE_NAME));
+                                              element.getAttribute(AbstractMuleBeanDefinitionParser.ATTRIBUTE_NAME));
       }
     }
   }

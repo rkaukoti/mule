@@ -40,7 +40,7 @@ public class EndpointFactoryTestCase extends AbstractMuleContextTestCase {
   @Test
   public void testCreateInboundEndpointFromGlobalEndpoint() throws Exception {
     registerEndpointBuilder(muleContext.getRegistry(), "myGlobalEndpoint",
-        new EndpointURIEndpointBuilder("test://address", muleContext));
+                            new EndpointURIEndpointBuilder("test://address", muleContext));
     String uri = "myGlobalEndpoint";
     EndpointFactory endpointFactory = new DefaultEndpointFactory();
     endpointFactory.setMuleContext(muleContext);
@@ -57,7 +57,7 @@ public class EndpointFactoryTestCase extends AbstractMuleContextTestCase {
   @Test
   public void testCreateInboundEndpointFromNamedConcreteEndpoint() throws Exception {
     registerEndpointBuilder(muleContext.getRegistry(), "&myNamedConcreateEndpoint",
-        new EndpointURIEndpointBuilder("test://address", muleContext));
+                            new EndpointURIEndpointBuilder("test://address", muleContext));
     String uri = "&myNamedConcreateEndpoint";
     EndpointFactory endpointFactory = new DefaultEndpointFactory();
     endpointFactory.setMuleContext(muleContext);
@@ -81,7 +81,7 @@ public class EndpointFactoryTestCase extends AbstractMuleContextTestCase {
   @Test
   public void testCreateoutboundEndpointFromGlobalEndpoint() throws Exception {
     registerEndpointBuilder(muleContext.getRegistry(), "myGlobalEndpoint",
-        new EndpointURIEndpointBuilder("test://address", muleContext));
+                            new EndpointURIEndpointBuilder("test://address", muleContext));
     String uri = "myGlobalEndpoint";
     EndpointFactory endpointFactory = new DefaultEndpointFactory();
     endpointFactory.setMuleContext(muleContext);
@@ -94,7 +94,7 @@ public class EndpointFactoryTestCase extends AbstractMuleContextTestCase {
   @Test
   public void testCreateoutboundEndpointFromNamedConcreteEndpoint() throws Exception {
     registerEndpointBuilder(muleContext.getRegistry(), "&myNamedConcreateEndpoint",
-        new EndpointURIEndpointBuilder("test://address", muleContext));
+                            new EndpointURIEndpointBuilder("test://address", muleContext));
     String uri = "&myNamedConcreateEndpoint";
     EndpointFactory endpointFactory = new DefaultEndpointFactory();
     endpointFactory.setMuleContext(muleContext);

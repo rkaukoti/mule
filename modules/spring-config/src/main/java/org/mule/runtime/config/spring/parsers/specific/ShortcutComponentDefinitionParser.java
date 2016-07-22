@@ -27,7 +27,7 @@ public class ShortcutComponentDefinitionParser extends ComponentDefinitionParser
     GenericBeanDefinition objectFactoryBeanDefinition = new GenericBeanDefinition();
     objectFactoryBeanDefinition.setBeanClass(OBJECT_FACTORY_TYPE);
     objectFactoryBeanDefinition.getPropertyValues().addPropertyValue(AbstractObjectFactory.ATTRIBUTE_OBJECT_CLASS_NAME,
-        className);
+                                                                     className);
 
     builder.addPropertyValue("objectFactory", objectFactoryBeanDefinition);
     super.parseChild(element, parserContext, builder);

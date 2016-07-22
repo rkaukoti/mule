@@ -70,7 +70,7 @@ public class HeisenbergOperations {
 
   @DataTypeParameters
   public OperationResult<String, IntegerAttributes> getEnemy(@UseConfig HeisenbergExtension config,
-      @Optional(defaultValue = "0") int index) {
+                                                             @Optional(defaultValue = "0") int index) {
     Charset lastSupportedEncoding = Charset.availableCharsets().values().stream().reduce((first, last) -> last).get();
     org.mule.runtime.api.metadata.DataType dt =
         DataType.builder().type(String.class).mediaType("dead/dead").charset(lastSupportedEncoding.toString()).build();
@@ -83,9 +83,8 @@ public class HeisenbergOperations {
     return killWithCustomMessage(victim, goodbyeMessage);
   }
 
-  public String killWithCustomMessage(
-      @Optional(defaultValue = "#[payload]") @Placement(group = KILL_WITH_GROUP, order = 1) String victim,
-      @Placement(group = KILL_WITH_GROUP, order = 2) String goodbyeMessage) {
+  public String killWithCustomMessage(@Optional(defaultValue = "#[payload]") @Placement(group = KILL_WITH_GROUP,
+      order = 1) String victim, @Placement(group = KILL_WITH_GROUP, order = 2) String goodbyeMessage) {
     return String.format("%s, %s", goodbyeMessage, victim);
   }
 
@@ -165,8 +164,7 @@ public class HeisenbergOperations {
     return connection.getSaulPhoneNumber();
   }
 
-  public String literalEcho(
-      @DisplayName(OPERATION_PARAMETER_OVERRIDED_DISPLAY_NAME) @Expression(ExpressionSupport.LITERAL) String literalExpression) {
+  public String literalEcho(@DisplayName(OPERATION_PARAMETER_OVERRIDED_DISPLAY_NAME) @Expression(ExpressionSupport.LITERAL) String literalExpression) {
     return literalExpression;
   }
 

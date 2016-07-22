@@ -25,7 +25,7 @@ public class PetStoreClient implements TransactionalConnection {
   private int disconnectCount;
 
   public PetStoreClient(String username, String password, TlsContextFactory tlsContextFactory, ThreadingProfile threadingProfile,
-      String configName) {
+                        String configName) {
     this.username = username;
     this.password = password;
     this.tlsContext = tlsContextFactory;

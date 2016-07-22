@@ -31,8 +31,7 @@ public class AggregationStrategyDefinitionParser extends ChildDefinitionParser {
       if (element.hasAttribute(ATTRIBUTE_REF)) {
         return AggregationStrategyDelegate.class;
       } else {
-        throw new IllegalStateException(
-            "<custom-merge-strategy> requires you to provide a value for either 'class' or 'ref' attributes");
+        throw new IllegalStateException("<custom-merge-strategy> requires you to provide a value for either 'class' or 'ref' attributes");
       }
     }
   }

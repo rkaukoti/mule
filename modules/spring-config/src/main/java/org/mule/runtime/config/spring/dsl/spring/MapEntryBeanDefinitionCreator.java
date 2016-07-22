@@ -55,12 +55,13 @@ public class MapEntryBeanDefinitionCreator extends BeanDefinitionCreator {
     componentModel.setType(type);
     final Object key = componentModel.getParameters().get(ENTRY_TYPE_KEY_PARAMETER_NAME);
     Object keyBeanDefinition = getConvertibleBeanDefinition(objectTypeVisitor.getMapEntryType().get().getKeyType(), key,
-        componentBuildingDefinition.getKeyTypeConverter());
+                                                            componentBuildingDefinition.getKeyTypeConverter());
     Object value;
     Class valueType = objectTypeVisitor.getMapEntryType().get().getValueType();
     if (isSimpleType(valueType) || componentModel.getInnerComponents().isEmpty()) {
       value = getConvertibleBeanDefinition(objectTypeVisitor.getMapEntryType().get().getValueType(),
-          componentModel.getParameters().get(SIMPLE_TYPE_VALUE_PARAMETER_NAME), componentBuildingDefinition.getTypeConverter());
+                                           componentModel.getParameters().get(SIMPLE_TYPE_VALUE_PARAMETER_NAME),
+                                           componentBuildingDefinition.getTypeConverter());
     } else if (List.class.isAssignableFrom(objectTypeVisitor.getMapEntryType().get().getValueType())) {
       if (componentModel.getInnerComponents().isEmpty()) {
         String valueParameter = componentModel.getParameters().get(SIMPLE_TYPE_VALUE_PARAMETER_NAME);

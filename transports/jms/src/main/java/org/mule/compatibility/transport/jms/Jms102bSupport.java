@@ -80,14 +80,15 @@ public class Jms102bSupport extends Jms11Support {
       // for this case).
       return ((QueueConnection) connection).createQueueSession(transacted, (transacted ? Session.SESSION_TRANSACTED : ackMode));
     } else {
-      throw new IllegalArgumentException(
-          "Connection and domain type do not match, connection is of type " + connection.getClass().getName());
+      throw new IllegalArgumentException("Connection and domain type do not match, connection is of type "
+          + connection.getClass().getName());
     }
   }
 
   @Override
   public MessageConsumer createConsumer(Session session, Destination destination, String messageSelector, boolean noLocal,
-      String durableName, boolean topic, ImmutableEndpoint endpoint) throws JMSException {
+                                        String durableName, boolean topic, ImmutableEndpoint endpoint)
+      throws JMSException {
     if (topic && session instanceof TopicSession) {
       if (durableName == null) {
         return ((TopicSession) session).createSubscriber((Topic) destination, messageSelector, noLocal);
@@ -177,10 +178,11 @@ public class Jms102bSupport extends Jms11Support {
 
   @Override
   public void send(MessageProducer producer, Message message, boolean persistent, int priority, long ttl, boolean topic,
-      ImmutableEndpoint endpoint) throws JMSException {
+                   ImmutableEndpoint endpoint)
+      throws JMSException {
     if (topic && producer instanceof TopicPublisher) {
       ((TopicPublisher) producer).publish(message, (persistent ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT), priority,
-          ttl);
+                                          ttl);
     } else if (producer instanceof QueueSender) {
       // DO NOT REMOVE THIS CAST, it breaks Weblogic
       ((QueueSender) producer).send(message, (persistent ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT), priority, ttl);
@@ -191,13 +193,14 @@ public class Jms102bSupport extends Jms11Support {
 
   @Override
   public void send(MessageProducer producer, Message message, Destination dest, boolean persistent, int priority, long ttl,
-      boolean topic, ImmutableEndpoint endpoint) throws JMSException {
+                   boolean topic, ImmutableEndpoint endpoint)
+      throws JMSException {
     if (topic && producer instanceof TopicPublisher) {
       ((TopicPublisher) producer).publish((Topic) dest, message,
-          (persistent ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT), priority, ttl);
+                                          (persistent ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT), priority, ttl);
     } else if (producer instanceof QueueSender) {
       ((QueueSender) producer).send((Queue) dest, message, (persistent ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT),
-          priority, ttl);
+                                    priority, ttl);
     } else {
       throw new IllegalArgumentException("Producer and domain type do not match");
     }

@@ -50,7 +50,7 @@ public class TransportTransformerUtils extends TransformerUtils {
    */
   @Deprecated
   public static List<Transformer> getDefaultInboundTransformers(final TransportServiceDescriptor serviceDescriptor,
-      final ImmutableEndpoint endpoint) {
+                                                                final ImmutableEndpoint endpoint) {
     return getTransformersFromSource(() -> serviceDescriptor.createInboundTransformers(endpoint));
   }
 
@@ -59,7 +59,7 @@ public class TransportTransformerUtils extends TransformerUtils {
    */
   @Deprecated
   public static List<Transformer> getDefaultResponseTransformers(final TransportServiceDescriptor serviceDescriptor,
-      final ImmutableEndpoint endpoint) {
+                                                                 final ImmutableEndpoint endpoint) {
     return getTransformersFromSource(() -> serviceDescriptor.createResponseTransformers(endpoint));
   }
 
@@ -68,7 +68,7 @@ public class TransportTransformerUtils extends TransformerUtils {
    */
   @Deprecated
   public static List<Transformer> getDefaultOutboundTransformers(final TransportServiceDescriptor serviceDescriptor,
-      final ImmutableEndpoint endpoint) {
+                                                                 final ImmutableEndpoint endpoint) {
     return getTransformersFromSource(() -> serviceDescriptor.createOutboundTransformers(endpoint));
   }
 

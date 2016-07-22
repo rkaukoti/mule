@@ -73,7 +73,7 @@ public abstract class AbstractPollingMessageReceiver extends AbstractMessageRece
       PollingReceiverWorker pollingReceiverWorker = this.createWork();
       ScheduledFuture schedule =
           connector.getScheduler().scheduleWithFixedDelay(new PollingReceiverWorkerSchedule(pollingReceiverWorker),
-              DEFAULT_STARTUP_DELAY, this.getFrequency(), this.getTimeUnit());
+                                                          DEFAULT_STARTUP_DELAY, this.getFrequency(), this.getTimeUnit());
       schedules.put(schedule, pollingReceiverWorker);
 
       if (logger.isDebugEnabled()) {

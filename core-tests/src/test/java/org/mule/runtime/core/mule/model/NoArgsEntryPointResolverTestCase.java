@@ -38,7 +38,7 @@ public class NoArgsEntryPointResolverTestCase extends AbstractMuleContextTestCas
     AbstractArgumentEntryPointResolver resolver = new NoArgumentsEntryPointResolver();
     InvocationResult result = resolver.invoke(new Apple(), getTestEventContext("blah"));
     assertEquals("Apple service has a number of matching method, so should have failed", result.getState(),
-        InvocationResult.State.FAILED);
+                 InvocationResult.State.FAILED);
   }
 
   @Test
@@ -54,7 +54,7 @@ public class NoArgsEntryPointResolverTestCase extends AbstractMuleContextTestCas
     assertTrue(resolver.removeIgnoredMethod("is*"));
     InvocationResult result = resolver.invoke(new InvalidSatsuma(), getTestEventContext("blah"));
     assertEquals("Satsuma service has a number of matching method, so should have failed", result.getState(),
-        InvocationResult.State.FAILED);
+                 InvocationResult.State.FAILED);
   }
 
   /**

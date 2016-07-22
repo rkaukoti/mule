@@ -37,19 +37,17 @@ public class ConnectorServiceOverridesTestCase extends FunctionalTestCase {
     assertNotNull(c);
     assertNotNull(c.getServiceOverrides());
     assertEquals("org.mule.runtime.core.transformer.simple.ByteArrayToSerializable",
-        c.getServiceOverrides().get("inbound.transformer"));
+                 c.getServiceOverrides().get("inbound.transformer"));
     assertNotNull(TransformerUtils.firstOrNull(c.getDefaultInboundTransformers(null)));
     assertNotNull(TransformerUtils.firstOrNull(c.getDefaultOutboundTransformers(null)));
     assertThat(TransformerUtils.firstOrNull(c.getDefaultInboundTransformers(null)),
-        instanceOf(DefaultEndpointAwareTransformer.class));
-    assertThat(
-        ((DefaultEndpointAwareTransformer) TransformerUtils.firstOrNull(c.getDefaultInboundTransformers(null))).getTransformer(),
-        instanceOf(ByteArrayToSerializable.class));
+               instanceOf(DefaultEndpointAwareTransformer.class));
+    assertThat(((DefaultEndpointAwareTransformer) TransformerUtils.firstOrNull(c.getDefaultInboundTransformers(null)))
+        .getTransformer(), instanceOf(ByteArrayToSerializable.class));
     assertThat(TransformerUtils.firstOrNull(c.getDefaultOutboundTransformers(null)),
-        instanceOf(DefaultEndpointAwareTransformer.class));
-    assertThat(
-        ((DefaultEndpointAwareTransformer) TransformerUtils.firstOrNull(c.getDefaultOutboundTransformers(null))).getTransformer(),
-        instanceOf(SerializableToByteArray.class));
+               instanceOf(DefaultEndpointAwareTransformer.class));
+    assertThat(((DefaultEndpointAwareTransformer) TransformerUtils.firstOrNull(c.getDefaultOutboundTransformers(null)))
+        .getTransformer(), instanceOf(SerializableToByteArray.class));
   }
 
   @Test

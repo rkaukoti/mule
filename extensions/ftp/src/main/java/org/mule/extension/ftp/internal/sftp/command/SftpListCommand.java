@@ -43,7 +43,7 @@ public final class SftpListCommand extends SftpCommand implements ListCommand {
    */
   @Override
   public TreeNode list(FileConnectorConfig config, String directoryPath, boolean recursive, MuleMessage message,
-      Predicate<FileAttributes> matcher) {
+                       Predicate<FileAttributes> matcher) {
     FileAttributes directoryAttributes = getExistingFile(config, directoryPath);
     Path path = Paths.get(directoryAttributes.getPath());
 
@@ -58,7 +58,7 @@ public final class SftpListCommand extends SftpCommand implements ListCommand {
   }
 
   private void doList(FileConnectorConfig config, String path, TreeNode.Builder treeNodeBuilder, boolean recursive,
-      MuleMessage message, Predicate<FileAttributes> matcher) {
+                      MuleMessage message, Predicate<FileAttributes> matcher) {
     LOGGER.debug("Listing directory {}", path);
     for (SftpFileAttributes file : client.list(path)) {
       if (isVirtualDirectory(file.getName()) || !matcher.test(file)) {

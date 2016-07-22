@@ -21,8 +21,9 @@ public class JmsCustomCorrelationIdTestCase extends AbstractJmsFunctionalTestCas
   @Test
   public void testExplicitReplyToAsyncSet() throws MuleException {
     MuleClient client = muleContext.getClient();
-    MuleMessage response = client.send("vm://in4",
-        MuleMessage.builder().payload(TEST_MESSAGE).addOutboundProperty("customCorrelation", "abcdefghij").build());
+    MuleMessage response =
+        client.send("vm://in4",
+                    MuleMessage.builder().payload(TEST_MESSAGE).addOutboundProperty("customCorrelation", "abcdefghij").build());
     // We get the original message back, not the result from the remote component
     assertEquals(TEST_MESSAGE + " TestService1", response.getPayload());
   }

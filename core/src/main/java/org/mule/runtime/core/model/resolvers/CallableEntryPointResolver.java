@@ -27,8 +27,8 @@ public class CallableEntryPointResolver implements EntryPointResolver {
     try {
       callableMethod = Callable.class.getMethod("onCall", new Class[] {MuleEventContext.class});
     } catch (NoSuchMethodException e) {
-      throw new MuleRuntimeException(
-          MessageFactory.createStaticMessage("Panic! No onCall(MuleEventContext) method found in the Callable interface."));
+      throw new MuleRuntimeException(MessageFactory
+          .createStaticMessage("Panic! No onCall(MuleEventContext) method found in the Callable interface."));
     }
   }
 

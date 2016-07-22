@@ -44,8 +44,7 @@ public class MessageProcessorFilterPairFactoryBean implements FactoryBean<Messag
       } else if (processor instanceof MessageProcessorBuilder) {
         builder.chain((MessageProcessorBuilder) processor);
       } else {
-        throw new IllegalArgumentException(
-            "MessageProcessorBuilder should only have MessageProcessors or MessageProcessorBuilders configured");
+        throw new IllegalArgumentException("MessageProcessorBuilder should only have MessageProcessors or MessageProcessorBuilders configured");
       }
     }
 

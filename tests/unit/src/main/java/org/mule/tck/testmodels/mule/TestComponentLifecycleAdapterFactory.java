@@ -20,7 +20,8 @@ public class TestComponentLifecycleAdapterFactory implements LifecycleAdapterFac
 
   @Override
   public LifecycleAdapter create(Object pojoService, JavaComponent service, FlowConstruct flowConstruct,
-      EntryPointResolverSet resolver, MuleContext muleContext) throws MuleException {
+                                 EntryPointResolverSet resolver, MuleContext muleContext)
+      throws MuleException {
     return new TestComponentLifecycleAdapter(pojoService, service, flowConstruct, resolver, muleContext);
   }
 

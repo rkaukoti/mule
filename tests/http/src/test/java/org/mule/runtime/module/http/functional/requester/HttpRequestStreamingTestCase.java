@@ -67,8 +67,8 @@ public class HttpRequestStreamingTestCase extends AbstractHttpRequestTestCase {
 
   @Test
   public void doesNotStreamWithContentLengthTransferEncodingHeadersAndStreamingModeAuto() throws Exception {
-    assertNoStreaming(
-        flowRunner("streamingAutoBothHeaders").withPayload(new ByteArrayInputStream(TEST_MESSAGE.getBytes())).run());
+    assertNoStreaming(flowRunner("streamingAutoBothHeaders").withPayload(new ByteArrayInputStream(TEST_MESSAGE.getBytes()))
+        .run());
   }
 
   @Test

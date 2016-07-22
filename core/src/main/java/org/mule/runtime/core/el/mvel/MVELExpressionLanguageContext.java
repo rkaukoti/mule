@@ -129,7 +129,7 @@ public class MVELExpressionLanguageContext extends MuleBaseVariableResolverFacto
   public void declareFunction(String name, ExpressionLanguageFunction function) {
     try {
       addFinalVariable(name,
-          new FunctionInstance(new MVELFunctionAdaptor(name, function, new ParserContext(parserConfiguration))));
+                       new FunctionInstance(new MVELFunctionAdaptor(name, function, new ParserContext(parserConfiguration))));
     } finally {
       // Clear AbstractParser.parserContext ThreadLocal once Function has been created.
       AbstractParser.resetParserContext();

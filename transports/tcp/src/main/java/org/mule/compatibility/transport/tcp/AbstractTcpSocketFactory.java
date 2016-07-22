@@ -64,8 +64,9 @@ public abstract class AbstractTcpSocketFactory implements KeyedPoolableObjectFac
   public void passivateObject(Object key, Object object) throws Exception {
     TcpSocketKey socketKey = (TcpSocketKey) key;
 
-    boolean keepSocketOpen = MapUtils.getBooleanValue(socketKey.getEndpoint().getProperties(),
-        TcpConnector.KEEP_SEND_SOCKET_OPEN_PROPERTY, socketKey.getConnector().isKeepSendSocketOpen());
+    boolean keepSocketOpen =
+        MapUtils.getBooleanValue(socketKey.getEndpoint().getProperties(), TcpConnector.KEEP_SEND_SOCKET_OPEN_PROPERTY,
+                                 socketKey.getConnector().isKeepSendSocketOpen());
     Socket socket = (Socket) object;
 
     if (!keepSocketOpen) {

@@ -75,8 +75,8 @@ public class FlowDefaultProcessingStrategyTestCase extends FunctionalTestCase {
 
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException {
-      event.setMessage(
-          MuleMessage.builder(event.getMessage()).addOutboundProperty(PROCESSOR_THREAD, currentThread().getName()).build());
+      event.setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty(PROCESSOR_THREAD, currentThread().getName())
+          .build());
       return event;
     }
   }

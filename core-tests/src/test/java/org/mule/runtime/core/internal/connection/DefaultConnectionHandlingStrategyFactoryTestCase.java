@@ -74,7 +74,7 @@ public class DefaultConnectionHandlingStrategyFactoryTestCase extends AbstractMu
   }
 
   private void assertType(ConnectionHandlingStrategy<Banana> strategy,
-      Class<? extends ConnectionHandlingStrategy> expectedClass) {
+                          Class<? extends ConnectionHandlingStrategy> expectedClass) {
     assertThat(strategy, is(instanceOf(expectedClass)));
     assertThat(ConnectionHandlingStrategyAdapter.class.isAssignableFrom(expectedClass), is(true));
   }

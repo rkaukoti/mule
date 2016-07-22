@@ -39,8 +39,8 @@ public class DeletedFileAttributes extends ListenerFileAttributes {
    * @throws IllegalStateException
    */
   private IllegalStateException unsupported(String property) {
-    throw new IllegalStateException(
-        String.format("Cannot obtain %s property for path '%s' because it has been deleted", property, getPath()));
+    throw new IllegalStateException(String.format("Cannot obtain %s property for path '%s' because it has been deleted", property,
+                                                  getPath()));
   }
 
   /**

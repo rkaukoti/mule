@@ -69,8 +69,9 @@ public class HttpListenerBuilder {
    */
   public HttpListenerBuilder setPort(final int port) {
     Preconditions.checkArgument(port > 0 && port < MAXIMUM_PORT_NUMBER, "Port number out of range");
-    Preconditions.checkState(httpListenerConfig == null,
-        "Listener config already specified. A port cannot be specified since the one in the listener config will be used");
+    Preconditions
+        .checkState(httpListenerConfig == null,
+                    "Listener config already specified. A port cannot be specified since the one in the listener config will be used");
     Preconditions.checkState(this.port == null, "Port already specified");
     this.port = port;
     return this;
@@ -149,9 +150,9 @@ public class HttpListenerBuilder {
    */
   public HttpListenerBuilder setTlsContextFactory(final TlsContextFactory tlsContextFactory) {
     Preconditions.checkState(httpListenerConfig == null,
-        "You already set a listener config. You cannot specify a tls context factory");
+                             "You already set a listener config. You cannot specify a tls context factory");
     Preconditions.checkState(protocol == null || protocol.equalsIgnoreCase(HTTPS.getScheme()),
-        "You cannot set a tls context factory with protocol http");
+                             "You cannot set a tls context factory with protocol http");
     this.tlsContextFactory = tlsContextFactory;
     this.protocol = HTTPS.getScheme();
     return this;
@@ -173,8 +174,8 @@ public class HttpListenerBuilder {
       resolveListenerConfig();
       if (protocol != null && protocol.toLowerCase().equals(HTTPS.getScheme())) {
         if (httpListenerConfig == null) {
-          throw new DefaultMuleException(CoreMessages.createStaticMessage(
-              "Protocol is https but there is not listener config provided. A listener config with tls configuration is required."));
+          throw new DefaultMuleException(CoreMessages
+              .createStaticMessage("Protocol is https but there is not listener config provided. A listener config with tls configuration is required."));
         }
         if (!httpListenerConfig.hasTlsConfig()) {
           throw new DefaultMuleException(CoreMessages
@@ -204,7 +205,7 @@ public class HttpListenerBuilder {
 
   public HttpListenerBuilder setListenerConfig(HttpListenerConfig httpListenerConfig) {
     Preconditions.checkState(tlsContextFactory == null,
-        "You cannot configure a listener config if you provided a tls context factory");
+                             "You cannot configure a listener config if you provided a tls context factory");
     this.httpListenerConfig = httpListenerConfig;
     return this;
   }
@@ -217,9 +218,9 @@ public class HttpListenerBuilder {
             && (protocol == null || (protocol.equalsIgnoreCase(HTTPS.getScheme()) && listenerConfig.hasTlsConfig())
                 || (protocol.equalsIgnoreCase(HttpConstants.Protocols.HTTP.getScheme()) && !listenerConfig.hasTlsConfig()))) {
           if (tlsContextFactory != null && !tlsContextFactory.equals(listenerConfig.getTlsContext())) {
-            throw new IllegalStateException(
-                String.format("There's already a listener configuration with TLS configuration defined for host(%s) and port(%s)",
-                    this.host, this.port));
+            throw new IllegalStateException(String.format(
+                                                          "There's already a listener configuration with TLS configuration defined for host(%s) and port(%s)",
+                                                          this.host, this.port));
           }
           this.httpListenerConfig = listenerConfig;
           break;

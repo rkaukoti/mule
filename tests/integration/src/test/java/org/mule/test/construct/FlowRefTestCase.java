@@ -72,7 +72,7 @@ public class FlowRefTestCase extends FunctionalTestCase {
 
     assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.size(), is(1));
     assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.get(0),
-        is("/flow2/processors/0/sub-flow-J/subprocessors/0"));
+               is("/flow2/processors/0/sub-flow-J/subprocessors/0"));
   }
 
   @Test
@@ -81,9 +81,9 @@ public class FlowRefTestCase extends FunctionalTestCase {
 
     assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.size(), is(2));
     assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.get(0),
-        is("/flow3/processors/0/sub-flow-J/subprocessors/0"));
+               is("/flow3/processors/0/sub-flow-J/subprocessors/0"));
     assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.get(1),
-        is("/flow3/processors/1/sub-flow-J/subprocessors/0"));
+               is("/flow3/processors/1/sub-flow-J/subprocessors/0"));
   }
 
   @Test
@@ -94,11 +94,11 @@ public class FlowRefTestCase extends FunctionalTestCase {
 
     assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.size(), is(3));
     assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.get(0),
-        is("/flow2/processors/0/sub-flow-J/subprocessors/0"));
+               is("/flow2/processors/0/sub-flow-J/subprocessors/0"));
     assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.get(1),
-        is("/flow3/processors/0/sub-flow-J/subprocessors/0"));
+               is("/flow3/processors/0/sub-flow-J/subprocessors/0"));
     assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.get(2),
-        is("/flow3/processors/1/sub-flow-J/subprocessors/0"));
+               is("/flow3/processors/1/sub-flow-J/subprocessors/0"));
   }
 
   @Test
@@ -144,7 +144,7 @@ public class FlowRefTestCase extends FunctionalTestCase {
     HttpResponse httpResponse = response.returnResponse();
     assertThat(httpResponse.getStatusLine().getStatusCode(), is(500));
     assertThat(IOUtils.toString(httpResponse.getEntity().getContent()),
-        containsString(SYNCHRONOUS_NONBLOCKING_EVENT_ERROR_MESSAGE));
+               containsString(SYNCHRONOUS_NONBLOCKING_EVENT_ERROR_MESSAGE));
   }
 
   @Test

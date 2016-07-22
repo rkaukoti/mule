@@ -147,18 +147,18 @@ public class SpringXmlConfigurationMuleArtifactFactoryTest {
     Document muleConfig = DocumentHelper.parseText(muleConfigTxt);
 
     List result = DocumentHelper.selectNodes(
-        "/mule/*[local-name()='property-placeholder' and @location='test1.properties' and not(@ignore-unresolvable)]",
-        muleConfig);
+                                             "/mule/*[local-name()='property-placeholder' and @location='test1.properties' and not(@ignore-unresolvable)]",
+                                             muleConfig);
     Assert.assertThat("Property placeholder for test1.properties is present", result.size(), CoreMatchers.is(1));
 
     result = DocumentHelper.selectNodes(
-        "/mule/*[local-name()='property-placeholder' and @location='test2.properties' and @ignore-unresolvable='true']",
-        muleConfig);
+                                        "/mule/*[local-name()='property-placeholder' and @location='test2.properties' and @ignore-unresolvable='true']",
+                                        muleConfig);
     Assert.assertThat("Property placeholder for test2.properties is present", result.size(), CoreMatchers.is(1));
 
     result = DocumentHelper.selectNodes(
-        "/mule/*[local-name()='property-placeholder' and @location='test3.properties' and @ignore-unresolvable='true']",
-        muleConfig);
+                                        "/mule/*[local-name()='property-placeholder' and @location='test3.properties' and @ignore-unresolvable='true']",
+                                        muleConfig);
     Assert.assertThat("Property placeholder for test3.properties is present", result.size(), CoreMatchers.is(1));
   }
 
@@ -177,8 +177,8 @@ public class SpringXmlConfigurationMuleArtifactFactoryTest {
     Document muleConfig = DocumentHelper.parseText(muleConfigTxt);
 
     List result = DocumentHelper.selectNodes(
-        "/mule/*[local-name()='property-placeholder' and @location='test1.properties' and not(@ignore-unresolvable)]",
-        muleConfig);
+                                             "/mule/*[local-name()='property-placeholder' and @location='test1.properties' and not(@ignore-unresolvable)]",
+                                             muleConfig);
     Assert.assertThat("Property placeholder for test1.properties is present", result.size(), CoreMatchers.is(1));
   }
 
@@ -197,8 +197,8 @@ public class SpringXmlConfigurationMuleArtifactFactoryTest {
     Document muleConfig = DocumentHelper.parseText(muleConfigTxt);
 
     List result = DocumentHelper.selectNodes(
-        "/mule/*[local-name()='property-placeholder' and @location='test1.properties' and @ignore-unresolvable='true']",
-        muleConfig);
+                                             "/mule/*[local-name()='property-placeholder' and @location='test1.properties' and @ignore-unresolvable='true']",
+                                             muleConfig);
     Assert.assertThat("Property placeholder for test1.properties is present", result.size(), CoreMatchers.is(1));
   }
 
@@ -217,8 +217,8 @@ public class SpringXmlConfigurationMuleArtifactFactoryTest {
     Document muleConfig = DocumentHelper.parseText(muleConfigTxt);
 
     List result = DocumentHelper.selectNodes(
-        "/mule/*[local-name()='property-placeholder' and @location='test1.properties' and @ignore-unresolvable='false']",
-        muleConfig);
+                                             "/mule/*[local-name()='property-placeholder' and @location='test1.properties' and @ignore-unresolvable='false']",
+                                             muleConfig);
     Assert.assertThat("Property placeholder for test1.properties is present", result.size(), CoreMatchers.is(1));
   }
 
@@ -237,7 +237,7 @@ public class SpringXmlConfigurationMuleArtifactFactoryTest {
     Document muleConfig = DocumentHelper.parseText(muleConfigTxt);
 
     List result = DocumentHelper.selectNodes("/mule/*[local-name()='bean' and @class='" + BEAN_PROPERTY_PLACEHOLDER_CLASS + "']",
-        muleConfig);
+                                             muleConfig);
     Assert.assertThat("Property placeholder bean is present", result.size(), CoreMatchers.is(1));
 
     result =
@@ -265,7 +265,7 @@ public class SpringXmlConfigurationMuleArtifactFactoryTest {
     Document muleConfig = DocumentHelper.parseText(muleConfigTxt);
 
     List result = DocumentHelper.selectNodes("/mule/*[local-name()='bean' and @class='" + BEAN_PROPERTY_PLACEHOLDER_CLASS + "']",
-        muleConfig);
+                                             muleConfig);
     Assert.assertThat("Property placeholder bean is present", result.size(), CoreMatchers.is(1));
 
     result =
@@ -277,8 +277,8 @@ public class SpringXmlConfigurationMuleArtifactFactoryTest {
     Assert.assertThat("Property placeholder prop for ignoreUnresolvablePlaceholders is true", result.size(), CoreMatchers.is(1));
 
     result = DocumentHelper.selectNodes(
-        "/mule/*[local-name()='property-placeholder' and @location='test2.properties' and @ignore-unresolvable='true']",
-        muleConfig);
+                                        "/mule/*[local-name()='property-placeholder' and @location='test2.properties' and @ignore-unresolvable='true']",
+                                        muleConfig);
     Assert.assertThat("Property placeholder for test2.properties is present", result.size(), CoreMatchers.is(1));
   }
 

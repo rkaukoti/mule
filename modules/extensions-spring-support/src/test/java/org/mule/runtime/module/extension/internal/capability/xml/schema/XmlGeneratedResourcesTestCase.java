@@ -68,16 +68,18 @@ public class XmlGeneratedResourcesTestCase extends AbstractGeneratedResourceFact
 
   @Before
   public void before() {
-    xmlModelProperty = new XmlModelProperty(EXTENSION_VERSION, EXTENSION_NAME, UNESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION,
-        SCHEMA_NAME, String.format("%s/%s/%s", UNESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION, CURRENT_VERSION, SCHEMA_NAME));
+    xmlModelProperty =
+        new XmlModelProperty(EXTENSION_VERSION, EXTENSION_NAME, UNESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION, SCHEMA_NAME, String
+            .format("%s/%s/%s", UNESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION, CURRENT_VERSION, SCHEMA_NAME));
 
     when(extensionModel.getModelProperty(XmlModelProperty.class)).thenReturn(Optional.of(xmlModelProperty));
     when(extensionModel.getModelProperty(SubTypesModelProperty.class)).thenReturn(Optional.empty());
     when(extensionModel.getModelProperty(ImportedTypesModelProperty.class)).thenReturn(Optional.empty());
     when(extensionModel.getModelProperty(ExportModelProperty.class)).thenReturn(Optional.empty());
 
-    generator = new AnnotationProcessorResourceGenerator(
-        asList(springHandlerFactory, springSchemaBundleResourceFactory, schemaResourceFactory), processingEnvironment);
+    generator = new AnnotationProcessorResourceGenerator(asList(springHandlerFactory, springSchemaBundleResourceFactory,
+                                                                schemaResourceFactory),
+                                                         processingEnvironment);
 
     when(extensionModel.getName()).thenReturn(EXTENSION_NAME);
     when(extensionModel.getVersion()).thenReturn(EXTENSION_VERSION);
@@ -100,8 +102,9 @@ public class XmlGeneratedResourcesTestCase extends AbstractGeneratedResourceFact
     GeneratedResource resource = springHandlerFactory.generateResource(extensionModel).get();
 
     assertThat(SpringHandlerBundleResourceFactory.GENERATED_FILE_NAME, equalTo(resource.getPath()));
-    assertThat(new String(resource.getContent()), equalTo(String.format(SpringHandlerBundleResourceFactory.BUNDLE_MASK,
-        ESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION, ExtensionNamespaceHandler.class.getName())));
+    assertThat(new String(resource.getContent()),
+               equalTo(String.format(SpringHandlerBundleResourceFactory.BUNDLE_MASK, ESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION,
+                                     ExtensionNamespaceHandler.class.getName())));
   }
 
   @Test
@@ -110,8 +113,8 @@ public class XmlGeneratedResourcesTestCase extends AbstractGeneratedResourceFact
     assertThat(resource.getPath(), equalTo(GENERATED_FILE_NAME));
 
     StringBuilder expected = new StringBuilder();
-    expected.append(
-        String.format(BUNDLE_MASK, ESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION, EXTENSION_VERSION, SCHEMA_NAME, SCHEMA_NAME));
+    expected.append(String.format(BUNDLE_MASK, ESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION, EXTENSION_VERSION, SCHEMA_NAME,
+                                  SCHEMA_NAME));
     expected.append(String.format(BUNDLE_MASK, ESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION, "current", SCHEMA_NAME, SCHEMA_NAME));
 
 

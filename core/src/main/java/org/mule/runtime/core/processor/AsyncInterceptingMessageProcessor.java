@@ -119,7 +119,7 @@ public class AsyncInterceptingMessageProcessor extends AbstractInterceptingMessa
   protected void processNextAsync(MuleEvent event) throws MuleException {
     try {
       workManagerSource.getWorkManager().scheduleWork(new AsyncMessageProcessorWorker(event), WorkManager.INDEFINITE, null,
-          new AsyncWorkListener(next));
+                                                      new AsyncWorkListener(next));
       fireAsyncScheduledNotification(event);
     } catch (Exception e) {
       new MessagingException(CoreMessages.errorSchedulingMessageProcessorForAsyncInvocation(next), event, e, this);
@@ -128,8 +128,9 @@ public class AsyncInterceptingMessageProcessor extends AbstractInterceptingMessa
 
   protected void fireAsyncScheduledNotification(MuleEvent event) {
     if (event.getFlowConstruct() instanceof MessageProcessorPathResolver) {
-      muleContext.getNotificationManager().fireNotification(
-          new AsyncMessageNotification(event.getFlowConstruct(), event, next, AsyncMessageNotification.PROCESS_ASYNC_SCHEDULED));
+      muleContext.getNotificationManager()
+          .fireNotification(new AsyncMessageNotification(event.getFlowConstruct(), event, next,
+                                                         AsyncMessageNotification.PROCESS_ASYNC_SCHEDULED));
     }
 
   }
@@ -144,8 +145,9 @@ public class AsyncInterceptingMessageProcessor extends AbstractInterceptingMessa
   protected void firePipelineNotification(MuleEvent event, MessagingException exception) {
     // Async completed notification uses same event instance as async listener
     if (event.getFlowConstruct() instanceof MessageProcessorPathResolver) {
-      muleContext.getNotificationManager().fireNotification(new AsyncMessageNotification(event.getFlowConstruct(), event, next,
-          AsyncMessageNotification.PROCESS_ASYNC_COMPLETE, exception));
+      muleContext.getNotificationManager()
+          .fireNotification(new AsyncMessageNotification(event.getFlowConstruct(), event, next,
+                                                         AsyncMessageNotification.PROCESS_ASYNC_COMPLETE, exception));
     }
   }
 

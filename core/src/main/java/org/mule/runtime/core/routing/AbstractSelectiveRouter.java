@@ -171,10 +171,9 @@ public abstract class AbstractSelectiveRouter extends AbstractAnnotatedObject im
       getRouterStatistics().incrementNoRoutedMessage();
     }
 
-    throw new RoutePathNotFoundException(
-        MessageFactory.createStaticMessage(
-            "Can't process message because no route has been found matching any filter and no default route is defined"),
-        event, this);
+    throw new RoutePathNotFoundException(MessageFactory
+        .createStaticMessage("Can't process message because no route has been found matching any filter and no default route is defined"),
+                                         event, this);
   }
 
   /**
@@ -289,7 +288,7 @@ public abstract class AbstractSelectiveRouter extends AbstractAnnotatedObject im
   @Override
   public String toString() {
     return String.format("%s [flow-construct=%s, started=%s]", getClass().getSimpleName(),
-        flowConstruct != null ? flowConstruct.getName() : null, started);
+                         flowConstruct != null ? flowConstruct.getName() : null, started);
   }
 
   private interface RoutesUpdater {

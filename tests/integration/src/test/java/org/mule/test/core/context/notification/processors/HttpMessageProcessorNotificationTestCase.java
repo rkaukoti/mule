@@ -35,7 +35,7 @@ public class HttpMessageProcessorNotificationTestCase extends AbstractMessagePro
   public HttpMessageProcessorNotificationTestCase(boolean nonBlocking) {
     if (nonBlocking) {
       systemProperty = new SystemProperty(MuleProperties.MULE_DEFAULT_PROCESSING_STRATEGY,
-          ProcessingStrategyUtils.NON_BLOCKING_PROCESSING_STRATEGY);
+                                          ProcessingStrategyUtils.NON_BLOCKING_PROCESSING_STRATEGY);
     }
   }
 

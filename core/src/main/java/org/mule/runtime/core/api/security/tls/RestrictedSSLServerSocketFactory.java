@@ -47,7 +47,7 @@ public class RestrictedSSLServerSocketFactory extends SSLServerSocketFactory {
 
     if (this.enabledProtocols.length != protocols.length) {
       logger.warn("Current context supports less SSL protocols than configured. Only the following are enabled: [{}]",
-          Joiner.on(", ").join(this.enabledProtocols));
+                  Joiner.on(", ").join(this.enabledProtocols));
     }
   }
 

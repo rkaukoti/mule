@@ -26,7 +26,7 @@ public class TestAttachments {
   @WebResult(name = "result")
   @WebMethod(action = "uploadAttachment")
   public String uploadAttachment(@WebParam(mode = WebParam.Mode.IN, name = "fileName") String fileName,
-      @WebParam(mode = WebParam.Mode.IN, name = "attachment") DataHandler attachment) {
+                                 @WebParam(mode = WebParam.Mode.IN, name = "attachment") DataHandler attachment) {
     try {
       InputStream received = attachment.getInputStream();
       InputStream expected = IOUtils.getResourceAsStream(fileName, getClass());

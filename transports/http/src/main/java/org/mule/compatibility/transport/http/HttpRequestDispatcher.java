@@ -41,7 +41,7 @@ class HttpRequestDispatcher implements Work {
   private WorkManager workManager;
 
   public HttpRequestDispatcher(final HttpConnector httpConnector, final RetryPolicyTemplate retryPolicyTemplate,
-      final ServerSocket serverSocket, final WorkManager workManager) {
+                               final ServerSocket serverSocket, final WorkManager workManager) {
     if (httpConnector == null) {
       throw new IllegalArgumentException("HttpConnector can not be null");
     }

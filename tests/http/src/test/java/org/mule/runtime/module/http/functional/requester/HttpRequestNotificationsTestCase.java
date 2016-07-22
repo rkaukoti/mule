@@ -50,7 +50,7 @@ public class HttpRequestNotificationsTestCase extends AbstractHttpRequestTestCas
     latch.await(1000, TimeUnit.MILLISECONDS);
 
     assertThat(listener.getNotificationActionNames(),
-        contains(getActionName(MESSAGE_REQUEST_BEGIN), getActionName(MESSAGE_REQUEST_END)));
+               contains(getActionName(MESSAGE_REQUEST_BEGIN), getActionName(MESSAGE_REQUEST_END)));
 
     // End event should have appended http.status and http.reason as inbound properties
     MuleMessage message = listener.getNotifications(getActionName(MESSAGE_REQUEST_END)).get(0).getSource();

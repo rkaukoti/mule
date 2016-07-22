@@ -67,7 +67,7 @@ public class Jms11SupportTestCase extends AbstractMuleContextEndpointTestCase {
     } catch (JMSException jmsex) {
       // expected
       assertEquals("Wrong exception text.", "A durable subscriber name was set but the destination was not a Topic",
-          jmsex.getMessage());
+                   jmsex.getMessage());
     }
   }
 }

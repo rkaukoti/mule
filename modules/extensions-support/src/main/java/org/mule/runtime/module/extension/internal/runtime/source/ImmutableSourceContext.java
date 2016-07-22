@@ -16,7 +16,7 @@ final class ImmutableSourceContext implements SourceContext {
   private final ConfigurationInstance<Object> configurationInstance;
 
   ImmutableSourceContext(MessageHandler messageHandler, ExceptionCallback<Void, Throwable> exceptionCallback,
-      ConfigurationInstance<Object> configurationInstance) {
+                         ConfigurationInstance<Object> configurationInstance) {
     this.messageHandler = messageHandler;
     this.exceptionCallback = exceptionCallback;
     this.configurationInstance = configurationInstance;

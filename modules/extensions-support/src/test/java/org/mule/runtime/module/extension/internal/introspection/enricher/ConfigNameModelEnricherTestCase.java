@@ -164,8 +164,7 @@ public class ConfigNameModelEnricherTestCase extends AbstractMuleTestCase {
     }
 
     @Override
-    public ConnectionHandlingStrategy<Object> getHandlingStrategy(
-        ConnectionHandlingStrategyFactory<Object> handlingStrategyFactory) {
+    public ConnectionHandlingStrategy<Object> getHandlingStrategy(ConnectionHandlingStrategyFactory<Object> handlingStrategyFactory) {
       return null;
     }
 

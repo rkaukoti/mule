@@ -54,7 +54,7 @@ public class FilterRefDefinitionParser extends ParentDefinitionParser {
 
     @Override
     public BeanAssembler newBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
-        PropertyConfiguration targetConfig, BeanDefinition target) {
+                                          PropertyConfiguration targetConfig, BeanDefinition target) {
       return new MessageProcessorWrappingBeanAssembler(beanConfig, bean, targetConfig, target);
     }
   }
@@ -62,7 +62,7 @@ public class FilterRefDefinitionParser extends ParentDefinitionParser {
   private static class MessageProcessorWrappingBeanAssembler extends DefaultBeanAssembler {
 
     public MessageProcessorWrappingBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
-        PropertyConfiguration targetConfig, BeanDefinition target) {
+                                                 PropertyConfiguration targetConfig, BeanDefinition target) {
       super(beanConfig, bean, targetConfig, target);
     }
 

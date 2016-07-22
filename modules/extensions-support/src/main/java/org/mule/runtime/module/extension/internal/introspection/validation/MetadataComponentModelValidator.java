@@ -62,10 +62,9 @@ public class MetadataComponentModelValidator implements ModelValidator {
   private void validateReturnType(ExtensionModel extensionModel, RuntimeComponentModel component, Class<?> returnType) {
     if (Object.class.equals(returnType)
         && component.getMetadataResolverFactory().getOutputResolver() instanceof NullMetadataResolver) {
-      throw new IllegalModelDefinitionException(format(
-          "Component '%s' in Extension '%s' specifies '%s' as a return type. Operations and Sources with "
-              + "return type such as Object or Map must have defined a not null MetadataOutputResolver",
-          component.getName(), extensionModel.getName(), returnType.getName()));
+      throw new IllegalModelDefinitionException(format("Component '%s' in Extension '%s' specifies '%s' as a return type. Operations and Sources with "
+          + "return type such as Object or Map must have defined a not null MetadataOutputResolver", component.getName(),
+                                                       extensionModel.getName(), returnType.getName()));
     }
   }
 }

@@ -44,7 +44,7 @@ public class AsyncResponseFlowProcessingPhase
 
   @Override
   public void runPhase(final AsyncResponseFlowProcessingPhaseTemplate template, final MessageProcessContext messageProcessContext,
-      final PhaseResultNotifier phaseResultNotifier) {
+                       final PhaseResultNotifier phaseResultNotifier) {
     Work flowExecutionWork = new Work() {
 
       @Override
@@ -60,17 +60,20 @@ public class AsyncResponseFlowProcessingPhase
             final MessagingExceptionHandler exceptionHandler = messageProcessContext.getFlowConstruct().getExceptionListener();
             TransactionalErrorHandlingExecutionTemplate transactionTemplate = TransactionalErrorHandlingExecutionTemplate
                 .createMainExecutionTemplate(messageProcessContext.getFlowConstruct().getMuleContext(),
-                    (messageProcessContext.getTransactionConfig() == null ? new MuleTransactionConfig()
-                        : messageProcessContext.getTransactionConfig()),
-                    exceptionHandler);
+                                             (messageProcessContext.getTransactionConfig() == null ? new MuleTransactionConfig()
+                                                 : messageProcessContext.getTransactionConfig()),
+                                             exceptionHandler);
             final MuleEvent response = transactionTemplate.execute(() -> {
               MuleEvent muleEvent = template.getMuleEvent();
               fireNotification(messageSource, muleEvent, MESSAGE_RECEIVED);
               if (muleEvent.isAllowNonBlocking()) {
-                muleEvent = new DefaultMuleEvent(muleEvent,
-                    new ExceptionHandlingReplyToHandlerDecorator(
-                        new FlowProcessingNonBlockingReplyToHandler(template, phaseResultNotifier, exceptionHandler),
-                        messageProcessContext.getFlowConstruct().getExceptionListener()));
+                muleEvent =
+                    new DefaultMuleEvent(muleEvent,
+                                         new ExceptionHandlingReplyToHandlerDecorator(new FlowProcessingNonBlockingReplyToHandler(template,
+                                                                                                                                  phaseResultNotifier,
+                                                                                                                                  exceptionHandler),
+                                                                                      messageProcessContext.getFlowConstruct()
+                                                                                          .getExceptionListener()));
                 // Update RequestContext ThreadLocal for backwards compatibility
                 OptimizedRequestContext.unsafeSetEvent(muleEvent);
               }
@@ -102,8 +105,7 @@ public class AsyncResponseFlowProcessingPhase
     }
   }
 
-  private ResponseCompletionCallback createSendFailureResponseCompletationCallback(
-      final PhaseResultNotifier phaseResultNotifier) {
+  private ResponseCompletionCallback createSendFailureResponseCompletationCallback(final PhaseResultNotifier phaseResultNotifier) {
     return new ResponseCompletionCallback() {
 
       @Override
@@ -120,7 +122,7 @@ public class AsyncResponseFlowProcessingPhase
   }
 
   private ResponseCompletionCallback createResponseCompletationCallback(final PhaseResultNotifier phaseResultNotifier,
-      final MessagingExceptionHandler exceptionListener) {
+                                                                        final MessagingExceptionHandler exceptionListener) {
     return new ResponseCompletionCallback() {
 
       @Override
@@ -169,7 +171,8 @@ public class AsyncResponseFlowProcessingPhase
     private final MessagingExceptionHandler exceptionHandler;
 
     public FlowProcessingNonBlockingReplyToHandler(AsyncResponseFlowProcessingPhaseTemplate template,
-        PhaseResultNotifier phaseResultNotifier, MessagingExceptionHandler exceptionHandler) {
+                                                   PhaseResultNotifier phaseResultNotifier,
+                                                   MessagingExceptionHandler exceptionHandler) {
       this.template = template;
       this.phaseResultNotifier = phaseResultNotifier;
       this.exceptionHandler = exceptionHandler;

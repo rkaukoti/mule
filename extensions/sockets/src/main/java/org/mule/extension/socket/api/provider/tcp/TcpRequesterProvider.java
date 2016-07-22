@@ -89,7 +89,7 @@ public final class TcpRequesterProvider implements ConnectionProvider<TcpRequest
     }
 
     TcpRequesterConnection connection = new TcpRequesterConnection(connectionSettings, localAddressSettings, protocol,
-        tcpClientSocketProperties, simpleSocketFactory);
+                                                                   tcpClientSocketProperties, simpleSocketFactory);
     connection.connect();
     return connection;
   }
@@ -114,8 +114,7 @@ public final class TcpRequesterProvider implements ConnectionProvider<TcpRequest
    * {@inheritDoc}
    */
   @Override
-  public ConnectionHandlingStrategy<TcpRequesterConnection> getHandlingStrategy(
-      ConnectionHandlingStrategyFactory<TcpRequesterConnection> handlingStrategyFactory) {
+  public ConnectionHandlingStrategy<TcpRequesterConnection> getHandlingStrategy(ConnectionHandlingStrategyFactory<TcpRequesterConnection> handlingStrategyFactory) {
     return handlingStrategyFactory.supportsPooling();
   }
 

@@ -25,8 +25,7 @@ public class LocalTxQueueTransactionJournal extends AbstractQueueTransactionJour
     super(logFilesDirectory, createLocalTxQueueJournalEntrySerializer(muleContext), null);
   }
 
-  public static JournalEntrySerializer<Integer, LocalQueueTxJournalEntry> createLocalTxQueueJournalEntrySerializer(
-      final MuleContext muleContext) {
+  public static JournalEntrySerializer<Integer, LocalQueueTxJournalEntry> createLocalTxQueueJournalEntrySerializer(final MuleContext muleContext) {
     return new JournalEntrySerializer<Integer, LocalQueueTxJournalEntry>() {
 
       @Override
@@ -43,7 +42,7 @@ public class LocalTxQueueTransactionJournal extends AbstractQueueTransactionJour
 
   @Override
   protected LocalQueueTxJournalEntry createUpdateJournalEntry(Integer txId, byte byteRepresentation, String queueName,
-      Serializable value) {
+                                                              Serializable value) {
     return new LocalQueueTxJournalEntry(txId, byteRepresentation, queueName, value);
   }
 

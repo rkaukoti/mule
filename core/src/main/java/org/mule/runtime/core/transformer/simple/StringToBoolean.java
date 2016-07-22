@@ -52,8 +52,8 @@ public class StringToBoolean extends AbstractTransformer implements Discoverable
       if (transformed != null) {
         return transformed;
       } else {
-        throw new TransformerException(createStaticMessage(format(
-            "Cannot transform String '%s' to boolean. Valid types are: [%s]", value, Joiner.on(", ").join(MAPPING.keySet()))));
+        throw new TransformerException(createStaticMessage(format("Cannot transform String '%s' to boolean. Valid types are: [%s]",
+                                                                  value, Joiner.on(", ").join(MAPPING.keySet()))));
       }
     }
   }

@@ -220,7 +220,7 @@ public class MuleUniversalTransport extends AbstractTransportFactory
 
     @Override
     public MuleUniversalConduit create(MuleUniversalTransport transport, CxfConfiguration configuration, EndpointInfo ei,
-        EndpointReferenceType t) {
+                                       EndpointReferenceType t) {
       return new MuleUniversalConduit(transport, configuration, ei, t);
     }
 

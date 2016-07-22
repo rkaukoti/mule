@@ -68,8 +68,9 @@ public class HttpRequestAttributes extends HttpAttributes {
   private final Certificate clientCertificate;
 
   public HttpRequestAttributes(ParameterMap headers, Map<String, DataHandler> parts, String listenerPath, String relativePath,
-      String version, String scheme, String method, String requestPath, String requestUri, String queryString,
-      ParameterMap queryParams, ParameterMap uriParams, String remoteAddress, Certificate clientCertificate) {
+                               String version, String scheme, String method, String requestPath, String requestUri,
+                               String queryString, ParameterMap queryParams, ParameterMap uriParams, String remoteAddress,
+                               Certificate clientCertificate) {
     super(headers, parts);
     this.listenerPath = listenerPath;
     this.relativePath = relativePath;

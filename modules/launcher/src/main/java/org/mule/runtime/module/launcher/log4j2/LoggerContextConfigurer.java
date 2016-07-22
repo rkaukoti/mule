@@ -96,8 +96,8 @@ final class LoggerContextConfigurer {
     try {
       ClassUtils.setFieldValue(context.getConfiguration(), "isShutdownHookEnabled", false, true);
     } catch (Exception e) {
-      throw new MuleRuntimeException(
-          MessageFactory.createStaticMessage("Could not configure shutdown hook. Unexpected configuration type"), e);
+      throw new MuleRuntimeException(MessageFactory
+          .createStaticMessage("Could not configure shutdown hook. Unexpected configuration type"), e);
     }
 
   }
@@ -123,7 +123,7 @@ final class LoggerContextConfigurer {
       return ClassUtils.getFieldValue(configuration, "listeners", true);
     } catch (Exception e) {
       throw new MuleRuntimeException(MessageFactory.createStaticMessage("Could not get listeners. Unexpected configuration type"),
-          e);
+                                     e);
     }
   }
 
@@ -135,7 +135,7 @@ final class LoggerContextConfigurer {
 
   private void forceConsoleAppender(MuleLoggerContext context) {
     Appender appender = ConsoleAppender.createAppender(createLayout(context.getConfiguration()), null, null,
-        FORCED_CONSOLE_APPENDER_NAME, null, null);
+                                                       FORCED_CONSOLE_APPENDER_NAME, null, null);
     doAddAppender(context, appender);
   }
 
@@ -146,13 +146,14 @@ final class LoggerContextConfigurer {
   }
 
   private RollingFileAppender createRollingFileAppender(String logFilePath, String filePattern, String appenderName,
-      Configuration configuration) {
+                                                        Configuration configuration) {
     TriggeringPolicy triggeringPolicy = TimeBasedTriggeringPolicy.createPolicy("1", "true");
-    RolloverStrategy rolloverStrategy = DefaultRolloverStrategy.createStrategy("30", "1", null,
-        String.valueOf(Deflater.NO_COMPRESSION), null, true, configuration);
+    RolloverStrategy rolloverStrategy = DefaultRolloverStrategy
+        .createStrategy("30", "1", null, String.valueOf(Deflater.NO_COMPRESSION), null, true, configuration);
 
     return RollingFileAppender.createAppender(logFilePath, logFilePath + filePattern, "true", appenderName, "true", null, null,
-        triggeringPolicy, rolloverStrategy, createLayout(configuration), null, null, null, null, configuration);
+                                              triggeringPolicy, rolloverStrategy, createLayout(configuration), null, null, null,
+                                              null, configuration);
   }
 
   private Layout<? extends Serializable> createLayout(Configuration configuration) {

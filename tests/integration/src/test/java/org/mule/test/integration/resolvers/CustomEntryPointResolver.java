@@ -12,7 +12,7 @@ public class CustomEntryPointResolver implements EntryPointResolver {
 
   public InvocationResult invoke(Object component, MuleEventContext context) throws Exception {
     return new InvocationResult(this, ((Target) component).custom(context.getMessage().getPayload()),
-        Target.class.getMethod("custom", new Class[] {Object.class}));
+                                Target.class.getMethod("custom", new Class[] {Object.class}));
   }
 
 }

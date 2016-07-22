@@ -25,8 +25,8 @@ public abstract class AbstractSessionHandler implements SessionHandler {
   private ObjectSerializerLocator objectSerializerLocator = new FromMessageObjectSerializerLocator();
 
   protected <T> T deserialize(MuleMessage message, byte[] bytes, MuleContext muleContext) {
-    T object = objectSerializerLocator.getObjectSerializer(message, muleContext).deserialize(bytes,
-        muleContext.getExecutionClassLoader());
+    T object = objectSerializerLocator.getObjectSerializer(message, muleContext)
+        .deserialize(bytes, muleContext.getExecutionClassLoader());
     if (object instanceof DeserializationPostInitialisable) {
       try {
         DeserializationPostInitialisable.Implementation.init(object, muleContext);

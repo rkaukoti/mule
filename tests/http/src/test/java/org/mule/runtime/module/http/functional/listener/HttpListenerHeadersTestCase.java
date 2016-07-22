@@ -47,13 +47,13 @@ public class HttpListenerHeadersTestCase extends AbstractHttpTestCase {
   @Test
   public void handlesMultipleHeadersString() throws Exception {
     testHeaders("multipleHeadersString", "custom2", new BasicHeader(header.getValue(), "custom1"),
-        new BasicHeader(header.getValue(), "custom2"));
+                new BasicHeader(header.getValue(), "custom2"));
   }
 
   @Test
   public void handlesMultipleHeadersCollection() throws Exception {
     testHeaders("multipleHeadersCollection", "custom1", new BasicHeader(header.getValue(), "custom1"),
-        new BasicHeader(header.getValue(), "custom2"));
+                new BasicHeader(header.getValue(), "custom2"));
   }
 
   public void testHeaders(String path, String expectedResponse, Header... headers) throws IOException {

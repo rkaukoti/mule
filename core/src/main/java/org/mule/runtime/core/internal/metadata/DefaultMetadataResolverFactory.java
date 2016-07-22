@@ -32,8 +32,9 @@ public final class DefaultMetadataResolverFactory implements MetadataResolverFac
   private final MetadataKeysResolver metadataKeysResolver;
 
   public DefaultMetadataResolverFactory(Class<? extends MetadataKeysResolver> keyResolver,
-      Class<? extends MetadataContentResolver> contentResolver, Class<? extends MetadataOutputResolver> outputResolver,
-      Class<? extends MetadataAttributesResolver> attributesResolver) {
+                                        Class<? extends MetadataContentResolver> contentResolver,
+                                        Class<? extends MetadataOutputResolver> outputResolver,
+                                        Class<? extends MetadataAttributesResolver> attributesResolver) {
     checkArgument(keyResolver != null, "MetadataKeyResolver type cannot be null");
     checkArgument(contentResolver != null, "MetadataContentResolver type cannot be null");
     checkArgument(outputResolver != null, "MetadataOutputResolver type cannot be null");
@@ -80,8 +81,8 @@ public final class DefaultMetadataResolverFactory implements MetadataResolverFac
     try {
       return (T) ClassUtils.instanciateClass(factoryType);
     } catch (Exception e) {
-      throw new MuleRuntimeException(
-          createStaticMessage("Could not create MetadataResolver of type " + getClassName(factoryType)), e);
+      throw new MuleRuntimeException(createStaticMessage("Could not create MetadataResolver of type "
+          + getClassName(factoryType)), e);
     }
   }
 }

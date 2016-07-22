@@ -42,14 +42,15 @@ public class ContainerClassLoaderFactory {
   /**
    * Boot packages define all the prefixes that must be loaded from the container classLoader without being filtered
    */
-  public static final Set<String> BOOT_PACKAGES = ImmutableSet.of("java", "javax.accessibility", "javax.activation",
-      "javax.activity", "javax.annotation", "javax.crypto", "javax.imageio", "javax.jws", "javax.lang.model", "javax.management",
-      "javax.naming", "javax.net", "javax.print", "javax.rmi", "javax.script", "javax.security", "javax.smartcardio",
-      "javax.sound", "javax.sql", "javax.swing", "javax.tools", "javax.transaction", "javax.resource", "javax.xml",
-      // Java EE
-      "javax.jms", "javax.servlet", "javax.ws", "javax.mail", "javax.inject", "org.xml.sax", "org.apache.xerces",
-      "org.apache.logging.log4j", "org.slf4j", "org.apache.commons.logging", "org.apache.log4j", "org.dom4j", "org.w3c.dom",
-      "com.sun", "sun", "org.springframework", "org.mule.mvel2");
+  public static final Set<String> BOOT_PACKAGES =
+      ImmutableSet.of("java", "javax.accessibility", "javax.activation", "javax.activity", "javax.annotation", "javax.crypto",
+                      "javax.imageio", "javax.jws", "javax.lang.model", "javax.management", "javax.naming", "javax.net",
+                      "javax.print", "javax.rmi", "javax.script", "javax.security", "javax.smartcardio", "javax.sound",
+                      "javax.sql", "javax.swing", "javax.tools", "javax.transaction", "javax.resource", "javax.xml",
+                      // Java EE
+                      "javax.jms", "javax.servlet", "javax.ws", "javax.mail", "javax.inject", "org.xml.sax", "org.apache.xerces",
+                      "org.apache.logging.log4j", "org.slf4j", "org.apache.commons.logging", "org.apache.log4j", "org.dom4j",
+                      "org.w3c.dom", "com.sun", "sun", "org.springframework", "org.mule.mvel2");
   private ModuleDiscoverer moduleDiscoverer = new ClasspathModuleDiscoverer(this.getClass().getClassLoader());
 
   /**
@@ -89,9 +90,9 @@ public class ContainerClassLoaderFactory {
    * @return a {@link ArtifactClassLoader} to be used in a {@link FilteringContainerClassLoader}
    */
   protected ArtifactClassLoader createArtifactClassLoader(final ClassLoader parentClassLoader, List<MuleModule> muleModules,
-      final ClassLoaderLookupPolicy containerLookupPolicy) {
-    return createContainerFilteringClassLoader(muleModules,
-        new MuleContainerClassLoader("mule", new URL[0], parentClassLoader, containerLookupPolicy));
+                                                          final ClassLoaderLookupPolicy containerLookupPolicy) {
+    return createContainerFilteringClassLoader(muleModules, new MuleContainerClassLoader("mule", new URL[0], parentClassLoader,
+                                                                                         containerLookupPolicy));
   }
 
   public void setModuleDiscoverer(ModuleDiscoverer moduleDiscoverer) {
@@ -127,9 +128,9 @@ public class ContainerClassLoaderFactory {
    *         {@link ArtifactClassLoader}
    */
   protected FilteringArtifactClassLoader createContainerFilteringClassLoader(List<MuleModule> muleModules,
-      ArtifactClassLoader containerClassLoader) {
+                                                                             ArtifactClassLoader containerClassLoader) {
     return new FilteringContainerClassLoader(containerClassLoader,
-        new ContainerClassLoaderFilterFactory().create(getBootPackages(), muleModules));
+                                             new ContainerClassLoaderFilterFactory().create(getBootPackages(), muleModules));
   }
 
   /**

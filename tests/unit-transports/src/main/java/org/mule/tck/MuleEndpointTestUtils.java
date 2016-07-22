@@ -47,34 +47,46 @@ public final class MuleEndpointTestUtils {
 
   public static InboundEndpoint getTestInboundEndpoint(String name, final MuleContext context) throws Exception {
     return (InboundEndpoint) getTestEndpoint(name, null, null, null, null, context,
-        builder -> getEndpointFactory(context.getRegistry()).getInboundEndpoint(builder), null);
+                                             builder -> getEndpointFactory(context.getRegistry()).getInboundEndpoint(builder),
+                                             null);
   }
 
   public static OutboundEndpoint getTestOutboundEndpoint(String name, final MuleContext context) throws Exception {
     return (OutboundEndpoint) getTestEndpoint(name, null, null, null, null, context,
-        builder -> getEndpointFactory(context.getRegistry()).getOutboundEndpoint(builder), null);
+                                              builder -> getEndpointFactory(context.getRegistry()).getOutboundEndpoint(builder),
+                                              null);
   }
 
   public static InboundEndpoint getTestInboundEndpoint(String name, final MuleContext context, String uri,
-      List<Transformer> transformers, Filter filter, Map<String, Serializable> properties, Connector connector) throws Exception {
+                                                       List<Transformer> transformers, Filter filter,
+                                                       Map<String, Serializable> properties, Connector connector)
+      throws Exception {
     return (InboundEndpoint) getTestEndpoint(name, uri, transformers, filter, properties, context,
-        builder -> getEndpointFactory(context.getRegistry()).getInboundEndpoint(builder), connector);
+                                             builder -> getEndpointFactory(context.getRegistry()).getInboundEndpoint(builder),
+                                             connector);
   }
 
   public static OutboundEndpoint getTestOutboundEndpoint(String name, final MuleContext context, String uri,
-      List<Transformer> transformers, Filter filter, Map<String, Serializable> properties) throws Exception {
+                                                         List<Transformer> transformers, Filter filter,
+                                                         Map<String, Serializable> properties)
+      throws Exception {
     return (OutboundEndpoint) getTestEndpoint(name, uri, transformers, filter, properties, context,
-        builder -> getEndpointFactory(context.getRegistry()).getOutboundEndpoint(builder), null);
+                                              builder -> getEndpointFactory(context.getRegistry()).getOutboundEndpoint(builder),
+                                              null);
   }
 
   public static InboundEndpoint getTestInboundEndpoint(String name, final MuleContext context, String uri,
-      List<Transformer> transformers, Filter filter, Map<String, Serializable> properties) throws Exception {
+                                                       List<Transformer> transformers, Filter filter,
+                                                       Map<String, Serializable> properties)
+      throws Exception {
     return (InboundEndpoint) getTestEndpoint(name, uri, transformers, filter, properties, context,
-        builder -> getEndpointFactory(context.getRegistry()).getInboundEndpoint(builder), null);
+                                             builder -> getEndpointFactory(context.getRegistry()).getInboundEndpoint(builder),
+                                             null);
   }
 
   public static OutboundEndpoint getTestOutboundEndpoint(String name, final MuleContext context, String uri,
-      List<Transformer> transformers, Filter filter, Map<String, Serializable> properties, final Connector connector)
+                                                         List<Transformer> transformers, Filter filter,
+                                                         Map<String, Serializable> properties, final Connector connector)
       throws Exception {
     return (OutboundEndpoint) getTestEndpoint(name, uri, transformers, filter, properties, context, builder -> {
       builder.setConnector(connector);
@@ -83,7 +95,8 @@ public final class MuleEndpointTestUtils {
   }
 
   public static OutboundEndpoint getTestOutboundEndpoint(final MessageExchangePattern mep, final MuleContext context, String uri,
-      final Connector connector) throws Exception {
+                                                         final Connector connector)
+      throws Exception {
     return (OutboundEndpoint) getTestEndpoint(null, uri, null, null, null, context, builder -> {
       builder.setConnector(connector);
       builder.setExchangePattern(mep);
@@ -108,7 +121,8 @@ public final class MuleEndpointTestUtils {
   }
 
   public static InboundEndpoint getTestInboundEndpoint(String name, final MessageExchangePattern mep, final MuleContext context,
-      final Connector connector) throws Exception {
+                                                       final Connector connector)
+      throws Exception {
     return (InboundEndpoint) getTestEndpoint(name, null, null, null, null, context, builder -> {
       builder.setExchangePattern(mep);
       return getEndpointFactory(context.getRegistry()).getInboundEndpoint(builder);
@@ -135,7 +149,9 @@ public final class MuleEndpointTestUtils {
   }
 
   private static ImmutableEndpoint getTestEndpoint(String name, String uri, List<Transformer> transformers, Filter filter,
-      Map<String, Serializable> properties, MuleContext context, EndpointSource source, Connector connector) throws Exception {
+                                                   Map<String, Serializable> properties, MuleContext context,
+                                                   EndpointSource source, Connector connector)
+      throws Exception {
     final Map<String, Serializable> props = new HashMap<>();
     props.put("name", name);
     props.put("endpointURI", new MuleEndpointURI("test://test", context));
@@ -168,17 +184,18 @@ public final class MuleEndpointTestUtils {
   public static ImmutableEndpoint getTestSchemeMetaInfoInboundEndpoint(String name, String protocol, final MuleContext context)
       throws Exception {
     return getTestSchemeMetaInfoEndpoint(name, protocol, context,
-        builder -> getEndpointFactory(context.getRegistry()).getInboundEndpoint(builder));
+                                         builder -> getEndpointFactory(context.getRegistry()).getInboundEndpoint(builder));
   }
 
   public static ImmutableEndpoint getTestSchemeMetaInfoOutboundEndpoint(String name, String protocol, final MuleContext context)
       throws Exception {
     return getTestSchemeMetaInfoEndpoint(name, protocol, context,
-        builder -> getEndpointFactory(context.getRegistry()).getOutboundEndpoint(builder));
+                                         builder -> getEndpointFactory(context.getRegistry()).getOutboundEndpoint(builder));
   }
 
   private static ImmutableEndpoint getTestSchemeMetaInfoEndpoint(String name, String protocol, MuleContext context,
-      EndpointSource source) throws Exception {
+                                                                 EndpointSource source)
+      throws Exception {
     // need to build endpoint this way to avoid depenency to any endpoint jars
     final AbstractConnector connector = (AbstractConnector) ClassUtils
         .loadClass("org.mule.tck.testmodels.mule.TestConnector", AbstractMuleTestCase.class).newInstance();

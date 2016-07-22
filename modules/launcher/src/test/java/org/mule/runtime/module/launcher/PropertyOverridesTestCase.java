@@ -58,9 +58,9 @@ public class PropertyOverridesTestCase extends AbstractMuleTestCase {
     input.close();
     output.close();
     ApplicationDescriptor descriptor = new ApplicationDescriptor();
-    ApplicationDescriptorFactory applicationDescriptorFactory = new ApplicationDescriptorFactory(
-        new ArtifactPluginDescriptorLoader(new ArtifactPluginDescriptorFactory(new DefaultArtifactClassLoaderFilterFactory())),
-        applicationPluginRepository);
+    ApplicationDescriptorFactory applicationDescriptorFactory =
+        new ApplicationDescriptorFactory(new ArtifactPluginDescriptorLoader(new ArtifactPluginDescriptorFactory(new DefaultArtifactClassLoaderFilterFactory())),
+                                         applicationPluginRepository);
     applicationDescriptorFactory.setApplicationProperties(descriptor, tempProps);
     Map<String, String> appProps = descriptor.getAppProperties();
     assertEquals("state", appProps.get("texas"));

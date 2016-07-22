@@ -99,10 +99,10 @@ public class ExtensionResourcesGeneratorAnnotationProcessor extends AbstractProc
     Set<TypeElement> elements = getTypeElementsAnnotatedWith(Extension.class, env);
     if (elements.size() > 1) {
 
-      String message = format(
-          "Only one extension is allowed per plugin, however several classes annotated with @%s were found. Offending classes are [%s]",
-          Extension.class.getSimpleName(),
-          Joiner.on(", ").join(elements.stream().map(TypeElement::getQualifiedName).collect(toList())));
+      String message =
+          format("Only one extension is allowed per plugin, however several classes annotated with @%s were found. Offending classes are [%s]",
+                 Extension.class.getSimpleName(),
+                 Joiner.on(", ").join(elements.stream().map(TypeElement::getQualifiedName).collect(toList())));
 
       throw new RuntimeException(message);
     }

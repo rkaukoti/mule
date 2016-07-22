@@ -28,8 +28,8 @@ public class NonBlockingProcessingStrategy extends AbstractThreadingProfileProce
 
   @Override
   public void configureProcessors(List<MessageProcessor> processors,
-      org.mule.runtime.core.api.processor.StageNameSource nameSource, MessageProcessorChainBuilder chainBuilder,
-      MuleContext muleContext) {
+                                  org.mule.runtime.core.api.processor.StageNameSource nameSource,
+                                  MessageProcessorChainBuilder chainBuilder, MuleContext muleContext) {
     for (MessageProcessor processor : processors) {
       chainBuilder.chain((MessageProcessor) processor);
     }
@@ -37,8 +37,9 @@ public class NonBlockingProcessingStrategy extends AbstractThreadingProfileProce
 
   public WorkManager createWorkManager(FlowConstruct flowConstruct) {
     MuleContext muleContext = flowConstruct.getMuleContext();
-    MuleWorkManager workManager = (MuleWorkManager) createThreadingProfile(muleContext).createWorkManager(
-        getThreadPoolName(flowConstruct.getName(), muleContext), muleContext.getConfiguration().getShutdownTimeout());
+    MuleWorkManager workManager = (MuleWorkManager) createThreadingProfile(muleContext)
+        .createWorkManager(getThreadPoolName(flowConstruct.getName(), muleContext),
+                           muleContext.getConfiguration().getShutdownTimeout());
     return workManager;
   }
 

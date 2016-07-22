@@ -41,7 +41,7 @@ public class CxfDataTypeTestCase extends FunctionalTestCase {
   public void testCxfService() throws Exception {
     MuleMessage request = MuleMessage.builder().payload(requestPayload).build();
     MuleMessage received = muleContext.getClient().send("http://localhost:" + dynamicPort.getNumber() + "/hello", request,
-        newOptions().method(POST.name()).disableStatusCodeValidation().build());
+                                                        newOptions().method(POST.name()).disableStatusCodeValidation().build());
     Assert.assertThat(getPayloadAsString(received), not(containsString("Fault")));
   }
 
@@ -55,7 +55,7 @@ public class CxfDataTypeTestCase extends FunctionalTestCase {
   public void testCxfProxy() throws Exception {
     MuleMessage request = MuleMessage.builder().payload(requestPayload).build();
     MuleMessage received = muleContext.getClient().send("http://localhost:" + dynamicPort.getNumber() + "/hello-proxy", request,
-        newOptions().method(POST.name()).disableStatusCodeValidation().build());
+                                                        newOptions().method(POST.name()).disableStatusCodeValidation().build());
     Assert.assertThat(getPayloadAsString(received), not(containsString("Fault")));
   }
 
@@ -64,8 +64,8 @@ public class CxfDataTypeTestCase extends FunctionalTestCase {
     MuleClient client = muleContext.getClient();
     InputStream xml = getClass().getResourceAsStream("/direct/direct-request.xml");
     MuleMessage result = client.send("http://localhost:" + dynamicPort.getNumber() + "/echo",
-        MuleMessage.builder().payload(xml).mediaType(APP_SOAP_XML).build(),
-        newOptions().method(POST.name()).disableStatusCodeValidation().build());
+                                     MuleMessage.builder().payload(xml).mediaType(APP_SOAP_XML).build(),
+                                     newOptions().method(POST.name()).disableStatusCodeValidation().build());
     Assert.assertThat(getPayloadAsString(result), not(containsString("Fault")));
   }
 

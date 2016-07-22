@@ -29,7 +29,7 @@ public final class StudioModelEnricher extends AbstractAnnotatedModelEnricher {
   }
 
   private StudioModelProperty createStudioEditorModelProperty(StudioProvidedEditor studioProvidedEditor,
-      CustomStudioEditor customStudioEditor) {
+                                                              CustomStudioEditor customStudioEditor) {
     String editorFileName = "";
     boolean isDerived = false;
 

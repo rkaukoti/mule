@@ -26,8 +26,8 @@ public class OracleTestDatabase extends AbstractTestDatabase {
     executeDdl(connection, "CREATE SEQUENCE PLANET_SEQ INCREMENT BY 1 START WITH 1");
 
     executeDdl(connection,
-        "CREATE TRIGGER PLANET_TRIGGER\n" + "BEFORE INSERT ON PLANET\n" + "FOR EACH ROW WHEN (new.ID is null)\n" + "begin\n"
-            + "    select PLANET_SEQ.nextval into :new.ID from dual;\n" + "end;");
+               "CREATE TRIGGER PLANET_TRIGGER\n" + "BEFORE INSERT ON PLANET\n" + "FOR EACH ROW WHEN (new.ID is null)\n"
+                   + "begin\n" + "    select PLANET_SEQ.nextval into :new.ID from dual;\n" + "end;");
   }
 
   @Override

@@ -79,7 +79,7 @@ public class NameTransferDefinitionParser extends ParentDefinitionParser {
   private class LocalBeanAssembler extends DefaultBeanAssembler {
 
     public LocalBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean, PropertyConfiguration targetConfig,
-        BeanDefinition target) {
+                              BeanDefinition target) {
       super(beanConfig, bean, targetConfig, target);
     }
 
@@ -109,7 +109,7 @@ public class NameTransferDefinitionParser extends ParentDefinitionParser {
   private class LocalBeanAssemblerFactory implements BeanAssemblerFactory {
 
     public BeanAssembler newBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
-        PropertyConfiguration targetConfig, BeanDefinition target) {
+                                          PropertyConfiguration targetConfig, BeanDefinition target) {
       return new LocalBeanAssembler(beanConfig, bean, targetConfig, target);
     }
 

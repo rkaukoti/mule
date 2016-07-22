@@ -281,7 +281,7 @@ public abstract class AbstractResourceManager {
    */
   protected void setDirty(AbstractTransactionContext context, Throwable t) {
     logger.error("Fatal error during critical commit/rollback of transaction " + context + ", setting resource manager to dirty.",
-        t);
+                 t);
     dirty = true;
   }
 

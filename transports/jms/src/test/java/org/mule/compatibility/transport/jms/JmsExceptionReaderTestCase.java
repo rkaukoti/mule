@@ -58,7 +58,7 @@ public class JmsExceptionReaderTestCase extends AbstractMuleTestCase {
     e.setLinkedException(new IOException("blah"));
 
     return new DefaultMuleException(MessageFactory.createStaticMessage("foo"),
-        new DefaultMuleException(MessageFactory.createStaticMessage("bar"), e));
+                                    new DefaultMuleException(MessageFactory.createStaticMessage("bar"), e));
   }
 
 }

@@ -128,7 +128,7 @@ public class HttpListenerExpectHeaderStreamingNeverTestCase extends AbstractHttp
    */
   private void sendHeaders(OutputStream outputStream, String httpVersion, String expectHeaderValue) throws IOException {
     String request = String.format("%s / %s\n" + "%s: %s\n" + "%s: %d\n", POST.name(), httpVersion, HOST, LISTEN_HOST,
-        CONTENT_LENGTH, TEST_MESSAGE.length());
+                                   CONTENT_LENGTH, TEST_MESSAGE.length());
 
     if (expectHeaderValue != null) {
       request += String.format("%s: %s\n", EXPECT, expectHeaderValue);

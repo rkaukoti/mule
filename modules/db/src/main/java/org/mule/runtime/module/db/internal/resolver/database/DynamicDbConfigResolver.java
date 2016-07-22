@@ -47,7 +47,7 @@ public class DynamicDbConfigResolver extends AbstractAnnotatedObject implements 
   private int instanceCount = 1;
 
   public DynamicDbConfigResolver(String name, DbConfigFactory dbConfigFactory, DataSourceFactory dataSourceFactory,
-      DataSourceConfig dataSourceConfig) {
+                                 DataSourceConfig dataSourceConfig) {
     this.name = name;
     this.dbConfigFactory = dbConfigFactory;
     this.dataSourceConfig = dataSourceConfig;

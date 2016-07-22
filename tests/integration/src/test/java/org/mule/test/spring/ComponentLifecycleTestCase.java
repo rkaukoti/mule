@@ -39,8 +39,7 @@ public class ComponentLifecycleTestCase extends FunctionalTestCase {
     assertObjectFactoryAndMessageProcessorLifecycle(lifecycleSensingMessageProcessor);
   }
 
-  private void assertObjectFactoryAndMessageProcessorLifecycle(
-      LifecycleSensingMessageProcessor lifecycleSensingMessageProcessor) {
+  private void assertObjectFactoryAndMessageProcessorLifecycle(LifecycleSensingMessageProcessor lifecycleSensingMessageProcessor) {
     LifecycleSensingObjectFactory lifecycleSensingObjectFactory = lifecycleSensingMessageProcessor.getObjectFactory();
     assertThat(lifecycleSensingObjectFactory.getLifecycleActions(), hasItems(GET_OBJECT));
     assertThat(lifecycleSensingMessageProcessor.getLifecycleActions(), hasItems(INITIALISE, START));

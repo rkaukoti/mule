@@ -62,8 +62,9 @@ public class StandardFileSystemOperations {
    */
   @Summary("List all the files from given directory")
   public TreeNode list(@UseConfig FileConnectorConfig config, @Connection FileSystem fileSystem, @Optional String directoryPath,
-      @Optional(defaultValue = "false") boolean recursive, MuleMessage message,
-      @Optional @Summary("Matcher to filter the listed files") @Placement(group = MATCHER) FilePredicateBuilder matchWith) {
+                       @Optional(defaultValue = "false") boolean recursive, MuleMessage message,
+                       @Optional @Summary("Matcher to filter the listed files") @Placement(
+                           group = MATCHER) FilePredicateBuilder matchWith) {
     fileSystem.changeToBaseDir(config);
     return fileSystem.list(config, directoryPath, recursive, message, getPredicate(matchWith));
   }
@@ -93,8 +94,9 @@ public class StandardFileSystemOperations {
   @DataTypeParameters
   @Summary("Obtains the content and metadata of a file at a given path")
   public OperationResult<InputStream, FileAttributes> read(@UseConfig FileConnectorConfig config,
-      @Connection FileSystem fileSystem, MuleMessage message, @DisplayName("File Path") String path,
-      @Optional(defaultValue = "false") boolean lock) {
+                                                           @Connection FileSystem fileSystem, MuleMessage message,
+                                                           @DisplayName("File Path") String path,
+                                                           @Optional(defaultValue = "false") boolean lock) {
     fileSystem.changeToBaseDir(config);
     return fileSystem.read(config, message, path, lock);
   }
@@ -142,12 +144,13 @@ public class StandardFileSystemOperations {
    */
   @Summary("Writes the given \"Content\" in the file pointed by \"Path\"")
   public void write(@UseConfig FileConnectorConfig config, @Connection FileSystem fileSystem, @Optional String path,
-      @Optional(defaultValue = "#[payload]") @Summary("Content to be written into the file") @NoRef Object content,
-      @Optional(
-          defaultValue = "OVERWRITE") @Summary("How the file is going to be written") @DisplayName("Write Mode") FileWriteMode mode,
-      @Optional(defaultValue = "false") boolean lock, @Optional(defaultValue = "true") boolean createParentDirectories,
-      @Optional @Summary("Encoding when trying to write a String file. If not set, defaults to the configuration one or the Mule default") String encoding,
-      MuleEvent event) {
+                    @Optional(defaultValue = "#[payload]") @Summary("Content to be written into the file") @NoRef Object content,
+                    @Optional(
+                        defaultValue = "OVERWRITE") @Summary("How the file is going to be written") @DisplayName("Write Mode") FileWriteMode mode,
+                    @Optional(defaultValue = "false") boolean lock,
+                    @Optional(defaultValue = "true") boolean createParentDirectories,
+                    @Optional @Summary("Encoding when trying to write a String file. If not set, defaults to the configuration one or the Mule default") String encoding,
+                    MuleEvent event) {
     if (content == null) {
       throw new IllegalArgumentException("Cannot write a null content");
     }
@@ -195,8 +198,8 @@ public class StandardFileSystemOperations {
    */
   @Summary("Copies a file in another directory")
   public void copy(@UseConfig FileConnectorConfig config, @Connection FileSystem fileSystem, @Optional String sourcePath,
-      String targetPath, @Optional(defaultValue = "false") boolean overwrite,
-      @Optional(defaultValue = "true") boolean createParentDirectories, MuleEvent event) {
+                   String targetPath, @Optional(defaultValue = "false") boolean overwrite,
+                   @Optional(defaultValue = "true") boolean createParentDirectories, MuleEvent event) {
     fileSystem.changeToBaseDir(config);
     validateTargetPath(targetPath);
     sourcePath = resolvePath(sourcePath, event, "sourcePath");
@@ -242,8 +245,8 @@ public class StandardFileSystemOperations {
    */
   @Summary("Moves a file to another directory")
   public void move(@UseConfig FileConnectorConfig config, @Connection FileSystem fileSystem, @Optional String sourcePath,
-      String targetPath, @Optional(defaultValue = "false") boolean overwrite,
-      @Optional(defaultValue = "true") boolean createParentDirectories, MuleEvent event) {
+                   String targetPath, @Optional(defaultValue = "false") boolean overwrite,
+                   @Optional(defaultValue = "true") boolean createParentDirectories, MuleEvent event) {
     fileSystem.changeToBaseDir(config);
     validateTargetPath(targetPath);
     sourcePath = resolvePath(sourcePath, event, "sourcePath");
@@ -266,7 +269,7 @@ public class StandardFileSystemOperations {
    */
   @Summary("Deletes a file")
   public void delete(@UseConfig FileConnectorConfig config, @Connection FileSystem fileSystem, @Optional String path,
-      MuleEvent event) {
+                     MuleEvent event) {
     fileSystem.changeToBaseDir(config);
     path = resolvePath(path, event, "path");
     fileSystem.delete(config, path);
@@ -293,9 +296,10 @@ public class StandardFileSystemOperations {
   // TODO: MULE-9715
   @Summary("Renames a file")
   public void rename(@UseConfig FileConnectorConfig config, @Connection FileSystem fileSystem, @Optional String path,
-      @DisplayName("New Name") String to, @Optional(defaultValue = "false") boolean overwrite, MuleEvent event) {
+                     @DisplayName("New Name") String to, @Optional(defaultValue = "false") boolean overwrite, MuleEvent event) {
     checkArgument(get(to).getNameCount() == 1,
-        format("'to' parameter of rename operation should not contain any file separator character but '%s' was received", to));
+                  format("'to' parameter of rename operation should not contain any file separator character but '%s' was received",
+                         to));
     fileSystem.changeToBaseDir(config);
     path = resolvePath(path, event, "path");
     fileSystem.rename(config, path, to, overwrite);
@@ -324,8 +328,8 @@ public class StandardFileSystemOperations {
       return ((FileAttributes) message.getAttributes()).getPath();
     }
 
-    throw new IllegalArgumentException(format(
-        "A %s was not specified and a default one could not be obtained from the current message attributes", attributeName));
+    throw new IllegalArgumentException(format("A %s was not specified and a default one could not be obtained from the current message attributes",
+                                              attributeName));
   }
 
   private Predicate<FileAttributes> getPredicate(FilePredicateBuilder builder) {

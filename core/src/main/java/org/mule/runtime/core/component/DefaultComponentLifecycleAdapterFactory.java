@@ -26,7 +26,8 @@ public class DefaultComponentLifecycleAdapterFactory implements LifecycleAdapter
 
   @Override
   public LifecycleAdapter create(Object pojoService, JavaComponent component, FlowConstruct flowConstruct,
-      EntryPointResolverSet resolver, MuleContext muleContext) throws MuleException {
+                                 EntryPointResolverSet resolver, MuleContext muleContext)
+      throws MuleException {
     return new DefaultComponentLifecycleAdapter(pojoService, component, flowConstruct, resolver, muleContext);
   }
 

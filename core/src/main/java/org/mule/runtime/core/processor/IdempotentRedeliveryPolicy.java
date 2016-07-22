@@ -64,14 +64,13 @@ public class IdempotentRedeliveryPolicy extends AbstractRedeliveryPolicy {
       }
     }
     if (!useSecureHash && messageDigestAlgorithm != null) {
-      throw new InitialisationException(
-          CoreMessages.initialisationFailure(String.format(
-              "The message digest algorithm '%s' was specified when a secure hash will not be used", messageDigestAlgorithm)),
-          this);
+      throw new InitialisationException(CoreMessages.initialisationFailure(String
+          .format("The message digest algorithm '%s' was specified when a secure hash will not be used", messageDigestAlgorithm)),
+                                        this);
     }
     if (!useSecureHash && idExpression == null) {
       throw new InitialisationException(CoreMessages.initialisationFailure("No method for identifying messages was specified"),
-          this);
+                                        this);
     }
     if (useSecureHash) {
       if (messageDigestAlgorithm == null) {
@@ -80,10 +79,8 @@ public class IdempotentRedeliveryPolicy extends AbstractRedeliveryPolicy {
       try {
         MessageDigest.getInstance(messageDigestAlgorithm);
       } catch (NoSuchAlgorithmException e) {
-        throw new InitialisationException(
-            CoreMessages.initialisationFailure(
-                String.format("Exception '%s' initializing message digest algorithm %s", e.getMessage(), messageDigestAlgorithm)),
-            this);
+        throw new InitialisationException(CoreMessages.initialisationFailure(String
+            .format("Exception '%s' initializing message digest algorithm %s", e.getMessage(), messageDigestAlgorithm)), this);
 
       }
     }
@@ -103,7 +100,7 @@ public class IdempotentRedeliveryPolicy extends AbstractRedeliveryPolicy {
     return () -> {
       ObjectStoreManager objectStoreManager = muleContext.getObjectStoreManager();
       return objectStoreManager.getObjectStore(flowConstruct.getName() + "." + getClass().getName(), false, -1, 60 * 5 * 1000,
-          6000);
+                                               6000);
     };
   }
 
@@ -145,8 +142,8 @@ public class IdempotentRedeliveryPolicy extends AbstractRedeliveryPolicy {
     try {
       messageId = getIdForEvent(event);
     } catch (TransformerException e) {
-      logger.warn(
-          "The message cannot be processed because the digest could not be generated. Either make the payload serializable or use an expression.");
+      logger
+          .warn("The message cannot be processed because the digest could not be generated. Either make the payload serializable or use an expression.");
       return null;
     } catch (Exception ex) {
       exceptionSeen = true;
@@ -167,7 +164,7 @@ public class IdempotentRedeliveryPolicy extends AbstractRedeliveryPolicy {
             return deadLetterQueue.process(event);
           } else {
             throw new MessageRedeliveredException(messageId, counter.get(), maxRedeliveryCount, event,
-                CoreMessages.createStaticMessage("Redelivery exhausted"), this);
+                                                  CoreMessages.createStaticMessage("Redelivery exhausted"), this);
           }
         } catch (MessageRedeliveredException ex) {
           throw ex;

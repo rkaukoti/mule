@@ -44,8 +44,8 @@ public class DateTimeExpressionLanguageFuntion implements ExpressionLanguageFunc
       try {
         return new DateTime((String) params[0], (String) params[1]);
       } catch (ParseException e) {
-        throw new ExpressionRuntimeException(
-            CoreMessages.createStaticMessage("Unable to parse string as a date using format '" + params[1] + "''"));
+        throw new ExpressionRuntimeException(CoreMessages
+            .createStaticMessage("Unable to parse string as a date using format '" + params[1] + "''"));
       }
     }
   }

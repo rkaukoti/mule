@@ -593,7 +593,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
     Assert.notNull(dependencyType, "Type must not be null");
     if (autowiredValue != null) {
       Assert.isTrue((autowiredValue instanceof ObjectFactory || dependencyType.isInstance(autowiredValue)),
-          "Value [" + autowiredValue + "] does not implement specified type [" + dependencyType.getName() + "]");
+                    "Value [" + autowiredValue + "] does not implement specified type [" + dependencyType.getName() + "]");
       this.resolvableDependencies.put(dependencyType, autowiredValue);
     }
   }
@@ -643,7 +643,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
    * @return whether the bean should be considered as autowire candidate
    */
   protected boolean isAutowireCandidate(String beanName, RootBeanDefinition mbd, DependencyDescriptor descriptor,
-      AutowireCandidateResolver resolver) {
+                                        AutowireCandidateResolver resolver) {
 
     String beanDefinitionName = BeanFactoryUtils.transformedBeanName(beanName);
     resolveBeanClass(mbd, beanDefinitionName);
@@ -776,7 +776,7 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
         ((AbstractBeanDefinition) beanDefinition).validate();
       } catch (BeanDefinitionValidationException ex) {
         throw new BeanDefinitionStoreException(beanDefinition.getResourceDescription(), beanName,
-            "Validation of bean definition failed", ex);
+                                               "Validation of bean definition failed", ex);
       }
     }
 
@@ -786,8 +786,8 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
     if (oldBeanDefinition != null) {
       if (!isAllowBeanDefinitionOverriding()) {
         throw new BeanDefinitionStoreException(beanDefinition.getResourceDescription(), beanName,
-            "Cannot register bean definition [" + beanDefinition + "] for bean '" + beanName + "': There is already ["
-                + oldBeanDefinition + "] bound.");
+                                               "Cannot register bean definition [" + beanDefinition + "] for bean '" + beanName
+                                                   + "': There is already [" + oldBeanDefinition + "] bound.");
       } else if (oldBeanDefinition.getRole() < beanDefinition.getRole()) {
         // e.g. was ROLE_APPLICATION, now overriding with ROLE_SUPPORT or ROLE_INFRASTRUCTURE
         if (this.logger.isWarnEnabled()) {
@@ -901,7 +901,8 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
 
   @Override
   public Object resolveDependency(DependencyDescriptor descriptor, String beanName, Set<String> autowiredBeanNames,
-      TypeConverter typeConverter) throws BeansException {
+                                  TypeConverter typeConverter)
+      throws BeansException {
 
     descriptor.initParameterNameDiscovery(getParameterNameDiscoverer());
     if (descriptor.getDependencyType().equals(javaUtilOptionalClass)) {
@@ -920,7 +921,8 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
   }
 
   public Object doResolveDependency(DependencyDescriptor descriptor, String beanName, Set<String> autowiredBeanNames,
-      TypeConverter typeConverter) throws BeansException {
+                                    TypeConverter typeConverter)
+      throws BeansException {
 
     Class<?> type = descriptor.getDependencyType();
     Object value = getAutowireCandidateResolver().getSuggestedValue(descriptor);
@@ -985,8 +987,8 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
       Class<?> keyType = descriptor.getMapKeyType();
       if (keyType == null || !String.class.isAssignableFrom(keyType)) {
         if (descriptor.isRequired()) {
-          throw new FatalBeanException(
-              "Key type [" + keyType + "] of map [" + type.getName() + "] must be assignable to [java.lang.String]");
+          throw new FatalBeanException("Key type [" + keyType + "] of map [" + type.getName()
+              + "] must be assignable to [java.lang.String]");
         }
         return null;
       }
@@ -1145,8 +1147,8 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
           boolean candidateLocal = containsBeanDefinition(candidateBeanName);
           boolean primaryLocal = containsBeanDefinition(primaryBeanName);
           if (candidateLocal && primaryLocal) {
-            throw new NoUniqueBeanDefinitionException(requiredType, candidateBeans.size(),
-                "more than one 'primary' bean found among candidates: " + candidateBeans.keySet());
+            throw new NoUniqueBeanDefinitionException(requiredType, candidateBeans
+                .size(), "more than one 'primary' bean found among candidates: " + candidateBeans.keySet());
           } else if (candidateLocal) {
             primaryBeanName = candidateBeanName;
           }
@@ -1178,8 +1180,8 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
         if (highestPriorityBeanName != null) {
           if (candidatePriority.equals(highestPriority)) {
             throw new NoUniqueBeanDefinitionException(requiredType, candidateBeans.size(),
-                "Multiple beans found with the same priority ('" + highestPriority + "') " + "among candidates: "
-                    + candidateBeans.keySet());
+                                                      "Multiple beans found with the same priority ('" + highestPriority + "') "
+                                                          + "among candidates: " + candidateBeans.keySet());
           } else if (candidatePriority < highestPriority) {
             highestPriorityBeanName = candidateBeanName;
             highestPriority = candidatePriority;
@@ -1252,8 +1254,9 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
       throws NoSuchBeanDefinitionException {
 
     throw new NoSuchBeanDefinitionException(type, dependencyDescription,
-        "expected at least 1 bean which qualifies as autowire candidate for this dependency. " + "Dependency annotations: "
-            + ObjectUtils.nullSafeToString(descriptor.getAnnotations()));
+                                            "expected at least 1 bean which qualifies as autowire candidate for this dependency. "
+                                                + "Dependency annotations: "
+                                                + ObjectUtils.nullSafeToString(descriptor.getAnnotations()));
   }
 
 
@@ -1278,8 +1281,8 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
   // ---------------------------------------------------------------------
 
   private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-    throw new NotSerializableException(
-        "DefaultListableBeanFactory itself is not deserializable - " + "just a SerializedBeanFactoryReference is");
+    throw new NotSerializableException("DefaultListableBeanFactory itself is not deserializable - "
+        + "just a SerializedBeanFactoryReference is");
   }
 
   protected Object writeReplace() throws ObjectStreamException {
@@ -1305,13 +1308,13 @@ public class DefaultListableBeanFactory extends AbstractAutowireCapableBeanFacto
     private Object readResolve() {
       Reference<?> ref = serializableFactories.get(this.id);
       if (ref == null) {
-        throw new IllegalStateException(
-            "Cannot deserialize BeanFactory with id " + this.id + ": no factory registered for this id");
+        throw new IllegalStateException("Cannot deserialize BeanFactory with id " + this.id
+            + ": no factory registered for this id");
       }
       Object result = ref.get();
       if (result == null) {
-        throw new IllegalStateException(
-            "Cannot deserialize BeanFactory with id " + this.id + ": factory has been garbage-collected");
+        throw new IllegalStateException("Cannot deserialize BeanFactory with id " + this.id
+            + ": factory has been garbage-collected");
       }
       return result;
     }

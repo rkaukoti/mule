@@ -70,7 +70,7 @@ public class ApplicationExtensionsManagerConfigurationBuilderTestCase extends Ab
     when(extensionManager.parseExtensionManifestXml(any())).thenReturn(manifest);
 
     builder = new ApplicationExtensionsManagerConfigurationBuilder(asList(extensionPlugin, notExtensionPlugin),
-        extensionManagerAdapterFactory);
+                                                                   extensionManagerAdapterFactory);
   }
 
   @Test

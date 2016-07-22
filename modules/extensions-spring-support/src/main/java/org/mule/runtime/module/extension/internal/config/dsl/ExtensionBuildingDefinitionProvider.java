@@ -99,10 +99,12 @@ public class ExtensionBuildingDefinitionProvider implements ComponentBuildingDef
   @Override
   public List<ComponentBuildingDefinition> getComponentBuildingDefinitions() {
     Builder baseDefinition = new Builder().withNamespace(EXTENSION_NAMESPACE);
-    definitions.add(baseDefinition.copy().withIdentifier("extensions-config").withTypeDefinition(fromType(ExtensionConfig.class))
-        .withObjectFactoryType(ExtensionConfigObjectFactory.class).withSetterParameterDefinition("dynamicConfigurationExpiration",
-            fromChildConfiguration(DynamicConfigurationExpiration.class).build())
-        .build());
+    definitions.add(
+                    baseDefinition.copy().withIdentifier("extensions-config").withTypeDefinition(fromType(ExtensionConfig.class))
+                        .withObjectFactoryType(ExtensionConfigObjectFactory.class)
+                        .withSetterParameterDefinition("dynamicConfigurationExpiration",
+                                                       fromChildConfiguration(DynamicConfigurationExpiration.class).build())
+                        .build());
     definitions.add(baseDefinition.copy().withIdentifier("dynamic-configuration-expiration")
         .withTypeDefinition(fromType(DynamicConfigurationExpiration.class))
         .withObjectFactoryType(DynamicConfigurationExpirationObjectFactory.class)
@@ -116,8 +118,9 @@ public class ExtensionBuildingDefinitionProvider implements ComponentBuildingDef
 
     definitions.add(baseDefinition.copy().withIdentifier("expiration-policy").withTypeDefinition(fromType(ExpirationPolicy.class))
         .withObjectFactoryType(ExpirationPolicyObjectFactory.class)
-        .withSetterParameterDefinition("maxIdleTime", fromSimpleParameter("maxIdleTime").build()).withSetterParameterDefinition(
-            "timeUnit", fromSimpleParameter("timeUnit", value -> TimeUnit.valueOf((String) value)).build())
+        .withSetterParameterDefinition("maxIdleTime", fromSimpleParameter("maxIdleTime").build())
+        .withSetterParameterDefinition("timeUnit",
+                                       fromSimpleParameter("timeUnit", value -> TimeUnit.valueOf((String) value)).build())
         .build());
 
     return definitions;
@@ -144,31 +147,32 @@ public class ExtensionBuildingDefinitionProvider implements ComponentBuildingDef
         @Override
         public void onConfiguration(ConfigurationModel model) {
           parseWith(new ConfigurationDefinitionParser(definitionBuilder, (RuntimeConfigurationModel) model, dslElementResolver,
-              muleContext, parsingContext));
+                                                      muleContext, parsingContext));
         }
 
         @Override
         public void onOperation(OperationModel model) {
           parseWith(new OperationDefinitionParser(definitionBuilder, (RuntimeExtensionModel) extensionModel,
-              (RuntimeOperationModel) model, dslElementResolver, muleContext, parsingContext));
+                                                  (RuntimeOperationModel) model, dslElementResolver, muleContext,
+                                                  parsingContext));
         }
 
         @Override
         public void onConnectionProvider(ConnectionProviderModel model) {
-          parseWith(
-              new ConnectionProviderDefinitionParser(definitionBuilder, model, dslElementResolver, muleContext, parsingContext));
+          parseWith(new ConnectionProviderDefinitionParser(definitionBuilder, model, dslElementResolver, muleContext,
+                                                           parsingContext));
         }
 
         @Override
         public void onSource(SourceModel model) {
           parseWith(new SourceDefinitionParser(definitionBuilder, (RuntimeExtensionModel) extensionModel,
-              (RuntimeSourceModel) model, dslElementResolver, muleContext, parsingContext));
+                                               (RuntimeSourceModel) model, dslElementResolver, muleContext, parsingContext));
         }
 
         @Override
         public void onParameter(ParameterModel model) {
           registerSubTypes(typeMapping, model.getType(), definitionBuilder, extensionClassLoader, dslElementResolver,
-              parsingContext);
+                           parsingContext);
           registerTopLevelParameter(model.getType(), definitionBuilder, extensionClassLoader, dslElementResolver, parsingContext);
         }
 
@@ -176,12 +180,13 @@ public class ExtensionBuildingDefinitionProvider implements ComponentBuildingDef
       }.walk(extensionModel);
 
       registerExportedTypesTopLevelParsers(extensionModel, definitionBuilder, extensionClassLoader, dslElementResolver,
-          parsingContext);
+                                           parsingContext);
     });
   }
 
   private void registerSubTypes(SubTypesMappingContainer typeMapping, MetadataType type, Builder definitionBuilder,
-      ClassLoader extensionClassLoader, DslElementResolver dslElementResolver, ExtensionParsingContext parsingContext) {
+                                ClassLoader extensionClassLoader, DslElementResolver dslElementResolver,
+                                ExtensionParsingContext parsingContext) {
     type.accept(new MetadataTypeVisitor() {
 
       @Override
@@ -196,8 +201,9 @@ public class ExtensionBuildingDefinitionProvider implements ComponentBuildingDef
 
       @Override
       public void visitObject(ObjectType objectType) {
-        typeMapping.getSubTypes(objectType).forEach(subtype -> registerTopLevelParameter(subtype, definitionBuilder,
-            extensionClassLoader, dslElementResolver, parsingContext));
+        typeMapping.getSubTypes(objectType)
+            .forEach(subtype -> registerTopLevelParameter(subtype, definitionBuilder, extensionClassLoader, dslElementResolver,
+                                                          parsingContext));
       }
 
       @Override
@@ -216,7 +222,8 @@ public class ExtensionBuildingDefinitionProvider implements ComponentBuildingDef
   }
 
   private void registerTopLevelParameter(final MetadataType parameterType, Builder definitionBuilder,
-      ClassLoader extensionClassLoader, DslElementResolver dslElementResolver, ExtensionParsingContext parsingContext) {
+                                         ClassLoader extensionClassLoader, DslElementResolver dslElementResolver,
+                                         ExtensionParsingContext parsingContext) {
     DslElementDeclaration elementDsl = dslElementResolver.resolve(parameterType);
     if (parsingContext.isRegistered(elementDsl.getElementName(), elementDsl.getElementNamespace())) {
       return;
@@ -228,7 +235,7 @@ public class ExtensionBuildingDefinitionProvider implements ComponentBuildingDef
       public void visitObject(ObjectType objectType) {
         if (isInstantiable(objectType)) {
           parseWith(new ObjectTypeParameterParser(definitionBuilder, objectType, extensionClassLoader, dslElementResolver,
-              parsingContext));
+                                                  parsingContext));
         }
       }
 
@@ -236,7 +243,7 @@ public class ExtensionBuildingDefinitionProvider implements ComponentBuildingDef
       public void visitArrayType(ArrayType arrayType) {
 
         registerTopLevelParameter(arrayType.getType(), definitionBuilder.copy(), extensionClassLoader, dslElementResolver,
-            parsingContext);
+                                  parsingContext);
       }
 
       @Override
@@ -255,10 +262,14 @@ public class ExtensionBuildingDefinitionProvider implements ComponentBuildingDef
   }
 
   private void registerExportedTypesTopLevelParsers(ExtensionModel extensionModel, Builder definitionBuilder,
-      ClassLoader extensionClassLoader, DslElementResolver dslElementResolver, ExtensionParsingContext parsingContext) {
+                                                    ClassLoader extensionClassLoader, DslElementResolver dslElementResolver,
+                                                    ExtensionParsingContext parsingContext) {
     extensionModel.getModelProperty(ExportModelProperty.class).map(ExportModelProperty::getExportedTypes)
         .ifPresent(exportedTypes -> exportedTypes.stream().filter(MetadataTypeUtils::isInstantiable)
             .filter(MetadataTypeUtils::hasExposedFields).forEach(exportedType -> registerTopLevelParameter(exportedType,
-                definitionBuilder, extensionClassLoader, dslElementResolver, parsingContext)));
+                                                                                                           definitionBuilder,
+                                                                                                           extensionClassLoader,
+                                                                                                           dslElementResolver,
+                                                                                                           parsingContext)));
   }
 }

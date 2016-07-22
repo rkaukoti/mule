@@ -42,14 +42,16 @@ public class DefaultOutboundEndpoint extends AbstractEndpoint implements Outboun
   private MessagingExceptionHandler exceptionHandler;
 
   public DefaultOutboundEndpoint(Connector connector, EndpointURI endpointUri, String name, Map properties,
-      TransactionConfig transactionConfig, boolean deleteUnacceptedMessage, MessageExchangePattern messageExchangePattern,
-      int responseTimeout, String initialState, Charset endpointEncoding, String endpointBuilderName, MuleContext muleContext,
-      RetryPolicyTemplate retryPolicyTemplate, AbstractRedeliveryPolicy redeliveryPolicy, String responsePropertiesList,
-      EndpointMessageProcessorChainFactory messageProcessorsFactory, List<MessageProcessor> messageProcessors,
-      List<MessageProcessor> responseMessageProcessors, boolean disableTransportTransformer, MediaType endpointMimeType) {
+                                 TransactionConfig transactionConfig, boolean deleteUnacceptedMessage,
+                                 MessageExchangePattern messageExchangePattern, int responseTimeout, String initialState,
+                                 Charset endpointEncoding, String endpointBuilderName, MuleContext muleContext,
+                                 RetryPolicyTemplate retryPolicyTemplate, AbstractRedeliveryPolicy redeliveryPolicy,
+                                 String responsePropertiesList, EndpointMessageProcessorChainFactory messageProcessorsFactory,
+                                 List<MessageProcessor> messageProcessors, List<MessageProcessor> responseMessageProcessors,
+                                 boolean disableTransportTransformer, MediaType endpointMimeType) {
     super(connector, endpointUri, name, properties, transactionConfig, deleteUnacceptedMessage, messageExchangePattern,
-        responseTimeout, initialState, endpointEncoding, endpointBuilderName, muleContext, retryPolicyTemplate, null,
-        messageProcessorsFactory, messageProcessors, responseMessageProcessors, disableTransportTransformer, endpointMimeType);
+          responseTimeout, initialState, endpointEncoding, endpointBuilderName, muleContext, retryPolicyTemplate, null,
+          messageProcessorsFactory, messageProcessors, responseMessageProcessors, disableTransportTransformer, endpointMimeType);
 
     if (redeliveryPolicy != null) {
       logger.warn("Ignoring redelivery policy set on outbound endpoint " + endpointUri);
@@ -88,8 +90,8 @@ public class DefaultOutboundEndpoint extends AbstractEndpoint implements Outboun
   @Override
   protected MessageProcessor createMessageProcessorChain(FlowConstruct flowContruct) throws MuleException {
     EndpointMessageProcessorChainFactory factory = getMessageProcessorsFactory();
-    MessageProcessor chain = factory.createOutboundMessageProcessorChain(this,
-        ((AbstractConnector) getConnector()).createDispatcherMessageProcessor(this));
+    MessageProcessor chain = factory
+        .createOutboundMessageProcessorChain(this, ((AbstractConnector) getConnector()).createDispatcherMessageProcessor(this));
 
     if (chain instanceof MuleContextAware) {
       ((MuleContextAware) chain).setMuleContext(getMuleContext());

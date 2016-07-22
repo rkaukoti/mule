@@ -31,14 +31,15 @@ public class DefaultNativeLibraryFinderFactoryTestCase extends AbstractMuleTestC
   private void doCreateNativeLibraryFinderTest(final Class<? extends NativeLibraryFinder> expectedNativeLibraryFinderClass)
       throws Exception {
     MuleTestUtils.testWithSystemProperty(MuleProperties.MULE_HOME_DIRECTORY_PROPERTY, muleHomeFolder.getRoot().getAbsolutePath(),
-        new MuleTestUtils.TestCallback() {
+                                         new MuleTestUtils.TestCallback() {
 
-          @Override
-          public void run() throws Exception {
-            NativeLibraryFinder nativeLibraryFinder = nativeLibraryFinderFactory.create("testApp");
+                                           @Override
+                                           public void run() throws Exception {
+                                             NativeLibraryFinder nativeLibraryFinder =
+                                                 nativeLibraryFinderFactory.create("testApp");
 
-            assertThat(nativeLibraryFinder, instanceOf(expectedNativeLibraryFinderClass));
-          }
-        });
+                                             assertThat(nativeLibraryFinder, instanceOf(expectedNativeLibraryFinderClass));
+                                           }
+                                         });
   }
 }

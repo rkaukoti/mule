@@ -70,8 +70,7 @@ public abstract class ConnectionProviderWrapper<Connection>
   }
 
   @Override
-  public ConnectionHandlingStrategy<Connection> getHandlingStrategy(
-      ConnectionHandlingStrategyFactory<Connection> handlingStrategyFactory) {
+  public ConnectionHandlingStrategy<Connection> getHandlingStrategy(ConnectionHandlingStrategyFactory<Connection> handlingStrategyFactory) {
     return delegate.getHandlingStrategy(handlingStrategyFactory);
   }
 

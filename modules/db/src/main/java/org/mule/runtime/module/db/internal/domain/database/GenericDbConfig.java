@@ -37,7 +37,7 @@ public class GenericDbConfig extends AbstractAnnotatedObject implements DbConfig
   private final DbTypeManager dbTypeManager;
 
   public GenericDbConfig(DataSource dataSource, String name, DbTypeManager dbTypeManager,
-      DbConnectionFactory dbConnectionFactory) {
+                         DbConnectionFactory dbConnectionFactory) {
     this.name = name;
     this.dataSource = dataSource;
     this.dbTypeManager = dbTypeManager;

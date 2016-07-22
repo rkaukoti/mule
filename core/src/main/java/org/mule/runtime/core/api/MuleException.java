@@ -144,7 +144,7 @@ public abstract class MuleException extends Exception {
       buf.append(": ");
       buf.append((entry.getValue() == null ? "null"
           : entry.getValue().toString().replaceAll(SystemUtils.LINE_SEPARATOR,
-              SystemUtils.LINE_SEPARATOR + StringUtils.repeat(' ', 24))))
+                                                   SystemUtils.LINE_SEPARATOR + StringUtils.repeat(' ', 24))))
           .append(SystemUtils.LINE_SEPARATOR);
     }
 

@@ -29,8 +29,8 @@ public final class RunnerModuleUtils {
     try (InputStream excludedPropertiesUrl =
         RunnerModuleUtils.class.getClassLoader().getResourceAsStream(EXCLUDED_PROPERTIES_FILE)) {
       if (excludedPropertiesUrl == null) {
-        throw new IllegalStateException(
-            "Couldn't find file: " + EXCLUDED_PROPERTIES_FILE + " in classpath, at least one should be defined");
+        throw new IllegalStateException("Couldn't find file: " + EXCLUDED_PROPERTIES_FILE
+            + " in classpath, at least one should be defined");
       }
       Properties excludedProperties = new Properties();
       excludedProperties.load(excludedPropertiesUrl);

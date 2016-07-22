@@ -48,7 +48,7 @@ public class TcpRemoteSyncTestCase extends FunctionalTestCase {
     props.put(MULE_REMOTE_SYNC_PROPERTY, Boolean.TRUE);
     MuleMessage reply =
         client.send(((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("Echo1")).getMessageSource()).getAddress(),
-            MuleMessage.builder().payload(message).inboundProperties(props).build());
+                    MuleMessage.builder().payload(message).inboundProperties(props).build());
 
     assertNotNull(reply);
     assertNotNull(reply.getPayload());
@@ -65,7 +65,7 @@ public class TcpRemoteSyncTestCase extends FunctionalTestCase {
 
     MuleMessage reply =
         client.send(((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("Echo2")).getMessageSource()).getAddress(),
-            MuleMessage.builder().payload(message).inboundProperties(props).build());
+                    MuleMessage.builder().payload(message).inboundProperties(props).build());
 
     assertNotNull(reply);
     assertNotNull(reply.getPayload());

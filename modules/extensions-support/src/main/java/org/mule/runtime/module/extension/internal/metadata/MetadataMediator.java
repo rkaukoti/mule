@@ -236,7 +236,7 @@ public class MetadataMediator {
    *         {@link Optional#empty()} if no Content parameter is present Failure if the dynamic resolution fails for any reason.
    */
   private Optional<MetadataResult<ParameterMetadataDescriptor>> getContentMetadataDescriptor(MetadataContext context,
-      MetadataKey key) {
+                                                                                             MetadataKey key) {
     if (!contentParameter.isPresent()) {
       return Optional.empty();
     }
@@ -298,7 +298,7 @@ public class MetadataMediator {
     }
 
     return resolveMetadataType(subTypesUnion(contentParameter.get().getType(), subTypesMappingContainer, extensionClassLoader),
-        () -> resolverFactory.getContentResolver().getContentMetadata(context, getKeyId(key)));
+                               () -> resolverFactory.getContentResolver().getContentMetadata(context, getKeyId(key)));
   }
 
   /**
@@ -316,7 +316,7 @@ public class MetadataMediator {
     }
 
     return resolveMetadataType(subTypesUnion(output.getType(), subTypesMappingContainer, extensionClassLoader),
-        () -> resolverFactory.getOutputResolver().getOutputMetadata(context, getKeyId(key)));
+                               () -> resolverFactory.getOutputResolver().getOutputMetadata(context, getKeyId(key)));
   }
 
   /**
@@ -334,7 +334,7 @@ public class MetadataMediator {
     }
 
     return resolveMetadataType(subTypesUnion(attributes.getType(), subTypesMappingContainer, extensionClassLoader),
-        () -> resolverFactory.getOutputAttributesResolver().getAttributesMetadata(context, getKeyId(key)));
+                               () -> resolverFactory.getOutputAttributesResolver().getAttributesMetadata(context, getKeyId(key)));
   }
 
   /**
@@ -414,7 +414,7 @@ public class MetadataMediator {
     StringJoiner messageBuilder = new StringJoiner(" and ");
     failedResults.forEach(failure -> messageBuilder.add(failure.getFailure().get().getMessage()));
     return failure(descriptor, messageBuilder.toString(),
-        failedResults.size() == 1 ? results[0].getFailure().get().getFailureCode() : FailureCode.MULTIPLE, "");
+                   failedResults.size() == 1 ? results[0].getFailure().get().getFailureCode() : FailureCode.MULTIPLE, "");
   }
 
   private interface MetadataDelegate {

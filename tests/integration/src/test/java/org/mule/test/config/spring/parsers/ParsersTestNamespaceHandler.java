@@ -32,8 +32,8 @@ public class ParsersTestNamespaceHandler extends AbstractMuleNamespaceHandler {
     registerMuleBeanDefinitionParser("child", new ChildDefinitionParser("child", ChildBean.class)).addAlias("bar", "foo")
         .addIgnored("ignored").addCollection("offspring");
     registerMuleBeanDefinitionParser("mapped-child",
-        new MapDefinitionParserMutator("map", new ChildDefinitionParser("child", ChildBean.class))).addAlias("bar", "foo")
-            .addIgnored("ignored").addCollection("offspring");
+                                     new MapDefinitionParserMutator("map", new ChildDefinitionParser("child", ChildBean.class)))
+                                         .addAlias("bar", "foo").addIgnored("ignored").addCollection("offspring");
     registerMuleBeanDefinitionParser("kid", new ChildDefinitionParser("kid", ChildBean.class)).addAlias("bar", "foo")
         .addIgnored("ignored");
     registerMuleBeanDefinitionParser("parent", new ParentDefinitionParser()).addAlias("bar", "foo").addIgnored("ignored")
@@ -48,14 +48,17 @@ public class ParsersTestNamespaceHandler extends AbstractMuleNamespaceHandler {
     registerBeanDefinitionParser("list-entry", new ChildListEntryDefinitionParser("list"));
     registerMuleBeanDefinitionParser("named", new NamedDefinitionParser()).addAlias("bar", "foo").addIgnored("ignored");
     registerMuleBeanDefinitionParser("inherit",
-        new InheritDefinitionParser(new OrphanDefinitionParser(OrphanBean.class, true), new NamedDefinitionParser()))
-            .addAlias("bar", "foo").addIgnored("ignored").addCollection("offspring");
+                                     new InheritDefinitionParser(new OrphanDefinitionParser(OrphanBean.class, true),
+                                                                 new NamedDefinitionParser())).addAlias("bar", "foo")
+                                                                     .addIgnored("ignored").addCollection("offspring");
 
     registerBeanDefinitionParser("list-element-test-1", new ChildListEntryDefinitionParser("kids", "listAttribute"));
     registerBeanDefinitionParser("list-element-test-2",
-        new SingleParentFamilyDefinitionParser(new OrphanDefinitionParser(OrphanBean.class, true))
-            .addChildDelegate("kid1", new ChildListEntryDefinitionParser("kids", "kid1")).addChildDelegate("kid2",
-                new ChildListEntryDefinitionParser("kids", "kid2")));
+                                 new SingleParentFamilyDefinitionParser(new OrphanDefinitionParser(OrphanBean.class, true))
+                                     .addChildDelegate("kid1",
+                                                       new ChildListEntryDefinitionParser("kids",
+                                                                                          "kid1"))
+                                     .addChildDelegate("kid2", new ChildListEntryDefinitionParser("kids", "kid2")));
     // simpler list element parser doesn't support dynamic attribute
     // registerBeanDefinitionParser("list-element-test-3", new AllAttributeChildDefinitionParser(new
     // ChildListEntryDefinitionParser("kids")));

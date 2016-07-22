@@ -179,23 +179,23 @@ public class MessagePropertiesTestCase extends AbstractELTestCase {
 
   @Test
   public void outboundClear() throws Exception {
-    event.setMessage(
-        MuleMessage.builder(event.getMessage()).addOutboundProperty("foo", "abc").addOutboundProperty("bar", "xyz").build());
+    event.setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty("foo", "abc").addOutboundProperty("bar", "xyz")
+        .build());
     evaluate("message.outboundProperties.clear()", event);
     assertEquals(0, event.getMessage().getOutboundPropertyNames().size());
   }
 
   @Test
   public void outboundSize() throws Exception {
-    event.setMessage(
-        MuleMessage.builder(event.getMessage()).addOutboundProperty("foo", "abc").addOutboundProperty("bar", "xyz").build());
+    event.setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty("foo", "abc").addOutboundProperty("bar", "xyz")
+        .build());
     assertEquals(2, evaluate("message.outboundProperties.size()", event));
   }
 
   @Test
   public void outboundKeySet() throws Exception {
-    event.setMessage(
-        MuleMessage.builder(event.getMessage()).addOutboundProperty("foo", "abc").addOutboundProperty("bar", "xyz").build());
+    event.setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty("foo", "abc").addOutboundProperty("bar", "xyz")
+        .build());
     assertThat(evaluate("message.outboundProperties.keySet().toArray()[0]", event), anyOf(equalTo("foo"), equalTo("bar")));
     assertThat(evaluate("message.outboundProperties.keySet().toArray()[1]", event), anyOf(equalTo("foo"), equalTo("bar")));
   }
@@ -217,8 +217,8 @@ public class MessagePropertiesTestCase extends AbstractELTestCase {
   @SuppressWarnings("unchecked")
   @Test
   public void outboundEntrySet() throws Exception {
-    event.setMessage(
-        MuleMessage.builder(event.getMessage()).addOutboundProperty("foo", "abc").addOutboundProperty("bar", "xyz").build());
+    event.setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty("foo", "abc").addOutboundProperty("bar", "xyz")
+        .build());
     Set<Map.Entry<String, Object>> entrySet =
         (Set<Entry<String, Object>>) evaluate("message.outboundProperties.entrySet()", event);
     assertEquals(2, entrySet.size());
@@ -229,8 +229,8 @@ public class MessagePropertiesTestCase extends AbstractELTestCase {
   @SuppressWarnings("unchecked")
   @Test
   public void outboundValues() throws Exception {
-    event.setMessage(
-        MuleMessage.builder(event.getMessage()).addOutboundProperty("foo", "abc").addOutboundProperty("bar", "xyz").build());
+    event.setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty("foo", "abc").addOutboundProperty("bar", "xyz")
+        .build());
     Collection<DataHandler> values = (Collection<DataHandler>) evaluate("message.outboundProperties.values()", event);
     assertEquals(2, values.size());
     values.contains("abc");
@@ -240,8 +240,8 @@ public class MessagePropertiesTestCase extends AbstractELTestCase {
   @Test
   public void outboundIsEmpty() throws Exception {
     assertTrue((Boolean) evaluate("message.outboundProperties.isEmpty()", event));
-    event.setMessage(
-        MuleMessage.builder(event.getMessage()).addOutboundProperty("foo", "abc").addOutboundProperty("bar", "xyz").build());
+    event.setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty("foo", "abc").addOutboundProperty("bar", "xyz")
+        .build());
     assertFalse((Boolean) evaluate("message.outboundProperties.isEmpty()", event));
   }
 

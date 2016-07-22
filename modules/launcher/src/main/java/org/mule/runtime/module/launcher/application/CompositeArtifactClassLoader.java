@@ -49,7 +49,7 @@ public class CompositeArtifactClassLoader extends CompositeClassLoader implement
    * @param lookupPolicy policy used to guide the lookup process. Non null
    */
   public CompositeArtifactClassLoader(String artifactName, ClassLoader parent, List<ArtifactClassLoader> artifactClassLoaders,
-      ClassLoaderLookupPolicy lookupPolicy) {
+                                      ClassLoaderLookupPolicy lookupPolicy) {
     super(parent, getClassLoaders(artifactClassLoaders), lookupPolicy);
     this.artifactName = artifactName;
     this.artifactClassLoaders = artifactClassLoaders;

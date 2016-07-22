@@ -14,7 +14,7 @@ class MuleAliasVariableResolver extends MuleVariableResolver<Object> {
   private MVELExpressionLanguageContext context;
 
   public MuleAliasVariableResolver(String name, String expression, MVELExpressionLanguageContext context,
-      ParserConfiguration parserConfiguration) {
+                                   ParserConfiguration parserConfiguration) {
     super(name, null, null, null);
     this.expression = expression;
     this.context = context;

@@ -59,7 +59,7 @@ public class MuleResourceResolverTestCase extends AbstractMuleTestCase {
   @Test
   public void testsExistentClasspathResource() {
     LSInput outcome = resolver.resolveResource(IDENTIFIER_TYPE, IDENTIFIER_NAMESPACE, IDENTIFIER_PUBLIC_ID,
-        EXISTENT_CLASSPATH_ABSOLUTE_RESOURCE, null);
+                                               EXISTENT_CLASSPATH_ABSOLUTE_RESOURCE, null);
     assertThat(outcome, is(not(nullValue())));
     assertThat(outcome.getBaseURI(), is(nullValue()));
     assertCommon(outcome);
@@ -79,7 +79,7 @@ public class MuleResourceResolverTestCase extends AbstractMuleTestCase {
   public void testsNonExistentAbsoluteFileSystemResource() throws IOException {
     String nonExistentAbsoluteFileSystemResource = new File(temporaryFolder.getRoot(), NON_EXISTENT_RESOURCE).getAbsolutePath();
     LSInput outcome = resolver.resolveResource(IDENTIFIER_TYPE, IDENTIFIER_NAMESPACE, IDENTIFIER_PUBLIC_ID,
-        nonExistentAbsoluteFileSystemResource, null);
+                                               nonExistentAbsoluteFileSystemResource, null);
     assertThat(outcome, is(nullValue()));
   }
 
@@ -97,7 +97,7 @@ public class MuleResourceResolverTestCase extends AbstractMuleTestCase {
   public void testsNonExistentFileSystemResourceWithBaseUri() throws IOException {
     File file = temporaryFolder.newFile(UUID.getUUID());
     LSInput outcome = resolver.resolveResource(IDENTIFIER_TYPE, IDENTIFIER_NAMESPACE, IDENTIFIER_PUBLIC_ID, file.getName(),
-        NON_EXISTENT_RESOURCE);
+                                               NON_EXISTENT_RESOURCE);
     assertThat(outcome, is(nullValue()));
   }
 

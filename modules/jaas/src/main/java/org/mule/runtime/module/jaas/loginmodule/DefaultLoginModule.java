@@ -129,8 +129,8 @@ public class DefaultLoginModule implements LoginModule {
     } catch (IOException e) {
       throw new LoginException(e.toString());
     } catch (UnsupportedCallbackException e) {
-      throw new LoginException(
-          "Error: " + e.getCallback().toString() + " not available to garner authentication information " + "from the user");
+      throw new LoginException("Error: " + e.getCallback().toString() + " not available to garner authentication information "
+          + "from the user");
     }
 
     username = nameCb.getName();

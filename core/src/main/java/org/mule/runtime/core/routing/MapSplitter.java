@@ -38,8 +38,8 @@ public class MapSplitter extends AbstractSplitter {
       }
       return list;
     } else {
-      throw new IllegalArgumentException(
-          CoreMessages.objectNotOfCorrectType(message.getDataType().getType(), Map.class).getMessage());
+      throw new IllegalArgumentException(CoreMessages.objectNotOfCorrectType(message.getDataType().getType(), Map.class)
+          .getMessage());
     }
   }
 }

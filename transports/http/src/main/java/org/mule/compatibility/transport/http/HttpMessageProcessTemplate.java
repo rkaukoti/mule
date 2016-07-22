@@ -156,7 +156,7 @@ public class HttpMessageProcessTemplate extends AbstractTransportMessageProcessT
     MuleEvent response = messagingException.getEvent();
     MessagingException e = getExceptionForCreatingFailureResponse(messagingException, response);
     String temp = ExceptionHelper.getErrorMapping(getInboundEndpoint().getConnector().getProtocol(),
-        messagingException.getClass(), getMuleContext());
+                                                  messagingException.getClass(), getMuleContext());
     int httpStatus = Integer.valueOf(temp);
     try {
       sendFailureResponseToClient(e, httpStatus);
@@ -398,9 +398,9 @@ public class HttpMessageProcessTemplate extends AbstractTransportMessageProcessT
 
   @Override
   public void setThrottlingPolicyStatistics(long remainingRequestInCurrentPeriod, long maximumRequestAllowedPerPeriod,
-      long timeUntilNextPeriodInMillis) {
+                                            long timeUntilNextPeriodInMillis) {
     httpThrottlingHeadersMapBuilder.setThrottlingPolicyStatistics(remainingRequestInCurrentPeriod, maximumRequestAllowedPerPeriod,
-        timeUntilNextPeriodInMillis);
+                                                                  timeUntilNextPeriodInMillis);
   }
 
   private void sendFailureResponseToClient(int httpStatus, String message) throws IOException {

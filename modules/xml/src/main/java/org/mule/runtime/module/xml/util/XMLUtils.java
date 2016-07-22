@@ -241,7 +241,8 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils {
    * @return null if no XMLStreamReader can be created for the object type
    */
   public static javax.xml.stream.XMLStreamReader toXMLStreamReader(javax.xml.stream.XMLInputFactory factory, MuleEvent event,
-      Object obj) throws XMLStreamException {
+                                                                   Object obj)
+      throws XMLStreamException {
     if (obj instanceof javax.xml.stream.XMLStreamReader) {
       return (javax.xml.stream.XMLStreamReader) obj;
     } else if (obj instanceof org.mule.runtime.module.xml.stax.StaxSource) {
@@ -303,7 +304,8 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils {
    * Convert our object to a Source type efficiently.
    */
   public static javax.xml.transform.Source toXmlSource(javax.xml.stream.XMLInputFactory xmlInputFactory, boolean useStaxSource,
-      Object src) throws Exception {
+                                                       Object src)
+      throws Exception {
     if (src instanceof javax.xml.transform.Source) {
       return (Source) src;
     } else if (src instanceof byte[]) {
@@ -345,7 +347,8 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils {
   }
 
   public static javax.xml.transform.Source toStreamSource(javax.xml.stream.XMLInputFactory xmlInputFactory, boolean useStaxSource,
-      InputStream stream) throws XMLStreamException {
+                                                          InputStream stream)
+      throws XMLStreamException {
     if (useStaxSource) {
       return new org.mule.runtime.module.xml.stax.StaxSource(xmlInputFactory.createXMLStreamReader(stream));
     } else {
@@ -514,7 +517,7 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils {
         writer.writeAttribute(reader.getAttributeNamespace(i), reader.getAttributeLocalName(i), reader.getAttributeValue(i));
       } else {
         writer.writeAttribute(reader.getAttributePrefix(i), reader.getAttributeNamespace(i), reader.getAttributeLocalName(i),
-            reader.getAttributeValue(i));
+                              reader.getAttributeValue(i));
       }
 
     }

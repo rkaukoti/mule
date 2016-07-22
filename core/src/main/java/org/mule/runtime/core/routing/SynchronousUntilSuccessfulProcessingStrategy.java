@@ -74,19 +74,18 @@ public class SynchronousUntilSuccessfulProcessingStrategy extends AbstractUntilS
   @Override
   public void initialise() throws InitialisationException {
     if (getUntilSuccessfulConfiguration().getThreadingProfile() != null) {
-      throw new InitialisationException(CoreMessages.createStaticMessage(
-          "Until successful cannot be configured to be synchronous and have a threading profile at the same time"), this);
+      throw new InitialisationException(CoreMessages
+          .createStaticMessage("Until successful cannot be configured to be synchronous and have a threading profile at the same time"),
+                                        this);
     }
     if (getUntilSuccessfulConfiguration().getObjectStore() != null) {
-      throw new InitialisationException(
-          CoreMessages.createStaticMessage("Until successful cannot be configured to be synchronous and use an object store."),
-          this);
+      throw new InitialisationException(CoreMessages
+          .createStaticMessage("Until successful cannot be configured to be synchronous and use an object store."), this);
     }
     if (getUntilSuccessfulConfiguration().getDlqMP() != null) {
-      throw new InitialisationException(
-          CoreMessages.createStaticMessage(
-              "Until successful cannot be configured to be synchronous and use a dead letter queue. Failure must be processed with exception strategy"),
-          this);
+      throw new InitialisationException(CoreMessages
+          .createStaticMessage("Until successful cannot be configured to be synchronous and use a dead letter queue. Failure must be processed with exception strategy"),
+                                        this);
     }
   }
 

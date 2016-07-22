@@ -63,9 +63,9 @@ public final class DefaultDescribingContext implements DescribingContext {
     }
 
     if (!expectedType.isInstance(parameter)) {
-      throw new IllegalArgumentException(
-          String.format("Custom parameter '%s' was expected to be of class '%s' but got '%s' instead", key,
-              expectedType.getName(), parameter.getClass().getName()));
+      throw new IllegalArgumentException(String.format(
+                                                       "Custom parameter '%s' was expected to be of class '%s' but got '%s' instead",
+                                                       key, expectedType.getName(), parameter.getClass().getName()));
     }
 
     return (T) parameter;

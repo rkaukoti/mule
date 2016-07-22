@@ -39,7 +39,7 @@ public class PooledJavaComponent extends AbstractJavaComponent {
   }
 
   public PooledJavaComponent(ObjectFactory objectFactory, PoolingProfile poolingProfile,
-      EntryPointResolverSet entryPointResolverSet) {
+                             EntryPointResolverSet entryPointResolverSet) {
     super(objectFactory, entryPointResolverSet);
     this.poolingProfile = poolingProfile;
   }

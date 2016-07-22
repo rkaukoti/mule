@@ -26,7 +26,7 @@ public class TransactionAwareQueueStore implements Queue {
   protected transient Logger logger = LoggerFactory.getLogger(getClass());
 
   public TransactionAwareQueueStore(QueueStore queue, TransactionContextProvider transactionContextProvider,
-      MuleContext muleContext) {
+                                    MuleContext muleContext) {
     this.queue = queue;
     this.transactionContextProvider = transactionContextProvider;
     this.muleContext = muleContext;

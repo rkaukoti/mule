@@ -84,8 +84,8 @@ public final class DefaultJsonParser implements JsonParser {
     JsonNode jsonNode = toJsonNode(input);
     if (jsonNode == null) {
       LOGGER.debug(
-          "Input type {} was not of any supported type. Attempting with transformer resolution of the following types {}",
-          input.getClass().getName(), TRANSFORMABLE_SUPPORTED_TYPES_AS_STRING);
+                   "Input type {} was not of any supported type. Attempting with transformer resolution of the following types {}",
+                   input.getClass().getName(), TRANSFORMABLE_SUPPORTED_TYPES_AS_STRING);
 
       input = TransformerUtils.transformToAny(input, muleContext, TRANSFORMABLE_SUPPORTED_TYPES);
       jsonNode = asJsonNode(input);

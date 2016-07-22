@@ -111,7 +111,7 @@ public class AggregatorTestCase extends AbstractMuleContextTestCase {
           }
 
           return new DefaultMuleEvent(MuleMessage.builder().payload(newPayload.toString()).build(),
-              events.getMessageCollectionEvent());
+                                      events.getMessageCollectionEvent());
         }
       };
     }

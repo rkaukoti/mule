@@ -56,7 +56,8 @@ public class ClassPathClassifierContext {
    *         {@link org.mule.functional.classloading.isolation.utils.RunnerModuleUtils#EXCLUDED_PROPERTIES_FILE} file
    */
   public ClassPathClassifierContext(final Class<?> testClass, final List<URL> classPathURLs,
-      final DependenciesGraph dependenciesGraph, final MavenMultiModuleArtifactMapping mavenMultiModuleArtifactMapping)
+                                    final DependenciesGraph dependenciesGraph,
+                                    final MavenMultiModuleArtifactMapping mavenMultiModuleArtifactMapping)
       throws IOException {
     this.testClass = testClass;
     this.classPathURLs = classPathURLs;

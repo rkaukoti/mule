@@ -68,8 +68,8 @@ public class MessageEnricherTestCase extends AbstractMuleContextTestCase {
   public void testEnrichHeaderWithHeader() throws Exception {
     MessageEnricher enricher = new MessageEnricher();
     enricher.setMuleContext(muleContext);
-    enricher.addEnrichExpressionPair(
-        new EnrichExpressionPair("#[message.outboundProperties.header1]", "#[message.outboundProperties.myHeader]"));
+    enricher.addEnrichExpressionPair(new EnrichExpressionPair("#[message.outboundProperties.header1]",
+                                                              "#[message.outboundProperties.myHeader]"));
     enricher.setEnrichmentMessageProcessor(event -> {
       event.setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty("header1", "test").build());
       return event;
@@ -84,12 +84,12 @@ public class MessageEnricherTestCase extends AbstractMuleContextTestCase {
   public void testEnrichHeadersMToN() throws Exception {
     MessageEnricher enricher = new MessageEnricher();
     enricher.setMuleContext(muleContext);
-    enricher.addEnrichExpressionPair(
-        new EnrichExpressionPair("#[message.outboundProperties.header1]", "#[message.outboundProperties.myHeader1]"));
-    enricher.addEnrichExpressionPair(
-        new EnrichExpressionPair("#[message.outboundProperties.header2]", "#[message.outboundProperties.myHeader2]"));
-    enricher.addEnrichExpressionPair(
-        new EnrichExpressionPair("#[message.outboundProperties.header3]", "#[message.outboundProperties.myHeader3]"));
+    enricher.addEnrichExpressionPair(new EnrichExpressionPair("#[message.outboundProperties.header1]",
+                                                              "#[message.outboundProperties.myHeader1]"));
+    enricher.addEnrichExpressionPair(new EnrichExpressionPair("#[message.outboundProperties.header2]",
+                                                              "#[message.outboundProperties.myHeader2]"));
+    enricher.addEnrichExpressionPair(new EnrichExpressionPair("#[message.outboundProperties.header3]",
+                                                              "#[message.outboundProperties.myHeader3]"));
     enricher.setEnrichmentMessageProcessor(event -> {
       event.setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty("header1", "test")
           .addOutboundProperty("header2", "test2").addOutboundProperty("header3", "test3").build());
@@ -360,7 +360,7 @@ public class MessageEnricherTestCase extends AbstractMuleContextTestCase {
     when(flow.getMuleContext()).thenReturn(muleContext);
 
     return new DefaultMuleEvent(MuleMessage.builder().payload(TEST_MESSAGE).build(), MessageExchangePattern.REQUEST_RESPONSE,
-        nullReplyToHandler, flow);
+                                nullReplyToHandler, flow);
   }
 
   private MessageEnricher createNonBlockingEnricher(SensingNullMessageProcessor sensingNullMessageProcessor) {

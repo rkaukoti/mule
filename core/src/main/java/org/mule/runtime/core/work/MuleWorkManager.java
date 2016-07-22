@@ -98,11 +98,11 @@ public class MuleWorkManager implements WorkManager, MuleContextAware {
           // Wait a while for tasks to respond to being cancelled
           if (!workExecutorService.awaitTermination(FORCEFUL_SHUTDOWN_TIMEOUT, TimeUnit.MILLISECONDS)) {
             logger.warn(MessageFormat.format("Pool {0} did not terminate in time; {1} work items were cancelled.", name,
-                outstanding.isEmpty() ? "No" : Integer.toString(outstanding.size())));
+                                             outstanding.isEmpty() ? "No" : Integer.toString(outstanding.size())));
           } else {
             if (!outstanding.isEmpty()) {
               logger.warn(MessageFormat.format("Pool {0} terminated; {1} work items were cancelled.", name,
-                  Integer.toString(outstanding.size())));
+                                               Integer.toString(outstanding.size())));
             }
           }
         }

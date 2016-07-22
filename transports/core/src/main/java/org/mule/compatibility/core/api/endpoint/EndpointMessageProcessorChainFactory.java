@@ -15,7 +15,8 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 public interface EndpointMessageProcessorChainFactory {
 
   public MessageProcessor createInboundMessageProcessorChain(InboundEndpoint endpoint, FlowConstruct flowConstruct,
-      MessageProcessor target) throws MuleException;
+                                                             MessageProcessor target)
+      throws MuleException;
 
   public MessageProcessor createOutboundMessageProcessorChain(OutboundEndpoint endpoint, MessageProcessor target)
       throws MuleException;

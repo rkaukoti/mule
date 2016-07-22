@@ -55,7 +55,7 @@ class MuleLoggerContext extends LoggerContext implements LogConfigChangeSubject 
   }
 
   MuleLoggerContext(String name, URI configLocn, ClassLoader ownerClassLoader, ContextSelector contextSelector,
-      boolean standalone) {
+                    boolean standalone) {
     super(name, null, configLocn);
     configFile = configLocn;
     this.contextSelector = contextSelector;
@@ -115,7 +115,7 @@ class MuleLoggerContext extends LoggerContext implements LogConfigChangeSubject 
   protected Logger newInstance(LoggerContext ctx, final String name, final MessageFactory messageFactory) {
 
     return new DispatchingLogger(super.newInstance(ctx, name, messageFactory), ownerClassLoaderHash, this, contextSelector,
-        messageFactory) {
+                                 messageFactory) {
 
       // force the name due to log4j2's cyclic constructor dependencies
       // aren't a friend of the wrapper pattern

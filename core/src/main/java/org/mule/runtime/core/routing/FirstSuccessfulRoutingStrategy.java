@@ -67,12 +67,12 @@ public class FirstSuccessfulRoutingStrategy extends AbstractRoutingStrategy {
 
     if (failed) {
       if (failExceptionCause != null) {
-        throw new RoutingFailedMessagingException(
-            CoreMessages.createStaticMessage("all message processor failed during first successful routing strategy"), event,
-            failExceptionCause);
+        throw new RoutingFailedMessagingException(CoreMessages
+            .createStaticMessage("all message processor failed during first successful routing strategy"), event,
+                                                  failExceptionCause);
       } else {
-        throw new RoutingFailedMessagingException(
-            CoreMessages.createStaticMessage("all message processor failed during first successful routing strategy"), event);
+        throw new RoutingFailedMessagingException(CoreMessages
+            .createStaticMessage("all message processor failed during first successful routing strategy"), event);
       }
     }
 

@@ -37,9 +37,9 @@ public class TransformerResolutionTestCase extends AbstractMuleContextTestCase {
 
     try {
       Transformer transformer = muleContext.getRegistry().lookupTransformer(DataType.STRING, FRUIT_DATA_TYPE);
-      assertTrue(
-          String.format("Expected a %s transformer but got %s", StringToFruit.class.getName(), transformer.getClass().getName()),
-          transformer instanceof StringToFruit);
+      assertTrue(String.format("Expected a %s transformer but got %s", StringToFruit.class.getName(),
+                               transformer.getClass().getName()),
+                 transformer instanceof StringToFruit);
     } catch (TransformerException e) {
       fail("Unable to properly resolve transformer");
     }

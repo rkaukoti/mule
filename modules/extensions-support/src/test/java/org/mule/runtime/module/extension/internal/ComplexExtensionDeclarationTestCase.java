@@ -124,7 +124,7 @@ public class ComplexExtensionDeclarationTestCase extends BaseExtensionDeclaratio
         extensionModel.getConfigurationModel(REQUESTER_CONFIG_NAME).get().getConnectionProviders().get(0);
     assertThat(provider.getName(), is(REQUESTER_PROVIDER));
     assertThat(((RuntimeConnectionProviderModel) provider).getConnectionType(),
-        equalTo(REQUESTER_CONNECTION_PROVIDER_CONNECTION_TYPE));
+               equalTo(REQUESTER_CONNECTION_PROVIDER_CONNECTION_TYPE));
   }
 
   @Override

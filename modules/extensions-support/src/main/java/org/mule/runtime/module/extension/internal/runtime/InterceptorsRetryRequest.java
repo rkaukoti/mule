@@ -50,9 +50,8 @@ final class InterceptorsRetryRequest implements RetryRequest {
   @Override
   public void request() {
     if (!history.add(owner)) {
-      throw new IllegalStateException(
-          "A Interceptor requested to retry the same failed operation twice but only one retry is allowed "
-              + "per execution. Interceptor is " + owner);
+      throw new IllegalStateException("A Interceptor requested to retry the same failed operation twice but only one retry is allowed "
+          + "per execution. Interceptor is " + owner);
     }
     requested = true;
   }

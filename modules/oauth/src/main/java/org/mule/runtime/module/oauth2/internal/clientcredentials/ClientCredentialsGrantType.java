@@ -97,8 +97,8 @@ public class ClientCredentialsGrantType extends AbstractGrantType implements Ini
     final String accessToken = tokenManager.getConfigOAuthContext()
         .getContextForResourceOwner(ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID).getAccessToken();
     if (accessToken == null) {
-      throw new RequestAuthenticationException(createStaticMessage(String.format(
-          "No access token found. Verify that you have authenticated before trying to execute an operation to the API.")));
+      throw new RequestAuthenticationException(createStaticMessage(String
+          .format("No access token found. Verify that you have authenticated before trying to execute an operation to the API.")));
     }
     builder.addHeader(HttpHeaders.Names.AUTHORIZATION, buildAuthorizationHeaderContent(accessToken));
   }
@@ -107,8 +107,8 @@ public class ClientCredentialsGrantType extends AbstractGrantType implements Ini
   public boolean shouldRetry(final MuleEvent firstAttemptResponseEvent) {
     final Object value = muleContext.getExpressionManager().evaluate(getRefreshTokenWhen(), firstAttemptResponseEvent);
     if (!(value instanceof Boolean)) {
-      throw new MuleRuntimeException(
-          createStaticMessage("Expression %s should return a boolean but return %s", getRefreshTokenWhen(), value));
+      throw new MuleRuntimeException(createStaticMessage("Expression %s should return a boolean but return %s",
+                                                         getRefreshTokenWhen(), value));
     }
     final Boolean shouldRetryRequest = (Boolean) value;
     if (shouldRetryRequest) {

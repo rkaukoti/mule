@@ -119,12 +119,12 @@ public class DefaultHttpListenerConfig extends AbstractAnnotatedObject
           + "If you defined a tls:context element in your listener-config then you must set protocol=\"HTTPS\""), this);
     }
     if (protocol.equals(HTTPS) && tlsContext == null) {
-      throw new InitialisationException(
-          CoreMessages.createStaticMessage("Configured protocol is HTTPS but there's no TlsContext configured"), this);
+      throw new InitialisationException(CoreMessages
+          .createStaticMessage("Configured protocol is HTTPS but there's no TlsContext configured"), this);
     }
     if (tlsContext != null && !tlsContext.isKeyStoreConfigured()) {
       throw new InitialisationException(CoreMessages.createStaticMessage("KeyStore must be configured for server side SSL"),
-          this);
+                                        this);
     }
 
     verifyConnectionsParameters();
@@ -140,11 +140,11 @@ public class DefaultHttpListenerConfig extends AbstractAnnotatedObject
 
     if (tlsContext == null) {
       server = connectionManager.createServer(serverAddress, createWorkManagerSource(), usePersistentConnections,
-          connectionIdleTimeout);
+                                              connectionIdleTimeout);
     } else {
       LifecycleUtils.initialiseIfNeeded(tlsContext);
       server = connectionManager.createSslServer(serverAddress, createWorkManagerSource(), tlsContext, usePersistentConnections,
-          connectionIdleTimeout);
+                                                 connectionIdleTimeout);
     }
     initialised = true;
   }
@@ -171,7 +171,7 @@ public class DefaultHttpListenerConfig extends AbstractAnnotatedObject
   private WorkManager createWorkManager() {
     final WorkManager workManager =
         workerThreadingProfile.createWorkManager(format("%s%s.%s", ThreadNameHelper.getPrefix(muleContext), name, "worker"),
-            muleContext.getConfiguration().getShutdownTimeout());
+                                                 muleContext.getConfiguration().getShutdownTimeout());
     if (workManager instanceof MuleContextAware) {
       ((MuleContextAware) workManager).setMuleContext(muleContext);
     }

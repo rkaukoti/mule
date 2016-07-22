@@ -49,7 +49,7 @@ public class FileContainsInLine extends TypeSafeMatcher<File> {
       }
     } catch (IOException e) {
       fail(String.format("Exception %s caught while reading the file %s trying to match its line with the matcher %s",
-          e.getMessage(), file.getAbsolutePath(), stringMatcher.toString()));
+                         e.getMessage(), file.getAbsolutePath(), stringMatcher.toString()));
       return false;
     }
     return false;

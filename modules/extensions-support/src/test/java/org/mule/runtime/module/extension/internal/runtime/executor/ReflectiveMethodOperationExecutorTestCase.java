@@ -153,7 +153,7 @@ public class ReflectiveMethodOperationExecutorTestCase extends AbstractMuleTestC
         {"floatOperation", float.class}, {"doubleOperation", double.class}, {"booleanOperation", boolean.class}};
     for (Object[] primitiveOperation : primitiveOperations) {
       Method method = ClassUtils.getMethod(PrimitiveTypesTestOperations.class, (String) primitiveOperation[0],
-          new Class<?>[] {(Class<?>) primitiveOperation[1]});
+                                           new Class<?>[] {(Class<?>) primitiveOperation[1]});
       executor = new ReflectiveMethodOperationExecutor(method, primitiveTypesTestOperations);
       executor.execute(operationContext);
     }
@@ -223,13 +223,13 @@ public class ReflectiveMethodOperationExecutorTestCase extends AbstractMuleTestC
     }
 
     public void allCombined(@org.mule.runtime.extension.api.annotation.param.Optional char charValue,
-        @org.mule.runtime.extension.api.annotation.param.Optional byte byteValue,
-        @org.mule.runtime.extension.api.annotation.param.Optional short shortValue,
-        @org.mule.runtime.extension.api.annotation.param.Optional int intValue,
-        @org.mule.runtime.extension.api.annotation.param.Optional long longValue,
-        @org.mule.runtime.extension.api.annotation.param.Optional float floatValue,
-        @org.mule.runtime.extension.api.annotation.param.Optional double doubleValue,
-        @org.mule.runtime.extension.api.annotation.param.Optional boolean booleanValue) {
+                            @org.mule.runtime.extension.api.annotation.param.Optional byte byteValue,
+                            @org.mule.runtime.extension.api.annotation.param.Optional short shortValue,
+                            @org.mule.runtime.extension.api.annotation.param.Optional int intValue,
+                            @org.mule.runtime.extension.api.annotation.param.Optional long longValue,
+                            @org.mule.runtime.extension.api.annotation.param.Optional float floatValue,
+                            @org.mule.runtime.extension.api.annotation.param.Optional double doubleValue,
+                            @org.mule.runtime.extension.api.annotation.param.Optional boolean booleanValue) {
       assertThat(charValue, is(this.charValue));
       assertThat(byteValue, is(this.byteValue));
       assertThat(shortValue, is(this.shortValue));

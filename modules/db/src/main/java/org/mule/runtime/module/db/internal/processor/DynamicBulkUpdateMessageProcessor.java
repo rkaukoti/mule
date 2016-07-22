@@ -42,8 +42,8 @@ import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.cre
 public class DynamicBulkUpdateMessageProcessor extends AbstractBulkUpdateMessageProcessor {
 
   public DynamicBulkUpdateMessageProcessor(DbConfigResolver dbConfigResolver, QueryResolver queryResolver,
-      BulkQueryExecutorFactory bulkUpdateExecutorFactory, TransactionalAction transactionalAction,
-      List<QueryType> validQueryTypes) {
+                                           BulkQueryExecutorFactory bulkUpdateExecutorFactory,
+                                           TransactionalAction transactionalAction, List<QueryType> validQueryTypes) {
     super(dbConfigResolver, transactionalAction, validQueryTypes, queryResolver, bulkUpdateExecutorFactory);
   }
 

@@ -32,7 +32,7 @@ public class OperationMessageProcessorObjectFactory extends AbstractExtensionObj
   private String target = EMPTY;
 
   public OperationMessageProcessorObjectFactory(RuntimeExtensionModel extensionModel, RuntimeOperationModel operationModel,
-      MuleContext muleContext) {
+                                                MuleContext muleContext) {
     this.extensionModel = extensionModel;
     this.operationModel = operationModel;
     this.muleContext = muleContext;
@@ -43,8 +43,9 @@ public class OperationMessageProcessorObjectFactory extends AbstractExtensionObj
     return withContextClassLoader(getClassLoader(extensionModel), () -> {
       try {
         ResolverSet resolverSet = getParametersAsResolverSet();
-        OperationMessageProcessor processor = new OperationMessageProcessor(extensionModel, operationModel,
-            configurationProviderName, target, resolverSet, (ExtensionManagerAdapter) muleContext.getExtensionManager());
+        OperationMessageProcessor processor =
+            new OperationMessageProcessor(extensionModel, operationModel, configurationProviderName, target, resolverSet,
+                                          (ExtensionManagerAdapter) muleContext.getExtensionManager());
 
         // TODO: MULE-5002 this should not be necessary but lifecycle issues when injecting message processors automatically
         muleContext.getInjector().inject(processor);

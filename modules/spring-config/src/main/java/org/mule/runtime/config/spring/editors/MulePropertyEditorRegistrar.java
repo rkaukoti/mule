@@ -40,8 +40,8 @@ public class MulePropertyEditorRegistrar implements PropertyEditorRegistrar, Mul
   @Override
   public void registerCustomEditors(PropertyEditorRegistry registry) {
     registry.registerCustomEditor(MessageExchangePattern.class, new MessageExchangePatternPropertyEditor());
-    registry.registerCustomEditor(Date.class,
-        new DatePropertyEditor(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"), new SimpleDateFormat("yyyy-MM-dd"), true));
+    registry.registerCustomEditor(Date.class, new DatePropertyEditor(new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"),
+                                                                     new SimpleDateFormat("yyyy-MM-dd"), true));
     registry.registerCustomEditor(ProcessingStrategy.class, new ProcessingStrategyEditor());
 
     if (customPropertyEditorsCache == null) {

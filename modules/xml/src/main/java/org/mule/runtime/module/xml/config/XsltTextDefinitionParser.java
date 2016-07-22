@@ -55,7 +55,7 @@ public class XsltTextDefinitionParser extends ChildDefinitionParser {
       }
       if (null != stylesheet) {
         assertArgument(STYLESHEET.equals(stylesheet.getLocalName()),
-            "XSLT transformer child element must be named " + STYLESHEET);
+                       "XSLT transformer child element must be named " + STYLESHEET);
         assembler.extendTarget("xslt", domToString(stylesheet), false);
         // block processing by Spring
         element.removeChild(stylesheet);

@@ -52,7 +52,8 @@ public class SpringRegistryBootstrap extends AbstractRegistryBootstrap implement
    * @param beanDefinitionRegistry the spring bean definition registry where the bean definitions gets stored
    */
   public SpringRegistryBootstrap(ArtifactType artifactType, MuleContext muleContext,
-      OptionalObjectsController optionalObjectsController, BeanDefinitionRegistry beanDefinitionRegistry) {
+                                 OptionalObjectsController optionalObjectsController,
+                                 BeanDefinitionRegistry beanDefinitionRegistry) {
     super(artifactType, muleContext);
     this.optionalObjectsController = optionalObjectsController;
     this.beanDefinitionRegistry = beanDefinitionRegistry;
@@ -75,7 +76,8 @@ public class SpringRegistryBootstrap extends AbstractRegistryBootstrap implement
 
   @Override
   protected void doRegisterTransformer(TransformerBootstrapProperty bootstrapProperty, Class<?> returnClass,
-      Class<? extends Transformer> transformerClass) throws Exception {
+                                       Class<? extends Transformer> transformerClass)
+      throws Exception {
     BeanDefinitionBuilder builder = BeanDefinitionBuilder.rootBeanDefinition(transformerClass);
 
     DataType returnType = null;

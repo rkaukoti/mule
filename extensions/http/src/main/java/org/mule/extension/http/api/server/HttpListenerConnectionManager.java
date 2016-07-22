@@ -64,9 +64,8 @@ public class HttpListenerConnectionManager implements HttpServerFactory, Initial
     if (tcpServerSocketPropertiesBeans.size() == 1) {
       tcpServerSocketProperties = Iterables.getOnlyElement(tcpServerSocketPropertiesBeans);
     } else if (tcpServerSocketPropertiesBeans.size() > 1) {
-      throw new InitialisationException(
-          CoreMessages.createStaticMessage("Only one global TCP server socket properties bean should be defined in the config"),
-          this);
+      throw new InitialisationException(CoreMessages
+          .createStaticMessage("Only one global TCP server socket properties bean should be defined in the config"), this);
     }
 
     String threadNamePrefix = ThreadNameHelper.getPrefix(muleContext) + LISTENER_THREAD_NAME_PREFIX;
@@ -101,19 +100,19 @@ public class HttpListenerConnectionManager implements HttpServerFactory, Initial
     TlsContextFactory tlsContextFactory = serverConfiguration.getTlsContextFactory();
     if (tlsContextFactory == null) {
       return createServer(serverAddress, serverConfiguration.getWorkManagerSource(),
-          serverConfiguration.isUsePersistentConnections(), serverConfiguration.getConnectionIdleTimeout());
+                          serverConfiguration.isUsePersistentConnections(), serverConfiguration.getConnectionIdleTimeout());
     } else {
       return createSslServer(serverAddress, serverConfiguration.getWorkManagerSource(), tlsContextFactory,
-          serverConfiguration.isUsePersistentConnections(), serverConfiguration.getConnectionIdleTimeout());
+                             serverConfiguration.isUsePersistentConnections(), serverConfiguration.getConnectionIdleTimeout());
     }
   }
 
   public Server createServer(ServerAddress serverAddress, WorkManagerSource workManagerSource, boolean usePersistentConnections,
-      int connectionIdleTimeout) {
+                             int connectionIdleTimeout) {
     if (!containsServerFor(serverAddress)) {
       try {
         return httpServerManager.createServerFor(serverAddress, workManagerSource, usePersistentConnections,
-            connectionIdleTimeout);
+                                                 connectionIdleTimeout);
       } catch (IOException e) {
         throw new MuleRuntimeException(e);
       }
@@ -128,11 +127,11 @@ public class HttpListenerConnectionManager implements HttpServerFactory, Initial
   }
 
   public Server createSslServer(ServerAddress serverAddress, WorkManagerSource workManagerSource, TlsContextFactory tlsContext,
-      boolean usePersistentConnections, int connectionIdleTimeout) {
+                                boolean usePersistentConnections, int connectionIdleTimeout) {
     if (!containsServerFor(serverAddress)) {
       try {
         return httpServerManager.createSslServerFor(tlsContext, workManagerSource, serverAddress, usePersistentConnections,
-            connectionIdleTimeout);
+                                                    connectionIdleTimeout);
       } catch (IOException e) {
         throw new MuleRuntimeException(e);
       }

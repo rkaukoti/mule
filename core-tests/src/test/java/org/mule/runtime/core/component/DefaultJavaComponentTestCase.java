@@ -54,7 +54,7 @@ public class DefaultJavaComponentTestCase extends AbstractComponentTestCase {
     component.start();
 
     assertNotSame(((DefaultComponentLifecycleAdapter) component.borrowComponentLifecycleAdaptor()).componentObject,
-        ((DefaultComponentLifecycleAdapter) component.borrowComponentLifecycleAdaptor()).componentObject);
+                  ((DefaultComponentLifecycleAdapter) component.borrowComponentLifecycleAdaptor()).componentObject);
 
   }
 

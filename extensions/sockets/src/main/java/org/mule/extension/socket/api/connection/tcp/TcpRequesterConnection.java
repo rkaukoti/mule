@@ -33,7 +33,8 @@ public class TcpRequesterConnection extends AbstractTcpConnection implements Req
   private Socket socket;
 
   public TcpRequesterConnection(ConnectionSettings connectionSettings, ConnectionSettings localAddressSettings,
-      TcpProtocol protocol, TcpClientSocketProperties socketProperties, SimpleSocketFactory socketFactory)
+                                TcpProtocol protocol, TcpClientSocketProperties socketProperties,
+                                SimpleSocketFactory socketFactory)
       throws ConnectionException {
     super(connectionSettings, protocol);
     this.socketProperties = socketProperties;
@@ -68,10 +69,11 @@ public class TcpRequesterConnection extends AbstractTcpConnection implements Req
       configureConnection(socket, socketProperties);
       socket.bind(localAddressSettings.getInetSocketAddress());
       socket.connect(getSocketAddress(connectionSettings, socketProperties.getFailOnUnresolvedHost()),
-          socketProperties.getConnectionTimeout());
+                     socketProperties.getConnectionTimeout());
     } catch (Exception e) {
       throw new ConnectionException(format("Could not connect TCP requester socket to host '%s' on port '%d'",
-          connectionSettings.getHost(), connectionSettings.getPort()), e);
+                                           connectionSettings.getHost(), connectionSettings.getPort()),
+                                    e);
     }
 
   }

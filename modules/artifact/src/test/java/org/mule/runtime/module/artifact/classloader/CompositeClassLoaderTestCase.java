@@ -105,9 +105,12 @@ public class CompositeClassLoaderTestCase extends AbstractMuleTestCase {
     expected.expect(CompositeClassNotFoundException.class);
     expected.expectMessage(startsWith("Cannot load class '" + CLASS_NAME + "': ["));
     expected.expect(expressionMatches((e) -> ((CompositeClassNotFoundException) e).getExceptions(),
-        contains(expressionMatches((e) -> ((TestClassNotFoundException) e).getClassLoader(), is((ClassLoader) parentClassLoader)),
-            expressionMatches((e) -> ((TestClassNotFoundException) e).getClassLoader(), is((ClassLoader) classLoader1)),
-            expressionMatches((e) -> ((TestClassNotFoundException) e).getClassLoader(), is((ClassLoader) classLoader2)))));
+                                      contains(expressionMatches((e) -> ((TestClassNotFoundException) e).getClassLoader(),
+                                                                 is((ClassLoader) parentClassLoader)),
+                                               expressionMatches((e) -> ((TestClassNotFoundException) e).getClassLoader(),
+                                                                 is((ClassLoader) classLoader1)),
+                                               expressionMatches((e) -> ((TestClassNotFoundException) e).getClassLoader(),
+                                                                 is((ClassLoader) classLoader2)))));
 
     final ClassLoaderLookupPolicy lookupPolicy = mock(ClassLoaderLookupPolicy.class);
     when(lookupPolicy.getLookupStrategy(CLASS_NAME)).thenReturn(PARENT_FIRST);

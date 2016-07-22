@@ -25,7 +25,7 @@ class CreateBeanDefinitionRequest {
    * @param componentBuildingDefinition the definition to build the domain object that will represent the configuration on runtime
    */
   public CreateBeanDefinitionRequest(ComponentModel parentComponentModel, ComponentModel componentModel,
-      ComponentBuildingDefinition componentBuildingDefinition) {
+                                     ComponentBuildingDefinition componentBuildingDefinition) {
     this.parentComponentModel = parentComponentModel;
     this.componentModel = componentModel;
     this.componentBuildingDefinition = componentBuildingDefinition;

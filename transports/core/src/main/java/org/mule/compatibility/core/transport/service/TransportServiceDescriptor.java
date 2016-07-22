@@ -45,7 +45,8 @@ public interface TransportServiceDescriptor extends ServiceDescriptor, MuleConte
       throws MuleException;
 
   MessageReceiver createMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint,
-      Object... args) throws MuleException;
+                                        Object... args)
+      throws MuleException;
 
   MessageDispatcherFactory createDispatcherFactory() throws TransportServiceException;
 

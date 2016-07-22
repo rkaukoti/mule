@@ -119,8 +119,9 @@ public class MVELExpressionLanguage implements ExpressionLanguage, Initialisable
     // Global functions defined in external file
     if (globalFunctionsFile != null) {
       try {
-        globalFunctions.putAll(CompilerTools.extractAllDeclaredFunctions(
-            new ExpressionCompiler(IOUtils.getResourceAsString(globalFunctionsFile, getClass())).compile()));
+        globalFunctions.putAll(CompilerTools
+            .extractAllDeclaredFunctions(new ExpressionCompiler(IOUtils.getResourceAsString(globalFunctionsFile, getClass()))
+                .compile()));
       } catch (IOException e) {
         throw new InitialisationException(CoreMessages.failedToLoad(globalFunctionsFile), e, this);
       }
@@ -141,8 +142,8 @@ public class MVELExpressionLanguage implements ExpressionLanguage, Initialisable
   public <T> T evaluate(String expression, Map<String, Object> vars) {
     MVELExpressionLanguageContext context = createExpressionLanguageContext();
     if (vars != null) {
-      context.setNextFactory(
-          new CachedMapVariableResolverFactory(vars, new DelegateVariableResolverFactory(staticContext, globalContext)));
+      context.setNextFactory(new CachedMapVariableResolverFactory(vars, new DelegateVariableResolverFactory(staticContext,
+                                                                                                            globalContext)));
     } else {
       context.setNextFactory(new DelegateVariableResolverFactory(staticContext, globalContext));
     }
@@ -162,13 +163,18 @@ public class MVELExpressionLanguage implements ExpressionLanguage, Initialisable
     }
     MVELExpressionLanguageContext context = createExpressionLanguageContext();
     if (vars != null) {
-      context.setNextFactory(new CachedMapVariableResolverFactory(vars,
-          new DelegateVariableResolverFactory(staticContext, new EventVariableResolverFactory(parserConfiguration, muleContext,
-              event, new DelegateVariableResolverFactory(globalContext, createVariableVariableResolverFactory(event))))));
+      context
+          .setNextFactory(new CachedMapVariableResolverFactory(vars,
+                                                               new DelegateVariableResolverFactory(staticContext,
+                                                                                                   new EventVariableResolverFactory(parserConfiguration,
+                                                                                                                                    muleContext, event, new DelegateVariableResolverFactory(globalContext,
+                                                                                                                                                                                            createVariableVariableResolverFactory(event))))));
     } else {
-      context.setNextFactory(
-          new DelegateVariableResolverFactory(staticContext, new EventVariableResolverFactory(parserConfiguration, muleContext,
-              event, new DelegateVariableResolverFactory(globalContext, createVariableVariableResolverFactory(event)))));
+      context
+          .setNextFactory(new DelegateVariableResolverFactory(staticContext,
+                                                              new EventVariableResolverFactory(parserConfiguration, muleContext,
+                                                                                               event, new DelegateVariableResolverFactory(globalContext,
+                                                                                                                                          createVariableVariableResolverFactory(event)))));
     }
     return evaluateInternal(expression, context);
   }

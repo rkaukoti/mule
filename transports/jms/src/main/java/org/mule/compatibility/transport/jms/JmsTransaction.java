@@ -28,8 +28,8 @@ public class JmsTransaction extends AbstractSingleResourceTransaction {
   @Override
   public void bindResource(Object key, Object resource) throws TransactionException {
     if (!(key instanceof Connection) || !(resource instanceof Session)) {
-      throw new IllegalTransactionStateException(
-          CoreMessages.transactionCanOnlyBindToResources("javax.jms.Connection/javax.jms.Session"));
+      throw new IllegalTransactionStateException(CoreMessages
+          .transactionCanOnlyBindToResources("javax.jms.Connection/javax.jms.Session"));
     }
 
     Session session = (Session) resource;

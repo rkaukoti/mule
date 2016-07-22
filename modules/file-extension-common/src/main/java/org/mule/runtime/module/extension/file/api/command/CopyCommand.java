@@ -28,5 +28,5 @@ public interface CopyCommand {
    * @throws IllegalArgumentException if an illegal combination of arguments is supplied
    */
   void copy(FileConnectorConfig config, String sourcePath, String targetPath, boolean overwrite, boolean createParentDirectories,
-      MuleEvent event);
+            MuleEvent event);
 }

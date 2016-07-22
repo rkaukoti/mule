@@ -32,8 +32,8 @@ public class ExpressionMuleEventKeyGenerator implements MuleEventKeyGenerator {
     if (key instanceof Serializable) {
       return (Serializable) key;
     } else {
-      throw new NotSerializableException(
-          "Generated key must a serializable object but was " + (key != null ? key.getClass().getName() : "null"));
+      throw new NotSerializableException("Generated key must a serializable object but was "
+          + (key != null ? key.getClass().getName() : "null"));
     }
   }
 

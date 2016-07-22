@@ -40,12 +40,13 @@ public class RetryPolicyDefinitionParser extends OptionalChildDefinitionParser {
     if (isConfigElement(element)) {
       element.setAttribute(ATTRIBUTE_ID, OBJECT_DEFAULT_RETRY_POLICY_TEMPLATE);
       return false;
-    } else if (getParentElement(element).getSchemaTypeInfo().isDerivedFrom(
-        MULE_EXTENSION_CONNECTION_PROVIDER_TYPE.getNamespaceURI(), MULE_EXTENSION_CONNECTION_PROVIDER_TYPE.getLocalPart(),
-        DERIVATION_EXTENSION)) {
+    } else if (getParentElement(element).getSchemaTypeInfo()
+        .isDerivedFrom(MULE_EXTENSION_CONNECTION_PROVIDER_TYPE.getNamespaceURI(),
+                       MULE_EXTENSION_CONNECTION_PROVIDER_TYPE.getLocalPart(), DERIVATION_EXTENSION)) {
       return false;
     } else if (getParentElement(element).getSchemaTypeInfo().isDerivedFrom(MULE_ABSTRACT_MESSAGE_SOURCE_TYPE.getNamespaceURI(),
-        MULE_ABSTRACT_MESSAGE_SOURCE_TYPE.getLocalPart(), DERIVATION_EXTENSION)) {
+                                                                           MULE_ABSTRACT_MESSAGE_SOURCE_TYPE.getLocalPart(),
+                                                                           DERIVATION_EXTENSION)) {
       return false;
     }
     return true;
@@ -119,7 +120,7 @@ public class RetryPolicyDefinitionParser extends OptionalChildDefinitionParser {
   }
 
   protected void wrapDelegateRetryPolicy(Element element, ParserContext parserContext, BeanDefinitionBuilder bdb,
-      String asynchWrapperName) {
+                                         String asynchWrapperName) {
     // Pass in the retry policy as a constructor argument
     bdb.addConstructorArgReference(getBeanName(element));
     // Register the new bean

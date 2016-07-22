@@ -203,7 +203,7 @@ public class AsynchronousUntilSuccessfulProcessingStrategyTestCase extends Abstr
     waitUntilExceptionIsHandled();
 
     verify(mockEvent.getFlowConstruct().getExceptionListener(), never()).handleException(any(Exception.class),
-        any(MuleEvent.class));
+                                                                                         any(MuleEvent.class));
     verify(mockDLQ, times(1)).process(argThat(new ArgumentMatcher<MuleEvent>() {
 
       @Override
@@ -215,7 +215,7 @@ public class AsynchronousUntilSuccessfulProcessingStrategyTestCase extends Abstr
           @Override
           public boolean matches(Object argument) {
             assertThat(((MuleMessage) argument).getExceptionPayload().getException().getMessage(),
-                containsString("until-successful retries exhausted. Last exception message was: " + EXPECTED_FAILURE_MSG));
+                       containsString("until-successful retries exhausted. Last exception message was: " + EXPECTED_FAILURE_MSG));
             return true;
           }
         }));
@@ -236,7 +236,7 @@ public class AsynchronousUntilSuccessfulProcessingStrategyTestCase extends Abstr
     waitUntilExceptionIsHandled();
 
     verify(mockEvent.getFlowConstruct().getExceptionListener(), never()).handleException(any(Exception.class),
-        any(MuleEvent.class));
+                                                                                         any(MuleEvent.class));
     verify(mockDLQ, times(1)).process(argThat(new ArgumentMatcher<MuleEvent>() {
 
       @Override
@@ -249,7 +249,7 @@ public class AsynchronousUntilSuccessfulProcessingStrategyTestCase extends Abstr
           @Override
           public boolean matches(Object argument) {
             assertThat(((MuleMessage) argument).getExceptionPayload().getException().getMessage(),
-                containsString("until-successful retries exhausted. Last exception message was: " + EXPECTED_FAILURE_MSG));
+                       containsString("until-successful retries exhausted. Last exception message was: " + EXPECTED_FAILURE_MSG));
             return true;
           }
         }));
@@ -270,7 +270,7 @@ public class AsynchronousUntilSuccessfulProcessingStrategyTestCase extends Abstr
     waitUntilExceptionIsHandled();
 
     verify(mockEvent.getFlowConstruct().getExceptionListener(), never()).handleException(any(Exception.class),
-        any(MuleEvent.class));
+                                                                                         any(MuleEvent.class));
     verify(mockDLQ, times(1)).process(argThat(new ArgumentMatcher<MuleEvent>() {
 
       @Override
@@ -282,7 +282,7 @@ public class AsynchronousUntilSuccessfulProcessingStrategyTestCase extends Abstr
           @Override
           public boolean matches(Object argument) {
             assertThat(((MuleMessage) argument).getExceptionPayload().getException().getMessage(),
-                containsString("until-successful retries exhausted. Last exception message was: " + EXPECTED_FAILURE_MSG));
+                       containsString("until-successful retries exhausted. Last exception message was: " + EXPECTED_FAILURE_MSG));
             return true;
           }
         }));

@@ -33,7 +33,8 @@ import java.util.concurrent.Executor;
 public class DefaultDbConnection extends AbstractDbConnection {
 
   public DefaultDbConnection(Connection delegate, TransactionalAction transactionalAction,
-      DefaultDbConnectionReleaser connectionReleaseListener, ParamTypeResolverFactory paramTypeResolverFactory) {
+                             DefaultDbConnectionReleaser connectionReleaseListener,
+                             ParamTypeResolverFactory paramTypeResolverFactory) {
     super(delegate, transactionalAction, connectionReleaseListener, paramTypeResolverFactory);
   }
 

@@ -22,7 +22,7 @@ public class XmlObjectTransformersUTF8TestCase extends AbstractTransformerTestCa
     super();
 
     testXml = ArrayUtils.addAll("<string>".getBytes("ASCII"),
-        ArrayUtils.addAll(TEST_STRING.getBytes("UTF-8"), "</string>".getBytes("ASCII")));
+                                ArrayUtils.addAll(TEST_STRING.getBytes("UTF-8"), "</string>".getBytes("ASCII")));
   }
 
   public Transformer getTransformer() throws Exception {

@@ -55,8 +55,9 @@ public class IOUtilsTestCase extends AbstractMuleTestCase {
       InputStream in = new ByteArrayInputStream(new byte[newBufferSize]);
       OutputStream out = mock(OutputStream.class);
 
-      Class clazz = ClassUtils.loadClass(IOUtils.class.getCanonicalName(),
-          new URLClassLoader(((URLClassLoader) Thread.currentThread().getContextClassLoader()).getURLs(), null));
+      Class clazz = ClassUtils
+          .loadClass(IOUtils.class.getCanonicalName(),
+                     new URLClassLoader(((URLClassLoader) Thread.currentThread().getContextClassLoader()).getURLs(), null));
       clazz.getMethod("copyLarge", InputStream.class, OutputStream.class).invoke(clazz.newInstance(), in, out);
 
       // With 8KB buffer define via system property only 1 read is required for 8KB

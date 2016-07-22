@@ -26,12 +26,14 @@ import static org.junit.Assert.assertThat;
 public abstract class AbstractAuthorizationCodeBasicTestCase extends AbstractOAuthAuthorizationTestCase {
 
   @Rule
-  public SystemProperty localAuthorizationUrl = new SystemProperty("local.authorization.url",
-      String.format("%s://localhost:%d/authorization", getProtocol(), localHostPort.getNumber()));
+  public SystemProperty localAuthorizationUrl =
+      new SystemProperty("local.authorization.url",
+                         String.format("%s://localhost:%d/authorization", getProtocol(), localHostPort.getNumber()));
 
   @Rule
-  public SystemProperty authorizationUrl = new SystemProperty("authorization.url",
-      String.format("%s://localhost:%d" + AUTHORIZE_PATH, getProtocol(), resolveOauthServerPort()));
+  public SystemProperty authorizationUrl =
+      new SystemProperty("authorization.url",
+                         String.format("%s://localhost:%d" + AUTHORIZE_PATH, getProtocol(), resolveOauthServerPort()));
   @Rule
   public SystemProperty tokenUrl =
       new SystemProperty("token.url", String.format("%s://localhost:%d" + TOKEN_PATH, getProtocol(), resolveOauthServerPort()));

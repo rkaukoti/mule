@@ -35,6 +35,6 @@ public class XsltWithParamsTransformerTestCase extends FunctionalTestCase {
     assertNotNull(result);
     XMLUnit.setIgnoreWhitespace(true);
     XMLAssert.assertEquals("<?xml version=\"1.0\" encoding=\"UTF-8\"?><echo-value xmlns=\"http://test.com\">hello</echo-value>",
-        result);
+                           result);
   }
 }

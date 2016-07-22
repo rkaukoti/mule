@@ -108,8 +108,8 @@ public class TransactedSingleResourceJmsMessageReceiver extends AbstractMessageR
       String durableName = (String) endpoint.getProperties().get(JmsConstants.DURABLE_NAME_PROPERTY);
       if (durableName == null && durable && dest instanceof Topic) {
         durableName = "mule." + connector.getName() + "." + endpoint.getEndpointURI().getAddress();
-        logger.debug(
-            "Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: " + durableName);
+        logger.debug("Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: "
+            + durableName);
       }
 
       // Create consumer

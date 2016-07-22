@@ -31,7 +31,7 @@ public class PhaseExecutionEngine {
   private final EndProcessPhase endProcessPhase;
 
   public PhaseExecutionEngine(List<MessageProcessPhase> messageProcessPhaseList, SystemExceptionHandler exceptionHandler,
-      EndProcessPhase endProcessPhase) {
+                              EndProcessPhase endProcessPhase) {
     this.phaseList = messageProcessPhaseList;
     this.exceptionHandler = exceptionHandler;
     this.endProcessPhase = endProcessPhase;
@@ -51,7 +51,7 @@ public class PhaseExecutionEngine {
     private boolean endPhaseProcessed;
 
     public InternalPhaseExecutionEngine(MessageProcessTemplate messageProcessTemplate,
-        MessageProcessContext messageProcessContext) {
+                                        MessageProcessContext messageProcessContext) {
       this.messageProcessTemplate = messageProcessTemplate;
       this.messageProcessContext = messageProcessContext;
     }

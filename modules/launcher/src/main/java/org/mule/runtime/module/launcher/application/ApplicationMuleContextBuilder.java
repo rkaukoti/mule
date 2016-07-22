@@ -55,7 +55,7 @@ public class ApplicationMuleContextBuilder extends DefaultMuleContextBuilder {
     // use app name in the core Mule thread
     final String threadName = String.format("[%s].Mule", appName);
     return new MuleWorkManager(ThreadingProfile.DEFAULT_THREADING_PROFILE, threadName,
-        getMuleConfiguration().getShutdownTimeout());
+                               getMuleConfiguration().getShutdownTimeout());
 
   }
 }

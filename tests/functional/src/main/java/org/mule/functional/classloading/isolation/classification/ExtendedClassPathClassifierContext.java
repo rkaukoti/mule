@@ -33,7 +33,8 @@ public class ExtendedClassPathClassifierContext {
    * @param targetTestClassesFolder the target/test-classes folder of the current artifact being tested
    */
   public ExtendedClassPathClassifierContext(final ClassPathClassifierContext classificationContext,
-      final MavenArtifactToClassPathUrlsResolver artifactToClassPathURLResolver, final File targetTestClassesFolder) {
+                                            final MavenArtifactToClassPathUrlsResolver artifactToClassPathURLResolver,
+                                            final File targetTestClassesFolder) {
     this.classificationContext = classificationContext;
     this.artifactToClassPathURLResolver = artifactToClassPathURLResolver;
     this.targetTestClassesFolder = targetTestClassesFolder;

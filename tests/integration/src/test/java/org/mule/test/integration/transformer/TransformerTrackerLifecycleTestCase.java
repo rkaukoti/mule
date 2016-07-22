@@ -27,6 +27,6 @@ public class TransformerTrackerLifecycleTestCase extends FunctionalTestCase {
     muleContext.dispose();
 
     assertThat(ltt.getTracker(),
-        contains("setProperty", "setMuleContext", "setMuleContext", "initialise", "start", "stop", "dispose"));
+               contains("setProperty", "setMuleContext", "setMuleContext", "initialise", "start", "stop", "dispose"));
   }
 }

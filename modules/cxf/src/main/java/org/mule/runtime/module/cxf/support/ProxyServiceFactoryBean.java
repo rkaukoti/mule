@@ -72,7 +72,7 @@ public class ProxyServiceFactoryBean extends ReflectionServiceFactoryBean {
         }
       }
       LOG.log(Level.WARNING, "COULD_NOT_FIND_ENDPOINT",
-          new ComponentNotFoundRuntimeException(CxfMessages.couldNotFindEndpoint(getEndpointName(), enames)));
+              new ComponentNotFoundRuntimeException(CxfMessages.couldNotFindEndpoint(getEndpointName(), enames)));
     }
 
     try {

@@ -71,7 +71,7 @@ public class ResponseTransformerScenariosTestCase extends FunctionalTestCase {
     MuleMessage message = client.send("vm://syncOutboundEndpointResponseTransformer", "request", null);
     assertThat(message, notNullValue());
     assertThat(getPayloadAsString(message),
-        is(equalTo("request" + VM_OUTBOUND + VM_INBOUND + VM_OUT_IN_RESP + CUSTOM_RESPONSE + VM_RESPONSE)));
+               is(equalTo("request" + VM_OUTBOUND + VM_INBOUND + VM_OUT_IN_RESP + CUSTOM_RESPONSE + VM_RESPONSE)));
   }
 
   @Test
@@ -105,7 +105,7 @@ public class ResponseTransformerScenariosTestCase extends FunctionalTestCase {
     MuleClient client = muleContext.getClient();
     MuleMessage message = client.send("vm://nestedRouterOutboundEndpointResponseTransformer", "request", null);
     assertThat(message, notNullValue());
-    assertThat(getPayloadAsString(message),
-        is(equalTo("request" + VM_OUTBOUND + VM_INBOUND + VM_OUT_IN_RESP + CUSTOM_RESPONSE + CUSTOM_RESPONSE + VM_RESPONSE)));
+    assertThat(getPayloadAsString(message), is(equalTo("request" + VM_OUTBOUND + VM_INBOUND + VM_OUT_IN_RESP + CUSTOM_RESPONSE
+        + CUSTOM_RESPONSE + VM_RESPONSE)));
   }
 }

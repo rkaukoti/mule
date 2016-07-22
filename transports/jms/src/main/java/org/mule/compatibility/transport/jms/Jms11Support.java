@@ -74,7 +74,8 @@ public class Jms11Support implements JmsSupport {
 
   @Override
   public MessageConsumer createConsumer(Session session, Destination destination, String messageSelector, boolean noLocal,
-      String durableName, boolean topic, ImmutableEndpoint endpoint) throws JMSException {
+                                        String durableName, boolean topic, ImmutableEndpoint endpoint)
+      throws JMSException {
     if (durableName == null) {
       if (topic) {
         return session.createConsumer(destination, messageSelector, noLocal);
@@ -186,25 +187,27 @@ public class Jms11Support implements JmsSupport {
   @Override
   public void send(MessageProducer producer, Message message, boolean topic, ImmutableEndpoint endpoint) throws JMSException {
     send(producer, message, connector.isPersistentDelivery(), Message.DEFAULT_PRIORITY, Message.DEFAULT_TIME_TO_LIVE, topic,
-        endpoint);
+         endpoint);
   }
 
   @Override
   public void send(MessageProducer producer, Message message, Destination dest, boolean topic, ImmutableEndpoint endpoint)
       throws JMSException {
     send(producer, message, dest, connector.isPersistentDelivery(), Message.DEFAULT_PRIORITY, Message.DEFAULT_TIME_TO_LIVE, topic,
-        endpoint);
+         endpoint);
   }
 
   @Override
   public void send(MessageProducer producer, Message message, boolean persistent, int priority, long ttl, boolean topic,
-      ImmutableEndpoint endpoint) throws JMSException {
+                   ImmutableEndpoint endpoint)
+      throws JMSException {
     producer.send(message, (persistent ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT), priority, ttl);
   }
 
   @Override
   public void send(MessageProducer producer, Message message, Destination dest, boolean persistent, int priority, long ttl,
-      boolean topic, ImmutableEndpoint endpoint) throws JMSException {
+                   boolean topic, ImmutableEndpoint endpoint)
+      throws JMSException {
     producer.send(dest, message, (persistent ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT), priority, ttl);
   }
 

@@ -222,15 +222,16 @@ public class MuleNamespaceHandler extends AbstractMuleNamespaceHandler {
     registerBeanDefinitionParser("configuration", new ConfigurationDefinitionParser());
     registerBeanDefinitionParser("global-property", new GlobalPropertyDefinitionParser());
     registerBeanDefinitionParser("default-threading-profile",
-        new DefaultThreadingProfileDefinitionParser(MuleProperties.OBJECT_DEFAULT_THREADING_PROFILE));
+                                 new DefaultThreadingProfileDefinitionParser(MuleProperties.OBJECT_DEFAULT_THREADING_PROFILE));
     registerBeanDefinitionParser("default-dispatcher-threading-profile",
-        new DefaultThreadingProfileDefinitionParser(MuleProperties.OBJECT_DEFAULT_MESSAGE_DISPATCHER_THREADING_PROFILE));
+                                 new DefaultThreadingProfileDefinitionParser(MuleProperties.OBJECT_DEFAULT_MESSAGE_DISPATCHER_THREADING_PROFILE));
     registerBeanDefinitionParser("default-receiver-threading-profile",
-        new DefaultThreadingProfileDefinitionParser(MuleProperties.OBJECT_DEFAULT_MESSAGE_RECEIVER_THREADING_PROFILE));
+                                 new DefaultThreadingProfileDefinitionParser(MuleProperties.OBJECT_DEFAULT_MESSAGE_RECEIVER_THREADING_PROFILE));
     registerBeanDefinitionParser("default-service-threading-profile",
-        new DefaultThreadingProfileDefinitionParser(MuleProperties.OBJECT_DEFAULT_SERVICE_THREADING_PROFILE));
+                                 new DefaultThreadingProfileDefinitionParser(MuleProperties.OBJECT_DEFAULT_SERVICE_THREADING_PROFILE));
     registerBeanDefinitionParser("threading-profile",
-        new ThreadingProfileDefinitionParser("threadingProfile", MuleProperties.OBJECT_DEFAULT_SERVICE_THREADING_PROFILE));
+                                 new ThreadingProfileDefinitionParser("threadingProfile",
+                                                                      MuleProperties.OBJECT_DEFAULT_SERVICE_THREADING_PROFILE));
     registerBeanDefinitionParser("custom-agent", new DefaultNameMuleOrphanDefinitionParser());
     registerBeanDefinitionParser("expression-language", new ExpressionLanguageDefinitionParser());
     registerBeanDefinitionParser("global-functions", new GlobalFunctionsDefintionParser("globalFunctionsString"));
@@ -240,15 +241,15 @@ public class MuleNamespaceHandler extends AbstractMuleNamespaceHandler {
 
     // Exception Strategies
     registerBeanDefinitionParser("default-exception-strategy",
-        new ExceptionStrategyDefinitionParser(DefaultMessagingExceptionStrategy.class));
+                                 new ExceptionStrategyDefinitionParser(DefaultMessagingExceptionStrategy.class));
     registerBeanDefinitionParser("catch-exception-strategy",
-        new ExceptionStrategyDefinitionParser(CatchMessagingExceptionStrategy.class));
+                                 new ExceptionStrategyDefinitionParser(CatchMessagingExceptionStrategy.class));
     registerBeanDefinitionParser("rollback-exception-strategy",
-        new ExceptionStrategyDefinitionParser(RollbackMessagingExceptionStrategy.class));
+                                 new ExceptionStrategyDefinitionParser(RollbackMessagingExceptionStrategy.class));
     registerBeanDefinitionParser("on-redelivery-attempts-exceeded",
-        new ChildDefinitionParser("redeliveryExceeded", RedeliveryExceeded.class));
+                                 new ChildDefinitionParser("redeliveryExceeded", RedeliveryExceeded.class));
     registerBeanDefinitionParser("choice-exception-strategy",
-        new ExceptionStrategyDefinitionParser(ChoiceMessagingExceptionStrategy.class));
+                                 new ExceptionStrategyDefinitionParser(ChoiceMessagingExceptionStrategy.class));
     registerMuleBeanDefinitionParser("exception-strategy", new ReferenceExceptionStrategyDefinitionParser());
     registerBeanDefinitionParser("custom-exception-strategy", new ExceptionStrategyDefinitionParser(null));
     registerBeanDefinitionParser("commit-transaction", new ExceptionTXFilterDefinitionParser("commitTxFilter"));
@@ -266,11 +267,11 @@ public class MuleNamespaceHandler extends AbstractMuleNamespaceHandler {
         .addAlias(AbstractMuleBeanDefinitionParser.ATTRIBUTE_REF, "queue-store");
     registerMuleBeanDefinitionParser("custom-queue-store", new QueueStoreDefinitionParser()).addIgnored("name");
     registerBeanDefinitionParser("default-in-memory-queue-store",
-        new QueueStoreDefinitionParser(DefaultMemoryQueueStoreFactoryBean.class));
+                                 new QueueStoreDefinitionParser(DefaultMemoryQueueStoreFactoryBean.class));
     registerBeanDefinitionParser("default-persistent-queue-store",
-        new QueueStoreDefinitionParser(DefaultPersistentQueueStoreFactoryBean.class));
+                                 new QueueStoreDefinitionParser(DefaultPersistentQueueStoreFactoryBean.class));
     registerBeanDefinitionParser("simple-in-memory-queue-store",
-        new QueueStoreDefinitionParser(SimpleMemoryQueueStoreFactoryBean.class));
+                                 new QueueStoreDefinitionParser(SimpleMemoryQueueStoreFactoryBean.class));
     registerBeanDefinitionParser("file-queue-store", new QueueStoreDefinitionParser(FileQueueStoreFactoryBean.class));
 
     registerBeanDefinitionParser("pooling-profile", new PoolingProfileDefinitionParser());
@@ -280,8 +281,8 @@ public class MuleNamespaceHandler extends AbstractMuleNamespaceHandler {
     registerBeanDefinitionParser("notification", new NotificationDefinitionParser());
     registerBeanDefinitionParser("disable-notification", new NotificationDisableDefinitionParser());
     registerMuleBeanDefinitionParser("notification-listener",
-        new ChildDefinitionParser("allListenerSubscriptionPair", ListenerSubscriptionPair.class)).addAlias("ref", "listener")
-            .addReference("listener");
+                                     new ChildDefinitionParser("allListenerSubscriptionPair", ListenerSubscriptionPair.class))
+                                         .addAlias("ref", "listener").addReference("listener");
 
     // Transformer elements
 
@@ -291,105 +292,106 @@ public class MuleNamespaceHandler extends AbstractMuleNamespaceHandler {
     registerBeanDefinitionParser("custom-transformer", new TransformerMessageProcessorDefinitionParser());
     registerBeanDefinitionParser("auto-transformer", new TransformerMessageProcessorDefinitionParser(AutoTransformer.class));
     registerMuleBeanDefinitionParser("set-property",
-        new MessageProcessorWithDataTypeDefinitionParser(AddPropertyTransformer.class)).addAlias(PROPERTY_NAME_ATTRIBUTE,
-            IDENTIFIER_PROPERTY);
+                                     new MessageProcessorWithDataTypeDefinitionParser(AddPropertyTransformer.class))
+                                         .addAlias(PROPERTY_NAME_ATTRIBUTE, IDENTIFIER_PROPERTY);
     registerMuleBeanDefinitionParser("remove-property", new MessageProcessorDefinitionParser(RemovePropertyTransformer.class))
         .addAlias(PROPERTY_NAME_ATTRIBUTE, IDENTIFIER_PROPERTY);
     registerBeanDefinitionParser("copy-properties", new MessageProcessorDefinitionParser(CopyPropertiesTransformer.class));
     registerMuleBeanDefinitionParser("set-variable",
-        new MessageProcessorWithDataTypeDefinitionParser(AddFlowVariableTransformer.class)).addAlias(VARIABLE_NAME_ATTRIBUTE,
-            IDENTIFIER_PROPERTY);
+                                     new MessageProcessorWithDataTypeDefinitionParser(AddFlowVariableTransformer.class))
+                                         .addAlias(VARIABLE_NAME_ATTRIBUTE, IDENTIFIER_PROPERTY);
     registerMuleBeanDefinitionParser("remove-variable", new MessageProcessorDefinitionParser(RemoveFlowVariableTransformer.class))
         .addAlias(VARIABLE_NAME_ATTRIBUTE, IDENTIFIER_PROPERTY);
     registerMuleBeanDefinitionParser("set-session-variable",
-        new MessageProcessorWithDataTypeDefinitionParser(AddSessionVariableTransformer.class)).addAlias(VARIABLE_NAME_ATTRIBUTE,
-            IDENTIFIER_PROPERTY);
+                                     new MessageProcessorWithDataTypeDefinitionParser(AddSessionVariableTransformer.class))
+                                         .addAlias(VARIABLE_NAME_ATTRIBUTE, IDENTIFIER_PROPERTY);
     registerMuleBeanDefinitionParser("remove-session-variable",
-        new MessageProcessorDefinitionParser(RemoveSessionVariableTransformer.class)).addAlias(VARIABLE_NAME_ATTRIBUTE,
-            IDENTIFIER_PROPERTY);
+                                     new MessageProcessorDefinitionParser(RemoveSessionVariableTransformer.class))
+                                         .addAlias(VARIABLE_NAME_ATTRIBUTE, IDENTIFIER_PROPERTY);
     registerBeanDefinitionParser("set-attachment", new MessageProcessorDefinitionParser(AddAttachmentTransformer.class));
     registerBeanDefinitionParser("remove-attachment", new MessageProcessorDefinitionParser(RemoveAttachmentTransformer.class));
     registerBeanDefinitionParser("copy-attachments", new MessageProcessorDefinitionParser(CopyAttachmentsTransformer.class));
 
     registerMuleBeanDefinitionParser("expression-transformer",
-        new ExpressionTransformerDefinitionParser(ExpressionTransformer.class));
+                                     new ExpressionTransformerDefinitionParser(ExpressionTransformer.class));
 
     registerBeanDefinitionParser("return-argument", new ChildDefinitionParser("argument", ExpressionArgument.class));
 
     registerBeanDefinitionParser("bean-builder-transformer",
-        new TransformerMessageProcessorDefinitionParser(BeanBuilderTransformer.class));
+                                 new TransformerMessageProcessorDefinitionParser(BeanBuilderTransformer.class));
 
     final ChildDefinitionParser beanPropertyParser = new ChildDefinitionParser("argument", ExpressionArgument.class);
     beanPropertyParser.addAlias("property-name", "name");
     registerBeanDefinitionParser("bean-property", beanPropertyParser);
 
     registerBeanDefinitionParser("base64-encoder-transformer",
-        new TransformerMessageProcessorDefinitionParser(Base64Encoder.class));
+                                 new TransformerMessageProcessorDefinitionParser(Base64Encoder.class));
     registerBeanDefinitionParser("base64-decoder-transformer",
-        new TransformerMessageProcessorDefinitionParser(Base64Decoder.class));
+                                 new TransformerMessageProcessorDefinitionParser(Base64Decoder.class));
 
     registerBeanDefinitionParser("xml-entity-encoder-transformer",
-        new TransformerMessageProcessorDefinitionParser(XmlEntityEncoder.class));
+                                 new TransformerMessageProcessorDefinitionParser(XmlEntityEncoder.class));
     registerBeanDefinitionParser("xml-entity-decoder-transformer",
-        new TransformerMessageProcessorDefinitionParser(XmlEntityDecoder.class));
+                                 new TransformerMessageProcessorDefinitionParser(XmlEntityDecoder.class));
     registerBeanDefinitionParser("gzip-compress-transformer",
-        new TransformerMessageProcessorDefinitionParser(GZipCompressTransformer.class));
+                                 new TransformerMessageProcessorDefinitionParser(GZipCompressTransformer.class));
     registerBeanDefinitionParser("gzip-uncompress-transformer",
-        new TransformerMessageProcessorDefinitionParser(GZipUncompressTransformer.class));
+                                 new TransformerMessageProcessorDefinitionParser(GZipUncompressTransformer.class));
     registerBeanDefinitionParser("encrypt-transformer",
-        new TransformerMessageProcessorDefinitionParser(EncryptionTransformer.class));
+                                 new TransformerMessageProcessorDefinitionParser(EncryptionTransformer.class));
     registerBeanDefinitionParser("decrypt-transformer",
-        new TransformerMessageProcessorDefinitionParser(DecryptionTransformer.class));
+                                 new TransformerMessageProcessorDefinitionParser(DecryptionTransformer.class));
     registerBeanDefinitionParser("byte-array-to-hex-string-transformer",
-        new TransformerMessageProcessorDefinitionParser(ByteArrayToHexString.class));
+                                 new TransformerMessageProcessorDefinitionParser(ByteArrayToHexString.class));
     registerBeanDefinitionParser("hex-string-to-byte-array-transformer",
-        new TransformerMessageProcessorDefinitionParser(HexStringToByteArray.class));
+                                 new TransformerMessageProcessorDefinitionParser(HexStringToByteArray.class));
 
     registerBeanDefinitionParser("byte-array-to-object-transformer",
-        new TransformerMessageProcessorDefinitionParser(ByteArrayToObject.class));
+                                 new TransformerMessageProcessorDefinitionParser(ByteArrayToObject.class));
     registerBeanDefinitionParser("object-to-byte-array-transformer",
-        new TransformerMessageProcessorDefinitionParser(ObjectToByteArray.class));
+                                 new TransformerMessageProcessorDefinitionParser(ObjectToByteArray.class));
     registerBeanDefinitionParser("object-to-string-transformer",
-        new TransformerMessageProcessorDefinitionParser(ObjectToString.class));
+                                 new TransformerMessageProcessorDefinitionParser(ObjectToString.class));
     registerBeanDefinitionParser("byte-array-to-serializable-transformer",
-        new TransformerMessageProcessorDefinitionParser(ByteArrayToSerializable.class));
+                                 new TransformerMessageProcessorDefinitionParser(ByteArrayToSerializable.class));
     registerBeanDefinitionParser("serializable-to-byte-array-transformer",
-        new TransformerMessageProcessorDefinitionParser(SerializableToByteArray.class));
+                                 new TransformerMessageProcessorDefinitionParser(SerializableToByteArray.class));
     registerBeanDefinitionParser("byte-array-to-string-transformer",
-        new TransformerMessageProcessorDefinitionParser(ObjectToString.class));
+                                 new TransformerMessageProcessorDefinitionParser(ObjectToString.class));
     registerBeanDefinitionParser("string-to-byte-array-transformer",
-        new TransformerMessageProcessorDefinitionParser(ObjectToByteArray.class));
+                                 new TransformerMessageProcessorDefinitionParser(ObjectToByteArray.class));
     registerBeanDefinitionParser("parse-template", new MessageProcessorDefinitionParser(ParseTemplateTransformer.class));
     registerBeanDefinitionParser("set-payload", new MessageProcessorDefinitionParser(SetPayloadMessageProcessor.class));
 
     registerBeanDefinitionParser("append-string-transformer",
-        new TransformerMessageProcessorDefinitionParser(StringAppendTransformer.class));
+                                 new TransformerMessageProcessorDefinitionParser(StringAppendTransformer.class));
 
     registerBeanDefinitionParser("map-to-bean-transformer", new TransformerMessageProcessorDefinitionParser(MapToBean.class));
     registerBeanDefinitionParser("bean-to-map-transformer", new TransformerMessageProcessorDefinitionParser(BeanToMap.class));
 
     registerMuleBeanDefinitionParser("combine-collections-transformer",
-        new TransformerMessageProcessorDefinitionParser(CombineCollectionsTransformer.class)).addIgnored("name");
+                                     new TransformerMessageProcessorDefinitionParser(CombineCollectionsTransformer.class))
+                                         .addIgnored("name");
 
     // Transaction Managers
     registerBeanDefinitionParser("custom-transaction-manager", new TransactionManagerDefinitionParser());
     registerBeanDefinitionParser("jndi-transaction-manager",
-        new TransactionManagerDefinitionParser(GenericTransactionManagerLookupFactory.class));
+                                 new TransactionManagerDefinitionParser(GenericTransactionManagerLookupFactory.class));
     registerBeanDefinitionParser("weblogic-transaction-manager",
-        new TransactionManagerDefinitionParser(WeblogicTransactionManagerLookupFactory.class));
+                                 new TransactionManagerDefinitionParser(WeblogicTransactionManagerLookupFactory.class));
     registerBeanDefinitionParser("jboss-transaction-manager",
-        new TransactionManagerDefinitionParser(JBossTransactionManagerLookupFactory.class));
+                                 new TransactionManagerDefinitionParser(JBossTransactionManagerLookupFactory.class));
     registerBeanDefinitionParser("jrun-transaction-manager",
-        new TransactionManagerDefinitionParser(JRunTransactionManagerLookupFactory.class));
+                                 new TransactionManagerDefinitionParser(JRunTransactionManagerLookupFactory.class));
     registerBeanDefinitionParser("resin-transaction-manager",
-        new TransactionManagerDefinitionParser(Resin3TransactionManagerLookupFactory.class));
+                                 new TransactionManagerDefinitionParser(Resin3TransactionManagerLookupFactory.class));
     registerBeanDefinitionParser("websphere-transaction-manager",
-        new TransactionManagerDefinitionParser(WebsphereTransactionManagerLookupFactory.class));
+                                 new TransactionManagerDefinitionParser(WebsphereTransactionManagerLookupFactory.class));
 
     registerBeanDefinitionParser("custom-transaction", new TransactionDefinitionParser());
     registerBeanDefinitionParser("xa-transaction", new XaTransactionDefinitionParser(XaTransactionFactory.class));
     registerBeanDefinitionParser("idempotent-redelivery-policy",
-        new ChildDefinitionParser("redeliveryPolicy", IdempotentRedeliveryPolicy.class));
+                                 new ChildDefinitionParser("redeliveryPolicy", IdempotentRedeliveryPolicy.class));
 
     // Message Processors
     registerMuleBeanDefinitionParser("processor", new ParentDefinitionParser())
@@ -397,7 +399,7 @@ public class MuleNamespaceHandler extends AbstractMuleNamespaceHandler {
     registerMuleBeanDefinitionParser("custom-processor", new MessageProcessorDefinitionParser()).addIgnored("name");
     registerBeanDefinitionParser("processor-chain", new MessageProcessorChainDefinitionParser());
     registerBeanDefinitionParser("sub-flow",
-        new MuleOrphanDefinitionParser(SubflowMessageProcessorChainFactoryBean.class, false));
+                                 new MuleOrphanDefinitionParser(SubflowMessageProcessorChainFactoryBean.class, false));
     registerBeanDefinitionParser("response", new ResponseDefinitionParser());
     registerMuleBeanDefinitionParser("message-filter", new MessageFilterDefinitionParser());
     registerMuleBeanDefinitionParser("invoke", new MessageProcessorDefinitionParser(InvokerMessageProcessor.class))
@@ -407,51 +409,53 @@ public class MuleNamespaceHandler extends AbstractMuleNamespaceHandler {
         .addIgnored("source").addIgnored("target")
         .registerPreProcessor(new CheckExclusiveAttributesAndChildren(new String[] {"source", "target"}, new String[] {"enrich"}))
         .registerPreProcessor(new CheckRequiredAttributesWhenNoChildren(new String[][] {new String[] {"target"}}, "enrich",
-            "http://www.mulesoft.org/schema/mule/core"))
+                                                                        "http://www.mulesoft.org/schema/mule/core"))
         .addCollection("enrichExpressionPairs");
     registerMuleBeanDefinitionParser("enrich", new ChildDefinitionParser("enrichExpressionPair", EnrichExpressionPair.class));
 
     registerBeanDefinitionParser("async", new AsyncMessageProcessorsDefinitionParser());
     registerBeanDefinitionParser("transactional",
-        new ChildDefinitionParser("messageProcessor", TransactionalMessageProcessorsFactoryBean.class));
+                                 new ChildDefinitionParser("messageProcessor", TransactionalMessageProcessorsFactoryBean.class));
     registerMuleBeanDefinitionParser("logger", new ChildDefinitionParser("messageProcessor", LoggerMessageProcessor.class));
     registerMuleBeanDefinitionParser("expression-component",
-        new ExpressionComponentDefintionParser("messageProcessor", ExpressionLanguageComponent.class))
-            .registerPreProcessor(new CheckExclusiveAttributeAndText("file"));
+                                     new ExpressionComponentDefintionParser("messageProcessor",
+                                                                            ExpressionLanguageComponent.class))
+                                                                                .registerPreProcessor(new CheckExclusiveAttributeAndText("file"));
 
     // Message Sources
     registerBeanDefinitionParser("custom-source", new ChildDefinitionParser("messageSource", null, MessageSource.class));
     registerBeanDefinitionParser("composite-source",
-        new ChildDefinitionParser("messageSource", CompositeMessageSourceFactoryBean.class));
+                                 new ChildDefinitionParser("messageSource", CompositeMessageSourceFactoryBean.class));
 
     registerBeanDefinitionParser("poll", new ChildEmbeddedDefinitionParser(PollingMessageSourceFactoryBean.class));
     registerBeanDefinitionParser("fixed-frequency-scheduler",
-        new ChildDefinitionParser("schedulerFactory", FixedFrequencySchedulerFactory.class));
+                                 new ChildDefinitionParser("schedulerFactory", FixedFrequencySchedulerFactory.class));
 
 
     // Poll overrides
     registerBeanDefinitionParser("watermark", new ChildDefinitionParser("override", WatermarkFactoryBean.class));
 
     registerBeanDefinitionParser("entry-point-resolver-set",
-        new ChildDefinitionParser("entryPointResolverSet", DefaultEntryPointResolverSet.class));
+                                 new ChildDefinitionParser("entryPointResolverSet", DefaultEntryPointResolverSet.class));
     registerBeanDefinitionParser("legacy-entry-point-resolver-set",
-        new ChildDefinitionParser("entryPointResolverSet", LegacyEntryPointResolverSet.class));
+                                 new ChildDefinitionParser("entryPointResolverSet", LegacyEntryPointResolverSet.class));
     registerBeanDefinitionParser("custom-entry-point-resolver-set", new ChildDefinitionParser("entryPointResolverSet"));
 
     registerBeanDefinitionParser("custom-entry-point-resolver", new ChildDefinitionParser("entryPointResolver"));
     registerBeanDefinitionParser("callable-entry-point-resolver",
-        new ChildDefinitionParser("entryPointResolver", CallableEntryPointResolver.class));
+                                 new ChildDefinitionParser("entryPointResolver", CallableEntryPointResolver.class));
     registerMuleBeanDefinitionParser("property-entry-point-resolver",
-        new ChildDefinitionParser("entryPointResolver", MethodHeaderPropertyEntryPointResolver.class)).addAlias("property",
-            "methodProperty");
+                                     new ChildDefinitionParser("entryPointResolver",
+                                                               MethodHeaderPropertyEntryPointResolver.class))
+                                                                   .addAlias("property", "methodProperty");
     registerBeanDefinitionParser("method-entry-point-resolver",
-        new ChildDefinitionParser("entryPointResolver", ExplicitMethodEntryPointResolver.class));
+                                 new ChildDefinitionParser("entryPointResolver", ExplicitMethodEntryPointResolver.class));
     registerBeanDefinitionParser("reflection-entry-point-resolver",
-        new ChildDefinitionParser("entryPointResolver", ReflectionEntryPointResolver.class));
+                                 new ChildDefinitionParser("entryPointResolver", ReflectionEntryPointResolver.class));
     registerBeanDefinitionParser("no-arguments-entry-point-resolver",
-        new ChildDefinitionParser("entryPointResolver", NoArgumentsEntryPointResolver.class));
+                                 new ChildDefinitionParser("entryPointResolver", NoArgumentsEntryPointResolver.class));
     registerBeanDefinitionParser("array-entry-point-resolver",
-        new ChildDefinitionParser("entryPointResolver", ArrayEntryPointResolver.class));
+                                 new ChildDefinitionParser("entryPointResolver", ArrayEntryPointResolver.class));
     registerMuleBeanDefinitionParser("include-entry-point", new ParentDefinitionParser());
     registerMuleBeanDefinitionParser("exclude-entry-point", new ParentDefinitionParser()).addAlias("method", "ignoredMethod");
     registerMuleBeanDefinitionParser("exclude-object-methods", new IgnoreObjectMethodsDefinitionParser());
@@ -462,11 +466,13 @@ public class MuleNamespaceHandler extends AbstractMuleNamespaceHandler {
 
     // Processing Strategies
     registerMuleBeanDefinitionParser("asynchronous-processing-strategy",
-        new OrphanDefinitionParser(AsynchronousProcessingStrategy.class, false))
-            .addMapping("poolExhaustedAction", ThreadingProfile.POOL_EXHAUSTED_ACTIONS).addIgnored("name");
+                                     new OrphanDefinitionParser(AsynchronousProcessingStrategy.class, false))
+                                         .addMapping("poolExhaustedAction", ThreadingProfile.POOL_EXHAUSTED_ACTIONS)
+                                         .addIgnored("name");
     registerMuleBeanDefinitionParser("non-blocking-processing-strategy",
-        new OrphanDefinitionParser(NonBlockingProcessingStrategy.class, false))
-            .addMapping("poolExhaustedAction", ThreadingProfile.POOL_EXHAUSTED_ACTIONS).addIgnored("name");
+                                     new OrphanDefinitionParser(NonBlockingProcessingStrategy.class, false))
+                                         .addMapping("poolExhaustedAction", ThreadingProfile.POOL_EXHAUSTED_ACTIONS)
+                                         .addIgnored("name");
     registerMuleBeanDefinitionParser("custom-processing-strategy", new OrphanDefinitionParser(false)).addIgnored("name");
 
     // Components
@@ -475,9 +481,9 @@ public class MuleNamespaceHandler extends AbstractMuleNamespaceHandler {
 
     // Simple Components
     registerBeanDefinitionParser("log-component",
-        new SimpleComponentDefinitionParser(SimpleCallableJavaComponent.class, LogComponent.class));
+                                 new SimpleComponentDefinitionParser(SimpleCallableJavaComponent.class, LogComponent.class));
     registerBeanDefinitionParser("null-component",
-        new SimpleComponentDefinitionParser(SimpleCallableJavaComponent.class, NullComponent.class));
+                                 new SimpleComponentDefinitionParser(SimpleCallableJavaComponent.class, NullComponent.class));
     registerBeanDefinitionParser("static-component", new StaticComponentDefinitionParser());
     registerIgnoredElement("return-data"); // Handled by StaticComponentDefinitionParser
 
@@ -485,13 +491,13 @@ public class MuleNamespaceHandler extends AbstractMuleNamespaceHandler {
     // therefore we
     // need an entry point resolver
     registerBeanDefinitionParser("echo-component",
-        new SimpleComponentDefinitionParser(DefaultJavaComponent.class, EchoComponent.class));
+                                 new SimpleComponentDefinitionParser(DefaultJavaComponent.class, EchoComponent.class));
 
     // Object Factories
     registerBeanDefinitionParser("singleton-object",
-        new ObjectFactoryDefinitionParser(SingletonObjectFactory.class, "objectFactory"));
+                                 new ObjectFactoryDefinitionParser(SingletonObjectFactory.class, "objectFactory"));
     registerBeanDefinitionParser("prototype-object",
-        new ObjectFactoryDefinitionParser(PrototypeObjectFactory.class, "objectFactory"));
+                                 new ObjectFactoryDefinitionParser(PrototypeObjectFactory.class, "objectFactory"));
     registerBeanDefinitionParser("spring-object", new ObjectFactoryDefinitionParser(SpringBeanLookup.class, "objectFactory"));
 
     // Life-cycle Adapters Factories
@@ -502,14 +508,14 @@ public class MuleNamespaceHandler extends AbstractMuleNamespaceHandler {
     registerBeanDefinitionParser("simple-text-file-store", new ChildDefinitionParser("store", TextFileObjectStore.class));
     registerBeanDefinitionParser("custom-object-store", new ChildDefinitionParser("store", null));
     registerBeanDefinitionParser("spring-object-store",
-        (BeanDefinitionParser) new ParentDefinitionParser().addAlias("ref", "store"));
+                                 (BeanDefinitionParser) new ParentDefinitionParser().addAlias("ref", "store"));
     registerBeanDefinitionParser("managed-store", new ChildDefinitionParser("store", ManagedObjectStore.class));
 
     // Routing: Intercepting Message Processors
     registerMuleBeanDefinitionParser("idempotent-message-filter",
-        new MessageFilterDefinitionParser(IdempotentMessageFilter.class));
+                                     new MessageFilterDefinitionParser(IdempotentMessageFilter.class));
     registerMuleBeanDefinitionParser("idempotent-secure-hash-message-filter",
-        new MessageFilterDefinitionParser(IdempotentSecureHashMessageFilter.class));
+                                     new MessageFilterDefinitionParser(IdempotentSecureHashMessageFilter.class));
     registerBeanDefinitionParser("wire-tap", new InboundRouterDefinitionParser(WireTap.class));
     registerBeanDefinitionParser("custom-aggregator", new AggregatorDefinitionParser());
     registerBeanDefinitionParser("collection-aggregator", new AggregatorDefinitionParser(SimpleCollectionAggregator.class));
@@ -528,19 +534,21 @@ public class MuleNamespaceHandler extends AbstractMuleNamespaceHandler {
     // Routing: Conditional Routers
     registerBeanDefinitionParser("choice", new ChildDefinitionParser("messageProcessor", ChoiceRouterFactoryBean.class));
     registerBeanDefinitionParser("when",
-        (ChildDefinitionParser) new ChildDefinitionParser("route", MessageProcessorFilterPairFactoryBean.class)
-            .registerPreProcessor(new CheckExclusiveAttributesAndChildren(new String[] {"expression"},
-                new String[] {"{http://www.mulesoft.org/schema/mule/core}abstractFilterType"})));
+                                 (ChildDefinitionParser) new ChildDefinitionParser("route",
+                                                                                   MessageProcessorFilterPairFactoryBean.class)
+                                                                                       .registerPreProcessor(new CheckExclusiveAttributesAndChildren(new String[] {
+                                                                                           "expression"}, new String[] {
+                                                                                               "{http://www.mulesoft.org/schema/mule/core}abstractFilterType"})));
     registerBeanDefinitionParser("otherwise",
-        new ChildDefinitionParser("defaultRoute", MessageProcessorFilterPairFactoryBean.class));
+                                 new ChildDefinitionParser("defaultRoute", MessageProcessorFilterPairFactoryBean.class));
 
     registerBeanDefinitionParser("all", new ChildDefinitionParser("messageProcessor", MulticastingRouter.class));
     registerBeanDefinitionParser("scatter-gather",
-        new ChildDefinitionParser("messageProcessor", ScatterGatherRouterFactoryBean.class));
+                                 new ChildDefinitionParser("messageProcessor", ScatterGatherRouterFactoryBean.class));
     registerBeanDefinitionParser("custom-aggregation-strategy", new AggregationStrategyDefinitionParser());
 
     registerBeanDefinitionParser("request-reply",
-        new ChildDefinitionParser("messageProcessor", SimpleAsyncRequestReplyRequester.class));
+                                 new ChildDefinitionParser("messageProcessor", SimpleAsyncRequestReplyRequester.class));
     registerBeanDefinitionParser("first-successful", new ChildDefinitionParser("messageProcessor", FirstSuccessful.class));
     registerBeanDefinitionParser("until-successful", new ChildDefinitionParser("messageProcessor", UntilSuccessful.class));
     registerBeanDefinitionParser("round-robin", new ChildDefinitionParser("messageProcessor", RoundRobin.class));
@@ -550,13 +558,13 @@ public class MuleNamespaceHandler extends AbstractMuleNamespaceHandler {
     registerMuleBeanDefinitionParser("custom-route-resolver", new ParentDefinitionParser())
         .addAlias(AbstractMuleBeanDefinitionParser.ATTRIBUTE_REF, "dynamicRouteResolver");
     registerMuleBeanDefinitionParser("dead-letter-queue", new ParentDefinitionParser()).addAlias("messageProcessor",
-        "deadLetterQueue");
+                                                                                                 "deadLetterQueue");
 
     registerBeanDefinitionParser("custom-router", new ChildDefinitionParser("messageProcessor"));
 
     // Message Info Mappings
     registerBeanDefinitionParser("expression-message-info-mapping",
-        new ChildDefinitionParser("messageInfoMapping", ExpressionMessageInfoMapping.class));
+                                 new ChildDefinitionParser("messageInfoMapping", ExpressionMessageInfoMapping.class));
     registerBeanDefinitionParser("custom-message-info-mapping", new ChildDefinitionParser("messageInfoMapping"));
 
     // Common Filters
@@ -583,7 +591,7 @@ public class MuleNamespaceHandler extends AbstractMuleNamespaceHandler {
     registerMuleBeanDefinitionParser("rename-message-property", new ChildMapEntryDefinitionParser("renameProperties"))
         .addCollection("renameProperties");
     registerBeanDefinitionParser("delete-message-property",
-        new ChildListEntryDefinitionParser("deleteProperties", ChildMapEntryDefinitionParser.KEY));
+                                 new ChildListEntryDefinitionParser("deleteProperties", ChildMapEntryDefinitionParser.KEY));
     registerMuleBeanDefinitionParser("jndi-provider-properties", new ChildMapDefinitionParser("jndiProviderProperties"))
         .addCollection("jndiProviderProperties");
     registerMuleBeanDefinitionParser("jndi-provider-property", new ChildMapEntryDefinitionParser("jndiProviderProperties"))
@@ -598,15 +606,16 @@ public class MuleNamespaceHandler extends AbstractMuleNamespaceHandler {
     registerMuleBeanDefinitionParser("custom-encryption-strategy", new NameTransferDefinitionParser("encryptionStrategies"))
         .addAlias("strategy", "encryptionStrategy");
     registerBeanDefinitionParser("password-encryption-strategy",
-        new ChildDefinitionParser("encryptionStrategy", PasswordBasedEncryptionStrategy.class));
+                                 new ChildDefinitionParser("encryptionStrategy", PasswordBasedEncryptionStrategy.class));
     registerMuleBeanDefinitionParser("secret-key-encryption-strategy",
-        new ChildDefinitionParser("encryptionStrategy", SecretKeyEncryptionStrategy.class)).registerPreProcessor(
-            new CheckExclusiveAttributes(new String[][] {new String[] {"key"}, new String[] {"keyFactory-ref"}}));
+                                     new ChildDefinitionParser("encryptionStrategy", SecretKeyEncryptionStrategy.class))
+                                         .registerPreProcessor(new CheckExclusiveAttributes(new String[][] {new String[] {"key"},
+                                             new String[] {"keyFactory-ref"}}));
     registerBeanDefinitionParser("encryption-security-filter",
-        new SecurityFilterDefinitionParser(MuleEncryptionEndpointSecurityFilter.class));
+                                 new SecurityFilterDefinitionParser(MuleEncryptionEndpointSecurityFilter.class));
     registerBeanDefinitionParser("custom-security-filter", new SecurityFilterDefinitionParser());
     registerBeanDefinitionParser("username-password-filter",
-        new SecurityFilterDefinitionParser(UsernamePasswordAuthenticationFilter.class));
+                                 new SecurityFilterDefinitionParser(UsernamePasswordAuthenticationFilter.class));
 
     // Interceptors
     registerMuleBeanDefinitionParser("interceptor-stack", new InterceptorStackDefinitionParser());

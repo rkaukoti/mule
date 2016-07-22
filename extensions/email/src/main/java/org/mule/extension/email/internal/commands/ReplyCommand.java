@@ -48,7 +48,7 @@ public final class ReplyCommand {
    * @param replyToAll if this reply should be sent to all recipients of this message, or only the sender of the received email.
    */
   public void reply(SenderConnection connection, MuleMessage muleMessage, EmailContent content, String subject, String from,
-      String defaultCharset, Map<String, String> headers, Boolean replyToAll) {
+                    String defaultCharset, Map<String, String> headers, Boolean replyToAll) {
     EmailAttributes attributes = getAttributesFromMessage(muleMessage).orElseThrow(() -> new EmailException(NO_EMAIL_FOUND));
 
     List<String> replyTo = attributes.getReplyToAddresses();
@@ -69,6 +69,6 @@ public final class ReplyCommand {
     List<String> ccAddresses = replyToAll ? attributes.getCcAddresses() : new ArrayList<>();
     List<EmailAttachment> emailAttachments = mapToEmailAttachments(attributes.getAttachments());
     sendCommand.send(connection, content, subject, replyTo, from, defaultCharset, ccAddresses, new ArrayList<>(), headers,
-        emailAttachments);
+                     emailAttachments);
   }
 }

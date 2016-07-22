@@ -29,7 +29,8 @@ public class UdpRequesterConnection extends AbstractUdpConnection implements Req
   private final ConnectionSettings localAddressSettings;
 
   public UdpRequesterConnection(ConnectionSettings connectionSettings, ConnectionSettings localAddressSettings,
-      UdpSocketProperties socketProperties) throws ConnectionException {
+                                UdpSocketProperties socketProperties)
+      throws ConnectionException {
     super(connectionSettings, socketProperties);
     this.localAddressSettings = localAddressSettings;
   }

@@ -38,7 +38,8 @@ public class SpringXmlConfigurationBuilder extends AbstractResourceConfiguration
   protected ApplicationContext applicationContext;
 
   public SpringXmlConfigurationBuilder(String[] configResources, Map<String, String> artifactProperties,
-      ArtifactType artifactType) throws ConfigurationException {
+                                       ArtifactType artifactType)
+      throws ConfigurationException {
     super(configResources, artifactProperties);
     this.artifactType = artifactType;
   }
@@ -49,7 +50,7 @@ public class SpringXmlConfigurationBuilder extends AbstractResourceConfiguration
   }
 
   public SpringXmlConfigurationBuilder(ConfigResource[] configResources, Map<String, String> artifactProperties,
-      ArtifactType artifactType) {
+                                       ArtifactType artifactType) {
     super(configResources, artifactProperties);
     this.artifactType = artifactType;
   }
@@ -103,9 +104,9 @@ public class SpringXmlConfigurationBuilder extends AbstractResourceConfiguration
   }
 
   protected ApplicationContext doCreateApplicationContext(MuleContext muleContext, ConfigResource[] artifactConfigResources,
-      OptionalObjectsController optionalObjectsController) {
+                                                          OptionalObjectsController optionalObjectsController) {
     return new MuleArtifactContext(muleContext, artifactConfigResources, optionalObjectsController, getArtifactProperties(),
-        artifactType);
+                                   artifactType);
   }
 
 
@@ -129,12 +130,13 @@ public class SpringXmlConfigurationBuilder extends AbstractResourceConfiguration
   }
 
   private void createRegistryWithParentContext(MuleContext muleContext, ApplicationContext applicationContext,
-      ApplicationContext parentContext) throws ConfigurationException {
+                                               ApplicationContext parentContext)
+      throws ConfigurationException {
     if (applicationContext instanceof ConfigurableApplicationContext) {
       registry = new SpringRegistry((ConfigurableApplicationContext) applicationContext, parentContext, muleContext);
     } else {
-      throw new ConfigurationException(MessageFactory.createStaticMessage(
-          "Cannot set a parent context if the ApplicationContext does not implement ConfigurableApplicationContext"));
+      throw new ConfigurationException(MessageFactory
+          .createStaticMessage("Cannot set a parent context if the ApplicationContext does not implement ConfigurableApplicationContext"));
     }
   }
 

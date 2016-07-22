@@ -35,14 +35,14 @@ public class MuleBeanDefinitionDocumentReader extends DefaultBeanDefinitionDocum
   private final Stack<ApplicationModel> applicationModelStack = new Stack<>();
 
   public MuleBeanDefinitionDocumentReader(BeanDefinitionFactory beanDefinitionFactory,
-      XmlApplicationParser xmlApplicationParser) {
+                                          XmlApplicationParser xmlApplicationParser) {
     this.beanDefinitionFactory = beanDefinitionFactory;
     this.xmlApplicationParser = xmlApplicationParser;
   }
 
   @Override
   protected BeanDefinitionParserDelegate createDelegate(XmlReaderContext readerContext, Element root,
-      BeanDefinitionParserDelegate parentDelegate) {
+                                                        BeanDefinitionParserDelegate parentDelegate) {
     BeanDefinitionParserDelegate delegate = createBeanDefinitionParserDelegate(readerContext);
     delegate.initDefaults(root, parentDelegate);
     return delegate;
@@ -50,7 +50,7 @@ public class MuleBeanDefinitionDocumentReader extends DefaultBeanDefinitionDocum
 
   protected MuleHierarchicalBeanDefinitionParserDelegate createBeanDefinitionParserDelegate(XmlReaderContext readerContext) {
     return new MuleHierarchicalBeanDefinitionParserDelegate(readerContext, this, applicationModelStack::peek,
-        beanDefinitionFactory, getElementsValidator());
+                                                            beanDefinitionFactory, getElementsValidator());
   }
 
   protected ElementValidator[] getElementsValidator() {

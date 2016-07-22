@@ -17,7 +17,7 @@ public class ApplicationStartupSplashScreen extends SplashScreen {
   protected void doHeader(MuleContext context) {
     header.add("Application: " + context.getConfiguration().getId());
     header.add(String.format("OS encoding: %s, Mule encoding: %s", SystemUtils.FILE_SEPARATOR,
-        context.getConfiguration().getDefaultEncoding()));
+                             context.getConfiguration().getDefaultEncoding()));
     header.add(" ");
   }
 

@@ -29,23 +29,25 @@ public class OAuth2NamespaceHandler extends MuleNamespaceHandler {
         new ChildDefinitionParser("authentication", DefaultAuthorizationCodeGrantType.class);
     registerMuleBeanDefinitionParser("authorization-code-grant-type", authorizationCodeGrantType);
     registerMuleBeanDefinitionParser("authorization-request",
-        new ChildDefinitionParser("authorizationRequestHandler", AuthorizationRequestHandler.class));
+                                     new ChildDefinitionParser("authorizationRequestHandler", AuthorizationRequestHandler.class));
     final ParentContextDefinitionParser tokenRequestHandlerDefinitionParser =
         new ParentContextDefinitionParser("authorization-code-grant-type",
-            new ChildDefinitionParser("tokenRequestHandler", AutoAuthorizationCodeTokenRequestHandler.class));
+                                          new ChildDefinitionParser("tokenRequestHandler",
+                                                                    AutoAuthorizationCodeTokenRequestHandler.class));
     tokenRequestHandlerDefinitionParser
         .otherwise(new ChildDefinitionParser("tokenRequestHandler", ClientCredentialsTokenRequestHandler.class));
     registerMuleBeanDefinitionParser("token-request", tokenRequestHandlerDefinitionParser);
     registerMuleBeanDefinitionParser("token-response",
-        new ChildDefinitionParser("tokenResponseConfiguration", TokenResponseConfiguration.class));
+                                     new ChildDefinitionParser("tokenResponseConfiguration", TokenResponseConfiguration.class));
     registerMuleBeanDefinitionParser("custom-parameters",
-        new GenericChildMapDefinitionParser("customParameters", "custom-parameter", "paramName", "value"));
+                                     new GenericChildMapDefinitionParser("customParameters", "custom-parameter", "paramName",
+                                                                         "value"));
     registerMuleBeanDefinitionParser("custom-parameter-extractor",
-        new ChildDefinitionParser("parameterExtractor", ParameterExtractor.class));
+                                     new ChildDefinitionParser("parameterExtractor", ParameterExtractor.class));
     registerMuleBeanDefinitionParser("client-credentials-grant-type",
-        new ChildDefinitionParser("authentication", ClientCredentialsGrantType.class, true));
+                                     new ChildDefinitionParser("authentication", ClientCredentialsGrantType.class, true));
     registerMuleBeanDefinitionParser("invalidate-oauth-context",
-        new MessageProcessorDefinitionParser(InvalidateOauthContextMessageProcessor.class));
+                                     new MessageProcessorDefinitionParser(InvalidateOauthContextMessageProcessor.class));
   }
 
 }

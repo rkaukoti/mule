@@ -32,7 +32,7 @@ public class ResultSetIterator implements Iterator<Map<String, Object>>, Closeab
   private Boolean cachedNext = null;
 
   public ResultSetIterator(DbConnection connection, ResultSet resultSet, RowHandler rowHandler,
-      StreamingResultSetCloser streamingResultSetCloser) {
+                           StreamingResultSetCloser streamingResultSetCloser) {
     if (connection == null) {
       throw new NullPointerException();
     }

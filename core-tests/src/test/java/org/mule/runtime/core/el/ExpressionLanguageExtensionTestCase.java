@@ -153,7 +153,7 @@ public class ExpressionLanguageExtensionTestCase extends AbstractELTestCase {
     mvel.initialise();
 
     Assert.assertEquals("called param[0]=one,param[1]=two,app.name=" + muleContext.getConfiguration().getId(),
-        mvel.evaluate("f('one','two')"));
+                        mvel.evaluate("f('one','two')"));
   }
 
   @Test

@@ -50,8 +50,9 @@ public class HttpMessageProcessorTemplateTestCase extends AbstractMuleTestCase {
     ArgumentCaptor<HttpResponse> httpResponseCaptor = ArgumentCaptor.forClass(HttpResponse.class);
     doNothing().when(responseReadyCallback).responseReady(httpResponseCaptor.capture(), any(ResponseStatusCallback.class));
 
-    HttpMessageProcessorTemplate httpMessageProcessorTemplate = new HttpMessageProcessorTemplate(testEvent,
-        mock(MessageProcessor.class), responseReadyCallback, null, HttpResponseBuilder.emptyInstance(mock(MuleContext.class)));
+    HttpMessageProcessorTemplate httpMessageProcessorTemplate =
+        new HttpMessageProcessorTemplate(testEvent, mock(MessageProcessor.class), responseReadyCallback, null,
+                                         HttpResponseBuilder.emptyInstance(mock(MuleContext.class)));
 
     httpMessageProcessorTemplate
         .sendFailureResponseToClient(new MessagingException(CoreMessages.createStaticMessage(TEST_MESSAGE), testEvent), null);
@@ -66,8 +67,9 @@ public class HttpMessageProcessorTemplateTestCase extends AbstractMuleTestCase {
     ArgumentCaptor<HttpResponse> httpResponseCaptor = ArgumentCaptor.forClass(HttpResponse.class);
     doNothing().when(responseReadyCallback).responseReady(httpResponseCaptor.capture(), any(ResponseStatusCallback.class));
 
-    HttpMessageProcessorTemplate httpMessageProcessorTemplate = new HttpMessageProcessorTemplate(testEvent,
-        mock(MessageProcessor.class), responseReadyCallback, null, HttpResponseBuilder.emptyInstance(mock(MuleContext.class)));
+    HttpMessageProcessorTemplate httpMessageProcessorTemplate =
+        new HttpMessageProcessorTemplate(testEvent, mock(MessageProcessor.class), responseReadyCallback, null,
+                                         HttpResponseBuilder.emptyInstance(mock(MuleContext.class)));
 
     ResponseCompletionCallback responseCompletionCallback = mock(ResponseCompletionCallback.class);
     httpMessageProcessorTemplate.sendResponseToClient(testEvent, responseCompletionCallback);
@@ -85,8 +87,9 @@ public class HttpMessageProcessorTemplateTestCase extends AbstractMuleTestCase {
     ArgumentCaptor<HttpResponse> httpResponseCaptor = ArgumentCaptor.forClass(HttpResponse.class);
     doThrow(expected).when(responseReadyCallback).responseReady(httpResponseCaptor.capture(), any(ResponseStatusCallback.class));
 
-    HttpMessageProcessorTemplate httpMessageProcessorTemplate = new HttpMessageProcessorTemplate(testEvent,
-        mock(MessageProcessor.class), responseReadyCallback, null, HttpResponseBuilder.emptyInstance(mock(MuleContext.class)));
+    HttpMessageProcessorTemplate httpMessageProcessorTemplate =
+        new HttpMessageProcessorTemplate(testEvent, mock(MessageProcessor.class), responseReadyCallback, null,
+                                         HttpResponseBuilder.emptyInstance(mock(MuleContext.class)));
 
     ResponseCompletionCallback responseCompletionCallback = mock(ResponseCompletionCallback.class);
 

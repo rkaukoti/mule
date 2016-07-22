@@ -24,16 +24,17 @@ public class ErrorHandlingExecutionTemplate implements ExecutionTemplate<MuleEve
   private final ExecutionInterceptor<MuleEvent> processingInterceptor;
 
   private ErrorHandlingExecutionTemplate(final MuleContext muleContext,
-      final MessagingExceptionHandler messagingExceptionHandler) {
+                                         final MessagingExceptionHandler messagingExceptionHandler) {
     final TransactionConfig transactionConfig = new MuleTransactionConfig();
     final boolean processTransactionOnException = false;
     ExecutionInterceptor<MuleEvent> tempExecutionInterceptor = new ExecuteCallbackInterceptor<MuleEvent>();
     tempExecutionInterceptor = new CommitTransactionInterceptor(tempExecutionInterceptor);
     tempExecutionInterceptor = new HandleExceptionInterceptor(tempExecutionInterceptor, messagingExceptionHandler);
-    tempExecutionInterceptor = new BeginAndResolveTransactionInterceptor<MuleEvent>(tempExecutionInterceptor, transactionConfig,
-        muleContext, processTransactionOnException, false);
+    tempExecutionInterceptor =
+        new BeginAndResolveTransactionInterceptor<MuleEvent>(tempExecutionInterceptor, transactionConfig, muleContext,
+                                                             processTransactionOnException, false);
     tempExecutionInterceptor = new SuspendXaTransactionInterceptor<MuleEvent>(tempExecutionInterceptor, transactionConfig,
-        processTransactionOnException);
+                                                                              processTransactionOnException);
     this.processingInterceptor = new RethrowExceptionInterceptor(tempExecutionInterceptor);
   }
 
@@ -45,7 +46,7 @@ public class ErrorHandlingExecutionTemplate implements ExecutionTemplate<MuleEve
    * @param messagingExceptionHandler exception listener to execute for any MessagingException exception
    */
   public static ErrorHandlingExecutionTemplate createErrorHandlingExecutionTemplate(final MuleContext muleContext,
-      final MessagingExceptionHandler messagingExceptionHandler) {
+                                                                                    final MessagingExceptionHandler messagingExceptionHandler) {
     return new ErrorHandlingExecutionTemplate(muleContext, messagingExceptionHandler);
   }
 

@@ -46,7 +46,7 @@ public final class FtpWriteCommand extends ClassicFtpCommand implements WriteCom
    */
   @Override
   public void write(FileConnectorConfig config, String filePath, Object content, FileWriteMode mode, MuleEvent event,
-      boolean lock, boolean createParentDirectory, String encoding) {
+                    boolean lock, boolean createParentDirectory, String encoding) {
     Path path = resolvePath(config, filePath);
     FileAttributes file = getFile(config, filePath);
 
@@ -54,9 +54,10 @@ public final class FtpWriteCommand extends ClassicFtpCommand implements WriteCom
       assureParentFolderExists(config, path, createParentDirectory);
     } else {
       if (mode == FileWriteMode.CREATE_NEW) {
-        throw new IllegalArgumentException(
-            String.format("Cannot write to path '%s' because it already exists and write mode '%s' was selected. "
-                + "Use a different write mode or point to a path which doesn't exists", path, mode));
+        throw new IllegalArgumentException(String.format(
+                                                         "Cannot write to path '%s' because it already exists and write mode '%s' was selected. "
+                                                             + "Use a different write mode or point to a path which doesn't exists",
+                                                         path, mode));
       } else if (mode == FileWriteMode.OVERWRITE) {
         fileSystem.delete(config, file.getPath());
       }

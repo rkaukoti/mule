@@ -60,8 +60,8 @@ public final class SourceConfigurer {
     try {
       return builder.build(MuleExtensionUtils.getInitialiserEvent(muleContext));
     } catch (Exception e) {
-      throw new MuleRuntimeException(
-          createStaticMessage("Exception was found trying to configure source of type " + source.getClass().getName()), e);
+      throw new MuleRuntimeException(createStaticMessage("Exception was found trying to configure source of type "
+          + source.getClass().getName()), e);
     }
   }
 

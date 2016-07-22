@@ -20,7 +20,7 @@ public class ResponseMessageProcessorAdapterTestCase extends AbstractMuleContext
   public void testResponseAdaptorSingleMP() throws MuleException, Exception {
     DefaultMessageProcessorChainBuilder builder = new DefaultMessageProcessorChainBuilder();
     builder.chain(createStringAppendTransformer("1"), new ResponseMessageProcessorAdapter(createStringAppendTransformer("3")),
-        createStringAppendTransformer("2"));
+                  createStringAppendTransformer("2"));
     assertEquals("0123", builder.build().process(getTestEvent("0")).getMessageAsString());
   }
 
@@ -28,7 +28,7 @@ public class ResponseMessageProcessorAdapterTestCase extends AbstractMuleContext
   public void testResponseAdaptorSingleMPReturnsNull() throws MuleException, Exception {
     DefaultMessageProcessorChainBuilder builder = new DefaultMessageProcessorChainBuilder();
     builder.chain(createStringAppendTransformer("1"), new ResponseMessageProcessorAdapter(new ReturnNullMP()),
-        createStringAppendTransformer("2"));
+                  createStringAppendTransformer("2"));
     assertEquals("012", builder.build().process(getTestEvent("0")).getMessageAsString());
   }
 
@@ -36,9 +36,9 @@ public class ResponseMessageProcessorAdapterTestCase extends AbstractMuleContext
   public void testResponseAdaptorNestedChain() throws MuleException, Exception {
     DefaultMessageProcessorChainBuilder builder = new DefaultMessageProcessorChainBuilder();
     builder.chain(createStringAppendTransformer("1"),
-        new ResponseMessageProcessorAdapter(new DefaultMessageProcessorChainBuilder()
-            .chain(createStringAppendTransformer("a"), createStringAppendTransformer("b")).build()),
-        createStringAppendTransformer("2"));
+                  new ResponseMessageProcessorAdapter(new DefaultMessageProcessorChainBuilder()
+                      .chain(createStringAppendTransformer("a"), createStringAppendTransformer("b")).build()),
+                  createStringAppendTransformer("2"));
     assertEquals("012ab", builder.build().process(getTestEvent("0")).getMessageAsString());
   }
 
@@ -46,9 +46,9 @@ public class ResponseMessageProcessorAdapterTestCase extends AbstractMuleContext
   public void testResponseAdaptorNestedChainReturnsNull() throws MuleException, Exception {
     DefaultMessageProcessorChainBuilder builder = new DefaultMessageProcessorChainBuilder();
     builder.chain(createStringAppendTransformer("1"),
-        new ResponseMessageProcessorAdapter(new DefaultMessageProcessorChainBuilder()
-            .chain(createStringAppendTransformer("a"), createStringAppendTransformer("b"), new ReturnNullMP()).build()),
-        createStringAppendTransformer("2"));
+                  new ResponseMessageProcessorAdapter(new DefaultMessageProcessorChainBuilder()
+                      .chain(createStringAppendTransformer("a"), createStringAppendTransformer("b"), new ReturnNullMP()).build()),
+                  createStringAppendTransformer("2"));
     assertEquals("012", builder.build().process(getTestEvent("0")).getMessageAsString());
   }
 

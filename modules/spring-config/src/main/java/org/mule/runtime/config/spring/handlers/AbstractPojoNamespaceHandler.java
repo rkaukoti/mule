@@ -20,9 +20,10 @@ public abstract class AbstractPojoNamespaceHandler extends AbstractMuleNamespace
     if (s.contains("get")) {
       s = s.substring(3);
     }
-    return s.replaceAll(
-        String.format("%s|%s|%s", "(?<=[A-Z])(?=[A-Z][a-z][0-9])", "(?<=[^A-Z])(?=[A-Z])", "(?<=[A-Za-z0-9])(?=[^A-Za-z0-9])"),
-        "-").toLowerCase();
+    return s.replaceAll(String.format("%s|%s|%s", "(?<=[A-Z])(?=[A-Z][a-z][0-9])", "(?<=[^A-Z])(?=[A-Z])",
+                                      "(?<=[A-Za-z0-9])(?=[^A-Za-z0-9])"),
+                        "-")
+        .toLowerCase();
   }
 
   public void registerPojo(String configElementName, Class<?> cls) {
@@ -41,7 +42,8 @@ public abstract class AbstractPojoNamespaceHandler extends AbstractMuleNamespace
           String[] parameterNames = paramReader.getParameterNames(m);
 
           registerMuleBeanDefinitionParser(splitCamelCase(m.getName()),
-              new InvokerMessageProcessorDefinitionParser("messageProcessor", cls, m.getName(), parameterNames));
+                                           new InvokerMessageProcessorDefinitionParser("messageProcessor", cls, m.getName(),
+                                                                                       parameterNames));
         }
       }
     } catch (IOException e) {

@@ -73,15 +73,15 @@ public class CollectionCorrelatorCallback implements EventCorrelatorCallback {
   public boolean shouldAggregateEvents(EventGroup events) {
 
     if (!events.expectedSize().isPresent()) {
-      logger.warn(
-          "Correlation Group Size not set, but correlation aggregator is being used." + " Message is being forwarded as is");
+      logger.warn("Correlation Group Size not set, but correlation aggregator is being used."
+          + " Message is being forwarded as is");
       return true;
     }
 
     Integer size = events.expectedSize().get();
     if (logger.isDebugEnabled()) {
       logger.debug(MessageFormat.format("Correlation group size is {0}. Current event group size is {1} for group ID: {2}", size,
-          events.size(), events.getGroupId()));
+                                        events.size(), events.getGroupId()));
     }
 
     return size == events.size();

@@ -38,8 +38,8 @@ class ObjectReferencePopulator {
   public void populate(Class<?> type, Consumer<String> typeIdConsumer) {
     String referenceName = OBJECT_REFERENCES.get(type);
     if (referenceName == null) {
-      throw new MuleRuntimeException(
-          CoreMessages.createStaticMessage("Could not determine reference object of type: " + type.getName()));
+      throw new MuleRuntimeException(CoreMessages
+          .createStaticMessage("Could not determine reference object of type: " + type.getName()));
     }
     typeIdConsumer.accept(referenceName);
   }

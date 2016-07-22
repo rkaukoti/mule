@@ -48,8 +48,7 @@ public abstract class AbstractRemoveVariablePropertyTransformerTestCase extends 
   private AbstractRemoveVariablePropertyTransformer removeVariableTransformer;
 
 
-  public AbstractRemoveVariablePropertyTransformerTestCase(
-      AbstractRemoveVariablePropertyTransformer abstractAddVariableTransformer) {
+  public AbstractRemoveVariablePropertyTransformerTestCase(AbstractRemoveVariablePropertyTransformer abstractAddVariableTransformer) {
     removeVariableTransformer = abstractAddVariableTransformer;
   }
 

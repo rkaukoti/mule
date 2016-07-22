@@ -54,10 +54,9 @@ public class HttpTransformersMule1822TestCase extends FunctionalTestCase {
    */
   @Test
   public void testResponse() throws Exception {
-    assertEquals(
-        StringAppendTestTransformer.append(" response",
-            StringAppendTestTransformer.append(" response 2", OUTBOUND_MESSAGE + " Received")),
-        getPayloadAsString(sendTo("response")));
+    assertEquals(StringAppendTestTransformer
+        .append(" response", StringAppendTestTransformer.append(" response 2", OUTBOUND_MESSAGE + " Received")),
+                 getPayloadAsString(sendTo("response")));
   }
 
   /**
@@ -65,13 +64,12 @@ public class HttpTransformersMule1822TestCase extends FunctionalTestCase {
    */
   @Test
   public void testBoth() throws Exception {
-    assertEquals(
-        StringAppendTestTransformer
-            .append(" response",
-                StringAppendTestTransformer.append(" response 2",
-                    StringAppendTestTransformer.append(" transformed 2",
-                        StringAppendTestTransformer.appendDefault(OUTBOUND_MESSAGE)) + " Received")),
-        getPayloadAsString(sendTo("both")));
+    assertEquals(StringAppendTestTransformer
+        .append(" response", StringAppendTestTransformer
+            .append(" response 2",
+                    StringAppendTestTransformer
+                        .append(" transformed 2", StringAppendTestTransformer.appendDefault(OUTBOUND_MESSAGE)) + " Received")),
+                 getPayloadAsString(sendTo("both")));
   }
 
 }

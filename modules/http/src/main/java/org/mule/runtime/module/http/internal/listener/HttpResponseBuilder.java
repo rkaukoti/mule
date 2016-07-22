@@ -89,7 +89,8 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
   }
 
   public HttpResponse build(org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder httpResponseBuilder,
-      MuleEvent event) throws MessagingException {
+                            MuleEvent event)
+      throws MessagingException {
     final HttpResponseHeaderBuilder httpResponseHeaderBuilder = new HttpResponseHeaderBuilder();
     final Set<String> outboundProperties = event.getMessage().getOutboundPropertyNames();
 
@@ -112,8 +113,8 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
       final Collection<String> paramValues = resolvedHeaders.getAll(name);
       for (String value : paramValues) {
         if (TRANSFER_ENCODING.equals(name) && !supportsTransferEncoding(event)) {
-          logger.debug(
-              "Client HTTP version is lower than 1.1 so the unsupported 'Transfer-Encoding' header has been removed and 'Content-Length' will be sent instead.");
+          logger
+              .debug("Client HTTP version is lower than 1.1 so the unsupported 'Transfer-Encoding' header has been removed and 'Content-Length' will be sent instead.");
         } else {
           httpResponseHeaderBuilder.addHeader(name, value);
         }
@@ -134,7 +135,7 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
       }
       httpEntity = createMultipartEntity(event, httpResponseHeaderBuilder.getContentType());
       resolveEncoding(httpResponseHeaderBuilder, existingTransferEncoding, existingContentLength, supportsTransferEncoding(event),
-          (ByteArrayHttpEntity) httpEntity);
+                      (ByteArrayHttpEntity) httpEntity);
     } else {
       final Object payload = event.getMessage().getPayload();
       if (payload == null) {
@@ -162,7 +163,7 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
         try {
           ByteArrayHttpEntity byteArrayHttpEntity = new ByteArrayHttpEntity(event.getMessageAsBytes());
           resolveEncoding(httpResponseHeaderBuilder, existingTransferEncoding, existingContentLength,
-              supportsTransferEncoding(event), byteArrayHttpEntity);
+                          supportsTransferEncoding(event), byteArrayHttpEntity);
           httpEntity = byteArrayHttpEntity;
         } catch (Exception e) {
           throw new RuntimeException(e);
@@ -196,7 +197,8 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
   }
 
   private void resolveEncoding(HttpResponseHeaderBuilder httpResponseHeaderBuilder, String existingTransferEncoding,
-      String existingContentLength, boolean supportsTranferEncoding, ByteArrayHttpEntity byteArrayHttpEntity) {
+                               String existingContentLength, boolean supportsTranferEncoding,
+                               ByteArrayHttpEntity byteArrayHttpEntity) {
     if (responseStreaming == ALWAYS
         || (responseStreaming == AUTO && existingContentLength == null && CHUNKED.equals(existingTransferEncoding))) {
       if (supportsTranferEncoding) {
@@ -279,8 +281,8 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
   private void warnMapPayloadButNoUrlEncodedContentType(String contentType) {
     if (!mapPayloadButNoUrlEncodedContentyTypeWarned) {
       logger.warn(String.format(
-          "Payload is a Map which will be used to generate an url encoded http body but Contenty-Type specified is %s and not %s",
-          contentType, HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED));
+                                "Payload is a Map which will be used to generate an url encoded http body but Contenty-Type specified is %s and not %s",
+                                contentType, HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED));
       mapPayloadButNoUrlEncodedContentyTypeWarned = true;
     }
   }
@@ -288,8 +290,8 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
   private void warnNoMultipartContentTypeButMultipartEntity(String contentType) {
     if (!multipartEntityWithNoMultipartContentyTypeWarned) {
       logger.warn(String.format(
-          "Sending http response with Content-Type %s but the message has attachment and a multipart entity is generated",
-          contentType));
+                                "Sending http response with Content-Type %s but the message has attachment and a multipart entity is generated",
+                                contentType));
       multipartEntityWithNoMultipartContentyTypeWarned = true;
     }
   }

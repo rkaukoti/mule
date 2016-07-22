@@ -86,10 +86,9 @@ public class DefaultTlsContextFactory implements TlsContextFactory, Initialisabl
   }
 
   private void globalConfigNotHonored(String element, String[] elementArray) throws InitialisationException {
-    throw new InitialisationException(MessageFactory.createStaticMessage(
-        String.format("Some selected %1$s are invalid. Valid %1$s according to your TLS configuration file are: %2$s", element,
-            Joiner.on(", ").join(elementArray))),
-        this);
+    throw new InitialisationException(MessageFactory.createStaticMessage(String
+        .format("Some selected %1$s are invalid. Valid %1$s according to your TLS configuration file are: %2$s", element,
+                Joiner.on(", ").join(elementArray))), this);
   }
 
   public String getName() {
@@ -191,8 +190,8 @@ public class DefaultTlsContextFactory implements TlsContextFactory, Initialisabl
   public void setTrustStoreInsecure(boolean insecure) {
     if (insecure) {
       logger.warn(String.format(
-          "TLS context %s trust store set as insecure. No certificate validations will be performed, rendering connections vulnerable to attacks. Use at own risk.",
-          name == null ? StringUtils.EMPTY : name));
+                                "TLS context %s trust store set as insecure. No certificate validations will be performed, rendering connections vulnerable to attacks. Use at own risk.",
+                                name == null ? StringUtils.EMPTY : name));
     }
     this.trustStoreInsecure = insecure;
   }

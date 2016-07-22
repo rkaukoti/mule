@@ -338,7 +338,8 @@ public abstract class AbstractMessageReceiver extends AbstractTransportMessageHa
 
   protected ExecutionTemplate<MuleEvent> createExecutionTemplate() {
     return TransactionalErrorHandlingExecutionTemplate.createMainExecutionTemplate(endpoint.getMuleContext(),
-        endpoint.getTransactionConfig(), flowConstruct.getExceptionListener());
+                                                                                   endpoint.getTransactionConfig(),
+                                                                                   flowConstruct.getExceptionListener());
   }
 
   /**
@@ -419,16 +420,16 @@ public abstract class AbstractMessageReceiver extends AbstractTransportMessageHa
       }
 
       if (connector.isEnableMessageEvents(muleEvent)) {
-        connector.fireNotification(
-            new EndpointMessageNotification(resultEvent.getMessage(), endpoint, resultEvent.getFlowConstruct(), MESSAGE_RESPONSE),
-            muleEvent);
+        connector.fireNotification(new EndpointMessageNotification(resultEvent.getMessage(), endpoint,
+                                                                   resultEvent.getFlowConstruct(), MESSAGE_RESPONSE),
+                                   muleEvent);
       }
     }
     return resultEvent;
   }
 
   protected void processMessage(final MessageProcessTemplate messageProcessTemplate,
-      final MessageProcessContext messageProcessContext) {
+                                final MessageProcessContext messageProcessContext) {
     messageProcessingManager.processMessage(messageProcessTemplate, messageProcessContext);
   }
 

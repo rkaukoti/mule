@@ -38,8 +38,8 @@ public class SingleResourceTransactionFactoryManager {
       }
     }
     if (transactionFactory == null) {
-      throw new MuleRuntimeException(CoreMessages.createStaticMessage(
-          String.format("No %s for transactional resource %s", TransactionFactory.class.getName(), type.getName())));
+      throw new MuleRuntimeException(CoreMessages.createStaticMessage(String
+          .format("No %s for transactional resource %s", TransactionFactory.class.getName(), type.getName())));
     }
     return transactionFactory;
   }

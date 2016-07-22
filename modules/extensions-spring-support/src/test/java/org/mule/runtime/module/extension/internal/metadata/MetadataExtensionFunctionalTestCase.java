@@ -117,7 +117,7 @@ public abstract class MetadataExtensionFunctionalTestCase extends ExtensionFunct
   protected ComponentMetadataDescriptor getComponentDynamicMetadata(MetadataKey key) {
     MetadataResult<ComponentMetadataDescriptor> componentMetadata = metadataManager.getMetadata(componentId, key);
     assertThat(componentMetadata.getFailure().isPresent() ? componentMetadata.getFailure().get().getReason() : "No Failure",
-        componentMetadata.isSuccess(), is(true));
+               componentMetadata.isSuccess(), is(true));
 
     return componentMetadata.get();
   }
@@ -145,19 +145,22 @@ public abstract class MetadataExtensionFunctionalTestCase extends ExtensionFunct
   }
 
   protected void assertExpectedOutput(MetadataResult<OutputMetadataDescriptor> outputDescriptor, Type payloadType,
-      Type attributesType) throws IOException {
+                                      Type attributesType)
+      throws IOException {
     assertExpectedType(outputDescriptor.get().getPayloadMetadata(), payloadType);
     assertExpectedType(outputDescriptor.get().getAttributesMetadata(), attributesType);
   }
 
   protected void assertExpectedOutput(MetadataResult<OutputMetadataDescriptor> outputDescriptor, MetadataType payloadType,
-      Type attributesType) throws IOException {
+                                      Type attributesType)
+      throws IOException {
     assertExpectedType(outputDescriptor.get().getPayloadMetadata(), payloadType);
     assertExpectedType(outputDescriptor.get().getAttributesMetadata(), attributesType);
   }
 
   protected void assertExpectedOutput(MetadataResult<OutputMetadataDescriptor> outputDescriptor, MetadataType payloadType,
-      MetadataType attributesType) throws IOException {
+                                      MetadataType attributesType)
+      throws IOException {
     assertExpectedType(outputDescriptor.get().getPayloadMetadata(), payloadType);
     assertExpectedType(outputDescriptor.get().getAttributesMetadata(), attributesType);
   }

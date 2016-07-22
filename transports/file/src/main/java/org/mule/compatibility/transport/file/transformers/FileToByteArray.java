@@ -63,7 +63,7 @@ public class FileToByteArray extends AbstractTransformer implements Discoverable
 
     } else {
       throw new TransformerException(MessageFactory.createStaticMessage("Cannot handle source type %s", src.getClass().getName()),
-          this);
+                                     this);
     }
 
     try {

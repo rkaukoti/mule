@@ -34,8 +34,8 @@ public class ImmutableThreadingProfile implements ThreadingProfile {
   private MuleContext muleContext;
 
   public ImmutableThreadingProfile(int maxThreadsActive, int maxThreadsIdle, int maxBufferSize, long threadTTL,
-      long threadWaitTimeout, int poolExhaustedAction, boolean doThreading, RejectedExecutionHandler rejectedExecutionHandler,
-      ThreadFactory threadFactory) {
+                                   long threadWaitTimeout, int poolExhaustedAction, boolean doThreading,
+                                   RejectedExecutionHandler rejectedExecutionHandler, ThreadFactory threadFactory) {
     this.maxThreadsActive = maxThreadsActive;
     this.maxThreadsIdle = maxThreadsIdle;
     this.maxBufferSize = maxBufferSize;
@@ -49,7 +49,7 @@ public class ImmutableThreadingProfile implements ThreadingProfile {
 
   public ImmutableThreadingProfile(ThreadingProfile tp) {
     this(tp.getMaxThreadsActive(), tp.getMaxThreadsIdle(), tp.getMaxBufferSize(), tp.getThreadTTL(), tp.getThreadWaitTimeout(),
-        tp.getPoolExhaustedAction(), tp.isDoThreading(), tp.getRejectedExecutionHandler(), tp.getThreadFactory());
+         tp.getPoolExhaustedAction(), tp.isDoThreading(), tp.getRejectedExecutionHandler(), tp.getThreadFactory());
   }
 
   public int getMaxThreadsActive() {

@@ -71,10 +71,12 @@ public class LifecycleAwareConfigurationInstanceTestCase
 
   @Parameters(name = "{0}")
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {
-        {"With provider",
-            mock(ConnectionProvider.class, withSettings().extraInterfaces(Lifecycle.class, MuleContextAware.class))},
-        {"Without provider", null}});
+    return Arrays.asList(
+                         new Object[][] {
+                             {"With provider",
+                                 mock(ConnectionProvider.class,
+                                      withSettings().extraInterfaces(Lifecycle.class, MuleContextAware.class))},
+                             {"Without provider", null}});
   }
 
   @Before

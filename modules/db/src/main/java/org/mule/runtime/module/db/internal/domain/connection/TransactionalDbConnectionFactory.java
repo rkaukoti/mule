@@ -33,7 +33,7 @@ public class TransactionalDbConnectionFactory implements DbConnectionFactory {
   private final DataSource dataSource;
 
   public TransactionalDbConnectionFactory(DbTransactionManager dbTransactionManager, DbTypeManager dbTypeManager,
-      ConnectionFactory connectionFactory, DataSource dataSource) {
+                                          ConnectionFactory connectionFactory, DataSource dataSource) {
     this.dbTransactionManager = dbTransactionManager;
     this.dbTypeManager = dbTypeManager;
     this.connectionFactory = connectionFactory;
@@ -80,7 +80,7 @@ public class TransactionalDbConnectionFactory implements DbConnectionFactory {
 
   protected DbConnection doCreateDbConnection(Connection connection, TransactionalAction transactionalAction) {
     return new DefaultDbConnection(connection, transactionalAction, new DefaultDbConnectionReleaser(this),
-        new GenericParamTypeResolverFactory(dbTypeManager));
+                                   new GenericParamTypeResolverFactory(dbTypeManager));
   }
 
   private Connection getConnectionFromTransaction(Transaction tx, DataSource dataSource) throws SQLException {

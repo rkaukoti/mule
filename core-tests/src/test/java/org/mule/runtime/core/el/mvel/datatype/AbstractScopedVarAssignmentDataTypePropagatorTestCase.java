@@ -13,7 +13,7 @@ public abstract class AbstractScopedVarAssignmentDataTypePropagatorTestCase
   protected final String variableName;
 
   public AbstractScopedVarAssignmentDataTypePropagatorTestCase(EnricherDataTypePropagator dataTypePropagator,
-      String variableName) {
+                                                               String variableName) {
     super(dataTypePropagator);
     this.variableName = variableName;
   }
@@ -35,8 +35,8 @@ public abstract class AbstractScopedVarAssignmentDataTypePropagatorTestCase
 
   @Test
   public void doesNotChangesVarDataTypeUsingRecursiveMapSyntax() throws Exception {
-    doInnerAssignmentDataTypePropagationTest(
-        createAssignmentExpression("['" + PROPERTY_NAME + "']['" + INNER_PROPERTY_NAME + "']"));
+    doInnerAssignmentDataTypePropagationTest(createAssignmentExpression("['" + PROPERTY_NAME + "']['" + INNER_PROPERTY_NAME
+        + "']"));
   }
 
   @Test
@@ -46,8 +46,8 @@ public abstract class AbstractScopedVarAssignmentDataTypePropagatorTestCase
 
   @Test
   public void doesNotChangesVarDataTypeUsingRecursiveEscapedDotSyntax() throws Exception {
-    doInnerAssignmentDataTypePropagationTest(
-        createAssignmentExpression(".'" + PROPERTY_NAME + "'.'" + INNER_PROPERTY_NAME + "'"));
+    doInnerAssignmentDataTypePropagationTest(createAssignmentExpression(".'" + PROPERTY_NAME + "'.'" + INNER_PROPERTY_NAME
+        + "'"));
   }
 
   private String createAssignmentExpression(String accessorExpression) {

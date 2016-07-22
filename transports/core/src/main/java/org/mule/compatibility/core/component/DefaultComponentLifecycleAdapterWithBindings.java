@@ -25,7 +25,9 @@ public class DefaultComponentLifecycleAdapterWithBindings extends DefaultCompone
   protected static final Logger logger = LoggerFactory.getLogger(DefaultComponentLifecycleAdapterWithBindings.class);
 
   public DefaultComponentLifecycleAdapterWithBindings(Object componentObject, JavaWithBindingsComponent component,
-      FlowConstruct flowConstruct, EntryPointResolverSet entryPointResolver, MuleContext muleContext) throws MuleException {
+                                                      FlowConstruct flowConstruct, EntryPointResolverSet entryPointResolver,
+                                                      MuleContext muleContext)
+      throws MuleException {
 
     super(componentObject, component, flowConstruct, muleContext);
     BindingUtils.configureBinding(component, componentObject);

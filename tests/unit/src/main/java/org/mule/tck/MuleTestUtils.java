@@ -155,7 +155,8 @@ public final class MuleTestUtils {
 
 
   public static MuleEvent getTestEvent(MuleMessage message, FlowConstruct flowConstruct, MessageExchangePattern mep,
-      MuleContext context) throws Exception {
+                                       MuleContext context)
+      throws Exception {
     final MuleSession session = getTestSession(flowConstruct, context);
     final DefaultMuleEvent event = new DefaultMuleEvent(message, mep, flowConstruct, session);
     return event;

@@ -95,9 +95,9 @@ public class ActiveMQJmsConnector extends JmsConnector {
           cleanupMethod = realConnectionClass.getMethod("cleanup", (Class[]) null);
         } else {
           if (logger.isDebugEnabled()) {
-            logger.debug(
-                String.format("InvocationHandler of the JMS connection proxy is of type %s, not doing " + "any extra cleanup",
-                    invocationHandler.getClass().getName()));
+            logger.debug(String
+                .format("InvocationHandler of the JMS connection proxy is of type %s, not doing " + "any extra cleanup",
+                        invocationHandler.getClass().getName()));
           }
         }
       } else {

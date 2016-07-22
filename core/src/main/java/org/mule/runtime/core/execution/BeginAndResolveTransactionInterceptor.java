@@ -24,7 +24,7 @@ class BeginAndResolveTransactionInterceptor<T> implements ExecutionInterceptor<T
   private boolean mustResolveAnyTransaction;
 
   BeginAndResolveTransactionInterceptor(ExecutionInterceptor next, TransactionConfig transactionConfig, MuleContext muleContext,
-      boolean processOnException, boolean mustResolveAnyTransaction) {
+                                        boolean processOnException, boolean mustResolveAnyTransaction) {
     this.next = next;
     this.transactionConfig = transactionConfig;
     this.muleContext = muleContext;

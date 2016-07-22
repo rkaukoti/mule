@@ -39,6 +39,6 @@ public class SMTPProvider extends AbstractSenderProvider {
   @Override
   public SenderConnection connect() throws ConnectionException {
     return new SenderConnection(SMTP, settings.getUser(), settings.getPassword(), settings.getHost(), port,
-        getConnectionTimeout(), getReadTimeout(), getWriteTimeout(), getProperties());
+                                getConnectionTimeout(), getReadTimeout(), getWriteTimeout(), getProperties());
   }
 }

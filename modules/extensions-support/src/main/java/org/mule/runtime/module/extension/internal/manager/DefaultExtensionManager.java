@@ -117,7 +117,7 @@ public final class DefaultExtensionManager
     if (extensionRegistry.containsExtension(extensionName, extensionVendor)) {
       if (LOGGER.isDebugEnabled()) {
         LOGGER.debug("A extension of name '{}' (version: {} vendor {}) is already registered. Skipping...", extensionName,
-            extensionVersion, extensionVendor);
+                     extensionVersion, extensionVendor);
       }
     } else {
       extensionRegistry.registerExtension(extensionName, extensionVendor, extensionModel);
@@ -153,8 +153,8 @@ public final class DefaultExtensionManager
   @Override
   public <C> ConfigurationInstance<C> getConfiguration(String configurationProviderName, Object muleEvent) {
     return (ConfigurationInstance<C>) getConfigurationProvider(configurationProviderName).map(provider -> provider.get(muleEvent))
-        .orElseThrow(() -> new IllegalArgumentException(
-            String.format("There is no registered configurationProvider under name '%s'", configurationProviderName)));
+        .orElseThrow(() -> new IllegalArgumentException(String
+            .format("There is no registered configurationProvider under name '%s'", configurationProviderName)));
   }
 
   /**
@@ -181,8 +181,8 @@ public final class DefaultExtensionManager
       return Optional.of(providers.get(0));
     } else if (matches > 1) {
       throw new IllegalStateException(String.format(
-          "No config-ref was specified for operation of extension '%s', but %d are registered. Please specify which to use",
-          extensionModel.getName(), matches));
+                                                    "No config-ref was specified for operation of extension '%s', but %d are registered. Please specify which to use",
+                                                    extensionModel.getName(), matches));
     }
 
     return Optional.empty();
@@ -197,8 +197,8 @@ public final class DefaultExtensionManager
     synchronized (extensionModel) {
       // check that another thread didn't beat us to create the instance
       if (extensionRegistry.getConfigurationProviders(extensionModel).isEmpty()) {
-        registerConfigurationProvider(
-            implicitConfigurationProviderFactory.createImplicitConfigurationProvider(extensionModel, muleEvent));
+        registerConfigurationProvider(implicitConfigurationProviderFactory.createImplicitConfigurationProvider(extensionModel,
+                                                                                                               muleEvent));
       }
     }
   }
@@ -242,7 +242,7 @@ public final class DefaultExtensionManager
       return new ExtensionManifestXmlSerializer().deserialize(IOUtils.toString(manifestStream));
     } catch (IOException e) {
       throw new MuleRuntimeException(createStaticMessage("Could not read extension manifest on plugin " + manifestUrl.toString()),
-          e);
+                                     e);
     }
   }
 
@@ -252,7 +252,8 @@ public final class DefaultExtensionManager
       disposeIfNeeded(configuration, LOGGER);
     } catch (Exception e) {
       LOGGER.error(String.format("Could not dispose expired dynamic config of key '%s' and type %s", key,
-          configuration.getClass().getName()), e);
+                                 configuration.getClass().getName()),
+                   e);
     }
   }
 

@@ -30,7 +30,7 @@ public class WildcardExpressionLanguageFuntion implements ExpressionLanguageFunc
     if (numParams == 1) {
       try {
         result = isMatch(wildcardPattern, context.getVariable("message", MessageContext.class).payloadAs(String.class),
-            DEFAULT_SENSITIVITY);
+                         DEFAULT_SENSITIVITY);
       } catch (TransformerException e) {
         throw new RuntimeException("Unable to convert payload to string");
       }

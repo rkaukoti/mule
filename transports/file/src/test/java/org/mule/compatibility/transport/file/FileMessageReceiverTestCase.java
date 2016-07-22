@@ -35,7 +35,7 @@ public class FileMessageReceiverTestCase extends AbstractMessageReceiverTestCase
     move.deleteOnExit();
 
     return new FileMessageReceiver(connector, mock(Flow.class), endpoint, read.getAbsolutePath(), move.getAbsolutePath(), null,
-        1000);
+                                   1000);
   }
 
   @Override

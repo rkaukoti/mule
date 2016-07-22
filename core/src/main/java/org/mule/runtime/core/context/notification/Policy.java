@@ -35,9 +35,9 @@ class Policy {
    * For each listener, we check each interface and see what events can be delivered.
    */
   Policy(Map<Class<? extends ServerNotificationListener>, Set<Class<? extends ServerNotification>>> interfaceToEvents,
-      Set<ListenerSubscriptionPair> listenerSubscriptionPairs,
-      Set<Class<? extends ServerNotificationListener>> disabledInterfaces,
-      Set<Class<? extends ServerNotification>> disabledEvents) {
+         Set<ListenerSubscriptionPair> listenerSubscriptionPairs,
+         Set<Class<? extends ServerNotificationListener>> disabledInterfaces,
+         Set<Class<? extends ServerNotification>> disabledEvents) {
     for (ListenerSubscriptionPair pair : listenerSubscriptionPairs) {
       ServerNotificationListener listener = pair.getListener();
       for (Class<? extends ServerNotificationListener> iface : interfaceToEvents.keySet()) {

@@ -61,42 +61,43 @@ public class HttpNamespaceHandler extends AbstractMuleTransportsNamespaceHandler
 
     registerDeprecatedBeanDefinitionParser("rest-service-component", new ComponentDefinitionParser(RestServiceWrapper.class));
     registerDeprecatedBeanDefinitionParser("payloadParameterName",
-        new ChildListEntryDefinitionParser("payloadParameterNames", ChildMapEntryDefinitionParser.VALUE));
+                                           new ChildListEntryDefinitionParser("payloadParameterNames",
+                                                                              ChildMapEntryDefinitionParser.VALUE));
     registerDeprecatedBeanDefinitionParser("requiredParameter", new ChildMapEntryDefinitionParser("requiredParams"));
     registerDeprecatedBeanDefinitionParser("optionalParameter", new ChildMapEntryDefinitionParser("optionalParams"));
 
     registerDeprecatedBeanDefinitionParser("http-response-to-object-transformer",
-        new TransformerMessageProcessorDefinitionParser(HttpClientMethodResponseToObject.class));
+                                           new TransformerMessageProcessorDefinitionParser(HttpClientMethodResponseToObject.class));
     registerDeprecatedBeanDefinitionParser("http-response-to-string-transformer",
-        new TransformerMessageProcessorDefinitionParser(HttpResponseToString.class));
+                                           new TransformerMessageProcessorDefinitionParser(HttpResponseToString.class));
     registerDeprecatedBeanDefinitionParser("object-to-http-request-transformer",
-        new TransformerMessageProcessorDefinitionParser(ObjectToHttpClientMethodRequest.class));
+                                           new TransformerMessageProcessorDefinitionParser(ObjectToHttpClientMethodRequest.class));
     registerDeprecatedBeanDefinitionParser("message-to-http-response-transformer",
-        new TransformerMessageProcessorDefinitionParser(MuleMessageToHttpResponse.class));
+                                           new TransformerMessageProcessorDefinitionParser(MuleMessageToHttpResponse.class));
     registerDeprecatedBeanDefinitionParser("body-to-parameter-map-transformer",
-        new TransformerMessageProcessorDefinitionParser(HttpRequestBodyToParamMap.class));
+                                           new TransformerMessageProcessorDefinitionParser(HttpRequestBodyToParamMap.class));
 
     registerDeprecatedBeanDefinitionParser("error-filter", new ParentDefinitionParser());
     registerDeprecatedBeanDefinitionParser("request-wildcard-filter",
-        new FilterDefinitionParser(HttpRequestWildcardFilter.class));
+                                           new FilterDefinitionParser(HttpRequestWildcardFilter.class));
     registerDeprecatedBeanDefinitionParser("basic-security-filter",
-        new SecurityFilterDefinitionParser(HttpBasicAuthenticationFilter.class));
+                                           new SecurityFilterDefinitionParser(HttpBasicAuthenticationFilter.class));
 
     registerDeprecatedMuleBeanDefinitionParser("static-resource-handler",
-        new MessageProcessorDefinitionParser(StaticResourceMessageProcessor.class));
+                                               new MessageProcessorDefinitionParser(StaticResourceMessageProcessor.class));
 
     registerDeprecatedBeanDefinitionParser("response-builder", new HttpResponseBuilderDefinitionParser("responseBuilder"));
     registerDeprecatedBeanDefinitionParser("error-response-builder",
-        new HttpResponseBuilderDefinitionParser("errorResponseBuilder"));
+                                           new HttpResponseBuilderDefinitionParser("errorResponseBuilder"));
 
     registerDeprecatedMuleBeanDefinitionParser("header", new HttpHeaderDefinitionParser()).addCollection("headers");
     registerDeprecatedMuleBeanDefinitionParser("set-cookie", new HttpCookiesDefinitionParser("cookie", CookieWrapper.class))
-        .registerPreProcessor(
-            new CheckExclusiveAttributes(new String[][] {new String[] {"maxAge"}, new String[] {"expiryDate"}}));
+        .registerPreProcessor(new CheckExclusiveAttributes(new String[][] {new String[] {"maxAge"},
+            new String[] {"expiryDate"}}));
     registerDeprecatedMuleBeanDefinitionParser("body", new TextDefinitionParser("body"));
     registerDeprecatedMuleBeanDefinitionParser("location", new HttpResponseDefinitionParser("header"));
     registerDeprecatedMuleBeanDefinitionParser("cache-control",
-        new ChildDefinitionParser("cacheControl", CacheControlHeader.class));
+                                               new ChildDefinitionParser("cacheControl", CacheControlHeader.class));
     registerDeprecatedMuleBeanDefinitionParser("expires", new HttpResponseDefinitionParser("header"));
   }
 
@@ -105,7 +106,7 @@ public class HttpNamespaceHandler extends AbstractMuleTransportsNamespaceHandler
   }
 
   protected MuleDefinitionParserConfiguration registerDeprecatedMuleBeanDefinitionParser(String elementName,
-      MuleDefinitionParser parser) {
+                                                                                         MuleDefinitionParser parser) {
     return registerDeprecatedMuleBeanDefinitionParser(elementName, parser, HTTP_TRANSPORT_DEPRECATION_MESSAGE);
   }
 

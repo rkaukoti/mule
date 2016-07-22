@@ -92,7 +92,7 @@ public class ShutdownAppInDomainTestCase extends DomainFunctionalTestCase {
     final MuleContext muleContextForApp = getMuleContextForApp("app-with-flows");
 
     muleContextForApp.getClient().dispatch("jms://in?connector=sharedJmsConnector",
-        MuleMessage.builder().payload("payload").build());
+                                           MuleMessage.builder().payload("payload").build());
     muleContextForApp.getClient().request("jms://out?connector=sharedJmsConnector", MESSAGE_TIMEOUT);
 
     muleContextForApp.dispose();

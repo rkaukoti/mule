@@ -62,8 +62,9 @@ public class TransportFactory {
       Connector connector;
       String scheme = url.getFullScheme();
 
-      TransportServiceDescriptor sd = (TransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(),
-          LegacyServiceType.TRANSPORT, scheme, null);
+      TransportServiceDescriptor sd =
+          (TransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(), LegacyServiceType.TRANSPORT, scheme,
+                                                               null);
       if (sd == null) {
         throw new ServiceException(TransportCoreMessages.noServiceTransportDescriptor(scheme));
       }
@@ -138,8 +139,8 @@ public class TransportFactory {
       for (Connector result : results) {
         buf.append(result.getName()).append(", ");
       }
-      throw new IllegalStateException(
-          TransportCoreMessages.moreThanOneConnectorWithProtocol(protocol, buf.toString()).getMessage());
+      throw new IllegalStateException(TransportCoreMessages.moreThanOneConnectorWithProtocol(protocol, buf.toString())
+          .getMessage());
     } else if (results.size() == 1) {
       return results.get(0);
     } else {
@@ -162,8 +163,8 @@ public class TransportFactory {
       for (Connector result : results) {
         buf.append(result.getName()).append(", ");
       }
-      throw new IllegalStateException(
-          TransportCoreMessages.moreThanOneConnectorWithProtocol(protocol, buf.toString()).getMessage());
+      throw new IllegalStateException(TransportCoreMessages.moreThanOneConnectorWithProtocol(protocol, buf.toString())
+          .getMessage());
     } else if (results.size() == 1) {
       return results.get(0);
     } else {

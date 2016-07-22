@@ -80,7 +80,7 @@ public class QueryParamTypeResolverTestCase extends AbstractMuleTestCase {
   }
 
   private QueryTemplate createQueryTemplate() {
-    return new QueryTemplate(SQL_TEXT, QueryType.SELECT,
-        Collections.<QueryParam>singletonList(new DefaultInputQueryParam(1, UnknownDbType.getInstance(), "7", "param1")));
+    return new QueryTemplate(SQL_TEXT, QueryType.SELECT, Collections
+        .<QueryParam>singletonList(new DefaultInputQueryParam(1, UnknownDbType.getInstance(), "7", "param1")));
   }
 }

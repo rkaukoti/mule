@@ -99,8 +99,8 @@ public class HttpClientMessageDispatcher extends AbstractMessageDispatcher {
       if (returnException(event, httpMethod)) {
         logger.error(httpMethod.getResponseBodyAsString());
 
-        Exception cause = new Exception(
-            String.format("Http call returned a status of: %1d %1s", httpMethod.getStatusCode(), httpMethod.getStatusText()));
+        Exception cause = new Exception(String.format("Http call returned a status of: %1d %1s", httpMethod.getStatusCode(),
+                                                      httpMethod.getStatusText()));
         throw new DispatchException(event, getEndpoint(), cause);
       } else if (httpMethod.getStatusCode() >= REDIRECT_STATUS_CODE_RANGE_START) {
         if (logger.isInfoEnabled()) {
@@ -208,8 +208,8 @@ public class HttpClientMessageDispatcher extends AbstractMessageDispatcher {
       httpMethod = (HttpMethod) sendTransformer.transform(body.toString());
     } else if (body instanceof byte[]) {
       byte[] buffer = (byte[]) event.transformMessage(DataType.BYTE_ARRAY);
-      postMethod.setRequestEntity(
-          new ByteArrayRequestEntity(buffer, event.getMessage().getDataType().getMediaType().getCharset().get().name()));
+      postMethod.setRequestEntity(new ByteArrayRequestEntity(buffer, event.getMessage().getDataType().getMediaType().getCharset()
+          .get().name()));
       httpMethod = postMethod;
     } else {
       if (!(body instanceof OutputHandler)) {
@@ -239,7 +239,8 @@ public class HttpClientMessageDispatcher extends AbstractMessageDispatcher {
 
       if (returnException(event, httpMethod)) {
         ep = new DefaultExceptionPayload(new DispatchException(event, getEndpoint(),
-            new HttpResponseException(httpMethod.getStatusText(), httpMethod.getStatusCode())));
+                                                               new HttpResponseException(httpMethod.getStatusText(),
+                                                                                         httpMethod.getStatusCode())));
       } else if (httpMethod.getStatusCode() >= REDIRECT_STATUS_CODE_RANGE_START) {
         try {
           return handleRedirect(httpMethod, event);

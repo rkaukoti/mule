@@ -41,8 +41,9 @@ public class ClientCredentialsFullConfigTestCase extends AbstractOAuthAuthorizat
   private final String CUSTOM_RESPONSE_PARAMETER1_VALUE = "token-resp-value1";
   private final String CUSTOM_RESPONSE_PARAMETER2_VALUE = "token-resp-value2";
   @Rule
-  public SystemProperty tokenUrl = new SystemProperty("token.url",
-      String.format("%s://localhost:%d" + TOKEN_PATH, getProtocol(), oauthHttpsServerPort.getNumber()));
+  public SystemProperty tokenUrl =
+      new SystemProperty("token.url",
+                         String.format("%s://localhost:%d" + TOKEN_PATH, getProtocol(), oauthHttpsServerPort.getNumber()));
   @Rule
   public SystemProperty customTokenResponseParameter1Name = new SystemProperty("custom.param.extractor1", "token-resp-param1");
   @Rule
@@ -57,7 +58,7 @@ public class ClientCredentialsFullConfigTestCase extends AbstractOAuthAuthorizat
   @Parameterized.Parameters
   public static Collection<Object[]> parameters() {
     return Arrays.asList(new Object[] {"client-credentials/client-credentials-full-config-tls-global.xml"},
-        new Object[] {"client-credentials/client-credentials-full-config-tls-nested.xml"});
+                         new Object[] {"client-credentials/client-credentials-full-config-tls-nested.xml"});
   }
 
   @Override
@@ -91,9 +92,9 @@ public class ClientCredentialsFullConfigTestCase extends AbstractOAuthAuthorizat
     oauthContextAsserter.assertAccessTokenIs(ACCESS_TOKEN);
     oauthContextAsserter.assertExpiresInIs(EXPIRES_IN);
     oauthContextAsserter.assertContainsCustomTokenResponseParam(customTokenResponseParameter1Name.getValue(),
-        CUSTOM_RESPONSE_PARAMETER1_VALUE);
+                                                                CUSTOM_RESPONSE_PARAMETER1_VALUE);
     oauthContextAsserter.assertContainsCustomTokenResponseParam(customTokenResponseParameter2Name.getValue(),
-        CUSTOM_RESPONSE_PARAMETER2_VALUE);
+                                                                CUSTOM_RESPONSE_PARAMETER2_VALUE);
   }
 
   @Test
@@ -110,8 +111,8 @@ public class ClientCredentialsFullConfigTestCase extends AbstractOAuthAuthorizat
 
     verifyRequestDoneToTokenUrlForClientCredentials();
 
-    wireMockRule.verify(postRequestedFor(urlEqualTo(RESOURCE_PATH)).withHeader(HttpHeaders.Names.AUTHORIZATION,
-        equalTo(buildAuthorizationHeaderContent(NEW_ACCESS_TOKEN))));
+    wireMockRule.verify(postRequestedFor(urlEqualTo(RESOURCE_PATH))
+        .withHeader(HttpHeaders.Names.AUTHORIZATION, equalTo(buildAuthorizationHeaderContent(NEW_ACCESS_TOKEN))));
   }
 
   @Override

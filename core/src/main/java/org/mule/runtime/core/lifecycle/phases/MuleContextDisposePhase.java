@@ -111,7 +111,7 @@ public class MuleContextDisposePhase extends DefaultLifecyclePhase {
       ((Method) anno.getMember()).invoke(o);
     } catch (Exception e) {
       throw new LifecycleException(CoreMessages.failedToInvokeLifecycle((anno == null ? "null" : anno.getMember().getName()), o),
-          e, this);
+                                   e, this);
     }
   }
 }

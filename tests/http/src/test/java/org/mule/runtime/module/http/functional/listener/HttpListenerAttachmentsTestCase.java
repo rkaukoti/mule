@@ -190,10 +190,10 @@ public class HttpListenerAttachmentsTestCase extends AbstractHttpTestCase {
         assertThat(receivedParts.size(), is(2));
         assertThat(receivedParts.keySet(), hasItem(TEXT_BODY_FIELD_NAME));
         assertThat(new String(((HttpPartDataSource) receivedParts.get(TEXT_BODY_FIELD_NAME).getDataSource()).getContent()),
-            is(TEXT_BODY_FIELD_VALUE));
+                   is(TEXT_BODY_FIELD_VALUE));
         assertThat(receivedParts.keySet(), hasItem(FILE_BODY_FIELD_NAME));
         assertThat(new String(((HttpPartDataSource) receivedParts.get(FILE_BODY_FIELD_NAME).getDataSource()).getContent()),
-            Is.<Object>is(FILE_BODY_FIELD_VALUE));
+                   Is.<Object>is(FILE_BODY_FIELD_VALUE));
 
         final String contentType = response.getFirstHeader(HttpHeaders.Names.CONTENT_TYPE).getValue();
         assertThat(contentType, containsString(expectedResponseContentType));
@@ -237,7 +237,7 @@ public class HttpListenerAttachmentsTestCase extends AbstractHttpTestCase {
     builder.addTextBody(TEXT_BODY_FIELD_NAME, TEXT_BODY_FIELD_VALUE, TEXT_PLAIN);
     if (withFile) {
       builder.addBinaryBody(FILE_BODY_FIELD_NAME, FILE_BODY_FIELD_VALUE.getBytes(), APPLICATION_OCTET_STREAM,
-          FILE_BODY_FIELD_FILENAME);
+                            FILE_BODY_FIELD_FILENAME);
     }
     return builder.build();
   }
@@ -271,8 +271,9 @@ public class HttpListenerAttachmentsTestCase extends AbstractHttpTestCase {
     public MuleEvent process(MuleEvent event) throws MuleException {
       org.mule.extension.http.api.HttpPart part1 =
           new org.mule.extension.http.api.HttpPart(TEXT_BODY_FIELD_NAME, TEXT_BODY_FIELD_VALUE, TEXT_PLAIN_LATIN, null);
-      org.mule.extension.http.api.HttpPart part2 = new org.mule.extension.http.api.HttpPart(FILE_BODY_FIELD_NAME,
-          FILE_BODY_FIELD_VALUE.getBytes(), BINARY, FILE_BODY_FIELD_FILENAME);
+      org.mule.extension.http.api.HttpPart part2 =
+          new org.mule.extension.http.api.HttpPart(FILE_BODY_FIELD_NAME, FILE_BODY_FIELD_VALUE.getBytes(), BINARY,
+                                                   FILE_BODY_FIELD_FILENAME);
       event.setFlowVariable("parts", asList(part1, part2));
       return event;
     }
@@ -289,8 +290,10 @@ public class HttpListenerAttachmentsTestCase extends AbstractHttpTestCase {
           if (!id.equals(dataHandler.getName())) {
             filename = dataHandler.getName();
           }
-          parts.add(new org.mule.extension.http.api.HttpPart(id, dataHandler.getContent(),
-              DataType.builder().mediaType(dataHandler.getContentType()).build().getMediaType(), filename));
+          parts.add(new org.mule.extension.http.api.HttpPart(id,
+                                                             dataHandler.getContent(), DataType.builder()
+                                                                 .mediaType(dataHandler.getContentType()).build().getMediaType(),
+                                                             filename));
         } catch (IOException e) {
           // do nothing
         }

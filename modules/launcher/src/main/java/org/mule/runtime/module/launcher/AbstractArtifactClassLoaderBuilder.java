@@ -78,8 +78,9 @@ public abstract class AbstractArtifactClassLoaderBuilder<T extends AbstractArtif
    * @param artifactPluginDescriptorLoader loader for plugin zip files into their descriptors. Must be not null.
    */
   public AbstractArtifactClassLoaderBuilder(DeployableArtifactClassLoaderFactory artifactClassLoaderFactory,
-      ArtifactPluginRepository artifactPluginRepository, ArtifactPluginFactory artifactPluginFactory,
-      ArtifactPluginDescriptorLoader artifactPluginDescriptorLoader) {
+                                            ArtifactPluginRepository artifactPluginRepository,
+                                            ArtifactPluginFactory artifactPluginFactory,
+                                            ArtifactPluginDescriptorLoader artifactPluginDescriptorLoader) {
     checkArgument(artifactClassLoaderFactory != null, "artifact class loader factory cannot be null");
     checkArgument(artifactPluginRepository != null, "artifact plugin repository cannot be null");
     checkArgument(artifactPluginFactory != null, "artifact plugin factory cannot be null");
@@ -205,9 +206,9 @@ public abstract class AbstractArtifactClassLoaderBuilder<T extends AbstractArtif
     final List<ArtifactPluginDescriptor> containerPlugins = new LinkedList<>();
     for (ArtifactPluginDescriptor appPluginDescriptor : artifactPluginRepository.getContainerArtifactPluginDescriptors()) {
       if (containsApplicationPluginDescriptor(appPluginDescriptor)) {
-        final String msg = format(
-            "Failed to deploy artifact [%s], plugin [%s] is already bundled within the container and cannot be included in artifact",
-            artifactId, appPluginDescriptor.getName());
+        final String msg =
+            format("Failed to deploy artifact [%s], plugin [%s] is already bundled within the container and cannot be included in artifact",
+                   artifactId, appPluginDescriptor.getName());
         throw new DeploymentException(createStaticMessage(msg));
       }
 
@@ -221,11 +222,11 @@ public abstract class AbstractArtifactClassLoaderBuilder<T extends AbstractArtif
    */
   private boolean containsApplicationPluginDescriptor(ArtifactPluginDescriptor appPluginDescriptor) {
     return find(this.artifactPluginDescriptors,
-        object -> ((ArtifactPluginDescriptor) object).getName().equals(appPluginDescriptor.getName())) != null;
+                object -> ((ArtifactPluginDescriptor) object).getName().equals(appPluginDescriptor.getName())) != null;
   }
 
   private ArtifactClassLoader createCompositePluginClassLoader(ArtifactClassLoader parent,
-      List<ArtifactPluginDescriptor> artifactPluginDescriptors) {
+                                                               List<ArtifactPluginDescriptor> artifactPluginDescriptors) {
     List<ArtifactClassLoader> classLoaders = new LinkedList<>();
 
     // Adds parent classloader first to use parent-first lookup approach
@@ -235,12 +236,13 @@ public abstract class AbstractArtifactClassLoaderBuilder<T extends AbstractArtif
       ArtifactPlugin artifactPlugin = artifactPluginFactory.create(artifactPluginDescriptor, parent);
       artifactPluginClassLoaders.add(artifactPlugin.getArtifactClassLoader());
 
-      final FilteringArtifactClassLoader filteringPluginClassLoader = new FilteringArtifactClassLoader(
-          artifactPlugin.getArtifactClassLoader(), artifactPlugin.getDescriptor().getClassLoaderFilter());
+      final FilteringArtifactClassLoader filteringPluginClassLoader =
+          new FilteringArtifactClassLoader(artifactPlugin.getArtifactClassLoader(),
+                                           artifactPlugin.getDescriptor().getClassLoaderFilter());
       classLoaders.add(filteringPluginClassLoader);
     }
     return new CompositeArtifactClassLoader("appPlugins", parent.getClassLoader(), classLoaders,
-        parent.getClassLoaderLookupPolicy());
+                                            parent.getClassLoaderLookupPolicy());
   }
 
 }

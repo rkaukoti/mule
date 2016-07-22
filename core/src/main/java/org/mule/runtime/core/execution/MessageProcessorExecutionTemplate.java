@@ -26,8 +26,7 @@ public class MessageProcessorExecutionTemplate {
   }
 
   public static MessageProcessorExecutionTemplate createExecutionTemplate() {
-    return new MessageProcessorExecutionTemplate(
-        new MessageProcessorNotificationExecutionInterceptor(new ExceptionToMessagingExceptionExecutionInterceptor()));
+    return new MessageProcessorExecutionTemplate(new MessageProcessorNotificationExecutionInterceptor(new ExceptionToMessagingExceptionExecutionInterceptor()));
   }
 
   public static MessageProcessorExecutionTemplate createNotificationExecutionTemplate() {

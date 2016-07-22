@@ -127,13 +127,13 @@ public class EmailPredicateBuilder {
     }
 
     if (receivedSince != null) {
-      predicate = predicate.and(
-          attributes -> attributes.getReceivedDate() != null && TIME_SINCE.apply(receivedSince, attributes.getReceivedDate()));
+      predicate = predicate.and(attributes -> attributes.getReceivedDate() != null
+          && TIME_SINCE.apply(receivedSince, attributes.getReceivedDate()));
     }
 
     if (receivedUntil != null) {
-      predicate = predicate.and(
-          attributes -> attributes.getReceivedDate() != null && TIME_UNTIL.apply(receivedUntil, attributes.getReceivedDate()));
+      predicate = predicate.and(attributes -> attributes.getReceivedDate() != null
+          && TIME_UNTIL.apply(receivedUntil, attributes.getReceivedDate()));
     }
 
     if (sentSince != null) {

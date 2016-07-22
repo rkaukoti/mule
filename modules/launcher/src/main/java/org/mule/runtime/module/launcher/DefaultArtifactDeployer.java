@@ -48,10 +48,10 @@ public class DefaultArtifactDeployer<T extends DeployableArtifact> implements Ar
     try {
       artifact.dispose();
     } catch (Throwable t) {
-      logger.error(
-          String.format("Unable to cleanly dispose artifact '%s'. Restart Mule if you get errors redeploying this artifact",
-              artifact.getArtifactName()),
-          t);
+      logger.error(String.format(
+                                 "Unable to cleanly dispose artifact '%s'. Restart Mule if you get errors redeploying this artifact",
+                                 artifact.getArtifactName()),
+                   t);
     }
   }
 
@@ -61,7 +61,8 @@ public class DefaultArtifactDeployer<T extends DeployableArtifact> implements Ar
       artifact.stop();
     } catch (Throwable t) {
       logger.error(String.format("Unable to cleanly stop artifact '%s'. Restart Mule if you get errors redeploying this artifact",
-          artifact.getArtifactName()), t);
+                                 artifact.getArtifactName()),
+                   t);
     }
   }
 

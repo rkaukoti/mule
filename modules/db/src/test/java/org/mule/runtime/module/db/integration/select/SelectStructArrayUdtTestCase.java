@@ -52,7 +52,9 @@ public class SelectStructArrayUdtTestCase extends AbstractDbIntegrationTestCase 
     final MuleMessage response = responseEvent.getMessage();
 
     assertRecords(response.getPayload(),
-        new Record(new Field("CONTACT_NAME", CONTACT1.getName()), new Field("DETAILS", CONTACT1.getDetailsAsObjectArray()[0])),
-        new Record(new Field("CONTACT_NAME", CONTACT2.getName()), new Field("DETAILS", CONTACT2.getDetailsAsObjectArray()[0])));
+                  new Record(new Field("CONTACT_NAME", CONTACT1.getName()),
+                             new Field("DETAILS", CONTACT1.getDetailsAsObjectArray()[0])),
+                  new Record(new Field("CONTACT_NAME", CONTACT2.getName()),
+                             new Field("DETAILS", CONTACT2.getDetailsAsObjectArray()[0])));
   }
 }

@@ -57,7 +57,7 @@ public class CollectionDataTypeXStreamConverter implements Converter {
 
 
   protected CollectionDataType createDataType(Class<? extends Collection> type, String mimeType, Class<?> itemType,
-      String itemMediaType) {
+                                              String itemMediaType) {
     return (CollectionDataType) DataType.builder().collectionType(type).itemType(itemType).itemMediaType(itemMediaType)
         .mediaType(mimeType).build();
   }

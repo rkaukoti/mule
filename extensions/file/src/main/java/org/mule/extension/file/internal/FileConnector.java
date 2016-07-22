@@ -73,20 +73,22 @@ public class FileConnector extends FileConnectorConfig {
     if (baseDir == null) {
       baseDir = System.getProperty("user.home");
       if (baseDir == null) {
-        throw new InitialisationException(createStaticMessage(
-            "Could not obtain user's home directory. Please provide a explicit value for the baseDir parameter"), this);
+        throw new InitialisationException(createStaticMessage("Could not obtain user's home directory. Please provide a explicit value for the baseDir parameter"),
+                                          this);
       }
 
       LOGGER.warn("File connector '{}' does not specify the baseDir property. Defaulting to '{}'", getConfigName(), baseDir);
     }
     Path baseDirPath = Paths.get(baseDir);
     if (Files.notExists(baseDirPath)) {
-      throw new InitialisationException(
-          createStaticMessage(format("Provided baseDir '%s' does not exists", baseDirPath.toAbsolutePath())), this);
+      throw new InitialisationException(createStaticMessage(format("Provided baseDir '%s' does not exists",
+                                                                   baseDirPath.toAbsolutePath())),
+                                        this);
     }
     if (!Files.isDirectory(baseDirPath)) {
-      throw new InitialisationException(
-          createStaticMessage(format("Provided baseDir '%s' is not a directory", baseDirPath.toAbsolutePath())), this);
+      throw new InitialisationException(createStaticMessage(format("Provided baseDir '%s' is not a directory",
+                                                                   baseDirPath.toAbsolutePath())),
+                                        this);
     }
   }
 

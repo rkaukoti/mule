@@ -16,9 +16,9 @@ public class MethodInvokerDefinitionParserTestCase extends FunctionalTestCase {
   @Test
   public void testPojoFlow() throws Exception {
     assertEquals("start nullmethod2Arg1Arg2config2Val arg2Valmethod2Arg1Arg2config2Val ",
-        flowRunner("pojoFlow").withPayload("start ").run().getMessageAsString());
+                 flowRunner("pojoFlow").withPayload("start ").run().getMessageAsString());
     assertEquals("start nullmethod2Arg1Arg2null arg2Valmethod2Arg1Arg2null ",
-        flowRunner("pojoFlow2").withPayload("start ").run().getMessageAsString());
+                 flowRunner("pojoFlow2").withPayload("start ").run().getMessageAsString());
   }
 
   @Override

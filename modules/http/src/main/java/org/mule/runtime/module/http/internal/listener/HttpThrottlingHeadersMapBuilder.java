@@ -17,7 +17,7 @@ public class HttpThrottlingHeadersMapBuilder {
   private Long timeUntilNextPeriodInMillis;
 
   public void setThrottlingPolicyStatistics(long remainingRequestInCurrentPeriod, long maximumRequestAllowedPerPeriod,
-      long timeUntilNextPeriodInMillis) {
+                                            long timeUntilNextPeriodInMillis) {
     this.remainingRequestInCurrentPeriod = remainingRequestInCurrentPeriod;
     this.maximumRequestAllowedPerPeriod = maximumRequestAllowedPerPeriod;
     this.timeUntilNextPeriodInMillis = timeUntilNextPeriodInMillis;
@@ -26,11 +26,11 @@ public class HttpThrottlingHeadersMapBuilder {
   public Map<String, String> build() {
     Map<String, String> throttlingHeaders = new HashMap<String, String>();
     addToMapIfNotNull(throttlingHeaders, HttpMessageProcessorTemplate.X_RATE_LIMIT_LIMIT_HEADER,
-        this.maximumRequestAllowedPerPeriod);
+                      this.maximumRequestAllowedPerPeriod);
     addToMapIfNotNull(throttlingHeaders, HttpMessageProcessorTemplate.X_RATE_LIMIT_REMAINING_HEADER,
-        this.remainingRequestInCurrentPeriod);
+                      this.remainingRequestInCurrentPeriod);
     addToMapIfNotNull(throttlingHeaders, HttpMessageProcessorTemplate.X_RATE_LIMIT_RESET_HEADER,
-        this.timeUntilNextPeriodInMillis);
+                      this.timeUntilNextPeriodInMillis);
     return throttlingHeaders;
   }
 

@@ -53,7 +53,7 @@ public class LocalStoreAliasConfigTestCase extends AbstractMuleContextTestCase {
   public void objectStoreManager() throws Exception {
     this.testSame(MuleProperties.OBJECT_STORE_MANAGER, DefaultMuleContext.LOCAL_OBJECT_STORE_MANAGER_KEY);
     assertSame(muleContext.getObjectStoreManager(),
-        muleContext.getRegistry().lookupObject(DefaultMuleContext.LOCAL_OBJECT_STORE_MANAGER_KEY));
+               muleContext.getRegistry().lookupObject(DefaultMuleContext.LOCAL_OBJECT_STORE_MANAGER_KEY));
   }
 
   private void testSame(String key1, String key2) {

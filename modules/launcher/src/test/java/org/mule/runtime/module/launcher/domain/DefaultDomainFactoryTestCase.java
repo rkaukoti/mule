@@ -27,7 +27,7 @@ import static org.mule.runtime.module.reboot.MuleContainerBootstrapUtils.MULE_DO
 public class DefaultDomainFactoryTestCase extends AbstractDomainTestCase {
 
   private DomainFactory domainFactory = new DefaultDomainFactory(new DomainClassLoaderFactory(getClass().getClassLoader()),
-      new DefaultDomainManager(), containerClassLoader);
+                                                                 new DefaultDomainManager(), containerClassLoader);
 
   public DefaultDomainFactoryTestCase() throws IOException {}
 

@@ -33,7 +33,7 @@ public class UpdateExpressionWatermark extends Watermark implements Initialisabl
   private MuleContext muleContext;
 
   public UpdateExpressionWatermark(ObjectStore<Serializable> objectStore, String variable, String defaultExpression,
-      String updateExpression) {
+                                   String updateExpression) {
     super(objectStore, variable, defaultExpression);
     this.updateExpression = updateExpression;
     this.interceptor = new WatermarkPollingInterceptor(this);
@@ -45,10 +45,9 @@ public class UpdateExpressionWatermark extends Watermark implements Initialisabl
       try {
         this.muleContext.getExpressionManager().validateExpression(this.updateExpression);
       } catch (InvalidExpressionException e) {
-        throw new InitialisationException(
-            MessageFactory.createStaticMessage(String
-                .format("update-expression requires a valid MEL expression. '%s' was found instead", this.updateExpression)),
-            e, this);
+        throw new InitialisationException(MessageFactory.createStaticMessage(String
+            .format("update-expression requires a valid MEL expression. '%s' was found instead", this.updateExpression)), e,
+                                          this);
       }
     }
   }

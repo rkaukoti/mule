@@ -72,7 +72,7 @@ public abstract class AbstractAggregator extends AbstractInterceptingMessageProc
     initEventGroupsObjectStore();
 
     eventCorrelator = new EventCorrelator(getCorrelatorCallback(muleContext), next, messageInfoMapping, muleContext,
-        flowConstruct, eventGroupsObjectStore, storePrefix, processedGroupsObjectStore);
+                                          flowConstruct, eventGroupsObjectStore, storePrefix, processedGroupsObjectStore);
 
     eventCorrelator.setTimeout(timeout);
     eventCorrelator.setFailOnTimeout(isFailOnTimeout());
@@ -91,7 +91,7 @@ public abstract class AbstractAggregator extends AbstractInterceptingMessageProc
       public Object create() {
         ObjectStoreManager objectStoreManager = muleContext.getRegistry().get(MuleProperties.OBJECT_STORE_MANAGER);
         return objectStoreManager.getObjectStore(storePrefix + ".processedGroups", persistentStores, MAX_PROCESSED_GROUPS, -1,
-            1000);
+                                                 1000);
       }
     };
   }

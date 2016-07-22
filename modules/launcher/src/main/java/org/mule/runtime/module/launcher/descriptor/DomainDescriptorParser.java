@@ -24,8 +24,8 @@ public class DomainDescriptorParser implements DescriptorParser<DomainDescriptor
     final Properties properties = loadProperties(new FileInputStream(descriptor));
     DomainDescriptor domainDescriptor = new DomainDescriptor();
     domainDescriptor.setName(artifactName);
-    domainDescriptor.setRedeploymentEnabled(
-        BooleanUtils.toBoolean(properties.getProperty(PROPERTY_REDEPLOYMENT_ENABLED, Boolean.TRUE.toString())));
+    domainDescriptor.setRedeploymentEnabled(BooleanUtils
+        .toBoolean(properties.getProperty(PROPERTY_REDEPLOYMENT_ENABLED, Boolean.TRUE.toString())));
     return domainDescriptor;
   }
 }

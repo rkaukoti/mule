@@ -43,8 +43,8 @@ public class NotificationLifecycleObject extends LifecycleObject {
 
     ctor = ClassUtils.getConstructor(notificationClass, new Class[] {Object.class, String.class});
     if (ctor == null) {
-      throw new IllegalArgumentException(
-          "No constructor defined in Notification class: " + notificationClass + " with arguments (Object.class, String.class)");
+      throw new IllegalArgumentException("No constructor defined in Notification class: " + notificationClass
+          + " with arguments (Object.class, String.class)");
     }
   }
 

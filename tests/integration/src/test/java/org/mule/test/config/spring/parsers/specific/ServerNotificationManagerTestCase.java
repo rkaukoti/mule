@@ -71,14 +71,17 @@ public class ServerNotificationManagerTestCase extends FunctionalTestCase {
   @Test
   public void testExplicitlyConiguredNotificationListenerRegistration() throws InterruptedException {
     ServerNotificationManager manager = muleContext.getNotificationManager();
-    assertTrue(manager.getListeners().contains(
-        new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject("listener"), null)));
-    assertTrue(manager.getListeners().contains(
-        new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject("listener2"), null)));
-    assertTrue(manager.getListeners().contains(new ListenerSubscriptionPair(
-        (ServerNotificationListener) muleContext.getRegistry().lookupObject("securityListener"), null)));
-    assertTrue(manager.getListeners().contains(
-        new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject("listener3"), "*")));
+    assertTrue(manager.getListeners()
+        .contains(new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject("listener"),
+                                               null)));
+    assertTrue(manager.getListeners()
+        .contains(new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject("listener2"),
+                                               null)));
+    assertTrue(manager.getListeners().contains(new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry()
+        .lookupObject("securityListener"), null)));
+    assertTrue(manager.getListeners()
+        .contains(new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject("listener3"),
+                                               "*")));
   }
 
   @Test
@@ -87,12 +90,14 @@ public class ServerNotificationManagerTestCase extends FunctionalTestCase {
 
     // Not registered as ad-hoc listener with null subscription as this is defined
     // explicitly.
-    assertFalse(manager.getListeners().contains(
-        new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject("listener3"), null)));
+    assertFalse(manager.getListeners()
+        .contains(new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject("listener3"),
+                                               null)));
 
     // Registered as configured
-    assertTrue(manager.getListeners().contains(
-        new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject("listener4"), null)));
+    assertTrue(manager.getListeners()
+        .contains(new ListenerSubscriptionPair((ServerNotificationListener) muleContext.getRegistry().lookupObject("listener4"),
+                                               null)));
   }
 
   @Test
@@ -187,10 +192,10 @@ public class ServerNotificationManagerTestCase extends FunctionalTestCase {
   protected static class TestSecurityEvent extends SecurityNotification {
 
     public TestSecurityEvent(MuleContext muleContext) throws Exception {
-      super(
-          new UnauthorisedException(CoreMessages.createStaticMessage("dummy"), new DefaultMuleEvent(
-              MuleMessage.builder().nullPayload().build(), REQUEST_RESPONSE, getTestFlow(), getTestSession(null, muleContext))),
-          0);
+      super(new UnauthorisedException(CoreMessages.createStaticMessage("dummy"),
+                                      new DefaultMuleEvent(MuleMessage.builder().nullPayload().build(), REQUEST_RESPONSE,
+                                                           getTestFlow(), getTestSession(null, muleContext))),
+            0);
     }
 
   }

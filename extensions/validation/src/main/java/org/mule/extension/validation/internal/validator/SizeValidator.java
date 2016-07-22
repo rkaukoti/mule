@@ -65,8 +65,8 @@ public class SizeValidator extends AbstractValidator {
       return ArrayUtils.getLength(value);
     } else {
       throw new IllegalArgumentException(String.format(
-          "Only instances of Map, Collection, Array and String can be checked for size. Instance of %s was found instead",
-          value.getClass().getName()));
+                                                       "Only instances of Map, Collection, Array and String can be checked for size. Instance of %s was found instead",
+                                                       value.getClass().getName()));
     }
   }
 

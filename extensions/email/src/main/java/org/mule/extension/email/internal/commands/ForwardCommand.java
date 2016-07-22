@@ -44,8 +44,8 @@ public final class ForwardCommand {
    * @param bccAddresses the blind carbon copy recipient addresses of the email.
    */
   public void forward(SenderConnection connection, MuleMessage muleMessage, EmailContent content, String subject, String from,
-      String defaultCharset, List<String> toAddresses, List<String> ccAddresses, List<String> bccAddresses,
-      Map<String, String> headers) {
+                      String defaultCharset, List<String> toAddresses, List<String> ccAddresses, List<String> bccAddresses,
+                      Map<String, String> headers) {
 
     EmailAttributes attributes = getAttributesFromMessage(muleMessage)
         .orElseThrow(() -> new EmailSenderException("Cannot perform the forward operation if no email is provided."));
@@ -60,7 +60,7 @@ public final class ForwardCommand {
         : new EmailContent(forwardBody, defaultCharset);
     List<EmailAttachment> emailAttachments = mapToEmailAttachments(attributes.getAttachments());
     sendCommand.send(connection, forwardContent, subject, toAddresses, from, defaultCharset, ccAddresses, bccAddresses, headers,
-        emailAttachments);
+                     emailAttachments);
 
   }
 }

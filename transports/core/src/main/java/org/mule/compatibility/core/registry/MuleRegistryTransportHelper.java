@@ -75,7 +75,8 @@ public class MuleRegistryTransportHelper {
    * Looks up the service descriptor from a singleton cache and creates a new one if not found.
    */
   public static ServiceDescriptor lookupServiceDescriptor(MuleRegistry registry, ServiceType type, String name,
-      Properties overrides) throws ServiceException {
+                                                          Properties overrides)
+      throws ServiceException {
     String key = new AbstractServiceDescriptor.Key(name, overrides).getKey();
     // TODO If we want these descriptors loaded form Spring we need to change the key mechanism
     // and the scope, and then deal with circular reference issues.
@@ -95,7 +96,8 @@ public class MuleRegistryTransportHelper {
   }
 
   protected static ServiceDescriptor createServiceDescriptor(MuleRegistry registry, ServiceType type, String name,
-      Properties overrides) throws ServiceException {
+                                                             Properties overrides)
+      throws ServiceException {
     // Stripe off and use the meta-scheme if present
     String scheme = name;
     if (name.contains(":")) {
@@ -108,7 +110,7 @@ public class MuleRegistryTransportHelper {
     }
 
     return ServiceDescriptorFactory.create(type, name, props, overrides, ((MuleRegistryHelper) registry).getMuleContext(),
-        ((MuleRegistryHelper) registry).getMuleContext().getExecutionClassLoader());
+                                           ((MuleRegistryHelper) registry).getMuleContext().getExecutionClassLoader());
   }
 
 

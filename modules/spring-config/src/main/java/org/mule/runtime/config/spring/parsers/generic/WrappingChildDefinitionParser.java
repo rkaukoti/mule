@@ -29,7 +29,8 @@ public class WrappingChildDefinitionParser extends ChildDefinitionParser {
   private final WrappingController wrappingController;
 
   public WrappingChildDefinitionParser(String setterMethod, Class clazz, Class constraint, boolean allowClassAttribute,
-      Class wrapperClass, String propertyNameInWrapper, String unwrappedPropertyName, WrappingController wrappingController) {
+                                       Class wrapperClass, String propertyNameInWrapper, String unwrappedPropertyName,
+                                       WrappingController wrappingController) {
     super(setterMethod, clazz, constraint, allowClassAttribute);
     this.wrapperClass = wrapperClass;
     this.propertyNameInWrapper = propertyNameInWrapper;
@@ -75,9 +76,9 @@ public class WrappingChildDefinitionParser extends ChildDefinitionParser {
     }
 
     public BeanAssembler newBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
-        PropertyConfiguration targetConfig, BeanDefinition target) {
+                                          PropertyConfiguration targetConfig, BeanDefinition target) {
       return new MessageProcessorWrappingBeanAssembler(beanConfig, bean, targetConfig, target, wrapperClass,
-          propertyNameInWrapper);
+                                                       propertyNameInWrapper);
     }
   }
 
@@ -87,7 +88,8 @@ public class WrappingChildDefinitionParser extends ChildDefinitionParser {
     private final String propertyNameInWrapper;
 
     public MessageProcessorWrappingBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
-        PropertyConfiguration targetConfig, BeanDefinition target, Class wrapperClass, String propertyNameInWrapper) {
+                                                 PropertyConfiguration targetConfig, BeanDefinition target, Class wrapperClass,
+                                                 String propertyNameInWrapper) {
       super(beanConfig, bean, targetConfig, target);
       this.wrapperClass = wrapperClass;
       this.propertyNameInWrapper = propertyNameInWrapper;

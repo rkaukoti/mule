@@ -109,7 +109,7 @@ public class HttpRequesterBuilder implements HttpRequestOperationConfig<HttpRequ
       requesterConfig.setTlsContext(tlsContextFactory);
       requesterConfig.setProtocol(HTTPS);
       muleContext.getRegistry().registerObject(new ObjectNameHelper(muleContext).getUniqueName("auto-generated-request-config"),
-          requesterConfig);
+                                               requesterConfig);
       httpRequester.setConfig(requesterConfig);
     } else if (httpRequester.getConfig() == null) {
       DefaultHttpRequesterConfig requestConfig = muleContext.getRegistry().get(DEFAULT_HTTP_REQUEST_CONFIG_NAME);

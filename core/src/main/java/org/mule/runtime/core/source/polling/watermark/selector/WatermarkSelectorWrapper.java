@@ -36,10 +36,10 @@ public class WatermarkSelectorWrapper extends WatermarkSelector {
       Serializable evaluated = WatermarkUtils.evaluate(this.selectorExpression, muleEvent);
       this.wrapped.acceptValue(evaluated);
     } catch (NotSerializableException e) {
-      logger.warn(
-          String.format("Watermark selector expression '%s' did not resolved to a Serializable value. Value will be ignored",
-              this.selectorExpression),
-          e);
+      logger.warn(String.format(
+                                "Watermark selector expression '%s' did not resolved to a Serializable value. Value will be ignored",
+                                this.selectorExpression),
+                  e);
     }
   }
 

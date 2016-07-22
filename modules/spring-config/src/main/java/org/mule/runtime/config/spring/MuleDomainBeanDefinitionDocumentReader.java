@@ -17,7 +17,7 @@ import org.mule.runtime.config.spring.parsers.specific.DomainElementsValidator;
 public class MuleDomainBeanDefinitionDocumentReader extends MuleBeanDefinitionDocumentReader {
 
   public MuleDomainBeanDefinitionDocumentReader(BeanDefinitionFactory beanDefinitionFactory,
-      XmlApplicationParser xmlApplicationParser) {
+                                                XmlApplicationParser xmlApplicationParser) {
     super(beanDefinitionFactory, xmlApplicationParser);
   }
 

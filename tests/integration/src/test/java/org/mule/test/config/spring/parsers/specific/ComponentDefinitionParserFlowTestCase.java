@@ -59,11 +59,11 @@ public class ComponentDefinitionParserFlowTestCase extends AbstractMuleTestCase 
     validateCorrectServiceCreation(flow);
     assertEquals(DefaultJavaComponent.class, flow.getMessageProcessors().get(0).getClass());
     assertEquals(PrototypeObjectFactory.class,
-        ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
+                 ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
     assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
     assertEquals(2,
-        (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
-            .getEntryPointResolvers().size()));
+                 (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
+                     .getEntryPointResolvers().size()));
     assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
         .getEntryPointResolvers().toArray()[0] instanceof ArrayEntryPointResolver));
     assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
@@ -79,11 +79,11 @@ public class ComponentDefinitionParserFlowTestCase extends AbstractMuleTestCase 
     validateCorrectServiceCreation(flow);
     assertEquals(DefaultJavaComponent.class, flow.getMessageProcessors().get(0).getClass());
     assertEquals(PrototypeObjectFactory.class,
-        ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
+                 ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
     assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
     assertEquals(1,
-        (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
-            .getEntryPointResolvers().size()));
+                 (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
+                     .getEntryPointResolvers().size()));
     assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
         .getEntryPointResolvers().toArray()[0] instanceof CallableEntryPointResolver));
   }
@@ -97,11 +97,11 @@ public class ComponentDefinitionParserFlowTestCase extends AbstractMuleTestCase 
     validateCorrectServiceCreation(flow);
     assertEquals(DefaultJavaComponent.class, flow.getMessageProcessors().get(0).getClass());
     assertEquals(SingletonObjectFactory.class,
-        ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
+                 ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
     assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
     assertEquals(1,
-        (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
-            .getEntryPointResolvers().size()));
+                 (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
+                     .getEntryPointResolvers().size()));
     assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
         .getEntryPointResolvers().toArray()[0] instanceof ExplicitMethodEntryPointResolver));
 
@@ -116,11 +116,11 @@ public class ComponentDefinitionParserFlowTestCase extends AbstractMuleTestCase 
     validateCorrectServiceCreation(flow);
     assertEquals(DefaultJavaComponent.class, flow.getMessageProcessors().get(0).getClass());
     assertEquals(SpringBeanLookup.class,
-        ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
+                 ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
     assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
     assertEquals(1,
-        (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
-            .getEntryPointResolvers().size()));
+                 (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
+                     .getEntryPointResolvers().size()));
     assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
         .getEntryPointResolvers().toArray()[0] instanceof NoArgumentsEntryPointResolver));
   }
@@ -147,12 +147,12 @@ public class ComponentDefinitionParserFlowTestCase extends AbstractMuleTestCase 
     validateCorrectServiceCreation(flow);
     assertEquals(PooledJavaComponent.class, flow.getMessageProcessors().get(0).getClass());
     assertEquals(PrototypeObjectFactory.class,
-        ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
+                 ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
     validatePoolingProfile(flow);
     assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
     assertEquals(1,
-        (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
-            .getEntryPointResolvers().size()));
+                 (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
+                     .getEntryPointResolvers().size()));
     assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
         .getEntryPointResolvers().toArray()[0] instanceof MethodHeaderPropertyEntryPointResolver));
 
@@ -167,12 +167,12 @@ public class ComponentDefinitionParserFlowTestCase extends AbstractMuleTestCase 
     validateCorrectServiceCreation(flow);
     assertEquals(PooledJavaComponent.class, flow.getMessageProcessors().get(0).getClass());
     assertEquals(PrototypeObjectFactory.class,
-        ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
+                 ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
     validatePoolingProfile(flow);
     assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
     assertEquals(1,
-        (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
-            .getEntryPointResolvers().size()));
+                 (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
+                     .getEntryPointResolvers().size()));
     assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
         .getEntryPointResolvers().toArray()[0] instanceof ReflectionEntryPointResolver));
 
@@ -187,12 +187,12 @@ public class ComponentDefinitionParserFlowTestCase extends AbstractMuleTestCase 
     validateCorrectServiceCreation(flow);
     assertEquals(PooledJavaComponent.class, flow.getMessageProcessors().get(0).getClass());
     assertEquals(SingletonObjectFactory.class,
-        ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
+                 ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
     validatePoolingProfile(flow);
     assertNotNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
     assertEquals(1,
-        (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
-            .getEntryPointResolvers().size()));
+                 (((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
+                     .getEntryPointResolvers().size()));
     assertTrue((((DefaultEntryPointResolverSet) ((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet())
         .getEntryPointResolvers().toArray()[0] instanceof ReflectionEntryPointResolver));
 
@@ -207,7 +207,7 @@ public class ComponentDefinitionParserFlowTestCase extends AbstractMuleTestCase 
     validateCorrectServiceCreation(flow);
     assertEquals(PooledJavaComponent.class, flow.getMessageProcessors().get(0).getClass());
     assertEquals(SpringBeanLookup.class,
-        ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
+                 ((AbstractJavaComponent) flow.getMessageProcessors().get(0)).getObjectFactory().getClass());
     validatePoolingProfile(flow);
     assertNull(((JavaComponent) flow.getMessageProcessors().get(0)).getEntryPointResolverSet());
   }

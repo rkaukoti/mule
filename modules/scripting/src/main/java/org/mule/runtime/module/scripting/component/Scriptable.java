@@ -108,10 +108,8 @@ public class Scriptable implements Initialisable, MuleContextAware {
     if (scriptEngineName != null) {
       scriptEngine = createScriptEngineByName(scriptEngineName);
       if (scriptEngine == null) {
-        throw new InitialisationException(
-            createStaticMessage(
-                "Scripting engine '" + scriptEngineName + "' not found.  Available engines are: " + listAvailableEngines()),
-            this);
+        throw new InitialisationException(createStaticMessage("Scripting engine '" + scriptEngineName
+            + "' not found.  Available engines are: " + listAvailableEngines()), this);
       }
     }
     // Determine scripting engine to use by file extension

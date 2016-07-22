@@ -59,10 +59,9 @@ public abstract class AbstractFtpCopyDelegate implements FtpCopyDelegate {
       writerConnectionHandler = getWriterConnection(config);
       writerConnection = writerConnectionHandler.getConnection();
     } catch (ConnectionException e) {
-      throw command.exception(format(
-          "FTP Copy operations require the use of two FTP connections. An exception was found trying to obtain second connection to"
-              + "copy the path '%s' to '%s'",
-          source.getPath(), targetPath), e);
+      throw command
+          .exception(format("FTP Copy operations require the use of two FTP connections. An exception was found trying to obtain second connection to"
+              + "copy the path '%s' to '%s'", source.getPath(), targetPath), e);
     }
     try {
       if (source.isDirectory()) {
@@ -88,7 +87,7 @@ public abstract class AbstractFtpCopyDelegate implements FtpCopyDelegate {
    * @param event the {@link MuleEvent} which triggered this operation
    */
   protected abstract void copyDirectory(FileConnectorConfig config, Path sourcePath, Path target, boolean overwrite,
-      FtpFileSystem writerConnection, MuleEvent event);
+                                        FtpFileSystem writerConnection, MuleEvent event);
 
   /**
    * Copies one individual file
@@ -101,7 +100,7 @@ public abstract class AbstractFtpCopyDelegate implements FtpCopyDelegate {
    * @param event the {@link MuleEvent} which triggered this operation
    */
   protected void copyFile(FileConnectorConfig config, FileAttributes source, Path target, boolean overwrite,
-      FtpFileSystem writerConnection, MuleEvent event) {
+                          FtpFileSystem writerConnection, MuleEvent event) {
     FileAttributes targetFile = command.getFile(config, target.toString());
     if (targetFile != null) {
       if (overwrite) {
@@ -125,7 +124,8 @@ public abstract class AbstractFtpCopyDelegate implements FtpCopyDelegate {
   }
 
   private void writeCopy(FileConnectorConfig config, String targetPath, InputStream inputStream, boolean overwrite,
-      FtpFileSystem writerConnection, MuleEvent event) throws IOException {
+                         FtpFileSystem writerConnection, MuleEvent event)
+      throws IOException {
     final FileWriteMode mode = overwrite ? FileWriteMode.OVERWRITE : FileWriteMode.CREATE_NEW;
     writerConnection.write(config, targetPath, inputStream, mode, event, false, true, config.getDefaultWriteEncoding());
   }

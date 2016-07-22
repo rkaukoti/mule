@@ -36,7 +36,7 @@ public class SftpCopyCommand extends SftpCommand implements CopyCommand {
    */
   @Override
   public void copy(FileConnectorConfig config, String sourcePath, String targetPath, boolean overwrite,
-      boolean createParentDirectories, MuleEvent event) {
+                   boolean createParentDirectories, MuleEvent event) {
     copy(config, sourcePath, targetPath, overwrite, createParentDirectories, event, new SftpCopyDelegate(this, fileSystem));
   }
 
@@ -48,7 +48,7 @@ public class SftpCopyCommand extends SftpCommand implements CopyCommand {
 
     @Override
     protected void copyDirectory(FileConnectorConfig config, Path sourcePath, Path target, boolean overwrite,
-        FtpFileSystem writerConnection, MuleEvent event) {
+                                 FtpFileSystem writerConnection, MuleEvent event) {
       for (FileAttributes fileAttributes : client.list(sourcePath.toString())) {
         if (isVirtualDirectory(fileAttributes.getName())) {
           continue;

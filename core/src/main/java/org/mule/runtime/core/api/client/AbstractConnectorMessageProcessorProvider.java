@@ -60,7 +60,8 @@ public abstract class AbstractConnectorMessageProcessorProvider
 
   @Override
   public MessageProcessor getMessageProcessor(String url, OperationOptions operationOptions,
-      MessageExchangePattern exchangePattern) throws MuleException {
+                                              MessageExchangePattern exchangePattern)
+      throws MuleException {
     try {
       return cachedMessageProcessors.get(new RequestCacheKey(url, operationOptions, exchangePattern));
     } catch (ExecutionException e) {

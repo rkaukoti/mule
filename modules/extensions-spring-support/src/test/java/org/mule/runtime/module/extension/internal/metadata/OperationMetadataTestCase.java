@@ -282,13 +282,13 @@ public class OperationMetadataTestCase extends MetadataExtensionFunctionalTestCa
     assertThat(shapeType, is(instanceOf(DefaultUnionType.class)));
     assertThat(((DefaultUnionType) shapeType).getTypes(), hasSize(2));
     assertThat(((DefaultUnionType) shapeType).getTypes(),
-        hasItems(toMetadataType(Circle.class), toMetadataType(Rectangle.class)));
+               hasItems(toMetadataType(Circle.class), toMetadataType(Rectangle.class)));
 
     MetadataType attributesType = metadataDescriptor.getOutputMetadata().get().getAttributesMetadata().get().getType();
     assertThat(attributesType, is(instanceOf(DefaultUnionType.class)));
     assertThat(((DefaultUnionType) attributesType).getTypes(), hasSize(2));
     assertThat(((DefaultUnionType) attributesType).getTypes(),
-        hasItems(toMetadataType(ShapeOutputAttributes.class), toMetadataType(AnimalsOutputAttributes.class)));
+               hasItems(toMetadataType(ShapeOutputAttributes.class), toMetadataType(AnimalsOutputAttributes.class)));
   }
 
   @Test
@@ -368,26 +368,26 @@ public class OperationMetadataTestCase extends MetadataExtensionFunctionalTestCa
     final ComponentMetadataDescriptor metadataDescriptor = getComponentDynamicMetadata(nullMetadataKey);
 
     assertThat(metadataDescriptor.getContentMetadata().get().get().getType(),
-        is(equalTo(metadataDescriptor.getOutputMetadata().get().getPayloadMetadata().get().getType())));
+               is(equalTo(metadataDescriptor.getOutputMetadata().get().getPayloadMetadata().get().getType())));
 
   }
 
   @Test
   public void typeKeysResolverWithContextClassLoader() throws Exception {
     doResolverTestWithContextClassLoader(RESOLVER_KEYS_WITH_CONTEXT_CLASSLOADER,
-        source -> source.metadataManager.getMetadataKeys(componentId));
+                                         source -> source.metadataManager.getMetadataKeys(componentId));
   }
 
   @Test
   public void resolverContentWithContextClassLoader() throws Exception {
     doResolverTestWithContextClassLoader(RESOLVER_CONTENT_WITH_CONTEXT_CLASSLOADER,
-        source -> source.getComponentDynamicMetadata());
+                                         source -> source.getComponentDynamicMetadata());
   }
 
   @Test
   public void resolverOutputWithContextClassLoader() throws Exception {
     doResolverTestWithContextClassLoader(RESOLVER_OUTPUT_WITH_CONTEXT_CLASSLOADER,
-        source -> source.getComponentDynamicMetadata());
+                                         source -> source.getComponentDynamicMetadata());
   }
 
   @Test
@@ -474,7 +474,7 @@ public class OperationMetadataTestCase extends MetadataExtensionFunctionalTestCa
     assertThat(shapeType, is(instanceOf(DefaultUnionType.class)));
     assertThat(((DefaultUnionType) shapeType).getTypes(), hasSize(2));
     assertThat(((DefaultUnionType) shapeType).getTypes(),
-        hasItems(toMetadataType(Circle.class), toMetadataType(Rectangle.class)));
+               hasItems(toMetadataType(Circle.class), toMetadataType(Rectangle.class)));
   }
 
   @Test
@@ -490,7 +490,7 @@ public class OperationMetadataTestCase extends MetadataExtensionFunctionalTestCa
     assertThat(shapeType, is(instanceOf(DefaultUnionType.class)));
     assertThat(((DefaultUnionType) shapeType).getTypes(), hasSize(2));
     assertThat(((DefaultUnionType) shapeType).getTypes(),
-        hasItems(toMetadataType(Rectangle.class), toMetadataType(Square.class)));
+               hasItems(toMetadataType(Rectangle.class), toMetadataType(Square.class)));
   }
 
   @Test

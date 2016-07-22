@@ -13,7 +13,7 @@ public abstract class AbstractMissingQueryConfigTestCase extends AbstractConfigu
   public void doMissingQueryTest() {
     String messageProcessorElement = getMessageProcessorElement();
     assertConfigurationError(String.format("Able to define an incomplete %s message processor", messageProcessorElement),
-        String.format("Element db:%s must contain one of the following elements", messageProcessorElement));
+                             String.format("Element db:%s must contain one of the following elements", messageProcessorElement));
   }
 
   protected abstract String getMessageProcessorElement();

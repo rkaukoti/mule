@@ -78,6 +78,6 @@ public class NtlmMessageFactory {
    */
   public Type3Message createType3Message(NTCredentials ntCredentials, Type2Message type2Message) {
     return new Type3Message(type2Message, ntCredentials.getPassword(), type2Message.getTarget(), ntCredentials.getUserName(),
-        ntCredentials.getHost(), DEFAULT_TYPE_3_MESSAGE_FLAGS);
+                            ntCredentials.getHost(), DEFAULT_TYPE_3_MESSAGE_FLAGS);
   }
 }

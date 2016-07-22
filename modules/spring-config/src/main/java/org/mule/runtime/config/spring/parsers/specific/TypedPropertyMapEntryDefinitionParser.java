@@ -31,7 +31,7 @@ public class TypedPropertyMapEntryDefinitionParser extends ChildMapEntryDefiniti
 
     @Override
     public BeanAssembler newBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
-        PropertyConfiguration targetConfig, BeanDefinition target) {
+                                          PropertyConfiguration targetConfig, BeanDefinition target) {
       return new TypedPropertyMapEntryBeanAssembler(beanConfig, bean, targetConfig, target);
     }
   }
@@ -41,7 +41,7 @@ public class TypedPropertyMapEntryDefinitionParser extends ChildMapEntryDefiniti
     public static final String VALUE_REF = "value-ref";
 
     public TypedPropertyMapEntryBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
-        PropertyConfiguration targetConfig, BeanDefinition target) {
+                                              PropertyConfiguration targetConfig, BeanDefinition target) {
       super(beanConfig, bean, targetConfig, target);
     }
 

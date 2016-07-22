@@ -44,7 +44,7 @@ public final class ListCommand {
    *        {@link MuleMessage} carrying all the emails and it's corresponding attributes.
    */
   public List<MuleMessage> list(RetrieverConnection connection, String folderName, boolean readContent,
-      Predicate<EmailAttributes> matcher) {
+                                Predicate<EmailAttributes> matcher) {
     try {
       Folder folder = connection.getFolder(folderName, READ_ONLY);
       List<MuleMessage> list = new LinkedList<>();

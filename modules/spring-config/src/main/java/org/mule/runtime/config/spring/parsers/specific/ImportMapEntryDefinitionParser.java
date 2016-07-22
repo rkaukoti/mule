@@ -29,7 +29,7 @@ public class ImportMapEntryDefinitionParser extends ChildMapEntryDefinitionParse
 
     @Override
     public BeanAssembler newBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
-        PropertyConfiguration targetConfig, BeanDefinition target) {
+                                          PropertyConfiguration targetConfig, BeanDefinition target) {
       return new ImportMapEntryBeanAssembler(beanConfig, bean, targetConfig, target);
     }
   }
@@ -37,7 +37,7 @@ public class ImportMapEntryDefinitionParser extends ChildMapEntryDefinitionParse
   private static class ImportMapEntryBeanAssembler extends DefaultBeanAssembler {
 
     public ImportMapEntryBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
-        PropertyConfiguration targetConfig, BeanDefinition target) {
+                                       PropertyConfiguration targetConfig, BeanDefinition target) {
       super(beanConfig, bean, targetConfig, target);
     }
 

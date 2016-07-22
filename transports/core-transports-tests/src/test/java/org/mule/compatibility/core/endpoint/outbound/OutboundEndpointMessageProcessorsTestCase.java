@@ -55,7 +55,9 @@ public class OutboundEndpointMessageProcessorsTestCase extends AbstractMessagePr
   }
 
   protected OutboundEndpoint createOutboundEndpoint(Filter filter, EndpointSecurityFilter securityFilter, Transformer in,
-      Transformer response, MessageExchangePattern exchangePattern, TransactionConfig txConfig) throws Exception {
+                                                    Transformer response, MessageExchangePattern exchangePattern,
+                                                    TransactionConfig txConfig)
+      throws Exception {
     return createTestOutboundEndpoint(filter, securityFilter, in, response, exchangePattern, txConfig);
   }
 }

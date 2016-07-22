@@ -49,9 +49,13 @@ public class StoredProcedureParamTypeResolverTestCase extends AbstractMuleTestCa
 
     DbConnection connection = new DbConnectionBuilder().onCalatog(catalog).with(databaseMetaData).build();
 
-    QueryTemplate queryTemplate = new QueryTemplate(sqlText, QueryType.STORE_PROCEDURE_CALL,
-        Collections.<org.mule.runtime.module.db.internal.domain.param.QueryParam>singletonList(
-            new DefaultInputQueryParam(1, UnknownDbType.getInstance(), "7", TYPE_COLUMN)));
+    QueryTemplate queryTemplate =
+        new QueryTemplate(sqlText, QueryType.STORE_PROCEDURE_CALL,
+                          Collections.<org.mule.runtime.module.db.internal.domain.param.QueryParam>singletonList(new DefaultInputQueryParam(1,
+                                                                                                                                            UnknownDbType
+                                                                                                                                                .getInstance(),
+                                                                                                                                            "7",
+                                                                                                                                            TYPE_COLUMN)));
 
     DbTypeManager dbTypeManager = new DbTypeManagerBuilder().on(connection).managing(JdbcTypes.INTEGER_DB_TYPE).build();
 

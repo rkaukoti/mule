@@ -99,8 +99,8 @@ public abstract class Controller {
     } catch (ExecuteException e) {
       return e.getExitValue();
     } catch (Exception e) {
-      throw new MuleControllerException(
-          "Error executing [" + commandLine.getExecutable() + " " + commandLine.getArguments() + "]", e);
+      throw new MuleControllerException("Error executing [" + commandLine.getExecutable() + " " + commandLine.getArguments()
+          + "]", e);
     }
   }
 

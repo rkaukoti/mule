@@ -21,5 +21,5 @@ public interface ArtistRegistryWebServices {
   @WebResult(name = "return", targetNamespace = "http://example.cxf.module.runtime.mule.org/", partName = "return")
   @WebMethod
   public ArtistArray getAll(@WebParam(partName = "pageSize", name = "pageSize") int pageSize,
-      @WebParam(partName = "pageNumber", name = "pageNumber") int pageNumber);
+                            @WebParam(partName = "pageNumber", name = "pageNumber") int pageNumber);
 }

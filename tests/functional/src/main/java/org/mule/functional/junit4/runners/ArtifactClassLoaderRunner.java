@@ -94,7 +94,7 @@ public class ArtifactClassLoaderRunner extends Runner implements Filterable {
 
     final AnnotatedBuilder annotatedBuilder = new AnnotatedBuilder(builder);
     delegate = annotatedBuilder.buildRunner(getAnnotationAttributeFrom(isolatedTestClass, runnerDelegateToClass, "value"),
-        isolatedTestClass);
+                                            isolatedTestClass);
 
     if (!pluginClassLoadersInjected) {
       injectPluginsClassLoaders(classLoaderTestRunner, isolatedTestClass);
@@ -120,8 +120,9 @@ public class ArtifactClassLoaderRunner extends Runner implements Filterable {
     ClassPathClassifier classPathClassifier = new MuleClassPathClassifier();
 
     // Does the classification and creation of the isolated ClassLoader
-    ClassPathClassifierContext context = new ClassPathClassifierContext(klass, classPathUrlsProvider.getURLs(),
-        mavenDependenciesResolver.buildDependencies(), mavenMultiModuleArtifactMapping);
+    ClassPathClassifierContext context =
+        new ClassPathClassifierContext(klass, classPathUrlsProvider.getURLs(), mavenDependenciesResolver.buildDependencies(),
+                                       mavenMultiModuleArtifactMapping);
     ArtifactUrlClassification artifactUrlClassification = classPathClassifier.classify(context);
     return classLoaderRunnerFactory.createClassLoaderTestRunner(context.getExtraBootPackages(), artifactUrlClassification);
   }
@@ -142,8 +143,8 @@ public class ArtifactClassLoaderRunner extends Runner implements Filterable {
         .loadClassWithApplicationClassLoader(PluginClassLoadersAware.class.getName());
     List<FrameworkMethod> contextAwareMethods = testClass.getAnnotatedMethods(artifactContextAwareAnn);
     if (contextAwareMethods.size() != 1) {
-      throw new IllegalStateException(
-          "Isolation tests need to have one method marked with annotation " + PluginClassLoadersAware.class.getName());
+      throw new IllegalStateException("Isolation tests need to have one method marked with annotation "
+          + PluginClassLoadersAware.class.getName());
     }
     for (FrameworkMethod method : contextAwareMethods) {
       if (!method.isStatic() || method.isPublic()) {

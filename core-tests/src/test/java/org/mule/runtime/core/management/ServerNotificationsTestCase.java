@@ -116,8 +116,8 @@ public class ServerNotificationsTestCase extends AbstractMuleContextTestCase imp
       }
     }, "* quick brown*");
 
-    muleContext.fireNotification(
-        new DummyNotification("the quick brown fox jumped over the lazy dog", DummyNotification.EVENT_RECEIVED));
+    muleContext.fireNotification(new DummyNotification("the quick brown fox jumped over the lazy dog",
+                                                       DummyNotification.EVENT_RECEIVED));
     muleContext.fireNotification(new DummyNotification("e quick bro", DummyNotification.EVENT_RECEIVED));
     muleContext.fireNotification(new DummyNotification(" quick brown", DummyNotification.EVENT_RECEIVED));
 

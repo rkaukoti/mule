@@ -32,7 +32,7 @@ public class DefaultMuleCoreExtensionManagerServer implements MuleCoreExtensionM
   private List<MuleCoreExtension> orderedCoreExtensions;
 
   public DefaultMuleCoreExtensionManagerServer(MuleCoreExtensionDiscoverer coreExtensionDiscoverer,
-      MuleCoreExtensionDependencyResolver coreExtensionDependencyResolver) {
+                                               MuleCoreExtensionDependencyResolver coreExtensionDependencyResolver) {
     this.coreExtensionDiscoverer = coreExtensionDiscoverer;
     this.coreExtensionDependencyResolver = coreExtensionDependencyResolver;
   }

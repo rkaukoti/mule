@@ -151,8 +151,8 @@ public class ScatterGatherRouter extends AbstractMessageProcessorOwner implement
       } catch (ResponseTimeoutException e) {
         exception = e;
       } catch (InterruptedException e) {
-        throw new DefaultMuleException(
-            MessageFactory.createStaticMessage(String.format("Was interrupted while waiting for route %d", routeIndex)), e);
+        throw new DefaultMuleException(MessageFactory
+            .createStaticMessage(String.format("Was interrupted while waiting for route %d", routeIndex)), e);
       } catch (MessagingException e) {
         exception = wrapInDispatchException(e.getEvent(), routeIndex, route, e);
       } catch (Exception e) {
@@ -173,8 +173,8 @@ public class ScatterGatherRouter extends AbstractMessageProcessorOwner implement
         }
 
         if (response.getMessage().getExceptionPayload() == null) {
-          event.setMessage(
-              MuleMessage.builder(event.getMessage()).exceptionPayload(new DefaultExceptionPayload(exception)).build());
+          event.setMessage(MuleMessage.builder(event.getMessage()).exceptionPayload(new DefaultExceptionPayload(exception))
+              .build());
         }
       } else {
         if (logger.isDebugEnabled()) {
@@ -189,8 +189,8 @@ public class ScatterGatherRouter extends AbstractMessageProcessorOwner implement
   }
 
   private Exception wrapInDispatchException(MuleEvent event, int routeIndex, MessageProcessor route, Exception e) {
-    return new DispatchException(
-        MessageFactory.createStaticMessage(String.format("route number %d failed to be executed", routeIndex)), event, route, e);
+    return new DispatchException(MessageFactory
+        .createStaticMessage(String.format("route number %d failed to be executed", routeIndex)), event, route, e);
   }
 
   private List<ProcessingMuleEventWork> executeWork(MuleEvent event) throws MuleException {
@@ -227,7 +227,7 @@ public class ScatterGatherRouter extends AbstractMessageProcessorOwner implement
 
       if (threadingProfile.isDoThreading()) {
         workManager = threadingProfile.createWorkManager(ThreadNameHelper.getPrefix(muleContext) + "ScatterGatherWorkManager",
-            muleContext.getConfiguration().getShutdownTimeout());
+                                                         muleContext.getConfiguration().getShutdownTimeout());
       } else {
         workManager = new SerialWorkManager();
       }
@@ -292,7 +292,7 @@ public class ScatterGatherRouter extends AbstractMessageProcessorOwner implement
 
   private void checkNotInitialised() {
     Preconditions.checkState(initialised == false,
-        "<scatter-gather> router is not dynamic. Cannot modify routes after initialisation");
+                             "<scatter-gather> router is not dynamic. Cannot modify routes after initialisation");
   }
 
   @Override

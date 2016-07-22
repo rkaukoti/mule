@@ -25,7 +25,7 @@ public class GenericChildMapDefinitionParser extends ChildDefinitionParser {
   private final String childElementValueAttribute;
 
   public GenericChildMapDefinitionParser(String setterMethod, String childElementName, String childElementKeyAttribute,
-      String childElementValueAttribute) {
+                                         String childElementValueAttribute) {
     super(setterMethod, HashMap.class);
     addBeanFlag(MuleHierarchicalBeanDefinitionParserDelegate.MULE_NO_RECURSE);
     this.childElementName = childElementName;
@@ -39,8 +39,8 @@ public class GenericChildMapDefinitionParser extends ChildDefinitionParser {
 
   protected void parseChild(Element element, ParserContext parserContext, BeanDefinitionBuilder builder) {
     super.parseChild(element, parserContext, builder);
-    final Map parseMap = ((MuleHierarchicalBeanDefinitionParserDelegate) parserContext.getDelegate()).parseMapElement(element,
-        childElementName, childElementKeyAttribute, childElementValueAttribute);
+    final Map parseMap = ((MuleHierarchicalBeanDefinitionParserDelegate) parserContext.getDelegate())
+        .parseMapElement(element, childElementName, childElementKeyAttribute, childElementValueAttribute);
     builder.addPropertyValue("sourceMap", parseMap);
     builder.addPropertyValue("targetMapClass", super.getBeanClass(element));
   }

@@ -84,10 +84,10 @@ public final class FileContentWrapper {
     if (transformedValue != null) {
       visitor.visit((InputStream) transformedValue);
     } else {
-      throw new IllegalArgumentException(
-          format("Content of type '%s' is not supported and no suitable transformer could be found. Supported types are [%s]",
-              content.getClass().getName(), Joiner.on(", ")
-                  .join(asList(String.class, InputStream.class, OutputHandler.class, byte[].class, byte.class, Byte.class))));
+      throw new IllegalArgumentException(format("Content of type '%s' is not supported and no suitable transformer could be found. Supported types are [%s]",
+                                                content.getClass().getName(),
+                                                Joiner.on(", ").join(asList(String.class, InputStream.class, OutputHandler.class,
+                                                                            byte[].class, byte.class, Byte.class))));
     }
   }
 
@@ -98,7 +98,8 @@ public final class FileContentWrapper {
     } catch (TransformerException e) {
       if (LOGGER.isDebugEnabled()) {
         LOGGER.debug(format("Could not find transformer for content of type '%s' to '%s'", content.getClass().getName(),
-            targetDataType.getType().getName()), e);
+                            targetDataType.getType().getName()),
+                     e);
       }
       return null;
     }
@@ -112,7 +113,8 @@ public final class FileContentWrapper {
     } catch (Exception e) {
       if (LOGGER.isDebugEnabled()) {
         LOGGER.debug(format("Found exception trying to transform content of type '%s' to '%s'", content.getClass().getName(),
-            targetDataType.getType().getName()), e);
+                            targetDataType.getType().getName()),
+                     e);
       }
       return null;
     }

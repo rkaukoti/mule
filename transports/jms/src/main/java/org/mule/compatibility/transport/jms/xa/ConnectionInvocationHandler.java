@@ -53,8 +53,8 @@ public class ConnectionInvocationHandler implements TargetInvocationHandler {
       if (tx != null) {
         XASession xas = ((XAConnection) xaConnection).createXASession();
         return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
-            new Class[] {Session.class, XaTransaction.MuleXaObject.class},
-            new SessionInvocationHandler(xas, sameRMOverrideValue));
+                                      new Class[] {Session.class, XaTransaction.MuleXaObject.class},
+                                      new SessionInvocationHandler(xas, sameRMOverrideValue));
       } else {
         return ((XAConnection) xaConnection).createSession(false, Session.AUTO_ACKNOWLEDGE);
       }
@@ -62,8 +62,8 @@ public class ConnectionInvocationHandler implements TargetInvocationHandler {
       if (tx != null) {
         XAQueueSession xaqs = ((XAQueueConnection) xaConnection).createXAQueueSession();
         return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
-            new Class[] {QueueSession.class, XaTransaction.MuleXaObject.class},
-            new SessionInvocationHandler(xaqs, sameRMOverrideValue));
+                                      new Class[] {QueueSession.class, XaTransaction.MuleXaObject.class},
+                                      new SessionInvocationHandler(xaqs, sameRMOverrideValue));
       } else {
         return ((XAQueueConnection) xaConnection).createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
       }
@@ -71,8 +71,8 @@ public class ConnectionInvocationHandler implements TargetInvocationHandler {
       if (tx != null) {
         XATopicSession xats = ((XATopicConnection) xaConnection).createXATopicSession();
         return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
-            new Class[] {TopicSession.class, XaTransaction.MuleXaObject.class},
-            new SessionInvocationHandler(xats, sameRMOverrideValue));
+                                      new Class[] {TopicSession.class, XaTransaction.MuleXaObject.class},
+                                      new SessionInvocationHandler(xats, sameRMOverrideValue));
       } else {
         return ((XATopicConnection) xaConnection).createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
       }

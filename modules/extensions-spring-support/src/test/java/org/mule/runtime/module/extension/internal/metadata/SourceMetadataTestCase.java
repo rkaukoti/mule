@@ -78,7 +78,7 @@ public class SourceMetadataTestCase extends MetadataExtensionFunctionalTestCase 
   public void getSourceStaticOutputMetadata() throws IOException {
     final ComponentMetadataDescriptor componentMetadata = getComponentStaticMetadata();
     assertExpectedOutput(componentMetadata.getOutputMetadata(), new TypeToken<Map<String, Object>>() {}.getType(),
-        StringAttributes.class);
+                         StringAttributes.class);
   }
 
   @Test

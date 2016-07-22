@@ -77,7 +77,7 @@ public abstract class ExtensionComponent implements MuleContextAware, MetadataAw
   private MuleMetadataManager metadataManager;
 
   protected ExtensionComponent(RuntimeExtensionModel extensionModel, RuntimeComponentModel componentModel,
-      String configurationProviderName, ExtensionManagerAdapter extensionManager) {
+                               String configurationProviderName, ExtensionManagerAdapter extensionManager) {
     this.extensionModel = extensionModel;
     this.componentModel = componentModel;
     this.configurationProviderName = configurationProviderName;
@@ -226,11 +226,11 @@ public abstract class ExtensionComponent implements MuleContextAware, MetadataAw
     ConfigurationInstance<Object> configuration = getConfiguration(fakeEvent);
     ConfigurationProvider<Object> configurationProvider = findConfigurationProvider()
         .orElseThrow(() -> new MetadataResolvingException("Failed to create the required configuration for Metadata retrieval",
-            FailureCode.INVALID_CONFIGURATION));
+                                                          FailureCode.INVALID_CONFIGURATION));
 
     if (configurationProvider instanceof DynamicConfigurationProvider) {
       throw new MetadataResolvingException("Configuration used for Metadata fetch cannot be dynamic",
-          FailureCode.INVALID_CONFIGURATION);
+                                           FailureCode.INVALID_CONFIGURATION);
     }
 
     String cacheId = configuration.getName();
@@ -243,9 +243,9 @@ public abstract class ExtensionComponent implements MuleContextAware, MetadataAw
    */
   protected ConfigurationInstance<Object> getConfiguration(MuleEvent event) {
     if (isConfigurationSpecified()) {
-      return getConfigurationProviderByName().map(provider -> provider.get(event)).orElseThrow(
-          () -> new IllegalModelDefinitionException(format("Flow '%s' contains a reference to config '%s' but it doesn't exists",
-              flowConstruct.getName(), configurationProviderName)));
+      return getConfigurationProviderByName().map(provider -> provider.get(event))
+          .orElseThrow(() -> new IllegalModelDefinitionException(format("Flow '%s' contains a reference to config '%s' but it doesn't exists",
+                                                                        flowConstruct.getName(), configurationProviderName)));
     }
 
     return getConfigurationProviderByModel().map(provider -> provider.get(event))
@@ -274,10 +274,10 @@ public abstract class ExtensionComponent implements MuleContextAware, MetadataAw
 
   private void validateConfigurationProviderIsNotExpression() throws InitialisationException {
     if (isConfigurationSpecified() && expressionParser.isContainsTemplate(configurationProviderName)) {
-      throw new InitialisationException(createStaticMessage(format(
-          "Flow '%s' defines component '%s' which specifies the expression '%s' as a config-ref. "
-              + "Expressions are not allowed as config references",
-          flowConstruct.getName(), hyphenize(componentModel.getName()), configurationProviderName)), this);
+      throw new InitialisationException(createStaticMessage(format("Flow '%s' defines component '%s' which specifies the expression '%s' as a config-ref. "
+          + "Expressions are not allowed as config references", flowConstruct.getName(), hyphenize(componentModel.getName()),
+                                                                   configurationProviderName)),
+                                        this);
     }
   }
 }

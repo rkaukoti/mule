@@ -100,8 +100,8 @@ public abstract class FtpCommand<Connection extends FtpFileSystem> extends FileC
    */
   protected void changeWorkingDirectory(String path) {
     if (!tryChangeWorkingDirectory(path)) {
-      throw new IllegalArgumentException(
-          format("Could not change working directory to '%s'. Path doesn't exists or is not a directory", path.toString()));
+      throw new IllegalArgumentException(format("Could not change working directory to '%s'. Path doesn't exists or is not a directory",
+                                                path.toString()));
     }
     LOGGER.debug("working directory changed to {}", path);
   }
@@ -185,7 +185,7 @@ public abstract class FtpCommand<Connection extends FtpFileSystem> extends FileC
    * @param event the {@link MuleEvent} which triggered this operation
    */
   protected final void copy(FileConnectorConfig config, String sourcePath, String target, boolean overwrite,
-      boolean createParentDirectory, MuleEvent event, FtpCopyDelegate delegate) {
+                            boolean createParentDirectory, MuleEvent event, FtpCopyDelegate delegate) {
     FileAttributes sourceFile = getExistingFile(config, sourcePath);
     Path targetPath = resolvePath(config, target);
     FileAttributes targetFile = getFile(config, targetPath.toString());
@@ -205,9 +205,9 @@ public abstract class FtpCommand<Connection extends FtpFileSystem> extends FileC
         mkdirs(config, targetPath);
         targetPath = targetPath.resolve(sourceFile.getName());
       } else {
-        throw new IllegalArgumentException(
-            String.format("Can't copy '%s' to '%s' because the destination path " + "doesn't exists", sourceFile.getPath(),
-                targetPath.toAbsolutePath()));
+        throw new IllegalArgumentException(String
+            .format("Can't copy '%s' to '%s' because the destination path " + "doesn't exists", sourceFile.getPath(),
+                    targetPath.toAbsolutePath()));
       }
     }
 

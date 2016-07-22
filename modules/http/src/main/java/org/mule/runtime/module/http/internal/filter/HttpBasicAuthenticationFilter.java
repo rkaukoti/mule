@@ -146,8 +146,8 @@ public class HttpBasicAuthenticationFilter extends AbstractAuthenticationFilter 
       throw new UnauthorisedException(event, event.getSession().getSecurityContext(), this);
     } else {
       setUnauthenticated(event);
-      throw new UnsupportedAuthenticationSchemeException(
-          createStaticMessage("Http Basic filter doesn't know how to handle header " + header), event);
+      throw new UnsupportedAuthenticationSchemeException(createStaticMessage("Http Basic filter doesn't know how to handle header "
+          + header), event);
     }
   }
 }

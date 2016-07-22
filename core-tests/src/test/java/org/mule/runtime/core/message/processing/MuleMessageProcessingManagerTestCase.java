@@ -77,7 +77,7 @@ public class MuleMessageProcessingManagerTestCase extends org.mule.tck.junit4.Ab
     when(messageProcessPhase.compareTo(any(MessageProcessPhase.class))).thenCallRealMethod();
     when(messageProcessPhase.supportsTemplate(any(MessageProcessTemplate.class))).thenCallRealMethod();
     doCallRealMethod().when(messageProcessPhase).runPhase(any(MessageProcessTemplate.class), any(MessageProcessContext.class),
-        any(PhaseResultNotifier.class));
+                                                          any(PhaseResultNotifier.class));
     MuleMessageProcessingManager manager =
         createManagerUsingPhasesInRegistry(Arrays.<MessageProcessPhase>asList(messageProcessPhase));
     manager.processMessage(completeMessageProcessTemplateAndContext, completeMessageProcessTemplateAndContext);
@@ -112,7 +112,7 @@ public class MuleMessageProcessingManagerTestCase extends org.mule.tck.junit4.Ab
         return null;
       }
     }).when(failureMessageProcessPhase).runPhase(any(MessageProcessTemplate.class), any(MessageProcessContext.class),
-        any(PhaseResultNotifier.class));
+                                                 any(PhaseResultNotifier.class));
     return failureMessageProcessPhase;
   }
 
@@ -171,7 +171,7 @@ public class MuleMessageProcessingManagerTestCase extends org.mule.tck.junit4.Ab
 
     @Override
     public void runPhase(MessageProcessTemplate messageProcessTemplate, MessageProcessContext messageProcessContext,
-        PhaseResultNotifier phaseResultNotifier) {
+                         PhaseResultNotifier phaseResultNotifier) {
       phaseResultNotifier.phaseConsumedMessage();
     }
   }

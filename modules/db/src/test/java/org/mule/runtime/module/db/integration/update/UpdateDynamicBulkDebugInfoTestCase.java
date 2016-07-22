@@ -68,10 +68,12 @@ public class UpdateDynamicBulkDebugInfoTestCase extends UpdateBulkTestCase {
 
   private List<Matcher<FieldDebugInfo<?>>> createExpectedQueryMatchers() {
     final List<Matcher<FieldDebugInfo<?>>> queriesDebugInfo = new ArrayList<>();
-    queriesDebugInfo.add(createQueryFieldDebugInfoMatcher(QUERY1,
-        new QueryTemplate("update PLANET set NAME='Mercury' where NAME='EARTH'", UPDATE, Collections.<QueryParam>emptyList())));
-    queriesDebugInfo.add(createQueryFieldDebugInfoMatcher(QUERY2,
-        new QueryTemplate("update PLANET set NAME='Mercury' where NAME='MARS'", UPDATE, Collections.<QueryParam>emptyList())));
+    queriesDebugInfo
+        .add(createQueryFieldDebugInfoMatcher(QUERY1, new QueryTemplate("update PLANET set NAME='Mercury' where NAME='EARTH'",
+                                                                        UPDATE, Collections.<QueryParam>emptyList())));
+    queriesDebugInfo
+        .add(createQueryFieldDebugInfoMatcher(QUERY2, new QueryTemplate("update PLANET set NAME='Mercury' where NAME='MARS'",
+                                                                        UPDATE, Collections.<QueryParam>emptyList())));
 
     return queriesDebugInfo;
   }

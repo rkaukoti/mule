@@ -41,7 +41,8 @@ public class ConnectionProviderObjectFactory extends AbstractExtensionObjectFact
   public ConnectionProviderResolver getObject() throws Exception {
     ResolverSet resolverSet = getParametersAsResolverSet();
     return new ConnectionProviderResolver(new ConnectionProviderObjectBuilder(providerModel, resolverSet, poolingProfile,
-        disableValidation, retryPolicyTemplate, getConnectionManager()));
+                                                                              disableValidation, retryPolicyTemplate,
+                                                                              getConnectionManager()));
   }
 
   private ConnectionManagerAdapter getConnectionManager() throws ConfigurationException {

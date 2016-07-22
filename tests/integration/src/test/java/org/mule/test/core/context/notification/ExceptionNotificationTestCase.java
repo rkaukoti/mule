@@ -42,6 +42,6 @@ public class ExceptionNotificationTestCase extends AbstractNotificationTestCase 
   @Override
   public void validateSpecification(RestrictedNode spec) throws Exception {
     verifyAllNotifications(spec, ExceptionNotification.class, ExceptionNotification.EXCEPTION_ACTION,
-        ExceptionNotification.EXCEPTION_ACTION);
+                           ExceptionNotification.EXCEPTION_ACTION);
   }
 }

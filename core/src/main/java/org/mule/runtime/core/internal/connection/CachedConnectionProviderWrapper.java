@@ -27,7 +27,7 @@ public final class CachedConnectionProviderWrapper<Connection> extends Connectio
   private final RetryPolicyTemplate retryPolicyTemplate;
 
   public CachedConnectionProviderWrapper(ConnectionProvider<Connection> provider, boolean disableValidation,
-      RetryPolicyTemplate retryPolicyTemplate) {
+                                         RetryPolicyTemplate retryPolicyTemplate) {
     super(provider);
     this.disableValidation = disableValidation;
     this.retryPolicyTemplate = retryPolicyTemplate;

@@ -30,14 +30,14 @@ public class ResourceReleaserTestCase extends AbstractMuleTestCase {
 
   @Test
   public void createdByCorrectArtifactClassLoader() throws Exception {
-    ensureResourceReleaserIsCreatedByCorrectClassLoader(
-        new TestArtifactClassLoader(new TestArtifactClassLoader(Thread.currentThread().getContextClassLoader())));
+    ensureResourceReleaserIsCreatedByCorrectClassLoader(new TestArtifactClassLoader(new TestArtifactClassLoader(Thread
+        .currentThread().getContextClassLoader())));
   }
 
   @Test
   public void createdByCorrectParentArtifactClassLoader() throws Exception {
-    ensureResourceReleaserIsCreatedByCorrectClassLoader(
-        new TestArtifactClassLoader(Thread.currentThread().getContextClassLoader()));
+    ensureResourceReleaserIsCreatedByCorrectClassLoader(new TestArtifactClassLoader(Thread.currentThread()
+        .getContextClassLoader()));
   }
 
   @Test

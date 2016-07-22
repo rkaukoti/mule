@@ -176,11 +176,12 @@ public class RestServiceWrapper extends AbstractComponent {
     MuleEventContext eventContext = new DefaultMuleEventContext(event);
     MuleEvent result =
         new DefaultMuleEvent(eventContext.sendEvent(MuleMessage.builder(event.getMessage()).payload(requestBody).build(),
-            outboundEndpoint.getEndpointURI().toString()), flowConstruct);
+                                                    outboundEndpoint.getEndpointURI().toString()),
+                             flowConstruct);
 
     if (isErrorPayload(result)) {
       handleException(new RestServiceException(CoreMessages.failedToInvokeRestService(tempUrl), event, this),
-          result.getMessage());
+                      result.getMessage());
     }
 
     return result.getMessage();
@@ -211,7 +212,7 @@ public class RestServiceWrapper extends AbstractComponent {
   // requestBodyBuffer must contain the body of the http method at the end of this
   // function call
   private void setRESTParams(StringBuilder url, MuleEvent event, Object body, Map args, boolean optional,
-      StringBuilder requestBodyBuffer) {
+                             StringBuilder requestBodyBuffer) {
     String sep;
 
     if (requestBodyBuffer == null) {

@@ -22,7 +22,7 @@ public class MessageRedeliveredException extends MessagingException {
   int maxRedelivery;
 
   protected MessageRedeliveredException(String messageId, int redeliveryCount, int maxRedelivery, MuleEvent event,
-      Message message) {
+                                        Message message) {
     super(message, event);
     this.messageId = messageId;
     this.redeliveryCount = redeliveryCount;
@@ -30,7 +30,7 @@ public class MessageRedeliveredException extends MessagingException {
   }
 
   public MessageRedeliveredException(String messageId, int redeliveryCount, int maxRedelivery, MuleEvent event, Message message,
-      MessageProcessor failingMessageProcessor) {
+                                     MessageProcessor failingMessageProcessor) {
     super(message, event, failingMessageProcessor);
     this.messageId = messageId;
     this.redeliveryCount = redeliveryCount;
@@ -38,9 +38,9 @@ public class MessageRedeliveredException extends MessagingException {
   }
 
   public MessageRedeliveredException(String messageId, int redeliveryCount, int maxRedelivery, MuleEvent event,
-      MessageProcessor failingMessageProcessor) {
+                                     MessageProcessor failingMessageProcessor) {
     this(messageId, redeliveryCount, maxRedelivery, event,
-        CoreMessages.createStaticMessage("Maximum redelivery attempts reached"), failingMessageProcessor);
+         CoreMessages.createStaticMessage("Maximum redelivery attempts reached"), failingMessageProcessor);
   }
 
   public String getMessageId() {

@@ -44,8 +44,8 @@ public class JaasSecurityFilter extends AbstractOperationSecurityFilter {
     } catch (SecurityException se) {
       // Security Exception occurred
       if (logger.isDebugEnabled()) {
-        logger.debug(
-            "Security Exception raised. Authentication request for user: " + user.getUsername() + " failed: " + se.toString());
+        logger.debug("Security Exception raised. Authentication request for user: " + user.getUsername() + " failed: "
+            + se.toString());
       }
       throw se;
     } catch (Exception e) {

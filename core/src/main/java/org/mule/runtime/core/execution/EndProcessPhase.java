@@ -18,7 +18,7 @@ public class EndProcessPhase implements MessageProcessPhase<EndPhaseTemplate> {
 
   @Override
   public void runPhase(EndPhaseTemplate messageProcessTemplate, MessageProcessContext messageProcessContext,
-      PhaseResultNotifier phaseResultNotifier) {
+                       PhaseResultNotifier phaseResultNotifier) {
     messageProcessTemplate.messageProcessingEnded();
   }
 

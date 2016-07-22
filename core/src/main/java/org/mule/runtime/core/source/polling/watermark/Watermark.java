@@ -89,7 +89,7 @@ public abstract class Watermark extends MessageProcessorPollingOverride {
         watermarkValue = WatermarkUtils.evaluate(defaultExpression, event);
       } catch (NotSerializableException nse) {
         logger.warn(String.format("Default watermark expression '%s' returned not serializable value", this.defaultExpression),
-            nse);
+                    nse);
       }
     }
     if (watermarkValue != null) {

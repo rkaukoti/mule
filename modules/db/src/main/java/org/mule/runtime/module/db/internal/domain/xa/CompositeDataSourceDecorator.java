@@ -25,7 +25,7 @@ public class CompositeDataSourceDecorator implements DataSourceDecorator {
 
   @Override
   public DataSource decorate(DataSource dataSource, String dataSourceName, DbPoolingProfile dbPoolingProfile,
-      MuleContext muleContext) {
+                             MuleContext muleContext) {
     for (DataSourceDecorator decorator : decorators) {
       if (decorator.appliesTo(dataSource, muleContext)) {
         return decorator.decorate(dataSource, dataSourceName, dbPoolingProfile, muleContext);

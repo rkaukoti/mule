@@ -43,7 +43,7 @@ public final class FtpReadCommand extends ClassicFtpCommand implements ReadComma
    */
   @Override
   public OperationResult<InputStream, FileAttributes> read(FileConnectorConfig config, MuleMessage message, String filePath,
-      boolean lock) {
+                                                           boolean lock) {
     FtpFileAttributes attributes = getExistingFile(config, filePath);
     if (attributes.isDirectory()) {
       throw cannotReadDirectoryException(Paths.get(attributes.getPath()));

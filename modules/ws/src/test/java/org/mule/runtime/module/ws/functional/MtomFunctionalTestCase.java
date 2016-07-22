@@ -35,11 +35,10 @@ public class MtomFunctionalTestCase extends AbstractWSConsumerFunctionalTestCase
 
   @Test
   public void uploadAttachmentTest() throws Exception {
-    String request = String.format(
-        "<ns:uploadAttachment xmlns:ns=\"http://consumer.ws.module.runtime.mule.org/\">" + "<fileName>%s</fileName><attachment>"
-            + "<xop:Include xmlns:xop=\"http://www.w3.org/2004/08/xop/include\" href=\"cid:testAttachmentId\"/>"
-            + "</attachment></ns:uploadAttachment>",
-        TEST_FILE_ATTACHMENT);
+    String request = String.format("<ns:uploadAttachment xmlns:ns=\"http://consumer.ws.module.runtime.mule.org/\">"
+        + "<fileName>%s</fileName><attachment>"
+        + "<xop:Include xmlns:xop=\"http://www.w3.org/2004/08/xop/include\" href=\"cid:testAttachmentId\"/>"
+        + "</attachment></ns:uploadAttachment>", TEST_FILE_ATTACHMENT);
 
     MuleEvent event = flowRunner("clientUploadAttachment").withPayload(request)
         .withOutboundAttachment("testAttachmentId", buildDataHandler(TEST_FILE_ATTACHMENT)).run();

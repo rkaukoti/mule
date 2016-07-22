@@ -46,8 +46,7 @@ public class TransactionalMessageProcessorsFactoryBean implements FactoryBean {
       } else if (processor instanceof MessageProcessorBuilder) {
         builder.chain((MessageProcessorBuilder) processor);
       } else {
-        throw new IllegalArgumentException(
-            "MessageProcessorBuilder should only have MessageProcessor's or MessageProcessorBuilder's configured");
+        throw new IllegalArgumentException("MessageProcessorBuilder should only have MessageProcessor's or MessageProcessorBuilder's configured");
       }
       if (processor instanceof MessagingExceptionHandlerAware) {
         ((MessagingExceptionHandlerAware) processor).setMessagingExceptionHandler(exceptionListener);

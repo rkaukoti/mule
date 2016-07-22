@@ -108,7 +108,7 @@ public abstract class AbstractMuleTestCase {
     }
     if (filteredThreads > 0) {
       logThreadsResult(String.format("Hung threads count: %d. Test case: %s. Thread names:%s", filteredThreads, testCaseName,
-          builder.toString()));
+                                     builder.toString()));
     } else {
       logThreadsResult(String.format("No hung threads. Test case: %s", testCaseName));
     }

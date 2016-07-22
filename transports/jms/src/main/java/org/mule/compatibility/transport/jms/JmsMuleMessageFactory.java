@@ -164,7 +164,7 @@ public class JmsMuleMessageFactory extends AbstractMuleMessageFactory {
   }
 
   protected void addCorrelationProperties(Message jmsMessage, MuleMessage.Builder messageBuilder,
-      Map<String, Serializable> messageProperties) {
+                                          Map<String, Serializable> messageProperties) {
     try {
       String value = jmsMessage.getJMSCorrelationID();
       if (value != null) {

@@ -26,8 +26,8 @@ public class ServerStartupSplashScreen extends SplashScreen {
     Attributes att = mf.getMainAttributes();
     if (att.values().size() > 0) {
       header.add(StringUtils.defaultString(MuleManifest.getProductDescription(), notset));
-      header.add(
-          CoreMessages.version().getMessage() + " Build: " + StringUtils.defaultString(MuleManifest.getBuildNumber(), notset));
+      header.add(CoreMessages.version().getMessage() + " Build: "
+          + StringUtils.defaultString(MuleManifest.getBuildNumber(), notset));
 
       header.add(StringUtils.defaultString(MuleManifest.getVendorName(), notset));
       header.add(StringUtils.defaultString(MuleManifest.getProductMoreInfo(), notset));

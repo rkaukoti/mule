@@ -220,8 +220,8 @@ public class CompositeClassLoader extends ClassLoader implements ClassLoaderLook
       }
     }
 
-    throw new NoSuchMethodException(
-        String.format("Cannot find a method '%s' with the given parameter types '%s'", methodName, Arrays.toString(params)));
+    throw new NoSuchMethodException(String.format("Cannot find a method '%s' with the given parameter types '%s'", methodName,
+                                                  Arrays.toString(params)));
   }
 
   protected void logReflectionLoadingError(String name, ClassLoader classLoader, Exception e, String type) {
@@ -237,7 +237,7 @@ public class CompositeClassLoader extends ClassLoader implements ClassLoaderLook
       }
 
       logger.debug(String.format("Error loading '%s' '%s' from class loader '%s': '%s'", type.toLowerCase(), name, classLoader,
-          errorMessage));
+                                 errorMessage));
     }
   }
 }

@@ -24,14 +24,14 @@ public class TestNamespaceHandler extends AbstractMuleNamespaceHandler {
     registerIgnoredElement("return-data");
     registerIgnoredElement("callback");
     registerBeanDefinitionParser("no-action-transformer",
-        new TransformerMessageProcessorDefinitionParser(NoActionTransformer.class));
+                                 new TransformerMessageProcessorDefinitionParser(NoActionTransformer.class));
     registerMuleBeanDefinitionParser("assert", new MessageProcessorDefinitionParser(AssertionMessageProcessor.class));
     registerMuleBeanDefinitionParser("invocation-counter",
-        new MessageProcessorDefinitionParser(InvocationCountMessageProcessor.class));
+                                     new MessageProcessorDefinitionParser(InvocationCountMessageProcessor.class));
     registerMuleBeanDefinitionParser("non-blocking-processor",
-        new MessageProcessorDefinitionParser(TestNonBlockingProcessor.class));
+                                     new MessageProcessorDefinitionParser(TestNonBlockingProcessor.class));
     registerMuleBeanDefinitionParser("assert-intercepting",
-        new MessageProcessorDefinitionParser(ResponseAssertionMessageProcessor.class));
+                                     new MessageProcessorDefinitionParser(ResponseAssertionMessageProcessor.class));
     registerBeanDefinitionParser("queue", new QueueWriterMessageProcessorBeanDefinitionParser());
   }
 }

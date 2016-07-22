@@ -36,7 +36,7 @@ public class BlockingProcessorExecutor implements ProcessorExecutor {
   private int index;
 
   public BlockingProcessorExecutor(MuleEvent event, List<MessageProcessor> processors,
-      MessageProcessorExecutionTemplate messageProcessorExecutionTemplate, boolean copyOnVoidEvent) {
+                                   MessageProcessorExecutionTemplate messageProcessorExecutionTemplate, boolean copyOnVoidEvent) {
     this.event = event;
     this.processors = processors;
     this.copyOnVoidEvent = copyOnVoidEvent;

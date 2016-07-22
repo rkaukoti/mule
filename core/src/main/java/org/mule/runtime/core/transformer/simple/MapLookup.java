@@ -31,8 +31,8 @@ public class MapLookup extends AbstractTransformer {
       if (key != null) {
         return ((Map) src).get(key);
       } else {
-        throw new TransformerException(
-            MessageFactory.createStaticMessage("Property 'key' must be set in order to use this transformer."));
+        throw new TransformerException(MessageFactory
+            .createStaticMessage("Property 'key' must be set in order to use this transformer."));
       }
     } else {
       throw new TransformerException(MessageFactory.createStaticMessage("Message to transform must be of type java.util.Map"));

@@ -84,7 +84,7 @@ public class BasicValidationTestCase extends ValidationTestCase {
     assertValid(configureTimeRunner(flowRunner("time"), "Wed, Jul 4, '01", "EEE, MMM d, ''yy"));
     final String invalidPattern = "yyMMddHHmmssZ";
     assertInvalid(configureTimeRunner(flowRunner("time"), time, invalidPattern),
-        messages.invalidTime(time, DEFAULT_LOCALE, invalidPattern));
+                  messages.invalidTime(time, DEFAULT_LOCALE, invalidPattern));
   }
 
   private FlowRunner configureTimeRunner(FlowRunner runner, String time, String pattern) {
@@ -256,12 +256,12 @@ public class BasicValidationTestCase extends ValidationTestCase {
 
     maxLength = 2;
     assertInvalid(configureSizeValidationRunner(flowRunner(flowName), value, minLength, maxLength),
-        messages.greaterThanMaxSize(value, maxLength, expectedSize));
+                  messages.greaterThanMaxSize(value, maxLength, expectedSize));
 
     minLength = 5;
     maxLength = 10;
     assertInvalid(configureSizeValidationRunner(flowRunner(flowName), value, minLength, maxLength),
-        messages.lowerThanMinSize(value, minLength, expectedSize));
+                  messages.lowerThanMinSize(value, minLength, expectedSize));
   }
 
   private FlowRunner configureSizeValidationRunner(FlowRunner runner, Object value, int minLength, int maxLength)

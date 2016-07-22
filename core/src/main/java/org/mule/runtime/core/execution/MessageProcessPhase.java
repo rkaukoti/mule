@@ -41,6 +41,6 @@ public interface MessageProcessPhase<Template extends MessageProcessTemplate> {
    * @param phaseResultNotifier notifier that must be advice under certain scenarios
    */
   void runPhase(Template messageProcessTemplate, MessageProcessContext messageProcessContext,
-      PhaseResultNotifier phaseResultNotifier);
+                PhaseResultNotifier phaseResultNotifier);
 
 }

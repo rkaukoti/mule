@@ -52,7 +52,7 @@ public abstract class AbstractTransformerTestCase extends AbstractMuleContextTes
     final boolean match = this.compareResults(expectedResult, result);
     if (!match) {
       fail(String.format("Transformation result does not match expected result. Expected '%s', but got '%s'", expectedResult,
-          result));
+                         result));
     }
   }
 
@@ -68,7 +68,7 @@ public abstract class AbstractTransformerTestCase extends AbstractMuleContextTes
 
       if (!match) {
         fail(String.format("The result of the roundtrip transform does not match expected result. Expected '%s', but got '%s'",
-            this.getTestData(), result));
+                           this.getTestData(), result));
       }
     }
   }

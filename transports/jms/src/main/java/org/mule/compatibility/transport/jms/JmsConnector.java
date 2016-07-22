@@ -509,9 +509,9 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
     session = createSession(transacted, topic);
 
     if (logger.isDebugEnabled()) {
-      logger.debug(MessageFormat.format(
-          "Retrieved new jms session from connection: " + "topic={0}, transacted={1}, ack mode={2}, nolocal={3}: {4}", topic,
-          transacted, acknowledgementMode, noLocal, session));
+      logger.debug(MessageFormat
+          .format("Retrieved new jms session from connection: " + "topic={0}, transacted={1}, ack mode={2}, nolocal={3}: {4}",
+                  topic, transacted, acknowledgementMode, noLocal, session));
     }
 
     if (tx != null) {
@@ -827,8 +827,8 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
     if (JmsConstants.JMS_SPECIFICATION_11.equals(specification) || (JmsConstants.JMS_SPECIFICATION_102B.equals(specification))) {
       this.specification = specification;
     } else {
-      throw new IllegalArgumentException(
-          "JMS specification needs to be one of the defined values in JmsConstants but was: " + specification);
+      throw new IllegalArgumentException("JMS specification needs to be one of the defined values in JmsConstants but was: "
+          + specification);
     }
   }
 

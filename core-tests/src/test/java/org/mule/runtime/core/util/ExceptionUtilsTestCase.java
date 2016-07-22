@@ -68,7 +68,7 @@ public class ExceptionUtilsTestCase extends AbstractMuleTestCase {
     assertSame(expected, getDeepestOccurenceOfType(new Exception(expected), IllegalArgumentException.class));
 
     assertSame(expected,
-        getDeepestOccurenceOfType(new IllegalArgumentException(new Exception(expected)), IllegalArgumentException.class));
+               getDeepestOccurenceOfType(new IllegalArgumentException(new Exception(expected)), IllegalArgumentException.class));
 
     assertNull(getDeepestOccurenceOfType(new IllegalArgumentException(new Exception(expected)), IOException.class));
   }

@@ -71,7 +71,7 @@ public abstract class AbstractTransportsJmxAgent extends AbstractJmxAgent {
       final String rawName = service.getName();
       final String name = jmxSupport.escape(rawName);
       final String jmxName = String.format("%s:%s%s", jmxSupport.getDomainName(muleContext, !containerMode),
-          ConnectorServiceMBean.DEFAULT_JMX_NAME_PREFIX, name);
+                                           ConnectorServiceMBean.DEFAULT_JMX_NAME_PREFIX, name);
       if (logger.isDebugEnabled()) {
         logger.debug("Attempting to register service with name: " + jmxName);
       }

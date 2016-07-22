@@ -33,7 +33,8 @@ public class SelectMessageProcessor extends AbstractSingleQueryDbMessageProcesso
   private final List<QueryType> validQueryTypes;
 
   public SelectMessageProcessor(DbConfigResolver dbConfigResolver, QueryResolver queryResolver,
-      QueryExecutorFactory queryExecutorFactory, TransactionalAction transactionalAction, boolean streaming) {
+                                QueryExecutorFactory queryExecutorFactory, TransactionalAction transactionalAction,
+                                boolean streaming) {
     super(dbConfigResolver, queryResolver, transactionalAction);
     this.queryExecutorFactory = queryExecutorFactory;
     this.streaming = streaming;

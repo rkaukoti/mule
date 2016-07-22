@@ -45,7 +45,7 @@ public class StateEncoder {
   private void encodeParameter(String parameterValue, String parameterAssignation) {
     Preconditions.checkArgument(parameterValue != null, "parameter cannot be null");
     Preconditions.checkArgument(state == null ? true : !state.contains(ON_COMPLETE_REDIRECT_TO_PARAM_NAME_ASSIGN),
-        "parameter cannot be added after " + ON_COMPLETE_REDIRECT_TO_PARAM_NAME);
+                                "parameter cannot be added after " + ON_COMPLETE_REDIRECT_TO_PARAM_NAME);
     if (state == null && parameterValue != null) {
       state = parameterAssignation + parameterValue;
     } else if (parameterValue != null) {

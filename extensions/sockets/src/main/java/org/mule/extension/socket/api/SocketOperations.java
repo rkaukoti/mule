@@ -41,11 +41,13 @@ public class SocketOperations {
    */
   @MetadataScope(outputResolver = SocketMetadataResolver.class, keysResolver = SocketMetadataResolver.class)
   public OperationResult<?, ?> send(@Connection RequesterConnection connection, @UseConfig RequesterConfig config,
-      @Optional(defaultValue = "#[payload]") @NoRef Object content, @Optional String outputEncoding, String hasResponse, // TODO
-                                                                                                                         // Add
-                                                                                                                         // metadata
-                                                                                                                         // https://www.mulesoft.org/jira/browse/MULE-9894
-      MuleMessage muleMessage) throws ConnectionException, IOException {
+                                    @Optional(defaultValue = "#[payload]") @NoRef Object content, @Optional String outputEncoding,
+                                    String hasResponse, // TODO
+                                                        // Add
+                                                        // metadata
+                                                        // https://www.mulesoft.org/jira/browse/MULE-9894
+                                    MuleMessage muleMessage)
+      throws ConnectionException, IOException {
     SocketClient client = connection.getClient();
 
     if (outputEncoding == null) {

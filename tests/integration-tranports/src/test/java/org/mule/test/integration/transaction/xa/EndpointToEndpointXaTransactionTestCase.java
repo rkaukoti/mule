@@ -32,8 +32,8 @@ public class EndpointToEndpointXaTransactionTestCase extends FunctionalTestCase 
   private final TransactionScenarios.OutboundMessagesCounter outboundMessagesCounter;
 
   public EndpointToEndpointXaTransactionTestCase(String[] configFiles, TransactionalTestSetUp testSetUp,
-      TransactionScenarios.InboundMessagesGenerator inboundMessagesCreator,
-      TransactionScenarios.OutboundMessagesCounter outboundMessagesCounter) {
+                                                 TransactionScenarios.InboundMessagesGenerator inboundMessagesCreator,
+                                                 TransactionScenarios.OutboundMessagesCounter outboundMessagesCounter) {
     this.configFiles = configFiles;
     this.testSetUp = testSetUp;
     this.inboundMessagesCreator = inboundMessagesCreator;

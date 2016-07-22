@@ -69,7 +69,8 @@ public final class DynamicConfigurationProvider<T> extends LifecycleAwareConfigu
    * @param expirationPolicy the {@link ExpirationPolicy} for the unused instances
    */
   public DynamicConfigurationProvider(String name, RuntimeConfigurationModel configurationModel, ResolverSet resolverSet,
-      ValueResolver<ConnectionProvider> connectionProviderResolver, ExpirationPolicy expirationPolicy) {
+                                      ValueResolver<ConnectionProvider> connectionProviderResolver,
+                                      ExpirationPolicy expirationPolicy) {
     super(name, configurationModel);
     configurationInstanceFactory = new ConfigurationInstanceFactory<>(configurationModel, resolverSet);
     this.resolverSet = resolverSet;
@@ -129,8 +130,8 @@ public final class DynamicConfigurationProvider<T> extends LifecycleAwareConfigu
   }
 
   private ConfigurationInstance<T> createConfiguration(ResolverSetResult result, MuleEvent event) throws MuleException {
-    ConfigurationInstance<T> configuration = configurationInstanceFactory.createConfiguration(getName(), result,
-        Optional.ofNullable(connectionProviderResolver.resolve(event)));
+    ConfigurationInstance<T> configuration = configurationInstanceFactory
+        .createConfiguration(getName(), result, Optional.ofNullable(connectionProviderResolver.resolve(event)));
 
     registerConfiguration(configuration);
 

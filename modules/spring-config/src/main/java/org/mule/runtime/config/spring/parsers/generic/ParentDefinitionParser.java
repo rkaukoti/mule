@@ -43,7 +43,7 @@ public class ParentDefinitionParser extends AbstractHierarchicalDefinitionParser
     setRegistry(parserContext.getRegistry());
     Class beanClass = getBeanClass(element);
     Assert.state(beanClass != null,
-        "Class returned from getBeanClass(Element) must not be null, element is: " + element.getNodeName());
+                 "Class returned from getBeanClass(Element) must not be null, element is: " + element.getNodeName());
     BeanDefinitionBuilder builder = createBeanDefinitionBuilder(element, beanClass);
     builder.getRawBeanDefinition().setSource(parserContext.extractSource(element));
     if (parserContext.isNested()) {

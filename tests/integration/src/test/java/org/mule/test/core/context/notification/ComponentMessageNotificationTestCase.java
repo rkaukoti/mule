@@ -39,6 +39,6 @@ public class ComponentMessageNotificationTestCase extends AbstractNotificationTe
   @Override
   public void validateSpecification(RestrictedNode spec) throws Exception {
     verifyAllNotifications(spec, ComponentMessageNotification.class, ComponentMessageNotification.COMPONENT_PRE_INVOKE,
-        ComponentMessageNotification.COMPONENT_POST_INVOKE);
+                           ComponentMessageNotification.COMPONENT_POST_INVOKE);
   }
 }

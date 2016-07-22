@@ -492,7 +492,7 @@ public class FlowConfigurationFunctionalTestCase extends FunctionalTestCase {
   public void testCustomMessageRouter() throws Exception {
     MuleMessage result = flowRunner("customRouter").withPayload("").run().getMessage();
     assertEquals("abc",
-        ((List<MuleMessage>) result.getPayload()).stream().map(msg -> (String) msg.getPayload()).collect(joining()));
+                 ((List<MuleMessage>) result.getPayload()).stream().map(msg -> (String) msg.getPayload()).collect(joining()));
   }
 
   @Test

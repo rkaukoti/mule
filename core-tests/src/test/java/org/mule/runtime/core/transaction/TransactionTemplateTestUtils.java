@@ -55,8 +55,8 @@ public class TransactionTemplateTestUtils {
     };
   }
 
-  public static ExecutionCallback<MuleEvent> getFailureTransactionCallbackStartsTransaction(
-      final MessagingException mockMessagingException, final Transaction mockTransaction) {
+  public static ExecutionCallback<MuleEvent> getFailureTransactionCallbackStartsTransaction(final MessagingException mockMessagingException,
+                                                                                            final Transaction mockTransaction) {
     return new ExecutionCallback<MuleEvent>() {
 
       @Override

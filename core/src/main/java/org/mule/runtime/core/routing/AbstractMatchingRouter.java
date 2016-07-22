@@ -68,7 +68,7 @@ public class AbstractMatchingRouter extends AbstractAnnotatedObject implements M
       if (copyEvent) {
         if (isConsumable(message.getDataType().getType())) {
           throw new MessagingException(CoreMessages.cannotCopyStreamPayload(message.getDataType().getType().getName()), event,
-              this);
+                                       this);
         }
         eventToRoute = OptimizedRequestContext.criticalSetEvent(event);
       } else {
@@ -86,8 +86,8 @@ public class AbstractMatchingRouter extends AbstractAnnotatedObject implements M
 
     if (!matchfound && defaultRoute != null) {
       if (logger.isDebugEnabled()) {
-        logger.debug(
-            "Message did not match any routers on: " + event.getFlowConstruct().getName() + " invoking catch all strategy");
+        logger.debug("Message did not match any routers on: " + event.getFlowConstruct().getName()
+            + " invoking catch all strategy");
       }
       return processDefaultRoute(event);
     } else if (!matchfound) {

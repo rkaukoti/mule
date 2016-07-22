@@ -30,9 +30,10 @@ public class AutoConfigurationBuilderTestCase extends AbstractMuleTestCase {
   public void testConfigureSpring() throws ConfigurationException, InitialisationException {
     MuleContextFactory muleContextFactory = new DefaultMuleContextFactory();
     MuleContext muleContext = muleContextFactory.createMuleContext(
-        Arrays.asList(new SimpleConfigurationBuilder(null),
-            new AutoConfigurationBuilder("org/mule/test/spring/config1/test-xml-mule2-config.xml", emptyMap(), APP)),
-        new DefaultMuleContextBuilder());
+                                                                   Arrays.asList(new SimpleConfigurationBuilder(null),
+                                                                                 new AutoConfigurationBuilder("org/mule/test/spring/config1/test-xml-mule2-config.xml",
+                                                                                                              emptyMap(), APP)),
+                                                                   new DefaultMuleContextBuilder());
 
     // Just a few of the asserts from AbstractConfigBuilderTestCase
     Flow flow = (Flow) muleContext.getRegistry().lookupFlowConstruct("appleComponent");

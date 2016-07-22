@@ -38,7 +38,7 @@ public class WsSecurityDefinitionParserTestCase extends FunctionalTestCase {
     assertEquals("joe", wsProperties.get(WSHandlerConstants.USER));
     assertEquals("PasswordText", wsProperties.get(WSHandlerConstants.PASSWORD_TYPE));
     assertEquals("org.mule.runtime.module.cxf.wssec.ClientPasswordCallback",
-        wsProperties.get(WSHandlerConstants.PW_CALLBACK_CLASS));
+                 wsProperties.get(WSHandlerConstants.PW_CALLBACK_CLASS));
 
     assertNotNull(wsSecurity.getCustomValidator());
     assertFalse(wsSecurity.getCustomValidator().isEmpty());
@@ -57,7 +57,7 @@ public class WsSecurityDefinitionParserTestCase extends FunctionalTestCase {
     Map<String, Object> wsProperties = wsSecurity.getConfigProperties();
 
     assertEquals(WSHandlerConstants.TIMESTAMP + " " + WSHandlerConstants.SIGNATURE + " " + WSHandlerConstants.ENCRYPT,
-        wsProperties.get(WSHandlerConstants.ACTION));
+                 wsProperties.get(WSHandlerConstants.ACTION));
     assertEquals("joe", wsProperties.get(WSHandlerConstants.USER));
     assertEquals("org/mule/runtime/module/cxf/wssec/wssecurity.properties", wsProperties.get(WSHandlerConstants.SIG_PROP_FILE));
     assertEquals("org/mule/runtime/module/cxf/wssec/wssecurity.properties", wsProperties.get(WSHandlerConstants.ENC_PROP_FILE));

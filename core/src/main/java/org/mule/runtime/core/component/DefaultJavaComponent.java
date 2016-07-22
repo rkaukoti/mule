@@ -54,7 +54,7 @@ public class DefaultJavaComponent extends AbstractJavaComponent {
         }
       } catch (Exception e) {
         throw new InitialisationException(MessageFactory.createStaticMessage("Unable to create instance of POJO service"), e,
-            this);
+                                          this);
 
       }
       // On all calls, start if not started.

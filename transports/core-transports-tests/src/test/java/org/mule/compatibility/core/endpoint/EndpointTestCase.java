@@ -107,9 +107,9 @@ public class EndpointTestCase extends AbstractMuleTestCase {
     // Creates the endpoint using the transformers which will validate the
     // configuration
     new AbstractEndpoint(mockConnector, uri, name, properties, mockTransactionConfig, deleteUnacceptedMessages,
-        messageExchangePattern, responseTimeout, initialState, endpointEncoding, endpointBuilderName, muleContext,
-        retryPolicyTemplate, redeliveryPolicy, messageProcessorsFactory, messageProcessors, responseMessageProcessors,
-        disableTransportTransformer, mimeType) {
+                         messageExchangePattern, responseTimeout, initialState, endpointEncoding, endpointBuilderName,
+                         muleContext, retryPolicyTemplate, redeliveryPolicy, messageProcessorsFactory, messageProcessors,
+                         responseMessageProcessors, disableTransportTransformer, mimeType) {
 
       @Override
       protected MessageProcessor createMessageProcessorChain(FlowConstruct flowConstruct) throws MuleException {

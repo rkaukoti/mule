@@ -17,7 +17,7 @@ public class DynamicBulkQueryResolver extends AbstractBulkQueryResolver {
   private final ExpressionManager expressionManager;
 
   public DynamicBulkQueryResolver(String bulkQuery, QueryTemplateParser queryTemplateParser,
-      ExpressionManager expressionManager) {
+                                  ExpressionManager expressionManager) {
     super(bulkQuery, queryTemplateParser);
     this.expressionManager = expressionManager;
   }

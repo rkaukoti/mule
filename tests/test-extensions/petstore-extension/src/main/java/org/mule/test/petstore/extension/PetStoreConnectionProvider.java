@@ -68,7 +68,7 @@ public abstract class PetStoreConnectionProvider implements ConnectionProvider<P
       return ConnectionValidationResult.success();
     } else {
       return ConnectionValidationResult.failure("Invalid credentials", ConnectionExceptionCode.INCORRECT_CREDENTIALS,
-          new Exception("Invalid credentials"));
+                                                new Exception("Invalid credentials"));
     }
   }
 

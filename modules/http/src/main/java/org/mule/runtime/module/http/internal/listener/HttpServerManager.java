@@ -31,7 +31,8 @@ public interface HttpServerManager {
    * @throws IOException if it was not possible to create the Server. Most likely because the host and port is already in use.
    */
   Server createServerFor(ServerAddress serverAddress, WorkManagerSource workManagerSource, boolean usePersistentConnections,
-      int connectionIdleTimeout) throws IOException;
+                         int connectionIdleTimeout)
+      throws IOException;
 
   /**
    * @param serverAddress address of the server
@@ -43,7 +44,8 @@ public interface HttpServerManager {
    * @throws IOException if it was not possible to create the Server. Most likely because the host and port is already in use.
    */
   Server createSslServerFor(TlsContextFactory tlsContextFactory, WorkManagerSource workManagerSource, ServerAddress serverAddress,
-      boolean usePersistentConnections, int connectionIdleTimeout) throws IOException;
+                            boolean usePersistentConnections, int connectionIdleTimeout)
+      throws IOException;
 
   /**
    * Frees all the resource hold by the server manager. The client is responsible for stopping all the server prior to call

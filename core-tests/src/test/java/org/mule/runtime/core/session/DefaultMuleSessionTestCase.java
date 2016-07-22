@@ -176,11 +176,11 @@ public class DefaultMuleSessionTestCase {
     assertEquals(before.isValid(), after.isValid());
     assertEquals((Object) before.getProperty("foo"), after.getProperty("foo"));
     assertEquals(before.getSecurityContext().getAuthentication().getPrincipal(),
-        after.getSecurityContext().getAuthentication().getPrincipal());
+                 after.getSecurityContext().getAuthentication().getPrincipal());
     assertEquals(before.getSecurityContext().getAuthentication().getProperties().get("key1"),
-        after.getSecurityContext().getAuthentication().getProperties().get("key1"));
+                 after.getSecurityContext().getAuthentication().getProperties().get("key1"));
     assertEquals(before.getSecurityContext().getAuthentication().getCredentials(),
-        after.getSecurityContext().getAuthentication().getCredentials());
+                 after.getSecurityContext().getAuthentication().getCredentials());
     // assertEquals(before.getSecurityContext().getAuthentication().getEvent().getId(),
     // after.getSecurityContext().getAuthentication().getEvent().getId());
 

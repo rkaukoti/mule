@@ -38,9 +38,10 @@ public class CopyPropertiesTransformer extends AbstractMessageTransformer {
     MuleMessage message = event.getMessage();
     if (wildcardPropertyNameEvaluator.hasWildcards()) {
       final Builder builder = MuleMessage.builder(message);
-      wildcardPropertyNameEvaluator.processValues(message.getInboundPropertyNames(),
-          matchedValue -> builder.addOutboundProperty(matchedValue, message.getInboundProperty(matchedValue),
-              message.getInboundPropertyDataType(matchedValue)));
+      wildcardPropertyNameEvaluator
+          .processValues(message.getInboundPropertyNames(),
+                         matchedValue -> builder.addOutboundProperty(matchedValue, message.getInboundProperty(matchedValue),
+                                                                     message.getInboundPropertyDataType(matchedValue)));
       event.setMessage(builder.build());
     } else {
       Object keyValue = propertyNameEvaluator.resolveValue(event);

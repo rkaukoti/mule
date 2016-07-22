@@ -45,7 +45,7 @@ public class TestConnectorMessageNotificationListener implements ServerNotificat
         serverNotificationManager.getInterfaceToTypes();
     if (!mapping.containsKey(ConnectorMessageNotificationListener.class)) {
       serverNotificationManager.addInterfaceToType(TestConnectorMessageNotificationListener.class,
-          ConnectorMessageNotification.class);
+                                                   ConnectorMessageNotification.class);
       serverNotificationManager.addListener(new TestConnectorMessageNotificationListener());
     }
     return serverNotificationManager;

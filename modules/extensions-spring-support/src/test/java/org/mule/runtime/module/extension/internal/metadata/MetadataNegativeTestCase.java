@@ -105,7 +105,7 @@ public class MetadataNegativeTestCase extends MetadataExtensionFunctionalTestCas
     MetadataKey key = newKey(AMERICA, CONTINENT).withChild(newKey(USA, COUNTRY).withChild(newKey(SAN_FRANCISCO, CITY))).build();
     MetadataResult<ComponentMetadataDescriptor> result = metadataManager.getMetadata(componentId, key);
     assertFailure(result, "Configuration used for Metadata fetch cannot be dynamic", FailureCode.INVALID_CONFIGURATION,
-        MetadataResolvingException.class.getName());
+                  MetadataResolvingException.class.getName());
   }
 
   @Test

@@ -10,8 +10,7 @@ import org.mule.runtime.api.connection.ConnectionHandlingStrategyFactory;
 public class SimplePetStoreConnectionProvider extends PetStoreConnectionProvider {
 
   @Override
-  public ConnectionHandlingStrategy<PetStoreClient> getHandlingStrategy(
-      ConnectionHandlingStrategyFactory handlingStrategyFactory) {
+  public ConnectionHandlingStrategy<PetStoreClient> getHandlingStrategy(ConnectionHandlingStrategyFactory handlingStrategyFactory) {
     return handlingStrategyFactory.cached();
   }
 }

@@ -33,9 +33,9 @@ public class CompositeClassNotFoundException extends ClassNotFoundException {
    * @param exceptions the exceptions thrown by each individual classloader that was used for the loading.
    */
   public CompositeClassNotFoundException(String className, ClassLoaderLookupStrategy lookupStrategy,
-      List<ClassNotFoundException> exceptions) {
+                                         List<ClassNotFoundException> exceptions) {
     super(format("Cannot load class '%s': %s", className,
-        exceptions.stream().map((e) -> e.getMessage() + lineSeparator()).collect(toList())));
+                 exceptions.stream().map((e) -> e.getMessage() + lineSeparator()).collect(toList())));
     this.className = className;
     this.lookupStrategy = lookupStrategy;
     this.exceptions = copyOf(exceptions);

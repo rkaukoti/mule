@@ -68,9 +68,9 @@ public class HttpRequestProxyTlsTestCase extends AbstractHttpTestCase {
    */
   @Parameterized.Parameters
   public static Collection<Object[]> parameters() {
-    return Arrays.asList(
-        new Object[][] {{"tls/ssltest-keystore-with-test-hostname.jks", "tls/ssltest-truststore-with-test-hostname.jks", "test"},
-            {"tls/ssltest-keystore.jks", "tls/ssltest-cacerts.jks", "localhost"}});
+    return Arrays.asList(new Object[][] {
+        {"tls/ssltest-keystore-with-test-hostname.jks", "tls/ssltest-truststore-with-test-hostname.jks", "test"},
+        {"tls/ssltest-keystore.jks", "tls/ssltest-cacerts.jks", "localhost"}});
   }
 
   @Override

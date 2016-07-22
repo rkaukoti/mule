@@ -32,7 +32,7 @@ public abstract class AbstractAnnotatedModelEnricher implements ModelEnricher {
    *         backing annotated type
    */
   protected <A extends Annotation> A extractAnnotation(BaseDeclaration<? extends BaseDeclaration> declaration,
-      Class<A> annotationType) {
+                                                       Class<A> annotationType) {
     Class<?> extensionType = extractExtensionType(declaration);
     return extensionType != null ? extensionType.getAnnotation(annotationType) : null;
   }

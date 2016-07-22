@@ -22,7 +22,7 @@ public class PersistentQueueTransactionContext implements LocalQueueTransactionC
   private int txId;
 
   public PersistentQueueTransactionContext(LocalTxQueueTransactionJournal localTxQueueTransactionJournal,
-      QueueProvider queueProvider) {
+                                           QueueProvider queueProvider) {
     this.transactionJournal = localTxQueueTransactionJournal;
     this.queueProvider = queueProvider;
     this.txId = getNextId();

@@ -26,7 +26,8 @@ public class DefaultComponentLifecycleAdapterWithBindingsFactory implements Life
 
   @Override
   public LifecycleAdapter create(Object pojoService, JavaWithBindingsComponent component, FlowConstruct flowConstruct,
-      EntryPointResolverSet resolver, MuleContext muleContext) throws MuleException {
+                                 EntryPointResolverSet resolver, MuleContext muleContext)
+      throws MuleException {
     return new DefaultComponentLifecycleAdapterWithBindings(pojoService, component, flowConstruct, resolver, muleContext);
   }
 

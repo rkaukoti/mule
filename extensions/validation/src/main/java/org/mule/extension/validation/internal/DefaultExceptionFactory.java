@@ -60,8 +60,8 @@ public class DefaultExceptionFactory implements ExceptionFactory {
           }
 
           if (!Exception.class.isAssignableFrom(exceptionClass)) {
-            throw new IllegalArgumentException(
-                String.format("Was expecting an exception type, %s found instead", exceptionClass.getCanonicalName()));
+            throw new IllegalArgumentException(String.format("Was expecting an exception type, %s found instead",
+                                                             exceptionClass.getCanonicalName()));
           }
 
           return exceptionClass;
@@ -74,8 +74,9 @@ public class DefaultExceptionFactory implements ExceptionFactory {
     try {
       return constructorDelegate.createException(result, result.getMessage(), event);
     } catch (Exception e) {
-      throw new MuleRuntimeException(MessageFactory.createStaticMessage(String.format(
-          "Could not create exception of type %s. Exception message was:\n%s", exceptionClass.getName(), result.getMessage())));
+      throw new MuleRuntimeException(MessageFactory
+          .createStaticMessage(String.format("Could not create exception of type %s. Exception message was:\n%s",
+                                             exceptionClass.getName(), result.getMessage())));
     }
   }
 
@@ -110,10 +111,9 @@ public class DefaultExceptionFactory implements ExceptionFactory {
     candidate = getConstructors(exceptionType, withParameters(String.class));
 
     if (CollectionUtils.isEmpty(candidate)) {
-      throw new IllegalArgumentException(String.format(
-          "Exception type %s was expected to contain at least one accessible constructor with eia single String argument but a matching constructor "
-              + "could not be found.",
-          exceptionType.getCanonicalName()));
+      throw new IllegalArgumentException(String
+          .format("Exception type %s was expected to contain at least one accessible constructor with eia single String argument but a matching constructor "
+              + "could not be found.", exceptionType.getCanonicalName()));
     }
 
     return new DirectMessageConstructorDelegate((Constructor<T>) candidate.iterator().next());

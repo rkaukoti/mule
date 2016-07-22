@@ -70,7 +70,7 @@ public class DefaultOperationContextTestCase extends AbstractMuleTestCase {
   @Before
   public void before() {
     configuration = new LifecycleAwareConfigurationInstance<>(CONFIG_NAME, configurationModel, configurationInstance, emptyList(),
-        Optional.empty());
+                                                              Optional.empty());
     Map<String, Object> parametersMap = new HashMap<>();
     parametersMap.put(PARAM_NAME, VALUE);
     when(resolverSetResult.asMap()).thenReturn(parametersMap);

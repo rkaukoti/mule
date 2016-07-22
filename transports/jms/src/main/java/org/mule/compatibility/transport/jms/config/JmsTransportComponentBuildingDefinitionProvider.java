@@ -79,7 +79,7 @@ public class JmsTransportComponentBuildingDefinitionProvider extends TransportCo
     List<ComponentBuildingDefinition> componentBuildingDefinitions = new ArrayList<>();
     ComponentBuildingDefinition.Builder baseJmsConnector = getBaseConnector().withTypeDefinition(fromType(JmsConnector.class))
         .withSetterParameterDefinition("acknowledgementMode",
-            fromSimpleParameter("acknowledgementMode", getAckModeConverter()).build())
+                                       fromSimpleParameter("acknowledgementMode", getAckModeConverter()).build())
         .withSetterParameterDefinition("clientId", fromSimpleParameter("clientId").build())
         .withSetterParameterDefinition("durable", fromSimpleParameter("durable").build())
         .withSetterParameterDefinition("noLocal", fromSimpleParameter("noLocal").build())
@@ -93,23 +93,23 @@ public class JmsTransportComponentBuildingDefinitionProvider extends TransportCo
         .withSetterParameterDefinition("jndiProviderUrl", fromSimpleParameter("jndiProviderUrl").build())
         .withSetterParameterDefinition("connectionFactoryJndiName", fromSimpleParameter("connectionFactoryJndiName").build())
         .withSetterParameterDefinition("jndiProviderProperties",
-            fromSimpleReferenceParameter("jndiProviderProperties-ref").build())
+                                       fromSimpleReferenceParameter("jndiProviderProperties-ref").build())
         .withSetterParameterDefinition("forceJndiDestinations", fromSimpleParameter("forceJndiDestinations").build())
         .withSetterParameterDefinition("specification", fromSimpleParameter("specification").build())
         .withSetterParameterDefinition("disableTemporaryReplyToDestinations",
-            fromSimpleParameter("disableTemporaryReplyToDestinations").build())
+                                       fromSimpleParameter("disableTemporaryReplyToDestinations").build())
         .withSetterParameterDefinition("returnOriginalMessageAsReply",
-            fromSimpleParameter("returnOriginalMessageAsReply").build())
+                                       fromSimpleParameter("returnOriginalMessageAsReply").build())
         .withSetterParameterDefinition("embeddedMode", fromSimpleParameter("embeddedMode").build())
         .withSetterParameterDefinition("honorQosHeaders", fromSimpleParameter("honorQosHeaders").build())
         .withSetterParameterDefinition("sameRMOverrideValue", fromSimpleParameter("sameRMOverrideValue").build())
         .withSetterParameterDefinition("maxRedelivery", fromSimpleParameter("maxRedelivery").build())
         .withSetterParameterDefinition("redeliveryHandlerFactory",
-            fromSimpleReferenceParameter("redeliveryHandlerFactory-ref").build())
+                                       fromSimpleReferenceParameter("redeliveryHandlerFactory-ref").build())
         .withSetterParameterDefinition("connectionFactory", fromSimpleReferenceParameter("connectionFactory-ref").build())
         .withSetterParameterDefinition("numberOfConsumers", fromSimpleParameter("numberOfConsumers").build())
         .withSetterParameterDefinition("numberOfConcurrentTransactedReceivers",
-            fromSimpleParameter("numberOfConcurrentTransactedReceivers").build())
+                                       fromSimpleParameter("numberOfConcurrentTransactedReceivers").build())
         .withSetterParameterDefinition("jndiNameResolver", fromChildConfiguration(JndiNameResolver.class).build());
 
     componentBuildingDefinitions.add(baseJmsConnector.copy().build());
@@ -139,7 +139,7 @@ public class JmsTransportComponentBuildingDefinitionProvider extends TransportCo
         .withSetterParameterDefinition("jndiInitialFactory", fromSimpleParameter("jndiInitialFactory").build())
         .withSetterParameterDefinition("jndiProviderUrl", fromSimpleParameter("jndiProviderUrl").build())
         .withSetterParameterDefinition("jndiProviderProperties",
-            fromSimpleReferenceParameter("jndiProviderProperties-ref").build())
+                                       fromSimpleReferenceParameter("jndiProviderProperties-ref").build())
         .build());
 
     componentBuildingDefinitions.add(baseDefinition.copy().withIdentifier("custom-jndi-name-resolver")

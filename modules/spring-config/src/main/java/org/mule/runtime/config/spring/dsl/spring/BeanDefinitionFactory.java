@@ -104,8 +104,9 @@ public class BeanDefinitionFactory {
    * @return the {@code BeanDefinition} of the component model.
    */
   public BeanDefinition resolveComponentRecursively(ComponentModel parentComponentModel, ComponentModel componentModel,
-      BeanDefinitionRegistry registry, BiConsumer<ComponentModel, BeanDefinitionRegistry> componentModelPostProcessor,
-      BiFunction<Element, BeanDefinition, BeanDefinition> oldParsingMechanism) {
+                                                    BeanDefinitionRegistry registry,
+                                                    BiConsumer<ComponentModel, BeanDefinitionRegistry> componentModelPostProcessor,
+                                                    BiFunction<Element, BeanDefinition, BeanDefinition> oldParsingMechanism) {
     List<ComponentModel> innerComponents = componentModel.getInnerComponents();
     if (!innerComponents.isEmpty()) {
       for (ComponentModel innerComponent : innerComponents) {
@@ -123,7 +124,8 @@ public class BeanDefinitionFactory {
   }
 
   private BeanDefinition resolveComponent(ComponentModel parentComponentModel, ComponentModel componentModel,
-      BeanDefinitionRegistry registry, BiConsumer<ComponentModel, BeanDefinitionRegistry> componentDefinitionModelProcessor) {
+                                          BeanDefinitionRegistry registry,
+                                          BiConsumer<ComponentModel, BeanDefinitionRegistry> componentDefinitionModelProcessor) {
     if (ignoredMuleCoreComponentIdentifiers.contains(componentModel.getIdentifier())) {
       return null;
     }
@@ -154,14 +156,13 @@ public class BeanDefinitionFactory {
     Optional<ComponentBuildingDefinition> buildingDefinitionOptional =
         componentBuildingDefinitionRegistry.getBuildingDefinition(componentModel.getIdentifier());
     if (buildingDefinitionOptional.isPresent() || customBuildersComponentIdentifiers.contains(componentModel.getIdentifier())) {
-      this.componentModelProcessor.processRequest(
-          new CreateBeanDefinitionRequest(parentComponentModel, componentModel, buildingDefinitionOptional.orElse(null)));
+      this.componentModelProcessor.processRequest(new CreateBeanDefinitionRequest(parentComponentModel, componentModel,
+                                                                                  buildingDefinitionOptional.orElse(null)));
     } else {
       boolean isWrapperComponent = isWrapperComponent(componentModel.getIdentifier(), of(parentComponentModel.getIdentifier()));
       if (!isWrapperComponent) {
-        throw new MuleRuntimeException(
-            createStaticMessage(format("No component building definition for element %s. It may be that there's a dependency "
-                + "missing to the project that handle that extension.", componentModel.getIdentifier())));
+        throw new MuleRuntimeException(createStaticMessage(format("No component building definition for element %s. It may be that there's a dependency "
+            + "missing to the project that handle that extension.", componentModel.getIdentifier())));
       }
       processComponentWrapper(componentModel);
     }
@@ -178,7 +179,7 @@ public class BeanDefinitionFactory {
       componentModel.setBeanReference(componentModel.getInnerComponents().get(0).getBeanReference());
     } else {
       throw new IllegalStateException(format("Element %s does not have a building definition and it should since it's of type %s",
-          componentModel.getIdentifier(), wrapperElementType));
+                                             componentModel.getIdentifier(), wrapperElementType));
     }
   }
 
@@ -213,7 +214,7 @@ public class BeanDefinitionFactory {
    *         not.
    */
   public boolean hasDefinition(ComponentIdentifier componentIdentifier,
-      Optional<ComponentIdentifier> parentComponentModelOptional) {
+                               Optional<ComponentIdentifier> parentComponentModelOptional) {
     return ignoredMuleCoreComponentIdentifiers.contains(componentIdentifier)
         || customBuildersComponentIdentifiers.contains(componentIdentifier)
         || componentBuildingDefinitionRegistry.getBuildingDefinition(componentIdentifier).isPresent()
@@ -222,7 +223,7 @@ public class BeanDefinitionFactory {
 
   // TODO MULE-9638 this code will be removed and a cache will be implemented
   public boolean isWrapperComponent(ComponentIdentifier componentModel,
-      Optional<ComponentIdentifier> parentComponentModelOptional) {
+                                    Optional<ComponentIdentifier> parentComponentModelOptional) {
     if (!parentComponentModelOptional.isPresent()) {
       return false;
     }

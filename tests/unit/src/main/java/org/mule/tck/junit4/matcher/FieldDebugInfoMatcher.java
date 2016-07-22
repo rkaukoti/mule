@@ -55,8 +55,8 @@ public class FieldDebugInfoMatcher extends TypeSafeMatcher<FieldDebugInfo<?>> {
   }
 
   public void describeTo(Description description) {
-    description.appendText(
-        format("a %s with name: '%s' type: '%s' and value that is ", SimpleFieldDebugInfo.class.getSimpleName(), name, type));
+    description.appendText(format("a %s with name: '%s' type: '%s' and value that is ",
+                                  SimpleFieldDebugInfo.class.getSimpleName(), name, type));
     matcher.describeTo(description);
   }
 }

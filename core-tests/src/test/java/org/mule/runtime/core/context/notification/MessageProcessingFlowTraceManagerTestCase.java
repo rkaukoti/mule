@@ -92,8 +92,8 @@ public class MessageProcessingFlowTraceManagerTestCase extends AbstractMuleTestC
     assertThat(getContextInfo(event), is(""));
 
     manager.onPipelineNotificationStart(pipelineNotification);
-    manager.onMessageProcessorNotificationPreInvoke(
-        buildProcessorNotification(event, mock(MessageProcessor.class), NESTED_FLOW_NAME + "_ref"));
+    manager.onMessageProcessorNotificationPreInvoke(buildProcessorNotification(event, mock(MessageProcessor.class),
+                                                                               NESTED_FLOW_NAME + "_ref"));
 
     PipelineMessageNotification pipelineNotificationNested = buildPipelineNotification(event, NESTED_FLOW_NAME);
     manager.onPipelineNotificationStart(pipelineNotificationNested);
@@ -144,8 +144,9 @@ public class MessageProcessingFlowTraceManagerTestCase extends AbstractMuleTestC
     when(annotatedMessageProcessor.getAnnotation(docNameAttrName)).thenReturn("annotatedName");
     when(annotatedMessageProcessor.getAnnotation(sourceFileNameAttrName)).thenReturn("muleApp.xml");
     when(annotatedMessageProcessor.getAnnotation(sourceFileLineAttrName)).thenReturn(10);
-    manager.onMessageProcessorNotificationPreInvoke(
-        buildProcessorNotification(event, (MessageProcessor) annotatedMessageProcessor, "/comp"));
+    manager
+        .onMessageProcessorNotificationPreInvoke(buildProcessorNotification(event, (MessageProcessor) annotatedMessageProcessor,
+                                                                            "/comp"));
     assertThat(getContextInfo(event), is("at " + flowName + "(/comp @ " + APP_ID + ":muleApp.xml:10 (annotatedName))"));
 
     manager.onPipelineNotificationComplete(pipelineNotification);
@@ -174,8 +175,8 @@ public class MessageProcessingFlowTraceManagerTestCase extends AbstractMuleTestC
     String asyncFlowName = "asyncFlow";
     manager.onPipelineNotificationStart(buildPipelineNotification(eventCopy, asyncFlowName));
 
-    manager.onMessageProcessorNotificationPreInvoke(
-        buildProcessorNotification(eventCopy, mock(MessageProcessor.class), "/asyncComp"));
+    manager.onMessageProcessorNotificationPreInvoke(buildProcessorNotification(eventCopy, mock(MessageProcessor.class),
+                                                                               "/asyncComp"));
     assertThat(getContextInfo(eventCopy), is("at " + asyncFlowName + "(/asyncComp @ " + APP_ID + ")" + System.lineSeparator()
         + "at " + flowName + "(/comp @ " + APP_ID + ")"));
   }
@@ -193,8 +194,8 @@ public class MessageProcessingFlowTraceManagerTestCase extends AbstractMuleTestC
     manager.onPipelineNotificationComplete(pipelineNotification);
     String asyncFlowName = "asyncFlow";
     manager.onPipelineNotificationStart(buildPipelineNotification(eventCopy, asyncFlowName));
-    manager.onMessageProcessorNotificationPreInvoke(
-        buildProcessorNotification(eventCopy, mock(MessageProcessor.class), "/asyncComp"));
+    manager.onMessageProcessorNotificationPreInvoke(buildProcessorNotification(eventCopy, mock(MessageProcessor.class),
+                                                                               "/asyncComp"));
 
     assertThat(event.getProcessorsTrace(), hasExecutedProcessors("/comp @ " + APP_ID, "/asyncComp @ " + APP_ID));
   }
@@ -209,22 +210,22 @@ public class MessageProcessingFlowTraceManagerTestCase extends AbstractMuleTestC
     manager.onPipelineNotificationStart(pipelineNotification);
     assertThat(getContextInfo(event), is("at " + flowName));
 
-    manager.onMessageProcessorNotificationPreInvoke(
-        buildProcessorNotification(event, mock(MessageProcessor.class), "/scatter-gather"));
+    manager.onMessageProcessorNotificationPreInvoke(buildProcessorNotification(event, mock(MessageProcessor.class),
+                                                                               "/scatter-gather"));
     assertThat(getContextInfo(event), is("at " + flowName + "(/scatter-gather @ " + APP_ID + ")"));
 
     MuleEvent eventCopy0 = buildEvent("joinStack_0", event.getFlowCallStack().clone(), event.getProcessorsTrace());
     MuleEvent eventCopy1 = buildEvent("joinStack_1", event.getFlowCallStack().clone(), event.getProcessorsTrace());
 
-    manager.onMessageProcessorNotificationPreInvoke(
-        buildProcessorNotification(eventCopy0, mock(MessageProcessor.class), "/route_0"));
+    manager.onMessageProcessorNotificationPreInvoke(buildProcessorNotification(eventCopy0, mock(MessageProcessor.class),
+                                                                               "/route_0"));
 
-    manager.onMessageProcessorNotificationPreInvoke(
-        buildProcessorNotification(eventCopy1, mock(MessageProcessor.class), NESTED_FLOW_NAME + "_ref"));
+    manager.onMessageProcessorNotificationPreInvoke(buildProcessorNotification(eventCopy1, mock(MessageProcessor.class),
+                                                                               NESTED_FLOW_NAME + "_ref"));
     PipelineMessageNotification pipelineNotificationNested = buildPipelineNotification(eventCopy1, NESTED_FLOW_NAME);
     manager.onPipelineNotificationStart(pipelineNotificationNested);
-    manager.onMessageProcessorNotificationPreInvoke(
-        buildProcessorNotification(eventCopy1, mock(MessageProcessor.class), "/route_1"));
+    manager.onMessageProcessorNotificationPreInvoke(buildProcessorNotification(eventCopy1, mock(MessageProcessor.class),
+                                                                               "/route_1"));
     assertThat(getContextInfo(eventCopy1), is("at " + NESTED_FLOW_NAME + "(/route_1 @ " + APP_ID + ")" + System.lineSeparator()
         + "at " + ROOT_FLOW_NAME + "(" + NESTED_FLOW_NAME + "_ref @ " + APP_ID + ")"));
 
@@ -243,28 +244,28 @@ public class MessageProcessingFlowTraceManagerTestCase extends AbstractMuleTestC
     PipelineMessageNotification pipelineNotification = buildPipelineNotification(event, flowName);
 
     manager.onPipelineNotificationStart(pipelineNotification);
-    manager.onMessageProcessorNotificationPreInvoke(
-        buildProcessorNotification(event, mock(MessageProcessor.class), "/scatter-gather"));
+    manager.onMessageProcessorNotificationPreInvoke(buildProcessorNotification(event, mock(MessageProcessor.class),
+                                                                               "/scatter-gather"));
 
     FlowCallStack flowCallStack = event.getFlowCallStack();
     MuleEvent eventCopy0 = buildEvent("joinStack_0", flowCallStack.clone(), event.getProcessorsTrace());
     MuleEvent eventCopy1 = buildEvent("joinStack_1", flowCallStack.clone(), event.getProcessorsTrace());
 
-    manager.onMessageProcessorNotificationPreInvoke(
-        buildProcessorNotification(eventCopy0, mock(MessageProcessor.class), "/route_0"));
+    manager.onMessageProcessorNotificationPreInvoke(buildProcessorNotification(eventCopy0, mock(MessageProcessor.class),
+                                                                               "/route_0"));
 
-    manager.onMessageProcessorNotificationPreInvoke(
-        buildProcessorNotification(eventCopy1, mock(MessageProcessor.class), NESTED_FLOW_NAME + "_ref"));
+    manager.onMessageProcessorNotificationPreInvoke(buildProcessorNotification(eventCopy1, mock(MessageProcessor.class),
+                                                                               NESTED_FLOW_NAME + "_ref"));
     PipelineMessageNotification pipelineNotificationNested = buildPipelineNotification(eventCopy1, NESTED_FLOW_NAME);
     manager.onPipelineNotificationStart(pipelineNotificationNested);
-    manager.onMessageProcessorNotificationPreInvoke(
-        buildProcessorNotification(eventCopy1, mock(MessageProcessor.class), "/route_1"));
+    manager.onMessageProcessorNotificationPreInvoke(buildProcessorNotification(eventCopy1, mock(MessageProcessor.class),
+                                                                               "/route_1"));
     manager.onPipelineNotificationComplete(pipelineNotificationNested);
 
     manager.onPipelineNotificationComplete(pipelineNotification);
 
     assertThat(event.getProcessorsTrace(), hasExecutedProcessors("/scatter-gather @ " + APP_ID, "/route_0 @ " + APP_ID,
-        NESTED_FLOW_NAME + "_ref @ " + APP_ID, "/route_1 @ " + APP_ID));
+                                                                 NESTED_FLOW_NAME + "_ref @ " + APP_ID, "/route_1 @ " + APP_ID));
   }
 
   @Test
@@ -308,7 +309,7 @@ public class MessageProcessingFlowTraceManagerTestCase extends AbstractMuleTestC
   }
 
   protected MessageProcessorNotification buildProcessorNotification(MuleEvent event, MessageProcessor processor,
-      String processorPath) {
+                                                                    String processorPath) {
     MessageProcessorNotification processorNotification = mock(MessageProcessorNotification.class);
     when(processorNotification.getProcessor()).thenReturn(processor);
     when(processorNotification.getProcessorPath()).thenReturn(processorPath);

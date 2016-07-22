@@ -208,7 +208,7 @@ public final class StringMessageUtils {
   }
 
   private static void appendPropertyValues(MuleMessage m, StringBuilder buf, Set<String> names,
-      Function<String, Serializable> valueResolver) {
+                                           Function<String, Serializable> valueResolver) {
     for (String name : names) {
       Serializable value = valueResolver.apply(name);
       // avoid calling toString recursively on MuleMessages

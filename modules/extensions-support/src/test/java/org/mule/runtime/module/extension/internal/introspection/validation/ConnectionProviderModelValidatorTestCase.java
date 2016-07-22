@@ -56,8 +56,9 @@ public class ConnectionProviderModelValidatorTestCase extends AbstractMuleTestCa
 
   private ExtensionModel modelFor(Class<?> connectorClass) {
     DescribingContext context = new DefaultDescribingContext(connectorClass.getClassLoader());
-    return extensionFactory.createFrom(
-        new AnnotationsBasedDescriber(connectorClass, new StaticVersionResolver(getProductVersion())).describe(context), context);
+    return extensionFactory
+        .createFrom(new AnnotationsBasedDescriber(connectorClass, new StaticVersionResolver(getProductVersion()))
+            .describe(context), context);
   }
 
   private void validate(Class<?> connectorClass) {
@@ -144,8 +145,7 @@ public class ConnectionProviderModelValidatorTestCase extends AbstractMuleTestCa
     }
 
     @Override
-    public ConnectionHandlingStrategy<ValidatorTestConnection> getHandlingStrategy(
-        ConnectionHandlingStrategyFactory<ValidatorTestConnection> handlingStrategyFactory) {
+    public ConnectionHandlingStrategy<ValidatorTestConnection> getHandlingStrategy(ConnectionHandlingStrategyFactory<ValidatorTestConnection> handlingStrategyFactory) {
       return handlingStrategyFactory.cached();
     }
   }
@@ -174,8 +174,7 @@ public class ConnectionProviderModelValidatorTestCase extends AbstractMuleTestCa
     }
 
     @Override
-    public ConnectionHandlingStrategy<ValidatorTestConnection> getHandlingStrategy(
-        ConnectionHandlingStrategyFactory<ValidatorTestConnection> handlingStrategyFactory) {
+    public ConnectionHandlingStrategy<ValidatorTestConnection> getHandlingStrategy(ConnectionHandlingStrategyFactory<ValidatorTestConnection> handlingStrategyFactory) {
       return handlingStrategyFactory.cached();
     }
   }
@@ -199,8 +198,7 @@ public class ConnectionProviderModelValidatorTestCase extends AbstractMuleTestCa
     }
 
     @Override
-    public ConnectionHandlingStrategy<Apple> getHandlingStrategy(
-        ConnectionHandlingStrategyFactory<Apple> handlingStrategyFactory) {
+    public ConnectionHandlingStrategy<Apple> getHandlingStrategy(ConnectionHandlingStrategyFactory<Apple> handlingStrategyFactory) {
       return handlingStrategyFactory.cached();
     }
   }

@@ -256,7 +256,7 @@ public class ObjectToHttpClientMethodRequest extends AbstractMessageTransformer 
     String endpointAddress = message.getOutboundProperty(MuleProperties.MULE_ENDPOINT_PROPERTY, null);
     if (endpointAddress == null) {
       throw new TransformerException(HttpMessages.eventPropertyNotSetCannotProcessRequest(MuleProperties.MULE_ENDPOINT_PROPERTY),
-          this);
+                                     this);
     }
     return new URI(endpointAddress);
   }
@@ -388,8 +388,10 @@ public class ObjectToHttpClientMethodRequest extends AbstractMessageTransformer 
           }
         }
 
-        parts[i] = new FilePart(attachmentName, new ByteArrayPartSource(StringUtils.defaultString(fileName, attachmentName),
-            IOUtils.toByteArray(dh.getInputStream())), dh.getContentType(), null);
+        parts[i] = new FilePart(
+                                attachmentName, new ByteArrayPartSource(StringUtils.defaultString(fileName, attachmentName),
+                                                                        IOUtils.toByteArray(dh.getInputStream())),
+                                dh.getContentType(), null);
       }
     }
 

@@ -25,7 +25,7 @@ public class OutboundEndpointPropertyMessageProcessorTestCase extends AbstractMe
     MuleEvent event = mp.process(createTestOutboundEvent());
 
     assertEquals(endpoint.getEndpointURI().getUri().toString(),
-        event.getMessage().getOutboundProperty(MuleProperties.MULE_ENDPOINT_PROPERTY));
+                 event.getMessage().getOutboundProperty(MuleProperties.MULE_ENDPOINT_PROPERTY));
     assertSame(event, RequestContext.getEvent());
   }
 

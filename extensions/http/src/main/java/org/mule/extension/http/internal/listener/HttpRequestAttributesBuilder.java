@@ -68,6 +68,6 @@ public class HttpRequestAttributesBuilder {
       headers.put(headerName, request.getHeaderValues(headerName));
     }
     return new HttpRequestAttributes(headers, parts, listenerPath, relativePath, version, scheme, method, path, uri, queryString,
-        queryParams, uriParams, remoteHostAddress, clientCertificate);
+                                     queryParams, uriParams, remoteHostAddress, clientCertificate);
   }
 }

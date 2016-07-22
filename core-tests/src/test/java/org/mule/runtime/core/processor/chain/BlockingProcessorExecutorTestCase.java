@@ -69,8 +69,9 @@ public class BlockingProcessorExecutorTestCase extends AbstractMuleContextTestCa
     when(event.getId()).thenReturn(RandomStringUtils.randomNumeric(3));
     when(event.getMessage()).thenReturn(message);
     when(event.getMuleContext()).thenReturn(muleContext);
-    when(executionTemplate.execute(any(MessageProcessor.class), any(MuleEvent.class))).thenAnswer(
-        invocation -> ((MessageProcessor) invocation.getArguments()[0]).process((MuleEvent) invocation.getArguments()[1]));
+    when(executionTemplate.execute(any(MessageProcessor.class), any(MuleEvent.class)))
+        .thenAnswer(invocation -> ((MessageProcessor) invocation.getArguments()[0])
+            .process((MuleEvent) invocation.getArguments()[1]));
     muleContext.setTransformationService(new TransformationService(muleContext));
   }
 

@@ -52,7 +52,7 @@ class ComponentConfigurationBuilder {
   private final ComponentBuildingDefinition componentBuildingDefinition;
 
   public ComponentConfigurationBuilder(ComponentModel componentModel, ComponentBuildingDefinition componentBuildingDefinition,
-      BeanDefinitionBuilderHelper beanDefinitionBuilderHelper) {
+                                       BeanDefinitionBuilderHelper beanDefinitionBuilderHelper) {
     this.componentModel = componentModel;
     this.componentBuildingDefinition = componentBuildingDefinition;
     this.beanDefinitionBuilderHelper = beanDefinitionBuilderHelper;
@@ -109,7 +109,7 @@ class ComponentConfigurationBuilder {
 
   private ConfigurableAttributeDefinitionVisitor constructorVisitor() {
     return new ConfigurableAttributeDefinitionVisitor(beanDefinitionBuilderHelper::addConstructorValue,
-        beanDefinitionBuilderHelper::addConstructorReference);
+                                                      beanDefinitionBuilderHelper::addConstructorReference);
   }
 
   private ConfigurableAttributeDefinitionVisitor setterVisitor(String propertyName, AttributeDefinition attributeDefinition) {

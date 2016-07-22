@@ -48,8 +48,9 @@ public class HttpListenerResponseBuilderTestCase extends AbstractHttpTestCase {
   public SystemProperty defaultReasonPhraseResponseBuilderPath =
       new SystemProperty("defaultReasonPhraseResponseBuilderPath", "defaultReasonPhraseResponseBuilderPath");
   @Rule
-  public SystemProperty noReasonPhraseUnknownStatusCodeResponseBuilderPath = new SystemProperty(
-      "noReasonPhraseUnknownStatusCodeResponseBuilderPath", "noReasonPhraseUnknownStatusCodeResponseBuilderPath");
+  public SystemProperty noReasonPhraseUnknownStatusCodeResponseBuilderPath =
+      new SystemProperty("noReasonPhraseUnknownStatusCodeResponseBuilderPath",
+                         "noReasonPhraseUnknownStatusCodeResponseBuilderPath");
   @Rule
   public SystemProperty errorEmptyResponseBuilderPath =
       new SystemProperty("errorEmptyResponseBuilderPath", "errorEmptyResponseBuilderPath");
@@ -66,8 +67,9 @@ public class HttpListenerResponseBuilderTestCase extends AbstractHttpTestCase {
   public SystemProperty errorHeadersOverrideResponseBuilderPath =
       new SystemProperty("errorHeadersOverrideResponseBuilderPath", "errorHeadersOverrideResponseBuilderPath");
   @Rule
-  public SystemProperty responseBuilderAndErrorResponseBuilderNotTheSamePath = new SystemProperty(
-      "responseBuilderAndErrorResponseBuilderNotTheSamePath", "responseBuilderAndErrorResponseBuilderNotTheSamePath");
+  public SystemProperty responseBuilderAndErrorResponseBuilderNotTheSamePath =
+      new SystemProperty("responseBuilderAndErrorResponseBuilderNotTheSamePath",
+                         "responseBuilderAndErrorResponseBuilderNotTheSamePath");
 
   @Override
   protected String getConfigFile() {

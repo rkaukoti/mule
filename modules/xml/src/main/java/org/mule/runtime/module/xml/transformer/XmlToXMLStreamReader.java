@@ -41,8 +41,8 @@ public class XmlToXMLStreamReader extends AbstractXmlTransformer implements Disc
     try {
       XMLStreamReader xsr = XMLUtils.toXMLStreamReader(getXMLInputFactory(), src);
       if (xsr == null) {
-        throw new TransformerException(
-            MessageFactory.createStaticMessage("Unable to convert " + src.getClass() + " to XMLStreamReader."), this);
+        throw new TransformerException(MessageFactory
+            .createStaticMessage("Unable to convert " + src.getClass() + " to XMLStreamReader."), this);
       }
 
       if (reversible && !(xsr instanceof ReversibleXMLStreamReader)) {

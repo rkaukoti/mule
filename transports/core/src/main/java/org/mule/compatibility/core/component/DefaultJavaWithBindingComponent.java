@@ -41,7 +41,7 @@ public class DefaultJavaWithBindingComponent extends AbstractJavaWithBindingsCom
   }
 
   public DefaultJavaWithBindingComponent(ObjectFactory objectFactory, EntryPointResolverSet entryPointResolverSet,
-      List<InterfaceBinding> bindings) {
+                                         List<InterfaceBinding> bindings) {
     super(objectFactory, entryPointResolverSet, bindings);
   }
 
@@ -61,7 +61,7 @@ public class DefaultJavaWithBindingComponent extends AbstractJavaWithBindingsCom
         }
       } catch (Exception e) {
         throw new InitialisationException(MessageFactory.createStaticMessage("Unable to create instance of POJO service"), e,
-            this);
+                                          this);
 
       }
       // On all calls, start if not started.

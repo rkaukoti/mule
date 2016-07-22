@@ -25,8 +25,8 @@ public class ProcessIfStartedWaitIfSyncPausedMessageProcessor extends ProcessIfS
       if (isPaused() && event.getExchangePattern().hasResponse()) {
         try {
           if (logger.isDebugEnabled()) {
-            logger.debug(
-                startable.getClass().getName() + " " + getStartableName(startable) + " is paused. Blocking call until resumd");
+            logger.debug(startable.getClass().getName() + " " + getStartableName(startable)
+                + " is paused. Blocking call until resumd");
           }
           while (isPaused()) {
             Thread.sleep(500);

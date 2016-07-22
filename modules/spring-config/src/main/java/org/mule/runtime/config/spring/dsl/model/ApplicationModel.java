@@ -141,8 +141,8 @@ public class ApplicationModel {
       .add(new ComponentIdentifier.Builder().withNamespace(MULE_ROOT_ELEMENT).withName("custom-encryption-strategy").build())
       .add(new ComponentIdentifier.Builder().withNamespace(MULE_ROOT_ELEMENT).withName("secret-key-encryption-strategy").build())
       .add(new ComponentIdentifier.Builder().withNamespace(MULE_ROOT_ELEMENT).withName("import").build())
-      .add(
-          new ComponentIdentifier.Builder().withNamespace(MULE_ROOT_ELEMENT).withName("string-to-byte-array-transformer").build())
+      .add(new ComponentIdentifier.Builder().withNamespace(MULE_ROOT_ELEMENT).withName("string-to-byte-array-transformer")
+          .build())
       .add(new ComponentIdentifier.Builder().withNamespace(MULE_ROOT_ELEMENT).withName("append-string-transformer").build())
       .add(new ComponentIdentifier.Builder().withNamespace(MULE_ROOT_ELEMENT).withName("security-manager").build())
       .add(new ComponentIdentifier.Builder().withNamespace(TEST_NAMESPACE).withName("queue").build())
@@ -157,8 +157,8 @@ public class ApplicationModel {
       .add(new ComponentIdentifier.Builder().withNamespace(SPRING_NAMESPACE).withName("property").build())
       .add(new ComponentIdentifier.Builder().withNamespace(SPRING_NAMESPACE).withName("bean").build())
       .add(new ComponentIdentifier.Builder().withNamespace(SPRING_SECURITY_NAMESPACE).withName("user").build())
-      .add(
-          new ComponentIdentifier.Builder().withNamespace(MULE_SECURITY_NAMESPACE).withName("delegate-security-provider").build())
+      .add(new ComponentIdentifier.Builder().withNamespace(MULE_SECURITY_NAMESPACE).withName("delegate-security-provider")
+          .build())
       .add(new ComponentIdentifier.Builder().withNamespace(MULE_SECURITY_NAMESPACE).withName("security-manager").build())
       .add(new ComponentIdentifier.Builder().withNamespace(MULE_XML_NAMESPACE).withName("xslt-transformer").build())
       .add(new ComponentIdentifier.Builder().withNamespace(MULE_XML_NAMESPACE).withName("alias").build())
@@ -174,10 +174,10 @@ public class ApplicationModel {
       .add(new ComponentIdentifier.Builder().withNamespace(HTTP_NAMESPACE).withName("inbound-endpoint").build())
       .add(new ComponentIdentifier.Builder().withNamespace(HTTP_NAMESPACE).withName("set-cookie").build())
       .add(new ComponentIdentifier.Builder().withNamespace(HTTP_NAMESPACE).withName("header").build())
-      .add(
-          new ComponentIdentifier.Builder().withNamespace(HTTP_NAMESPACE).withName("http-response-to-object-transformer").build())
-      .add(
-          new ComponentIdentifier.Builder().withNamespace(HTTP_NAMESPACE).withName("http-response-to-string-transformer").build())
+      .add(new ComponentIdentifier.Builder().withNamespace(HTTP_NAMESPACE).withName("http-response-to-object-transformer")
+          .build())
+      .add(new ComponentIdentifier.Builder().withNamespace(HTTP_NAMESPACE).withName("http-response-to-string-transformer")
+          .build())
       .add(new ComponentIdentifier.Builder().withNamespace(HTTP_NAMESPACE).withName("message-to-http-response-transformer")
           .build())
       .add(new ComponentIdentifier.Builder().withNamespace(HTTP_NAMESPACE).withName("object-to-http-request-transformer").build())
@@ -309,10 +309,8 @@ public class ApplicationModel {
           Optional<ComponentModel> childOptional =
               findRelatedChildForParameter(componentModel.getInnerComponents(), mapChildName, listOrPojoChildName);
           if (childOptional.isPresent() && !childOptional.get().getIdentifier().equals(SPRING_PROPERTY_IDENTIFIER)) {
-            throw new MuleRuntimeException(createStaticMessage(format(
-                "Component %s has a child element %s which is used for the same purpose of the configuration parameter %s. "
-                    + "Only one must be used.",
-                componentModel.getIdentifier(), childOptional.get().getIdentifier(), parameterName)));
+            throw new MuleRuntimeException(createStaticMessage(format("Component %s has a child element %s which is used for the same purpose of the configuration parameter %s. "
+                + "Only one must be used.", componentModel.getIdentifier(), childOptional.get().getIdentifier(), parameterName)));
           }
         }
       }
@@ -333,8 +331,8 @@ public class ApplicationModel {
     executeOnEveryMuleComponentTree(componentModel -> {
       if (componentModel.isRoot() && DEFAULT_ES_ELEMENT_IDENTIFIER.equals(componentModel.getIdentifier())) {
         if (componentModel.getNameAttribute() != null) {
-          throw new MuleRuntimeException(
-              createStaticMessage(format("Component %s is not supported as global", DEFAULT_ES_ELEMENT_IDENTIFIER.getName())));
+          throw new MuleRuntimeException(createStaticMessage(format("Component %s is not supported as global",
+                                                                    DEFAULT_ES_ELEMENT_IDENTIFIER.getName())));
         }
       }
     });
@@ -346,9 +344,9 @@ public class ApplicationModel {
       String nameAttributeValue = componentModel.getNameAttribute();
       if (nameAttributeValue != null && !ignoredNameValidationComponentList.contains(componentModel.getIdentifier())) {
         if (existingObjectsWithName.containsKey(nameAttributeValue)) {
-          throw new MuleRuntimeException(createStaticMessage(
-              "Two configuration elements have been defined with the same global name. Global name must be unique. Clashing components are %s and %s",
-              existingObjectsWithName.get(nameAttributeValue).getIdentifier(), componentModel.getIdentifier()));
+          throw new MuleRuntimeException(createStaticMessage("Two configuration elements have been defined with the same global name. Global name must be unique. Clashing components are %s and %s",
+                                                             existingObjectsWithName.get(nameAttributeValue).getIdentifier(),
+                                                             componentModel.getIdentifier()));
         }
         existingObjectsWithName.put(nameAttributeValue, componentModel);
       }
@@ -372,8 +370,7 @@ public class ApplicationModel {
     if (component.getInnerComponents().stream().filter(exceptionStrategyComponent -> {
       return exceptionStrategyComponent.getParameters().get(MAX_REDELIVERY_ATTEMPTS_ROLLBACK_ES_ATTRIBUTE) != null;
     }).count() > 1) {
-      throw new MuleRuntimeException(createStaticMessage(
-          "Only one rollback-exception-strategy within a choice-exception-strategy can handle message redelivery. Remove one of the maxRedeliveryAttempts attributes"));
+      throw new MuleRuntimeException(createStaticMessage("Only one rollback-exception-strategy within a choice-exception-strategy can handle message redelivery. Remove one of the maxRedeliveryAttempts attributes"));
     }
   }
 
@@ -381,8 +378,7 @@ public class ApplicationModel {
     List<ComponentModel> innerComponents = component.getInnerComponents();
     for (int i = 0; i < innerComponents.size() - 1; i++) {
       if (innerComponents.get(i).getParameters().get(WHEN_CHOICE_ES_ATTRIBUTE) == null) {
-        throw new MuleRuntimeException(createStaticMessage(
-            "Every exception strategy (except for the last one) within a choice-exception-strategy must specify the when attribute"));
+        throw new MuleRuntimeException(createStaticMessage("Every exception strategy (except for the last one) within a choice-exception-strategy must specify the when attribute"));
       }
     }
   }
@@ -394,8 +390,7 @@ public class ApplicationModel {
         if (component.getParameters().get(WHEN_CHOICE_ES_ATTRIBUTE) != null
             && !componentNode.getParentNode().getLocalName().equals(CHOICE_EXCEPTION_STRATEGY)
             && !componentNode.getParentNode().getLocalName().equals(MULE_ROOT_ELEMENT)) {
-          throw new MuleRuntimeException(createStaticMessage(
-              "Only exception strategies within a choice-exception-strategy can have when attribute specified"));
+          throw new MuleRuntimeException(createStaticMessage("Only exception strategies within a choice-exception-strategy can have when attribute specified"));
         }
       }
     });
@@ -408,9 +403,8 @@ public class ApplicationModel {
         topLevelComponent.getInnerComponents().stream().filter(this::isMuleComponent).forEach((topLevelComponentChild -> {
           executeOnComponentTree(topLevelComponentChild, (component) -> {
             if (component.getNameAttribute() != null && !ignoredNameValidationComponentList.contains(component.getIdentifier())) {
-              throw new MuleRuntimeException(createStaticMessage(
-                  "Only top level elements can have a name attribute. Component %s has attribute name with value %s",
-                  component.getIdentifier(), component.getNameAttribute()));
+              throw new MuleRuntimeException(createStaticMessage("Only top level elements can have a name attribute. Component %s has attribute name with value %s",
+                                                                 component.getIdentifier(), component.getNameAttribute()));
             }
           }, true);
         }));
@@ -438,7 +432,8 @@ public class ApplicationModel {
   }
 
   private void executeOnComponentTree(final ComponentModel component, final Consumer<ComponentModel> task,
-      boolean avoidSpringElements) throws MuleRuntimeException {
+                                      boolean avoidSpringElements)
+      throws MuleRuntimeException {
     if (component.getIdentifier().getNamespace().equals(SPRING_NAMESPACE) && avoidSpringElements) {
       // TODO MULE-9648: for now do no process beans inside spring
       return;
@@ -459,7 +454,7 @@ public class ApplicationModel {
       to(builder).addNode(from(configLine).getNode()).addConfigFileName(configFileName);
       for (SimpleConfigAttribute simpleConfigAttribute : configLine.getConfigAttributes().values()) {
         builder.addParameter(simpleConfigAttribute.getName(), resolveValueIfIsPlaceHolder(simpleConfigAttribute.getValue()),
-            simpleConfigAttribute.isValueFromSchema());
+                             simpleConfigAttribute.isValueFromSchema());
       }
       List<ComponentModel> componentModels = extractComponentDefinitionModel(configLine.getChildren(), configFileName);
       componentModels.stream().forEach(componentDefinitionModel -> {

@@ -84,7 +84,7 @@ public class TcpReconnectionTestCase extends AbstractMuleTestCase {
     listenerConnection =
         new TcpListenerConnection(connectionSettings, new SafeProtocol(), serverSocketProperties, new TcpServerSocketFactory());
     requesterConnection = new TcpRequesterConnection(connectionSettings, new ConnectionSettings(), new SafeProtocol(),
-        clientSocketProperties, new TcpSocketFactory());
+                                                     clientSocketProperties, new TcpSocketFactory());
   }
 
   @Test

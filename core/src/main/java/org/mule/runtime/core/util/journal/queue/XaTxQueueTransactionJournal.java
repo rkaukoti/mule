@@ -19,7 +19,7 @@ import javax.transaction.xa.Xid;
 public class XaTxQueueTransactionJournal extends AbstractQueueTransactionJournal<Xid, XaQueueTxJournalEntry> {
 
   public XaTxQueueTransactionJournal(String logFilesDirectory, final MuleContext muleContext,
-      Integer maximumFileSizeInMegabytes) {
+                                     Integer maximumFileSizeInMegabytes) {
     super(logFilesDirectory, new JournalEntrySerializer<Xid, XaQueueTxJournalEntry>() {
 
       @Override
@@ -49,8 +49,8 @@ public class XaTxQueueTransactionJournal extends AbstractQueueTransactionJournal
   }
 
   public void logPrepare(Xid xid) {
-    getJournal().logCheckpointOperation(
-        createCheckpointJournalEntry(xid, AbstractQueueTxJournalEntry.Operation.PREPARE.getByteRepresentation()));
+    getJournal().logCheckpointOperation(createCheckpointJournalEntry(xid, AbstractQueueTxJournalEntry.Operation.PREPARE
+        .getByteRepresentation()));
   }
 
   @Override

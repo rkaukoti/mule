@@ -122,7 +122,7 @@ public class FlowConstructService implements FlowConstructServiceMBean, MBeanReg
     try {
       if (flow.getStatistics() != null) {
         statsName = jmxSupport.getObjectName(String.format("%s:type=org.mule.Statistics,%s=%s", objectName.getDomain(),
-            flow.getConstructType(), jmxSupport.escape(getName())));
+                                                           flow.getConstructType(), jmxSupport.escape(getName())));
 
         // unregister old version if exists
         if (this.server.isRegistered(statsName)) {

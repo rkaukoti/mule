@@ -19,7 +19,8 @@ import org.mule.runtime.core.api.model.EntryPointResolverSet;
 public class NullLifecycleAdapter extends DefaultComponentLifecycleAdapter {
 
   public NullLifecycleAdapter(Object componentObject, JavaComponent component, FlowConstruct flowConstruct,
-      EntryPointResolverSet entryPointResolver, MuleContext muleContext) throws MuleException {
+                              EntryPointResolverSet entryPointResolver, MuleContext muleContext)
+      throws MuleException {
     super(componentObject, component, flowConstruct, entryPointResolver, muleContext);
   }
 

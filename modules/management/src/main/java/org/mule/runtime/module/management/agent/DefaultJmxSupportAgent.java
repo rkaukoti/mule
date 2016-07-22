@@ -184,8 +184,9 @@ public class DefaultJmxSupportAgent extends AbstractAgent {
 
     // if defaults haven't been used
     if (StringUtils.isBlank(remotingUri)) {
-      remotingUri = MessageFormat.format("service:jmx:rmi:///jndi/rmi://{0}:{1}/server",
-          StringUtils.defaultString(host, DEFAULT_HOST), StringUtils.defaultString(port, DEFAULT_PORT));
+      remotingUri =
+          MessageFormat.format("service:jmx:rmi:///jndi/rmi://{0}:{1}/server", StringUtils.defaultString(host, DEFAULT_HOST),
+                               StringUtils.defaultString(port, DEFAULT_PORT));
     }
 
     if (credentials != null && !credentials.isEmpty()) {

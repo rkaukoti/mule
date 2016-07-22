@@ -279,8 +279,8 @@ public class URIBuilder extends AbstractAnnotatedObject {
 
   protected void assertProtocolConsistent() {
     if (null != protocol && null != address && !address.startsWith(protocol + DOTS_SLASHES)) {
-      throw new IllegalArgumentException(
-          "Address '" + address + "' for protocol '" + protocol + "' should start with " + protocol + DOTS_SLASHES);
+      throw new IllegalArgumentException("Address '" + address + "' for protocol '" + protocol + "' should start with " + protocol
+          + DOTS_SLASHES);
     }
   }
 

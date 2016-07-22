@@ -38,7 +38,7 @@ public final class PoolingConnectionProviderWrapper<Connection> extends Connecti
    *        Application
    */
   public PoolingConnectionProviderWrapper(ConnectionProvider<Connection> delegate, PoolingProfile poolingProfile,
-      boolean disableValidation, RetryPolicyTemplate retryPolicyTemplate) {
+                                          boolean disableValidation, RetryPolicyTemplate retryPolicyTemplate) {
     super(delegate);
     this.poolingProfile = poolingProfile;
     this.disableValidation = disableValidation;

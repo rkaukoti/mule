@@ -47,7 +47,8 @@ public class ServiceDescriptorFactory {
    * @throws ServiceException if the service cannot be located
    */
   public static ServiceDescriptor create(ServiceType type, String name, Properties props, Properties overrides,
-      MuleContext muleContext, ClassLoader classLoader) throws ServiceException {
+                                         MuleContext muleContext, ClassLoader classLoader)
+      throws ServiceException {
     if (overrides != null) {
       props.putAll(overrides);
     }

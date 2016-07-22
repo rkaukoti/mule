@@ -67,6 +67,7 @@ public class IMAPSProvider extends AbstractRetrieverProvider<RetrieverConnection
   @Override
   public RetrieverConnection connect() throws ConnectionException {
     return new RetrieverConnection(IMAPS, settings.getUser(), settings.getPassword(), settings.getHost(), port,
-        getConnectionTimeout(), getReadTimeout(), getWriteTimeout(), getProperties(), tlsContextFactory);
+                                   getConnectionTimeout(), getReadTimeout(), getWriteTimeout(), getProperties(),
+                                   tlsContextFactory);
   }
 }

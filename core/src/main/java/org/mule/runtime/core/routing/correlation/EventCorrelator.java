@@ -73,8 +73,8 @@ public class EventCorrelator implements Startable, Stoppable, Disposable {
   private EventCorrelator.ExpiringGroupMonitoringThread expiringGroupMonitoringThread;
 
   public EventCorrelator(EventCorrelatorCallback callback, MessageProcessor timeoutMessageProcessor,
-      MessageInfoMapping messageInfoMapping, MuleContext muleContext, FlowConstruct flowConstruct,
-      PartitionableObjectStore correlatorStore, String storePrefix, ObjectStore<Long> processedGroups) {
+                         MessageInfoMapping messageInfoMapping, MuleContext muleContext, FlowConstruct flowConstruct,
+                         PartitionableObjectStore correlatorStore, String storePrefix, ObjectStore<Long> processedGroups) {
     if (callback == null) {
       throw new IllegalArgumentException(CoreMessages.objectIsNull("EventCorrelatorCallback").getMessage());
     }
@@ -115,9 +115,10 @@ public class EventCorrelator implements Startable, Stoppable, Disposable {
 
     if (logger.isTraceEnabled()) {
       try {
-        logger.trace(String.format("Received async reply message for correlationID: %s%n%s%n%s", groupId,
-            StringMessageUtils.truncate(StringMessageUtils.toString(event.getMessage().getPayload()), 200, false),
-            StringMessageUtils.headersToString(event.getMessage())));
+        logger.trace(String.format("Received async reply message for correlationID: %s%n%s%n%s",
+                                   groupId, StringMessageUtils
+                                       .truncate(StringMessageUtils.toString(event.getMessage().getPayload()), 200, false),
+                                   StringMessageUtils.headersToString(event.getMessage())));
       } catch (Exception e) {
         // ignore
       }
@@ -136,7 +137,7 @@ public class EventCorrelator implements Startable, Stoppable, Disposable {
           }
           // Fire a notification to say we received this message
           muleContext.fireNotification(new RoutingNotification(event.getMessage(), event.getMessageSourceURI().toString(),
-              RoutingNotification.MISSED_AGGREGATION_GROUP_EVENT));
+                                                               RoutingNotification.MISSED_AGGREGATION_GROUP_EVENT));
           return null;
         }
       } catch (ObjectStoreException e) {
@@ -278,8 +279,8 @@ public class EventCorrelator implements Startable, Stoppable, Disposable {
 
     if (isFailOnTimeout()) {
       MuleEvent messageCollectionEvent = group.getMessageCollectionEvent();
-      muleContext.fireNotification(
-          new RoutingNotification(messageCollectionEvent.getMessage(), null, RoutingNotification.CORRELATION_TIMEOUT));
+      muleContext.fireNotification(new RoutingNotification(messageCollectionEvent.getMessage(), null,
+                                                           RoutingNotification.CORRELATION_TIMEOUT));
       try {
         group.clear();
       } catch (ObjectStoreException e) {
@@ -290,8 +291,10 @@ public class EventCorrelator implements Startable, Stoppable, Disposable {
     } else {
       if (logger.isDebugEnabled()) {
         logger.debug(MessageFormat.format(
-            "Aggregator expired, but ''failOnTimeOut'' is false. Forwarding {0} events out of {1} " + "total for group ID: {2}",
-            group.size(), group.expectedSize().map(v -> v.toString()).orElse(NOT_SET), group.getGroupId()));
+                                          "Aggregator expired, but ''failOnTimeOut'' is false. Forwarding {0} events out of {1} "
+                                              + "total for group ID: {2}",
+                                          group.size(), group.expectedSize().map(v -> v.toString()).orElse(NOT_SET),
+                                          group.getGroupId()));
       }
 
       try {
@@ -306,10 +309,9 @@ public class EventCorrelator implements Startable, Stoppable, Disposable {
             if (timeoutMessageProcessor != null) {
               timeoutMessageProcessor.process(newEvent);
             } else {
-              throw new MessagingException(
-                  CoreMessages.createStaticMessage(MessageFormat
-                      .format("Group {0} timed out, but no timeout message processor was " + "configured.", group.getGroupId())),
-                  newEvent);
+              throw new MessagingException(CoreMessages.createStaticMessage(MessageFormat
+                  .format("Group {0} timed out, but no timeout message processor was " + "configured.", group.getGroupId())),
+                                           newEvent);
             }
             correlatorStore.store((Serializable) group.getGroupId(), group.getCreated(), getExpiredAndDispatchedPartitionKey());
           } else {

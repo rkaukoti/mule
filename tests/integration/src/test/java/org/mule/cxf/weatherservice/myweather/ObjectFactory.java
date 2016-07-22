@@ -143,7 +143,7 @@ public class ObjectFactory {
   @XmlElementDecl(namespace = "http://ws.cdyne.com/WeatherWS/", name = "ArrayOfWeatherDescription")
   public JAXBElement<ArrayOfWeatherDescription> createArrayOfWeatherDescription(ArrayOfWeatherDescription value) {
     return new JAXBElement<ArrayOfWeatherDescription>(_ArrayOfWeatherDescription_QNAME, ArrayOfWeatherDescription.class, null,
-        value);
+                                                      value);
   }
 
   /**

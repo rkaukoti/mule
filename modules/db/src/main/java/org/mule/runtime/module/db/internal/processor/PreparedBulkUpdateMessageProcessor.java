@@ -46,8 +46,9 @@ public class PreparedBulkUpdateMessageProcessor extends AbstractBulkUpdateMessag
   private final ParamValueResolver paramValueResolver;
 
   public PreparedBulkUpdateMessageProcessor(DbConfigResolver dbConfigResolver, QueryResolver queryResolver,
-      BulkQueryExecutorFactory bulkUpdateExecutorFactory, TransactionalAction transactionalAction,
-      List<QueryType> validQueryTypes, ParamValueResolver paramValueResolver) {
+                                            BulkQueryExecutorFactory bulkUpdateExecutorFactory,
+                                            TransactionalAction transactionalAction, List<QueryType> validQueryTypes,
+                                            ParamValueResolver paramValueResolver) {
     super(dbConfigResolver, transactionalAction, validQueryTypes, queryResolver, bulkUpdateExecutorFactory);
     this.paramValueResolver = paramValueResolver;
   }

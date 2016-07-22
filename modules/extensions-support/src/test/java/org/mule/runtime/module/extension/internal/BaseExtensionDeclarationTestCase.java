@@ -60,8 +60,8 @@ abstract class BaseExtensionDeclarationTestCase extends AbstractMuleTestCase {
   }
 
   protected void assertParameter(ParameterModel parameterModel, String name, String description,
-      ExpressionSupport expressionSupport, boolean required, MetadataType metadataType, Class<? extends MetadataType> qualifier,
-      Object defaultValue) {
+                                 ExpressionSupport expressionSupport, boolean required, MetadataType metadataType,
+                                 Class<? extends MetadataType> qualifier, Object defaultValue) {
     assertThat(parameterModel, is(notNullValue()));
     assertThat(parameterModel.getName(), equalTo(name));
     assertThat(parameterModel.getDescription(), equalTo(description));
@@ -78,7 +78,7 @@ abstract class BaseExtensionDeclarationTestCase extends AbstractMuleTestCase {
   }
 
   protected void assertDataType(MetadataType metadataType, Class<?> expectedRawType,
-      Class<? extends MetadataType> typeQualifier) {
+                                Class<? extends MetadataType> typeQualifier) {
     assertThat(metadataType, is(instanceOf(typeQualifier)));
     assertThat(expectedRawType.isAssignableFrom(getType(metadataType)), is(true));
   }

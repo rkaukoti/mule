@@ -123,11 +123,11 @@ public class IntrospectionUtilsTestCase extends AbstractMuleTestCase {
     assertField("wildCardList", arrayOf(List.class, objectTypeBuilder(Object.class)), exposedFields);
     assertField("rawList", arrayOf(List.class, objectTypeBuilder(Object.class)), exposedFields);
     assertField("wildCardMap", dictionaryOf(Map.class, objectTypeBuilder(Object.class), objectTypeBuilder(Object.class)),
-        exposedFields);
+                exposedFields);
     assertField("rawMap", dictionaryOf(Map.class, objectTypeBuilder(Object.class), objectTypeBuilder(Object.class)),
-        exposedFields);
+                exposedFields);
     assertField("fruitLikeMap", dictionaryOf(Map.class, objectTypeBuilder(Object.class), objectTypeBuilder(Fruit.class)),
-        exposedFields);
+                exposedFields);
   }
 
   private void assertField(String name, MetadataType metadataType, Collection<Field> fields) {

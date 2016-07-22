@@ -72,6 +72,6 @@ public class JsonBeanRoundTripNonAsciiTestCase extends JsonBeanRoundTripTestCase
 
   private String getBrandOfOrange(Locale locale) {
     return LocaleMessageHandler.getString("test-data", locale, "JsonBeanRoundTripNonAsciiTestCase.getBrandOfOrange",
-        new Object[] {});
+                                          new Object[] {});
   }
 }

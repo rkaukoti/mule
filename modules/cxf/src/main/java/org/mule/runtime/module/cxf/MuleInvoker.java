@@ -107,8 +107,8 @@ public class MuleInvoker implements Invoker {
       try {
         Object payload = extractPayload(exchange.getInMessage());
         Class payloadClass = payload != null ? payload.getClass() : Object.class;
-        event.setMessage(
-            MuleMessage.builder(event.getMessage()).payload(payload).mediaType(cxfMmessageProcessor.getMimeType()).build());
+        event.setMessage(MuleMessage.builder(event.getMessage()).payload(payload).mediaType(cxfMmessageProcessor.getMimeType())
+            .build());
         BindingOperationInfo bop = exchange.get(BindingOperationInfo.class);
         Service svc = exchange.get(Service.class);
         if (!cxfMmessageProcessor.isProxy()) {

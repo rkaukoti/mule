@@ -46,8 +46,8 @@ public abstract class AbstractAddVariablePropertyTransformer<T> extends Abstract
 
         if (logger.isDebugEnabled()) {
           logger.debug(MessageFormat.format(
-              "Variable with key \"{0}\", not found on message using \"{1}\". Since the value was marked optional, nothing was set on the message for this variable",
-              key, valueEvaluator.getRawValue()));
+                                            "Variable with key \"{0}\", not found on message using \"{1}\". Since the value was marked optional, nothing was set on the message for this variable",
+                                            key, valueEvaluator.getRawValue()));
         }
       } else {
         addProperty(event, key, typedValue.getValue(), DataType.builder().type(typedValue.getValue().getClass())

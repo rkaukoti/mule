@@ -66,7 +66,7 @@ public final class DefaultConfigurationExpirationMonitor implements Configuratio
       Multimap<String, ConfigurationInstance<Object>> expired = extensionRegistry.getExpiredConfigs();
       if (LOGGER.isDebugEnabled()) {
         LOGGER.debug(expired.isEmpty() ? "No expired configuration instances were found" : "Found {} expired configurations",
-            expired.size());
+                     expired.size());
       }
 
       expired.entries().stream().forEach(entry -> handleExpiration(entry.getKey(), entry.getValue()));
@@ -87,7 +87,8 @@ public final class DefaultConfigurationExpirationMonitor implements Configuratio
     } catch (Exception e) {
       LOGGER
           .error(String.format("Could not process expiration for dynamic config '%s' of type '%s'. Will try again on next cycle",
-              key, config.getClass().getName()), e);
+                               key, config.getClass().getName()),
+                 e);
     }
   }
 

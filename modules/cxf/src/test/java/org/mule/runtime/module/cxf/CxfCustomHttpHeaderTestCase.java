@@ -75,8 +75,9 @@ public class CxfCustomHttpHeaderTestCase extends FunctionalTestCase implements F
     props.put(MULE_METHOD_PROPERTY, "onReceive");
     props.put(myProperty, myProperty);
 
-    MuleMessage reply = muleContext.getClient().send(String.format(endpointAddress),
-        MuleMessage.builder().payload(REQUEST_PAYLOAD).outboundProperties(props).build(), HTTP_REQUEST_OPTIONS);
+    MuleMessage reply = muleContext.getClient()
+        .send(String.format(endpointAddress), MuleMessage.builder().payload(REQUEST_PAYLOAD).outboundProperties(props).build(),
+              HTTP_REQUEST_OPTIONS);
 
     assertNotNull(reply);
     assertNotNull(reply.getPayload());

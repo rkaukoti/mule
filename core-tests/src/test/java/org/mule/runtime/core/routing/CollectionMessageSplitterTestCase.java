@@ -172,8 +172,8 @@ public class CollectionMessageSplitterTestCase extends AbstractMuleContextTestCa
   }
 
   private void assertSplitParts(int count, boolean counted, Map<String, Serializable> inboundProps,
-      Map<String, Serializable> outboundProps, Map<String, Object> invocationProps, List<MuleEvent> splits,
-      Set<Object> actualSequences) {
+                                Map<String, Serializable> outboundProps, Map<String, Object> invocationProps,
+                                List<MuleEvent> splits, Set<Object> actualSequences) {
     for (MuleEvent event : splits) {
       MuleMessage msg = event.getMessage();
       assertTrue(msg.getPayload() instanceof String);

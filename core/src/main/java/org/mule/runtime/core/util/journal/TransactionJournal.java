@@ -55,11 +55,11 @@ public class TransactionJournal<T, K extends JournalEntry<T>> {
    * @param logFilesDirectory directory used to store the journal files.
    */
   public TransactionJournal(String logFilesDirectory, TransactionCompletePredicate transactionCompletePredicate,
-      JournalEntrySerializer journalEntrySerializer, Integer maximumFileSizeInMegabytes) {
+                            JournalEntrySerializer journalEntrySerializer, Integer maximumFileSizeInMegabytes) {
     File logFileDirectory = new File(logFilesDirectory);
     if (!logFileDirectory.exists()) {
       Preconditions.checkState(logFileDirectory.mkdirs(),
-          "Could not create directory for queue transaction logger " + logFileDirectory);
+                               "Could not create directory for queue transaction logger " + logFileDirectory);
     }
     calculateJournalFileSize(maximumFileSizeInMegabytes);
     File logFile1 = new File(logFileDirectory, TX1_LOG_FILE_NAME);

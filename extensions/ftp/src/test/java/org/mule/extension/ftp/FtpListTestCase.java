@@ -107,7 +107,7 @@ public class FtpListTestCase extends FtpConnectorTestCase {
     TreeNode node = (TreeNode) flowRunner("listWithoutPath").run().getMessage().getPayload();
 
     assertThat(node.getAttributes().getPath(),
-        is(equalTo(Paths.get(testHarness.getWorkingDirectory()).toAbsolutePath().toString())));
+               is(equalTo(Paths.get(testHarness.getWorkingDirectory()).toAbsolutePath().toString())));
     assertThat(node.getChilds(), hasSize(6));
   }
 

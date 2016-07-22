@@ -39,8 +39,8 @@ public class ExtensionTransaction extends AbstractSingleResourceTransaction {
   @Override
   public void bindResource(Object key, Object resource) throws TransactionException {
     if (!(key instanceof ExtensionTransactionKey) || !(resource instanceof ExtensionTransactionalResource)) {
-      throw new IllegalTransactionStateException(transactionCanOnlyBindToResources(
-          format("%s/%s", ExtensionTransactionKey.class.getName(), ExtensionTransactionalResource.class.getName())));
+      throw new IllegalTransactionStateException(transactionCanOnlyBindToResources(format("%s/%s", ExtensionTransactionKey.class
+          .getName(), ExtensionTransactionalResource.class.getName())));
     }
 
     ExtensionTransactionalResource txResource = (ExtensionTransactionalResource) resource;

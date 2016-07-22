@@ -29,8 +29,8 @@ public class TransactionalFunctionalTestComponent extends FunctionalTestComponen
       Transaction currentTx = context.getCurrentTransaction();
       if (currentTx == null || !currentTx.isBegun()) {
         context.setStopFurtherProcessing(true);
-        throw new TransactionException(
-            MessageFactory.createStaticMessage("Trying to roll back transaction but no transaction is underway."));
+        throw new TransactionException(MessageFactory
+            .createStaticMessage("Trying to roll back transaction but no transaction is underway."));
       }
 
       if (rollback) {

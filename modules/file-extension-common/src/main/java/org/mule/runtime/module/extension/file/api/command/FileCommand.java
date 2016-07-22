@@ -58,9 +58,8 @@ public abstract class FileCommand<F extends FileSystem> {
       if (createParentFolder) {
         mkdirs(config, parentFolder);
       } else {
-        throw new IllegalArgumentException(format(
-            "Cannot write to file '%s' because path to it doesn't exist. Consider setting the 'createParentFolder' attribute to 'true'",
-            path));
+        throw new IllegalArgumentException(format("Cannot write to file '%s' because path to it doesn't exist. Consider setting the 'createParentFolder' attribute to 'true'",
+                                                  path));
       }
     }
   }
@@ -181,8 +180,8 @@ public abstract class FileCommand<F extends FileSystem> {
    * @return {@link RuntimeException}
    */
   protected RuntimeException cannotListFileException(Path path) {
-    return new IllegalArgumentException(
-        format("Cannot list path '%s' because it's a file. Only directories can be listed", path));
+    return new IllegalArgumentException(format("Cannot list path '%s' because it's a file. Only directories can be listed",
+                                               path));
   }
 
   /**
@@ -205,7 +204,7 @@ public abstract class FileCommand<F extends FileSystem> {
    * @return {@link RuntimeException}
    */
   public IllegalArgumentException alreadyExistsException(Path path) {
-    return new IllegalArgumentException(
-        format("'%s' already exists. Set the 'overwrite' parameter to 'true' to perform the operation anyway", path));
+    return new IllegalArgumentException(format("'%s' already exists. Set the 'overwrite' parameter to 'true' to perform the operation anyway",
+                                               path));
   }
 }

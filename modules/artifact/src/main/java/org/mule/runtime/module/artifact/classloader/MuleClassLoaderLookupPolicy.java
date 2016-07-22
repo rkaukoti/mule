@@ -44,8 +44,7 @@ public class MuleClassLoaderLookupPolicy implements ClassLoaderLookupPolicy {
     this.lookupStrategies = new HashMap<>(configuredlookupStrategies);
   }
 
-  private Map<String, ClassLoaderLookupStrategy> normalizeLookupStrategies(
-      Map<String, ClassLoaderLookupStrategy> lookupStrategies) {
+  private Map<String, ClassLoaderLookupStrategy> normalizeLookupStrategies(Map<String, ClassLoaderLookupStrategy> lookupStrategies) {
     final Map<String, ClassLoaderLookupStrategy> result = new HashMap<>();
 
     for (String packageName : lookupStrategies.keySet()) {

@@ -44,8 +44,8 @@ public class TestSingleUserSecurityProvider extends AbstractSecurityProvider {
       String favoriteColor = (String) props.get(PROPERTY_FAVORITE_COLOR);
       props.put(PROPERTY_NUMBER_LOGINS, numberLogins + 1);
       authentication.setProperties(props);
-      logger.info(
-          "Welcome back " + user + " (" + numberLogins + 1 + " logins), we remembered your favorite color: " + favoriteColor);
+      logger.info("Welcome back " + user + " (" + numberLogins + 1 + " logins), we remembered your favorite color: "
+          + favoriteColor);
     } else {
       String favoriteColor = getFavoriteColor(user);
       logger.info("First login for user: " + user + ", favorite color is " + favoriteColor);

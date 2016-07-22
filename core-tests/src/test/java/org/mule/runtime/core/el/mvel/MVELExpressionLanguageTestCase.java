@@ -289,7 +289,7 @@ public class MVELExpressionLanguageTestCase extends AbstractMuleContextTestCase 
     MuleEvent event = getTestEvent("");
     event.setFlowVariable("app", "otherb");
     muleContext.getRegistry().registerObject("foo",
-        (ExpressionLanguageExtension) context -> context.addVariable("app", "otherc"));
+                                             (ExpressionLanguageExtension) context -> context.addVariable("app", "otherc"));
     mvel.initialise();
     assertEquals(AppContext.class, evaluate("app", event).getClass());
   }
@@ -300,7 +300,7 @@ public class MVELExpressionLanguageTestCase extends AbstractMuleContextTestCase 
     MuleEvent event = getTestEvent("");
     event.setFlowVariable("message", "other2");
     muleContext.getRegistry().registerObject("foo",
-        (ExpressionLanguageExtension) context -> context.addVariable("message", "other3"));
+                                             (ExpressionLanguageExtension) context -> context.addVariable("message", "other3"));
     mvel.initialise();
     assertEquals(MessageContext.class, evaluate("message", event).getClass());
   }

@@ -35,7 +35,7 @@ public class DomainArchiveDeployer implements ArchiveDeployer<Domain> {
   private final ArchiveDeployer<Application> applicationDeployer;
 
   public DomainArchiveDeployer(ArchiveDeployer<Domain> domainDeployer, ArchiveDeployer<Application> applicationDeployer,
-      DeploymentService deploymentService) {
+                               DeploymentService deploymentService) {
     this.domainDeployer = domainDeployer;
     this.applicationDeployer = applicationDeployer;
     this.deploymentService = deploymentService;
@@ -108,7 +108,7 @@ public class DomainArchiveDeployer implements ArchiveDeployer<Domain> {
       domainDeployer.redeploy(artifact);
     } catch (DeploymentException e) {
       logger.warn(String.format("Failure during redeployment of domain %s, domain applications deployment will be skipped",
-          artifact.getArtifactName()));
+                                artifact.getArtifactName()));
       throw e;
     }
     for (Application domainApplication : domainApplications) {

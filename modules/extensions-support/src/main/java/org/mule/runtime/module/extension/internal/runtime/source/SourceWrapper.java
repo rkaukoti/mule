@@ -154,10 +154,9 @@ final class SourceWrapper extends Source implements Lifecycle, FlowConstructAwar
 
     if (fields.size() > 1) {
       // TODO: MULE-9220 Move this to a syntax validator
-      throw new IllegalModelDefinitionException(format(
-          "Message Source defined on class '%s' has more than one field annotated with '@%s'. "
-              + "Only one field in the class can bare such annotation",
-          delegate.getClass().getName(), annotation.getClass().getSimpleName()));
+      throw new IllegalModelDefinitionException(format("Message Source defined on class '%s' has more than one field annotated with '@%s'. "
+          + "Only one field in the class can bare such annotation", delegate.getClass().getName(),
+                                                       annotation.getClass().getSimpleName()));
     }
 
     return Optional.of(new FieldSetter<>(fields.iterator().next()));

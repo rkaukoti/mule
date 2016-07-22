@@ -127,8 +127,8 @@ public class GrizzlyHttpClient implements HttpClient {
 
       if (trustStoreConfiguration != null && trustStoreConfiguration.isInsecure()) {
         logger.warn(String.format(
-            "TLS configuration for requester %s has been set to use an insecure trust store. This means no certificate validations will be performed, rendering connections vulnerable to attacks. Use at own risk.",
-            ownerName));
+                                  "TLS configuration for requester %s has been set to use an insecure trust store. This means no certificate validations will be performed, rendering connections vulnerable to attacks. Use at own risk.",
+                                  ownerName));
         // This disables hostname verification
         builder.setAcceptAnyCertificate(true);
       }
@@ -205,7 +205,8 @@ public class GrizzlyHttpClient implements HttpClient {
 
   @Override
   public HttpResponse send(HttpRequest request, int responseTimeout, boolean followRedirects,
-      HttpRequestAuthentication authentication) throws IOException, TimeoutException {
+                           HttpRequestAuthentication authentication)
+      throws IOException, TimeoutException {
 
     Request grizzlyRequest = createGrizzlyRequest(request, responseTimeout, followRedirects, authentication);
     ListenableFuture<Response> future = asyncHttpClient.executeRequest(grizzlyRequest);
@@ -252,7 +253,8 @@ public class GrizzlyHttpClient implements HttpClient {
   }
 
   private Request createGrizzlyRequest(HttpRequest request, int responseTimeout, boolean followRedirects,
-      HttpRequestAuthentication authentication) throws IOException {
+                                       HttpRequestAuthentication authentication)
+      throws IOException {
     RequestBuilder builder = createRequestBuilder(request);
 
     builder.setMethod(request.getMethod());
@@ -300,7 +302,7 @@ public class GrizzlyHttpClient implements HttpClient {
         for (HttpPart part : multipartHttpEntity.getParts()) {
           if (part.getFileName() != null) {
             builder.addBodyPart(new ByteArrayPart(part.getName(), IOUtils.toByteArray(part.getInputStream()),
-                part.getContentType(), null, part.getFileName()));
+                                                  part.getContentType(), null, part.getFileName()));
           } else {
             byte[] content = IOUtils.toByteArray(part.getInputStream());
             builder.addBodyPart(new ByteArrayPart(part.getName(), content, part.getContentType(), null));

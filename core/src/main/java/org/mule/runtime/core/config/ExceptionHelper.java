@@ -169,8 +169,7 @@ public final class ExceptionHelper {
     }
   }
 
-  private static MuleContextNotificationListener<MuleContextNotification> createClearCacheListenerOnContextDispose(
-      final MuleContext muleContext) {
+  private static MuleContextNotificationListener<MuleContextNotification> createClearCacheListenerOnContextDispose(final MuleContext muleContext) {
     return new MuleContextNotificationListener<MuleContextNotification>() {
 
       @Override

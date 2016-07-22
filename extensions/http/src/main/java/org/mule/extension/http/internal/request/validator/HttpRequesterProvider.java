@@ -183,8 +183,7 @@ public class HttpRequesterProvider implements ConnectionProvider<HttpClient>, In
   }
 
   @Override
-  public ConnectionHandlingStrategy<HttpClient> getHandlingStrategy(
-      ConnectionHandlingStrategyFactory<HttpClient> connectionHandlingStrategyFactory) {
+  public ConnectionHandlingStrategy<HttpClient> getHandlingStrategy(ConnectionHandlingStrategyFactory<HttpClient> connectionHandlingStrategyFactory) {
     return connectionHandlingStrategyFactory.cached();
   }
 
@@ -213,8 +212,8 @@ public class HttpRequesterProvider implements ConnectionProvider<HttpClient>, In
 
   private void verifyConnectionsParameters() throws InitialisationException {
     if (maxConnections < UNLIMITED_CONNECTIONS || maxConnections == 0) {
-      throw new InitialisationException(createStaticMessage(
-          "The maxConnections parameter only allows positive values or -1 for unlimited concurrent connections."), this);
+      throw new InitialisationException(createStaticMessage("The maxConnections parameter only allows positive values or -1 for unlimited concurrent connections."),
+                                        this);
     }
 
     if (!usePersistentConnections) {

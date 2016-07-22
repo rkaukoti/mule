@@ -118,8 +118,7 @@ public class ClassicFtpConnectionProvider extends AbstractFtpConnectionProvider<
    * {@inheritDoc}
    */
   @Override
-  public ConnectionHandlingStrategy<ClassicFtpFileSystem> getHandlingStrategy(
-      ConnectionHandlingStrategyFactory<ClassicFtpFileSystem> handlingStrategyFactory) {
+  public ConnectionHandlingStrategy<ClassicFtpFileSystem> getHandlingStrategy(ConnectionHandlingStrategyFactory<ClassicFtpFileSystem> handlingStrategyFactory) {
     return handlingStrategyFactory.supportsPooling(new PoolingListener<ClassicFtpFileSystem>() {
 
       @Override

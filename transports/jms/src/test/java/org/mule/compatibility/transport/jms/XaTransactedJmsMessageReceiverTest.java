@@ -161,7 +161,7 @@ public class XaTransactedJmsMessageReceiverTest extends AbstractMuleTestCase {
     when(consumer.receive(anyLong())).then(buildLatchedReceiveAnswer(receivingLatch, disconnectedLatch));
 
     when(jmsSupport.createConsumer(any(Session.class), any(Destination.class), anyString(), anyBoolean(), anyString(),
-        anyBoolean(), eq(mockInboundEndpoint))).thenReturn(consumer);
+                                   anyBoolean(), eq(mockInboundEndpoint))).thenReturn(consumer);
 
     final XaTransactedJmsMessageReceiver messageReceiver =
         new XaTransactedJmsMessageReceiver(mockJmsConnector, mockFlowConstruct, mockInboundEndpoint);
@@ -190,7 +190,7 @@ public class XaTransactedJmsMessageReceiverTest extends AbstractMuleTestCase {
     when(consumer3.receive(anyLong())).then(buildLatchedReceiveAnswer(receivingLatch, disconnectedLatch));
 
     when(jmsSupport.createConsumer(any(Session.class), any(Destination.class), anyString(), anyBoolean(), anyString(),
-        anyBoolean(), eq(mockInboundEndpoint))).thenReturn(consumer1, consumer2, consumer3);
+                                   anyBoolean(), eq(mockInboundEndpoint))).thenReturn(consumer1, consumer2, consumer3);
 
     final XaTransactedJmsMessageReceiver messageReceiver =
         new XaTransactedJmsMessageReceiver(mockJmsConnector, mockFlowConstruct, mockInboundEndpoint);

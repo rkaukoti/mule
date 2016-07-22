@@ -70,8 +70,9 @@ public class ScriptComponentWithBindings extends ScriptComponent {
           BindingInvocationHandler handler = (BindingInvocationHandler) Proxy.getInvocationHandler(proxy);
           handler.addRouterForInterface(interfaceBinding);
         } else {
-          Object proxy = Proxy.newProxyInstance(muleContext.getExecutionClassLoader(),
-              new Class[] {interfaceBinding.getInterface()}, new BindingInvocationHandler(interfaceBinding));
+          Object proxy =
+              Proxy.newProxyInstance(muleContext.getExecutionClassLoader(), new Class[] {interfaceBinding.getInterface()},
+                                     new BindingInvocationHandler(interfaceBinding));
           // new BindingInvocationHandler(interfaceBinding, muleContext));
           proxies.put(bindingName, proxy);
         }

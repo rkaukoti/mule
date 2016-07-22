@@ -60,7 +60,7 @@ public class HttpRequestBuilder {
 
   public HttpRequest build() {
     return new DefaultHttpRequest(uri, path, method, headers == null ? null : headers.toImmutableParameterMap(),
-        queryParams == null ? queryParams : queryParams.toImmutableParameterMap(), entity);
+                                  queryParams == null ? queryParams : queryParams.toImmutableParameterMap(), entity);
 
   }
 

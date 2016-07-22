@@ -47,14 +47,14 @@ public abstract class AbstractQueueManager
   public synchronized void setQueueConfiguration(String queueName, QueueConfiguration newConfig) {
     // We allow calling this method only if the new config is equals to the previous one because of MULE-7420
     if (queues.containsKey(queueName) && !newConfig.equals(queueConfigurations.get(queueName))) {
-      throw new MuleRuntimeException(CoreMessages.createStaticMessage(
-          String.format("A queue with name %s is in use so we cannot change it's configuration", queueName)));
+      throw new MuleRuntimeException(CoreMessages.createStaticMessage(String
+          .format("A queue with name %s is in use so we cannot change it's configuration", queueName)));
     }
     if (logger.isDebugEnabled()) {
       if (queueConfigurations.containsKey(queueName)) {
         QueueConfiguration oldConfiguration = queueConfigurations.get(queueName);
-        logger.debug(
-            String.format("Replacing queue %s configuration: %s with new newConfig: %s", queueName, oldConfiguration, newConfig));
+        logger.debug(String.format("Replacing queue %s configuration: %s with new newConfig: %s", queueName, oldConfiguration,
+                                   newConfig));
       }
     }
     queueConfigurations.put(queueName, newConfig);

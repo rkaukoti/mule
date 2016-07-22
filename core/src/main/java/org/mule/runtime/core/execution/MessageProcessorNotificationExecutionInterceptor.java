@@ -43,7 +43,7 @@ class MessageProcessorNotificationExecutionInterceptor implements MessageProcess
     final boolean fireNotification = event.isNotificationsEnabled();
     if (fireNotification) {
       fireNotification(notificationManager, event.getFlowConstruct(), event, messageProcessor, null,
-          MessageProcessorNotification.MESSAGE_PROCESSOR_PRE_INVOKE);
+                       MessageProcessorNotification.MESSAGE_PROCESSOR_PRE_INVOKE);
     }
 
     MuleEvent eventToProcess = event;
@@ -63,7 +63,7 @@ class MessageProcessorNotificationExecutionInterceptor implements MessageProcess
 
           if (fireNotification) {
             fireNotification(notificationManager, event.getFlowConstruct(), result != null ? result : event, messageProcessor,
-                null, MessageProcessorNotification.MESSAGE_PROCESSOR_POST_INVOKE);
+                             null, MessageProcessorNotification.MESSAGE_PROCESSOR_POST_INVOKE);
           }
           originalReplyToHandler.processReplyTo(result, returnMessage, replyTo);
         }
@@ -73,7 +73,7 @@ class MessageProcessorNotificationExecutionInterceptor implements MessageProcess
           if (fireNotification) {
             MuleEvent result = exception.getEvent();
             fireNotification(notificationManager, event.getFlowConstruct(), result != null ? result : event, messageProcessor,
-                null, MessageProcessorNotification.MESSAGE_PROCESSOR_POST_INVOKE);
+                             null, MessageProcessorNotification.MESSAGE_PROCESSOR_POST_INVOKE);
           }
           originalReplyToHandler.processExceptionReplyTo(exception, replyTo);
         }
@@ -98,14 +98,14 @@ class MessageProcessorNotificationExecutionInterceptor implements MessageProcess
     } finally {
       if (!NonBlockingVoidMuleEvent.getInstance().equals(result) && fireNotification) {
         fireNotification(notificationManager, event.getFlowConstruct(), result != null ? result : event, messageProcessor,
-            exceptionThrown, MessageProcessorNotification.MESSAGE_PROCESSOR_POST_INVOKE);
+                         exceptionThrown, MessageProcessorNotification.MESSAGE_PROCESSOR_POST_INVOKE);
       }
     }
     return result;
   }
 
   protected void fireNotification(ServerNotificationManager serverNotificationManager, FlowConstruct flowConstruct,
-      MuleEvent event, MessageProcessor processor, MessagingException exceptionThrown, int action) {
+                                  MuleEvent event, MessageProcessor processor, MessagingException exceptionThrown, int action) {
     if (serverNotificationManager != null
         && serverNotificationManager.isNotificationEnabled(MessageProcessorNotification.class)) {
       if (flowConstruct instanceof MessageProcessorPathResolver

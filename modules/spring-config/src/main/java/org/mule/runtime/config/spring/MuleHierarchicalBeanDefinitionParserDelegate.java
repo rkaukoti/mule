@@ -85,8 +85,10 @@ public class MuleHierarchicalBeanDefinitionParserDelegate extends BeanDefinition
   private BeanDefinitionFactory beanDefinitionFactory;
 
   public MuleHierarchicalBeanDefinitionParserDelegate(XmlReaderContext readerContext,
-      DefaultBeanDefinitionDocumentReader beanDefinitionDocumentReader, Supplier<ApplicationModel> applicationModelSupplier,
-      BeanDefinitionFactory beanDefinitionFactory, ElementValidator... elementValidators) {
+                                                      DefaultBeanDefinitionDocumentReader beanDefinitionDocumentReader,
+                                                      Supplier<ApplicationModel> applicationModelSupplier,
+                                                      BeanDefinitionFactory beanDefinitionFactory,
+                                                      ElementValidator... elementValidators) {
     super(readerContext);
     this.beanDefinitionDocumentReader = beanDefinitionDocumentReader;
     this.applicationModelSupplier = applicationModelSupplier;
@@ -134,28 +136,34 @@ public class MuleHierarchicalBeanDefinitionParserDelegate extends BeanDefinition
           ComponentModel parentComponentModel =
               applicationModelSupplier.get().findComponentDefinitionModel((Element) element.getParentNode());
           beanDefinitionFactory.resolveComponentRecursively(parentComponentModel, componentModel,
-              getReaderContext().getRegistry(), (resolvedComponent, registry) -> {
-                if (resolvedComponent.isRoot()) {
-                  String name = resolvedComponent.getNameAttribute();
-                  if (name == null) {
-                    if (resolvedComponent.getIdentifier().equals(CONFIGURATION_IDENTIFIER)) {
-                      name = OBJECT_MULE_CONFIGURATION;
-                    } else {
-                      name = AutoIdUtils.uniqueValue(resolvedComponent.getIdentifier().toString());
-                    }
-                  }
-                  BeanDefinitionFactory.checkElementNameUnique(registry, element);
-                  registry.registerBeanDefinition(name, resolvedComponent.getBeanDefinition());
-                }
-              }, (mpElement, beanDefinition) -> {
-                // We don't want the bean definition to be automatically injected in the parent bean in this cases since the
-                // parent is using
-                // the new parsing mechanism.
-                // Here it will always be a nested element. We use a fake bean definition so it does not try to validate the ID if
-                // it thinks
-                // is a global element
-                return parseCustomElement(mpElement, BeanDefinitionBuilder.genericBeanDefinition().getBeanDefinition());
-              });
+                                                            getReaderContext().getRegistry(), (resolvedComponent, registry) -> {
+                                                              if (resolvedComponent.isRoot()) {
+                                                                String name = resolvedComponent.getNameAttribute();
+                                                                if (name == null) {
+                                                                  if (resolvedComponent.getIdentifier()
+                                                                      .equals(CONFIGURATION_IDENTIFIER)) {
+                                                                    name = OBJECT_MULE_CONFIGURATION;
+                                                                  } else {
+                                                                    name = AutoIdUtils.uniqueValue(resolvedComponent
+                                                                        .getIdentifier().toString());
+                                                                  }
+                                                                }
+                                                                BeanDefinitionFactory.checkElementNameUnique(registry, element);
+                                                                registry.registerBeanDefinition(name, resolvedComponent
+                                                                    .getBeanDefinition());
+                                                              }
+                                                            }, (mpElement, beanDefinition) -> {
+                                                              // We don't want the bean definition to be automatically injected in
+                                                              // the parent bean in this cases since the
+                                                              // parent is using
+                                                              // the new parsing mechanism.
+                                                              // Here it will always be a nested element. We use a fake bean
+                                                              // definition so it does not try to validate the ID if
+                                                              // it thinks
+                                                              // is a global element
+                                                              return parseCustomElement(mpElement, BeanDefinitionBuilder
+                                                                  .genericBeanDefinition().getBeanDefinition());
+                                                            });
           // Do not iterate since this iteration is done iside the resolve component going through childrens
           return null;
         } else {
@@ -166,8 +174,9 @@ public class MuleHierarchicalBeanDefinitionParserDelegate extends BeanDefinition
             ComponentModel parentComponentModel =
                 applicationModelSupplier.get().findComponentDefinitionModel((Element) element.getParentNode());
             if (parentComponentModel != null) {
-              finalChild = adaptFilterBeanDefinitions(parentComponentModel,
-                  (org.springframework.beans.factory.support.AbstractBeanDefinition) finalChild);
+              finalChild =
+                  adaptFilterBeanDefinitions(parentComponentModel,
+                                             (org.springframework.beans.factory.support.AbstractBeanDefinition) finalChild);
             }
             registerBean(element, currentDefinition);
             setComponentModelTypeFromBeanDefinition(finalChild, componentModel);
@@ -399,7 +408,7 @@ public class MuleHierarchicalBeanDefinitionParserDelegate extends BeanDefinition
    * Parse a map element.
    */
   public Map parseMapElement(Element mapEle, String mapElementTagName, String mapElementKeyAttributeName,
-      String mapElementValueAttributeName) {
+                             String mapElementValueAttributeName) {
     List<Element> entryEles = DomUtils.getChildElementsByTagName(mapEle, mapElementTagName);
     ManagedMap<Object, Object> map = new ManagedMap<Object, Object>(entryEles.size());
     map.setSource(extractSource(mapEle));

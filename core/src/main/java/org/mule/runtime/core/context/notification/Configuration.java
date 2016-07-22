@@ -37,11 +37,11 @@ class Configuration {
   private Policy policy;
 
   synchronized void addInterfaceToType(Class<? extends ServerNotificationListener> iface,
-      Class<? extends ServerNotification> type) {
+                                       Class<? extends ServerNotification> type) {
     dirty = true;
     if (!ServerNotification.class.isAssignableFrom(type)) {
-      throw new IllegalArgumentException(
-          CoreMessages.propertyIsNotSupportedType("type", ServerNotification.class, type).getMessage());
+      throw new IllegalArgumentException(CoreMessages.propertyIsNotSupportedType("type", ServerNotification.class, type)
+          .getMessage());
     }
     if (!interfaceToTypes.containsKey(iface)) {
       interfaceToTypes.put(iface, new HashSet<Class<? extends ServerNotification>>());
@@ -58,8 +58,7 @@ class Configuration {
    * @param interfaceToTypes map from interace to a particular event
    * @throws ClassNotFoundException if the interface is a key, but the corresponding class cannot be loaded
    */
-  synchronized void addAllInterfaceToTypes(
-      Map<Class<? extends ServerNotificationListener>, Set<Class<? extends ServerNotification>>> interfaceToTypes)
+  synchronized void addAllInterfaceToTypes(Map<Class<? extends ServerNotificationListener>, Set<Class<? extends ServerNotification>>> interfaceToTypes)
       throws ClassNotFoundException {
     dirty = true;
 

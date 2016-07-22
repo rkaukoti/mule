@@ -139,17 +139,19 @@ public class MVELExpressionExecutorTestCase extends AbstractELTestCase {
   @Test
   public void doesNotCachesCompiledExpressions() throws Exception {
     MuleTestUtils.testWithSystemProperty(MVELExpressionExecutor.DISABLE_MEL_EXPRESSION_CACHE, "",
-        new MuleTestUtils.TestCallback() {
+                                         new MuleTestUtils.TestCallback() {
 
-          @Override
-          public void run() throws Exception {
-            setupMVEL();
+                                           @Override
+                                           public void run() throws Exception {
+                                             setupMVEL();
 
-            final Serializable compiledExpression1 = mvel.getCompiledExpression(SIMPLE_EXPRESSION);
-            final Serializable compiledExpression2 = mvel.getCompiledExpression(SIMPLE_EXPRESSION);
-            assertThat(compiledExpression1, is(not(compiledExpression2)));
-          }
-        });
+                                             final Serializable compiledExpression1 =
+                                                 mvel.getCompiledExpression(SIMPLE_EXPRESSION);
+                                             final Serializable compiledExpression2 =
+                                                 mvel.getCompiledExpression(SIMPLE_EXPRESSION);
+                                             assertThat(compiledExpression1, is(not(compiledExpression2)));
+                                           }
+                                         });
   }
 
   static class MyClassClassLoader extends ClassLoader {

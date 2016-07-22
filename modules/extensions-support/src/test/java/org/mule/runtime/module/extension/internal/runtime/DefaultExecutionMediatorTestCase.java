@@ -274,7 +274,7 @@ public class DefaultExecutionMediatorTestCase extends AbstractMuleContextTestCas
 
   private void assertOnError(VerificationMode verificationMode) {
     verifyInOrder(interceptor -> interceptor.onError(same(operationContext), any(RetryRequest.class), same(connectionException)),
-        verificationMode);
+                  verificationMode);
   }
 
   private void assertAfter(Object expected) {

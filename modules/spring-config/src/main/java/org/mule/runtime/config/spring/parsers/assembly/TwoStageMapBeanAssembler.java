@@ -21,7 +21,7 @@ public class TwoStageMapBeanAssembler extends AbstractMapBeanAssembler {
   private TwoStageMapBeanAssemblerFactory.BeanAssemblerStore store;
 
   public TwoStageMapBeanAssembler(TwoStageMapBeanAssemblerFactory.BeanAssemblerStore store, PropertyConfiguration beanConfig,
-      BeanDefinitionBuilder bean, PropertyConfiguration targetConfig, BeanDefinition target) {
+                                  BeanDefinitionBuilder bean, PropertyConfiguration targetConfig, BeanDefinition target) {
     super(beanConfig, bean, targetConfig, target);
     this.store = store;
   }
@@ -38,13 +38,13 @@ public class TwoStageMapBeanAssembler extends AbstractMapBeanAssembler {
     assertTargetPresent();
 
     if (MuleHierarchicalBeanDefinitionParserDelegate.testFlag(getBean().getBeanDefinition(),
-        MuleHierarchicalBeanDefinitionParserDelegate.MULE_POST_CHILDREN)) {
+                                                              MuleHierarchicalBeanDefinitionParserDelegate.MULE_POST_CHILDREN)) {
       insertDefinitionAsMap(oldName);
     } else {
       // called for the first time, so set the flag and store this assembler for
       // later processing
       MuleHierarchicalBeanDefinitionParserDelegate.setFlag(getBean().getBeanDefinition(),
-          MuleHierarchicalBeanDefinitionParserDelegate.MULE_POST_CHILDREN);
+                                                           MuleHierarchicalBeanDefinitionParserDelegate.MULE_POST_CHILDREN);
       store.saveBeanAssembler(this);
     }
   }

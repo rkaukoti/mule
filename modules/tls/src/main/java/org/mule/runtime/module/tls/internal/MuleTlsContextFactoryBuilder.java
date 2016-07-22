@@ -40,8 +40,8 @@ public class MuleTlsContextFactoryBuilder implements TlsContextFactoryBuilder, I
       defaultTlsContextFactory = new DefaultTlsContextFactory();
       muleContext.getRegistry().registerObject(MuleProperties.DEFAULT_TLS_CONTEXT_FACTORY_REGISTRY_KEY, defaultTlsContextFactory);
     } catch (Exception e) {
-      throw new InitialisationException(
-          createStaticMessage("Failed to create default " + TlsContextFactory.class.getSimpleName()), e, this);
+      throw new InitialisationException(createStaticMessage("Failed to create default "
+          + TlsContextFactory.class.getSimpleName()), e, this);
     }
   }
 

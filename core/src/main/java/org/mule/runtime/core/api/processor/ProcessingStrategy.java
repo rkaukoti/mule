@@ -14,5 +14,5 @@ import java.util.List;
 public interface ProcessingStrategy {
 
   void configureProcessors(List<MessageProcessor> processors, org.mule.runtime.core.api.processor.StageNameSource nameSource,
-      MessageProcessorChainBuilder chainBuilder, MuleContext muleContext);
+                           MessageProcessorChainBuilder chainBuilder, MuleContext muleContext);
 }

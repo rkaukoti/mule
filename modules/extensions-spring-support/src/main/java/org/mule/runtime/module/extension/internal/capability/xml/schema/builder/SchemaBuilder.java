@@ -377,7 +377,7 @@ public final class SchemaBuilder {
   }
 
   private ComplexType declarePojoAsType(Class<?> clazz, ObjectType metadataType, QName base, String description,
-      Collection<ObjectFieldType> fields) {
+                                        Collection<ObjectFieldType> fields) {
     final TopLevelComplexType complexType = new TopLevelComplexType();
     registeredComplexTypesHolders.put(clazz, new ComplexTypeHolder(complexType, metadataType));
 
@@ -497,7 +497,7 @@ public final class SchemaBuilder {
   }
 
   private Attribute createAttribute(final String name, String description, final MetadataType type, Object defaultValue,
-      boolean required, final ExpressionSupport expressionSupport) {
+                                    boolean required, final ExpressionSupport expressionSupport) {
     final Attribute attribute = new Attribute();
     attribute.setUse(required ? SchemaConstants.USE_REQUIRED : SchemaConstants.USE_OPTIONAL);
     attribute.setAnnotation(createDocAnnotation(description));
@@ -526,15 +526,15 @@ public final class SchemaBuilder {
         try {
           enumType = getType(stringType);
         } catch (Exception e) {
-          throw new IllegalParameterModelDefinitionException(
-              String.format("Parameter '%s' refers to an enum class which couldn't be loaded.", name), e);
+          throw new IllegalParameterModelDefinitionException(String
+              .format("Parameter '%s' refers to an enum class which couldn't be loaded.", name), e);
         }
 
         if (OperationTransactionalAction.class.equals(enumType)) {
           attribute.setType(MULE_EXTENSION_OPERATION_TRANSACTIONAL_ACTION_TYPE);
         } else {
-          attribute.setType(
-              new QName(schema.getTargetNamespace(), sanitizeName(enumType.getName()) + SchemaConstants.ENUM_TYPE_SUFFIX));
+          attribute.setType(new QName(schema.getTargetNamespace(),
+                                      sanitizeName(enumType.getName()) + SchemaConstants.ENUM_TYPE_SUFFIX));
           registeredEnums.add(enumType);
         }
       }
@@ -550,7 +550,7 @@ public final class SchemaBuilder {
   }
 
   private void generateCollectionElement(ExplicitGroup all, String name, String description, ArrayType metadataType,
-      boolean required) {
+                                         boolean required) {
     name = hyphenize(name);
 
     BigInteger minOccurs = required ? ONE : ZERO;
@@ -608,7 +608,7 @@ public final class SchemaBuilder {
   }
 
   private void generateMapElement(ExplicitGroup all, String name, String description, DictionaryType metadataType,
-      boolean required) {
+                                  boolean required) {
     BigInteger minOccurs = required ? ONE : ZERO;
     String mapName = hyphenize(pluralize(name));
     LocalComplexType mapComplexType = generateMapComplexType(mapName, metadataType);
@@ -760,13 +760,14 @@ public final class SchemaBuilder {
   }
 
   private MetadataTypeVisitor getParameterDeclarationVisitor(final ExtensionType extensionType, final ExplicitGroup all,
-      final ParameterModel parameterModel) {
+                                                             final ParameterModel parameterModel) {
     return getParameterDeclarationVisitor(extensionType, all, parameterModel.getName(), parameterModel.getDescription(),
-        parameterModel.getExpressionSupport(), parameterModel.isRequired(), parameterModel.getDefaultValue());
+                                          parameterModel.getExpressionSupport(), parameterModel.isRequired(),
+                                          parameterModel.getDefaultValue());
   }
 
   private MetadataTypeVisitor getParameterDeclarationVisitor(final ExtensionType extensionType, final ExplicitGroup all,
-      final ObjectFieldType field) {
+                                                             final ObjectFieldType field) {
     final String name = field.getKey().getName().getLocalPart();
     final String defaultValue = MetadataTypeUtils.getDefaultValue(field).orElse(null);
     final ExpressionSupport expressionSupport = TypeUtils.getExpressionSupport(field);
@@ -775,7 +776,9 @@ public final class SchemaBuilder {
   }
 
   private MetadataTypeVisitor getParameterDeclarationVisitor(final ExtensionType extensionType, final ExplicitGroup all,
-      final String name, final String description, ExpressionSupport expressionSupport, boolean required, Object defaultValue) {
+                                                             final String name, final String description,
+                                                             ExpressionSupport expressionSupport, boolean required,
+                                                             Object defaultValue) {
     return new MetadataTypeVisitor() {
 
       private boolean forceOptional = false;
@@ -849,7 +852,7 @@ public final class SchemaBuilder {
       @Override
       protected void defaultVisit(MetadataType metadataType) {
         extensionType.getAttributeOrAttributeGroup().add(createAttribute(name, description, metadataType, defaultValue,
-            isRequired(forceOptional, required), expressionSupport));
+                                                                         isRequired(forceOptional, required), expressionSupport));
       }
 
       private boolean shouldForceOptional(MetadataType type) {
@@ -883,7 +886,7 @@ public final class SchemaBuilder {
   }
 
   private void addImportedTypeElement(Class<?> extensionType, String name, String description, MetadataType metadataType,
-      ExplicitGroup all) {
+                                      ExplicitGroup all) {
     XmlModelProperty baseTypeXml = registerExtensionImport(extensionType);
 
     // TODO review this when union types and annotations are added

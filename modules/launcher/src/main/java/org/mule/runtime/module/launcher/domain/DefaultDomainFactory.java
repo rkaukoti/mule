@@ -31,7 +31,7 @@ public class DefaultDomainFactory implements DomainFactory {
   protected DeploymentListener deploymentListener;
 
   public DefaultDomainFactory(DeployableArtifactClassLoaderFactory<DomainDescriptor> domainClassLoaderFactory,
-      DomainManager domainManager, ArtifactClassLoader containerClassLoader) {
+                              DomainManager domainManager, ArtifactClassLoader containerClassLoader) {
     checkArgument(domainManager != null, "Domain manager cannot be null");
     checkArgument(containerClassLoader != null, "Container classLoader cannot be null");
     this.containerClassLoader = containerClassLoader;

@@ -139,8 +139,8 @@ public class InvocationResult {
   }
 
   public void setErrorNoMatchingMethodsCalled(Object component, String methods) {
-    setErrorMessage(
-        CoreMessages.noMatchingMethodsOnObjectCalledUsingResolver(component.getClass().getName(), methods).toString());
+    setErrorMessage(CoreMessages.noMatchingMethodsOnObjectCalledUsingResolver(component.getClass().getName(), methods)
+        .toString());
   }
 
   public static enum State {

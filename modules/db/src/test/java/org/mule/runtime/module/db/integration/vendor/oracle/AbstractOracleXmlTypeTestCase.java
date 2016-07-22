@@ -54,16 +54,16 @@ public abstract class AbstractOracleXmlTypeTestCase extends AbstractDbIntegratio
       @Override
       public void describeTo(Description description) {
         description.appendText(String.format("Cannot find class %s. Check that required libraries are available",
-            OracleXmlType.ORACLE_XMLTYPE_CLASS));
+                                             OracleXmlType.ORACLE_XMLTYPE_CLASS));
       }
     });
   }
 
   protected void assertUpdatedAlienDscription() throws SQLException {
-    List<Map<String, String>> result = selectData(
-        "SELECT name FROM Alien a where a.DESCRIPTION.extract('/Alien/Planet/text()').getStringVal() = 'Mars' ORDER BY NAME",
-        getDefaultDataSource());
+    List<Map<String, String>> result =
+        selectData("SELECT name FROM Alien a where a.DESCRIPTION.extract('/Alien/Planet/text()').getStringVal() = 'Mars' ORDER BY NAME",
+                   getDefaultDataSource());
     assertRecords(result, new Record(new Field("NAME", Alien.ET.getName())),
-        new Record(new Field("NAME", Alien.MONGUITO.getName())));
+                  new Record(new Field("NAME", Alien.MONGUITO.getName())));
   }
 }

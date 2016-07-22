@@ -89,8 +89,8 @@ public class ProxyServiceConfiguration extends DefaultServiceConfiguration {
     if (service == null) {
       List<QName> probableServices = getProbableServices(definition);
       List<QName> allServices = getAllServices(definition);
-      throw new ComponentNotFoundRuntimeException(
-          CxfMessages.invalidOrMissingNamespace(getServiceFactory().getServiceQName(), probableServices, allServices));
+      throw new ComponentNotFoundRuntimeException(CxfMessages.invalidOrMissingNamespace(getServiceFactory().getServiceQName(),
+                                                                                        probableServices, allServices));
     }
     return service;
   }

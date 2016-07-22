@@ -43,7 +43,7 @@ public class ObjectTypeParameterParser extends ExtensionDefinitionParser {
   private final String namespace;
 
   public ObjectTypeParameterParser(Builder definition, ObjectType type, ClassLoader classLoader,
-      DslElementResolver dslElementResolver, ExtensionParsingContext context) {
+                                   DslElementResolver dslElementResolver, ExtensionParsingContext context) {
     super(definition, dslElementResolver, context);
     this.type = type;
     this.classLoader = classLoader;
@@ -53,7 +53,7 @@ public class ObjectTypeParameterParser extends ExtensionDefinitionParser {
   }
 
   public ObjectTypeParameterParser(Builder definition, String name, String namespace, ObjectType type, ClassLoader classLoader,
-      DslElementResolver dslElementResolver, ExtensionParsingContext context) {
+                                   DslElementResolver dslElementResolver, ExtensionParsingContext context) {
     super(definition, dslElementResolver, context);
     this.type = type;
     this.classLoader = classLoader;
@@ -89,7 +89,7 @@ public class ObjectTypeParameterParser extends ExtensionDefinitionParser {
           if (!parsingContext.isRegistered(childDsl.getElementName(), childDsl.getElementNamespace())) {
             parsingContext.registerObjectType(name, namespace, type);
             parseObjectParameter(fieldName, fieldName, objectType, defaultValue, expressionSupport, false, acceptsReferences,
-                childDsl);
+                                 childDsl);
           } else {
             parseObject(fieldName, fieldName, objectType, defaultValue, expressionSupport, false, acceptsReferences, childDsl);
           }

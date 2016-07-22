@@ -18,7 +18,7 @@ public class ValidationPhase implements MessageProcessPhase<ValidationPhaseTempl
 
   @Override
   public void runPhase(ValidationPhaseTemplate validationPhaseTemplate, MessageProcessContext messageProcessContext,
-      PhaseResultNotifier phaseResultNotifier) {
+                       PhaseResultNotifier phaseResultNotifier) {
     try {
       if (!validationPhaseTemplate.validateMessage()) {
         validationPhaseTemplate.discardInvalidMessage();

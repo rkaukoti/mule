@@ -49,8 +49,9 @@ public class RestrictedSSLSocketFactory extends SSLSocketFactory {
       try {
         TlsConfiguration configuration = new TlsConfiguration(null);
         configuration.initialise(true, null);
-        defaultSocketFactory = new RestrictedSSLSocketFactory(configuration.getSslContext(),
-            configuration.getEnabledCipherSuites(), configuration.getEnabledProtocols());
+        defaultSocketFactory =
+            new RestrictedSSLSocketFactory(configuration.getSslContext(), configuration.getEnabledCipherSuites(),
+                                           configuration.getEnabledProtocols());
       } catch (Exception e) {
         throw new MuleRuntimeException(createStaticMessage("Could not create the default RestrictedSSLSocketFactory"), e);
       }

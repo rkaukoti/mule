@@ -36,8 +36,8 @@ public class SourceDefinitionParser extends ExtensionDefinitionParser {
   private final DslElementDeclaration sourceDsl;
 
   public SourceDefinitionParser(ComponentBuildingDefinition.Builder definition, RuntimeExtensionModel extensionModel,
-      RuntimeSourceModel sourceModel, DslElementResolver dslElementResolver, MuleContext muleContext,
-      ExtensionParsingContext parsingContext) {
+                                RuntimeSourceModel sourceModel, DslElementResolver dslElementResolver, MuleContext muleContext,
+                                ExtensionParsingContext parsingContext) {
     super(definition, dslElementResolver, parsingContext);
     this.extensionModel = extensionModel;
     this.sourceModel = sourceModel;

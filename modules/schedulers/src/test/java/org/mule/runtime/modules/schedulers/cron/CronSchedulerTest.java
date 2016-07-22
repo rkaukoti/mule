@@ -82,8 +82,9 @@ public class CronSchedulerTest extends AbstractMuleContextTestCase {
   }
 
   private CronScheduler createVoidScheduler() {
-    CronScheduler scheduler = new CronScheduler("name",
-        new PollingWorker(mock(PollingTask.class), muleContext.getExceptionListener()), "0/1 * * * * ?", TimeZone.getDefault());
+    CronScheduler scheduler =
+        new CronScheduler("name", new PollingWorker(mock(PollingTask.class), muleContext.getExceptionListener()), "0/1 * * * * ?",
+                          TimeZone.getDefault());
     scheduler.setMuleContext(muleContext);
     return scheduler;
   }

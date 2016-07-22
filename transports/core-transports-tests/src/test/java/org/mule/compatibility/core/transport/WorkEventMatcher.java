@@ -58,6 +58,6 @@ public class WorkEventMatcher extends TypeSafeMatcher<WorkEvent> {
   public void describeTo(Description description) {
     description
         .appendText(String.format("a WorkEvent for work '%s', type '%s', source '%s', exception '%s' and startDuration '%s'",
-            work, type, source, workException, startDuration));
+                                  work, type, source, workException, startDuration));
   }
 }

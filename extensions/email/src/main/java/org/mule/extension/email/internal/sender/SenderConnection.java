@@ -35,7 +35,7 @@ public final class SenderConnection extends AbstractEmailConnection {
    * @param properties the custom properties added to configure the session.
    */
   public SenderConnection(EmailProtocol protocol, String username, String password, String host, String port,
-      long connectionTimeout, long readTimeout, long writeTimeout, Map<String, String> properties)
+                          long connectionTimeout, long readTimeout, long writeTimeout, Map<String, String> properties)
       throws EmailConnectionException {
     super(protocol, username, password, host, port, connectionTimeout, readTimeout, writeTimeout, properties);
   }
@@ -55,8 +55,9 @@ public final class SenderConnection extends AbstractEmailConnection {
    * @param tlsContextFactory the tls context factory for creating the context to secure the connection
    */
   public SenderConnection(EmailProtocol protocol, String username, String password, String host, String port,
-      long connectionTimeout, long readTimeout, long writeTimeout, Map<String, String> properties,
-      TlsContextFactory tlsContextFactory) throws EmailConnectionException {
+                          long connectionTimeout, long readTimeout, long writeTimeout, Map<String, String> properties,
+                          TlsContextFactory tlsContextFactory)
+      throws EmailConnectionException {
     super(protocol, username, password, host, port, connectionTimeout, readTimeout, writeTimeout, properties, tlsContextFactory);
   }
 

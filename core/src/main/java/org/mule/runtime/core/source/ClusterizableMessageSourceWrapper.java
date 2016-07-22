@@ -42,7 +42,7 @@ public class ClusterizableMessageSourceWrapper implements MessageSource, Lifecyc
   }
 
   public ClusterizableMessageSourceWrapper(MuleContext muleContext, ClusterizableMessageSource messageSource,
-      FlowConstruct flowConstruct) {
+                                           FlowConstruct flowConstruct) {
     this.messageSource = messageSource;
     setMuleContext(muleContext);
     setFlowConstruct(flowConstruct);

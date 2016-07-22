@@ -193,7 +193,7 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
   public void start() throws Exception {
     if (!muleContext.isPrimaryPollingInstance()) {
       LOGGER.debug("{} source on flow {} not started because this is a secondary cluster node", DIRECTORY_LISTENER,
-          flowConstruct.getName());
+                   flowConstruct.getName());
       initialiseClusterListener();
       return;
     }
@@ -202,8 +202,9 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
     createWatcherService();
 
     matcher = predicateBuilder != null ? predicateBuilder.build() : new NullFilePayloadPredicate();
-    executorService = newSingleThreadExecutor(
-        r -> new Thread(r, format("%s%s.file.listener", getPrefix(muleContext), flowConstruct.getName())));
+    executorService =
+        newSingleThreadExecutor(r -> new Thread(r,
+                                                format("%s%s.file.listener", getPrefix(muleContext), flowConstruct.getName())));
     started = true;
     stopRequested.set(false);
     executorService.execute(this::listen);
@@ -274,9 +275,9 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
     ListenerFileAttributes attributes = new ListenerFileAttributes(path, FileEventType.of(kind));
     if (!matcher.test(attributes)) {
       if (LOGGER.isDebugEnabled()) {
-        LOGGER.debug(
-            format("Detected a '%s' event on path '%s' but it will be skipped because it does not meet the matcher's criteria",
-                FileEventType.of(kind), path.toString()));
+        LOGGER
+            .debug(format("Detected a '%s' event on path '%s' but it will be skipped because it does not meet the matcher's criteria",
+                          FileEventType.of(kind), path.toString()));
       }
       return;
     }
@@ -342,8 +343,8 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
       }
     } catch (InterruptedException e) {
       if (LOGGER.isWarnEnabled()) {
-        LOGGER.warn(
-            "Got interrupted while trying to terminate pending events for directory listener on flow " + flowConstruct.getName());
+        LOGGER.warn("Got interrupted while trying to terminate pending events for directory listener on flow "
+            + flowConstruct.getName());
       }
     }
   }
@@ -358,7 +359,7 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
     } catch (IOException e) {
       if (LOGGER.isWarnEnabled()) {
         LOGGER.warn("Found exception trying to close watcher service for directory listener on flow " + flowConstruct.getName(),
-            e);
+                    e);
       }
     }
 
@@ -376,8 +377,8 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
         registerPath(path);
       } catch (IOException e) {
         if (LOGGER.isWarnEnabled()) {
-          LOGGER.warn(
-              format("Directory '%s' became unavailable and a new listener could not be established on it", path.toString()));
+          LOGGER.warn(format("Directory '%s' became unavailable and a new listener could not be established on it",
+                             path.toString()));
         }
       }
     }
@@ -425,9 +426,8 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
     enabledEventTypes = types.build();
 
     if (enabledEventTypes.isEmpty()) {
-      throw new ConfigurationException(createStaticMessage(
-          format("File listener in flow '%s' has disabled all notification types. At least one should be enabled",
-              flowConstruct.getName())));
+      throw new ConfigurationException(createStaticMessage(format("File listener in flow '%s' has disabled all notification types. At least one should be enabled",
+                                                                  flowConstruct.getName())));
     }
   }
 

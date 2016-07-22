@@ -200,9 +200,9 @@ public class StartableCompositeMessageSource implements CompositeMessageSource, 
         return listener.process(event);
       } else {
         // TODO i18n
-        throw new IllegalStateException(
-            String.format("A message was receieved from MessageSource, but CompositeMessageSource is stopped.%n"
-                + "  Message: %s%n" + "  CompositeMessageSource: %s", event, this));
+        throw new IllegalStateException(String
+            .format("A message was receieved from MessageSource, but CompositeMessageSource is stopped.%n" + "  Message: %s%n"
+                + "  CompositeMessageSource: %s", event, this));
       }
     }
 

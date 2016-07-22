@@ -84,7 +84,7 @@ public class MuleWorkManagerTestCase extends AbstractMuleContextTestCase {
         public void run() {
           Thread calleeThread = Thread.currentThread();
           assertFalse("WorkManager.scheduleWork() should have been executed in a different thread.",
-              callerThread.equals(calleeThread));
+                      callerThread.equals(calleeThread));
           if (logger.isDebugEnabled()) {
             logger.debug("WORK: " + Thread.currentThread());
           }
@@ -118,7 +118,7 @@ public class MuleWorkManagerTestCase extends AbstractMuleContextTestCase {
         public void run() {
           Thread calleeThread = Thread.currentThread();
           assertFalse("WorkManager.startWork() should have been executed in a different thread.",
-              callerThread.equals(calleeThread));
+                      callerThread.equals(calleeThread));
           if (logger.isDebugEnabled()) {
             logger.debug("WORK: " + Thread.currentThread());
           }

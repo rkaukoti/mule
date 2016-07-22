@@ -136,7 +136,8 @@ public class ExceptionUtils extends org.apache.commons.lang.exception.ExceptionU
    * @throws E if the expected exception is actually thrown
    */
   public static <T, E extends Exception> T tryExpecting(Class<E> expectedExceptionType, Callable<T> callable,
-      ExceptionHandler<T, E> exceptionHandler) throws E {
+                                                        ExceptionHandler<T, E> exceptionHandler)
+      throws E {
     try {
       return callable.call();
     } catch (Exception e) {

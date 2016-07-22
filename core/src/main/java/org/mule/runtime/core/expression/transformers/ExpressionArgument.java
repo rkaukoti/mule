@@ -96,8 +96,9 @@ public class ExpressionArgument implements MuleContextAware {
     // class-loader to used is to switch it out here. We may want to consider
     // passing the class-loader to the ExpressionManager and only doing this for
     // certain ExpressionEvaluators further in.
-    Object result = withContextClassLoader(expressionEvaluationClassLoader,
-        () -> muleContext.getExpressionManager().evaluate(getExpression(), event, !isOptional()));
+    Object result =
+        withContextClassLoader(expressionEvaluationClassLoader,
+                               () -> muleContext.getExpressionManager().evaluate(getExpression(), event, !isOptional()));
 
     if (getReturnClass() != null && result != null) {
       if (!getReturnClass().isInstance(result)) {

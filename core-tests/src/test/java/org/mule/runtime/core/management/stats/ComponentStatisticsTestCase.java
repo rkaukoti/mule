@@ -21,7 +21,7 @@ public class ComponentStatisticsTestCase extends AbstractMuleTestCase {
   public SystemProperty statIntervalTime = new SystemProperty("statIntervalTime", null);
 
   private static void assertValues(ComponentStatistics stats, long numEvents, long totalTime, long avgTime, long maxTime,
-      long minTime) {
+                                   long minTime) {
     assertThat("getExecutedEvents", stats.getExecutedEvents(), equalTo(numEvents));
     assertThat("getTotalExecutionTime", stats.getTotalExecutionTime(), equalTo(totalTime));
     assertThat("getAverageExecutionTime", stats.getAverageExecutionTime(), equalTo(avgTime));

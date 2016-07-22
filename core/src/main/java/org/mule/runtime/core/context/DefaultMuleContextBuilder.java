@@ -293,12 +293,12 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder {
   }
 
   protected ImmutableThreadingProfile createMuleWorkManager() {
-    return new ImmutableThreadingProfile(
-        Integer.valueOf(System.getProperty(MULE_CONTEXT_WORKMANAGER_MAXTHREADSACTIVE,
-            String.valueOf(ThreadingProfile.DEFAULT_MAX_THREADS_ACTIVE))),
-        ThreadingProfile.DEFAULT_MAX_THREADS_IDLE, ThreadingProfile.DEFAULT_MAX_BUFFER_SIZE,
-        ThreadingProfile.DEFAULT_MAX_THREAD_TTL, ThreadingProfile.DEFAULT_THREAD_WAIT_TIMEOUT,
-        ThreadingProfile.DEFAULT_POOL_EXHAUST_ACTION, ThreadingProfile.DEFAULT_DO_THREADING, null, null);
+    return new ImmutableThreadingProfile(Integer.valueOf(System
+        .getProperty(MULE_CONTEXT_WORKMANAGER_MAXTHREADSACTIVE, String.valueOf(ThreadingProfile.DEFAULT_MAX_THREADS_ACTIVE))),
+                                         ThreadingProfile.DEFAULT_MAX_THREADS_IDLE, ThreadingProfile.DEFAULT_MAX_BUFFER_SIZE,
+                                         ThreadingProfile.DEFAULT_MAX_THREAD_TTL, ThreadingProfile.DEFAULT_THREAD_WAIT_TIMEOUT,
+                                         ThreadingProfile.DEFAULT_POOL_EXHAUST_ACTION, ThreadingProfile.DEFAULT_DO_THREADING,
+                                         null, null);
   }
 
   protected DefaultWorkListener createWorkListener() {

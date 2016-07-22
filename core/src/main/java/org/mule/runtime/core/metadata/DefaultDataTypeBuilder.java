@@ -283,7 +283,7 @@ public class DefaultDataTypeBuilder implements DataTypeBuilder, DataTypeBuilder.
   protected DataType doBuild() {
     if (Collection.class.isAssignableFrom(type)) {
       return new DefaultCollectionDataType((Class<? extends Collection>) type,
-          itemTypeBuilder != null ? itemTypeBuilder.build() : DataType.OBJECT, mediaType);
+                                           itemTypeBuilder != null ? itemTypeBuilder.build() : DataType.OBJECT, mediaType);
     } else {
       return new SimpleDataType(type, mediaType);
     }

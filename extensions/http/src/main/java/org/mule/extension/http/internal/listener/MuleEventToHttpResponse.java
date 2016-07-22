@@ -75,7 +75,8 @@ public class MuleEventToHttpResponse {
    * @throws MessagingException if the response creation fails.
    */
   public HttpResponse create(MuleEvent event, HttpResponseBuilder responseBuilder,
-      HttpListenerResponseBuilder listenerResponseBuilder, boolean supportsTransferEncoding) throws MessagingException {
+                             HttpListenerResponseBuilder listenerResponseBuilder, boolean supportsTransferEncoding)
+      throws MessagingException {
     Map<String, String> headers = listenerResponseBuilder.getHeaders(event);
 
     final HttpResponseHeaderBuilder httpResponseHeaderBuilder = new HttpResponseHeaderBuilder();
@@ -83,8 +84,8 @@ public class MuleEventToHttpResponse {
     for (String name : headers.keySet()) {
       // For now, only support single headers
       if (TRANSFER_ENCODING.equals(name) && !supportsTransferEncoding) {
-        logger.debug(
-            "Client HTTP version is lower than 1.1 so the unsupported 'Transfer-Encoding' header has been removed and 'Content-Length' will be sent instead.");
+        logger
+            .debug("Client HTTP version is lower than 1.1 so the unsupported 'Transfer-Encoding' header has been removed and 'Content-Length' will be sent instead.");
       } else {
         httpResponseHeaderBuilder.addHeader(name, headers.get(name));
       }
@@ -113,7 +114,7 @@ public class MuleEventToHttpResponse {
       }
       httpEntity = createMultipartEntity(event, httpResponseHeaderBuilder.getContentType(), parts);
       resolveEncoding(httpResponseHeaderBuilder, existingTransferEncoding, existingContentLength, supportsTransferEncoding,
-          (ByteArrayHttpEntity) httpEntity);
+                      (ByteArrayHttpEntity) httpEntity);
     } else {
       final Object payload = event.getMessage().getPayload();
       if (payload == null) {
@@ -141,7 +142,7 @@ public class MuleEventToHttpResponse {
         try {
           ByteArrayHttpEntity byteArrayHttpEntity = new ByteArrayHttpEntity(event.getMessageAsBytes());
           resolveEncoding(httpResponseHeaderBuilder, existingTransferEncoding, existingContentLength, supportsTransferEncoding,
-              byteArrayHttpEntity);
+                          byteArrayHttpEntity);
           httpEntity = byteArrayHttpEntity;
         } catch (Exception e) {
           throw new RuntimeException(e);
@@ -178,7 +179,8 @@ public class MuleEventToHttpResponse {
   }
 
   private void resolveEncoding(HttpResponseHeaderBuilder httpResponseHeaderBuilder, String existingTransferEncoding,
-      String existingContentLength, boolean supportsTransferEncoding, ByteArrayHttpEntity byteArrayHttpEntity) {
+                               String existingContentLength, boolean supportsTransferEncoding,
+                               ByteArrayHttpEntity byteArrayHttpEntity) {
     if (responseStreaming == ALWAYS
         || (responseStreaming == AUTO && existingContentLength == null && CHUNKED.equals(existingTransferEncoding))) {
       if (supportsTransferEncoding) {
@@ -228,8 +230,8 @@ public class MuleEventToHttpResponse {
   private void warnMapPayloadButNoUrlEncodedContentType(String contentType) {
     if (!mapPayloadButNoUrlEncodedContentyTypeWarned) {
       logger.warn(String.format(
-          "Payload is a Map which will be used to generate an url encoded http body but Contenty-Type specified is %s and not %s.",
-          contentType, HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED));
+                                "Payload is a Map which will be used to generate an url encoded http body but Contenty-Type specified is %s and not %s.",
+                                contentType, HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED));
       mapPayloadButNoUrlEncodedContentyTypeWarned = true;
     }
   }
@@ -237,8 +239,8 @@ public class MuleEventToHttpResponse {
   private void warnNoMultipartContentTypeButMultipartEntity(String contentType) {
     if (!multipartEntityWithNoMultipartContentyTypeWarned) {
       logger.warn(String.format(
-          "Sending http response with Content-Type %s but the message has attachment and a multipart entity is generated.",
-          contentType));
+                                "Sending http response with Content-Type %s but the message has attachment and a multipart entity is generated.",
+                                contentType));
       multipartEntityWithNoMultipartContentyTypeWarned = true;
     }
   }
@@ -255,7 +257,7 @@ public class MuleEventToHttpResponse {
       return new ByteArrayHttpEntity(HttpMultipartEncoder.createMultipartContent(multipartEntity, contentType));
     } catch (Exception e) {
       throw new MessagingException(MessageFactory.createStaticMessage("Error creating multipart HTTP entity."),
-          event.getMessage(), event.getMuleContext(), e);
+                                   event.getMessage(), event.getMuleContext(), e);
     }
   }
 

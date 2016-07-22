@@ -123,8 +123,8 @@ public class DefaultMuleDomain implements Domain {
       while (scanner.hasNextLine()) {
         final String lineFromFile = scanner.nextLine();
         if (lineFromFile.contains("<mule ")) {
-          throw new MuleRuntimeException(CoreMessages.createStaticMessage(
-              "Domain configuration file can not be created using core namespace. Use mule-domain namespace instead."));
+          throw new MuleRuntimeException(CoreMessages
+              .createStaticMessage("Domain configuration file can not be created using core namespace. Use mule-domain namespace instead."));
         }
       }
     } finally {
@@ -136,9 +136,9 @@ public class DefaultMuleDomain implements Domain {
 
   private ConfigurationBuilder createConfigurationBuilder() {
     try {
-      return (ConfigurationBuilder) ClassUtils.instanciateClass(
-          "org.mule.runtime.config.spring.SpringXmlDomainConfigurationBuilder", new Object[] {getResourceFiles()[0].getName()},
-          deploymentClassLoader.getClassLoader());
+      return (ConfigurationBuilder) ClassUtils
+          .instanciateClass("org.mule.runtime.config.spring.SpringXmlDomainConfigurationBuilder",
+                            new Object[] {getResourceFiles()[0].getName()}, deploymentClassLoader.getClassLoader());
     } catch (Exception e) {
       throw new MuleRuntimeException(e);
     }
@@ -164,7 +164,7 @@ public class DefaultMuleDomain implements Domain {
       });
     } catch (Exception e) {
       throw new DeploymentStartException(CoreMessages.createStaticMessage("Failure trying to start domain " + getArtifactName()),
-          e);
+                                         e);
     }
   }
 
@@ -179,7 +179,7 @@ public class DefaultMuleDomain implements Domain {
       }
     } catch (Exception e) {
       throw new DeploymentStopException(CoreMessages.createStaticMessage("Failure trying to stop domain " + getArtifactName()),
-          e);
+                                        e);
     }
   }
 
@@ -220,8 +220,8 @@ public class DefaultMuleDomain implements Domain {
         this.muleContext.initialise();
       }
     } catch (InitialisationException e) {
-      throw new DeploymentInitException(
-          CoreMessages.createStaticMessage("Failure trying to initialise domain " + getArtifactName()), e);
+      throw new DeploymentInitException(CoreMessages
+          .createStaticMessage("Failure trying to initialise domain " + getArtifactName()), e);
     }
   }
 

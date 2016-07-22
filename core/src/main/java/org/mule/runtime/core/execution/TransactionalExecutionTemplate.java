@@ -31,7 +31,7 @@ public class TransactionalExecutionTemplate<T> implements ExecutionTemplate<T> {
     final boolean processTransactionOnException = false;
     ExecutionInterceptor<T> tempExecutionInterceptor = new ExecuteCallbackInterceptor<>();
     tempExecutionInterceptor = new BeginAndResolveTransactionInterceptor<>(tempExecutionInterceptor, transactionConfig,
-        muleContext, processTransactionOnException, false);
+                                                                           muleContext, processTransactionOnException, false);
     tempExecutionInterceptor = new ResolvePreviousTransactionInterceptor<>(tempExecutionInterceptor, transactionConfig);
     tempExecutionInterceptor =
         new SuspendXaTransactionInterceptor<>(tempExecutionInterceptor, transactionConfig, processTransactionOnException);
@@ -47,7 +47,7 @@ public class TransactionalExecutionTemplate<T> implements ExecutionTemplate<T> {
    * @param transactionConfig transaction config for the execution context
    */
   public static <T> TransactionalExecutionTemplate<T> createTransactionalExecutionTemplate(MuleContext muleContext,
-      TransactionConfig transactionConfig) {
+                                                                                           TransactionConfig transactionConfig) {
     return new TransactionalExecutionTemplate<>(muleContext, transactionConfig);
   }
 

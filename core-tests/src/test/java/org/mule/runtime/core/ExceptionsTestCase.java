@@ -25,7 +25,7 @@ public class ExceptionsTestCase extends AbstractMuleTestCase {
     String msg = "Test Exception Message";
 
     Exception e = new MuleContextException(MessageFactory.createStaticMessage(msg),
-        new DefaultMuleException(MessageFactory.createStaticMessage(rootMsg)));
+                                           new DefaultMuleException(MessageFactory.createStaticMessage(rootMsg)));
 
     assertEquals(rootMsg, e.getCause().getMessage());
     assertEquals(msg, e.getMessage());

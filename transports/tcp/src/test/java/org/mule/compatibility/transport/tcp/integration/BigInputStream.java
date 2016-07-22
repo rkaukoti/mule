@@ -57,8 +57,8 @@ public class BigInputStream extends InputStream {
       if (++sent > nextMessage) {
         double percent = 100l * sent / ((double) size);
         Runtime runtime = Runtime.getRuntime();
-        logger.info(FORMAT.format(
-            new Object[] {new Long(sent), new Double(percent), new Long(runtime.freeMemory()), new Long(runtime.maxMemory())}));
+        logger.info(FORMAT.format(new Object[] {new Long(sent), new Double(percent), new Long(runtime.freeMemory()),
+            new Long(runtime.maxMemory())}));
         nextMessage = ++printedMessages * ((int) Math.floor(((double) size) / (messages - 1)) - 1);
       }
       if (dataIndex == data.length) {

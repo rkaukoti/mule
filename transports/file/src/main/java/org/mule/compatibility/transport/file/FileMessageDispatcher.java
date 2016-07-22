@@ -37,8 +37,7 @@ public class FileMessageDispatcher extends AbstractMessageDispatcher {
     this.connector = (FileConnector) endpoint.getConnector();
 
     if (endpoint.getProperty("outputAppend") != null) {
-      throw new IllegalArgumentException(
-          "Configuring 'outputAppend' on a file endpoint is no longer supported. You may configure it on a file connector instead.");
+      throw new IllegalArgumentException("Configuring 'outputAppend' on a file endpoint is no longer supported. You may configure it on a file connector instead.");
     }
   }
 

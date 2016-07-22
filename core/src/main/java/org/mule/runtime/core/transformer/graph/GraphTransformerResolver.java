@@ -28,7 +28,7 @@ public class GraphTransformerResolver implements TransformerResolver {
     this.graph = new TransformationGraph();
     lookupStrategyTransformation = new TransformationGraphLookupStrategy(graph);
     converterFilter = new CompositeConverterFilter(new TransformationLengthConverterFilter(),
-        new PriorityWeightingConverterFilter(), new NameConverterFilter());
+                                                   new PriorityWeightingConverterFilter(), new NameConverterFilter());
     cache = new LRUMap();
   }
 

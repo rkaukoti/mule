@@ -59,9 +59,9 @@ public class TwoEndpointsSinglePortTestCase extends FunctionalTestCase {
 
     List<Object> results = new ArrayList<Object>();
     for (int i = 0; i < noOfMessages; i++) {
-      results.add(getPayloadAsBytes(client.send(
-          ((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject(flowName)).getMessageSource()).getAddress(), message,
-          null)));
+      results.add(getPayloadAsBytes(client
+          .send(((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject(flowName)).getMessageSource()).getAddress(),
+                message, null)));
     }
 
     assertEquals(noOfMessages, results.size());

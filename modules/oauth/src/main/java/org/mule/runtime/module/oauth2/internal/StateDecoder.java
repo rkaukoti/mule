@@ -59,8 +59,9 @@ public class StateDecoder {
     String parameterValue = null;
     if (state != null && state.contains(StateEncoder.ON_COMPLETE_REDIRECT_TO_PARAM_NAME_ASSIGN)) {
       final int onCompleteRedirectToSuffixIndex = state.indexOf(StateEncoder.ON_COMPLETE_REDIRECT_TO_PARAM_NAME_ASSIGN);
-      parameterValue = state.substring(
-          onCompleteRedirectToSuffixIndex + StateEncoder.ON_COMPLETE_REDIRECT_TO_PARAM_NAME_ASSIGN.length(), state.length());
+      parameterValue =
+          state.substring(onCompleteRedirectToSuffixIndex + StateEncoder.ON_COMPLETE_REDIRECT_TO_PARAM_NAME_ASSIGN.length(),
+                          state.length());
     }
     return parameterValue;
   }

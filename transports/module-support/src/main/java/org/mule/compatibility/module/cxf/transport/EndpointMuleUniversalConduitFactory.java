@@ -15,7 +15,7 @@ public class EndpointMuleUniversalConduitFactory implements MuleUniversalConduit
 
   @Override
   public MuleUniversalConduit create(MuleUniversalTransport transport, CxfConfiguration configuration, EndpointInfo ei,
-      EndpointReferenceType t) {
+                                     EndpointReferenceType t) {
     return new EndpointMuleUniversalConduit(transport, configuration, ei, t);
   }
 

@@ -81,7 +81,8 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver {
   private ObjectStore<String> filesBeingProcessingObjectStore;
 
   public FileMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint, String readDir,
-      String moveDir, String moveToPattern, long frequency) throws CreateException {
+                             String moveDir, String moveToPattern, long frequency)
+      throws CreateException {
     super(connector, flowConstruct, endpoint);
     this.fileConnector = (FileConnector) connector;
 
@@ -314,7 +315,7 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver {
       processWithStreaming(sourceFile, (ReceiverFileInputStream) originalPayload, executionTemplate, finalMessage);
     } else {
       processWithoutStreaming(originalSourceFilePath, originalSourceFileName, originalSourceDirectory, sourceFile,
-          destinationFile, executionTemplate, finalMessage);
+                              destinationFile, executionTemplate, finalMessage);
     }
   }
 
@@ -354,8 +355,9 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver {
   }
 
   private void processWithoutStreaming(String originalSourceFile, final String originalSourceFileName,
-      final String originalSourceDirectory, final File sourceFile, final File destinationFile,
-      ExecutionTemplate<MuleEvent> executionTemplate, final MuleMessage finalMessage) throws DefaultMuleException {
+                                       final String originalSourceDirectory, final File sourceFile, final File destinationFile,
+                                       ExecutionTemplate<MuleEvent> executionTemplate, final MuleMessage finalMessage)
+      throws DefaultMuleException {
     try {
       executionTemplate.execute(() -> {
         moveAndDelete(sourceFile, destinationFile, originalSourceFileName, originalSourceDirectory, finalMessage);
@@ -377,7 +379,7 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver {
   }
 
   private void processWithStreaming(final File sourceFile, final ReceiverFileInputStream originalPayload,
-      ExecutionTemplate<MuleEvent> executionTemplate, final MuleMessage finalMessage) {
+                                    ExecutionTemplate<MuleEvent> executionTemplate, final MuleMessage finalMessage) {
     try {
       final AtomicBoolean exceptionWasThrown = new AtomicBoolean(false);
       executionTemplate.execute(() -> {
@@ -420,7 +422,8 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver {
   }
 
   protected ReceiverFileInputStream createReceiverFileInputStream(File sourceFile, File destinationFile,
-      InputStreamCloseListener closeListener) throws FileNotFoundException {
+                                                                  InputStreamCloseListener closeListener)
+      throws FileNotFoundException {
     return new ReceiverFileInputStream(sourceFile, fileConnector.isAutoDelete(), destinationFile, closeListener);
   }
 
@@ -435,7 +438,8 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver {
   }
 
   private void moveAndDelete(final File sourceFile, File destinationFile, String originalSourceFileName,
-      String originalSourceDirectory, MuleMessage message) throws MuleException {
+                             String originalSourceDirectory, MuleMessage message)
+      throws MuleException {
     // If we are moving the file to a read directory, move it there now and
     // hand over a reference to the
     // File in its moved location
@@ -445,8 +449,8 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver {
         FileUtils.moveFile(sourceFile, destinationFile);
       } catch (IOException e) {
         // move didn't work - bail out (will attempt rollback)
-        throw new DefaultMuleException(
-            FileMessages.failedToMoveFile(sourceFile.getAbsolutePath(), destinationFile.getAbsolutePath()));
+        throw new DefaultMuleException(FileMessages.failedToMoveFile(sourceFile.getAbsolutePath(),
+                                                                     destinationFile.getAbsolutePath()));
       }
 
       // create new Message for destinationFile

@@ -270,9 +270,10 @@ public class TestEventBuilder {
     }
     final MuleMessage muleMessage = messageBuilder.build();
 
-    DefaultMuleEvent event = new DefaultMuleEvent((MuleMessage) spyTransformer.transform(muleMessage), URI.create("none"), "none",
-        exchangePattern, flow, new DefaultMuleSession(), muleContext.getConfiguration().getDefaultResponseTimeout(), null, null,
-        transacted, null, replyToHandler);
+    DefaultMuleEvent event =
+        new DefaultMuleEvent((MuleMessage) spyTransformer.transform(muleMessage), URI.create("none"), "none", exchangePattern,
+                             flow, new DefaultMuleSession(), muleContext.getConfiguration().getDefaultResponseTimeout(), null,
+                             null, transacted, null, replyToHandler);
 
     for (Entry<String, Attachment> outboundAttachmentEntry : outboundAttachments.entrySet()) {
       outboundAttachmentEntry.getValue().addOutboundTo(event, outboundAttachmentEntry.getKey());

@@ -54,7 +54,7 @@ public class NotificationHelper {
    *        creation time
    */
   public NotificationHelper(ServerNotificationHandler defaultNotificationHandler,
-      Class<? extends ServerNotification> notificationClass, boolean dynamicNotifications) {
+                            Class<? extends ServerNotification> notificationClass, boolean dynamicNotifications) {
     this.notificationClass = notificationClass;
     this.dynamicNotifications = dynamicNotifications;
     this.defaultNotificationHandler = adaptNotificationHandler(defaultNotificationHandler);
@@ -115,7 +115,7 @@ public class NotificationHelper {
   }
 
   private void doFireNotification(ServerNotificationHandler serverNotificationHandler, Object source, MuleMessage message,
-      String uri, FlowConstruct flowConstruct, int action) {
+                                  String uri, FlowConstruct flowConstruct, int action) {
     try {
       if (serverNotificationHandler.isNotificationEnabled(notificationClass)) {
         serverNotificationHandler.fireNotification(new ConnectorMessageNotification(source, message, uri, flowConstruct, action));

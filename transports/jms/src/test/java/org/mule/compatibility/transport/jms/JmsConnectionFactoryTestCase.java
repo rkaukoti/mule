@@ -32,7 +32,7 @@ public class JmsConnectionFactoryTestCase extends FunctionalTestCase {
     ConnectionFactory cf = c.getConnectionFactory();
     assertTrue(cf instanceof TestConnectionFactory);
     assertEquals("Provider properties should not be passed to the ConnectionFactory.", "NOT_SET",
-        ((TestConnectionFactory) cf).getProviderProperty());
+                 ((TestConnectionFactory) cf).getProviderProperty());
   }
 
   /**
@@ -46,6 +46,6 @@ public class JmsConnectionFactoryTestCase extends FunctionalTestCase {
     ConnectionFactory cf = c.getConnectionFactory();
     assertTrue(cf instanceof TestConnectionFactory);
     assertEquals("ConnectionFactory properties should be passed to the ConnectionFactory.", "TEST_VALUE",
-        ((TestConnectionFactory) cf).getConnectionFactoryProperty());
+                 ((TestConnectionFactory) cf).getConnectionFactoryProperty());
   }
 }

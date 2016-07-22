@@ -42,9 +42,9 @@ public class PropertiesBootstrapServiceDiscoverer implements BootstrapServiceDis
     try {
       final List<Properties> discoveredProperties = registryBootstrapDiscoverer.discover();
 
-      propertiesServices.addAll(
-          discoveredProperties.stream().map(discoveredProperty -> new PropertiesBootstrapService(classLoader, discoveredProperty))
-              .collect(Collectors.toList()));
+      propertiesServices.addAll(discoveredProperties.stream()
+          .map(discoveredProperty -> new PropertiesBootstrapService(classLoader, discoveredProperty))
+          .collect(Collectors.toList()));
     } catch (BootstrapException e) {
       logger.error("Unable to discover bootstrap properties", e);
     }

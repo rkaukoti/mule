@@ -16,7 +16,7 @@ public class JbossTSNamespaceHandler extends NamespaceHandlerSupport {
 
   public void init() {
     registerBeanDefinitionParser("transaction-manager",
-        new MuleOrphanDefinitionParser(JBossArjunaTransactionManagerFactory.class, true));
+                                 new MuleOrphanDefinitionParser(JBossArjunaTransactionManagerFactory.class, true));
     registerBeanDefinitionParser("properties", new ChildMapEntryDefinitionParser("properties", "key", "value"));
   }
 

@@ -51,8 +51,9 @@ public class RetrieverConnection extends AbstractEmailConnection {
    * @param tlsContextFactory the tls context factory for creating the context to secure the connection
    */
   public RetrieverConnection(EmailProtocol protocol, String username, String password, String host, String port,
-      long connectionTimeout, long readTimeout, long writeTimeout, Map<String, String> properties,
-      TlsContextFactory tlsContextFactory) throws EmailConnectionException {
+                             long connectionTimeout, long readTimeout, long writeTimeout, Map<String, String> properties,
+                             TlsContextFactory tlsContextFactory)
+      throws EmailConnectionException {
     super(protocol, username, password, host, port, connectionTimeout, readTimeout, writeTimeout, properties, tlsContextFactory);
     try {
       this.store = session.getStore(protocol.getName());
@@ -81,7 +82,7 @@ public class RetrieverConnection extends AbstractEmailConnection {
    * @param properties additional custom properties.
    */
   public RetrieverConnection(EmailProtocol protocol, String username, String password, String host, String port,
-      long connectionTimeout, long readTimeout, long writeTimeout, Map<String, String> properties)
+                             long connectionTimeout, long readTimeout, long writeTimeout, Map<String, String> properties)
       throws EmailConnectionException {
     this(protocol, username, password, host, port, connectionTimeout, readTimeout, writeTimeout, properties, null);
   }

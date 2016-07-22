@@ -42,9 +42,9 @@ public class QueueControlDataFileTestCase extends AbstractMuleTestCase {
 
     final QueueControlDataFile newQueueControlDataFile = createTestQueueDataControl();
     assertThat(newQueueControlDataFile.getCurrentReadFile().getAbsolutePath(),
-        is(previousQueueControlDataFile.getCurrentReadFile().getAbsolutePath()));
+               is(previousQueueControlDataFile.getCurrentReadFile().getAbsolutePath()));
     assertThat(newQueueControlDataFile.getCurrentWriteFile().getAbsolutePath(),
-        is(previousQueueControlDataFile.getCurrentWriteFile().getAbsolutePath()));
+               is(previousQueueControlDataFile.getCurrentWriteFile().getAbsolutePath()));
     newQueueControlDataFile.close();
   }
 
@@ -59,9 +59,9 @@ public class QueueControlDataFileTestCase extends AbstractMuleTestCase {
   }
 
   private QueueControlDataFile createTestQueueDataControl() {
-    return new QueueControlDataFile(
-        new QueueFileProvider(getTestQueueDataControlFile().getParentFile(), getTestQueueDataControlFile().getName()),
-        DEFAULT_QUEUE_FILE, DEFAULT_QUEUE_FILE);
+    return new QueueControlDataFile(new QueueFileProvider(getTestQueueDataControlFile().getParentFile(),
+                                                          getTestQueueDataControlFile().getName()),
+                                    DEFAULT_QUEUE_FILE, DEFAULT_QUEUE_FILE);
   }
 
   private File getTestQueueDataControlFile() {

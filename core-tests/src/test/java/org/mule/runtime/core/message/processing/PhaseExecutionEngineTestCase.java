@@ -59,7 +59,7 @@ public class PhaseExecutionEngineTestCase {
     when(mockEndPhase.supportsTemplate(mockTemplate)).thenReturn(true);
     verifyAllPhasesAreRun();
     verify(mockEndPhase, Mockito.times(1)).runPhase(any(EndPhaseTemplate.class), any(MessageProcessContext.class),
-        any(PhaseResultNotifier.class));
+                                                    any(PhaseResultNotifier.class));
   }
 
   @Test
@@ -67,7 +67,7 @@ public class PhaseExecutionEngineTestCase {
     when(mockEndPhase.supportsTemplate(mockTemplate)).thenReturn(false);
     verifyAllPhasesAreRun();
     verify(mockEndPhase, Mockito.times(0)).runPhase(any(EndPhaseTemplate.class), any(MessageProcessContext.class),
-        any(PhaseResultNotifier.class));
+                                                    any(PhaseResultNotifier.class));
   }
 
   @Test
@@ -78,7 +78,7 @@ public class PhaseExecutionEngineTestCase {
     PhaseExecutionEngine phaseExecutionEngine = new PhaseExecutionEngine(phaseList, mockExceptionHandler, mockEndPhase);
     phaseExecutionEngine.process(mockTemplate, mockContext);
     verify(mockEndPhase, times(1)).runPhase(any(EndPhaseTemplate.class), any(MessageProcessContext.class),
-        any(PhaseResultNotifier.class));
+                                            any(PhaseResultNotifier.class));
   }
 
   @Test
@@ -90,11 +90,11 @@ public class PhaseExecutionEngineTestCase {
     PhaseExecutionEngine phaseExecutionEngine = new PhaseExecutionEngine(phaseList, mockExceptionHandler, mockEndPhase);
     phaseExecutionEngine.process(mockTemplate, mockContext);
     verify(mockProcessPhase1, times(1)).runPhase(any(EndPhaseTemplate.class), any(MessageProcessContext.class),
-        any(PhaseResultNotifier.class));
+                                                 any(PhaseResultNotifier.class));
     verify(mockProcessPhase2, times(0)).runPhase(any(EndPhaseTemplate.class), any(MessageProcessContext.class),
-        any(PhaseResultNotifier.class));
+                                                 any(PhaseResultNotifier.class));
     verify(mockProcessPhase3, times(1)).runPhase(any(EndPhaseTemplate.class), any(MessageProcessContext.class),
-        any(PhaseResultNotifier.class));
+                                                 any(PhaseResultNotifier.class));
   }
 
   private void verifyAllPhasesAreRun() {
@@ -102,11 +102,11 @@ public class PhaseExecutionEngineTestCase {
     addAllPhases();
     engine.process(mockTemplate, mockContext);
     verify(mockProcessPhase1, Mockito.times(1)).runPhase(any(MessageProcessTemplate.class), any(MessageProcessContext.class),
-        any(PhaseResultNotifier.class));
+                                                         any(PhaseResultNotifier.class));
     verify(mockProcessPhase2, Mockito.times(1)).runPhase(any(MessageProcessTemplate.class), any(MessageProcessContext.class),
-        any(PhaseResultNotifier.class));
+                                                         any(PhaseResultNotifier.class));
     verify(mockProcessPhase3, Mockito.times(1)).runPhase(any(MessageProcessTemplate.class), any(MessageProcessContext.class),
-        any(PhaseResultNotifier.class));
+                                                         any(PhaseResultNotifier.class));
   }
 
   private void addAllPhases() {
@@ -134,6 +134,6 @@ public class PhaseExecutionEngineTestCase {
         return null;
       }
     }).when(mockProcessPhase).runPhase(any(MessageProcessTemplate.class), any(MessageProcessContext.class),
-        any(PhaseResultNotifier.class));
+                                       any(PhaseResultNotifier.class));
   }
 }

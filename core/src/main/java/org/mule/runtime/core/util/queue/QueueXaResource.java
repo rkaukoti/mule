@@ -17,7 +17,7 @@ public class QueueXaResource extends DefaultXASession<XaQueueTypeTransactionCont
   private final QueueProvider queueProvider;
 
   public QueueXaResource(AbstractXAResourceManager xaResourceManager, XaTransactionRecoverer xaTransactionRecoverer,
-      QueueProvider queueProvider) {
+                         QueueProvider queueProvider) {
     super(xaResourceManager);
     this.xaTransactionRecoverer = xaTransactionRecoverer;
     this.queueProvider = queueProvider;

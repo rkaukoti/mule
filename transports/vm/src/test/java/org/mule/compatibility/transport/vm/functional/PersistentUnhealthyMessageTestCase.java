@@ -28,8 +28,8 @@ public class PersistentUnhealthyMessageTestCase extends FunctionalTestCase {
 
   @Test
   public void testUnhealthyMessageIgnored() throws Exception {
-    File firstQueueFile = DualRandomAccessFileQueueStoreDelegate.getFirstQueueFileForTesting(OUTPUT_QUEUE_NAME,
-        getWorkingDirectory().getAbsolutePath());
+    File firstQueueFile = DualRandomAccessFileQueueStoreDelegate
+        .getFirstQueueFileForTesting(OUTPUT_QUEUE_NAME, getWorkingDirectory().getAbsolutePath());
     FileUtils.createFile(firstQueueFile.getAbsolutePath());
 
     muleContext.start();

@@ -42,7 +42,7 @@ public class ProxyConfigBuilder {
   public ProxyConfig build() {
     Preconditions.checkArgument(proxyConfig.getHost() != null, "Host must be not null");
     Preconditions.checkArgument(proxyConfig.getPort() <= MAXIMUM_PORT_NUMBER,
-        "Port must be under 65535. Check that you set the port.");
+                                "Port must be under 65535. Check that you set the port.");
     return proxyConfig;
   }
 

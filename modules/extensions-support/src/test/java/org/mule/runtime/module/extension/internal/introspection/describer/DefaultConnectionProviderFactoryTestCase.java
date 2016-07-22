@@ -22,8 +22,9 @@ import static org.junit.Assert.assertThat;
 @SmallTest
 public class DefaultConnectionProviderFactoryTestCase extends AbstractMuleTestCase {
 
-  private ConnectionProviderFactory factory = new DefaultConnectionProviderFactory<>(SimplePetStoreConnectionProvider.class,
-      SimplePetStoreConnectionProvider.class.getClassLoader());
+  private ConnectionProviderFactory factory =
+      new DefaultConnectionProviderFactory<>(SimplePetStoreConnectionProvider.class,
+                                             SimplePetStoreConnectionProvider.class.getClassLoader());
 
   @Test
   public void getObjectType() {

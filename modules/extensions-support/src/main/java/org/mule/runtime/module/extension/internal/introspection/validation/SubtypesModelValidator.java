@@ -56,9 +56,9 @@ public final class SubtypesModelValidator implements ModelValidator {
             .stream().findFirst().map(TypeIdAnnotation::getValue).orElse(getType(base).getName())).collect(toList());
 
     if (!finalBaseTypes.isEmpty()) {
-      throw new IllegalModelDefinitionException(
-          String.format("All the declared SubtypesMapping in extension %s should have non final base types, but [%s] are final",
-              model.getName(), Arrays.toString(finalBaseTypes.toArray())));
+      throw new IllegalModelDefinitionException(String.format(
+                                                              "All the declared SubtypesMapping in extension %s should have non final base types, but [%s] are final",
+                                                              model.getName(), Arrays.toString(finalBaseTypes.toArray())));
     }
   }
 
@@ -70,14 +70,14 @@ public final class SubtypesModelValidator implements ModelValidator {
     }
 
     if (!abstractSubtypes.isEmpty()) {
-      throw new IllegalModelDefinitionException(
-          String.format("All the declared Subtypes in extension %s should be of concrete types, but [%s] are non instantiable",
-              model.getName(), Arrays.toString(abstractSubtypes.toArray())));
+      throw new IllegalModelDefinitionException(String.format(
+                                                              "All the declared Subtypes in extension %s should be of concrete types, but [%s] are non instantiable",
+                                                              model.getName(), Arrays.toString(abstractSubtypes.toArray())));
     }
   }
 
   private void validateSubtypesExtendOrImplementBaseType(ExtensionModel model,
-      Map<MetadataType, List<MetadataType>> typesMapping) {
+                                                         Map<MetadataType, List<MetadataType>> typesMapping) {
     for (Map.Entry<MetadataType, List<MetadataType>> subtypes : typesMapping.entrySet()) {
       Class<?> baseType = getType(subtypes.getKey());
 
@@ -86,9 +86,10 @@ public final class SubtypesModelValidator implements ModelValidator {
 
       if (!invalidTypes.isEmpty()) {
         throw new IllegalModelDefinitionException(String.format(
-            "All the declared Subtypes in extension %s should be concrete implementations of the give baseType,"
-                + " but [%s] are not implementations of [%s]",
-            model.getName(), Arrays.toString(invalidTypes.toArray()), baseType.getSimpleName()));
+                                                                "All the declared Subtypes in extension %s should be concrete implementations of the give baseType,"
+                                                                    + " but [%s] are not implementations of [%s]",
+                                                                model.getName(), Arrays.toString(invalidTypes.toArray()),
+                                                                baseType.getSimpleName()));
       }
     }
   }
@@ -103,9 +104,10 @@ public final class SubtypesModelValidator implements ModelValidator {
       MetadataType previousType = typesByName.put(getTopLevelTypeName(type), type);
       if (previousType != null && !previousType.equals(type)) {
         throw new IllegalModelDefinitionException(String.format(
-            "Subtypes mapped Type [%s] with alias [%s] in extension [%s] should have a different alias name "
-                + "than the previous mapped type [%s]",
-            getType(type).getSimpleName(), getTopLevelTypeName(type), model.getName(), getType(previousType).getSimpleName()));
+                                                                "Subtypes mapped Type [%s] with alias [%s] in extension [%s] should have a different alias name "
+                                                                    + "than the previous mapped type [%s]",
+                                                                getType(type).getSimpleName(), getTopLevelTypeName(type),
+                                                                model.getName(), getType(previousType).getSimpleName()));
       }
     }
   }

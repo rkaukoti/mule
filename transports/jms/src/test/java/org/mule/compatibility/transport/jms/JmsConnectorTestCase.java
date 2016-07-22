@@ -174,7 +174,7 @@ public class JmsConnectorTestCase extends AbstractMuleContextTestCase {
     JmsConnector connector = createConnectionFactoryWhenGettingConnection(mockConnectionFactory);
     assertThat(connector.getConnectionFactory(), instanceOf(CustomCachingConnectionFactory.class));
     assertThat(((CachingConnectionFactory) connector.getConnectionFactory()).getTargetConnectionFactory(),
-        is(mockConnectionFactory));
+               is(mockConnectionFactory));
   }
 
   @Test
@@ -267,7 +267,8 @@ public class JmsConnectorTestCase extends AbstractMuleContextTestCase {
   }
 
   private JmsConnector createConnectionFactoryWhenGettingConnection(ConnectionFactory mockConnectionFactory,
-      MuleContext muleContext) throws JMSException, MuleException {
+                                                                    MuleContext muleContext)
+      throws JMSException, MuleException {
     final Connection connection = mock(Connection.class);
 
     JmsSupport jmsSupport = mock(Jms11Support.class);

@@ -116,9 +116,9 @@ public abstract class AbstractAsyncRequestReplyRequester extends AbstractInterce
   @Override
   public void initialise() throws InitialisationException {
     name = String.format(NAME_TEMPLATE, storePrefix, ThreadNameHelper.getPrefix(muleContext),
-        flowConstruct == null ? "" : flowConstruct.getName());
-    store = ((ObjectStoreManager) muleContext.getRegistry().get(MuleProperties.OBJECT_STORE_MANAGER)).getObjectStore(name, false,
-        MAX_PROCESSED_GROUPS, UNCLAIMED_TIME_TO_LIVE, UNCLAIMED_INTERVAL);
+                         flowConstruct == null ? "" : flowConstruct.getName());
+    store = ((ObjectStoreManager) muleContext.getRegistry().get(MuleProperties.OBJECT_STORE_MANAGER))
+        .getObjectStore(name, false, MAX_PROCESSED_GROUPS, UNCLAIMED_TIME_TO_LIVE, UNCLAIMED_INTERVAL);
   }
 
   @Override
@@ -218,7 +218,7 @@ public abstract class AbstractAsyncRequestReplyRequester extends AbstractInterce
             .fireNotification(new RoutingNotification(event.getMessage(), null, RoutingNotification.ASYNC_REPLY_TIMEOUT));
 
         throw new ResponseTimeoutException(CoreMessages.responseTimedOutWaitingForId((int) timeout, asyncReplyCorrelationId),
-            event, null);
+                                           event, null);
       } else {
         return null;
       }
@@ -290,8 +290,9 @@ public abstract class AbstractAsyncRequestReplyRequester extends AbstractInterce
                     + ". Dropping event");
               }
               // Fire a notification to say we received this message
-              event.getMuleContext().fireNotification(new RoutingNotification(event.getMessage(),
-                  event.getMessageSourceURI().toString(), RoutingNotification.MISSED_ASYNC_REPLY));
+              event.getMuleContext()
+                  .fireNotification(new RoutingNotification(event.getMessage(), event.getMessageSourceURI().toString(),
+                                                            RoutingNotification.MISSED_ASYNC_REPLY));
             } else {
               Latch l = locks.get(correlationId);
               if (l != null) {

@@ -111,12 +111,12 @@ public abstract class AbstractMuleNamespaceHandler extends NamespaceHandlerSuppo
   }
 
   protected void registerDeprecatedBeanDefinitionParser(String elementName, BeanDefinitionParser parser, String message) {
-    registerBeanDefinitionParser(elementName, new DeprecatedBeanDefinitionParser(parser,
-        String.format("Schema warning: Use of element <%s> is deprecated.  %s.", elementName, message)));
+    registerBeanDefinitionParser(elementName, new DeprecatedBeanDefinitionParser(parser, String
+        .format("Schema warning: Use of element <%s> is deprecated.  %s.", elementName, message)));
   }
 
   protected MuleDefinitionParserConfiguration registerDeprecatedMuleBeanDefinitionParser(String name, MuleDefinitionParser parser,
-      String message) {
+                                                                                         String message) {
     registerDeprecatedBeanDefinitionParser(name, parser, message);
     return parser;
   }
@@ -184,7 +184,7 @@ public abstract class AbstractMuleNamespaceHandler extends NamespaceHandlerSuppo
                 }
               }
               assembler.addAnnotationValue(context.getContainingBeanDefinition().getPropertyValues(),
-                  new QName(node.getNamespaceURI(), node.getLocalName()), builder.toString());
+                                           new QName(node.getNamespaceURI(), node.getLocalName()), builder.toString());
             }
           }
         }

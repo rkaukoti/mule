@@ -27,7 +27,7 @@ class ResponseDispatchMessagingException extends MessagingException {
   }
 
   ResponseDispatchMessagingException(Message message, MuleEvent event, Throwable cause,
-      MessageProcessor failingMessageProcessor) {
+                                     MessageProcessor failingMessageProcessor) {
     super(message, event, cause, failingMessageProcessor);
   }
 

@@ -44,8 +44,9 @@ public class IncludedExternalXsdTypesFunctionalTestCase extends IncludedXsdTypes
 
   private void createWsdlFile() throws IOException {
     // the WSDL must reference a dynamic HTTP port so we have to create it
-    String modifiedWsdl = String.format(
-        IOUtils.getResourceAsString("TestIncludedExternalTypeDefinitionsFormat.wsdl", this.getClass()), httpPort.getValue());
+    String modifiedWsdl =
+        String.format(IOUtils.getResourceAsString("TestIncludedExternalTypeDefinitionsFormat.wsdl", this.getClass()),
+                      httpPort.getValue());
     String testRoot = getClassPathRoot(IncludedExternalXsdTypesFunctionalTestCase.class).getPath();
     wsdl = new File(testRoot + "TestIncludedExternalTypeDefinitions.wsdl");
     FileUtils.writeStringToFile(wsdl, modifiedWsdl);

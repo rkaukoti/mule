@@ -63,7 +63,7 @@ public final class AnnotationProcessorUtils {
   public static <T> Class<T> classFor(TypeElement typeElement, ProcessingEnvironment processingEnvironment) {
     try {
       return ClassUtils.loadClass(processingEnvironment.getElementUtils().getBinaryName(typeElement).toString(),
-          typeElement.getClass());
+                                  typeElement.getClass());
     } catch (ClassNotFoundException e) {
       throw new RuntimeException(e);
     }
@@ -77,7 +77,7 @@ public final class AnnotationProcessorUtils {
    * @return a {@link Set} with the {@link TypeElement}s annotated with {@code annotationType}
    */
   public static Set<TypeElement> getTypeElementsAnnotatedWith(Class<? extends Annotation> annotationType,
-      RoundEnvironment roundEnvironment) {
+                                                              RoundEnvironment roundEnvironment) {
     return ElementFilter.typesIn(roundEnvironment.getElementsAnnotatedWith(annotationType));
   }
 
@@ -90,7 +90,7 @@ public final class AnnotationProcessorUtils {
    *         {@link ExecutableElement}
    */
   static Map<String, Element> getOperationMethods(RoundEnvironment roundEnvironment,
-      ProcessingEnvironment processingEnvironment) {
+                                                  ProcessingEnvironment processingEnvironment) {
     ImmutableMap.Builder<String, Element> methods = ImmutableMap.builder();
     for (Element rootElement : roundEnvironment.getElementsAnnotatedWith(Extension.class)) {
       if (!(rootElement instanceof TypeElement)) {
@@ -119,7 +119,7 @@ public final class AnnotationProcessorUtils {
   }
 
   private static <T> T getAnnotationFromType(ProcessingEnvironment processingEnvironment, TypeElement rootElement,
-      Class<? extends Annotation> annotationClass) {
+                                             Class<? extends Annotation> annotationClass) {
     return (T) classFor(rootElement, processingEnvironment).getAnnotation(annotationClass);
   }
 
@@ -137,7 +137,7 @@ public final class AnnotationProcessorUtils {
   }
 
   private static <T extends Element> Map<String, T> collectAnnotatedElements(Iterable<T> elements,
-      Class<? extends Annotation> annotation) {
+                                                                             Class<? extends Annotation> annotation) {
     ImmutableMap.Builder<String, T> fields = ImmutableMap.builder();
 
     for (T element : elements) {
@@ -182,7 +182,7 @@ public final class AnnotationProcessorUtils {
    * @param parameterDocs a {@link Map} which keys are attribute names and values are their documentation
    */
   private static void parseOperationParameterGroups(ProcessingEnvironment processingEnv, MethodSymbol methodElement,
-      Map<String, String> parameterDocs) {
+                                                    Map<String, String> parameterDocs) {
     for (VarSymbol parameterSymbol : methodElement.getParameters()) {
       for (Attribute.Compound compound : parameterSymbol.getAnnotationMirrors()) {
         DeclaredType annotationType = compound.getAnnotationType();
@@ -191,8 +191,8 @@ public final class AnnotationProcessorUtils {
               classFor((TypeElement) compound.getAnnotationType().asElement(), processingEnv);
           if (ParameterGroup.class.isAssignableFrom(annotationClass)) {
             try {
-              getOperationParameterGroupDocumentation(
-                  (TypeElement) processingEnv.getTypeUtils().asElement(parameterSymbol.asType()), parameterDocs, processingEnv);
+              getOperationParameterGroupDocumentation((TypeElement) processingEnv.getTypeUtils()
+                  .asElement(parameterSymbol.asType()), parameterDocs, processingEnv);
             } catch (Exception e) {
               throw new RuntimeException(e);
             }
@@ -211,7 +211,7 @@ public final class AnnotationProcessorUtils {
    * @param processingEnvironment the current {@link ProcessingEnvironment}
    */
   private static void getOperationParameterGroupDocumentation(TypeElement groupElement, final Map<String, String> parameterDocs,
-      ProcessingEnvironment processingEnvironment) {
+                                                              ProcessingEnvironment processingEnvironment) {
     for (final Map.Entry<String, VariableElement> field : getFieldsAnnotatedWith(groupElement, Parameter.class).entrySet()) {
       parseJavaDoc(processingEnvironment, field.getValue(), new JavadocParseHandler() {
 
@@ -228,7 +228,7 @@ public final class AnnotationProcessorUtils {
     for (VariableElement field : getFieldsAnnotatedWith(groupElement, ParameterGroup.class).values()) {
 
       getOperationParameterGroupDocumentation((TypeElement) processingEnvironment.getTypeUtils().asElement(field.asType()),
-          parameterDocs, processingEnvironment);
+                                              parameterDocs, processingEnvironment);
     }
   }
 
@@ -325,7 +325,7 @@ public final class AnnotationProcessorUtils {
    * Returns the content of a field for a given annotation.
    */
   public static <T> T getAnnotationFieldValue(Element rootElement, Class<? extends Annotation> anAnnotation,
-      String annotationField) {
+                                              String annotationField) {
     if (rootElement.getAnnotation(anAnnotation) != null) {
       final String fullQualifiedAnnotationName = anAnnotation.getName();
       T annotationFieldValue = null;

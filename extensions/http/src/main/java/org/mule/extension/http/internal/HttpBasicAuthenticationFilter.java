@@ -113,7 +113,7 @@ public class HttpBasicAuthenticationFilter extends AbstractAuthenticationFilter 
   public void authenticate(MuleEvent event) throws SecurityException, UnknownAuthenticationTypeException, CryptoFailureException,
       SecurityProviderNotFoundException, EncryptionStrategyNotFoundException, InitialisationException {
     checkArgument(event.getMessage().getAttributes() instanceof HttpRequestAttributes,
-        "Message attributes must be HttpRequestAttributes.");
+                  "Message attributes must be HttpRequestAttributes.");
     String header = ((HttpRequestAttributes) event.getMessage().getAttributes()).getHeaders().get(AUTHORIZATION.toLowerCase());
 
     if (logger.isDebugEnabled()) {
@@ -158,8 +158,8 @@ public class HttpBasicAuthenticationFilter extends AbstractAuthenticationFilter 
       throw new UnauthorisedException(event, event.getSession().getSecurityContext(), this);
     } else {
       setUnauthenticated(event);
-      throw new UnsupportedAuthenticationSchemeException(
-          createStaticMessage("Http Basic filter doesn't know how to handle header " + header), event);
+      throw new UnsupportedAuthenticationSchemeException(createStaticMessage("Http Basic filter doesn't know how to handle header "
+          + header), event);
     }
   }
 }

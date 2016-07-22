@@ -59,8 +59,7 @@ public class UdpListenerProvider implements ConnectionProvider<UdpListenerConnec
   }
 
   @Override
-  public ConnectionHandlingStrategy<UdpListenerConnection> getHandlingStrategy(
-      ConnectionHandlingStrategyFactory<UdpListenerConnection> handlingStrategyFactory) {
+  public ConnectionHandlingStrategy<UdpListenerConnection> getHandlingStrategy(ConnectionHandlingStrategyFactory<UdpListenerConnection> handlingStrategyFactory) {
     return handlingStrategyFactory.none();
   }
 }

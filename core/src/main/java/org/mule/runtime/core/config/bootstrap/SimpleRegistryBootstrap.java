@@ -43,7 +43,8 @@ public class SimpleRegistryBootstrap extends AbstractRegistryBootstrap {
 
   @Override
   protected void doRegisterTransformer(TransformerBootstrapProperty bootstrapProperty, Class<?> returnClass,
-      Class<? extends Transformer> transformerClass) throws Exception {
+                                       Class<? extends Transformer> transformerClass)
+      throws Exception {
     Transformer trans = ClassUtils.instanciateClass(transformerClass);
     if (!(trans instanceof DiscoverableTransformer)) {
       throw new RegistrationException(CoreMessages.transformerNotImplementDiscoverable(trans));

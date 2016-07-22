@@ -79,7 +79,8 @@ public abstract class AbstractRoutingStrategy implements RoutingStrategy {
    * @param awaitResponse if the
    */
   protected final MuleEvent sendRequest(final MuleEvent routedEvent, final MuleMessage message, final MessageProcessor route,
-      boolean awaitResponse) throws MuleException {
+                                        boolean awaitResponse)
+      throws MuleException {
     MuleEvent result;
     try {
       result = sendRequestEvent(routedEvent, message, route, awaitResponse);

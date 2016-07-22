@@ -84,8 +84,8 @@ public class ExtensionMessageSource extends ExtensionComponent
   private MessageProcessingManager messageProcessingManager;
 
   public ExtensionMessageSource(RuntimeExtensionModel extensionModel, RuntimeSourceModel sourceModel, SourceFactory sourceFactory,
-      String configurationProviderName, ThreadingProfile threadingProfile, RetryPolicyTemplate retryPolicyTemplate,
-      ExtensionManagerAdapter managerAdapter) {
+                                String configurationProviderName, ThreadingProfile threadingProfile,
+                                RetryPolicyTemplate retryPolicyTemplate, ExtensionManagerAdapter managerAdapter) {
     super(extensionModel, sourceModel, configurationProviderName, managerAdapter);
     this.sourceModel = sourceModel;
     this.sourceFactory = sourceFactory;
@@ -96,17 +96,19 @@ public class ExtensionMessageSource extends ExtensionComponent
 
   @Override
   public void handle(MuleMessage message,
-      CompletionHandler<org.mule.runtime.api.message.MuleEvent, Exception, org.mule.runtime.api.message.MuleEvent> completionHandler) {
+                     CompletionHandler<org.mule.runtime.api.message.MuleEvent, Exception, org.mule.runtime.api.message.MuleEvent> completionHandler) {
     MuleEvent event = new DefaultMuleEvent((org.mule.runtime.core.api.MuleMessage) message, REQUEST_RESPONSE, flowConstruct);
-    messageProcessingManager.processMessage(
-        new ExtensionFlowProcessingTemplate(event, messageProcessor, downCast(completionHandler)), createProcessingContext());
+    messageProcessingManager
+        .processMessage(new ExtensionFlowProcessingTemplate(event, messageProcessor, downCast(completionHandler)),
+                        createProcessingContext());
   }
 
   @Override
   public void handle(MuleMessage message) {
     MuleEvent event = new DefaultMuleEvent((org.mule.runtime.core.api.MuleMessage) message, REQUEST_RESPONSE, flowConstruct);
-    messageProcessingManager.processMessage(
-        new ExtensionFlowProcessingTemplate(event, messageProcessor, new NullCompletionHandler()), createProcessingContext());
+    messageProcessingManager
+        .processMessage(new ExtensionFlowProcessingTemplate(event, messageProcessor, new NullCompletionHandler()),
+                        createProcessingContext());
   }
 
   @Override
@@ -116,7 +118,8 @@ public class ExtensionMessageSource extends ExtensionComponent
     if (connectionException.isPresent()) {
       try {
         LOGGER.warn(String.format("Message source '%s' on flow '%s' threw exception. Restarting...", source.getName(),
-            flowConstruct.getName()), exception);
+                                  flowConstruct.getName()),
+                    exception);
         stopSource();
         disposeSource();
         startSource();
@@ -189,8 +192,9 @@ public class ExtensionMessageSource extends ExtensionComponent
       try {
         source.stop();
       } catch (Exception e) {
-        throw new DefaultMuleException(
-            String.format("Found exception stopping source '%s' of flow '%s'", source.getName(), flowConstruct.getName()), e);
+        throw new DefaultMuleException(String.format("Found exception stopping source '%s' of flow '%s'", source.getName(),
+                                                     flowConstruct.getName()),
+                                       e);
       }
     }
   }
@@ -224,7 +228,7 @@ public class ExtensionMessageSource extends ExtensionComponent
   // TODO: MULE-9320
   private WorkManager createWorkManager() {
     return threadingProfile.createWorkManager(String.format("%s%s.worker", getPrefix(muleContext), flowConstruct.getName()),
-        muleContext.getConfiguration().getShutdownTimeout());
+                                              muleContext.getConfiguration().getShutdownTimeout());
   }
 
   private MessageProcessContext createProcessingContext() {
@@ -269,7 +273,8 @@ public class ExtensionMessageSource extends ExtensionComponent
 
   private void notifyExceptionAndShutDown(Throwable exception) {
     LOGGER.error(String.format("Message source '%s' on flow '%s' threw exception. Shutting down it forever...", source.getName(),
-        flowConstruct.getName()), exception);
+                               flowConstruct.getName()),
+                 exception);
     shutdown();
   }
 
@@ -283,14 +288,14 @@ public class ExtensionMessageSource extends ExtensionComponent
     if (!configurationModel.getSourceModel(sourceModel.getName()).isPresent()
         && !configurationModel.getExtensionModel().getSourceModel(sourceModel.getName()).isPresent()) {
       throw new IllegalOperationException(String.format(
-          "Flow '%s' defines an usage of operation '%s' which points to configuration '%s'. "
-              + "The selected config does not support that operation.",
-          flowConstruct.getName(), sourceModel.getName(), configurationProvider.getName()));
+                                                        "Flow '%s' defines an usage of operation '%s' which points to configuration '%s'. "
+                                                            + "The selected config does not support that operation.",
+                                                        flowConstruct.getName(), sourceModel.getName(),
+                                                        configurationProvider.getName()));
     }
   }
 
-  private CompletionHandler downCast(
-      CompletionHandler<org.mule.runtime.api.message.MuleEvent, Exception, org.mule.runtime.api.message.MuleEvent> handler) {
+  private CompletionHandler downCast(CompletionHandler<org.mule.runtime.api.message.MuleEvent, Exception, org.mule.runtime.api.message.MuleEvent> handler) {
     return handler;
   }
 

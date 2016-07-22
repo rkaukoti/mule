@@ -32,8 +32,10 @@ public interface ConfigurationProviderFactory {
    * @throws Exception if anything goes wrong
    */
   <T> ConfigurationProvider<T> createDynamicConfigurationProvider(String name, RuntimeConfigurationModel configurationModel,
-      ResolverSet resolverSet, ValueResolver<ConnectionProvider> connectionProviderResolver,
-      DynamicConfigPolicy dynamicConfigPolicy) throws Exception;
+                                                                  ResolverSet resolverSet,
+                                                                  ValueResolver<ConnectionProvider> connectionProviderResolver,
+                                                                  DynamicConfigPolicy dynamicConfigPolicy)
+      throws Exception;
 
 
   /**
@@ -49,6 +51,8 @@ public interface ConfigurationProviderFactory {
    * @throws Exception if anything goes wrong
    */
   <T> ConfigurationProvider<T> createStaticConfigurationProvider(String name, RuntimeConfigurationModel configurationModel,
-      ResolverSet resolverSet, ValueResolver<ConnectionProvider> connectionProviderResolver, MuleContext muleContext)
+                                                                 ResolverSet resolverSet,
+                                                                 ValueResolver<ConnectionProvider> connectionProviderResolver,
+                                                                 MuleContext muleContext)
       throws Exception;
 }

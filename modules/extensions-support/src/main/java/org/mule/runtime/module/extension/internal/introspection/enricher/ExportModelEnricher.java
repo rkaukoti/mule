@@ -28,10 +28,8 @@ public class ExportModelEnricher extends AbstractAnnotatedModelEnricher {
     if (exportAnnotation != null) {
       final ClassTypeLoader typeLoader = ExtensionsTypeLoaderFactory.getDefault().createTypeLoader();
 
-      describingContext.getExtensionDeclarer()
-          .withModelProperty(new ExportModelProperty(
-              stream(exportAnnotation.classes()).map(typeLoader::load).collect(new ImmutableListCollector<>()),
-              copyOf(exportAnnotation.resources())));
+      describingContext.getExtensionDeclarer().withModelProperty(new ExportModelProperty(stream(exportAnnotation.classes())
+          .map(typeLoader::load).collect(new ImmutableListCollector<>()), copyOf(exportAnnotation.resources())));
     }
   }
 }

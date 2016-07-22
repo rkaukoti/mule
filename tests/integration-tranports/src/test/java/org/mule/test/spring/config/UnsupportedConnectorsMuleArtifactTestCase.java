@@ -54,8 +54,7 @@ public class UnsupportedConnectorsMuleArtifactTestCase extends AbstractMuleTestC
   @Test
   public void unsupportedConnectorsHttp() throws SAXException, IOException, MuleArtifactFactoryException {
     // HTTP
-    checkUnsupportedConnector(
-        "<http:connector name=\"HttpConnector\" xmlns:http=\"http://www.mulesoft.org/schema/mule/transport/http\"/>");
+    checkUnsupportedConnector("<http:connector name=\"HttpConnector\" xmlns:http=\"http://www.mulesoft.org/schema/mule/transport/http\"/>");
   }
 
   @Test
@@ -68,10 +67,9 @@ public class UnsupportedConnectorsMuleArtifactTestCase extends AbstractMuleTestC
   @Test
   public void unsupportedConnectorsHttps() throws SAXException, IOException, MuleArtifactFactoryException {
     // HTTPS
-    checkUnsupportedConnector(
-        "<https:connector name=\"httpConnector\" xmlns:https=\"http://www.mulesoft.org/schema/mule/transport/https\">\n"
-            + "        <https:tls-key-store path=\"~/ce/tests/integration/src/test/resources/muletest.keystore\" keyPassword=\"mulepassword\" storePassword=\"mulepassword\"/>\n"
-            + "</https:connector>");
+    checkUnsupportedConnector("<https:connector name=\"httpConnector\" xmlns:https=\"http://www.mulesoft.org/schema/mule/transport/https\">\n"
+        + "        <https:tls-key-store path=\"~/ce/tests/integration/src/test/resources/muletest.keystore\" keyPassword=\"mulepassword\" storePassword=\"mulepassword\"/>\n"
+        + "</https:connector>");
   }
 
   @Test
@@ -84,8 +82,8 @@ public class UnsupportedConnectorsMuleArtifactTestCase extends AbstractMuleTestC
   @Test
   public void unsupportedConnectorsVm() throws SAXException, IOException, MuleArtifactFactoryException {
     // VM
-    checkUnsupportedConnector(
-        "<vm:connector name=\"memory\" " + "xmlns:vm=\"http://www.mulesoft.org/schema/mule/transport/vm\"/>");
+    checkUnsupportedConnector("<vm:connector name=\"memory\" "
+        + "xmlns:vm=\"http://www.mulesoft.org/schema/mule/transport/vm\"/>");
   }
 
   private void checkUnsupportedConnector(String connectorConfig) throws IOException, SAXException, MuleArtifactFactoryException {

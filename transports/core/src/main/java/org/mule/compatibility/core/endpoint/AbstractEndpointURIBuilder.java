@@ -46,7 +46,7 @@ public abstract class AbstractEndpointURIBuilder implements EndpointURIBuilder {
     }
 
     EndpointURI ep = new MuleEndpointURI(address, endpointName, connectorName, transformers, responseTransformers, props,
-        this.uri, userInfo, muleContext);
+                                         this.uri, userInfo, muleContext);
     address = null;
     endpointName = null;
     connectorName = null;

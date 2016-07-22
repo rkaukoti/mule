@@ -49,7 +49,7 @@ public class MessageReceiverWorkManagerTestCase extends AbstractMuleContextEndpo
 
   private AbstractMessageReceiver createMessageReceiver() throws Exception {
     return new TestMessageReceiver(getTestConnector(), mock(FlowConstruct.class, Answers.RETURNS_DEEP_STUBS.get()),
-        getTestInboundEndpoint(MessageExchangePattern.ONE_WAY));
+                                   getTestInboundEndpoint(MessageExchangePattern.ONE_WAY));
   }
 
 }

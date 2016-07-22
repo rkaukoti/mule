@@ -65,8 +65,8 @@ public class JmsClientAcknowledgeTransaction extends AbstractSingleResourceTrans
       return;
     }
     if (!(key instanceof Connection) || !(resource instanceof Session)) {
-      throw new IllegalTransactionStateException(
-          CoreMessages.transactionCanOnlyBindToResources("javax.jms.Connection/javax.jms.Session"));
+      throw new IllegalTransactionStateException(CoreMessages
+          .transactionCanOnlyBindToResources("javax.jms.Connection/javax.jms.Session"));
     }
 
     Session session = (Session) resource;

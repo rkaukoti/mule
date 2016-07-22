@@ -37,7 +37,7 @@ public class FlowStackTestCase extends FunctionalTestCase {
   @Before
   public void before() {
     muleContext.getNotificationManager().addInterfaceToType(MessageProcessorNotificationListener.class,
-        MessageProcessorNotification.class);
+                                                            MessageProcessorNotification.class);
 
     FlowStackAsserter.stackToAssert = null;
     FlowStackAsyncAsserter.latch = new CountDownLatch(1);
@@ -50,7 +50,7 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert, isFlowStackElement("flow", "/flow/processors/0"),
-        isFlowStackElement("flowStatic", "/flowStatic/processors/0"));
+                        isFlowStackElement("flowStatic", "/flowStatic/processors/0"));
   }
 
   @Test
@@ -60,8 +60,8 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert,
-        isFlowStackElement("subFlow", "/subFlowStatic/processors/0/subFlow/subprocessors/0"),
-        isFlowStackElement("subFlowStatic", "/subFlowStatic/processors/0"));
+                        isFlowStackElement("subFlow", "/subFlowStatic/processors/0/subFlow/subprocessors/0"),
+                        isFlowStackElement("subFlowStatic", "/subFlowStatic/processors/0"));
   }
 
   @Test
@@ -71,7 +71,7 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert, isFlowStackElement("flow", "/flow/processors/0"),
-        isFlowStackElement("flowDynamic", "/flowDynamic/processors/0"));
+                        isFlowStackElement("flowDynamic", "/flowDynamic/processors/0"));
   }
 
   @Test
@@ -81,8 +81,8 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert,
-        isFlowStackElement("subFlow", "/subFlowDynamic/processors/0/subFlow/subprocessors/0"),
-        isFlowStackElement("subFlowDynamic", "/subFlowDynamic/processors/0"));
+                        isFlowStackElement("subFlow", "/subFlowDynamic/processors/0/subFlow/subprocessors/0"),
+                        isFlowStackElement("subFlowDynamic", "/subFlowDynamic/processors/0"));
   }
 
   @Test
@@ -92,7 +92,7 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert, isFlowStackElement("flow", "/flow/processors/0"),
-        isFlowStackElement("secondFlowStatic", "/secondFlowStatic/processors/1"));
+                        isFlowStackElement("secondFlowStatic", "/secondFlowStatic/processors/1"));
   }
 
   @Test
@@ -102,8 +102,8 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert,
-        isFlowStackElement("subFlow", "/secondSubFlowStatic/processors/1/subFlow/subprocessors/0"),
-        isFlowStackElement("secondSubFlowStatic", "/secondSubFlowStatic/processors/1"));
+                        isFlowStackElement("subFlow", "/secondSubFlowStatic/processors/1/subFlow/subprocessors/0"),
+                        isFlowStackElement("secondSubFlowStatic", "/secondSubFlowStatic/processors/1"));
   }
 
   @Test
@@ -113,7 +113,7 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert, isFlowStackElement("flow", "/flow/processors/0"),
-        isFlowStackElement("secondFlowDynamic", "/secondFlowDynamic/processors/1"));
+                        isFlowStackElement("secondFlowDynamic", "/secondFlowDynamic/processors/1"));
   }
 
   @Test
@@ -123,8 +123,8 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert,
-        isFlowStackElement("subFlow", "/secondSubFlowDynamic/processors/1/subFlow/subprocessors/0"),
-        isFlowStackElement("secondSubFlowDynamic", "/secondSubFlowDynamic/processors/1"));
+                        isFlowStackElement("subFlow", "/secondSubFlowDynamic/processors/1/subFlow/subprocessors/0"),
+                        isFlowStackElement("secondSubFlowDynamic", "/secondSubFlowDynamic/processors/1"));
   }
 
   @Test
@@ -136,7 +136,7 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert, isFlowStackElement("flowInAsync", "/flowInAsync/processors/0"),
-        isFlowStackElement("flowStaticWithAsync", "/flowStaticWithAsync/processors/0/0"));
+                        isFlowStackElement("flowStaticWithAsync", "/flowStaticWithAsync/processors/0/0"));
   }
 
   @Test
@@ -148,8 +148,9 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert,
-        isFlowStackElement("subFlowInAsync", "/subFlowStaticWithAsync/processors/0/0/subFlowInAsync/subprocessors/0"),
-        isFlowStackElement("subFlowStaticWithAsync", "/subFlowStaticWithAsync/processors/0/0"));
+                        isFlowStackElement("subFlowInAsync",
+                                           "/subFlowStaticWithAsync/processors/0/0/subFlowInAsync/subprocessors/0"),
+                        isFlowStackElement("subFlowStaticWithAsync", "/subFlowStaticWithAsync/processors/0/0"));
   }
 
   @Test
@@ -161,7 +162,7 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert, isFlowStackElement("flowInAsync", "/flowInAsync/processors/0"),
-        isFlowStackElement("flowDynamicWithAsync", "/flowDynamicWithAsync/processors/0/0"));
+                        isFlowStackElement("flowDynamicWithAsync", "/flowDynamicWithAsync/processors/0/0"));
   }
 
   @Test
@@ -173,8 +174,9 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert,
-        isFlowStackElement("subFlowInAsync", "/subFlowDynamicWithAsync/processors/0/0/subFlowInAsync/subprocessors/0"),
-        isFlowStackElement("subFlowDynamicWithAsync", "/subFlowDynamicWithAsync/processors/0/0"));
+                        isFlowStackElement("subFlowInAsync",
+                                           "/subFlowDynamicWithAsync/processors/0/0/subFlowInAsync/subprocessors/0"),
+                        isFlowStackElement("subFlowDynamicWithAsync", "/subFlowDynamicWithAsync/processors/0/0"));
   }
 
   @Test
@@ -184,7 +186,7 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert, isFlowStackElement("flow", "/flow/processors/0"),
-        isFlowStackElement("flowStaticWithEnricher", "/flowStaticWithEnricher/processors/0/0"));
+                        isFlowStackElement("flowStaticWithEnricher", "/flowStaticWithEnricher/processors/0/0"));
   }
 
   @Test
@@ -194,8 +196,8 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert,
-        isFlowStackElement("subFlow", "/subFlowStaticWithEnricher/processors/0/0/subFlow/subprocessors/0"),
-        isFlowStackElement("subFlowStaticWithEnricher", "/subFlowStaticWithEnricher/processors/0"));
+                        isFlowStackElement("subFlow", "/subFlowStaticWithEnricher/processors/0/0/subFlow/subprocessors/0"),
+                        isFlowStackElement("subFlowStaticWithEnricher", "/subFlowStaticWithEnricher/processors/0"));
   }
 
   @Test
@@ -205,7 +207,7 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert, isFlowStackElement("flow", "/flow/processors/0"),
-        isFlowStackElement("flowDynamicWithEnricher", "/flowDynamicWithEnricher/processors/0/0"));
+                        isFlowStackElement("flowDynamicWithEnricher", "/flowDynamicWithEnricher/processors/0/0"));
   }
 
   @Test
@@ -215,8 +217,8 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert,
-        isFlowStackElement("subFlow", "/subFlowDynamicWithEnricher/processors/0/0/subFlow/subprocessors/0"),
-        isFlowStackElement("subFlowDynamicWithEnricher", "/subFlowDynamicWithEnricher/processors/0/0"));
+                        isFlowStackElement("subFlow", "/subFlowDynamicWithEnricher/processors/0/0/subFlow/subprocessors/0"),
+                        isFlowStackElement("subFlowDynamicWithEnricher", "/subFlowDynamicWithEnricher/processors/0/0"));
   }
 
   @Test
@@ -226,7 +228,7 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert, isFlowStackElement("flow", "/flow/processors/0"),
-        isFlowStackElement("flowStaticWithChoice", "/flowStaticWithChoice/processors/0/0/0"));
+                        isFlowStackElement("flowStaticWithChoice", "/flowStaticWithChoice/processors/0/0/0"));
   }
 
   @Test
@@ -236,8 +238,8 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert,
-        isFlowStackElement("subFlow", "/subFlowStaticWithChoice/processors/0/0/0/subFlow/subprocessors/0"),
-        isFlowStackElement("subFlowStaticWithChoice", "/subFlowStaticWithChoice/processors/0/0/0"));
+                        isFlowStackElement("subFlow", "/subFlowStaticWithChoice/processors/0/0/0/subFlow/subprocessors/0"),
+                        isFlowStackElement("subFlowStaticWithChoice", "/subFlowStaticWithChoice/processors/0/0/0"));
   }
 
   @Test
@@ -247,7 +249,7 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert, isFlowStackElement("flow", "/flow/processors/0"),
-        isFlowStackElement("flowDynamicWithChoice", "/flowDynamicWithChoice/processors/0/0/0"));
+                        isFlowStackElement("flowDynamicWithChoice", "/flowDynamicWithChoice/processors/0/0/0"));
   }
 
   @Test
@@ -257,8 +259,8 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert,
-        isFlowStackElement("subFlow", "/subFlowDynamicWithChoice/processors/0/0/0/subFlow/subprocessors/0"),
-        isFlowStackElement("subFlowDynamicWithChoice", "/subFlowDynamicWithChoice/processors/0/0/0"));
+                        isFlowStackElement("subFlow", "/subFlowDynamicWithChoice/processors/0/0/0/subFlow/subprocessors/0"),
+                        isFlowStackElement("subFlowDynamicWithChoice", "/subFlowDynamicWithChoice/processors/0/0/0"));
   }
 
   @Test
@@ -268,7 +270,7 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert, isFlowStackElement("flow", "/flow/processors/0"),
-        isFlowStackElement("flowStaticWithScatterGather", "/flowStaticWithScatterGather/processors/0/1/0"));
+                        isFlowStackElement("flowStaticWithScatterGather", "/flowStaticWithScatterGather/processors/0/1/0"));
   }
 
   @Test
@@ -278,8 +280,8 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert,
-        isFlowStackElement("subFlow", "/subFlowStaticWithScatterGather/processors/0/1/subFlow/subprocessors/0"),
-        isFlowStackElement("subFlowStaticWithScatterGather", "/subFlowStaticWithScatterGather/processors/0/1"));
+                        isFlowStackElement("subFlow", "/subFlowStaticWithScatterGather/processors/0/1/subFlow/subprocessors/0"),
+                        isFlowStackElement("subFlowStaticWithScatterGather", "/subFlowStaticWithScatterGather/processors/0/1"));
   }
 
   @Test
@@ -289,7 +291,7 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert, isFlowStackElement("flow", "/flow/processors/0"),
-        isFlowStackElement("flowDynamicWithScatterGather", "/flowDynamicWithScatterGather/processors/0/1/0"));
+                        isFlowStackElement("flowDynamicWithScatterGather", "/flowDynamicWithScatterGather/processors/0/1/0"));
   }
 
   @Test
@@ -299,8 +301,10 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert,
-        isFlowStackElement("subFlow", "/subFlowDynamicWithScatterGather/processors/0/1/0/subFlow/subprocessors/0"),
-        isFlowStackElement("subFlowDynamicWithScatterGather", "/subFlowDynamicWithScatterGather/processors/0/1/0"));
+                        isFlowStackElement("subFlow",
+                                           "/subFlowDynamicWithScatterGather/processors/0/1/0/subFlow/subprocessors/0"),
+                        isFlowStackElement("subFlowDynamicWithScatterGather",
+                                           "/subFlowDynamicWithScatterGather/processors/0/1/0"));
   }
 
   @Test
@@ -310,7 +314,8 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert, isFlowStackElement("flow", "/flow/processors/0"),
-        isFlowStackElement("flowStaticWithScatterGatherChain", "/flowStaticWithScatterGatherChain/processors/0/1/0"));
+                        isFlowStackElement("flowStaticWithScatterGatherChain",
+                                           "/flowStaticWithScatterGatherChain/processors/0/1/0"));
   }
 
   @Test
@@ -320,8 +325,10 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert,
-        isFlowStackElement("subFlow", "/subFlowStaticWithScatterGatherChain/processors/0/1/0/subFlow/subprocessors/0"),
-        isFlowStackElement("subFlowStaticWithScatterGatherChain", "/subFlowStaticWithScatterGatherChain/processors/0/1/0"));
+                        isFlowStackElement("subFlow",
+                                           "/subFlowStaticWithScatterGatherChain/processors/0/1/0/subFlow/subprocessors/0"),
+                        isFlowStackElement("subFlowStaticWithScatterGatherChain",
+                                           "/subFlowStaticWithScatterGatherChain/processors/0/1/0"));
   }
 
   @Test
@@ -331,7 +338,8 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert, isFlowStackElement("flow", "/flow/processors/0"),
-        isFlowStackElement("flowDynamicWithScatterGatherChain", "/flowDynamicWithScatterGatherChain/processors/0/1/0"));
+                        isFlowStackElement("flowDynamicWithScatterGatherChain",
+                                           "/flowDynamicWithScatterGatherChain/processors/0/1/0"));
   }
 
   @Test
@@ -341,7 +349,9 @@ public class FlowStackTestCase extends FunctionalTestCase {
     assertThat(FlowStackAsserter.stackToAssert, not(nullValue()));
 
     assertStackElements(FlowStackAsserter.stackToAssert,
-        isFlowStackElement("subFlow", "/subFlowDynamicWithScatterGatherChain/processors/0/1/0/subFlow/subprocessors/0"),
-        isFlowStackElement("subFlowDynamicWithScatterGatherChain", "/subFlowDynamicWithScatterGatherChain/processors/0/1/0"));
+                        isFlowStackElement("subFlow",
+                                           "/subFlowDynamicWithScatterGatherChain/processors/0/1/0/subFlow/subprocessors/0"),
+                        isFlowStackElement("subFlowDynamicWithScatterGatherChain",
+                                           "/subFlowDynamicWithScatterGatherChain/processors/0/1/0"));
   }
 }

@@ -96,7 +96,7 @@ public class SystemUtilsTestCase extends AbstractMuleTestCase {
     assertEquals(expected, SystemUtils.parsePropertyDefinitions(input));
 
     expected = MapUtils.mapWithKeysAndValues(HashMap.class, new String[] {"keyOnly", "mule.foo", "mule.bar"},
-        new String[] {"true", "xfoo", "xbar"});
+                                             new String[] {"true", "xfoo", "xbar"});
     input = "  standalone key=value -D -D= -DkeyOnly -D=noKey -Dmule.foo=xfoo -Dmule.bar=xbar ";
     assertEquals(expected, SystemUtils.parsePropertyDefinitions(input));
   }

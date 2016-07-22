@@ -32,8 +32,7 @@ public class CustomCachingConnectionFactory extends CachingConnectionFactory imp
 
   @Override
   public Connection createConnection(String username, String password) throws JMSException {
-    throw new javax.jms.IllegalStateException(
-        "CustomCachingConnectionFactory does not support creating a connection with username and password. Provide the desired username and password when the instance is defined");
+    throw new javax.jms.IllegalStateException("CustomCachingConnectionFactory does not support creating a connection with username and password. Provide the desired username and password when the instance is defined");
   }
 
   @Override

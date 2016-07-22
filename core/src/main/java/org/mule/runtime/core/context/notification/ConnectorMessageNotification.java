@@ -44,7 +44,7 @@ public class ConnectorMessageNotification extends ServerNotification implements 
   private FlowConstruct flowConstruct;
 
   public ConnectorMessageNotification(Object component, MuleMessage resource, String endpoint, FlowConstruct flowConstruct,
-      int action) {
+                                      int action) {
     super(resource, action, flowConstruct != null ? flowConstruct.getName() : null);
     this.component = component;
     this.endpoint = endpoint;

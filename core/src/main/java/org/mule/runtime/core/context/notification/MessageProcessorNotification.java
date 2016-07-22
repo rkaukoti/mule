@@ -34,7 +34,7 @@ public class MessageProcessorNotification extends ServerNotification implements 
   private MessagingException exceptionThrown;
 
   public MessageProcessorNotification(FlowConstruct flowConstruct, MuleEvent event, MessageProcessor processor,
-      MessagingException exceptionThrown, int action) {
+                                      MessagingException exceptionThrown, int action) {
     super(produceEvent(event, flowConstruct), action, flowConstruct != null ? flowConstruct.getName() : null);
     this.exceptionThrown = exceptionThrown;
     this.processor = processor;

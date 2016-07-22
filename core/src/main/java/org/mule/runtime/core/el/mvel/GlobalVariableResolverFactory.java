@@ -22,7 +22,7 @@ public class GlobalVariableResolverFactory extends MVELExpressionLanguageContext
   private boolean hasTarget = false;
 
   public GlobalVariableResolverFactory(Map<String, String> aliases, Map<String, Function> functions,
-      ParserConfiguration parserConfiguration, MuleContext muleContext) {
+                                       ParserConfiguration parserConfiguration, MuleContext muleContext) {
     super(parserConfiguration, muleContext);
     List<ExpressionLanguageExtension> extensions = (List<ExpressionLanguageExtension>) muleContext.getRegistry()
         .lookupObjectsForLifecycle(ExpressionLanguageExtension.class);

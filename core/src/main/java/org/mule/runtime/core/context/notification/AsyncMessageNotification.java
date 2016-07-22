@@ -34,7 +34,7 @@ public class AsyncMessageNotification extends ServerNotification implements Bloc
   }
 
   public AsyncMessageNotification(FlowConstruct flowConstruct, MuleEvent event, MessageProcessor messageProcessor, int action,
-      MessagingException exception) {
+                                  MessagingException exception) {
     this(flowConstruct, event, messageProcessor, action);
     this.exception = exception;
   }

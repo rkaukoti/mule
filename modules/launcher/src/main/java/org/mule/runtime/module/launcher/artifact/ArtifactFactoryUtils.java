@@ -27,8 +27,8 @@ public class ArtifactFactoryUtils {
    */
   public static File getDeploymentFile(File artifactDir) {
     if (!artifactDir.exists()) {
-      throw new MuleRuntimeException(
-          MessageFactory.createStaticMessage(String.format("Artifact directory does not exist: '%s'", artifactDir)));
+      throw new MuleRuntimeException(MessageFactory
+          .createStaticMessage(String.format("Artifact directory does not exist: '%s'", artifactDir)));
     }
     File deployFile = new File(artifactDir, DEFAULT_DEPLOY_PROPERTIES_RESOURCE);
     if (!deployFile.exists()) {

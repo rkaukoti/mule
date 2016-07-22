@@ -54,7 +54,8 @@ public class DefaultArchiveDeployer<T extends DeployableArtifact> implements Arc
 
 
   public DefaultArchiveDeployer(final ArtifactDeployer deployer, final ArtifactFactory artifactFactory,
-      final ObservableList<T> artifacts, final ReentrantLock lock, ArtifactDeploymentTemplate deploymentTemplate) {
+                                final ObservableList<T> artifacts, final ReentrantLock lock,
+                                ArtifactDeploymentTemplate deploymentTemplate) {
     this.deployer = deployer;
     this.artifactFactory = artifactFactory;
     this.artifacts = artifacts;

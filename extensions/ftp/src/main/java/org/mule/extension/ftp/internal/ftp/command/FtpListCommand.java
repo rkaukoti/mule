@@ -48,7 +48,7 @@ public final class FtpListCommand extends ClassicFtpCommand implements ListComma
    */
   @Override
   public TreeNode list(FileConnectorConfig config, String directoryPath, boolean recursive, MuleMessage message,
-      Predicate<FileAttributes> matcher) {
+                       Predicate<FileAttributes> matcher) {
     FileAttributes directoryAttributes = getExistingFile(config, directoryPath);
     Path path = Paths.get(directoryAttributes.getPath());
 
@@ -77,7 +77,8 @@ public final class FtpListCommand extends ClassicFtpCommand implements ListComma
   }
 
   private void doList(FileConnectorConfig config, Path path, TreeNode.Builder treeNodeBuilder, boolean recursive,
-      MuleMessage message, Predicate<FileAttributes> matcher) throws IOException {
+                      MuleMessage message, Predicate<FileAttributes> matcher)
+      throws IOException {
     LOGGER.debug("Listing directory {}", path);
 
     FTPListParseEngine engine = client.initiateListParsing();
@@ -103,13 +104,12 @@ public final class FtpListCommand extends ClassicFtpCommand implements ListComma
             Path recursionPath = path.resolve(attributes.getName());
             if (!client.changeWorkingDirectory(attributes.getName())) {
               throw exception(format("Could not change working directory to '%s' while performing recursion on list operation",
-                  recursionPath));
+                                     recursionPath));
             }
             doList(config, recursionPath, childNodeBuilder, recursive, message, matcher);
             if (!client.changeToParentDirectory()) {
-              throw exception(
-                  format("Could not return to parent working directory '%s' while performing recursion on list operation",
-                      recursionPath.getParent()));
+              throw exception(format("Could not return to parent working directory '%s' while performing recursion on list operation",
+                                     recursionPath.getParent()));
             }
           }
         } else {

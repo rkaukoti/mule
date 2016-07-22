@@ -59,7 +59,7 @@ public class TransportCoreMessages extends MessageFactory {
 
   public static Message transformOnObjectUnsupportedTypeOfEndpoint(String name, ImmutableEndpoint endpoint, Class<?> class1) {
     return factory.createMessage(BUNDLE_PATH, 54, name, StringMessageUtils.toString(class1),
-        (endpoint != null ? endpoint.getEndpointURI() : null));
+                                 (endpoint != null ? endpoint.getEndpointURI() : null));
   }
 
   public static Message messageNotSupportedByMuleMessageFactory(Object message, Class<?> creator) {
@@ -158,7 +158,7 @@ public class TransportCoreMessages extends MessageFactory {
   }
 
   public static Message exceptionListenerMustUseOutboundEndpoint(AbstractExceptionListener exceptionListener,
-      ImmutableEndpoint endpoint) {
+                                                                 ImmutableEndpoint endpoint) {
     return factory.createMessage(BUNDLE_PATH, 235, endpoint, exceptionListener);
   }
 
@@ -187,7 +187,7 @@ public class TransportCoreMessages extends MessageFactory {
   }
 
   public static Message exchangePatternForEndpointNotSupported(MessageExchangePattern mep, String direction,
-      EndpointURI endpointURI) {
+                                                               EndpointURI endpointURI) {
     return factory.createMessage(BUNDLE_PATH, 323, mep.name(), direction, endpointURI);
   }
 

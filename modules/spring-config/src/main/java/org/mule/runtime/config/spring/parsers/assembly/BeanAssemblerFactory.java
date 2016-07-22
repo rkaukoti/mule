@@ -11,6 +11,6 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 public interface BeanAssemblerFactory {
 
   BeanAssembler newBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean, PropertyConfiguration targetConfig,
-      BeanDefinition target);
+                                 BeanDefinition target);
 
 }

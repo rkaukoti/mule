@@ -60,7 +60,7 @@ public class DbConfigDefinitionParser extends MuleOrphanDefinitionParser {
   }
 
   public DbConfigDefinitionParser(Class<? extends DbConfigResolverFactoryBean> dbConfigFactoryClass,
-      CheckExclusiveAttributes exclusiveAttributes) {
+                                  CheckExclusiveAttributes exclusiveAttributes) {
     super(dbConfigFactoryClass, true);
 
     addMapping(TRANSACTION_ISOLATION_ATTRIBUTE, TRANSACTION_ISOLATION_MAPPING);

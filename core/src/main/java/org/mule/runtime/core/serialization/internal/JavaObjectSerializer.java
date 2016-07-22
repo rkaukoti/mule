@@ -58,8 +58,8 @@ public class JavaObjectSerializer extends AbstractObjectSerializer {
 
   private void validateForSerialization(Object object) {
     if (object != null && !(object instanceof Serializable)) {
-      throw new SerializationException(
-          String.format("Was expecting a Serializable type. %s was found instead", object.getClass().getName()));
+      throw new SerializationException(String.format("Was expecting a Serializable type. %s was found instead",
+                                                     object.getClass().getName()));
     }
   }
 }

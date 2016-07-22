@@ -69,7 +69,8 @@ public class MultiConsumerJmsMessageReceiverTest extends AbstractMuleTestCase {
 
     MessageConsumer mockMessageConsumer = mock(TestMessageConsumer.class, CALLS_REAL_METHODS);
     when(mockJmsConnector.getJmsSupport().createConsumer(any(Session.class), any(Destination.class), anyString(), anyBoolean(),
-        anyString(), anyBoolean(), any(InboundEndpoint.class))).thenReturn(mockMessageConsumer);
+                                                         anyString(), anyBoolean(), any(InboundEndpoint.class)))
+                                                             .thenReturn(mockMessageConsumer);
     when(mockInboundEndpoint.getConnector()).thenReturn(mockJmsConnector);
     when(mockInboundEndpoint.getMuleContext().getRegistry().get(MuleProperties.OBJECT_DEFAULT_MESSAGE_PROCESSING_MANAGER))
         .thenReturn(mock(MessageProcessingManager.class));

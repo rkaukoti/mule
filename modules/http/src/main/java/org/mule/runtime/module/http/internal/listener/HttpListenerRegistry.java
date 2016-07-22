@@ -38,7 +38,7 @@ public class HttpListenerRegistry implements RequestHandlerProvider {
   private Logger logger = LoggerFactory.getLogger(getClass());
 
   public synchronized RequestHandlerManager addRequestHandler(final Server server, final RequestHandler requestHandler,
-      final ListenerRequestMatcher requestMatcher) {
+                                                              final ListenerRequestMatcher requestMatcher) {
     ServerAddressRequestHandlerRegistry serverAddressRequestHandlerRegistry = this.requestHandlerPerServerAddress.get(server);
     if (serverAddressRequestHandlerRegistry == null) {
       serverAddressRequestHandlerRegistry = new ServerAddressRequestHandlerRegistry();
@@ -115,11 +115,11 @@ public class HttpListenerRegistry implements RequestHandlerProvider {
         });
 
     public synchronized RequestHandlerManager addRequestHandler(final ListenerRequestMatcher requestMatcher,
-        final RequestHandler requestHandler) {
+                                                                final RequestHandler requestHandler) {
       pathMapSearchCache.invalidateAll();
       String requestMatcherPath = normalizePathWithSpacesOrEncodedSpaces(requestMatcher.getPath());
       Preconditions.checkArgument(requestMatcherPath.startsWith(SLASH) || requestMatcherPath.equals(WILDCARD_CHARACTER),
-          "path parameter must start with /");
+                                  "path parameter must start with /");
       validateCollision(requestMatcher);
       paths.add(getMethodAndPath(requestMatcher.getMethodRequestMatcher().getMethodsList(), requestMatcherPath));
       PathMap currentPathMap = rootPathMap;
@@ -190,9 +190,9 @@ public class HttpListenerRegistry implements RequestHandlerProvider {
                   || (isUriParameter(possibleCollisionLastPathPart) && isCatchAllPath(newListenerRequestMatcherLastPathPart)
                       || (isUriParameter(possibleCollisionLastPathPart)
                           && isUriParameter(newListenerRequestMatcherLastPathPart)))) {
-                throw new MuleRuntimeException(CoreMessages.createStaticMessage(String.format(
-                    "Already exists a listener matching that path and methods. Listener matching %s new listener %s",
-                    requestMatcher, newListenerRequestMatcher)));
+                throw new MuleRuntimeException(CoreMessages.createStaticMessage(String
+                    .format("Already exists a listener matching that path and methods. Listener matching %s new listener %s",
+                            requestMatcher, newListenerRequestMatcher)));
               }
             }
           }
@@ -284,7 +284,7 @@ public class HttpListenerRegistry implements RequestHandlerProvider {
     }
 
     private RequestHandlerMatcherPair findRequestHandlerMatcherPair(List<RequestHandlerMatcherPair> requestHandlerMatcherPairs,
-        HttpRequest request) {
+                                                                    HttpRequest request) {
       for (RequestHandlerMatcherPair requestHandlerMatcherPair : requestHandlerMatcherPairs) {
         if (requestHandlerMatcherPair.getRequestMatcher().matches(request)) {
           return requestHandlerMatcherPair;

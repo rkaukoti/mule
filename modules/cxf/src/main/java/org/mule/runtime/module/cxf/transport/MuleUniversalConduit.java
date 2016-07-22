@@ -74,7 +74,7 @@ public class MuleUniversalConduit extends AbstractConduit {
    * @param t The EPR associated with this Conduit - i.e. the reply destination.
    */
   public MuleUniversalConduit(MuleUniversalTransport transport, CxfConfiguration configuration, EndpointInfo ei,
-      EndpointReferenceType t) {
+                              EndpointReferenceType t) {
     super(getTargetReference(ei, t));
     this.transport = transport;
     this.endpoint = ei;

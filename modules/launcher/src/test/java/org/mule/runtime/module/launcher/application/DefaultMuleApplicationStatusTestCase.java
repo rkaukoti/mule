@@ -120,7 +120,7 @@ public class DefaultMuleApplicationStatusTestCase extends AbstractMuleContextTes
       @Override
       public String describeFailure() {
         return String.format("Application remained at status %s instead of moving to %s", application.getStatus().name(),
-            status.name());
+                             status.name());
       }
     });
 

@@ -23,14 +23,14 @@ public class DateTimeFunctionalTestCase extends AbstractELTestCase {
 
   @Test
   public void iso9601DateRoundTrip() {
-    assertTrue(
-        (Boolean) evaluate("time = server.dateTime.withTimeZone('UTC').date; time == " + "dateTime(time.toString()).date"));
+    assertTrue((Boolean) evaluate("time = server.dateTime.withTimeZone('UTC').date; time == "
+        + "dateTime(time.toString()).date"));
   }
 
   @Test
   public void iso9601TimeRoundTrip() {
-    assertTrue(
-        (Boolean) evaluate("time = server.dateTime.withTimeZone('UTC').time; time == " + "dateTime(time.toString()).time;"));
+    assertTrue((Boolean) evaluate("time = server.dateTime.withTimeZone('UTC').time; time == "
+        + "dateTime(time.toString()).time;"));
   }
 
   @Test
@@ -41,8 +41,7 @@ public class DateTimeFunctionalTestCase extends AbstractELTestCase {
 
   @Test
   public void customFormatDateRoundTrip() {
-    assertTrue((Boolean) evaluate(
-        "time = server.dateTime.withTimeZone('UTC').date; time == dateTime(time.format('MM/dd/yy:zz'),'MM/dd/yy:zz').date;"));
+    assertTrue((Boolean) evaluate("time = server.dateTime.withTimeZone('UTC').date; time == dateTime(time.format('MM/dd/yy:zz'),'MM/dd/yy:zz').date;"));
   }
 
   @Test
@@ -120,7 +119,7 @@ public class DateTimeFunctionalTestCase extends AbstractELTestCase {
   @Test
   public void changeIso8601TimeZone() {
     assertEquals("1900-01-01T01:00:00-08:00",
-        evaluate("dateTime('1900-01-01T09:00:00Z').changeTimeZone('GMT-08:00').toString()"));
+                 evaluate("dateTime('1900-01-01T09:00:00Z').changeTimeZone('GMT-08:00').toString()"));
   }
 
 

@@ -100,19 +100,17 @@ public final class ConnectionInterceptor implements Interceptor {
       throws ConnectionException {
     Optional<ConnectionProvider> connectionProvider = operationContext.getConfiguration().getConnectionProvider();
     if (!connectionProvider.isPresent()) {
-      throw new IllegalStateException(format(
-          "Operation '%s' of extension '%s' requires a connection but was executed with config '%s' which "
-              + "is not associated to a connection provider",
-          operationContext.getOperationModel().getName(),
-          operationContext.getConfiguration().getModel().getExtensionModel().getName(),
-          operationContext.getConfiguration().getName()));
+      throw new IllegalStateException(format("Operation '%s' of extension '%s' requires a connection but was executed with config '%s' which "
+          + "is not associated to a connection provider", operationContext.getOperationModel().getName(),
+                                             operationContext.getConfiguration().getModel().getExtensionModel().getName(),
+                                             operationContext.getConfiguration().getName()));
     }
 
     return connectionManager.getConnection(operationContext.getConfiguration().getValue());
   }
 
-  private <T extends TransactionalConnection> ConnectionHandler<T> getTransactedConnectionHandler(
-      OperationContextAdapter operationContext, TransactionConfig transactionConfig)
+  private <T extends TransactionalConnection> ConnectionHandler<T> getTransactedConnectionHandler(OperationContextAdapter operationContext,
+                                                                                                  TransactionConfig transactionConfig)
       throws ConnectionException, TransactionException {
     if (transactionConfig.getAction() == ACTION_NOT_SUPPORTED) {
       return getTransactionlessConnectionHandler(operationContext);
@@ -137,12 +135,11 @@ public final class ConnectionInterceptor implements Interceptor {
           bound = true;
           return new TransactionalConnectionHandler(txResource);
         } else if (transactionConfig.isTransacted()) {
-          throw new TransactionException(createStaticMessage(format(
-              "Operation '%s' of extension '%s' is transactional but current transaction doesn't "
-                  + "support connections of type '%s'",
-              operationContext.getOperationModel().getName(),
-              operationContext.getConfiguration().getModel().getExtensionModel().getName(),
-              connectionHandler.getClass().getName())));
+          throw new TransactionException(createStaticMessage(format("Operation '%s' of extension '%s' is transactional but current transaction doesn't "
+              + "support connections of type '%s'", operationContext.getOperationModel().getName(),
+                                                                    operationContext.getConfiguration().getModel()
+                                                                        .getExtensionModel().getName(),
+                                                                    connectionHandler.getClass().getName())));
         }
       } finally {
         if (!bound) {

@@ -77,7 +77,7 @@ public final class LifecycleAwareConfigurationInstance<T> extends AbstractInterc
    * @param connectionProvider an {@link Optional} containing the {@link ConnectionProvider} to use
    */
   public LifecycleAwareConfigurationInstance(String name, RuntimeConfigurationModel model, T value,
-      List<Interceptor> interceptors, Optional<ConnectionProvider> connectionProvider) {
+                                             List<Interceptor> interceptors, Optional<ConnectionProvider> connectionProvider) {
     super(interceptors);
     this.name = name;
     this.model = model;

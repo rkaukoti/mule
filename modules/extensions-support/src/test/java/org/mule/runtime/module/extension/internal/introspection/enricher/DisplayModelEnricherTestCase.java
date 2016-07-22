@@ -53,7 +53,7 @@ public class DisplayModelEnricherTestCase extends AbstractMuleTestCase {
     List<ParameterDeclaration> parameters = extensionDeclaration.getConfigurations().get(0).getParameters();
 
     assertParameterDisplayName(findParameter(parameters, PARAMETER_ORIGINAL_OVERRIDED_DISPLAY_NAME),
-        PARAMETER_OVERRIDED_DISPLAY_NAME);
+                               PARAMETER_OVERRIDED_DISPLAY_NAME);
   }
 
   @Test
@@ -74,7 +74,7 @@ public class DisplayModelEnricherTestCase extends AbstractMuleTestCase {
     List<ParameterDeclaration> parameters = operation.getParameters();
 
     assertParameterDisplayName(findParameter(parameters, OPERATION_PARAMETER_ORIGINAL_OVERRIDED_DISPLAY_NAME),
-        OPERATION_PARAMETER_OVERRIDED_DISPLAY_NAME);
+                               OPERATION_PARAMETER_OVERRIDED_DISPLAY_NAME);
   }
 
   @Test
@@ -108,11 +108,11 @@ public class DisplayModelEnricherTestCase extends AbstractMuleTestCase {
 
   private OperationDeclaration getOperation(ExtensionDeclaration extensionDeclaration, final String operationName) {
     return (OperationDeclaration) CollectionUtils.find(extensionDeclaration.getOperations(),
-        object -> ((OperationDeclaration) object).getName().equals(operationName));
+                                                       object -> ((OperationDeclaration) object).getName().equals(operationName));
   }
 
   private ParameterDeclaration findParameter(List<ParameterDeclaration> parameters, final String name) {
     return (ParameterDeclaration) CollectionUtils.find(parameters,
-        object -> name.equals(((ParameterDeclaration) object).getName()));
+                                                       object -> name.equals(((ParameterDeclaration) object).getName()));
   }
 }

@@ -77,7 +77,7 @@ public class MessageProcessorNotificationPathTestCase extends FunctionalTestCase
     testFlowPaths("subflow", "/0", "/1", "/1/subflow-call/subprocessors/0", "/1/subflow-call/subprocessors/1");
     testFlowPaths("subflow2", "/0", "/1", "/1/subflow-call/subprocessors/0", "/1/subflow-call/subprocessors/1", "/2");
     testFlowPaths("subflow\\/With\\/Slash", "/0", "/1", "/1/subflow\\/call/subprocessors/0", "/1/subflow\\/call/subprocessors/1",
-        "/2");
+                  "/2");
   }
 
   @Test

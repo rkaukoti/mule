@@ -17,12 +17,14 @@ import org.mule.runtime.core.component.DefaultComponentLifecycleAdapter;
 public class TestComponentLifecycleAdapter extends DefaultComponentLifecycleAdapter {
 
   public TestComponentLifecycleAdapter(Object pojoService, JavaComponent service, FlowConstruct flowConstruct,
-      MuleContext muleContext) throws MuleException {
+                                       MuleContext muleContext)
+      throws MuleException {
     super(pojoService, service, flowConstruct, muleContext);
   }
 
   public TestComponentLifecycleAdapter(Object pojoService, JavaComponent service, FlowConstruct flowConstruct,
-      EntryPointResolverSet epResolver, MuleContext muleContext) throws MuleException {
+                                       EntryPointResolverSet epResolver, MuleContext muleContext)
+      throws MuleException {
     super(pojoService, service, flowConstruct, epResolver, muleContext);
   }
 

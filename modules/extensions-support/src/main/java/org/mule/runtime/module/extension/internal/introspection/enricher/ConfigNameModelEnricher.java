@@ -64,20 +64,18 @@ public final class ConfigNameModelEnricher implements ModelEnricher {
       }
 
       if (fields.size() > 1) {
-        throw new IllegalConfigurationModelDefinitionException(String.format(
-            "Only one configuration field is allowed to be annotated with @%s, but class '%s' has %d fields "
-                + "with such annotation. Offending fields are: [%s]",
-            ConfigName.class.getSimpleName(), typeProperty.getType().getName(), fields.size(),
-            Joiner.on(", ").join(fields.stream().map(Field::getName).collect(toList()))));
+        throw new IllegalConfigurationModelDefinitionException(String
+            .format("Only one configuration field is allowed to be annotated with @%s, but class '%s' has %d fields "
+                + "with such annotation. Offending fields are: [%s]", ConfigName.class.getSimpleName(), typeProperty.getType()
+                    .getName(), fields.size(), Joiner.on(", ").join(fields.stream().map(Field::getName).collect(toList()))));
       }
 
       final Field configNameField = fields.iterator().next();
       if (!String.class.equals(configNameField.getType())) {
-        throw new IllegalConfigurationModelDefinitionException(String.format(
-            "Config class '%s' declares the field '%s' which is annotated with @%s and is of type '%s'. Only "
-                + "fields of type String are allowed to carry such annotation",
-            typeProperty.getType().getName(), configNameField.getName(), ConfigName.class.getSimpleName(),
-            configNameField.getType().getName()));
+        throw new IllegalConfigurationModelDefinitionException(String
+            .format("Config class '%s' declares the field '%s' which is annotated with @%s and is of type '%s'. Only "
+                + "fields of type String are allowed to carry such annotation", typeProperty.getType().getName(),
+                    configNameField.getName(), ConfigName.class.getSimpleName(), configNameField.getType().getName()));
       }
 
       declaration.addModelProperty(new RequireNameField(configNameField));

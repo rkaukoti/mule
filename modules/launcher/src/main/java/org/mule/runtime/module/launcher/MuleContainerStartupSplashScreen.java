@@ -38,7 +38,7 @@ public class MuleContainerStartupSplashScreen extends SplashScreen {
     if (att.values().size() > 0) {
       doBody(StringUtils.defaultString(MuleManifest.getProductDescription(), notset));
       doBody(String.format("%s Build: %s", CoreMessages.version().getMessage(),
-          StringUtils.defaultString(MuleManifest.getBuildNumber(), notset)));
+                           StringUtils.defaultString(MuleManifest.getBuildNumber(), notset)));
 
       doBody(StringUtils.defaultString(MuleManifest.getVendorName(), notset));
       doBody(StringUtils.defaultString(MuleManifest.getProductMoreInfo(), notset));
@@ -55,8 +55,8 @@ public class MuleContainerStartupSplashScreen extends SplashScreen {
     String patch = System.getProperty("sun.os.patch.level", null);
 
     doBody(String.format("OS: %s%s (%s, %s)", System.getProperty("os.name"),
-        (patch != null && !"unknown".equalsIgnoreCase(patch) ? " - " + patch : ""), System.getProperty("os.version"),
-        System.getProperty("os.arch")));
+                         (patch != null && !"unknown".equalsIgnoreCase(patch) ? " - " + patch : ""),
+                         System.getProperty("os.version"), System.getProperty("os.arch")));
     try {
       InetAddress host = NetworkUtils.getLocalHost();
       doBody(String.format("Host: %s (%s)", host.getHostName(), host.getHostAddress()));

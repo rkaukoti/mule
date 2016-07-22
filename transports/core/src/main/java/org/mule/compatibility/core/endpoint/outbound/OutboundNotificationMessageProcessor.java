@@ -34,8 +34,9 @@ public class OutboundNotificationMessageProcessor implements MessageProcessor {
       } else {
         notificationAction = EndpointMessageNotification.MESSAGE_DISPATCH_END;
       }
-      dispatchNotification(
-          new EndpointMessageNotification(event.getMessage(), endpoint, event.getFlowConstruct(), notificationAction), event);
+      dispatchNotification(new EndpointMessageNotification(event.getMessage(), endpoint, event.getFlowConstruct(),
+                                                           notificationAction),
+                           event);
     }
 
     return event;

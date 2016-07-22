@@ -67,7 +67,7 @@ public class FineGrainedControlClassLoader extends GoodCitizenClassLoader implem
       }
     } catch (ClassNotFoundException e) {
       throw new CompositeClassNotFoundException(name, lookupStrategy,
-          firstException != null ? asList(firstException, e) : asList(e));
+                                                firstException != null ? asList(firstException, e) : asList(e));
     }
 
     if (resolve) {

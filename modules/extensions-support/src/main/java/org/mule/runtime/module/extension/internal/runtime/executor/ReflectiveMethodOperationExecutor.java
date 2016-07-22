@@ -56,8 +56,9 @@ public final class ReflectiveMethodOperationExecutor implements OperationExecuto
    */
   @Override
   public Object execute(OperationContext operationContext) throws Exception {
-    return withContextClassLoader(extensionClassLoader, () -> invokeMethod(operationMethod, executorDelegate,
-        getParameterValues(operationContext, operationMethod.getParameterTypes())));
+    return withContextClassLoader(extensionClassLoader,
+                                  () -> invokeMethod(operationMethod, executorDelegate,
+                                                     getParameterValues(operationContext, operationMethod.getParameterTypes())));
   }
 
   private Object[] getParameterValues(OperationContext operationContext, Class<?>[] parameterTypes) {

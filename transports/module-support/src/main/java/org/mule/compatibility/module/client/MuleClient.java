@@ -259,7 +259,8 @@ public class MuleClient implements Disposable {
    * @throws org.mule.api.MuleException if the dispatch fails or the components or transfromers cannot be found
    */
   public FutureMessageResult sendAsync(final String url, final Object payload, final Map<String, Serializable> messageProperties,
-      final int timeout) throws MuleException {
+                                       final int timeout)
+      throws MuleException {
     Map<String, Serializable> outboundProperties = messageProperties;
     if (messageProperties == null) {
       outboundProperties = EMPTY_MAP;

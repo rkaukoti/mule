@@ -182,11 +182,11 @@ public class FileConnector extends AbstractConnector {
 
     try {
       return serviceDescriptor.createMessageReceiver(this, flowConstruct, endpoint,
-          new Object[] {readDir, moveTo, moveToPattern, Long.valueOf(polling)});
+                                                     new Object[] {readDir, moveTo, moveToPattern, Long.valueOf(polling)});
 
     } catch (Exception e) {
       throw new InitialisationException(TransportCoreMessages.failedToCreateObjectWith("Message Receiver", serviceDescriptor), e,
-          this);
+                                        this);
     }
   }
 
@@ -450,8 +450,8 @@ public class FileConnector extends AbstractConnector {
 
       // move didn't work - bail out
       if (!fileWasMoved) {
-        throw new DefaultMuleException(
-            FileMessages.failedToMoveFile(sourceFile.getAbsolutePath(), destinationFile.getAbsolutePath()));
+        throw new DefaultMuleException(FileMessages.failedToMoveFile(sourceFile.getAbsolutePath(),
+                                                                     destinationFile.getAbsolutePath()));
       }
     }
   }

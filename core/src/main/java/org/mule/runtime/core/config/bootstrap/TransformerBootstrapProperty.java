@@ -32,7 +32,7 @@ public class TransformerBootstrapProperty extends AbstractBootstrapProperty {
    * @param mimeType transformer returned mimeType. Can be null
    */
   public TransformerBootstrapProperty(BootstrapService service, ArtifactType artifactType, boolean optional, String name,
-      String className, String returnClassName, String mimeType) {
+                                      String className, String returnClassName, String mimeType) {
     super(service, artifactType, optional);
     checkArgument(!StringUtils.isEmpty(className), "className cannot be empty");
 

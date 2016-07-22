@@ -92,8 +92,7 @@ public class PetStoreRetryPolicyConnectionTestCase extends ExtensionFunctionalTe
   public static class PooledPetStoreConnectionProviderWithValidConnection extends PetStoreConnectionProvider {
 
     @Override
-    public ConnectionHandlingStrategy<PetStoreClient> getHandlingStrategy(
-        ConnectionHandlingStrategyFactory handlingStrategyFactory) {
+    public ConnectionHandlingStrategy<PetStoreClient> getHandlingStrategy(ConnectionHandlingStrategyFactory handlingStrategyFactory) {
       return handlingStrategyFactory.requiresPooling();
     }
   }
@@ -104,12 +103,11 @@ public class PetStoreRetryPolicyConnectionTestCase extends ExtensionFunctionalTe
     @Override
     public ConnectionValidationResult validate(PetStoreClient connection) {
       return ConnectionValidationResult.failure(CONNECTION_FAIL, ConnectionExceptionCode.INCORRECT_CREDENTIALS,
-          new Exception("Invalid credentials"));
+                                                new Exception("Invalid credentials"));
     }
 
     @Override
-    public ConnectionHandlingStrategy<PetStoreClient> getHandlingStrategy(
-        ConnectionHandlingStrategyFactory handlingStrategyFactory) {
+    public ConnectionHandlingStrategy<PetStoreClient> getHandlingStrategy(ConnectionHandlingStrategyFactory handlingStrategyFactory) {
       return handlingStrategyFactory.requiresPooling();
     }
   }

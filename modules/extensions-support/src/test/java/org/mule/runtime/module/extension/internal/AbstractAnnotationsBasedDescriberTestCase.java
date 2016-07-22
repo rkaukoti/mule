@@ -40,11 +40,11 @@ public abstract class AbstractAnnotationsBasedDescriberTestCase extends Abstract
 
   protected OperationDeclaration getOperation(ExtensionDeclaration extensionDeclaration, final String operationName) {
     return (OperationDeclaration) CollectionUtils.find(extensionDeclaration.getOperations(),
-        object -> ((OperationDeclaration) object).getName().equals(operationName));
+                                                       object -> ((OperationDeclaration) object).getName().equals(operationName));
   }
 
   protected ParameterDeclaration findParameter(List<ParameterDeclaration> parameters, final String name) {
     return (ParameterDeclaration) CollectionUtils.find(parameters,
-        object -> name.equals(((ParameterDeclaration) object).getName()));
+                                                       object -> name.equals(((ParameterDeclaration) object).getName()));
   }
 }

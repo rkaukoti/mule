@@ -32,8 +32,9 @@ public class MuleSecurityManagerValidator implements Validator {
       throw new WSSecurityException(WSSecurityException.FAILURE, "noCredential");
     }
 
-    DefaultMuleAuthentication auth = new DefaultMuleAuthentication(
-        new MuleCredentials(credential.getUsernametoken().getName(), credential.getUsernametoken().getPassword().toCharArray()));
+    DefaultMuleAuthentication auth =
+        new DefaultMuleAuthentication(new MuleCredentials(credential.getUsernametoken().getName(),
+                                                          credential.getUsernametoken().getPassword().toCharArray()));
 
     try {
       Authentication authentication = securityManager.authenticate(auth);

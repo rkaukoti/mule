@@ -69,7 +69,8 @@ final class MuleDocumentLoader implements DocumentLoader {
    */
   @Override
   public Document loadDocument(InputSource inputSource, EntityResolver entityResolver, ErrorHandler errorHandler,
-      int validationMode, boolean namespaceAware) throws Exception {
+                               int validationMode, boolean namespaceAware)
+      throws Exception {
     ByteArrayOutputStream output = new ByteArrayOutputStream();
     IOUtils.copy(inputSource.getByteStream(), output);
 

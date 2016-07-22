@@ -43,7 +43,7 @@ public class RandomAccessFileQueueStoreTestCase extends AbstractMuleTestCase {
       randomAccessFileQueueStore.addLast(data);
     }
     assertThat(randomAccessFileQueueStore.getLength(),
-        is((dataSize + RandomAccessFileQueueStore.CONTROL_DATA_SIZE) * numberOfElements));
+               is((dataSize + RandomAccessFileQueueStore.CONTROL_DATA_SIZE) * numberOfElements));
   }
 
   private RandomAccessFileQueueStore createRandomAccessFileQueueStore() {

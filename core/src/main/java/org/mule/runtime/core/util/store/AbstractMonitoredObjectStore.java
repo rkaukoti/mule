@@ -60,8 +60,8 @@ public abstract class AbstractMonitoredObjectStore<T extends Serializable>
     }
 
     if (expirationInterval <= 0) {
-      throw new IllegalArgumentException(
-          CoreMessages.propertyHasInvalidValue("expirationInterval", new Integer(expirationInterval)).toString());
+      throw new IllegalArgumentException(CoreMessages
+          .propertyHasInvalidValue("expirationInterval", new Integer(expirationInterval)).toString());
     }
 
     if (scheduler == null) {

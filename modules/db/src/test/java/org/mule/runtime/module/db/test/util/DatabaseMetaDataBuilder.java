@@ -24,7 +24,7 @@ public class DatabaseMetaDataBuilder {
   }
 
   public DatabaseMetaDataBuilder returningStoredProcedureColumns(String catalog, String storedProcedureName,
-      ResultSet procedureColumns) {
+                                                                 ResultSet procedureColumns) {
     try {
       when(databaseMetaData.getProcedureColumns(catalog, null, storedProcedureName, "%")).thenReturn(procedureColumns);
     } catch (SQLException e) {

@@ -42,7 +42,7 @@ public class DefaultResourceReleaser implements ResourceReleaser {
         if (logger.isDebugEnabled()) {
           logger
               .debug(format("Skipping deregister driver %s. It wasn't loaded by the classloader of the artifact being released.",
-                  driver.getClass()));
+                            driver.getClass()));
         }
       }
     }

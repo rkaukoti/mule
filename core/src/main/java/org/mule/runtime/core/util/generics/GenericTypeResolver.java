@@ -100,8 +100,8 @@ public abstract class GenericTypeResolver {
       return null;
     }
     if (typeArgs.length != 1) {
-      throw new IllegalArgumentException(
-          "Expected 1 type argument on generic interface [" + genericIfc.getName() + "] but found " + typeArgs.length);
+      throw new IllegalArgumentException("Expected 1 type argument on generic interface [" + genericIfc.getName() + "] but found "
+          + typeArgs.length);
     }
     return typeArgs[0];
   }
@@ -245,7 +245,7 @@ public abstract class GenericTypeResolver {
   }
 
   private static void extractTypeVariablesFromGenericInterfaces(Type[] genericInterfaces,
-      Map<TypeVariable, Type> typeVariableMap) {
+                                                                Map<TypeVariable, Type> typeVariableMap) {
     for (Type genericInterface : genericInterfaces) {
       if (genericInterface instanceof ParameterizedType) {
         ParameterizedType pt = (ParameterizedType) genericInterface;

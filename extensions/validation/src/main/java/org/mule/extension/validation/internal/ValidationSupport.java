@@ -46,8 +46,8 @@ abstract class ValidationSupport {
   private ValidationResult evaluateCustomMessage(ValidationResult result, ValidationContext validationContext) {
     String customMessage = validationContext.getOptions().getMessage();
     if (!StringUtils.isBlank(customMessage)) {
-      result = error(validationContext.getMuleEvent().getMuleContext().getExpressionManager().parse(customMessage,
-          validationContext.getMuleEvent()));
+      result = error(validationContext.getMuleEvent().getMuleContext().getExpressionManager()
+          .parse(customMessage, validationContext.getMuleEvent()));
     }
 
     return result;

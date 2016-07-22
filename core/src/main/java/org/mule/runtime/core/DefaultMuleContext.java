@@ -183,7 +183,7 @@ public class DefaultMuleContext implements MuleContext {
    */
   @Deprecated
   public DefaultMuleContext(MuleConfiguration config, WorkManager workManager, WorkListener workListener,
-      MuleContextLifecycleManager lifecycleManager, ServerNotificationManager notificationManager) {
+                            MuleContextLifecycleManager lifecycleManager, ServerNotificationManager notificationManager) {
     this.config = config;
     ((MuleContextAware) config).setMuleContext(this);
     this.workManager = workManager;
@@ -228,7 +228,7 @@ public class DefaultMuleContext implements MuleContext {
       JdkVersionUtils.validateJdk();
     } catch (RuntimeException e) {
       throw new InitialisationException(CoreMessages.invalidJdk(SystemUtils.JAVA_VERSION, JdkVersionUtils.getSupportedJdks()),
-          this);
+                                        this);
     }
 
     try {
@@ -635,8 +635,8 @@ public class DefaultMuleContext implements MuleContext {
 
   protected void checkLifecycleForPropertySet(String propertyName, String phase) throws IllegalStateException {
     if (lifecycleManager.isPhaseComplete(phase)) {
-      throw new IllegalStateException(
-          "Cannot set property: '" + propertyName + "' once the server has already been through the " + phase + " phase.");
+      throw new IllegalStateException("Cannot set property: '" + propertyName + "' once the server has already been through the "
+          + phase + " phase.");
     }
   }
 
@@ -835,8 +835,8 @@ public class DefaultMuleContext implements MuleContext {
     if (config.getDefaultExceptionStrategyName() != null) {
       defaultExceptionStrategy = getRegistry().lookupObject(config.getDefaultExceptionStrategyName());
       if (defaultExceptionStrategy == null) {
-        throw new MuleRuntimeException(CoreMessages.createStaticMessage(
-            String.format("No global exception strategy named %s", config.getDefaultExceptionStrategyName())));
+        throw new MuleRuntimeException(CoreMessages.createStaticMessage(String.format("No global exception strategy named %s",
+                                                                                      config.getDefaultExceptionStrategyName())));
       }
     } else {
       defaultExceptionStrategy = new DefaultMessagingExceptionStrategy(this);

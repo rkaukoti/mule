@@ -40,8 +40,8 @@ public class JSR250ValidatorProcessor implements InjectProcessor {
   public Object process(Object object) {
     List<AnnotationMetaData> annos = AnnotationUtils.getMethodAnnotations(object.getClass(), PostConstruct.class);
     if (annos.size() > 1) {
-      throw new IllegalArgumentException(
-          CoreMessages.objectHasMoreThanOnePostConstructAnnotation(object.getClass()).getMessage());
+      throw new IllegalArgumentException(CoreMessages.objectHasMoreThanOnePostConstructAnnotation(object.getClass())
+          .getMessage());
     } else if (annos.size() == 1) {
       validateLifecycleMethod((Method) annos.get(0).getMember());
     }

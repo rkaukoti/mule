@@ -20,8 +20,8 @@ public class WsSecurityDefinitionParser extends ParentContextDefinitionParser {
     super(MuleOrphanDefinitionParser.ROOT_ELEMENT, createRootDefinitionParser(wsSecurityClass));
     otherwise(createChildDefinitionParser(wsSecurityClass));
 
-    super.registerPreProcessor(new CheckExclusiveAttributesAndChildren(new String[] {"ref"},
-        new String[] {"mule-security-manager", "ws-config", "ws-custom-validator"}));
+    super.registerPreProcessor(new CheckExclusiveAttributesAndChildren(new String[] {"ref"}, new String[] {
+        "mule-security-manager", "ws-config", "ws-custom-validator"}));
 
   }
 

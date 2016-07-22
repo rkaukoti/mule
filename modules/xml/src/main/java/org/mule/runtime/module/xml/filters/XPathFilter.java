@@ -68,8 +68,8 @@ public class XPathFilter extends AbstractJaxpFilter implements Filter, Initialis
     }
 
     if (pattern == null) {
-      throw new InitialisationException(
-          MessageFactory.createStaticMessage("A pattern must be supplied to the " + ClassUtils.getSimpleName(getClass())), this);
+      throw new InitialisationException(MessageFactory
+          .createStaticMessage("A pattern must be supplied to the " + ClassUtils.getSimpleName(getClass())), this);
     }
 
     try {
@@ -89,8 +89,7 @@ public class XPathFilter extends AbstractJaxpFilter implements Filter, Initialis
 
   @Override
   public boolean accept(MuleMessage message) {
-    throw new UnsupportedOperationException(
-        "MULE-9341 Remove Filters that are not needed.  This method will be removed when filters are cleaned up.");
+    throw new UnsupportedOperationException("MULE-9341 Remove Filters that are not needed.  This method will be removed when filters are cleaned up.");
   }
 
   @Override
@@ -116,7 +115,7 @@ public class XPathFilter extends AbstractJaxpFilter implements Filter, Initialis
       } else {
         if (logger.isInfoEnabled()) {
           logger.info("''expectedValue'' attribute for {} is not set, using 'true' by default",
-              ClassUtils.getSimpleName(getClass()));
+                      ClassUtils.getSimpleName(getClass()));
         }
         expectedValue = Boolean.TRUE.toString();
       }
@@ -154,7 +153,7 @@ public class XPathFilter extends AbstractJaxpFilter implements Filter, Initialis
 
     if (logger.isDebugEnabled()) {
       logger.debug(MessageFormat.format("{0} Expression result = ''{1}'' -  Expected value = ''{2}''",
-          ClassUtils.getSimpleName(getClass()), xpathResult, expectedValue));
+                                        ClassUtils.getSimpleName(getClass()), xpathResult, expectedValue));
     }
 
     // Compare the XPath result with the expected result.
@@ -168,8 +167,8 @@ public class XPathFilter extends AbstractJaxpFilter implements Filter, Initialis
       // A null result was not expected, something probably went wrong.
       else {
         if (logger.isDebugEnabled()) {
-          logger.debug(
-              MessageFormat.format("{0} expression evaluates to null: {1}", ClassUtils.getSimpleName(getClass()), pattern));
+          logger.debug(MessageFormat.format("{0} expression evaluates to null: {1}", ClassUtils.getSimpleName(getClass()),
+                                            pattern));
         }
       }
     }

@@ -93,9 +93,9 @@ public class AsyncDelegateMessageProcessor extends AbstractMessageProcessorOwner
     if (flowConstruct == null) {
       throw new IllegalArgumentException("FlowConstruct cannot be null");
     } else if (!(flowConstruct instanceof StageNameSourceProvider)) {
-      throw new IllegalArgumentException(
-          String.format("FlowConstuct must implement the %s interface. However, the type %s does not implement it",
-              StageNameSourceProvider.class.getCanonicalName(), flowConstruct.getClass().getCanonicalName()));
+      throw new IllegalArgumentException(String
+          .format("FlowConstuct must implement the %s interface. However, the type %s does not implement it",
+                  StageNameSourceProvider.class.getCanonicalName(), flowConstruct.getClass().getCanonicalName()));
     }
   }
 
@@ -108,9 +108,9 @@ public class AsyncDelegateMessageProcessor extends AbstractMessageProcessorOwner
     final MuleMessage message = event.getMessage();
     if (consumablePayloadWarned.compareAndSet(false, true) && isConsumable(message.getDataType().getType())) {
       logger.warn(String.format(
-          "Using 'async' router with consumable payload (%s) may lead to unexpected results."
-              + " Please ensure that only one of the branches actually consumes the payload, or transform it by using an <object-to-byte-array-transformer>.",
-          message.getPayload().getClass().getName()));
+                                "Using 'async' router with consumable payload (%s) may lead to unexpected results."
+                                    + " Please ensure that only one of the branches actually consumes the payload, or transform it by using an <object-to-byte-array-transformer>.",
+                                message.getPayload().getClass().getName()));
     }
 
     if (target != null) {

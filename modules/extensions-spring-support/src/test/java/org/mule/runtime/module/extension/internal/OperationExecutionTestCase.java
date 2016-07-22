@@ -49,7 +49,7 @@ public class OperationExecutionTestCase extends ExtensionFunctionalTestCase {
 
   public static final String HEISENBERG = "heisenberg";
   public static final String KILL_RESULT = String.format("Killed with: %s , Type %s and attribute %s", RICIN_KILL_MESSAGE,
-      WeaponType.MELEE_WEAPON.name(), "Pizza on the rooftop");
+                                                         WeaponType.MELEE_WEAPON.name(), "Pizza on the rooftop");
   public static final long PAYMENT = 100;
   private static final String GUSTAVO_FRING = "Gustavo Fring";
   private static final BigDecimal MONEY = BigDecimal.valueOf(1000000);
@@ -327,8 +327,8 @@ public class OperationExecutionTestCase extends ExtensionFunctionalTestCase {
   }
 
   private void assertDynamicVictim(String flowName, String victim) throws Exception {
-    assertKnockedDoor(
-        getPayloadAsString(flowRunner(flowName).withPayload("").withFlowVariable("victim", victim).run().getMessage()), victim);
+    assertKnockedDoor(getPayloadAsString(flowRunner(flowName).withPayload("").withFlowVariable("victim", victim).run()
+        .getMessage()), victim);
   }
 
   private void assertKnockedDoor(String actual, String expected) {

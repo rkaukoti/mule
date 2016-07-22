@@ -59,7 +59,7 @@ public class CxfErrorBehaviorTestCase extends FunctionalTestCase {
     assertNotNull(response);
     assertTrue(getPayloadAsString(response).contains("<faultstring>"));
     assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()),
-        response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
+                 response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
   }
 
   @Test
@@ -71,7 +71,7 @@ public class CxfErrorBehaviorTestCase extends FunctionalTestCase {
     assertNotNull(response);
     assertTrue(getPayloadAsString(response).contains("<faultstring>"));
     assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()),
-        response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
+                 response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
   }
 
   @Test
@@ -83,7 +83,7 @@ public class CxfErrorBehaviorTestCase extends FunctionalTestCase {
     assertNotNull(response);
     assertTrue(getPayloadAsString(response).contains("<faultstring>"));
     assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()),
-        response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
+                 response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
   }
 
   @Test
@@ -95,7 +95,7 @@ public class CxfErrorBehaviorTestCase extends FunctionalTestCase {
     assertNotNull(response);
     assertTrue(getPayloadAsString(response).contains("Illegal argument!!"));
     assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()),
-        response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
+                 response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
   }
 
   @Test
@@ -114,33 +114,33 @@ public class CxfErrorBehaviorTestCase extends FunctionalTestCase {
   public void testServerClientProxyWithFault() throws Exception {
     MuleClient client = muleContext.getClient();
     MuleMessage result = client.send("http://localhost:" + dynamicPort.getNumber() + "/testProxyWithFault",
-        getTestMuleMessage(requestFaultPayload), HTTP_REQUEST_OPTIONS);
+                                     getTestMuleMessage(requestFaultPayload), HTTP_REQUEST_OPTIONS);
     String resString = getPayloadAsString(result);
     assertThat(resString, containsString("<faultstring>Cxf Exception Message</faultstring>"));
     assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()),
-        result.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
+                 result.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
   }
 
   @Test
   public void testServerClientProxyWithTransformerException() throws Exception {
     MuleClient client = muleContext.getClient();
     MuleMessage result = client.send("http://localhost:" + dynamicPort.getNumber() + "/testProxyWithTransformerException",
-        getTestMuleMessage(requestPayload), HTTP_REQUEST_OPTIONS);
+                                     getTestMuleMessage(requestPayload), HTTP_REQUEST_OPTIONS);
     String resString = getPayloadAsString(result);
     assertTrue(resString.contains("TransformerException"));
     assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()),
-        result.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
+                 result.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
   }
 
   @Test
   public void testServerClientJaxwsWithUnwrapFault() throws Exception {
     MuleClient client = muleContext.getClient();
     MuleMessage result = client.send("http://localhost:" + dynamicPort.getNumber() + "/testUnwrapProxyFault",
-        getTestMuleMessage(requestPayload), HTTP_REQUEST_OPTIONS);
+                                     getTestMuleMessage(requestPayload), HTTP_REQUEST_OPTIONS);
     String resString = getPayloadAsString(result);
     assertThat(resString, containsString("Illegal argument!!"));
     assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()),
-        result.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
+                 result.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
   }
 
   public static class CxfTransformerThrowsExceptions extends AbstractTransformer {

@@ -108,11 +108,13 @@ public abstract class AbstractEndpoint extends AbstractAnnotatedObject implement
   private boolean disableTransportTransformer = false;
 
   public AbstractEndpoint(Connector connector, EndpointURI endpointUri, String name, Map properties,
-      TransactionConfig transactionConfig, boolean deleteUnacceptedMessages, MessageExchangePattern messageExchangePattern,
-      int responseTimeout, String initialState, Charset endpointEncoding, String endpointBuilderName, MuleContext muleContext,
-      RetryPolicyTemplate retryPolicyTemplate, AbstractRedeliveryPolicy redeliveryPolicy,
-      EndpointMessageProcessorChainFactory messageProcessorsFactory, List<MessageProcessor> messageProcessors,
-      List<MessageProcessor> responseMessageProcessors, boolean disableTransportTransformer, MediaType endpointMimeType) {
+                          TransactionConfig transactionConfig, boolean deleteUnacceptedMessages,
+                          MessageExchangePattern messageExchangePattern, int responseTimeout, String initialState,
+                          Charset endpointEncoding, String endpointBuilderName, MuleContext muleContext,
+                          RetryPolicyTemplate retryPolicyTemplate, AbstractRedeliveryPolicy redeliveryPolicy,
+                          EndpointMessageProcessorChainFactory messageProcessorsFactory, List<MessageProcessor> messageProcessors,
+                          List<MessageProcessor> responseMessageProcessors, boolean disableTransportTransformer,
+                          MediaType endpointMimeType) {
     this.connector = connector;
     this.endpointUri = endpointUri;
     this.name = name;

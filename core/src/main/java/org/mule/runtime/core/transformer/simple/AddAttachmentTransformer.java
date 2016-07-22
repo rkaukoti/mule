@@ -48,13 +48,13 @@ public class AddAttachmentTransformer extends AbstractMessageTransformer {
         Object value = valueEvaluator.resolveValue(event);
         if (value == null) {
           logger.error(MessageFormat.format(
-              "Attachment with key ''{0}'', not found on message using ''{1}''. Since the value was marked optional, nothing was set on the message for this attachment",
-              key, valueEvaluator.getRawValue()));
+                                            "Attachment with key ''{0}'', not found on message using ''{1}''. Since the value was marked optional, nothing was set on the message for this attachment",
+                                            key, valueEvaluator.getRawValue()));
         } else {
           MediaType contentType =
               DataType.builder().mediaType(contentTypeEvaluator.resolveStringValue(event)).build().getMediaType();
-          event.setMessage(
-              MuleMessage.builder(event.getMessage()).addOutboundAttachment(key, toDataHandler(key, value, contentType)).build());
+          event.setMessage(MuleMessage.builder(event.getMessage())
+              .addOutboundAttachment(key, toDataHandler(key, value, contentType)).build());
         }
       }
 

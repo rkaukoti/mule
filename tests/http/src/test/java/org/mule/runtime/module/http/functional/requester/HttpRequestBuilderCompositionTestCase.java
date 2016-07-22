@@ -23,7 +23,7 @@ public class HttpRequestBuilderCompositionTestCase extends AbstractHttpRequestTe
     flowRunner("testFlow").withPayload(TEST_MESSAGE).run();
 
     assertThat(uri,
-        equalTo("/testPath?queryParam1=testValue1&queryParam2=testValue2&queryParam2=newTestValue2&queryParam3=testValue3"));
+               equalTo("/testPath?queryParam1=testValue1&queryParam2=testValue2&queryParam2=newTestValue2&queryParam3=testValue3"));
     assertThat(getFirstReceivedHeader("testHeader1"), equalTo("headerValue1"));
     assertThat(getFirstReceivedHeader("testHeader2"), equalTo("headerValue2"));
   }

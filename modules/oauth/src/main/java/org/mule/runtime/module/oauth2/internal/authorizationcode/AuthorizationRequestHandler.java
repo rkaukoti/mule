@@ -115,8 +115,8 @@ public class AuthorizationRequestHandler implements MuleContextAware {
             .setCustomParameters(customParameters).setRedirectUrl(oauthConfig.getRedirectionUrl())
             .setState(stateEncoder.getEncodedState()).setScope(scopes).buildUrl();
 
-        muleEvent.setMessage(
-            MuleMessage.builder(muleEvent.getMessage()).addOutboundProperty(LOCATION, authorizationUrlWithParams).build());
+        muleEvent.setMessage(MuleMessage.builder(muleEvent.getMessage()).addOutboundProperty(LOCATION, authorizationUrlWithParams)
+            .build());
         return muleEvent;
       }
     };

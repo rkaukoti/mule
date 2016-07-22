@@ -134,7 +134,7 @@ public class QueryDefinitionParser {
     List<Element> childElementsByTagName = DomUtils.getChildElementsByTagName(element, QUERY_TAG_NAMES);
     if (childElementsByTagName.size() == 0) {
       throw new IllegalArgumentException(String.format("Element %s must contain one of the following elements: %s",
-          element.getTagName(), Arrays.toString(QUERY_TAG_NAMES)));
+                                                       element.getTagName(), Arrays.toString(QUERY_TAG_NAMES)));
     }
 
     List<Element> params = DomUtils.getChildElementsByTagName(element, new String[] {IN_PARAM_TAG, "out-param", "inout-param"});

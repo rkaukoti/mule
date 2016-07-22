@@ -127,15 +127,15 @@ final class CachedConnectionHandler<Connection> implements ConnectionHandlerAdap
       validationResult = connectionProvider.validate(connection);
     } catch (Exception e) {
       validationResult = ConnectionValidationResult.failure(
-          "Error validating connection. Unexpected exception was thrown by the extension when validating the connection",
-          ConnectionExceptionCode.UNKNOWN, e);
+                                                            "Error validating connection. Unexpected exception was thrown by the extension when validating the connection",
+                                                            ConnectionExceptionCode.UNKNOWN, e);
     }
 
     if (validationResult == null) {
       String errorMessage =
           "Error validating connection. validate() method from the connection provider can not return a null ConnectionValidationResult";
       validationResult = ConnectionValidationResult.failure(errorMessage, ConnectionExceptionCode.UNKNOWN,
-          new ConnectionException(errorMessage));
+                                                            new ConnectionException(errorMessage));
     }
 
     return validationResult;

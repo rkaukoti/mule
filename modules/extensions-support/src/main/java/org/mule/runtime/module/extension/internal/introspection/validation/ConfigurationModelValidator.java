@@ -43,9 +43,11 @@ public final class ConfigurationModelValidator implements ModelValidator {
             ((RuntimeConfigurationModel) configurationModel).getConfigurationFactory();
         if (!clazz.isAssignableFrom(configurationFactory.getObjectType())) {
           throw new IllegalConfigurationModelDefinitionException(String.format(
-              "Extension '%s' defines the '%s' configuration. However, the extension's operations %s expect configurations of type '%s'. "
-                  + "Please make sure that all configurations in the extension can be used with all its operations.",
-              model.getName(), configurationFactory.getObjectType(), clazz, configParams.get(clazz)));
+                                                                               "Extension '%s' defines the '%s' configuration. However, the extension's operations %s expect configurations of type '%s'. "
+                                                                                   + "Please make sure that all configurations in the extension can be used with all its operations.",
+                                                                               model.getName(),
+                                                                               configurationFactory.getObjectType(), clazz,
+                                                                               configParams.get(clazz)));
         }
       }
     }

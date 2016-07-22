@@ -52,7 +52,7 @@ public class ExtensionSourceObjectFactory extends AbstractExtensionObjectFactory
   private ConnectionManagerAdapter connectionManager;
 
   public ExtensionSourceObjectFactory(RuntimeExtensionModel extensionModel, RuntimeSourceModel sourceModel,
-      MuleContext muleContext) {
+                                      MuleContext muleContext) {
     this.extensionModel = extensionModel;
     this.sourceModel = sourceModel;
     this.muleContext = muleContext;
@@ -67,7 +67,8 @@ public class ExtensionSourceObjectFactory extends AbstractExtensionObjectFactory
 
     ExtensionMessageSource messageSource =
         new ExtensionMessageSource(extensionModel, sourceModel, getSourceFactory(resolverSet), configurationProviderName,
-            getThreadingProfile(), getRetryPolicyTemplate(), (ExtensionManagerAdapter) muleContext.getExtensionManager());
+                                   getThreadingProfile(), getRetryPolicyTemplate(), (ExtensionManagerAdapter) muleContext
+                                       .getExtensionManager());
     try {
       muleContext.getInjector().inject(messageSource);
     } catch (MuleException e) {
@@ -91,8 +92,8 @@ public class ExtensionSourceObjectFactory extends AbstractExtensionObjectFactory
       try {
         return new SourceConfigurer(sourceModel, resolverSet, muleContext).configure(source);
       } catch (Exception e) {
-        throw new MuleRuntimeException(
-            createStaticMessage(format("Could not create generator for source '%s'", sourceModel.getName())));
+        throw new MuleRuntimeException(createStaticMessage(format("Could not create generator for source '%s'",
+                                                                  sourceModel.getName())));
       }
     };
   }
@@ -109,9 +110,8 @@ public class ExtensionSourceObjectFactory extends AbstractExtensionObjectFactory
     List<String> dynamicParams = resolverSet.getResolvers().entrySet().stream().filter(entry -> entry.getValue().isDynamic())
         .map(entry -> entry.getKey()).collect(toList());
 
-    return new ConfigurationException(
-        createStaticMessage(format("The '%s' message source is using expressions, which are not allowed on message sources. "
-            + "Offending parameters are: [%s]", model.getName(), Joiner.on(',').join(dynamicParams))));
+    return new ConfigurationException(createStaticMessage(format("The '%s' message source is using expressions, which are not allowed on message sources. "
+        + "Offending parameters are: [%s]", model.getName(), Joiner.on(',').join(dynamicParams))));
   }
 
   public void setConfigurationProviderName(String configurationProviderName) {

@@ -70,11 +70,12 @@ class ConfigurationProviderObjectFactory extends AbstractExtensionObjectFactory<
     ConfigurationProvider<Object> configurationProvider;
     try {
       if (resolverSet.isDynamic() || connectionProviderResolver.isDynamic()) {
-        configurationProvider = configurationProviderFactory.createDynamicConfigurationProvider(name, configurationModel,
-            resolverSet, connectionProviderResolver, getDynamicConfigPolicy());
+        configurationProvider =
+            configurationProviderFactory.createDynamicConfigurationProvider(name, configurationModel, resolverSet,
+                                                                            connectionProviderResolver, getDynamicConfigPolicy());
       } else {
-        configurationProvider = configurationProviderFactory.createStaticConfigurationProvider(name, configurationModel,
-            resolverSet, connectionProviderResolver, muleContext);
+        configurationProvider = configurationProviderFactory
+            .createStaticConfigurationProvider(name, configurationModel, resolverSet, connectionProviderResolver, muleContext);
       }
 
       muleContext.getInjector().inject(configurationProvider);

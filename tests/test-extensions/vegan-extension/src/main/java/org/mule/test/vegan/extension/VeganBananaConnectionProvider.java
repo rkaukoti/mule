@@ -31,8 +31,7 @@ public class VeganBananaConnectionProvider implements ConnectionProvider<Banana>
   }
 
   @Override
-  public ConnectionHandlingStrategy<Banana> getHandlingStrategy(
-      ConnectionHandlingStrategyFactory<Banana> handlingStrategyFactory) {
+  public ConnectionHandlingStrategy<Banana> getHandlingStrategy(ConnectionHandlingStrategyFactory<Banana> handlingStrategyFactory) {
     return handlingStrategyFactory.none();
   }
 }

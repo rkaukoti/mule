@@ -311,9 +311,9 @@ public class AsyncResponseFlowProcessingPhaseTestCase extends AbstractMuleTestCa
     }).when(mockTemplate).sendResponseToClient(any(MuleEvent.class), any(ResponseCompletionCallback.class));
     phase.runPhase(mockTemplate, mockContext, mockNotifier);
     verify(notificationHelper).fireNotification(any(MessageSource.class), any(MuleEvent.class), isNull(String.class),
-        any(FlowConstruct.class), eq(MESSAGE_RESPONSE));
+                                                any(FlowConstruct.class), eq(MESSAGE_RESPONSE));
     verify(notificationHelper, never()).fireNotification(any(MessageSource.class), any(MuleEvent.class), isNull(String.class),
-        any(FlowConstruct.class), eq(MESSAGE_ERROR_RESPONSE));
+                                                         any(FlowConstruct.class), eq(MESSAGE_ERROR_RESPONSE));
   }
 
   @Test
@@ -341,9 +341,9 @@ public class AsyncResponseFlowProcessingPhaseTestCase extends AbstractMuleTestCa
 
     sensingMessageProcessor.latch.await(LATCH_TIMEOUT, TimeUnit.MILLISECONDS);
     verify(notificationHelper).fireNotification(any(MessageSource.class), any(MuleEvent.class), isNull(String.class),
-        any(FlowConstruct.class), eq(MESSAGE_RESPONSE));
+                                                any(FlowConstruct.class), eq(MESSAGE_RESPONSE));
     verify(notificationHelper, never()).fireNotification(any(MessageSource.class), any(MuleEvent.class), isNull(String.class),
-        any(FlowConstruct.class), eq(MESSAGE_ERROR_RESPONSE));
+                                                         any(FlowConstruct.class), eq(MESSAGE_ERROR_RESPONSE));
   }
 
   @Test
@@ -360,9 +360,9 @@ public class AsyncResponseFlowProcessingPhaseTestCase extends AbstractMuleTestCa
     when(mockTemplate.routeEvent(any(MuleEvent.class))).thenThrow(mockMessagingException);
     phase.runPhase(mockTemplate, mockContext, mockNotifier);
     verify(notificationHelper, never()).fireNotification(any(MessageSource.class), any(MuleEvent.class), isNull(String.class),
-        any(FlowConstruct.class), eq(MESSAGE_RESPONSE));
+                                                         any(FlowConstruct.class), eq(MESSAGE_RESPONSE));
     verify(notificationHelper).fireNotification(any(MessageSource.class), any(MuleEvent.class), isNull(String.class),
-        any(FlowConstruct.class), eq(MESSAGE_ERROR_RESPONSE));
+                                                any(FlowConstruct.class), eq(MESSAGE_ERROR_RESPONSE));
   }
 
   @Test
@@ -383,9 +383,9 @@ public class AsyncResponseFlowProcessingPhaseTestCase extends AbstractMuleTestCa
 
     sensingMessageProcessor.latch.await(LATCH_TIMEOUT, TimeUnit.MILLISECONDS);
     verify(notificationHelper, never()).fireNotification(any(MessageSource.class), any(MuleEvent.class), isNull(String.class),
-        any(FlowConstruct.class), eq(MESSAGE_RESPONSE));
+                                                         any(FlowConstruct.class), eq(MESSAGE_RESPONSE));
     verify(notificationHelper).fireNotification(any(MessageSource.class), any(MuleEvent.class), isNull(String.class),
-        any(FlowConstruct.class), eq(MESSAGE_ERROR_RESPONSE));
+                                                any(FlowConstruct.class), eq(MESSAGE_ERROR_RESPONSE));
   }
 
   private void verifyOnlySuccessfulWasCalled() {

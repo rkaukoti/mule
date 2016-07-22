@@ -50,8 +50,8 @@ public class WSConsumerConfig implements MuleContextAware {
     Preconditions.checkState(StringUtils.isNotEmpty(serviceAddress), "No serviceAddress provided in WS consumer config");
 
     if (connectorConfig != null && connector != null) {
-      throw new ConfigurationException(CoreMessages.createStaticMessage(
-          "Cannot set both connector-config and connector-ref attributes. Set either one of them, or none for default behavior."));
+      throw new ConfigurationException(CoreMessages
+          .createStaticMessage("Cannot set both connector-config and connector-ref attributes. Set either one of them, or none for default behavior."));
     }
 
     // MULE-9694 Reintroduce endpoint lookup capabilites for http and ws modules

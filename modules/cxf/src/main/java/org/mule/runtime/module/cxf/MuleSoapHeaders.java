@@ -164,12 +164,12 @@ public class MuleSoapHeaders {
           .appendChild(new DOMElement(new QName(MULE_CORRELATION_ID_PROPERTY, new Namespace(MULE_NAMESPACE, MULE_10_ACTOR))));
       e.setNodeValue(correlationId);
 
-      e = muleHeader.appendChild(
-          new DOMElement(new QName(MULE_CORRELATION_GROUP_SIZE_PROPERTY, new Namespace(MULE_NAMESPACE, MULE_10_ACTOR))));
+      e = muleHeader.appendChild(new DOMElement(new QName(MULE_CORRELATION_GROUP_SIZE_PROPERTY,
+                                                          new Namespace(MULE_NAMESPACE, MULE_10_ACTOR))));
       e.setNodeValue(correlationGroup);
 
-      e = muleHeader.appendChild(
-          new DOMElement(new QName(MULE_CORRELATION_SEQUENCE_PROPERTY, new Namespace(MULE_NAMESPACE, MULE_10_ACTOR))));
+      e = muleHeader.appendChild(new DOMElement(new QName(MULE_CORRELATION_SEQUENCE_PROPERTY,
+                                                          new Namespace(MULE_NAMESPACE, MULE_10_ACTOR))));
       e.setNodeValue(correlationSequence);
     }
     if (replyTo != null) {

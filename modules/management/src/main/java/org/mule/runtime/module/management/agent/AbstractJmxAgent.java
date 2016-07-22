@@ -166,8 +166,7 @@ public abstract class AbstractJmxAgent extends AbstractAgent {
 
     if (StringUtils.isBlank(muleContext.getConfiguration().getId())) {
       // TODO i18n the message properly
-      throw new IllegalArgumentException(
-          "Manager ID is mandatory when running with JmxAgent. Give your Mule configuration a valid ID.");
+      throw new IllegalArgumentException("Manager ID is mandatory when running with JmxAgent. Give your Mule configuration a valid ID.");
     }
 
     try {
@@ -279,8 +278,8 @@ public abstract class AbstractJmxAgent extends AbstractAgent {
 
   protected void registerStatisticsService() throws NotCompliantMBeanException, MBeanRegistrationException,
       InstanceAlreadyExistsException, MalformedObjectNameException {
-    ObjectName on = jmxSupport.getObjectName(
-        String.format("%s:%s", jmxSupport.getDomainName(muleContext, !containerMode), StatisticsServiceMBean.DEFAULT_JMX_NAME));
+    ObjectName on = jmxSupport.getObjectName(String.format("%s:%s", jmxSupport.getDomainName(muleContext, !containerMode),
+                                                           StatisticsServiceMBean.DEFAULT_JMX_NAME));
     StatisticsService service = new StatisticsService();
     service.setMuleContext(muleContext);
     service.setEnabled(isEnableStatistics());
@@ -292,8 +291,8 @@ public abstract class AbstractJmxAgent extends AbstractAgent {
 
   protected void registerMuleService() throws NotCompliantMBeanException, MBeanRegistrationException,
       InstanceAlreadyExistsException, MalformedObjectNameException {
-    ObjectName on = jmxSupport.getObjectName(
-        String.format("%s:%s", jmxSupport.getDomainName(muleContext, !containerMode), MuleServiceMBean.DEFAULT_JMX_NAME));
+    ObjectName on = jmxSupport.getObjectName(String.format("%s:%s", jmxSupport.getDomainName(muleContext, !containerMode),
+                                                           MuleServiceMBean.DEFAULT_JMX_NAME));
     if (muleContext.getConfiguration().isContainerMode() && mBeanServer.isRegistered(on)) {
       // while in container mode, a previous stop() action leaves MuleContext MBean behind for remote start() operation
       return;
@@ -308,7 +307,7 @@ public abstract class AbstractJmxAgent extends AbstractAgent {
   protected void registerConfigurationService() throws NotCompliantMBeanException, MBeanRegistrationException,
       InstanceAlreadyExistsException, MalformedObjectNameException {
     ObjectName on = jmxSupport.getObjectName(String.format("%s:%s", jmxSupport.getDomainName(muleContext, !containerMode),
-        MuleConfigurationServiceMBean.DEFAULT_JMX_NAME));
+                                                           MuleConfigurationServiceMBean.DEFAULT_JMX_NAME));
     MuleConfigurationServiceMBean service = new MuleConfigurationService(muleContext.getConfiguration());
     ClassloaderSwitchingMBeanWrapper mBean =
         new ClassloaderSwitchingMBeanWrapper(service, MuleConfigurationServiceMBean.class, muleContext.getExecutionClassLoader());
@@ -322,7 +321,7 @@ public abstract class AbstractJmxAgent extends AbstractAgent {
       final String rawName = flowConstruct.getName();
       final String name = jmxSupport.escape(rawName);
       final String jmxName = String.format("%s:type=%s,name=%s", jmxSupport.getDomainName(muleContext, !containerMode),
-          flowConstruct.getConstructType(), name);
+                                           flowConstruct.getConstructType(), name);
       ObjectName on = jmxSupport.getObjectName(jmxName);
       FlowConstructServiceMBean fcMBean =
           new FlowConstructService(flowConstruct.getConstructType(), rawName, muleContext, flowConstruct.getStatistics());
@@ -340,7 +339,7 @@ public abstract class AbstractJmxAgent extends AbstractAgent {
       final String rawName = appStats.getName();
       final String name = jmxSupport.escape(rawName);
       final String jmxName = String.format("%s:type=%s,name=%s", jmxSupport.getDomainName(muleContext, !containerMode),
-          appStats.getFlowConstructType(), name);
+                                           appStats.getFlowConstructType(), name);
       ObjectName on = jmxSupport.getObjectName(jmxName);
       FlowConstructServiceMBean fcMBean = new ApplicationService(appStats.getFlowConstructType(), rawName, muleContext, appStats);
       ClassloaderSwitchingMBeanWrapper wrapper =

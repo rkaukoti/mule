@@ -29,7 +29,7 @@ public class TypeAwareConfigurationFactoryTestCase extends AbstractMuleTestCase 
   @Test(expected = IllegalArgumentException.class)
   public void noDefaultConstructor() {
     instantiator = new TypeAwareConfigurationFactory(TypeAwareConfigurationFactory.class,
-        TypeAwareConfigurationFactory.class.getClassLoader());
+                                                     TypeAwareConfigurationFactory.class.getClassLoader());
   }
 
   @Test(expected = IllegalArgumentException.class)

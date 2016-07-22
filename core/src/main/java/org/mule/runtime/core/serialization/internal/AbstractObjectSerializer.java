@@ -126,8 +126,9 @@ public abstract class AbstractObjectSerializer implements ObjectSerializer, Mule
       try {
         DeserializationPostInitialisable.Implementation.init(object, muleContext);
       } catch (Exception e) {
-        throw new SerializationException(
-            String.format("Could not initialize instance of %s after deserialization", object.getClass().getName()), e);
+        throw new SerializationException(String.format("Could not initialize instance of %s after deserialization",
+                                                       object.getClass().getName()),
+                                         e);
       }
     }
 

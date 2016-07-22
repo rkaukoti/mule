@@ -69,7 +69,7 @@ public class SimpleComponentDefinitionParser extends ComponentDefinitionParser {
     AbstractBeanDefinition objectFactoryBeanDefinition = new GenericBeanDefinition();
     objectFactoryBeanDefinition.setBeanClass(OBJECT_FACTORY_TYPE);
     objectFactoryBeanDefinition.getPropertyValues().addPropertyValue(AbstractObjectFactory.ATTRIBUTE_OBJECT_CLASS,
-        componentInstanceClass);
+                                                                     componentInstanceClass);
     objectFactoryBeanDefinition.getPropertyValues().addPropertyValue("properties", properties);
 
     return objectFactoryBeanDefinition;

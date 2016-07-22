@@ -92,8 +92,8 @@ public abstract class AbstractTransformer extends AbstractAnnotatedObject implem
       sourceTypes.add(dataType);
 
       if (dataType.getType().equals(Object.class)) {
-        logger.debug(
-            "java.lang.Object has been added as source type for this transformer, there will be no source type checking performed");
+        logger
+            .debug("java.lang.Object has been added as source type for this transformer, there will be no source type checking performed");
       }
     }
   }

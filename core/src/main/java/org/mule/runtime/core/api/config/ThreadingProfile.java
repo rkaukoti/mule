@@ -111,7 +111,8 @@ public interface ThreadingProfile extends MuleContextAware {
 
   ThreadingProfile DEFAULT_THREADING_PROFILE =
       new ImmutableThreadingProfile(DEFAULT_MAX_THREADS_ACTIVE, DEFAULT_MAX_THREADS_IDLE, DEFAULT_MAX_BUFFER_SIZE,
-          DEFAULT_MAX_THREAD_TTL, DEFAULT_THREAD_WAIT_TIMEOUT, DEFAULT_POOL_EXHAUST_ACTION, DEFAULT_DO_THREADING, null, null);
+                                    DEFAULT_MAX_THREAD_TTL, DEFAULT_THREAD_WAIT_TIMEOUT, DEFAULT_POOL_EXHAUST_ACTION,
+                                    DEFAULT_DO_THREADING, null, null);
 
   int getMaxThreadsActive();
 

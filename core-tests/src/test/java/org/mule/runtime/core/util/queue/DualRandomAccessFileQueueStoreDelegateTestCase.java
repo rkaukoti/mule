@@ -56,28 +56,28 @@ public class DualRandomAccessFileQueueStoreDelegateTestCase extends AbstractMule
   @Test
   public void readQueueFileMessagesInOrder() throws Exception {
     MuleTestUtils.testWithSystemProperty(DualRandomAccessFileQueueStoreDelegate.MAX_LENGTH_PER_FILE_PROPERTY_KEY,
-        String.valueOf(MAXIMUM_NUMBER_OF_BYTES), new MuleTestUtils.TestCallback() {
+                                         String.valueOf(MAXIMUM_NUMBER_OF_BYTES), new MuleTestUtils.TestCallback() {
 
-          @Override
-          public void run() throws Exception {
-            int lastInsertedMessageIndex = writeDataUntilSecondFileContainsNextMessages();
-            verifyNextMessage(lastInsertedMessageIndex);
-          }
-        });
+                                           @Override
+                                           public void run() throws Exception {
+                                             int lastInsertedMessageIndex = writeDataUntilSecondFileContainsNextMessages();
+                                             verifyNextMessage(lastInsertedMessageIndex);
+                                           }
+                                         });
   }
 
   @Test
   public void readQueueFileMessagesInOrderWhenControlFileIsCorrupted() throws Exception {
     MuleTestUtils.testWithSystemProperty(DualRandomAccessFileQueueStoreDelegate.MAX_LENGTH_PER_FILE_PROPERTY_KEY,
-        String.valueOf(MAXIMUM_NUMBER_OF_BYTES), new MuleTestUtils.TestCallback() {
+                                         String.valueOf(MAXIMUM_NUMBER_OF_BYTES), new MuleTestUtils.TestCallback() {
 
-          @Override
-          public void run() throws Exception {
-            int lastInsertedMessageIndex = writeDataUntilSecondFileContainsNextMessages();
-            corruptQueueControlData();
-            verifyNextMessage(lastInsertedMessageIndex);
-          }
-        });
+                                           @Override
+                                           public void run() throws Exception {
+                                             int lastInsertedMessageIndex = writeDataUntilSecondFileContainsNextMessages();
+                                             corruptQueueControlData();
+                                             verifyNextMessage(lastInsertedMessageIndex);
+                                           }
+                                         });
   }
 
   @Test
@@ -133,9 +133,9 @@ public class DualRandomAccessFileQueueStoreDelegateTestCase extends AbstractMule
     // this call updates the read file.
     queueStore.peek();
     assertThat(queueStore.getQueueControlDataFile().getCurrentReadFile().getAbsolutePath(),
-        not(initialReadFile.getAbsolutePath()));
+               not(initialReadFile.getAbsolutePath()));
     assertThat(queueStore.getQueueControlDataFile().getCurrentWriteFile().getAbsolutePath(),
-        not(initialReadFile.getAbsolutePath()));
+               not(initialReadFile.getAbsolutePath()));
     queueStore.close();
     return lastInsertedMessageIndex;
   }
@@ -152,7 +152,7 @@ public class DualRandomAccessFileQueueStoreDelegateTestCase extends AbstractMule
 
   private DualRandomAccessFileQueueStoreDelegate createTestQueueStore() {
     return new DualRandomAccessFileQueueStoreDelegate(TEST_QUEUE_NAME, workingDirectory.getRoot().getAbsolutePath(),
-        mockMuleContext, 0);
+                                                      mockMuleContext, 0);
   }
 
 }

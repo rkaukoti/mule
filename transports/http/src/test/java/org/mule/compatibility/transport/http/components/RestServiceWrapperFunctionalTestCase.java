@@ -62,14 +62,14 @@ public class RestServiceWrapperFunctionalTestCase extends FunctionalTestCase {
     props.put("bar-optional-header", "bar");
 
     MuleMessage result = muleContext.getClient().send("restServiceEndpoint3",
-        MuleMessage.builder().nullPayload().outboundProperties(props).build());
+                                                      MuleMessage.builder().nullPayload().outboundProperties(props).build());
     assertEquals("foo=boo&faz=baz&far=bar", getPayloadAsString(result));
   }
 
   @Test
   public void testOptionalParametersMissing() throws Exception {
-    MuleMessage result = muleContext.getClient().send("restServiceEndpoint3",
-        MuleMessage.builder().nullPayload().addOutboundProperty("baz-header", "baz").build());
+    MuleMessage result = muleContext.getClient()
+        .send("restServiceEndpoint3", MuleMessage.builder().nullPayload().addOutboundProperty("baz-header", "baz").build());
     assertEquals("foo=boo&faz=baz", getPayloadAsString(result));
   }
 

@@ -48,7 +48,7 @@ public class BasicAuthFunctionalTestCase extends AbstractWSConsumerFunctionalTes
         (SoapFaultException) flowRunner("clientInvalidCredentials").withPayload(ECHO_REQUEST).runExpectingException();
     MuleEvent event = e.getEvent();
     assertThat(event.getMessage().<String>getInboundProperty(HTTP_STATUS_PROPERTY),
-        equalTo(String.valueOf(UNAUTHORIZED.getStatusCode())));
+               equalTo(String.valueOf(UNAUTHORIZED.getStatusCode())));
   }
 
   @Test
@@ -57,7 +57,7 @@ public class BasicAuthFunctionalTestCase extends AbstractWSConsumerFunctionalTes
     // The response message still contains inbound properties from the HTTP response.
     MuleEvent event = flowRunner("clientInvalidCredentialsEmptyResponse").withPayload(ECHO_REQUEST).run();
     assertThat(event.getMessage().<String>getInboundProperty(HTTP_STATUS_PROPERTY),
-        equalTo(String.valueOf(UNAUTHORIZED.getStatusCode())));
+               equalTo(String.valueOf(UNAUTHORIZED.getStatusCode())));
   }
 
 }

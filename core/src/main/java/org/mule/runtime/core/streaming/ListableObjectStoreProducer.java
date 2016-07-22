@@ -57,8 +57,8 @@ public class ListableObjectStoreProducer<T extends Serializable> implements Prod
     } catch (ObjectDoesNotExistException e) {
       if (logger.isDebugEnabled()) {
         logger.debug(String.format(
-            "key %s no longer available in objectstore. This is likely due to a concurrency issue. Will continue with next key if available",
-            key));
+                                   "key %s no longer available in objectstore. This is likely due to a concurrency issue. Will continue with next key if available",
+                                   key));
       }
 
       return this.produce();

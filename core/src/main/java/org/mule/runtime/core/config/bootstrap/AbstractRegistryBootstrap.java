@@ -146,8 +146,8 @@ public abstract class AbstractRegistryBootstrap implements Initialisable {
           transformers.add(createTransformerBootstrapProperty(bootstrapService, propertyValue));
         } else if (propertyKey.contains(SINGLE_TX)) {
           if (!propertyKey.contains(TRANSACTION_RESOURCE_SUFFIX)) {
-            singleTransactionFactories.add(
-                createTransactionFactoryBootstrapProperty(bootstrapService, bootstrapProperties, propertyKey, propertyValue));
+            singleTransactionFactories.add(createTransactionFactoryBootstrapProperty(bootstrapService, bootstrapProperties,
+                                                                                     propertyKey, propertyValue));
           }
         } else {
           namedObjects.add(createObjectBootstrapProperty(bootstrapService, propertyKey, propertyValue));
@@ -167,7 +167,7 @@ public abstract class AbstractRegistryBootstrap implements Initialisable {
   }
 
   private TransformerBootstrapProperty createTransformerBootstrapProperty(BootstrapService bootstrapService,
-      String propertyValue) {
+                                                                          String propertyValue) {
     String transString;
     String name = null;
     String returnClassName;
@@ -201,12 +201,14 @@ public abstract class AbstractRegistryBootstrap implements Initialisable {
   }
 
   private TransactionFactoryBootstrapProperty createTransactionFactoryBootstrapProperty(BootstrapService bootstrapService,
-      Properties bootstrapProperties, String propertyKey, String propertyValue) throws InitialisationException {
+                                                                                        Properties bootstrapProperties,
+                                                                                        String propertyKey, String propertyValue)
+      throws InitialisationException {
     String transactionResourceKey = propertyKey.replace(".transaction.factory", TRANSACTION_RESOURCE_SUFFIX);
     String transactionResource = bootstrapProperties.getProperty(transactionResourceKey);
     if (transactionResource == null) {
-      throw new InitialisationException(CoreMessages.createStaticMessage(
-          String.format("There is no transaction resource specified for transaction factory %s", propertyKey)), this);
+      throw new InitialisationException(CoreMessages.createStaticMessage(String
+          .format("There is no transaction resource specified for transaction factory %s", propertyKey)), this);
     }
 
     String transactionResourceClassNameProperties = transactionResource;
@@ -223,7 +225,7 @@ public abstract class AbstractRegistryBootstrap implements Initialisable {
   }
 
   private ObjectBootstrapProperty createObjectBootstrapProperty(BootstrapService bootstrapService, String propertyKey,
-      String propertyValue) {
+                                                                String propertyValue) {
     boolean optional = false;
     String className;
     ArtifactType artifactTypeParameterValue = APP;
@@ -267,14 +269,15 @@ public abstract class AbstractRegistryBootstrap implements Initialisable {
     } catch (InvocationTargetException e) {
       Throwable cause = ExceptionUtils.getCause(e);
       throwExceptionIfNotOptional(cause instanceof NoClassDefFoundError && bootstrapProperty.getOptional(), cause,
-          bootstrapProperty);
+                                  bootstrapProperty);
     } catch (NoClassDefFoundError | ClassNotFoundException | NoSuchMethodException e) {
       throwExceptionIfNotOptional(bootstrapProperty.getOptional(), e, bootstrapProperty);
     }
   }
 
   private void registerTransactionFactories(List<TransactionFactoryBootstrapProperty> singleTransactionFactories,
-      MuleContext context) throws Exception {
+                                            MuleContext context)
+      throws Exception {
     for (TransactionFactoryBootstrapProperty bootstrapProperty : singleTransactionFactories) {
       try {
         final Class<?> supportedType =
@@ -305,7 +308,7 @@ public abstract class AbstractRegistryBootstrap implements Initialisable {
       } catch (InvocationTargetException e) {
         Throwable cause = ExceptionUtils.getCause(e);
         throwExceptionIfNotOptional(cause instanceof NoClassDefFoundError && bootstrapProperty.getOptional(), cause,
-            bootstrapProperty);
+                                    bootstrapProperty);
       } catch (NoClassDefFoundError | ClassNotFoundException e) {
         throwExceptionIfNotOptional(bootstrapProperty.getOptional(), e, bootstrapProperty);
       }
@@ -313,7 +316,8 @@ public abstract class AbstractRegistryBootstrap implements Initialisable {
   }
 
   protected abstract void doRegisterTransformer(TransformerBootstrapProperty bootstrapProperty, Class<?> returnClass,
-      Class<? extends Transformer> transformerClass) throws Exception;
+                                                Class<? extends Transformer> transformerClass)
+      throws Exception;
 
   protected Class getClass(String className) throws ClassNotFoundException {
     return ClassUtils.loadClass(className, getClass());

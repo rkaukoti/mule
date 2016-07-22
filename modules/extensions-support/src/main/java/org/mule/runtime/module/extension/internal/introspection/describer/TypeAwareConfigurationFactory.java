@@ -46,8 +46,8 @@ final class TypeAwareConfigurationFactory implements ConfigurationFactory {
     try {
       return withContextClassLoader(extensionClassLoader, configurationType::newInstance);
     } catch (Exception e) {
-      throw new MuleRuntimeException(
-          createStaticMessage("Could not instantiate configuration of type " + configurationType.getName()), e);
+      throw new MuleRuntimeException(createStaticMessage("Could not instantiate configuration of type "
+          + configurationType.getName()), e);
     }
   }
 

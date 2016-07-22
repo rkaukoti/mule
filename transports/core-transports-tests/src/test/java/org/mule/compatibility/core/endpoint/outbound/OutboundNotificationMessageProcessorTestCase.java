@@ -66,7 +66,8 @@ public class OutboundNotificationMessageProcessorTestCase extends AbstractMessag
   }
 
   private void assertMessageNotification(TestEndpointMessageNotificationListener listener, OutboundEndpoint endpoint,
-      MuleEvent event, int action) throws InterruptedException {
+                                         MuleEvent event, int action)
+      throws InterruptedException {
     assertThat(listener.latch.await(RECEIVE_TIMEOUT, TimeUnit.MILLISECONDS), is(true));
     assertThat(listener.messageNotification.getAction(), equalTo(action));
     assertThat(listener.messageNotification.getEndpoint(), equalTo(endpoint.getEndpointURI().getUri().toString()));

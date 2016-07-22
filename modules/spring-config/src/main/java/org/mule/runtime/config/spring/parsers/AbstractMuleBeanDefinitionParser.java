@@ -136,7 +136,7 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
   }
 
   public static Map<QName, Object> processMetadataAnnotationsHelper(Element element, String configFileIdentifier,
-      BeanDefinitionBuilder builder) {
+                                                                    BeanDefinitionBuilder builder) {
     Map<QName, Object> annotations = new HashMap<>();
     // Ensure we have a placeholder for internally generated annotations, even if the XML config doesn't have any
     // defined for this element.
@@ -144,7 +144,7 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
 
       XmlMetadataAnnotations elementMetadata = (XmlMetadataAnnotations) element.getUserData(METADATA_ANNOTATIONS_KEY);
       addMetadataAnnotationsFromXml(annotations, configFileIdentifier, elementMetadata.getLineNumber(),
-          elementMetadata.getElementString());
+                                    elementMetadata.getElementString());
 
       builder.getBeanDefinition().getPropertyValues().addPropertyValue(AnnotatedObject.PROPERTY_NAME, annotations);
     }
@@ -287,8 +287,8 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
 
     if (context.isNested()) {
       // Inner bean definition must receive same singleton status as containing bean.
-      builder.setScope(
-          context.getContainingBeanDefinition().isSingleton() ? BeanDefinition.SCOPE_SINGLETON : BeanDefinition.SCOPE_PROTOTYPE);
+      builder.setScope(context.getContainingBeanDefinition().isSingleton() ? BeanDefinition.SCOPE_SINGLETON
+          : BeanDefinition.SCOPE_PROTOTYPE);
     }
 
     doParse(element, context, builder);
@@ -328,8 +328,8 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
       beanClass = getBeanClass(element);
     }
     if (null != beanClass && null != classConstraint && !classConstraint.isAssignableFrom(beanClass)) {
-      throw new IllegalStateException(
-          beanClass + " not a subclass of " + classConstraint + " for " + XMLUtils.elementToString(element));
+      throw new IllegalStateException(beanClass + " not a subclass of " + classConstraint + " for "
+          + XMLUtils.elementToString(element));
     }
     if (null == beanClass) {
       throw new IllegalStateException("No class for element " + XMLUtils.elementToString(element));

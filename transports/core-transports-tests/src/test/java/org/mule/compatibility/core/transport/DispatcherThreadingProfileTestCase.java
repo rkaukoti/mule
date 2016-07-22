@@ -82,7 +82,8 @@ public class DispatcherThreadingProfileTestCase extends AbstractMuleContextEndpo
     latch = new CountDownLatch(2);
 
     createTestConnectorWithSingleDispatcherThread(1, ThreadingProfile.WHEN_EXHAUSTED_WAIT,
-        ThreadingProfile.DEFAULT_THREAD_WAIT_TIMEOUT, ThreadingProfile.DEFAULT_MAX_BUFFER_SIZE);
+                                                  ThreadingProfile.DEFAULT_THREAD_WAIT_TIMEOUT,
+                                                  ThreadingProfile.DEFAULT_MAX_BUFFER_SIZE);
     dispatchTwoAsyncEvents();
 
     // Both execute in serial as the second job wait for the fist job to complete
@@ -146,7 +147,7 @@ public class DispatcherThreadingProfileTestCase extends AbstractMuleContextEndpo
     // SynchronousQueue there need to be
     // i) 2+ maxActiveThreads ii) maxBufferSize>0
     createTestConnectorWithSingleDispatcherThread(2, ThreadingProfile.WHEN_EXHAUSTED_DISCARD_OLDEST,
-        ThreadingProfile.DEFAULT_THREAD_WAIT_TIMEOUT, 1);
+                                                  ThreadingProfile.DEFAULT_THREAD_WAIT_TIMEOUT, 1);
 
     dispatchTwoAsyncEvents();
     dispatchTwoAsyncEvents();
@@ -163,10 +164,12 @@ public class DispatcherThreadingProfileTestCase extends AbstractMuleContextEndpo
   }
 
   protected void createTestConnectorWithSingleDispatcherThread(int threads, int exhaustedAction, long waitTimeout,
-      int maxBufferSize) throws MuleException {
+                                                               int maxBufferSize)
+      throws MuleException {
     TestConnector connector = new TestConnector(muleContext);
-    ThreadingProfile threadingProfile = new ImmutableThreadingProfile(threads, threads, maxBufferSize,
-        ThreadingProfile.DEFAULT_MAX_THREAD_TTL, waitTimeout, exhaustedAction, true, null, null);
+    ThreadingProfile threadingProfile =
+        new ImmutableThreadingProfile(threads, threads, maxBufferSize, ThreadingProfile.DEFAULT_MAX_THREAD_TTL, waitTimeout,
+                                      exhaustedAction, true, null, null);
     threadingProfile.setMuleContext(muleContext);
     connector.setDispatcherThreadingProfile(threadingProfile);
     registerConnector(muleContext.getRegistry(), connector);

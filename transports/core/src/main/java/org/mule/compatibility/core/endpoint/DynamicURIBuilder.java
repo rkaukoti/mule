@@ -45,7 +45,7 @@ public class DynamicURIBuilder {
 
     if (logger.isDebugEnabled()) {
       logger.debug(String.format("Resolved URI from template '%s' to '%s'", templateUriBuilder.getEncodedConstructor(),
-          resolvedUri.toString()));
+                                 resolvedUri.toString()));
     }
 
     return resolvedUri;

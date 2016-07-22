@@ -110,7 +110,8 @@ public class ReceiverFileInputStreamTestCase extends AbstractMuleTestCase {
   }
 
   private ReceiverFileInputStream createReceiver(File input, File output, boolean deleteOnClose,
-      InputStreamCloseListener listener, boolean streamingError) throws IOException {
+                                                 InputStreamCloseListener listener, boolean streamingError)
+      throws IOException {
     ReceiverFileInputStream receiverStream = new ReceiverFileInputStream(input, true, output, listener);
     receiverStream.setStreamProcessingError(streamingError);
     return receiverStream;

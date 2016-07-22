@@ -151,8 +151,8 @@ public abstract class AbstractQueueTxJournalEntry<T> implements JournalEntry<T> 
           return operation;
         }
       }
-      throw new MuleRuntimeException(
-          CoreMessages.createStaticMessage("Unexpected byte representation value: " + byteRepresentation));
+      throw new MuleRuntimeException(CoreMessages
+          .createStaticMessage("Unexpected byte representation value: " + byteRepresentation));
     }
 
     public byte getByteRepresentation() {

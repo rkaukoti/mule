@@ -42,8 +42,8 @@ public class TextDefinitionParser extends ChildDefinitionParser {
       if (node == null) {
         throw new IllegalArgumentException("No CDATA node found in " + element.getNodeName());
       } else if (node.getNodeType() != Node.CDATA_SECTION_NODE) {
-        throw new IllegalArgumentException(
-            "Sibling node is not a CDATA section, but one should be defined. Elements is " + element.getNodeName());
+        throw new IllegalArgumentException("Sibling node is not a CDATA section, but one should be defined. Elements is "
+            + element.getNodeName());
       }
     }
     if (node != null) {

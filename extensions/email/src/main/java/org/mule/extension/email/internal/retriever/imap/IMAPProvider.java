@@ -41,6 +41,6 @@ public class IMAPProvider extends AbstractRetrieverProvider<RetrieverConnection>
   @Override
   public RetrieverConnection connect() throws ConnectionException {
     return new RetrieverConnection(IMAP, settings.getUser(), settings.getPassword(), settings.getHost(), port,
-        getConnectionTimeout(), getReadTimeout(), getWriteTimeout(), getProperties());
+                                   getConnectionTimeout(), getReadTimeout(), getWriteTimeout(), getProperties());
   }
 }

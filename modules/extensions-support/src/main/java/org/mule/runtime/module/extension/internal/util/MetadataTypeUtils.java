@@ -81,7 +81,7 @@ public final class MetadataTypeUtils {
    *         union} of all the mapped subtypes for the given {@code baseType}
    */
   public static MetadataType subTypesUnion(MetadataType baseType, SubTypesMappingContainer subtypesContainer,
-      ClassLoader classLoader) {
+                                           ClassLoader classLoader) {
     List<MetadataType> subTypes = subtypesContainer.getSubTypes(baseType);
     if (subTypes.isEmpty()) {
       return baseType;

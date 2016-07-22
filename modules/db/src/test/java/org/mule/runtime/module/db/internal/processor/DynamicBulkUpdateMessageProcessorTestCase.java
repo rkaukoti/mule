@@ -86,8 +86,9 @@ public class DynamicBulkUpdateMessageProcessorTestCase extends AbstractMuleTestC
     when(queryResolver.resolve(any(DbConnection.class), any(MuleEvent.class))).thenReturn(new Query(QUERY_TEMPLATE1))
         .thenReturn(new Query(QUERY_TEMPLATE2));
 
-    final DynamicBulkUpdateMessageProcessor dynamicBulkUpdateMessageProcessor = new DynamicBulkUpdateMessageProcessor(
-        dbConfigResolver, queryResolver, null, NOT_SUPPORTED, Collections.singletonList(QueryType.UPDATE));
+    final DynamicBulkUpdateMessageProcessor dynamicBulkUpdateMessageProcessor =
+        new DynamicBulkUpdateMessageProcessor(dbConfigResolver, queryResolver, null, NOT_SUPPORTED,
+                                              Collections.singletonList(QueryType.UPDATE));
     dynamicBulkUpdateMessageProcessor.setMuleContext(muleContext);
 
     final List<FieldDebugInfo<?>> debugInfo = dynamicBulkUpdateMessageProcessor.getDebugInfo(event);
@@ -111,8 +112,9 @@ public class DynamicBulkUpdateMessageProcessorTestCase extends AbstractMuleTestC
     final QueryResolutionException queryResolutionException = new QueryResolutionException("Error");
     when(queryResolver.resolve(any(DbConnection.class), any(MuleEvent.class))).thenThrow(queryResolutionException);
 
-    final DynamicBulkUpdateMessageProcessor dynamicBulkUpdateMessageProcessor = new DynamicBulkUpdateMessageProcessor(
-        dbConfigResolver, queryResolver, null, NOT_SUPPORTED, Collections.singletonList(QueryType.UPDATE));
+    final DynamicBulkUpdateMessageProcessor dynamicBulkUpdateMessageProcessor =
+        new DynamicBulkUpdateMessageProcessor(dbConfigResolver, queryResolver, null, NOT_SUPPORTED,
+                                              Collections.singletonList(QueryType.UPDATE));
     dynamicBulkUpdateMessageProcessor.setMuleContext(muleContext);
 
     final List<FieldDebugInfo<?>> debugInfo = dynamicBulkUpdateMessageProcessor.getDebugInfo(event);

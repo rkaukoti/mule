@@ -44,7 +44,8 @@ public final class CustomValidatorOperation extends ValidationSupport {
       });
 
   public void customValidator(@ParameterGroup ObjectSource<Validator> source, @ParameterGroup ValidationOptions options,
-      MuleEvent event, @UseConfig ValidationExtension config) throws Exception {
+                              MuleEvent event, @UseConfig ValidationExtension config)
+      throws Exception {
     ValidatorSource validatorSource = new ValidatorSource(source.getType(), source.getRef());
     Validator validator = validatorSource.getObject(event.getMuleContext());
 
@@ -55,7 +56,7 @@ public final class CustomValidatorOperation extends ValidationSupport {
   protected void logSuccessfulValidation(Validator validator, MuleEvent event) {
     if (logger.isDebugEnabled()) {
       logger.debug("Successfully executed custom validator of type {} on message: {}", validator.getClass().getName(),
-          event.getMessage());
+                   event.getMessage());
     }
   }
 

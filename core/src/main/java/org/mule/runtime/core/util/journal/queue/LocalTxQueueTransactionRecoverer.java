@@ -29,7 +29,7 @@ public class LocalTxQueueTransactionRecoverer {
   private Logger logger = LoggerFactory.getLogger(getClass());
 
   public LocalTxQueueTransactionRecoverer(LocalTxQueueTransactionJournal localTxQueueTransactionJournal,
-      QueueProvider queueProvider) {
+                                          QueueProvider queueProvider) {
     this.localTxQueueTransactionJournal = localTxQueueTransactionJournal;
     this.queueProvider = queueProvider;
   }

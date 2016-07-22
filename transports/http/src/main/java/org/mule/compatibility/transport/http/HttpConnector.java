@@ -525,8 +525,8 @@ public class HttpConnector extends TcpConnector {
       String authScopeRealm = msg.getOutboundProperty(HTTP_PREFIX + "auth.scope.realm", AuthScope.ANY_REALM);
       String authScopeScheme = msg.getOutboundProperty(HTTP_PREFIX + "auth.scope.scheme", AuthScope.ANY_SCHEME);
       client.getState().setCredentials(new AuthScope(authScopeHost, authScopePort, authScopeRealm, authScopeScheme),
-          new UsernamePasswordCredentials(event.getCredentials().getUsername(),
-              new String(event.getCredentials().getPassword())));
+                                       new UsernamePasswordCredentials(event.getCredentials().getUsername(),
+                                                                       new String(event.getCredentials().getPassword())));
     } else if (endpoint.getEndpointURI().getUserInfo() != null
         && endpoint.getProperty(HttpConstants.HEADER_AUTHORIZATION) == null) {
       // Add User Creds

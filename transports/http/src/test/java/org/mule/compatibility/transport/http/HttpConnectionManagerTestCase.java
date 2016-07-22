@@ -73,7 +73,7 @@ public class HttpConnectionManagerTestCase extends AbstractMuleTestCase {
   public void addConnectionStartsSocketDispatcher() throws Exception {
     createConnectionManagerAndAddDefaultEndpointUri();
     verify(mockWorkManager, times(1)).scheduleWork(any(HttpRequestDispatcher.class), anyLong(), any(ExecutionContext.class),
-        any(WorkListener.class));
+                                                   any(WorkListener.class));
   }
 
   @Test
@@ -82,7 +82,7 @@ public class HttpConnectionManagerTestCase extends AbstractMuleTestCase {
     connectionManager.addConnection(createEndpointUri(NESTED_ENDPOINT_URI_1));
     connectionManager.addConnection(createEndpointUri(NESTED_ENDPOINT_URI_2));
     verify(mockWorkManager, times(1)).scheduleWork(any(HttpRequestDispatcher.class), anyLong(), any(ExecutionContext.class),
-        any(WorkListener.class));
+                                                   any(WorkListener.class));
   }
 
   @Test
@@ -93,7 +93,7 @@ public class HttpConnectionManagerTestCase extends AbstractMuleTestCase {
     connectionManager.addConnection(createEndpointUri(ANOTHER_ENDPOINT_URI));
     connectionManager.addConnection(createEndpointUri(ANOTHER_NESTED_ENDPOINT_URI));
     verify(mockWorkManager, times(2)).scheduleWork(any(HttpRequestDispatcher.class), anyLong(), any(ExecutionContext.class),
-        any(WorkListener.class));
+                                                   any(WorkListener.class));
   }
 
   @Test

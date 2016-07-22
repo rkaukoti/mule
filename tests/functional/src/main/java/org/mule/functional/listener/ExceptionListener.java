@@ -78,8 +78,8 @@ public class ExceptionListener {
         return this;
       }
     }
-    throw new AssertionError(
-        format("Exception exception caused by type %s was not thrown", expectedExceptionCauseType.getName()));
+    throw new AssertionError(format("Exception exception caused by type %s was not thrown",
+                                    expectedExceptionCauseType.getName()));
   }
 
   /**

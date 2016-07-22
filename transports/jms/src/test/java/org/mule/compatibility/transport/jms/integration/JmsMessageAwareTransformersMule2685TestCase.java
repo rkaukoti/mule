@@ -67,7 +67,7 @@ public class JmsMessageAwareTransformersMule2685TestCase extends AbstractJmsFunc
 
     // Check that transformer 1 set message property ok.
     assertEquals("vm://recipient1, vm://recipient1, vm://recipient3",
-        result1.getOutboundProperty(ExpressionRecipientList.DEFAULT_SELECTOR_PROPERTY));
+                 result1.getOutboundProperty(ExpressionRecipientList.DEFAULT_SELECTOR_PROPERTY));
 
     AbstractJmsTransformer trans2 = new SessionEnabledObjectToJMSMessage(session);
     trans2.setMuleContext(muleContext);

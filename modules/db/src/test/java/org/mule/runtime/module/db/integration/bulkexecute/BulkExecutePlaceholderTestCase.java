@@ -19,8 +19,8 @@ import java.util.List;
 public class BulkExecutePlaceholderTestCase extends AbstractBulkExecuteTestCase {
 
   @Rule
-  public SystemProperty bulkQuery = new SystemProperty("bulkQuery",
-      "update PLANET set NAME='Mercury' where POSITION=0;\n" + "update PLANET set NAME='Mercury' where POSITION=4");
+  public SystemProperty bulkQuery = new SystemProperty("bulkQuery", "update PLANET set NAME='Mercury' where POSITION=0;\n"
+      + "update PLANET set NAME='Mercury' where POSITION=4");
 
   @Rule
   public SystemProperty file = new SystemProperty("file", "integration/bulkexecute/bulk-execute.sql");

@@ -31,7 +31,7 @@ public class AbstractFirstResultSerialDefinitionParser extends AbstractSerialDel
   }
 
   protected AbstractBeanDefinition doSingleBean(int index, MuleDefinitionParser parser, Element element,
-      ParserContext parserContext) {
+                                                ParserContext parserContext) {
     try {
       AbstractBeanDefinition result = null;
       try {

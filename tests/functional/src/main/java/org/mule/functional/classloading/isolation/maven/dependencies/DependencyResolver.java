@@ -50,7 +50,7 @@ public class DependencyResolver {
 
     dependencies.stream()
         .map(artifact -> collectTransitiveDependencies(artifact, configuration.getTransitiveDependencyFilter().getPredicate(),
-            configuration.getTransitiveDependencyFilter().isTraverseWhenNoMatch()))
+                                                       configuration.getTransitiveDependencyFilter().isTraverseWhenNoMatch()))
         .forEach(resolvedDependencies::addAll);
 
     Predicate<MavenArtifact> includeRootArtifactPredicate = configuration.getIncludeRootArtifactPredicate();
@@ -73,7 +73,8 @@ public class DependencyResolver {
    * @return recursively gets the dependencies for the given artifact.
    */
   private Set<MavenArtifact> collectTransitiveDependencies(final MavenArtifact dependency,
-      final Predicate<MavenArtifact> predicate, final boolean traverseWhenNoMatch) {
+                                                           final Predicate<MavenArtifact> predicate,
+                                                           final boolean traverseWhenNoMatch) {
     Set<MavenArtifact> transitiveDependencies = new HashSet<>();
 
     configuration.getDependencyGraph().getTransitiveDependencies(dependency).stream().forEach(transitiveDependency -> {

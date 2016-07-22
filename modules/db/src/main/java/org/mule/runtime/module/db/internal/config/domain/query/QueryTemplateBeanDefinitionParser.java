@@ -62,8 +62,8 @@ public class QueryTemplateBeanDefinitionParser extends AbstractMuleBeanDefinitio
         if (sqlElem != null) {
           parseQueryTemplateRef(element, builder, nestedCtx, sqlElem);
         } else {
-          throw new IllegalArgumentException(
-              "Template must contain one of the following elements: " + Arrays.toString(QUERY_DEFINITION_ELEMENTS));
+          throw new IllegalArgumentException("Template must contain one of the following elements: "
+              + Arrays.toString(QUERY_DEFINITION_ELEMENTS));
         }
       }
     }
@@ -97,8 +97,8 @@ public class QueryTemplateBeanDefinitionParser extends AbstractMuleBeanDefinitio
     boolean hasTextContent = !element.getTextContent().trim().isEmpty();
 
     if (hasFileAttribute && hasTextContent) {
-      throw new IllegalArgumentException(
-          String.format("Element %s cannot contain attribute file and text content simultaneously", element.getTagName()));
+      throw new IllegalArgumentException(String.format("Element %s cannot contain attribute file and text content simultaneously",
+                                                       element.getTagName()));
     }
 
     BeanDefinitionBuilder queryTemplateFactory =

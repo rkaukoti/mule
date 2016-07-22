@@ -70,6 +70,6 @@ public class FileMessageRequesterTestCase extends AbstractMuleContextEndpointTes
     }
 
     return new DefaultInboundEndpoint(connector, null, null, properties, null, false, MessageExchangePattern.ONE_WAY, 42, null,
-        null, null, muleContext, null, null, null, null, null, false, null);
+                                      null, null, muleContext, null, null, null, null, null, false, null);
   }
 }

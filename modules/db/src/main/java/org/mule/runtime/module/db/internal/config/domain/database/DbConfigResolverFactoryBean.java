@@ -96,7 +96,7 @@ public class DbConfigResolverFactoryBean extends AnnotatedObjectFactoryBean<DbCo
   protected void validate() {
     if (dataSource != null) {
       Preconditions.checkState(connectionProperties.isEmpty(),
-          "connection-properties cannot be specified when a DataSource was provided");
+                               "connection-properties cannot be specified when a DataSource was provided");
     }
   }
 

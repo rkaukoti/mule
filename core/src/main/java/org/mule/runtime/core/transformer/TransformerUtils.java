@@ -126,25 +126,27 @@ public class TransformerUtils {
   }
 
   private static <S, R> R attemptTransformation(DataType sourceDataType, S source, DataType resultDataType,
-      MuleContext muleContext) {
+                                                MuleContext muleContext) {
     Transformer transformer;
     try {
       transformer = muleContext.getRegistry().lookupTransformer(sourceDataType, resultDataType);
     } catch (TransformerException e) {
       LOGGER.debug("Could not find a transformer from type {} to {}", sourceDataType.getType().getName(),
-          resultDataType.getType().getName());
+                   resultDataType.getType().getName());
       return null;
     }
 
     LOGGER.debug("Located transformer {} from type {} to type {}. Attempting transformation...", transformer.getName(),
-        sourceDataType.getType().getName(), resultDataType.getType().getName());
+                 sourceDataType.getType().getName(), resultDataType.getType().getName());
 
     try {
       return (R) transformer.transform(source);
     } catch (TransformerException e) {
       if (LOGGER.isDebugEnabled()) {
-        LOGGER.debug(String.format("Transformer %s threw exception while trying to transform an object of type %s into a %s",
-            transformer.getName(), sourceDataType.getType().getName(), resultDataType.getType().getName()), e);
+        LOGGER.debug(
+                     String.format("Transformer %s threw exception while trying to transform an object of type %s into a %s",
+                                   transformer.getName(), sourceDataType.getType().getName(), resultDataType.getType().getName()),
+                     e);
       }
 
       return null;

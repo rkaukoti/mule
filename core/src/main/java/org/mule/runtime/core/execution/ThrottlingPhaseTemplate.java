@@ -39,6 +39,6 @@ public interface ThrottlingPhaseTemplate extends MessageProcessTemplate {
    * are using this behavior it would involve moving the ThrottlingPolicyStatistics to CE.
    */
   void setThrottlingPolicyStatistics(long remainingRequestInCurrentPeriod, long maximumRequestAllowedPerPeriod,
-      long timeUntilNextPeriodInMillis);
+                                     long timeUntilNextPeriodInMillis);
 
 }

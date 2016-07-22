@@ -36,7 +36,7 @@ public final class FunctionExpressionMatcher<T, R> extends TypeSafeMatcher<T> {
    */
   @Factory
   public static final <T, R> FunctionExpressionMatcher<T, R> expressionMatches(Function<T, R> resolver,
-      Matcher<? extends R> matcher) {
+                                                                               Matcher<? extends R> matcher) {
     return new FunctionExpressionMatcher<>(resolver, matcher);
 
   }

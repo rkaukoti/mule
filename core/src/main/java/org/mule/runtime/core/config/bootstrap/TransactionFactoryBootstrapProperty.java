@@ -28,7 +28,7 @@ public class TransactionFactoryBootstrapProperty extends AbstractBootstrapProper
    * @param transactionResourceClassName className of the bootstrapped object. Not empty.
    */
   public TransactionFactoryBootstrapProperty(BootstrapService service, ArtifactType artifactType, Boolean optional,
-      String transactionFactoryClassName, String transactionResourceClassName) {
+                                             String transactionFactoryClassName, String transactionResourceClassName) {
     super(service, artifactType, optional);
     checkArgument(!StringUtils.isEmpty(transactionFactoryClassName), "key cannot be empty");
     checkArgument(!StringUtils.isEmpty(transactionResourceClassName), "className cannot be empty");

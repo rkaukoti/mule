@@ -41,9 +41,9 @@ public class JmsSharedConnectorTestCase extends DomainFunctionalTestCase {
 
   @Parameterized.Parameters
   public static Collection<Object[]> parameters() {
-    return Arrays.asList(
-        new Object[][] {{"domain/jms/jms-activemq-embedded-shared-connector.xml"}, {"domain/jms/jms-custom-shared-connector.xml"},
-            {"domain/jms/jms-shared-connnector.xml"}, {"domain/jms/jms-caching-connection-factory-shared-connnector.xml"}});
+    return Arrays.asList(new Object[][] {{"domain/jms/jms-activemq-embedded-shared-connector.xml"},
+        {"domain/jms/jms-custom-shared-connector.xml"}, {"domain/jms/jms-shared-connnector.xml"},
+        {"domain/jms/jms-caching-connection-factory-shared-connnector.xml"}});
   }
 
   @Override

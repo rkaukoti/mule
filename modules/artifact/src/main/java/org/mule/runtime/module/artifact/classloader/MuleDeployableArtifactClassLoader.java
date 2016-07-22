@@ -28,7 +28,7 @@ public class MuleDeployableArtifactClassLoader extends MuleArtifactClassLoader {
    * @param artifactPluginClassLoaders class loaders for the plugin artifacts contained by this artifact. Must be not null.
    */
   public MuleDeployableArtifactClassLoader(String name, URL[] urls, ClassLoader parent, ClassLoaderLookupPolicy lookupPolicy,
-      List<ArtifactClassLoader> artifactPluginClassLoaders) {
+                                           List<ArtifactClassLoader> artifactPluginClassLoaders) {
     super(name, urls, parent, lookupPolicy);
     checkArgument(artifactPluginClassLoaders != null, "artifact plugin class loaders cannot be null");
     this.artifactPluginClassLoaders = artifactPluginClassLoaders;

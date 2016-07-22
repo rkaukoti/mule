@@ -47,9 +47,9 @@ public class AddressedEndpointDefinitionParser extends AbstractSingleParentFamil
   }
 
   public AddressedEndpointDefinitionParser(String metaOrProtocol, boolean isMeta, MuleDefinitionParser endpointParser,
-      String[] requiredAddressAttributes, String[] requiredProperties) {
+                                           String[] requiredAddressAttributes, String[] requiredProperties) {
     this(metaOrProtocol, isMeta, endpointParser, RESTRICTED_ENDPOINT_ATTRIBUTES, URIBuilder.ALL_ATTRIBUTES,
-        new String[][] {requiredAddressAttributes}, new String[][] {requiredProperties});
+         new String[][] {requiredAddressAttributes}, new String[][] {requiredProperties});
   }
 
   /**
@@ -62,8 +62,8 @@ public class AddressedEndpointDefinitionParser extends AbstractSingleParentFamil
    * @param requiredProperties A list of property names that are required if "address" isn't present
    */
   public AddressedEndpointDefinitionParser(String metaOrProtocol, boolean isMeta, MuleDefinitionParser endpointParser,
-      String[] endpointAttributes, String[] addressAttributes, String[][] requiredAddressAttributes,
-      String[][] requiredProperties) {
+                                           String[] endpointAttributes, String[] addressAttributes,
+                                           String[][] requiredAddressAttributes, String[][] requiredProperties) {
     // the first delegate, the parent, is an endpoint; we block everything except the endpoint attributes
     enableAttributes(endpointParser, endpointAttributes);
     enableAttribute(endpointParser, AbstractMuleBeanDefinitionParser.ATTRIBUTE_NAME);
@@ -86,7 +86,7 @@ public class AddressedEndpointDefinitionParser extends AbstractSingleParentFamil
   private static class AddressParser extends ChildAddressDefinitionParser {
 
     public AddressParser(String metaOrProtocol, boolean isMeta, String[] addressAttributes,
-        String[][] requiredAddressAttributes) {
+                         String[][] requiredAddressAttributes) {
       super(metaOrProtocol, isMeta);
 
       // this handles the "ref problem" - we don't want this parsers to be used if a "ref"
@@ -119,7 +119,7 @@ public class AddressedEndpointDefinitionParser extends AbstractSingleParentFamil
   private static class PropertiesParser extends AttributePropertiesDefinitionParser {
 
     public PropertiesParser(String setter, String[] endpointAttributes, String[][] requiredAddressAttributes,
-        String[][] requiredProperties) {
+                            String[][] requiredProperties) {
       super(setter);
 
       // the properties parser gets to see everything that the other parsers don't - if you

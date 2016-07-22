@@ -78,8 +78,9 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject
     if (argumentTypes != null) {
       method = ClassUtils.getMethod(object.getClass(), methodName, argumentTypes);
       if (method == null) {
-        throw new InitialisationException(
-            CoreMessages.methodWithParamsNotFoundOnObject(methodName, argumentTypes, object.getClass()), this);
+        throw new InitialisationException(CoreMessages.methodWithParamsNotFoundOnObject(methodName, argumentTypes,
+                                                                                        object.getClass()),
+                                          this);
       }
     } else {
       List<Method> matchingMethods = new ArrayList<>();
@@ -93,7 +94,7 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject
         argumentTypes = method.getParameterTypes();
       } else {
         throw new InitialisationException(CoreMessages.methodWithNumParamsNotFoundOnObject(methodName, arguments.size(), object),
-            this);
+                                          this);
       }
     }
 
@@ -104,21 +105,21 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject
 
   protected void lookupObjectInstance() throws InitialisationException {
     if (logger.isDebugEnabled()) {
-      logger.debug(
-          String.format("No object instance speciedied.  Looking up single instance of type %s in mule registry", objectType));
+      logger.debug(String.format("No object instance speciedied.  Looking up single instance of type %s in mule registry",
+                                 objectType));
     }
 
     try {
       object = muleContext.getRegistry().lookupObject(objectType);
     } catch (RegistrationException e) {
-      throw new InitialisationException(
-          CoreMessages.initialisationFailure(String.format(
-              "Muliple instances of '%s' were found in the registry so you need to configure a specific instance", objectType)),
-          this);
+      throw new InitialisationException(CoreMessages.initialisationFailure(String.format(
+                                                                                         "Muliple instances of '%s' were found in the registry so you need to configure a specific instance",
+                                                                                         objectType)),
+                                        this);
     }
     if (object == null) {
-      throw new InitialisationException(
-          CoreMessages.initialisationFailure(String.format("No instance of '%s' was found in the registry", objectType)), this);
+      throw new InitialisationException(CoreMessages
+          .initialisationFailure(String.format("No instance of '%s' was found in the registry", objectType)), this);
 
     }
   }
@@ -237,8 +238,8 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject
     } else if (result != null) {
       final TransformerTemplate template = new TransformerTemplate(new TransformerTemplate.OverwitePayloadCallback(result));
       template.setReturnDataType(DataType.builder(DataType.OBJECT).charset(getDefaultEncoding(muleContext)).build());
-      event.setMessage(muleContext.getTransformationService().applyTransformers(event.getMessage(), event,
-          Collections.<Transformer>singletonList(template)));
+      event.setMessage(muleContext.getTransformationService()
+          .applyTransformers(event.getMessage(), event, Collections.<Transformer>singletonList(template)));
       return event;
     } else {
       return new DefaultMuleEvent(MuleMessage.builder().nullPayload().build(), event);
@@ -260,7 +261,7 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject
   @Override
   public String toString() {
     return String.format("InvokerMessageProcessor [name=%s, object=%s, methodName=%s, argExpressions=%s, argTypes=%s]", name,
-        object, methodName, arguments, argumentTypes);
+                         object, methodName, arguments, argumentTypes);
   }
 
   @Override

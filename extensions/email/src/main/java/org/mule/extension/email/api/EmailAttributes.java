@@ -121,8 +121,9 @@ public class EmailAttributes extends BaseAttributes {
    * @param flags the {@link EmailFlags} setted on the email.
    */
   public EmailAttributes(int id, String subject, List<String> fromAddresses, List<String> toAddresses, List<String> bccAddresses,
-      List<String> ccAddresses, List<String> replyToAddresses, Map<String, String> headers, Map<String, DataHandler> attachments,
-      LocalDateTime receivedDate, LocalDateTime sentDate, EmailFlags flags) {
+                         List<String> ccAddresses, List<String> replyToAddresses, Map<String, String> headers,
+                         Map<String, DataHandler> attachments, LocalDateTime receivedDate, LocalDateTime sentDate,
+                         EmailFlags flags) {
     this.id = id;
     this.subject = subject;
     this.sentDate = sentDate;

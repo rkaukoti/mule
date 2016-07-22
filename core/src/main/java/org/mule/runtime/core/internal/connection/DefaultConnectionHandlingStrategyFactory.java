@@ -31,7 +31,7 @@ final class DefaultConnectionHandlingStrategyFactory<Connection> implements Conn
    * @param muleContext the owning {@link MuleContext}
    */
   DefaultConnectionHandlingStrategyFactory(ConnectionProvider<Connection> connectionProvider, PoolingProfile poolingProfile,
-      MuleContext muleContext) {
+                                           MuleContext muleContext) {
     this.connectionProvider = connectionProvider;
     this.poolingProfile = poolingProfile;
     this.muleContext = muleContext;
@@ -59,9 +59,8 @@ final class DefaultConnectionHandlingStrategyFactory<Connection> implements Conn
   @Override
   public ConnectionHandlingStrategy<Connection> requiresPooling() {
     if (poolingProfile.isDisabled()) {
-      throw new IllegalArgumentException(
-          "The selected connection management strategy requires pooling but the supplied pooling profile "
-              + "is attempting to disable pooling. Supply a valid PoolingProfile or choose a different management strategy.");
+      throw new IllegalArgumentException("The selected connection management strategy requires pooling but the supplied pooling profile "
+          + "is attempting to disable pooling. Supply a valid PoolingProfile or choose a different management strategy.");
     }
 
     return requiresPooling(new NullPoolingListener<>());

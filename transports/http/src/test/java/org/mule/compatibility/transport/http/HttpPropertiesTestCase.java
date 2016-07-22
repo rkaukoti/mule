@@ -53,7 +53,7 @@ public class HttpPropertiesTestCase extends FunctionalTestCase {
     MuleClient client = muleContext.getClient();
     MuleMessage response =
         client.send("http://localhost:" + dynamicPort.getNumber() + "/redirect/products?retrieve=all&order=desc",
-            getTestMuleMessage(TEST_MESSAGE));
+                    getTestMuleMessage(TEST_MESSAGE));
     assertEquals("Successfully redirected: products?retrieve=all&order=desc", getPayloadAsString(response));
   }
 }

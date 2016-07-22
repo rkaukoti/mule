@@ -58,7 +58,7 @@ public class CatchExceptionStrategyTestCase extends FunctionalTestCase {
     MuleMessage request = MuleMessage.builder().payload(requestFaultPayload).build();
     MuleClient client = muleContext.getClient();
     MuleMessage response = client.send("http://localhost:" + dynamicPort.getNumber() + "/testServiceWithFaultCatchException",
-        request, HTTP_REQUEST_OPTIONS);
+                                       request, HTTP_REQUEST_OPTIONS);
     assertNotNull(response);
     assertEquals(String.valueOf(OK.getStatusCode()), response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
     assertTrue(getPayloadAsString(response).contains("Anonymous"));
@@ -70,10 +70,10 @@ public class CatchExceptionStrategyTestCase extends FunctionalTestCase {
     MuleClient client = muleContext.getClient();
     MuleMessage response =
         client.send("http://localhost:" + dynamicPort.getNumber() + "/testServiceWithFaultCatchExceptionRethrown", request,
-            HTTP_REQUEST_OPTIONS);
+                    HTTP_REQUEST_OPTIONS);
     assertNotNull(response);
     assertEquals(String.valueOf(HttpConstants.HttpStatus.INTERNAL_SERVER_ERROR.getStatusCode()),
-        response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
+                 response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
     assertTrue(getPayloadAsString(response).contains("<faultstring>"));
   }
 
@@ -82,7 +82,7 @@ public class CatchExceptionStrategyTestCase extends FunctionalTestCase {
     MuleMessage request = MuleMessage.builder().payload(requestPayload).build();
     MuleClient client = muleContext.getClient();
     MuleMessage response = client.send("http://localhost:" + dynamicPort.getNumber() + "/testTransformerExceptionCatchException",
-        request, HTTP_REQUEST_OPTIONS);
+                                       request, HTTP_REQUEST_OPTIONS);
     assertNotNull(response);
     assertEquals(String.valueOf(OK.getStatusCode()), response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
     assertTrue(getPayloadAsString(response).contains("APPEND"));
@@ -116,7 +116,7 @@ public class CatchExceptionStrategyTestCase extends FunctionalTestCase {
     MuleClient client = muleContext.getClient();
     MuleMessage result =
         client.send("http://localhost:" + dynamicPort.getNumber() + "/testProxyWithTransformerExceptionCatchStrategy",
-            getTestMuleMessage(requestPayload), HTTP_REQUEST_OPTIONS);
+                    getTestMuleMessage(requestPayload), HTTP_REQUEST_OPTIONS);
     String resString = getPayloadAsString(result);
     assertEquals(String.valueOf(OK.getStatusCode()), result.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
     assertTrue(resString.contains("Anonymous"));

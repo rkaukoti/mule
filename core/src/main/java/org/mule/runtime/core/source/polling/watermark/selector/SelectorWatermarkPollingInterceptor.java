@@ -67,8 +67,8 @@ public class SelectorWatermarkPollingInterceptor extends WatermarkPollingInterce
           .payload(new SelectorIteratorProxy<>((Iterator<Object>) payload, selector)).build());
     } else {
       throw new ConfigurationException(CoreMessages.createStaticMessage(String.format(
-          "Poll executing with payload of class %s but selector can only handle Iterator and Iterable objects when watermark is to be updated via selectors",
-          payload.getClass().getCanonicalName())));
+                                                                                      "Poll executing with payload of class %s but selector can only handle Iterator and Iterable objects when watermark is to be updated via selectors",
+                                                                                      payload.getClass().getCanonicalName())));
     }
 
     return event;

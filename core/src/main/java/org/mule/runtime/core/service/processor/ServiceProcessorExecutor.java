@@ -20,7 +20,7 @@ import java.util.List;
 public class ServiceProcessorExecutor extends BlockingProcessorExecutor {
 
   public ServiceProcessorExecutor(MuleEvent event, List<MessageProcessor> processors,
-      MessageProcessorExecutionTemplate messageProcessorExecutionTemplate, boolean copyOnVoidEvent) {
+                                  MessageProcessorExecutionTemplate messageProcessorExecutionTemplate, boolean copyOnVoidEvent) {
     super(event, processors, messageProcessorExecutionTemplate, copyOnVoidEvent);
   }
 

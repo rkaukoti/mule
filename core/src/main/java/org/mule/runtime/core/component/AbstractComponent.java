@@ -139,8 +139,8 @@ public abstract class AbstractComponent extends AbstractAnnotatedObject
     } else {
       final TransformerTemplate template = new TransformerTemplate(new TransformerTemplate.OverwitePayloadCallback(result));
       template.setReturnDataType(DataType.builder(DataType.OBJECT).charset(getDefaultEncoding(muleContext)).build());
-      event.setMessage(
-          muleContext.getTransformationService().applyTransformers(event.getMessage(), event, singletonList(template)));
+      event.setMessage(muleContext.getTransformationService().applyTransformers(event.getMessage(), event,
+                                                                                singletonList(template)));
       return event;
     }
   }
@@ -173,8 +173,8 @@ public abstract class AbstractComponent extends AbstractAnnotatedObject
   @Override
   public final void initialise() throws InitialisationException {
     if (flowConstruct == null) {
-      throw new InitialisationException(
-          MessageFactory.createStaticMessage("Component has not been initialized properly, no flow constuct."), this);
+      throw new InitialisationException(MessageFactory
+          .createStaticMessage("Component has not been initialized properly, no flow constuct."), this);
     }
 
     lifecycleManager.fireInitialisePhase((phaseName, object) -> {

@@ -111,8 +111,9 @@ public class WSConsumer implements MessageProcessor, Initialisable, MuleContextA
       try {
         config = muleContext.getRegistry().lookupObject(WSConsumerConfig.class);
         if (config == null) {
-          throw new InitialisationException(CoreMessages.createStaticMessage(
-              "No configuration defined for the web service " + "consumer. Add a consumer-config element."), this);
+          throw new InitialisationException(CoreMessages
+              .createStaticMessage("No configuration defined for the web service " + "consumer. Add a consumer-config element."),
+                                            this);
         }
       } catch (RegistrationException e) {
         throw new InitialisationException(e, this);
@@ -178,7 +179,7 @@ public class WSConsumer implements MessageProcessor, Initialisable, MuleContextA
                 .payload(soapFault.getDetail() != null ? soapFault.getDetail() : null).build());
 
             throw new SoapFaultException(event, soapFault.getFaultCode(), soapFault.getSubCode(), soapFault.getMessage(),
-                soapFault.getDetail(), this);
+                                         soapFault.getDetail(), this);
           } else {
             throw e;
           }
@@ -241,8 +242,8 @@ public class WSConsumer implements MessageProcessor, Initialisable, MuleContextA
         // Ensure that the http.status code inbound property (if present) is a String.
         Object statusCode = response.getMessage().getInboundProperty(HTTP_STATUS_PROPERTY, null);
         if (statusCode != null && !(statusCode instanceof String)) {
-          response.setMessage(
-              MuleMessage.builder(response.getMessage()).addInboundProperty(HTTP_STATUS_PROPERTY, statusCode.toString()).build());
+          response.setMessage(MuleMessage.builder(response.getMessage())
+              .addInboundProperty(HTTP_STATUS_PROPERTY, statusCode.toString()).build());
         }
         return super.processResponse(response, request);
       }
@@ -312,7 +313,7 @@ public class WSConsumer implements MessageProcessor, Initialisable, MuleContextA
     URL url = IOUtils.getResourceAsUrl(config.getWsdlLocation(), getClass());
     if (url == null) {
       throw new InitialisationException(MessageFactory.createStaticMessage("Can't find wsdl at %s", config.getWsdlLocation()),
-          this);
+                                        this);
     }
 
     try {
@@ -331,7 +332,7 @@ public class WSConsumer implements MessageProcessor, Initialisable, MuleContextA
     Service service = wsdlDefinition.getService(new QName(wsdlDefinition.getTargetNamespace(), config.getService()));
     if (service == null) {
       throw new InitialisationException(MessageFactory.createStaticMessage("Service %s not found in WSDL", config.getService()),
-          this);
+                                        this);
     }
 
     Port port = service.getPort(config.getPort());
@@ -347,7 +348,7 @@ public class WSConsumer implements MessageProcessor, Initialisable, MuleContextA
     BindingOperation bindingOperation = binding.getBindingOperation(this.operation, null, null);
     if (bindingOperation == null) {
       throw new InitialisationException(MessageFactory.createStaticMessage("Operation %s not found in WSDL", this.operation),
-          this);
+                                        this);
     }
 
     this.soapVersion = WSDLUtils.getSoapVersion(binding);
@@ -408,8 +409,9 @@ public class WSConsumer implements MessageProcessor, Initialisable, MuleContextA
         try {
           builder.addInboundAttachment(attachment.getId(), attachment.getDataHandler());
         } catch (Exception e) {
-          throw new MessagingException(
-              CoreMessages.createStaticMessage("Could not set inbound attachment %s", attachment.getId()), event, e, this);
+          throw new MessagingException(CoreMessages.createStaticMessage("Could not set inbound attachment %s",
+                                                                        attachment.getId()),
+                                       event, e, this);
         }
       }
       event.setMessage(builder.build());

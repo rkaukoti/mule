@@ -288,15 +288,13 @@ public class ComponentBuildingDefinition {
       checkState(namespace != null, "You must specify the namespace");
       Optional<Class> componentType = getType();
       checkState(!definition.typeConverter.isPresent() || (definition.typeConverter.isPresent() && componentType.isPresent()),
-          TYPE_CONVERTER_AND_UNKNOWN_TYPE_MESSAGE);
-      checkState(
-          !definition.typeConverter.isPresent()
-              || (definition.typeConverter.isPresent() && (isSimpleType(componentType.get()) || isMapType(componentType.get()))),
-          format(TYPE_CONVERTER_AND_NO_SIMPLE_TYPE_MESSAGE_TEMPLATE, componentType.orElse(Object.class).getName()));
-      checkState(
-          !definition.keyTypeConverter.isPresent()
-              || (definition.keyTypeConverter.isPresent() && componentType.isPresent() && isMapType(componentType.get())),
-          KEY_TYPE_CONVERTER_AND_NO_MAP_TYPE);
+                 TYPE_CONVERTER_AND_UNKNOWN_TYPE_MESSAGE);
+      checkState(!definition.typeConverter.isPresent()
+          || (definition.typeConverter.isPresent() && (isSimpleType(componentType.get()) || isMapType(componentType.get()))),
+                 format(TYPE_CONVERTER_AND_NO_SIMPLE_TYPE_MESSAGE_TEMPLATE, componentType.orElse(Object.class).getName()));
+      checkState(!definition.keyTypeConverter.isPresent()
+          || (definition.keyTypeConverter.isPresent() && componentType.isPresent() && isMapType(componentType.get())),
+                 KEY_TYPE_CONVERTER_AND_NO_MAP_TYPE);
       definition.componentIdentifier = new ComponentIdentifier.Builder().withName(identifier).withNamespace(namespace).build();
       return definition;
     }

@@ -112,9 +112,8 @@ public class JmsMessageUtils {
     } else if (object instanceof OutputHandler) {
       return outputHandlerToMessage((OutputHandler) object, session);
     } else {
-      throw new JMSException(
-          "Source was not of a supported type. Valid types are Message, String, Map, InputStream, List, byte[], Serializable or OutputHandler, "
-              + "but was " + ClassUtils.getShortClassName(object, "<null>"));
+      throw new JMSException("Source was not of a supported type. Valid types are Message, String, Map, InputStream, List, byte[], Serializable or OutputHandler, "
+          + "but was " + ClassUtils.getShortClassName(object, "<null>"));
     }
   }
 
@@ -158,10 +157,9 @@ public class JmsMessageUtils {
       if (validateStreamMessageType(o)) {
         sMsg.writeObject(o);
       } else {
-        throw new MessageFormatException(String.format(
-            "Invalid type passed to StreamMessage: %s . Allowed types are: "
-                + "Boolean, Byte, Short, Character, Integer, Long, Float, Double," + "String and byte[]",
-            ClassUtils.getShortClassName(o, "null")));
+        throw new MessageFormatException(String.format("Invalid type passed to StreamMessage: %s . Allowed types are: "
+            + "Boolean, Byte, Short, Character, Integer, Long, Float, Double," + "String and byte[]",
+                                                       ClassUtils.getShortClassName(o, "null")));
       }
     }
     return sMsg;
@@ -253,8 +251,8 @@ public class JmsMessageUtils {
       if (JmsConstants.JMS_SPECIFICATION_11.equals(jmsSpec)) {
         long bmBodyLength = bMsg.getBodyLength();
         if (bmBodyLength > Integer.MAX_VALUE) {
-          throw new JMSException(
-              "Size of BytesMessage exceeds Integer.MAX_VALUE; " + "please consider using JMS StreamMessage instead");
+          throw new JMSException("Size of BytesMessage exceeds Integer.MAX_VALUE; "
+              + "please consider using JMS StreamMessage instead");
         }
 
         if (bmBodyLength > 0) {

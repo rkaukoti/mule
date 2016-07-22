@@ -27,13 +27,13 @@ public class MuleFoldersUtilTestCase extends AbstractMuleTestCase {
   @Test
   public void getsMuleHome() throws Exception {
     MuleTestUtils.testWithSystemProperty(MuleProperties.MULE_HOME_DIRECTORY_PROPERTY, muleHome.getRoot().getAbsolutePath(),
-        new MuleTestUtils.TestCallback() {
+                                         new MuleTestUtils.TestCallback() {
 
-          @Override
-          public void run() throws Exception {
-            File folder = MuleFoldersUtil.getMuleHomeFolder();
-            assertThat(folder.getAbsolutePath(), equalTo(muleHome.getRoot().getAbsolutePath()));
-          }
-        });
+                                           @Override
+                                           public void run() throws Exception {
+                                             File folder = MuleFoldersUtil.getMuleHomeFolder();
+                                             assertThat(folder.getAbsolutePath(), equalTo(muleHome.getRoot().getAbsolutePath()));
+                                           }
+                                         });
   }
 }

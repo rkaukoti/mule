@@ -33,7 +33,7 @@ public abstract class AbstractSingleQueryDbMessageProcessor extends AbstractDbMe
   private final QueryResolver queryResolver;
 
   public AbstractSingleQueryDbMessageProcessor(DbConfigResolver dbConfigResolver, QueryResolver queryResolver,
-      TransactionalAction transactionalAction) {
+                                               TransactionalAction transactionalAction) {
     super(dbConfigResolver, transactionalAction);
     this.queryResolver = queryResolver;
   }

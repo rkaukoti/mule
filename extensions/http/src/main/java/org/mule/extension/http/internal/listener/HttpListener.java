@@ -207,7 +207,7 @@ public class HttpListener extends Source<Object, HttpRequestAttributes> implemen
 
                 @Override
                 public void onCompletion(org.mule.runtime.api.message.MuleEvent result,
-                    ExceptionCallback<org.mule.runtime.api.message.MuleEvent, Exception> exceptionCallback) {
+                                         ExceptionCallback<org.mule.runtime.api.message.MuleEvent, Exception> exceptionCallback) {
                   // TODO: MULE-9699 Analyse adding static resource handler here
                   final HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
                   final HttpResponse httpResponse =
@@ -232,10 +232,10 @@ public class HttpListener extends Source<Object, HttpRequestAttributes> implemen
                   HttpResponse response;
                   try {
                     response = muleEventToHttpResponse.create(messagingException.getEvent(), failureResponseBuilder,
-                        errorResponseBuilder, supportStreaming);
+                                                              errorResponseBuilder, supportStreaming);
                   } catch (MessagingException e) {
                     response = new DefaultHttpResponse(new ResponseStatus(500, "Server error"), new MultiValueMap(),
-                        new EmptyHttpEntity());
+                                                       new EmptyHttpEntity());
                   }
                   responseCallback.responseReady(response, getResponseFailureCallback(responseCallback));
                 }
@@ -253,22 +253,23 @@ public class HttpListener extends Source<Object, HttpRequestAttributes> implemen
       }
 
       private void sendErrorResponse(final HttpConstants.HttpStatus status, String message,
-          HttpResponseReadyCallback responseCallback) {
+                                     HttpResponseReadyCallback responseCallback) {
         responseCallback.responseReady(new HttpResponseBuilder().setStatusCode(status.getStatusCode())
             .setReasonPhrase(status.getReasonPhrase()).setEntity(new ByteArrayHttpEntity(message.getBytes())).build(),
-            new ResponseStatusCallback() {
+                                       new ResponseStatusCallback() {
 
-              @Override
-              public void responseSendFailure(Throwable exception) {
-                logger.warn("Error while sending {} response {}", status.getStatusCode(), exception.getMessage());
-                if (logger.isDebugEnabled()) {
-                  logger.debug("Exception thrown", exception);
-                }
-              }
+                                         @Override
+                                         public void responseSendFailure(Throwable exception) {
+                                           logger.warn("Error while sending {} response {}", status.getStatusCode(),
+                                                       exception.getMessage());
+                                           if (logger.isDebugEnabled()) {
+                                             logger.debug("Exception thrown", exception);
+                                           }
+                                         }
 
-              @Override
-              public void responseSendSuccessfully() {}
-            });
+                                         @Override
+                                         public void responseSendSuccessfully() {}
+                                       });
       }
     };
   }
@@ -282,7 +283,7 @@ public class HttpListener extends Source<Object, HttpRequestAttributes> implemen
   }
 
   protected HttpResponse buildResponse(MuleEvent event, final HttpResponseBuilder responseBuilder, boolean supportStreaming,
-      ExceptionCallback exceptionCallback) {
+                                       ExceptionCallback exceptionCallback) {
     addThrottlingHeaders(responseBuilder);
     final HttpResponse httpResponse;
 
@@ -296,7 +297,7 @@ public class HttpListener extends Source<Object, HttpRequestAttributes> implemen
   }
 
   protected HttpResponse doBuildResponse(MuleEvent event, final HttpResponseBuilder responseBuilder, boolean supportsStreaming,
-      ExceptionCallback exceptionCallback) {
+                                         ExceptionCallback exceptionCallback) {
     try {
       return muleEventToHttpResponse.create(event, responseBuilder, this.responseBuilder, supportsStreaming);
     } catch (Exception e) {
@@ -379,8 +380,8 @@ public class HttpListener extends Source<Object, HttpRequestAttributes> implemen
         if (pathPart.contains("*") && pathPart.length() > 1) {
           // TODO: MULE-8946 This should throw a MuleException
           throw new MuleRuntimeException(CoreMessages.createStaticMessage(String.format(
-              "Http Listener with path %s contains an invalid use of a wildcard. Wildcards can only be used at the end of the path (i.e.: /path/*) or between / characters (.i.e.: /path/*/anotherPath))",
-              this.path)));
+                                                                                        "Http Listener with path %s contains an invalid use of a wildcard. Wildcards can only be used at the end of the path (i.e.: /path/*) or between / characters (.i.e.: /path/*/anotherPath))",
+                                                                                        this.path)));
         }
       }
     }

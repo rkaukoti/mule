@@ -52,7 +52,7 @@ public class LoggerMessageProcessorTestCase extends AbstractMuleTestCase {
 
   // Verifies if the right call to the logger was made depending on the level enabled
   private void verifyLogCall(LoggerMessageProcessor loggerMessageProcessor, String logLevel, String enabledLevel,
-      MuleEvent muleEvent, String message) {
+                             MuleEvent muleEvent, String message) {
     when(loggerMessageProcessor.logger.isTraceEnabled()).thenReturn("TRACE".equals(enabledLevel));
     when(loggerMessageProcessor.logger.isDebugEnabled()).thenReturn("DEBUG".equals(enabledLevel));
     when(loggerMessageProcessor.logger.isInfoEnabled()).thenReturn("INFO".equals(enabledLevel));
@@ -68,7 +68,7 @@ public class LoggerMessageProcessorTestCase extends AbstractMuleTestCase {
 
   // Verifies if the Mule expression is called or not depending on the logging level enabled
   private void verifyExpressionEvaluation(LoggerMessageProcessor loggerMessageProcessor, String level, String enabledLevel,
-      MuleEvent muleEvent, VerificationMode timesEvaluateExpression) {
+                                          MuleEvent muleEvent, VerificationMode timesEvaluateExpression) {
     when(loggerMessageProcessor.logger.isTraceEnabled()).thenReturn("TRACE".equals(enabledLevel));
     when(loggerMessageProcessor.logger.isDebugEnabled()).thenReturn("DEBUG".equals(enabledLevel));
     when(loggerMessageProcessor.logger.isInfoEnabled()).thenReturn("INFO".equals(enabledLevel));
@@ -106,14 +106,14 @@ public class LoggerMessageProcessorTestCase extends AbstractMuleTestCase {
                                                                                                                                  // is
                                                                                                                                  // enabled
     verifyLogCall(buildLoggerMessageProcessorForExpressionEvaluation(level), level, "not" + level, muleEvent,
-        "text to log".toString()); // Level
-                                   // is
-                                   // disabled
-                                   // by
-                                   // prepending
-                                   // it
-                                   // with
-                                   // "not"
+                  "text to log".toString()); // Level
+                                             // is
+                                             // disabled
+                                             // by
+                                             // prepending
+                                             // it
+                                             // with
+                                             // "not"
     verifyExpressionEvaluation(buildLoggerMessageProcessorForExpressionEvaluation(level), level, level, muleEvent, times(1)); // Expression
                                                                                                                               // should
                                                                                                                               // be
@@ -124,16 +124,16 @@ public class LoggerMessageProcessorTestCase extends AbstractMuleTestCase {
                                                                                                                               // is
                                                                                                                               // enabled
     verifyExpressionEvaluation(buildLoggerMessageProcessorForExpressionEvaluation(level), level, "not" + level, muleEvent,
-        never()); // Expression
-                  // should
-                  // not
-                  // be
-                  // evaluated
-                  // when
-                  // the
-                  // level
-                  // is
-                  // enabled
+                               never()); // Expression
+                                         // should
+                                         // not
+                                         // be
+                                         // evaluated
+                                         // when
+                                         // the
+                                         // level
+                                         // is
+                                         // enabled
   }
 
   private Logger buildMockLogger() {

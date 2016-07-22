@@ -63,7 +63,7 @@ public abstract class ExtensionsTestUtils {
   }
 
   public static DictionaryType dictionaryOf(Class<? extends Map> clazz, TypeBuilder<?> keyTypeBuilder,
-      TypeBuilder<?> valueTypeBuilder) {
+                                            TypeBuilder<?> valueTypeBuilder) {
     return TYPE_BUILDER.dictionaryType().id(clazz.getName()).ofKey(keyTypeBuilder).ofValue(valueTypeBuilder).build();
   }
 

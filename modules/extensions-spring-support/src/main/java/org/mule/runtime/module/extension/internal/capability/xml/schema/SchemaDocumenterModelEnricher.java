@@ -50,7 +50,7 @@ public final class SchemaDocumenterModelEnricher implements ModelEnricher {
     }
 
     new SchemaDocumenter(processingEnv).document(describingContext.getExtensionDeclarer().getDeclaration(), extensionElement,
-        roundEnvironment);
+                                                 roundEnvironment);
 
   }
 }

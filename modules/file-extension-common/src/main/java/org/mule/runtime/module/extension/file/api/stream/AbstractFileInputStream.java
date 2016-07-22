@@ -44,7 +44,8 @@ public abstract class AbstractFileInputStream extends AutoCloseInputStream {
 
   private static InputStream createLazyStream(LazyStreamSupplier streamFactory) {
     return (InputStream) Enhancer.create(InputStream.class,
-        (MethodInterceptor) (proxy, method, arguments, methodProxy) -> methodProxy.invoke(streamFactory.get(), arguments));
+                                         (MethodInterceptor) (proxy, method, arguments, methodProxy) -> methodProxy
+                                             .invoke(streamFactory.get(), arguments));
   }
 
   /**

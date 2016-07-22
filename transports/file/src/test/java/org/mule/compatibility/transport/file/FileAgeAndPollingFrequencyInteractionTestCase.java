@@ -50,7 +50,8 @@ public class FileAgeAndPollingFrequencyInteractionTestCase extends FunctionalTes
   public static class TestFileMessageReceiver extends FileMessageReceiver {
 
     public TestFileMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint, String readDir,
-        String moveDir, String moveToPattern, long frequency) throws CreateException {
+                                   String moveDir, String moveToPattern, long frequency)
+        throws CreateException {
       super(connector, flowConstruct, endpoint, readDir, moveDir, moveToPattern, frequency);
     }
 

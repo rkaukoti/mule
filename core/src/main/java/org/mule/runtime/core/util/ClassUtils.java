@@ -283,8 +283,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
     if (type.isAssignableFrom(clazz)) {
       return (T) clazz;
     } else {
-      throw new IllegalArgumentException(
-          String.format("Loaded class '%s' is not assignable from type '%s'", clazz.getName(), type.getName()));
+      throw new IllegalArgumentException(String.format("Loaded class '%s' is not assignable from type '%s'", clazz.getName(),
+                                                       type.getName()));
     }
   }
 
@@ -319,8 +319,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
       }
     }
 
-    throw new NoSuchFieldException(
-        String.format("Could not find field '%s' in class %s", fieldName, target.getClass().getName()));
+    throw new NoSuchFieldException(String.format("Could not find field '%s' in class %s", fieldName,
+                                                 target.getClass().getName()));
   }
 
   public static void setFieldValue(Object target, String fieldName, Object value, boolean recursive)
@@ -344,8 +344,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
       }
     }
 
-    throw new NoSuchFieldException(
-        String.format("Could not find field '%s' in class %s", fieldName, target.getClass().getName()));
+    throw new NoSuchFieldException(String.format("Could not find field '%s' in class %s", fieldName,
+                                                 target.getClass().getName()));
   }
 
 
@@ -396,8 +396,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
       for (Class<?> arg : args) {
         argsString.append(arg.getName()).append(", ");
       }
-      throw new NoSuchMethodException(
-          "could not find constructor on class: " + clazz + ", with matching arg params: " + argsString);
+      throw new NoSuchMethodException("could not find constructor on class: " + clazz + ", with matching arg params: "
+          + argsString);
     }
 
     return (T) ctor.newInstance(constructorArgs);
@@ -521,7 +521,7 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
    * @return a List of methods on the class that match the criteria. If there are none, an empty list is returned
    */
   public static List<Method> getSatisfiableMethods(Class<?> implementation, Class<?>[] parameterTypes, boolean voidOk,
-      boolean matchOnObject, Set<String> ignoredMethodNames) {
+                                                   boolean matchOnObject, Set<String> ignoredMethodNames) {
     return getSatisfiableMethods(implementation, parameterTypes, voidOk, matchOnObject, ignoredMethodNames, null);
   }
 
@@ -537,7 +537,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
    * @return a List of methods on the class that match the criteria. If there are none, an empty list is returned
    */
   public static List<Method> getSatisfiableMethods(Class<?> implementation, Class<?>[] parameterTypes, boolean voidOk,
-      boolean matchOnObject, Collection<String> ignoredMethodNames, WildcardFilter filter) {
+                                                   boolean matchOnObject, Collection<String> ignoredMethodNames,
+                                                   WildcardFilter filter) {
     List<Method> result = new ArrayList<>();
 
     if (ignoredMethodNames == null) {
@@ -574,7 +575,7 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
    * @return the list of methods that matched the return type and criteria. If none are found an empty result is returned
    */
   public static List<Method> getSatisfiableMethodsWithReturnType(Class implementation, Class returnType, boolean matchOnObject,
-      Set<String> ignoredMethodNames) {
+                                                                 Set<String> ignoredMethodNames) {
     List<Method> result = new ArrayList<>();
 
     if (ignoredMethodNames == null) {
@@ -1013,7 +1014,9 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
    * @throws E if the expected exception is actually thrown
    */
   public static <T, E extends Exception> T withContextClassLoader(ClassLoader classLoader, Callable<T> callable,
-      Class<E> expectedExceptionType, ExceptionHandler<T, E> exceptionHandler) throws E {
+                                                                  Class<E> expectedExceptionType,
+                                                                  ExceptionHandler<T, E> exceptionHandler)
+      throws E {
     final Thread currentThread = Thread.currentThread();
     final ClassLoader currentClassLoader = currentThread.getContextClassLoader();
     currentThread.setContextClassLoader(classLoader);

@@ -48,7 +48,7 @@ abstract class AbstractLocalCopyCommand extends LocalFileCommand {
    * @param createParentDirectory whether to create the target's parent directory if it doesn't exists
    */
   protected final void execute(FileConnectorConfig config, String sourcePath, String target, boolean overwrite,
-      boolean createParentDirectory) {
+                               boolean createParentDirectory) {
     Path source = resolveExistingPath(config, sourcePath);
     Path targetPath = resolvePath(config, target);
 
@@ -69,7 +69,7 @@ abstract class AbstractLocalCopyCommand extends LocalFileCommand {
         targetPath = targetPath.resolve(source.getFileName());
       } else {
         throw new IllegalArgumentException(format("Can't copy '%s' to '%s' because the destination path " + "doesn't exists",
-            source.toAbsolutePath(), targetPath.toAbsolutePath()));
+                                                  source.toAbsolutePath(), targetPath.toAbsolutePath()));
       }
     }
 
@@ -80,10 +80,9 @@ abstract class AbstractLocalCopyCommand extends LocalFileCommand {
     try {
       doExecute(source, targetPath, overwrite, copyOption != null ? new CopyOption[] {copyOption} : new CopyOption[] {});
     } catch (FileAlreadyExistsException e) {
-      throw new IllegalArgumentException(format(
-          "Can't copy '%s' to '%s' because the destination path "
-              + "already exists. Consider setting the 'overwrite' parameter to 'true'",
-          source.toAbsolutePath(), targetPath.toAbsolutePath()));
+      throw new IllegalArgumentException(format("Can't copy '%s' to '%s' because the destination path "
+          + "already exists. Consider setting the 'overwrite' parameter to 'true'", source.toAbsolutePath(),
+                                                targetPath.toAbsolutePath()));
     } catch (Exception e) {
       throw exception(format("Found exception %s file '%s' to '%s': %s", getAction(), source, targetPath, e.getMessage()), e);
     }

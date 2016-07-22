@@ -37,8 +37,9 @@ public class ApplicationClassLoaderBuilder extends AbstractArtifactClassLoaderBu
    * @param artifactPluginDescriptorLoader loader for plugin zip files into their descriptors
    */
   public ApplicationClassLoaderBuilder(MuleApplicationClassLoaderFactory artifactClassLoaderFactory,
-      ArtifactPluginRepository artifactPluginRepository, ArtifactPluginFactory artifactPluginFactory,
-      ArtifactPluginDescriptorLoader artifactPluginDescriptorLoader) {
+                                       ArtifactPluginRepository artifactPluginRepository,
+                                       ArtifactPluginFactory artifactPluginFactory,
+                                       ArtifactPluginDescriptorLoader artifactPluginDescriptorLoader) {
     super(artifactClassLoaderFactory, artifactPluginRepository, artifactPluginFactory, artifactPluginDescriptorLoader);
   }
 

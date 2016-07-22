@@ -53,15 +53,16 @@ public final class SubTypesModelEnricher extends AbstractAnnotatedModelEnricher 
 
   private SubTypesModelProperty declareSubTypesMapping(List<SubTypeMapping> typeMappings, String name) {
     if (typeMappings.stream().map(SubTypeMapping::baseType).distinct().collect(toList()).size() != typeMappings.size()) {
-      throw new IllegalModelDefinitionException(
-          String.format("There should be only one SubtypeMapping for any given base type in extension [%s]."
+      throw new IllegalModelDefinitionException(String
+          .format("There should be only one SubtypeMapping for any given base type in extension [%s]."
               + " Duplicated base types are not allowed", name));
     }
 
     Map<MetadataType, List<MetadataType>> subTypesMap = typeMappings.stream()
         .collect(new ImmutableMapCollector<>(mapping -> getMetadataType(mapping.baseType(), typeLoader),
-            mapping -> stream(mapping.subTypes()).map(subType -> getMetadataType(subType, typeLoader))
-                .collect(new ImmutableListCollector<>())));
+                                             mapping -> stream(mapping.subTypes())
+                                                 .map(subType -> getMetadataType(subType, typeLoader))
+                                                 .collect(new ImmutableListCollector<>())));
 
     return new SubTypesModelProperty(subTypesMap);
   }

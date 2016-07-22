@@ -30,8 +30,9 @@ public class ApplicationClassLoaderBuilderFactory {
    * @param artifactPluginDescriptorLoader artifact for creating plugin descriptors
    */
   public ApplicationClassLoaderBuilderFactory(MuleApplicationClassLoaderFactory applicationClassLoaderFactory,
-      ArtifactPluginRepository artifactPluginRepository, ArtifactPluginFactory artifactPluginFactory,
-      ArtifactPluginDescriptorLoader artifactPluginDescriptorLoader) {
+                                              ArtifactPluginRepository artifactPluginRepository,
+                                              ArtifactPluginFactory artifactPluginFactory,
+                                              ArtifactPluginDescriptorLoader artifactPluginDescriptorLoader) {
     this.applicationClassLoaderFactory = applicationClassLoaderFactory;
     this.artifactPluginRepository = artifactPluginRepository;
     this.artifactPluginFactory = artifactPluginFactory;
@@ -45,7 +46,7 @@ public class ApplicationClassLoaderBuilderFactory {
    */
   public ApplicationClassLoaderBuilder createArtifactClassLoaderBuilder() {
     return new ApplicationClassLoaderBuilder(applicationClassLoaderFactory, artifactPluginRepository, artifactPluginFactory,
-        artifactPluginDescriptorLoader);
+                                             artifactPluginDescriptorLoader);
   }
 
 }

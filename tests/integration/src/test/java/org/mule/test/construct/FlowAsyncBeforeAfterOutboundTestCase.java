@@ -56,9 +56,9 @@ public class FlowAsyncBeforeAfterOutboundTestCase extends FunctionalTestCase {
     assertThat(msgOut, not(nullValue()));
 
     assertThat(msgOut.getInboundProperty("request-response-thread"),
-        equalTo(msgSync.getInboundProperty("request-response-thread")));
+               equalTo(msgSync.getInboundProperty("request-response-thread")));
     assertThat(msgSync.getOutboundProperty("request-response-thread"),
-        not(equalTo(msgAsync.getOutboundProperty("async-thread"))));
+               not(equalTo(msgAsync.getOutboundProperty("async-thread"))));
     assertThat(msgOut.getOutboundProperty("request-response-thread"), not(equalTo(msgAsync.getOutboundProperty("async-thread"))));
   }
 

@@ -78,8 +78,9 @@ public class ClientCredentialsTokenRequestHandler extends AbstractTokenRequestHa
 
   public void refreshAccessToken() throws MuleException {
     try {
-      final DefaultMuleEvent accessTokenEvent = new DefaultMuleEvent(MuleMessage.builder().nullPayload().build(),
-          MessageExchangePattern.REQUEST_RESPONSE, new Flow("test", getMuleContext()));
+      final DefaultMuleEvent accessTokenEvent =
+          new DefaultMuleEvent(MuleMessage.builder().nullPayload().build(), MessageExchangePattern.REQUEST_RESPONSE,
+                               new Flow("test", getMuleContext()));
       setMapPayloadWithTokenRequestParameters(accessTokenEvent);
       final MuleEvent response;
       response = invokeTokenUrl(accessTokenEvent);
@@ -89,8 +90,8 @@ public class ClientCredentialsTokenRequestHandler extends AbstractTokenRequestHa
 
       if (logger.isDebugEnabled()) {
         logger.debug("Retrieved access token, refresh token and expires from token url are: %s, %s, %s",
-            tokenResponseProcessor.getAccessToken(), tokenResponseProcessor.getRefreshToken(),
-            tokenResponseProcessor.getExpiresIn());
+                     tokenResponseProcessor.getAccessToken(), tokenResponseProcessor.getRefreshToken(),
+                     tokenResponseProcessor.getExpiresIn());
       }
 
       if (!tokenResponseContentIsValid(tokenResponseProcessor)) {
@@ -107,9 +108,9 @@ public class ClientCredentialsTokenRequestHandler extends AbstractTokenRequestHa
       }
       tokenManager.getConfigOAuthContext().updateResourceOwnerOAuthContext(defaultUserState);
     } catch (TokenNotFoundException e) {
-      logger.error(
-          String.format("Could not extract access token or refresh token from token URL. Access token is %s, Refresh token is %s",
-              e.getTokenResponseProcessor().getAccessToken(), e.getTokenResponseProcessor().getRefreshToken()));
+      logger.error(String
+          .format("Could not extract access token or refresh token from token URL. Access token is %s, Refresh token is %s",
+                  e.getTokenResponseProcessor().getAccessToken(), e.getTokenResponseProcessor().getRefreshToken()));
       muleEventLogger.logContent(e.getTokenUrlResponse());
       throw new DefaultMuleException(e);
     } catch (TokenUrlResponseException e) {

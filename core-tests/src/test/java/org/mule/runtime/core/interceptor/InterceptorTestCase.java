@@ -126,11 +126,10 @@ public class InterceptorTestCase extends AbstractMuleContextTestCase {
 
     MuleEvent result = component.process(getTestEvent(""));
 
-    assertEquals(
-        INTERCEPTOR_ONE + BEFORE + INTERCEPTOR_TWO + BEFORE + INTERCEPTOR_THREE + BEFORE + INTERCEPTOR_ONE + BEFORE
-            + INTERCEPTOR_TWO + BEFORE + INTERCEPTOR_THREE + BEFORE + COMPONENT + INTERCEPTOR_THREE + AFTER + INTERCEPTOR_TWO
-            + AFTER + INTERCEPTOR_ONE + AFTER + INTERCEPTOR_THREE + AFTER + INTERCEPTOR_TWO + AFTER + INTERCEPTOR_ONE + AFTER,
-        result.getMessageAsString());
+    assertEquals(INTERCEPTOR_ONE + BEFORE + INTERCEPTOR_TWO + BEFORE + INTERCEPTOR_THREE + BEFORE + INTERCEPTOR_ONE + BEFORE
+        + INTERCEPTOR_TWO + BEFORE + INTERCEPTOR_THREE + BEFORE + COMPONENT + INTERCEPTOR_THREE + AFTER + INTERCEPTOR_TWO + AFTER
+        + INTERCEPTOR_ONE + AFTER + INTERCEPTOR_THREE + AFTER + INTERCEPTOR_TWO + AFTER + INTERCEPTOR_ONE + AFTER,
+                 result.getMessageAsString());
   }
 
   protected Flow createUninitializedFlow() throws Exception {
@@ -152,8 +151,8 @@ public class InterceptorTestCase extends AbstractMuleContextTestCase {
     @Override
     public MuleEvent after(MuleEvent event) {
       try {
-        event.setMessage(
-            MuleMessage.builder(event.getMessage()).payload(getPayloadAsString(event.getMessage()) + name + AFTER).build());
+        event.setMessage(MuleMessage.builder(event.getMessage()).payload(getPayloadAsString(event.getMessage()) + name + AFTER)
+            .build());
       } catch (Exception e) {
         fail(e.getMessage());
       }
@@ -163,8 +162,8 @@ public class InterceptorTestCase extends AbstractMuleContextTestCase {
     @Override
     public MuleEvent before(MuleEvent event) {
       try {
-        event.setMessage(
-            MuleMessage.builder(event.getMessage()).payload(getPayloadAsString(event.getMessage()) + name + BEFORE).build());
+        event.setMessage(MuleMessage.builder(event.getMessage()).payload(getPayloadAsString(event.getMessage()) + name + BEFORE)
+            .build());
       } catch (Exception e) {
         fail(e.getMessage());
       }

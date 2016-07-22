@@ -284,7 +284,7 @@ public final class EmailAttributesBuilder {
    */
   public EmailAttributes build() {
     return new EmailAttributes(id, subject, from, to, bcc, cc, replyTo, headers, attachments, receivedDate, sentDate,
-        new EmailFlags(answered, deleted, draft, recent, seen));
+                               new EmailFlags(answered, deleted, draft, recent, seen));
   }
 
   private void addArrayAddresses(Address[] toAddresses, List<String> addresses) {

@@ -40,7 +40,7 @@ public final class FtpCopyCommand extends ClassicFtpCommand implements CopyComma
    */
   @Override
   public void copy(FileConnectorConfig config, String sourcePath, String targetPath, boolean overwrite,
-      boolean createParentDirectories, MuleEvent event) {
+                   boolean createParentDirectories, MuleEvent event) {
     copy(config, sourcePath, targetPath, overwrite, createParentDirectories, event, new RegularFtpCopyDelegate(this, fileSystem));
   }
 
@@ -52,7 +52,7 @@ public final class FtpCopyCommand extends ClassicFtpCommand implements CopyComma
 
     @Override
     protected void copyDirectory(FileConnectorConfig config, Path sourcePath, Path target, boolean overwrite,
-        FtpFileSystem writerConnection, MuleEvent event) {
+                                 FtpFileSystem writerConnection, MuleEvent event) {
       changeWorkingDirectory(sourcePath);
       FTPFile[] files;
       try {
@@ -79,7 +79,7 @@ public final class FtpCopyCommand extends ClassicFtpCommand implements CopyComma
 
     @Override
     protected void copyFile(FileConnectorConfig config, FileAttributes source, Path target, boolean overwrite,
-        FtpFileSystem writerConnection, MuleEvent event) {
+                            FtpFileSystem writerConnection, MuleEvent event) {
       try {
         super.copyFile(config, source, target, overwrite, writerConnection, event);
       } finally {

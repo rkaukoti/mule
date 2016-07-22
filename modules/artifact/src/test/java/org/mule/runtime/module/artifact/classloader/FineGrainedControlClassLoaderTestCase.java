@@ -65,8 +65,8 @@ public class FineGrainedControlClassLoaderTestCase extends AbstractMuleTestCase 
 
     expected.expect(CompositeClassNotFoundException.class);
     expected.expectMessage(startsWith("Cannot load class '" + TEST_CLASS_NAME + "': [ERROR" + lineSeparator() + "]"));
-    expected.expect(
-        expressionMatches((e) -> ((CompositeClassNotFoundException) e).getExceptions(), contains(sameInstance(thrownException))));
+    expected.expect(expressionMatches((e) -> ((CompositeClassNotFoundException) e).getExceptions(),
+                                      contains(sameInstance(thrownException))));
 
     FineGrainedControlClassLoader ext =
         new FineGrainedControlClassLoader(new URL[] {getChildFileResource()}, parent, lookupPolicy);
@@ -112,9 +112,10 @@ public class FineGrainedControlClassLoaderTestCase extends AbstractMuleTestCase 
 
     FineGrainedControlClassLoader ext = buildFineGrainedControlClassLoader(parent, lookupPolicy);
 
-    expected.expect(
-        expressionMatches((e) -> ((CompositeClassNotFoundException) e).getExceptions(), contains(hasMessage(is(TEST_CLASS_NAME)),
-            expressionMatches((e) -> ((TestClassNotFoundException) e).getClassLoader(), is((ClassLoader) ext)))));
+    expected.expect(expressionMatches((e) -> ((CompositeClassNotFoundException) e).getExceptions(),
+                                      contains(hasMessage(is(TEST_CLASS_NAME)),
+                                               expressionMatches((e) -> ((TestClassNotFoundException) e).getClassLoader(),
+                                                                 is((ClassLoader) ext)))));
 
     invokeTestClassMethod(ext);
   }
@@ -157,14 +158,15 @@ public class FineGrainedControlClassLoaderTestCase extends AbstractMuleTestCase 
     FineGrainedControlClassLoader ext = buildFineGrainedControlClassLoader(parent, lookupPolicy);
 
     expected.expect(expressionMatches((e) -> ((CompositeClassNotFoundException) e).getExceptions(),
-        contains(expressionMatches((e) -> ((TestClassNotFoundException) e).getClassLoader(), is((ClassLoader) ext)),
-            hasMessage(is(TEST_CLASS_NAME)))));
+                                      contains(expressionMatches((e) -> ((TestClassNotFoundException) e).getClassLoader(),
+                                                                 is((ClassLoader) ext)),
+                                               hasMessage(is(TEST_CLASS_NAME)))));
 
     invokeTestClassMethod(ext);
   }
 
   protected FineGrainedControlClassLoader buildFineGrainedControlClassLoader(ClassLoader parent,
-      final ClassLoaderLookupPolicy lookupPolicy) {
+                                                                             final ClassLoaderLookupPolicy lookupPolicy) {
     return new FineGrainedControlClassLoader(new URL[0], parent, lookupPolicy) {
 
       @Override

@@ -73,9 +73,11 @@ public class TypeSafeExpressionValueResolver<T> implements ValueResolver<T> {
     } catch (TransformerException e) {
 
       throw new MessagingException(createStaticMessage(String.format(
-          "Expression '%s' was expected to return a value of type '%s' but a '%s' was found instead "
-              + "and no suitable transformer could be located",
-          evaluator.getRawValue(), expectedType.getName(), object.getClass().getName())), event, e);
+                                                                     "Expression '%s' was expected to return a value of type '%s' but a '%s' was found instead "
+                                                                         + "and no suitable transformer could be located",
+                                                                     evaluator.getRawValue(), expectedType.getName(),
+                                                                     object.getClass().getName())),
+                                   event, e);
     }
 
     if (transformer instanceof MessageTransformer) {

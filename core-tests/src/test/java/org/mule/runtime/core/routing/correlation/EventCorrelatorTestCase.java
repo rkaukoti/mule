@@ -173,7 +173,7 @@ public class EventCorrelatorTestCase extends AbstractMuleTestCase {
     when(mockEventGroup.getMessageCollectionEvent()).thenReturn(mock(MuleEvent.class));
     when(mockFlowConstruct.getName()).thenReturn("flowName");
     return new EventCorrelator(mockEventCorrelatorCallback, mockTimeoutMessageProcessor, mockMessagingInfoMapping,
-        mockMuleContext, mockFlowConstruct, memoryObjectStore, "prefix", mockProcessedGroups);
+                               mockMuleContext, mockFlowConstruct, memoryObjectStore, "prefix", mockProcessedGroups);
   }
 
   public interface DisposableListableObjectStore extends ListableObjectStore, Disposable {

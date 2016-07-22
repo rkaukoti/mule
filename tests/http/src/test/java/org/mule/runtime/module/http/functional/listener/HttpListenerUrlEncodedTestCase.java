@@ -82,14 +82,14 @@ public class HttpListenerUrlEncodedTestCase extends AbstractHttpTestCase {
     assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(200));
 
     assertThat(URLDecoder.decode(IOUtils.toString(httpResponse.getEntity().getContent()), UTF_8.name()),
-        is("Invalid url encoded content"));
+               is("Invalid url encoded content"));
   }
 
   @Test
   public void urlEncodedMultiValueParamsHasOldValues() throws Exception {
-    final Response response = Request
-        .Post(getListenerUrl()).bodyForm(new BasicNameValuePair(PARAM_1_NAME, PARAM_1_VALUE),
-            new BasicNameValuePair(PARAM_2_NAME, PARAM_2_VALUE_1), new BasicNameValuePair(PARAM_2_NAME, PARAM_2_VALUE_2))
+    final Response response = Request.Post(getListenerUrl())
+        .bodyForm(new BasicNameValuePair(PARAM_1_NAME, PARAM_1_VALUE), new BasicNameValuePair(PARAM_2_NAME, PARAM_2_VALUE_1),
+                  new BasicNameValuePair(PARAM_2_NAME, PARAM_2_VALUE_2))
         .execute();
     final MuleMessage receivedMessage = muleContext.getClient().request(OUT_QUEUE_URL, 1000);
     assertThat(receivedMessage.getPayload(), instanceOf(ParameterMap.class));

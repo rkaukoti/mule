@@ -54,7 +54,7 @@ public abstract class AbstractEmailConnection {
    * @param properties the custom properties added to configure the session.
    */
   public AbstractEmailConnection(EmailProtocol protocol, String username, String password, String host, String port,
-      long connectionTimeout, long readTimeout, long writeTimeout, Map<String, String> properties)
+                                 long connectionTimeout, long readTimeout, long writeTimeout, Map<String, String> properties)
       throws EmailConnectionException {
     this(protocol, username, password, host, port, connectionTimeout, readTimeout, writeTimeout, properties, null);
   }
@@ -75,8 +75,9 @@ public abstract class AbstractEmailConnection {
    * @param tlsContextFactory the tls context factory for creating the context to secure the connection
    */
   public AbstractEmailConnection(EmailProtocol protocol, String username, String password, String host, String port,
-      long connectionTimeout, long readTimeout, long writeTimeout, Map<String, String> properties,
-      TlsContextFactory tlsContextFactory) throws EmailConnectionException {
+                                 long connectionTimeout, long readTimeout, long writeTimeout, Map<String, String> properties,
+                                 TlsContextFactory tlsContextFactory)
+      throws EmailConnectionException {
     this.protocol = protocol;
     Properties sessionProperties = buildBasicSessionProperties(host, port, connectionTimeout, readTimeout, writeTimeout);
 
@@ -102,7 +103,8 @@ public abstract class AbstractEmailConnection {
    * Creates a new {@link Properties} instance and set all the basic properties required by the specified {@code protocol}.
    */
   private Properties buildBasicSessionProperties(String host, String port, long connectionTimeout, long readTimeout,
-      long writeTimeout) throws EmailConnectionException {
+                                                 long writeTimeout)
+      throws EmailConnectionException {
     Properties props = new Properties();
     props.setProperty(protocol.getPortProperty(), port);
     props.setProperty(protocol.getHostProperty(), host);

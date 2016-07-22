@@ -32,11 +32,14 @@ public final class DefaultConfigurationProviderFactory implements ConfigurationP
    */
   @Override
   public <T> ConfigurationProvider<T> createDynamicConfigurationProvider(String name,
-      RuntimeConfigurationModel configurationModel, ResolverSet resolverSet,
-      ValueResolver<ConnectionProvider> connectionProviderResolver, DynamicConfigPolicy dynamicConfigPolicy) throws Exception {
+                                                                         RuntimeConfigurationModel configurationModel,
+                                                                         ResolverSet resolverSet,
+                                                                         ValueResolver<ConnectionProvider> connectionProviderResolver,
+                                                                         DynamicConfigPolicy dynamicConfigPolicy)
+      throws Exception {
     configureConnectionProviderResolver(name, connectionProviderResolver);
     return new DynamicConfigurationProvider<>(name, configurationModel, resolverSet, connectionProviderResolver,
-        dynamicConfigPolicy.getExpirationPolicy());
+                                              dynamicConfigPolicy.getExpirationPolicy());
   }
 
   /**
@@ -44,17 +47,20 @@ public final class DefaultConfigurationProviderFactory implements ConfigurationP
    */
   @Override
   public <T> ConfigurationProvider<T> createStaticConfigurationProvider(String name, RuntimeConfigurationModel configurationModel,
-      ResolverSet resolverSet, ValueResolver<ConnectionProvider> connectionProviderResolver, MuleContext muleContext)
+                                                                        ResolverSet resolverSet,
+                                                                        ValueResolver<ConnectionProvider> connectionProviderResolver,
+                                                                        MuleContext muleContext)
       throws Exception {
     return withExtensionClassLoader(configurationModel.getExtensionModel(), () -> {
       configureConnectionProviderResolver(name, connectionProviderResolver);
       ConfigurationInstance<T> configuration;
       try {
-        configuration = new ConfigurationInstanceFactory<T>(configurationModel, resolverSet).createConfiguration(name,
-            getInitialiserEvent(muleContext), connectionProviderResolver);
+        configuration = new ConfigurationInstanceFactory<T>(configurationModel, resolverSet)
+            .createConfiguration(name, getInitialiserEvent(muleContext), connectionProviderResolver);
       } catch (MuleException e) {
-        throw new ConfigurationException(createStaticMessage(String.format("Could not create configuration '%s' for the '%s'",
-            name, configurationModel.getExtensionModel().getName())), e);
+        throw new ConfigurationException(createStaticMessage(String
+            .format("Could not create configuration '%s' for the '%s'", name, configurationModel.getExtensionModel().getName())),
+                                         e);
       }
 
       return new StaticConfigurationProvider<>(name, configurationModel, configuration);

@@ -51,7 +51,7 @@ public class WSConsumerNonBlockingFunctionalTestCase extends AbstractWSConsumerF
   public void invalidRequestFormatReturnsSOAPFault() throws Exception {
     String message = "<tns:echo xmlns:tns=\"http://consumer.ws.module.runtime.mule.org/\"><invalid>Hello</invalid></tns:echo>";
     assertSoapFault("http://localhost:" + dynamicPort.getNumber() + "/in", message,
-        "unexpected element (uri:\"\", local:\"invalid\")");
+                    "unexpected element (uri:\"\", local:\"invalid\")");
     muleContext.getRegistry().lookupObject(SensingNullRequestResponseMessageProcessor.class)
         .assertRequestResponseThreadsDifferent();
   }
@@ -60,7 +60,7 @@ public class WSConsumerNonBlockingFunctionalTestCase extends AbstractWSConsumerF
   public void invalidNamespaceReturnsSOAPFault() throws Exception {
     String message = "<tns:echo xmlns:tns=\"http://invalid/\"><text>Hello</text></tns:echo>";
     assertSoapFault("http://localhost:" + dynamicPort.getNumber() + "/in", message,
-        "Unexpected wrapper element {http://invalid/}echo found");
+                    "Unexpected wrapper element {http://invalid/}echo found");
     muleContext.getRegistry().lookupObject(SensingNullRequestResponseMessageProcessor.class)
         .assertRequestResponseThreadsDifferent();
   }
@@ -70,7 +70,7 @@ public class WSConsumerNonBlockingFunctionalTestCase extends AbstractWSConsumerF
     MuleMessage request = MuleMessage.builder().payload(ECHO_REQUEST).build();
     MuleClient client = muleContext.getClient();
     MuleMessage response = client.send("http://localhost:" + dynamicPort.getNumber() + "/inMidFlow", request,
-        newOptions().method(POST.name()).disableStatusCodeValidation().build());
+                                       newOptions().method(POST.name()).disableStatusCodeValidation().build());
     assertThat(getPayloadAsString(response), equalTo(TEST_MESSAGE));
   }
 

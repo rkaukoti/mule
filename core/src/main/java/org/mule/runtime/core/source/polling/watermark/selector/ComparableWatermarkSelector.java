@@ -39,7 +39,7 @@ public abstract class ComparableWatermarkSelector extends WatermarkSelector {
     } else {
       if (logger.isDebugEnabled()) {
         logger.debug(String.format("This selector only accepts Comparable values but %s found instead. Ignoring.",
-            value.getClass().getCanonicalName()));
+                                   value.getClass().getCanonicalName()));
       }
     }
   }

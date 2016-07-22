@@ -88,7 +88,7 @@ public final class ExtensionRegistry {
           registry.registerTransformer(new StringToEnum(enumClass));
         } catch (MuleException e) {
           throw new MuleRuntimeException(createStaticMessage("Could not register transformer for enum " + enumClass.getName()),
-              e);
+                                         e);
         }
       }
     });
@@ -163,8 +163,9 @@ public final class ExtensionRegistry {
     try {
       registry.registerObject(configurationProvider.getName(), configurationProvider);
     } catch (RegistrationException e) {
-      throw new MuleRuntimeException(createStaticMessage(
-          format("Found exception while registering configuration provider '%s'", configurationProvider.getName())), e);
+      throw new MuleRuntimeException(createStaticMessage(format("Found exception while registering configuration provider '%s'",
+                                                                configurationProvider.getName())),
+                                     e);
     }
 
     providersByExtension.invalidate(configurationProvider.getModel().getExtensionModel());

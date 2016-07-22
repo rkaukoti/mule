@@ -67,6 +67,7 @@ public class POP3SProvider extends AbstractRetrieverProvider<RetrieverConnection
   @Override
   public RetrieverConnection connect() throws ConnectionException {
     return new RetrieverConnection(POP3S, settings.getUser(), settings.getPassword(), settings.getHost(), port,
-        getConnectionTimeout(), getReadTimeout(), getWriteTimeout(), getProperties(), tlsContextFactory);
+                                   getConnectionTimeout(), getReadTimeout(), getWriteTimeout(), getProperties(),
+                                   tlsContextFactory);
   }
 }

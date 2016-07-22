@@ -74,8 +74,9 @@ public final class SocketListener extends Source<InputStream, SocketAttributes> 
         threadingProfile.createWorkManager("SocketListenerWorkManager", muleContext.getConfiguration().getShutdownTimeout());
     workManager.start();
 
-    executorService = newSingleThreadExecutor(
-        r -> new Thread(r, format("%s%s.socket.listener", getPrefix(muleContext), flowConstruct.getName())));
+    executorService =
+        newSingleThreadExecutor(r -> new Thread(r,
+                                                format("%s%s.socket.listener", getPrefix(muleContext), flowConstruct.getName())));
     stopRequested.set(false);
     executorService.execute(this::listen);
   }
@@ -116,8 +117,8 @@ public final class SocketListener extends Source<InputStream, SocketAttributes> 
       }
     } catch (InterruptedException e) {
       if (LOGGER.isWarnEnabled()) {
-        LOGGER.warn(
-            "Got interrupted while trying to terminate pending events for socket listener on flow " + flowConstruct.getName());
+        LOGGER.warn("Got interrupted while trying to terminate pending events for socket listener on flow "
+            + flowConstruct.getName());
       }
     }
   }

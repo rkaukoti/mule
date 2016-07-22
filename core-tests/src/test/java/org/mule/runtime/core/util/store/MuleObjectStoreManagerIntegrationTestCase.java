@@ -235,7 +235,7 @@ public class MuleObjectStoreManagerIntegrationTestCase extends AbstractMuleConte
     }
 
     public <T extends ObjectStore<? extends Serializable>> T createObjectStore(String name, int maxEntries, int entryTTL,
-        int expirationInterval) {
+                                                                               int expirationInterval) {
       if (objectStoreType.equals(ObjectStoreType.USER)) {
         return muleObjectStoreManager.getUserObjectStore(name, isPersistent, maxEntries, entryTTL, expirationInterval);
       } else {

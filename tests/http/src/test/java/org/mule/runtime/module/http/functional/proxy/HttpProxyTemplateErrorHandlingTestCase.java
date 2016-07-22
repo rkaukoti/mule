@@ -51,7 +51,7 @@ public class HttpProxyTemplateErrorHandlingTestCase extends AbstractHttpRequestT
     this.nonBlocking = nonBlocking;
     if (nonBlocking) {
       systemProperty = new SystemProperty(MuleProperties.MULE_DEFAULT_PROCESSING_STRATEGY,
-          ProcessingStrategyUtils.NON_BLOCKING_PROCESSING_STRATEGY);
+                                          ProcessingStrategyUtils.NON_BLOCKING_PROCESSING_STRATEGY);
     }
   }
 

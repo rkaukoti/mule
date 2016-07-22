@@ -50,7 +50,7 @@ public class JmsMessages extends MessageFactory {
 
   public static Message tooManyRedeliveries(String messageId, int times, int maxRedelivery, ImmutableEndpoint endpoint) {
     return factory.createMessage(BUNDLE_PATH, 11, messageId, times, maxRedelivery, endpoint.getEndpointURI(),
-        endpoint.getConnector().getName());
+                                 endpoint.getConnector().getName());
   }
 
   public static Message invalidResourceType(Class<?> expectedClass, Object object) {
@@ -60,7 +60,7 @@ public class JmsMessages extends MessageFactory {
     }
 
     return factory.createMessage(BUNDLE_PATH, 12, StringMessageUtils.toString(expectedClass),
-        StringMessageUtils.toString(actualClass));
+                                 StringMessageUtils.toString(actualClass));
   }
 
   public static Message checkTransformer(String string, Class<?> class1, String name) {

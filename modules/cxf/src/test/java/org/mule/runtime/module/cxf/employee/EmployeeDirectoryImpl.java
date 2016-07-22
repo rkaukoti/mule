@@ -36,8 +36,8 @@ public class EmployeeDirectoryImpl implements EmployeeDirectory {
     }
 
 
-    System.out.println(
-        "Added " + employee.getName() + " in division " + employee.getDivision() + " with a picture " + employee.getPicture());
+    System.out.println("Added " + employee.getName() + " in division " + employee.getDivision() + " with a picture "
+        + employee.getPicture());
     employees.add(employee);
     invocationCount++;
   }

@@ -28,19 +28,19 @@ public class TokenResponseProcessor {
   private Map<String, Object> customResponseParameters;
 
   private TokenResponseProcessor(final TokenResponseConfiguration tokenResponseConfiguration,
-      final ExpressionManager expressionManager, boolean retrieveRefreshToken) {
+                                 final ExpressionManager expressionManager, boolean retrieveRefreshToken) {
     this.tokenResponseConfiguration = tokenResponseConfiguration;
     this.expressionManager = expressionManager;
     this.retrieveRefreshToken = retrieveRefreshToken;
   }
 
-  public static TokenResponseProcessor createAuthorizationCodeProcessor(
-      final TokenResponseConfiguration tokenResponseConfiguration, final ExpressionManager expressionManager) {
+  public static TokenResponseProcessor createAuthorizationCodeProcessor(final TokenResponseConfiguration tokenResponseConfiguration,
+                                                                        final ExpressionManager expressionManager) {
     return new TokenResponseProcessor(tokenResponseConfiguration, expressionManager, true);
   }
 
-  public static TokenResponseProcessor createClientCredentialsProcessor(
-      final TokenResponseConfiguration tokenResponseConfiguration, final ExpressionManager expressionManager) {
+  public static TokenResponseProcessor createClientCredentialsProcessor(final TokenResponseConfiguration tokenResponseConfiguration,
+                                                                        final ExpressionManager expressionManager) {
     return new TokenResponseProcessor(tokenResponseConfiguration, expressionManager, false);
   }
 
@@ -59,7 +59,7 @@ public class TokenResponseProcessor {
     customResponseParameters = new HashMap<>();
     for (ParameterExtractor parameterExtractor : tokenResponseConfiguration.getParameterExtractors()) {
       customResponseParameters.put(parameterExtractor.getParamName(),
-          expressionManager.evaluate(parameterExtractor.getValue(), muleEvent));
+                                   expressionManager.evaluate(parameterExtractor.getValue(), muleEvent));
     }
   }
 

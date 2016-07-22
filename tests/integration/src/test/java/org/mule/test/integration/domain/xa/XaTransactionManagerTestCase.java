@@ -30,8 +30,8 @@ public class XaTransactionManagerTestCase extends DomainFunctionalTestCase {
   @Override
   public void setUpMuleContexts() throws Exception {
     thrown.expect(InitialisationException.class);
-    thrown.expect(hasMessage(containsString(
-        "No qualifying bean of type [org.mule.runtime.core.api.transaction.TransactionManagerFactory] is defined: expected single matching bean but found 2:")));
+    thrown
+        .expect(hasMessage(containsString("No qualifying bean of type [org.mule.runtime.core.api.transaction.TransactionManagerFactory] is defined: expected single matching bean but found 2:")));
     thrown.expect(ThrowableRootCauseMatcher
         .hasRootCause(IsInstanceOf.<ConfigurationException>instanceOf(NoUniqueBeanDefinitionException.class)));
     super.setUpMuleContexts();

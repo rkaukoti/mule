@@ -150,8 +150,9 @@ public class DomainArchiveDeployerTestCase extends AbstractMuleTestCase {
   private void putApplicationInTestDomainAppsFolder(String appName) throws IOException {
     File domainDirectory = new File(domainsFolder, DOMAIN_NAME);
     domainDirectory.mkdirs();
-    assertThat(FileUtils.createFile(new File(domainsFolder, DOMAIN_NAME + File.separator
-        + DomainArchiveDeployer.DOMAIN_BUNDLE_APPS_FOLDER + File.separator + appName + ZIP_FILE_EXTENSION).getAbsolutePath())
+    assertThat(FileUtils.createFile(new File(domainsFolder,
+                                             DOMAIN_NAME + File.separator + DomainArchiveDeployer.DOMAIN_BUNDLE_APPS_FOLDER
+                                                 + File.separator + appName + ZIP_FILE_EXTENSION).getAbsolutePath())
         .exists(), is(true));
   }
 }

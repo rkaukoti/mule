@@ -57,8 +57,8 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
           BeanUtils.setProperty(object, entry.getKey().toString(), entry.getValue());
         } catch (Exception e) {
           if (logWarnings) {
-            logger.warn(
-                "Property: " + entry.getKey() + "=" + entry.getValue() + " not found on object: " + object.getClass().getName());
+            logger.warn("Property: " + entry.getKey() + "=" + entry.getValue() + " not found on object: "
+                + object.getClass().getName());
           }
         }
       }

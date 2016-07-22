@@ -79,9 +79,8 @@ public class StreamingTestCase extends FunctionalTestCase {
 
     ((FunctionalStreamingTestComponent) ftc).setEventCallback(callback, TEST_MESSAGE.length());
 
-    client.dispatch(
-        ((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("testComponent")).getMessageSource()).getAddress(),
-        TEST_MESSAGE, new HashMap());
+    client.dispatch(((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("testComponent")).getMessageSource())
+        .getAddress(), TEST_MESSAGE, new HashMap());
 
     latch.await(10, TimeUnit.SECONDS);
     assertEquals(RESULT, message.get());

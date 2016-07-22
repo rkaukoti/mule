@@ -35,15 +35,19 @@ public class HttpOperations {
    * @throws MuleException if unauthenticated.
    */
   public void basicSecurityFilter(String realm, @Optional String securityProviders, MuleEvent event,
-      @Optional(defaultValue = "statusCode") @DisplayName("Status Code - Flow Var Ref") String statusCodeFlowVar,
-      @Optional(defaultValue = "headers") @DisplayName("Headers - Flow Var Ref") String headersFlowVar) throws MuleException {
+                                  @Optional(
+                                      defaultValue = "statusCode") @DisplayName("Status Code - Flow Var Ref") String statusCodeFlowVar,
+                                  @Optional(
+                                      defaultValue = "headers") @DisplayName("Headers - Flow Var Ref") String headersFlowVar)
+      throws MuleException {
     HttpBasicAuthenticationFilter filter = createFilter(realm, securityProviders, statusCodeFlowVar, headersFlowVar);
 
     filter.doFilter(event);
   }
 
   private HttpBasicAuthenticationFilter createFilter(String realm, String securityProviders, String statusCodeFlowVar,
-      String headersFlowVar) throws InitialisationException {
+                                                     String headersFlowVar)
+      throws InitialisationException {
     HttpBasicAuthenticationFilter filter = new HttpBasicAuthenticationFilter(statusCodeFlowVar, headersFlowVar);
     filter.setRealm(realm);
     filter.setSecurityProviders(securityProviders);

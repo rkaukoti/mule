@@ -151,9 +151,9 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
     } catch (NoSuchMethodException nsme) {
       // For backward compatibility keep trying to use deprecated constructor for custom message factories.
       logger.warn(String.format(
-          "Couldn't find %s empty constructor. "
-              + "%s must be updated to have an empty constructor in order to work properly within domains.",
-          messageFactory, messageFactory));
+                                "Couldn't find %s empty constructor. "
+                                    + "%s must be updated to have an empty constructor in order to work properly within domains.",
+                                messageFactory, messageFactory));
       try {
         final Object[] args = new Object[] {muleContext};
         return (MuleMessageFactory) ClassUtils.instanciateClass(messageFactory, args, classLoader);
@@ -190,7 +190,8 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
 
   @Override
   public MessageReceiver createMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint,
-      Object... args) throws MuleException {
+                                               Object... args)
+      throws MuleException {
     String receiverClass = messageReceiver;
 
     if (endpoint.getTransactionConfig().isTransacted()) {
@@ -238,8 +239,9 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
       try {
         return (MessageDispatcherFactory) ClassUtils.instanciateClass(dispatcherFactory, ClassUtils.NO_ARGS, classLoader);
       } catch (Exception e) {
-        throw new TransportServiceException(
-            TransportCoreMessages.failedToCreateObjectWith("Message Dispatcher Factory", dispatcherFactory), e);
+        throw new TransportServiceException(TransportCoreMessages.failedToCreateObjectWith("Message Dispatcher Factory",
+                                                                                           dispatcherFactory),
+                                            e);
       }
     } else {
       // Its valid not to have a Dispatcher factory on the transport
@@ -253,8 +255,9 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
       try {
         return (MessageRequesterFactory) ClassUtils.instanciateClass(requesterFactory, ClassUtils.NO_ARGS, classLoader);
       } catch (Exception e) {
-        throw new TransportServiceException(
-            TransportCoreMessages.failedToCreateObjectWith("Message Requester Factory", requesterFactory), e);
+        throw new TransportServiceException(TransportCoreMessages.failedToCreateObjectWith("Message Requester Factory",
+                                                                                           requesterFactory),
+                                            e);
       }
     } else {
       // Its valid not to have a Requester factory on the transport
@@ -268,8 +271,9 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
       try {
         return (TransactionFactory) ClassUtils.instanciateClass(transactionFactory, ClassUtils.NO_ARGS, classLoader);
       } catch (Exception e) {
-        throw new TransportServiceException(
-            TransportCoreMessages.failedToCreateObjectWith("Transaction Factory", transactionFactory), e);
+        throw new TransportServiceException(TransportCoreMessages.failedToCreateObjectWith("Transaction Factory",
+                                                                                           transactionFactory),
+                                            e);
       }
     } else {
       return null;
@@ -356,7 +360,7 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
     EndpointAwareTransformer newTransformer;
     if (innerTransformer instanceof MessageTransformer) {
       newTransformer = new DefaultEndpointAwareMessageTransformer((MessageTransformer) innerTransformer,
-          SystemUtils.getDefaultEncoding(muleContext));
+                                                                  SystemUtils.getDefaultEncoding(muleContext));
     } else {
       newTransformer = new DefaultEndpointAwareTransformer(innerTransformer, SystemUtils.getDefaultEncoding(muleContext));
     }
@@ -480,8 +484,8 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
   @Override
   public List<MessageExchangePattern> getInboundExchangePatterns() throws TransportServiceException {
     if (inboundExchangePatterns == null) {
-      throw new TransportServiceException(
-          TransportCoreMessages.objectNotSetInService(MuleProperties.CONNECTOR_INBOUND_EXCHANGE_PATTERNS, getService()));
+      throw new TransportServiceException(TransportCoreMessages
+          .objectNotSetInService(MuleProperties.CONNECTOR_INBOUND_EXCHANGE_PATTERNS, getService()));
     }
     return inboundExchangePatterns;
   }
@@ -489,8 +493,8 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
   @Override
   public List<MessageExchangePattern> getOutboundExchangePatterns() throws TransportServiceException {
     if (outboundExchangePatterns == null) {
-      throw new TransportServiceException(
-          TransportCoreMessages.objectNotSetInService(MuleProperties.CONNECTOR_OUTBOUND_EXCHANGE_PATTERNS, getService()));
+      throw new TransportServiceException(TransportCoreMessages
+          .objectNotSetInService(MuleProperties.CONNECTOR_OUTBOUND_EXCHANGE_PATTERNS, getService()));
     }
     return outboundExchangePatterns;
   }
@@ -498,8 +502,8 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
   @Override
   public MessageExchangePattern getDefaultExchangePattern() throws TransportServiceException {
     if (defaultExchangePattern == null) {
-      throw new TransportServiceException(
-          TransportCoreMessages.objectNotSetInService(MuleProperties.CONNECTOR_DEFAULT_EXCHANGE_PATTERN, getService()));
+      throw new TransportServiceException(TransportCoreMessages
+          .objectNotSetInService(MuleProperties.CONNECTOR_DEFAULT_EXCHANGE_PATTERN, getService()));
     }
 
     return MessageExchangePattern.fromString(defaultExchangePattern);

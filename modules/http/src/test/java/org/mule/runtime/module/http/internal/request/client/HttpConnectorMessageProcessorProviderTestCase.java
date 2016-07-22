@@ -48,26 +48,29 @@ public class HttpConnectorMessageProcessorProviderTestCase extends AbstractMuleT
 
   @Test
   public void sameConfigReturnsSameInstanceUsingGenericOptions() throws Exception {
-    final MessageProcessor messageProcessor = httpConnectorMessageProcessorProvider.getMessageProcessor(PATH_URL,
-        SimpleOptionsBuilder.newOptions().build(), REQUEST_RESPONSE);
+    final MessageProcessor messageProcessor = httpConnectorMessageProcessorProvider
+        .getMessageProcessor(PATH_URL, SimpleOptionsBuilder.newOptions().build(), REQUEST_RESPONSE);
     assertThat(httpConnectorMessageProcessorProvider.getMessageProcessor(PATH_URL, SimpleOptionsBuilder.newOptions().build(),
-        REQUEST_RESPONSE), is(messageProcessor));
+                                                                         REQUEST_RESPONSE),
+               is(messageProcessor));
   }
 
   @Test
   public void sameConfigReturnsSameInstanceUsingDifferentGenericOptions() throws Exception {
-    final MessageProcessor messageProcessor = httpConnectorMessageProcessorProvider.getMessageProcessor(PATH_URL,
-        SimpleOptionsBuilder.newOptions().build(), REQUEST_RESPONSE);
-    assertThat(httpConnectorMessageProcessorProvider.getMessageProcessor(PATH_URL,
-        SimpleOptionsBuilder.newOptions().responseTimeout(1000).build(), REQUEST_RESPONSE), not(is(messageProcessor)));
+    final MessageProcessor messageProcessor = httpConnectorMessageProcessorProvider
+        .getMessageProcessor(PATH_URL, SimpleOptionsBuilder.newOptions().build(), REQUEST_RESPONSE);
+    assertThat(httpConnectorMessageProcessorProvider
+        .getMessageProcessor(PATH_URL, SimpleOptionsBuilder.newOptions().responseTimeout(1000).build(), REQUEST_RESPONSE),
+               not(is(messageProcessor)));
   }
 
   @Test
   public void sameConfigReturnsSameInstanceUsingDifferentHttpOptions() throws Exception {
-    final MessageProcessor messageProcessor = httpConnectorMessageProcessorProvider.getMessageProcessor(PATH_URL,
-        newOptions().requestStreamingMode(ALWAYS).build(), REQUEST_RESPONSE);
+    final MessageProcessor messageProcessor = httpConnectorMessageProcessorProvider
+        .getMessageProcessor(PATH_URL, newOptions().requestStreamingMode(ALWAYS).build(), REQUEST_RESPONSE);
     assertThat(httpConnectorMessageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().disableParseResponse().build(),
-        REQUEST_RESPONSE), not(is(messageProcessor)));
+                                                                         REQUEST_RESPONSE),
+               not(is(messageProcessor)));
   }
 
   @Test
@@ -95,7 +98,7 @@ public class HttpConnectorMessageProcessorProviderTestCase extends AbstractMuleT
     final MessageProcessor messageProcessor =
         httpConnectorMessageProcessorProvider.getMessageProcessor(PATH_URL, requestOptions, REQUEST_RESPONSE);
     assertThat(httpConnectorMessageProcessorProvider.getMessageProcessor(PATH_URL, requestOptions, REQUEST_RESPONSE),
-        is(messageProcessor));
+               is(messageProcessor));
   }
 
   @Test
@@ -103,7 +106,7 @@ public class HttpConnectorMessageProcessorProviderTestCase extends AbstractMuleT
     final MessageProcessor messageProcessor =
         httpConnectorMessageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), ONE_WAY);
     assertThat(httpConnectorMessageProcessorProvider.getMessageProcessor(ANOTHER_PATH, newOptions().build(), ONE_WAY),
-        not(is(messageProcessor)));
+               not(is(messageProcessor)));
   }
 
   @Test
@@ -111,16 +114,17 @@ public class HttpConnectorMessageProcessorProviderTestCase extends AbstractMuleT
     final MessageProcessor messageProcessor =
         httpConnectorMessageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), ONE_WAY);
     assertThat(httpConnectorMessageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), REQUEST_RESPONSE),
-        not(is(messageProcessor)));
+               not(is(messageProcessor)));
   }
 
   @Test
   public void disposeInvalidatesCache() throws Exception {
-    final MessageProcessor messageProcessor = httpConnectorMessageProcessorProvider.getMessageProcessor(PATH_URL,
-        SimpleOptionsBuilder.newOptions().build(), REQUEST_RESPONSE);
+    final MessageProcessor messageProcessor = httpConnectorMessageProcessorProvider
+        .getMessageProcessor(PATH_URL, SimpleOptionsBuilder.newOptions().build(), REQUEST_RESPONSE);
     httpConnectorMessageProcessorProvider.dispose();
     assertThat(httpConnectorMessageProcessorProvider.getMessageProcessor(PATH_URL, SimpleOptionsBuilder.newOptions().build(),
-        REQUEST_RESPONSE), not(is(messageProcessor)));
+                                                                         REQUEST_RESPONSE),
+               not(is(messageProcessor)));
   }
 
   @Test(expected = IllegalArgumentException.class)

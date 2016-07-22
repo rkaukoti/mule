@@ -38,9 +38,9 @@ public final class DefaultImplicitConfigurationProviderFactory implements Implic
         (RuntimeConfigurationModel) getFirstImplicit(extensionModel.getConfigurationModels());
 
     if (implicitConfigurationModel == null) {
-      throw new IllegalStateException(
-          String.format("Could not find a config for extension '%s' and none can be created automatically. Please define one",
-              extensionModel.getName()));
+      throw new IllegalStateException(String.format(
+                                                    "Could not find a config for extension '%s' and none can be created automatically. Please define one",
+                                                    extensionModel.getName()));
     }
 
     final String providerName = String.format("%s-%s", extensionModel.getName(), implicitConfigurationModel.getName());
@@ -54,8 +54,8 @@ public final class DefaultImplicitConfigurationProviderFactory implements Implic
 
       if (resolverSet.isDynamic()) {
         return new DynamicConfigurationProvider<>(configName, configurationModel, resolverSet,
-            new ImplicitConnectionProviderValueResolver(configName, configurationModel),
-            ImmutableExpirationPolicy.getDefault(new TimeSupplier()));
+                                                  new ImplicitConnectionProviderValueResolver(configName, configurationModel),
+                                                  ImmutableExpirationPolicy.getDefault(new TimeSupplier()));
       }
 
       return new StaticConfigurationProvider<>(configName, configurationModel, configurationInstance);

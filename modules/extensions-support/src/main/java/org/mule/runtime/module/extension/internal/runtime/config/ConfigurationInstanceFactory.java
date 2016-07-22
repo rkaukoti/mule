@@ -72,8 +72,8 @@ public final class ConfigurationInstanceFactory<T> {
   public ConfigurationInstance<T> createConfiguration(String name, MuleEvent event) throws MuleException {
     ValueResolver<ConnectionProvider> providerResolver;
     if (requiresConnection) {
-      providerResolver = new StaticValueResolver<>(
-          implicitConnectionProviderFactory.createImplicitConnectionProvider(name, configurationModel, event));
+      providerResolver = new StaticValueResolver<>(implicitConnectionProviderFactory
+          .createImplicitConnectionProvider(name, configurationModel, event));
     } else {
       providerResolver = NULL_CONNECTION_PROVIDER;
     }
@@ -94,12 +94,13 @@ public final class ConfigurationInstanceFactory<T> {
    * @throws MuleException if an error is encountered
    */
   public ConfigurationInstance<T> createConfiguration(String name, MuleEvent event,
-      ValueResolver<ConnectionProvider> connectionProviderResolver) throws MuleException {
+                                                      ValueResolver<ConnectionProvider> connectionProviderResolver)
+      throws MuleException {
     Optional<ConnectionProvider> connectionProvider = Optional.ofNullable(connectionProviderResolver.resolve(event));
     T configValue = createConfigurationInstance(name, event);
 
     return new LifecycleAwareConfigurationInstance<>(name, configurationModel, configValue,
-        createInterceptors(configurationModel), connectionProvider);
+                                                     createInterceptors(configurationModel), connectionProvider);
   }
 
   /**
@@ -111,11 +112,12 @@ public final class ConfigurationInstanceFactory<T> {
    * @throws MuleException if an error is encountered
    */
   public ConfigurationInstance<T> createConfiguration(String name, ResolverSetResult resolverSetResult,
-      Optional<ConnectionProvider> connectionProvider) throws MuleException {
+                                                      Optional<ConnectionProvider> connectionProvider)
+      throws MuleException {
     T configValue = createConfigurationInstance(name, resolverSetResult);
 
     return new LifecycleAwareConfigurationInstance<>(name, configurationModel, configValue,
-        createInterceptors(configurationModel), connectionProvider);
+                                                     createInterceptors(configurationModel), connectionProvider);
   }
 
   private T createConfigurationInstance(String name, ResolverSetResult resolverSetResult) throws MuleException {

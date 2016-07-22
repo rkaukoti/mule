@@ -22,7 +22,7 @@ public class TestTransactionManagerFactory extends GenericTransactionManagerLook
   @Override
   public TransactionManager create(MuleConfiguration config) throws Exception {
     return (TransactionManager) Proxy.newProxyInstance(getClass().getClassLoader(), new Class[] {TransactionManager.class},
-        new InternalInvocationHandler());
+                                                       new InternalInvocationHandler());
   }
 
   @Override

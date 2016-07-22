@@ -74,8 +74,7 @@ public abstract class FunctionalTestCase extends AbstractMuleContextTestCase {
     configResources = getConfigFile();
     if (configResources != null) {
       if (configResources.contains(",")) {
-        throw new RuntimeException(
-            "Do not use this method when the config is composed of several files. Use getConfigFiles method instead.");
+        throw new RuntimeException("Do not use this method when the config is composed of several files. Use getConfigFiles method instead.");
       }
       return new SpringXmlConfigurationBuilder(configResources, emptyMap(), APP);
     }
@@ -128,8 +127,8 @@ public abstract class FunctionalTestCase extends AbstractMuleContextTestCase {
       }
     }
 
-    throw new RegistrationException(
-        MessageFactory.createStaticMessage("Can't get component from flow construct " + flowConstruct.getName()));
+    throw new RegistrationException(MessageFactory
+        .createStaticMessage("Can't get component from flow construct " + flowConstruct.getName()));
   }
 
   /**

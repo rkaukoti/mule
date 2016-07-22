@@ -19,7 +19,7 @@ final class ExtensionFlowProcessingTemplate implements AsyncResponseFlowProcessi
   private final CompletionHandler<MuleEvent, MessagingException, MuleEvent> completionHandler;
 
   ExtensionFlowProcessingTemplate(MuleEvent event, MessageProcessor messageProcessor,
-      CompletionHandler<MuleEvent, MessagingException, MuleEvent> completionHandler) {
+                                  CompletionHandler<MuleEvent, MessagingException, MuleEvent> completionHandler) {
     this.event = event;
     this.messageProcessor = messageProcessor;
     this.completionHandler = completionHandler;
@@ -37,7 +37,8 @@ final class ExtensionFlowProcessingTemplate implements AsyncResponseFlowProcessi
 
   @Override
   public void sendResponseToClient(org.mule.runtime.core.api.MuleEvent muleEvent,
-      ResponseCompletionCallback responseCompletionCallback) throws MuleException {
+                                   ResponseCompletionCallback responseCompletionCallback)
+      throws MuleException {
     ExtensionSourceExceptionCallback exceptionCallback =
         new ExtensionSourceExceptionCallback(responseCompletionCallback, muleEvent);
     runAndNotify(() -> completionHandler.onCompletion(muleEvent, exceptionCallback), event, responseCompletionCallback);
@@ -45,7 +46,8 @@ final class ExtensionFlowProcessingTemplate implements AsyncResponseFlowProcessi
 
   @Override
   public void sendFailureResponseToClient(MessagingException messagingException,
-      ResponseCompletionCallback responseCompletionCallback) throws MuleException {
+                                          ResponseCompletionCallback responseCompletionCallback)
+      throws MuleException {
     runAndNotify(() -> completionHandler.onFailure(messagingException), event, responseCompletionCallback);
   }
 

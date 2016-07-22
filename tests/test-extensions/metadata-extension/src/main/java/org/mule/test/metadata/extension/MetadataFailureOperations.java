@@ -20,7 +20,7 @@ public class MetadataFailureOperations extends MetadataOperationsParent {
       contentResolver = TestMetadataResolverMetadataResolvingFailure.class,
       outputResolver = TestMetadataResolverMetadataResolvingFailure.class)
   public Object failWithResolvingException(@Connection MetadataConnection connection, @MetadataKeyId String type,
-      @Optional @Content Object content) {
+                                           @Optional @Content Object content) {
     return null;
   }
 
@@ -34,7 +34,7 @@ public class MetadataFailureOperations extends MetadataOperationsParent {
       contentResolver = TestMetadataResolverRuntimeExceptionFailure.class,
       outputResolver = TestMetadataResolverRuntimeExceptionFailure.class)
   public Object failWithRuntimeException(@Connection MetadataConnection connection, @MetadataKeyId String type,
-      @Optional @Content Object content) {
+                                         @Optional @Content Object content) {
     return null;
   }
 

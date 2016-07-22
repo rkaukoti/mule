@@ -147,7 +147,7 @@ public final class TcpWorker extends SocketWorker {
             dataOut.flush();
           } catch (IOException e) {
             exceptionCallback.onException(new IOException(format("An error occurred while sending TCP response to address '%s'",
-                socket.getRemoteSocketAddress().toString(), e)));
+                                                                 socket.getRemoteSocketAddress().toString(), e)));
           }
         }
 

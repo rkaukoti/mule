@@ -35,5 +35,6 @@ public interface ImplicitConnectionProviderFactory {
    *         used implicitly
    */
   <Connector> ConnectionProvider<Connector> createImplicitConnectionProvider(String configName,
-      RuntimeConfigurationModel configurationModel, MuleEvent event);
+                                                                             RuntimeConfigurationModel configurationModel,
+                                                                             MuleEvent event);
 }

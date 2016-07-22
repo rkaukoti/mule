@@ -38,8 +38,8 @@ public class SpringConfigurationBuilder extends AbstractConfigurationBuilder {
       if (appContext instanceof ConfigurableApplicationContext) {
         registry = new SpringRegistry((ConfigurableApplicationContext) appContext, parentContext, muleContext);
       } else {
-        throw new ConfigurationException(MessageFactory.createStaticMessage(
-            "Cannot set a parent context if the ApplicationContext does not implement ConfigurableApplicationContext"));
+        throw new ConfigurationException(MessageFactory
+            .createStaticMessage("Cannot set a parent context if the ApplicationContext does not implement ConfigurableApplicationContext"));
       }
     } else {
       registry = new SpringRegistry(appContext, muleContext);

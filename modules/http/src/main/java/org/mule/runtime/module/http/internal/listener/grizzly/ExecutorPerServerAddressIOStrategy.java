@@ -87,7 +87,7 @@ public class ExecutorPerServerAddressIOStrategy extends AbstractIOStrategy {
     final IOEventLifeCycleListener lifeCycleListener;
 
     private WorkerThreadRunnable(final Connection connection, final IOEvent ioEvent,
-        final IOEventLifeCycleListener lifeCycleListener) {
+                                 final IOEventLifeCycleListener lifeCycleListener) {
       this.connection = connection;
       this.ioEvent = ioEvent;
       this.lifeCycleListener = lifeCycleListener;

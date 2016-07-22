@@ -45,7 +45,7 @@ public class PooledJavaWithBindingsComponent extends AbstractJavaWithBindingsCom
   }
 
   public PooledJavaWithBindingsComponent(ObjectFactory objectFactory, PoolingProfile poolingProfile,
-      EntryPointResolverSet entryPointResolverSet, List<InterfaceBinding> bindings) {
+                                         EntryPointResolverSet entryPointResolverSet, List<InterfaceBinding> bindings) {
     super(objectFactory, entryPointResolverSet, bindings);
     this.poolingProfile = poolingProfile;
   }

@@ -235,7 +235,7 @@ public class WSDLQueryHandler implements StemMatchingQueryHandler {
   }
 
   protected void updateDoc(Document doc, String base, Map<String, Definition> mp, Map<String, SchemaReference> smp,
-      EndpointInfo ei) {
+                           EndpointInfo ei) {
     List<Element> elementList = null;
 
 
@@ -311,7 +311,7 @@ public class WSDLQueryHandler implements StemMatchingQueryHandler {
   }
 
   protected void updateDefinition(Definition def, Map<String, Definition> done, Map<String, SchemaReference> doneSchemas,
-      String base, EndpointInfo ei) {
+                                  String base, EndpointInfo ei) {
     OASISCatalogManager catalogs = OASISCatalogManager.getCatalogManager(bus);
 
     Collection<List<?>> imports = CastUtils.cast((Collection<?>) def.getImports().values());

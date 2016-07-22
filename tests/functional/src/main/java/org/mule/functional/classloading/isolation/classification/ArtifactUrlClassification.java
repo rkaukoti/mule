@@ -31,7 +31,7 @@ public class ArtifactUrlClassification {
    *        {@link ClassLoader}
    */
   public ArtifactUrlClassification(List<URL> containerUrls, List<PluginUrlClassification> pluginClassificationsUrls,
-      List<URL> applicationUrls) {
+                                   List<URL> applicationUrls) {
     this.containerUrls = containerUrls;
     this.pluginClassificationsUrls = pluginClassificationsUrls;
     this.applicationUrls = applicationUrls;

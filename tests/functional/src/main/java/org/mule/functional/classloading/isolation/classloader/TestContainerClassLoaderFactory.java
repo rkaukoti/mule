@@ -64,9 +64,10 @@ public class TestContainerClassLoaderFactory extends ContainerClassLoaderFactory
    */
   @Override
   protected ArtifactClassLoader createArtifactClassLoader(ClassLoader parentClassLoader, List<MuleModule> muleModules,
-      ClassLoaderLookupPolicy containerLookupPolicy) {
-    final ArtifactClassLoader containerClassLoader = new MuleArtifactClassLoader("mule", urls, parentClassLoader,
-        new MuleClassLoaderLookupPolicy(Collections.emptyMap(), getBootPackages()));
+                                                          ClassLoaderLookupPolicy containerLookupPolicy) {
+    final ArtifactClassLoader containerClassLoader =
+        new MuleArtifactClassLoader("mule", urls, parentClassLoader,
+                                    new MuleClassLoaderLookupPolicy(Collections.emptyMap(), getBootPackages()));
     return createContainerFilteringClassLoader(discoverModules(), containerClassLoader);
   }
 
@@ -85,7 +86,7 @@ public class TestContainerClassLoaderFactory extends ContainerClassLoaderFactory
    */
   public ClassLoaderLookupPolicy getContainerClassLoaderLookupPolicy() {
     return withContextClassLoader(new URLClassLoader(urls, null),
-        () -> super.getContainerClassLoaderLookupPolicy(discoverModules()));
+                                  () -> super.getContainerClassLoaderLookupPolicy(discoverModules()));
   }
 
   /**

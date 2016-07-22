@@ -71,8 +71,9 @@ public class ServerNotificationManagerConfigurator implements SmartFactoryBean {
         try {
           disableFunction.run();
         } catch (Exception e) {
-          throw new MuleRuntimeException(createStaticMessage(
-              format("Fail trying to disable a notification of type %s since such type does not exists", type)), e);
+          throw new MuleRuntimeException(createStaticMessage(format("Fail trying to disable a notification of type %s since such type does not exists",
+                                                                    type)),
+                                         e);
         }
       };
       if (disabledNotification.isInterfaceExplicitlyConfigured()) {

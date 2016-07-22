@@ -129,7 +129,7 @@ public final class IntrospectionUtils {
   }
 
   private static MetadataType getMethodType(Method method, ClassTypeLoader typeLoader, int genericIndex,
-      Supplier<MetadataType> fallbackSupplier) {
+                                            Supplier<MetadataType> fallbackSupplier) {
     ResolvableType methodType = getMethodResolvableType(method);
     Type type = null;
     if (methodType.getRawClass().equals(OperationResult.class)) {
@@ -237,8 +237,8 @@ public final class IntrospectionUtils {
     }
 
     if (interfaceType == null) {
-      throw new IllegalArgumentException(
-          String.format("Class '%s' does not implement the '%s' interface", type.getName(), implementedInterface.getName()));
+      throw new IllegalArgumentException(String.format("Class '%s' does not implement the '%s' interface", type.getName(),
+                                                       implementedInterface.getName()));
     }
 
     List<? super Class<?>> generics = toRawClasses(interfaceType.getGenerics());
@@ -273,7 +273,7 @@ public final class IntrospectionUtils {
     Class<?> searchClass = type;
 
     checkArgument(searchClass.getSuperclass().equals(superClass),
-        String.format("Class '%s' does not extend the '%s' class", type.getName(), superClass.getName()));
+                  String.format("Class '%s' does not extend the '%s' class", type.getName(), superClass.getName()));
 
     while (!Object.class.equals(searchClass)) {
       if (searchClass.getSuperclass().equals(superClass)) {

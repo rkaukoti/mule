@@ -35,7 +35,7 @@ public abstract class AbstractXmlPropertyExtractorTestCase extends FunctionalTes
   @Test
   public void testError() throws Exception {
     MessagingException e = flowRunner("test").withPayload(getErrorMessage()).runExpectingException();
-    assertThat(e.getMessage(), is(
-        "Execution of the expression \"payload.childBean.value\" failed. (org.mule.runtime.core.api.expression.ExpressionRuntimeException)."));
+    assertThat(e.getMessage(),
+               is("Execution of the expression \"payload.childBean.value\" failed. (org.mule.runtime.core.api.expression.ExpressionRuntimeException)."));
   }
 }

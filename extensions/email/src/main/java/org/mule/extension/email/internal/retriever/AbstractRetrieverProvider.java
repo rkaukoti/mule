@@ -49,8 +49,7 @@ public abstract class AbstractRetrieverProvider<Connection extends AbstractEmail
    * {@inheritDoc}
    */
   @Override
-  public ConnectionHandlingStrategy<Connection> getHandlingStrategy(
-      ConnectionHandlingStrategyFactory<Connection> connectionHandlingStrategyFactory) {
+  public ConnectionHandlingStrategy<Connection> getHandlingStrategy(ConnectionHandlingStrategyFactory<Connection> connectionHandlingStrategyFactory) {
     return connectionHandlingStrategyFactory.supportsPooling(new PoolingListener<Connection>() {
 
       @Override

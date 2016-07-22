@@ -46,7 +46,8 @@ public class ResponseMessageProcessorAdapter extends AbstractRequestResponseMess
       return response;
     } else {
       return new CopyOnNullNonBlockingProcessorExecutor(response, Collections.singletonList(responseProcessor),
-          MessageProcessorExecutionTemplate.createExecutionTemplate(), true).execute();
+                                                        MessageProcessorExecutionTemplate.createExecutionTemplate(), true)
+                                                            .execute();
     }
   }
 
@@ -92,7 +93,7 @@ public class ResponseMessageProcessorAdapter extends AbstractRequestResponseMess
   class CopyOnNullNonBlockingProcessorExecutor extends NonBlockingProcessorExecutor {
 
     public CopyOnNullNonBlockingProcessorExecutor(MuleEvent event, List<MessageProcessor> processors,
-        MessageProcessorExecutionTemplate executionTemplate, boolean copyOnVoidEvent) {
+                                                  MessageProcessorExecutionTemplate executionTemplate, boolean copyOnVoidEvent) {
       super(event, processors, executionTemplate, copyOnVoidEvent);
     }
 

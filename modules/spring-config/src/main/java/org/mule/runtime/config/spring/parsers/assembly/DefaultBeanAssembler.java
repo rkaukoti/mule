@@ -51,7 +51,7 @@ public class DefaultBeanAssembler implements BeanAssembler {
   private PropertyConfiguration beanConfig;
 
   public DefaultBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean, PropertyConfiguration targetConfig,
-      BeanDefinition target) {
+                              BeanDefinition target) {
     this.beanConfig = beanConfig;
     this.bean = bean;
     this.targetConfig = targetConfig;
@@ -231,7 +231,7 @@ public class DefaultBeanAssembler implements BeanAssembler {
   @Override
   public void extendBean(String newName, Object newValue, boolean isReference) {
     addPropertyWithReference(bean.getBeanDefinition().getPropertyValues(), new SinglePropertyLiteral(isReference), newName,
-        newValue);
+                             newValue);
   }
 
   /**
@@ -270,7 +270,7 @@ public class DefaultBeanAssembler implements BeanAssembler {
   public void extendTarget(String oldName, String newName, Object newValue) {
     assertTargetPresent();
     addPropertyWithReference(target.getPropertyValues(), new SinglePropertyWrapper(oldName, getTargetConfig()), newName,
-        newValue);
+                             newValue);
   }
 
   /**
@@ -319,9 +319,9 @@ public class DefaultBeanAssembler implements BeanAssembler {
         List list = retrieveList(oldValue);
         if (ChildMapEntryDefinitionParser.KeyValuePair.class.getName().equals(beanClass)) {
           list.add(new ManagedMap());
-          retrieveMap(list.get(list.size() - 1)).put(
-              sourceProperties.getPropertyValue(ChildMapEntryDefinitionParser.KEY).getValue(),
-              sourceProperties.getPropertyValue(ChildMapEntryDefinitionParser.VALUE).getValue());
+          retrieveMap(list.get(list.size() - 1))
+              .put(sourceProperties.getPropertyValue(ChildMapEntryDefinitionParser.KEY).getValue(),
+                   sourceProperties.getPropertyValue(ChildMapEntryDefinitionParser.VALUE).getValue());
         } else if (beanClass.equals(ChildListEntryDefinitionParser.ListEntry.class.getName())) {
           list.add(sourceProperties.getPropertyValue(ChildListEntryDefinitionParser.VALUE).getValue());
         } else {
@@ -336,7 +336,7 @@ public class DefaultBeanAssembler implements BeanAssembler {
             targetProperties.addPropertyValue(pv);
           }
           retrieveMap(pv.getValue()).put(sourceProperties.getPropertyValue(ChildMapEntryDefinitionParser.KEY).getValue(),
-              sourceProperties.getPropertyValue(ChildMapEntryDefinitionParser.VALUE).getValue());
+                                         sourceProperties.getPropertyValue(ChildMapEntryDefinitionParser.VALUE).getValue());
         } else {
           targetProperties.addPropertyValue(newName, bean.getBeanDefinition());
         }
@@ -399,7 +399,7 @@ public class DefaultBeanAssembler implements BeanAssembler {
     for (int i = 0; i < beanProperties.size(); i++) {
       PropertyValue propertyValue = beanProperties.getPropertyValues()[i];
       addPropertyWithoutReference(targetProperties, new SinglePropertyLiteral(), propertyValue.getName(),
-          propertyValue.getValue());
+                                  propertyValue.getValue());
     }
   }
 

@@ -355,7 +355,7 @@ public class MuleContextLifecycleTestCase extends AbstractMuleTestCase {
 
   private void assertLifecycleManagerDidApplyAllPhases() {
     assertLifecycleManagerDidApplyPhases(Initialisable.PHASE_NAME, Startable.PHASE_NAME, Stoppable.PHASE_NAME,
-        Disposable.PHASE_NAME);
+                                         Disposable.PHASE_NAME);
   }
 
   @Test(expected = InitialisationException.class)

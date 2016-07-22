@@ -50,13 +50,14 @@ public class GenericDbConfigFactory implements ConfigurableDbConfigFactory {
       connectionFactory = simpleConnectionFactory;
     } else {
       connectionFactory = new RetryConnectionFactory(retryPolicyTemplate,
-          new AnnotatedConnectionFactory(name, simpleConnectionFactory, annotations));
+                                                     new AnnotatedConnectionFactory(name, simpleConnectionFactory, annotations));
     }
 
     DbTypeManager dbTypeManager = doCreateTypeManager();
 
-    DbConnectionFactory dbConnectionFactory = new TransactionalDbConnectionFactory(
-        new TransactionCoordinationDbTransactionManager(), dbTypeManager, connectionFactory, dataSource);
+    DbConnectionFactory dbConnectionFactory =
+        new TransactionalDbConnectionFactory(new TransactionCoordinationDbTransactionManager(), dbTypeManager, connectionFactory,
+                                             dataSource);
 
     return doCreateDbConfig(dataSource, dbTypeManager, dbConnectionFactory, name);
   }
@@ -77,7 +78,7 @@ public class GenericDbConfigFactory implements ConfigurableDbConfigFactory {
   }
 
   protected DbConfig doCreateDbConfig(DataSource datasource, DbTypeManager dbTypeManager, DbConnectionFactory dbConnectionFactory,
-      String name) {
+                                      String name) {
     return new GenericDbConfig(datasource, name, dbTypeManager, dbConnectionFactory);
   }
 

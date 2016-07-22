@@ -329,8 +329,8 @@ public class MultiConsumerJmsMessageReceiver extends AbstractMessageReceiver {
         String durableName = (String) endpoint.getProperties().get(JmsConstants.DURABLE_NAME_PROPERTY);
         if (durableName == null && durable && topic) {
           durableName = "mule." + jmsConnector.getName() + "." + endpoint.getEndpointURI().getAddress();
-          logger.debug(
-              "Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: " + durableName);
+          logger.debug("Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: "
+              + durableName);
         }
 
         // Create consumer

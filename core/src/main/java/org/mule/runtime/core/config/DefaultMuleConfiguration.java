@@ -344,7 +344,7 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
     SAXParserFactory f = SAXParserFactory.newInstance();
     if (f == null || f.getClass().getName().indexOf("crimson") != -1) {
       throw new FatalException(CoreMessages.valueIsInvalidFor(f.getClass().getName(), "javax.xml.parsers.SAXParserFactory"),
-          this);
+                               this);
     }
   }
 

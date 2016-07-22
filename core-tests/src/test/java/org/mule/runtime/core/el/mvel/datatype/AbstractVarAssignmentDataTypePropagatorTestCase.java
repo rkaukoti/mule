@@ -92,7 +92,7 @@ public abstract class AbstractVarAssignmentDataTypePropagatorTestCase extends Ab
   }
 
   protected MVELExpressionLanguageContext createMvelExpressionLanguageContext(MuleEvent testEvent,
-      ParserConfiguration parserConfiguration) {
+                                                                              ParserConfiguration parserConfiguration) {
     final MVELExpressionLanguageContext context = new MVELExpressionLanguageContext(parserConfiguration, muleContext);
     final StaticVariableResolverFactory staticContext = new StaticVariableResolverFactory(parserConfiguration, muleContext);
     final GlobalVariableResolverFactory globalContext =
@@ -100,10 +100,11 @@ public abstract class AbstractVarAssignmentDataTypePropagatorTestCase extends Ab
 
     context
         .setNextFactory(new CachedMapVariableResolverFactory(Collections.EMPTY_MAP,
-            new DelegateVariableResolverFactory(staticContext,
-                new MessageVariableResolverFactory(parserConfiguration, muleContext, testEvent,
-                    new DelegateVariableResolverFactory(globalContext,
-                        new VariableVariableResolverFactory(parserConfiguration, muleContext, testEvent))))));
+                                                             new DelegateVariableResolverFactory(staticContext,
+                                                                                                 new MessageVariableResolverFactory(parserConfiguration,
+                                                                                                                                    muleContext, testEvent, new DelegateVariableResolverFactory(globalContext,
+                                                                                                                                                                                                new VariableVariableResolverFactory(parserConfiguration,
+                                                                                                                                                                                                                                    muleContext, testEvent))))));
     return context;
   }
 }

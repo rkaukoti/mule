@@ -56,7 +56,7 @@ public class KeyBasedEncryptionStrategy extends AbstractNamedEncryptionStrategy 
       PGPCryptInfo pgpCryptInfo = this.safeGetCryptInfo(cryptInfo);
       PGPPublicKey publicKey = pgpCryptInfo.getPublicKey();
       StreamTransformer transformer = new DecryptStreamTransformer(data, publicKey, this.keyManager.getSecretKey(),
-          this.keyManager.getSecretPassphrase(), provider);
+                                                                   this.keyManager.getSecretPassphrase(), provider);
       return new LazyTransformedInputStream(new TransformContinuouslyPolicy(), transformer);
     } catch (Exception e) {
       throw new CryptoFailureException(this, e);

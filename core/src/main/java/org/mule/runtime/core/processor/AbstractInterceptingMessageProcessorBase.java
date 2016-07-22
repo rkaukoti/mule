@@ -85,7 +85,7 @@ public abstract class AbstractInterceptingMessageProcessorBase extends AbstractA
     }
     if (next instanceof MessageProcessorChain) {
       NotificationUtils.addMessageProcessorPathElements(((MessageProcessorChain) next).getMessageProcessors(),
-          pathElement.getParent());
+                                                        pathElement.getParent());
     } else if (next != null) {
       NotificationUtils.addMessageProcessorPathElements(Arrays.asList(next), pathElement.getParent());
     }

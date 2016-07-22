@@ -81,14 +81,14 @@ public class CommonBeanDefinitionCreator extends BeanDefinitionCreator {
   public static List<PropertyValue> getPropertyValueFromPropertiesComponent(ComponentModel propertyComponentModel) {
     List<PropertyValue> propertyValues = new ArrayList<>();
     propertyComponentModel.getInnerComponents().stream().forEach(entryComponentModel -> {
-      propertyValues.add(
-          new PropertyValue(entryComponentModel.getParameters().get("key"), entryComponentModel.getParameters().get("value")));
+      propertyValues.add(new PropertyValue(entryComponentModel.getParameters().get("key"),
+                                           entryComponentModel.getParameters().get("value")));
     });
     return propertyValues;
   }
 
   public static AbstractBeanDefinition adaptFilterBeanDefinitions(ComponentModel parentComponentModel,
-      AbstractBeanDefinition originalBeanDefinition) {
+                                                                  AbstractBeanDefinition originalBeanDefinition) {
     // TODO this condition may be removed
     if (originalBeanDefinition == null) {
       return null;
@@ -147,7 +147,7 @@ public class CommonBeanDefinitionCreator extends BeanDefinitionCreator {
   }
 
   private BeanDefinitionBuilder createBeanDefinitionBuilder(ComponentModel componentModel,
-      ComponentBuildingDefinition buildingDefinition) {
+                                                            ComponentBuildingDefinition buildingDefinition) {
     BeanDefinitionBuilder beanDefinitionBuilder;
     if (buildingDefinition.getObjectFactoryType() != null) {
       beanDefinitionBuilder = createBeanDefinitionBuilderFromObjectFactory(componentModel, buildingDefinition);
@@ -174,7 +174,7 @@ public class CommonBeanDefinitionCreator extends BeanDefinitionCreator {
     }).findFirst().ifPresent(annotationsCdm -> {
       annotationsCdm.getInnerComponents().forEach(annotationCdm -> {
         previousAnnotations.put(new QName(from(annotationCdm).getNamespaceUri(), annotationCdm.getIdentifier().getName()),
-            annotationCdm.getTextContent());
+                                annotationCdm.getTextContent());
       });
     });
   }
@@ -182,8 +182,9 @@ public class CommonBeanDefinitionCreator extends BeanDefinitionCreator {
   private void processAnnotations(ComponentModel componentModel, BeanDefinitionBuilder beanDefinitionBuilder) {
     if (AnnotatedObject.class.isAssignableFrom(componentModel.getType())) {
       XmlCustomAttributeHandler.ComponentCustomAttributeRetrieve customAttributeRetrieve = from(componentModel);
-      Map<QName, Object> annotations = processMetadataAnnotationsHelper((Element) customAttributeRetrieve.getNode(),
-          customAttributeRetrieve.getConfigFileName(), beanDefinitionBuilder);
+      Map<QName, Object> annotations =
+          processMetadataAnnotationsHelper((Element) customAttributeRetrieve.getNode(),
+                                           customAttributeRetrieve.getConfigFileName(), beanDefinitionBuilder);
       processAnnotationParameters(componentModel, annotations);
       processNestedAnnotations(componentModel, annotations);
       if (!annotations.isEmpty()) {
@@ -193,14 +194,14 @@ public class CommonBeanDefinitionCreator extends BeanDefinitionCreator {
   }
 
   private Class<?> retrieveComponentType(final ComponentModel componentModel,
-      ComponentBuildingDefinition componentBuildingDefinition) {
+                                         ComponentBuildingDefinition componentBuildingDefinition) {
     ObjectTypeVisitor objectTypeVisitor = new ObjectTypeVisitor(componentModel);
     componentBuildingDefinition.getTypeDefinition().visit(objectTypeVisitor);
     return objectTypeVisitor.getType();
   }
 
   private BeanDefinitionBuilder createBeanDefinitionBuilderFromObjectFactory(final ComponentModel componentModel,
-      final ComponentBuildingDefinition componentBuildingDefinition) {
+                                                                             final ComponentBuildingDefinition componentBuildingDefinition) {
     /*
      * We need this to allow spring create the object using a FactoryBean but using the object factory setters and getters so we
      * create as FactoryBean a dynamic class that will have the same attributes and methods as the ObjectFactory that the user
@@ -233,9 +234,10 @@ public class CommonBeanDefinitionCreator extends BeanDefinitionCreator {
   }
 
   private void processComponentDefinitionModel(final ComponentModel parentComponentModel, final ComponentModel componentModel,
-      ComponentBuildingDefinition componentBuildingDefinition, final BeanDefinitionBuilder beanDefinitionBuilder) {
+                                               ComponentBuildingDefinition componentBuildingDefinition,
+                                               final BeanDefinitionBuilder beanDefinitionBuilder) {
     processObjectConstructionParameters(componentModel, componentBuildingDefinition,
-        new BeanDefinitionBuilderHelper(beanDefinitionBuilder));
+                                        new BeanDefinitionBuilderHelper(beanDefinitionBuilder));
     processSpringOrMuleProperties(componentModel, beanDefinitionBuilder);
     if (componentBuildingDefinition.isPrototype()) {
       beanDefinitionBuilder.setScope(SPRING_PROTOTYPE_OBJECT);
@@ -261,8 +263,8 @@ public class CommonBeanDefinitionCreator extends BeanDefinitionCreator {
   }
 
   private void processObjectConstructionParameters(final ComponentModel componentModel,
-      final ComponentBuildingDefinition componentBuildingDefinition,
-      final BeanDefinitionBuilderHelper beanDefinitionBuilderHelper) {
+                                                   final ComponentBuildingDefinition componentBuildingDefinition,
+                                                   final BeanDefinitionBuilderHelper beanDefinitionBuilderHelper) {
     new ComponentConfigurationBuilder(componentModel, componentBuildingDefinition, beanDefinitionBuilderHelper)
         .processConfiguration();
 

@@ -120,7 +120,7 @@ public final class DisplayModelEnricher extends AbstractAnnotatedModelEnricher {
   }
 
   private void createDisplayModelProperty(BaseDeclaration declaration, Summary summaryAnnotation,
-      DisplayName displayNameAnnotation) {
+                                          DisplayName displayNameAnnotation) {
     String summary = summaryAnnotation != null ? summaryAnnotation.value() : null;
     String displayName = displayNameAnnotation != null ? displayNameAnnotation.value() : null;
 

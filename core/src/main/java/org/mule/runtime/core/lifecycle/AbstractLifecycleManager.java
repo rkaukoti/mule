@@ -82,8 +82,8 @@ public abstract class AbstractLifecycleManager<O> implements LifecycleManager {
       if (name.equalsIgnoreCase(executingPhase)) {
         throw new IllegalStateException("Phase '" + name + "' is already currently being executed");
       } else {
-        throw new IllegalStateException(
-            "Cannot fire phase '" + name + "', currently executing lifecycle phase: " + executingPhase);
+        throw new IllegalStateException("Cannot fire phase '" + name + "', currently executing lifecycle phase: "
+            + executingPhase);
       }
     }
 
@@ -99,8 +99,8 @@ public abstract class AbstractLifecycleManager<O> implements LifecycleManager {
         return;
       }
 
-      throw new IllegalStateException(
-          "Lifecycle Manager '" + lifecycleManagerId + "' phase '" + currentPhase + "' does not support phase '" + name + "'");
+      throw new IllegalStateException("Lifecycle Manager '" + lifecycleManagerId + "' phase '" + currentPhase
+          + "' does not support phase '" + name + "'");
     }
   }
 

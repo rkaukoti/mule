@@ -26,7 +26,8 @@ import java.util.function.Supplier;
 public class ClassicFtpInputStream extends FtpInputStream {
 
   private ClassicFtpInputStream(Supplier<InputStream> streamSupplier, ConnectionHandler<FtpFileSystem> connectionHandler,
-      PathLock lock) throws ConnectionException {
+                                PathLock lock)
+      throws ConnectionException {
     super(streamSupplier, connectionHandler, lock);
   }
 

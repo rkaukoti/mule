@@ -33,7 +33,7 @@ public class SftpMoveCommand extends SftpCommand implements MoveCommand {
    */
   @Override
   public void move(FileConnectorConfig config, String sourcePath, String targetPath, boolean overwrite,
-      boolean createParentDirectories) {
+                   boolean createParentDirectories) {
     copy(config, sourcePath, targetPath, overwrite, createParentDirectories, null, new MoveFtpDelegate(this, fileSystem));
     LOGGER.debug("Moved '{}' to '{}'", sourcePath, targetPath);
   }

@@ -66,7 +66,8 @@ public class GrizzlyServerManager implements HttpServerManager {
   private boolean transportStarted;
 
   public GrizzlyServerManager(String threadNamePrefix, HttpListenerRegistry httpListenerRegistry,
-      TcpServerSocketProperties serverSocketProperties) throws IOException {
+                              TcpServerSocketProperties serverSocketProperties)
+      throws IOException {
     this.httpListenerRegistry = httpListenerRegistry;
     requestHandlerFilter = new GrizzlyRequestDispatcherFilter(httpListenerRegistry);
     sslFilterDelegate = new GrizzlyAddressDelegateFilter<>();
@@ -105,7 +106,7 @@ public class GrizzlyServerManager implements HttpServerManager {
   }
 
   private void configureServerSocketProperties(TCPNIOTransportBuilder transportBuilder,
-      TcpServerSocketProperties serverSocketProperties) {
+                                               TcpServerSocketProperties serverSocketProperties) {
     if (serverSocketProperties.getKeepAlive() != null) {
       transportBuilder.setKeepAlive(serverSocketProperties.getKeepAlive());
     }
@@ -161,18 +162,19 @@ public class GrizzlyServerManager implements HttpServerManager {
   }
 
   public Server createSslServerFor(TlsContextFactory tlsContextFactory, WorkManagerSource workManagerSource,
-      final ServerAddress serverAddress, boolean usePersistentConnections, int connectionIdleTimeout) throws IOException {
+                                   final ServerAddress serverAddress, boolean usePersistentConnections, int connectionIdleTimeout)
+      throws IOException {
     if (logger.isDebugEnabled()) {
       logger.debug("Creating https server socket for ip {} and port {}", serverAddress.getIp(), serverAddress.getPort());
     }
     if (servers.containsKey(serverAddress)) {
-      throw new IllegalStateException(
-          String.format("Could not create a server for %s since there's already one.", serverAddress));
+      throw new IllegalStateException(String.format("Could not create a server for %s since there's already one.",
+                                                    serverAddress));
     }
     startTransportIfNotStarted();
     sslFilterDelegate.addFilterForAddress(serverAddress, createSslFilter(tlsContextFactory));
     httpServerFilterDelegate.addFilterForAddress(serverAddress,
-        createHttpServerFilter(usePersistentConnections, connectionIdleTimeout));
+                                                 createHttpServerFilter(usePersistentConnections, connectionIdleTimeout));
     executorProvider.addExecutor(serverAddress, workManagerSource);
     final GrizzlyServer grizzlyServer = new GrizzlyServer(serverAddress, transport, httpListenerRegistry);
     servers.put(serverAddress, grizzlyServer);
@@ -180,17 +182,18 @@ public class GrizzlyServerManager implements HttpServerManager {
   }
 
   public Server createServerFor(ServerAddress serverAddress, WorkManagerSource workManagerSource,
-      boolean usePersistentConnections, int connectionIdleTimeout) throws IOException {
+                                boolean usePersistentConnections, int connectionIdleTimeout)
+      throws IOException {
     if (logger.isDebugEnabled()) {
       logger.debug("Creating http server socket for ip {} and port {}", serverAddress.getIp(), serverAddress.getPort());
     }
     if (servers.containsKey(serverAddress)) {
-      throw new IllegalStateException(
-          String.format("Could not create a server for %s since there's already one.", serverAddress));
+      throw new IllegalStateException(String.format("Could not create a server for %s since there's already one.",
+                                                    serverAddress));
     }
     startTransportIfNotStarted();
     httpServerFilterDelegate.addFilterForAddress(serverAddress,
-        createHttpServerFilter(usePersistentConnections, connectionIdleTimeout));
+                                                 createHttpServerFilter(usePersistentConnections, connectionIdleTimeout));
     executorProvider.addExecutor(serverAddress, workManagerSource);
     final GrizzlyServer grizzlyServer = new GrizzlyServer(serverAddress, transport, httpListenerRegistry);
     servers.put(serverAddress, grizzlyServer);
@@ -246,7 +249,9 @@ public class GrizzlyServerManager implements HttpServerManager {
       return valueOf(getProperty(MAXIMUM_HEADER_SECTION_SIZE_PROPERTY_KEY, String.valueOf(DEFAULT_MAX_HTTP_PACKET_HEADER_SIZE)));
     } catch (NumberFormatException e) {
       throw new MuleRuntimeException(CoreMessages.createStaticMessage(String.format("Invalid value %s for %s configuration",
-          getProperty(MAXIMUM_HEADER_SECTION_SIZE_PROPERTY_KEY), MAXIMUM_HEADER_SECTION_SIZE_PROPERTY_KEY)), e);
+                                                                                    getProperty(MAXIMUM_HEADER_SECTION_SIZE_PROPERTY_KEY),
+                                                                                    MAXIMUM_HEADER_SECTION_SIZE_PROPERTY_KEY)),
+                                     e);
     }
   }
 

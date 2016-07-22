@@ -208,7 +208,7 @@ public class MessagingExceptionTestCase extends AbstractMuleContextTestCase {
     MessagingException exception = new MessagingException(CoreMessages.createStaticMessage(""), mockEvent, mockProcessor);
     exception.getInfo().putAll(locationProvider.getContextInfo(mockEvent, mockProcessor));
     assertThat(exception.getInfo().get(LocatedMuleException.INFO_LOCATION_KEY).toString(),
-        is("Mock@1 @ MessagingExceptionTestCase"));
+               is("Mock@1 @ MessagingExceptionTestCase"));
   }
 
   @Test
@@ -221,7 +221,7 @@ public class MessagingExceptionTestCase extends AbstractMuleContextTestCase {
     MessagingException exception = new MessagingException(CoreMessages.createStaticMessage(""), mockEvent, mockProcessor);
     exception.getInfo().putAll(locationProvider.getContextInfo(mockEvent, mockProcessor));
     assertThat(exception.getInfo().get(LocatedMuleException.INFO_LOCATION_KEY).toString(),
-        is("/flow/processor @ MessagingExceptionTestCase"));
+               is("/flow/processor @ MessagingExceptionTestCase"));
   }
 
   @Test
@@ -234,7 +234,7 @@ public class MessagingExceptionTestCase extends AbstractMuleContextTestCase {
     MessagingException exception = new MessagingException(CoreMessages.createStaticMessage(""), mockEvent, mockProcessor);
     exception.getInfo().putAll(locationProvider.getContextInfo(mockEvent, mockProcessor));
     assertThat(exception.getInfo().get(LocatedMuleException.INFO_LOCATION_KEY).toString(),
-        is("Mock@1 @ MessagingExceptionTestCase"));
+               is("Mock@1 @ MessagingExceptionTestCase"));
   }
 
   @Test
@@ -249,7 +249,7 @@ public class MessagingExceptionTestCase extends AbstractMuleContextTestCase {
     MessagingException exception = new MessagingException(CoreMessages.createStaticMessage(""), mockEvent, mockProcessor);
     exception.getInfo().putAll(locationProvider.getContextInfo(mockEvent, mockProcessor));
     assertThat(exception.getInfo().get(LocatedMuleException.INFO_LOCATION_KEY).toString(),
-        is("Mock@1 @ MessagingExceptionTestCase:muleApp.xml:10 (Mock Component)"));
+               is("Mock@1 @ MessagingExceptionTestCase:muleApp.xml:10 (Mock Component)"));
   }
 
   @Test
@@ -266,7 +266,7 @@ public class MessagingExceptionTestCase extends AbstractMuleContextTestCase {
     MessagingException exception = new MessagingException(CoreMessages.createStaticMessage(""), mockEvent, mockProcessor);
     exception.getInfo().putAll(locationProvider.getContextInfo(mockEvent, mockProcessor));
     assertThat(exception.getInfo().get(LocatedMuleException.INFO_LOCATION_KEY).toString(),
-        is("/flow/processor @ MessagingExceptionTestCase:muleApp.xml:10 (Mock Component)"));
+               is("/flow/processor @ MessagingExceptionTestCase:muleApp.xml:10 (Mock Component)"));
   }
 
   @Test
@@ -282,7 +282,7 @@ public class MessagingExceptionTestCase extends AbstractMuleContextTestCase {
     MessagingException exception = new MessagingException(CoreMessages.createStaticMessage(""), mockEvent, mockProcessor);
     exception.getInfo().putAll(locationProvider.getContextInfo(mockEvent, mockProcessor));
     assertThat(exception.getInfo().get(LocatedMuleException.INFO_LOCATION_KEY).toString(),
-        is("Mock@1 @ MessagingExceptionTestCase:muleApp.xml:10 (Mock Component)"));
+               is("Mock@1 @ MessagingExceptionTestCase:muleApp.xml:10 (Mock Component)"));
   }
 
   @Test
@@ -362,7 +362,7 @@ public class MessagingExceptionTestCase extends AbstractMuleContextTestCase {
     MessagingException e = new MessagingException(MessageFactory.createStaticMessage(message), testEvent);
 
     assertThat(e.getInfo().get(PAYLOAD_INFO_KEY),
-        is(TransformerException.class.getName() + " while getting payload: exception thrown"));
+               is(TransformerException.class.getName() + " while getting payload: exception thrown"));
   }
 
   @Test

@@ -18,7 +18,7 @@ import static org.mule.compatibility.transport.http.HttpsConnector.PEER_CERTIFIC
 public class HttpsMessageProcessTemplate extends HttpMessageProcessTemplate {
 
   public HttpsMessageProcessTemplate(final HttpMessageReceiver messageReceiver, final HttpServerConnection httpServerConnection,
-      final WorkManager flowExecutionWorkManager) {
+                                     final WorkManager flowExecutionWorkManager) {
     super(messageReceiver, httpServerConnection);
   }
 

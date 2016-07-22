@@ -222,7 +222,7 @@ public class HttpConnection {
    */
   public HttpConnection(HostConfiguration hostConfiguration) {
     this(hostConfiguration.getProxyHost(), hostConfiguration.getProxyPort(), hostConfiguration.getHost(),
-        hostConfiguration.getPort(), hostConfiguration.getProtocol());
+         hostConfiguration.getPort(), hostConfiguration.getProtocol());
     this.localAddress = hostConfiguration.getLocalAddress();
   }
 

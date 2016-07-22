@@ -47,8 +47,9 @@ public class HttpFunctionalTestCase extends FunctionalTestCase {
     }
 
     MuleClient client = muleContext.getClient();
-    MuleMessage result = client.send("clientEndpoint",
-        MuleMessage.builder().payload(TEST_MESSAGE).mediaType(MediaType.parse("text/plain;charset=UTF-8")).build());
+    MuleMessage result =
+        client.send("clientEndpoint",
+                    MuleMessage.builder().payload(TEST_MESSAGE).mediaType(MediaType.parse("text/plain;charset=UTF-8")).build());
     assertEquals(TEST_MESSAGE + " Received", getPayloadAsString(result));
   }
 }

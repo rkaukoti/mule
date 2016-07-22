@@ -64,9 +64,10 @@ final class MetadataKeyIdObjectResolver {
 
   private Object resolveMetadataKeyWhenPresent(MetadataKey key, ComponentModel componentModel) throws MetadataResolvingException {
 
-    final MetadataType metadataType = componentModel.getModelProperty(MetadataKeyIdModelProperty.class)
-        .map(MetadataKeyIdModelProperty::getType).orElseThrow(() -> buildException(
-            format("Component '%s' doesn't have a MetadataKeyId parameter associated", componentModel.getName())));
+    final MetadataType metadataType =
+        componentModel.getModelProperty(MetadataKeyIdModelProperty.class).map(MetadataKeyIdModelProperty::getType)
+            .orElseThrow(() -> buildException(format("Component '%s' doesn't have a MetadataKeyId parameter associated",
+                                                     componentModel.getName())));
 
     final Class<?> metadataKeyType = getType(metadataType);
     final ValueHolder<Object> keyValueHolder = new ValueHolder<>();
@@ -76,9 +77,9 @@ final class MetadataKeyIdObjectResolver {
 
       @Override
       protected void defaultVisit(MetadataType metadataType) {
-        exceptionValueHolder.set(buildException(
-            String.format("'%s' type is invalid for MetadataKeyId parameters, use String type instead. Affecting component: '%s'",
-                metadataKeyType.getSimpleName(), componentModel.getName())));
+        exceptionValueHolder.set(buildException(String.format(
+                                                              "'%s' type is invalid for MetadataKeyId parameters, use String type instead. Affecting component: '%s'",
+                                                              metadataKeyType.getSimpleName(), componentModel.getName())));
       }
 
       @Override
@@ -120,7 +121,8 @@ final class MetadataKeyIdObjectResolver {
       metadataKeyId = ClassUtils.instanciateClass(metadataKeyType);
     } catch (Exception e) {
       throw buildException(String.format("MetadataKey object of type '%s' from the component '%s' could not be instantiated",
-          metadataKeyType.getSimpleName(), componentModel.getName()), e);
+                                         metadataKeyType.getSimpleName(), componentModel.getName()),
+                           e);
     }
 
     fieldValueMap.entrySet()
@@ -137,9 +139,9 @@ final class MetadataKeyIdObjectResolver {
         metadataKeyParts.keySet().stream().filter(partName -> !currentParts.containsKey(partName)).collect(toList());
 
     if (!missingParts.isEmpty()) {
-      throw new MetadataResolvingException(
-          String.format("The given MetadataKey does not provide all the required levels. Missing levels: %s", missingParts),
-          INVALID_METADATA_KEY);
+      throw new MetadataResolvingException(String
+          .format("The given MetadataKey does not provide all the required levels. Missing levels: %s", missingParts),
+                                           INVALID_METADATA_KEY);
     }
 
     return currentParts.entrySet().stream().filter(keyEntry -> metadataKeyParts.containsKey(keyEntry.getKey()))
@@ -162,8 +164,8 @@ final class MetadataKeyIdObjectResolver {
     if (key.getChilds().size() > 1) {
       final List<String> keyNames = key.getChilds().stream().map(MetadataKey::getId).collect(toList());
       throw buildException(String.format(
-          "MetadataKey used for Metadata resolution must only have one child per level. Key '%s' has %s as children.",
-          key.getId(), keyNames));
+                                         "MetadataKey used for Metadata resolution must only have one child per level. Key '%s' has %s as children.",
+                                         key.getId(), keyNames));
     }
   }
 

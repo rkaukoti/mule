@@ -35,7 +35,8 @@ public class OperationDefinitionParser extends ExtensionDefinitionParser {
   private final DslElementDeclaration operationDsl;
 
   public OperationDefinitionParser(Builder definition, RuntimeExtensionModel extensionModel, RuntimeOperationModel operationModel,
-      DslElementResolver dslElementResolver, MuleContext muleContext, ExtensionParsingContext parsingContext) {
+                                   DslElementResolver dslElementResolver, MuleContext muleContext,
+                                   ExtensionParsingContext parsingContext) {
     super(definition, dslElementResolver, parsingContext);
     this.extensionModel = extensionModel;
     this.operationModel = operationModel;

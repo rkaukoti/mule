@@ -32,9 +32,9 @@ public abstract class AbstractQueueTransactionJournal<T, K extends JournalEntry<
   private TransactionJournal<T, K> logFile;
 
   public AbstractQueueTransactionJournal(String logFilesDirectory, JournalEntrySerializer journalEntrySerializer,
-      Integer maximumFileSizeInMegabytes) {
+                                         Integer maximumFileSizeInMegabytes) {
     checkArgument(maximumFileSizeInMegabytes == null || maximumFileSizeInMegabytes > 0,
-        "Maximum tx log file size needs to be greater than zero");
+                  "Maximum tx log file size needs to be greater than zero");
     this.logFile = new TransactionJournal(logFilesDirectory, new TransactionCompletePredicate() {
 
       @Override
@@ -50,7 +50,7 @@ public abstract class AbstractQueueTransactionJournal<T, K extends JournalEntry<
       logger.debug("Logging queue add operation for tx " + txId);
     }
     logFile.logUpdateOperation(createUpdateJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.ADD.getByteRepresentation(),
-        queue.getName(), value));
+                                                        queue.getName(), value));
   }
 
   public void logAddFirst(T txId, QueueStore queue, Serializable item) {
@@ -58,23 +58,25 @@ public abstract class AbstractQueueTransactionJournal<T, K extends JournalEntry<
       logger.debug("Logging queue add first operation for tx " + txId);
     }
     logFile.logUpdateOperation(createUpdateJournalEntry(txId,
-        AbstractQueueTxJournalEntry.Operation.ADD_FIRST.getByteRepresentation(), queue.getName(), item));
+                                                        AbstractQueueTxJournalEntry.Operation.ADD_FIRST.getByteRepresentation(),
+                                                        queue.getName(), item));
   }
 
   public void logRemove(T txId, QueueStore queue, Serializable value) {
     if (logger.isDebugEnabled()) {
       logger.debug("Logging queue remove operation for tx " + txId);
     }
-    logFile.logUpdateOperation(createUpdateJournalEntry(txId,
-        AbstractQueueTxJournalEntry.Operation.REMOVE.getByteRepresentation(), queue.getName(), value));
+    logFile
+        .logUpdateOperation(createUpdateJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.REMOVE.getByteRepresentation(),
+                                                     queue.getName(), value));
   }
 
   public void logCommit(T txId) {
     if (logger.isDebugEnabled()) {
       logger.debug("Logging queue commit operation for tx " + txId);
     }
-    logFile.logCheckpointOperation(
-        createCheckpointJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.COMMIT.getByteRepresentation()));
+    logFile.logCheckpointOperation(createCheckpointJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.COMMIT
+        .getByteRepresentation()));
   }
 
   /**
@@ -101,8 +103,8 @@ public abstract class AbstractQueueTransactionJournal<T, K extends JournalEntry<
     if (logger.isDebugEnabled()) {
       logger.debug("Logging queue rollback operation for tx " + txId);
     }
-    logFile.logCheckpointOperation(
-        createCheckpointJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.ROLLBACK.getByteRepresentation()));
+    logFile.logCheckpointOperation(createCheckpointJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.ROLLBACK
+        .getByteRepresentation()));
   }
 
   public synchronized void close() {

@@ -20,12 +20,14 @@ import static org.junit.Assert.assertTrue;
 public abstract class AbstractFileMoveDeleteTestCase extends AbstractFileFunctionalTestCase {
 
   protected File configureConnector(File inFile, boolean stream, boolean move, boolean delete,
-      Class<? extends AbstractMuleMessageFactory> messageFactoryClass) throws Exception {
+                                    Class<? extends AbstractMuleMessageFactory> messageFactoryClass)
+      throws Exception {
     return configureConnector(inFile, stream, move, delete, false, messageFactoryClass);
   }
 
   protected File configureConnector(File inFile, boolean stream, boolean move, boolean delete, boolean useWorkDir,
-      Class<? extends AbstractMuleMessageFactory> messageFactoryClass) throws Exception {
+                                    Class<? extends AbstractMuleMessageFactory> messageFactoryClass)
+      throws Exception {
     FileConnector fc = new FileConnector(muleContext);
 
     // some tests assert that a sinlge message arrives from this connector. Use a very large

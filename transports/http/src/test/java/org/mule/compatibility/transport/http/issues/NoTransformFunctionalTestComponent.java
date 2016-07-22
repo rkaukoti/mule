@@ -53,8 +53,10 @@ public class NoTransformFunctionalTestComponent implements Callable {
   @Override
   public Object onCall(MuleEventContext context) throws Exception {
     String contents = context.getMessageAsString();
-    String msg = StringMessageUtils.getBoilerPlate("Message Received in service: " + context.getFlowConstruct().getName()
-        + ". Content is: " + StringMessageUtils.truncate(contents, 100, true), '*', 80);
+    String msg = StringMessageUtils.getBoilerPlate(
+                                                   "Message Received in service: " + context.getFlowConstruct().getName()
+                                                       + ". Content is: " + StringMessageUtils.truncate(contents, 100, true),
+                                                   '*', 80);
 
     logger.info(msg);
 
@@ -89,8 +91,10 @@ public class NoTransformFunctionalTestComponent implements Callable {
     MuleEventContext context = RequestContext.getEventContext();
 
     String contents = data.toString();
-    String msg = StringMessageUtils.getBoilerPlate("Message Received in service: " + context.getFlowConstruct().getName()
-        + ". Content is: " + StringMessageUtils.truncate(contents, 100, true), '*', 80);
+    String msg = StringMessageUtils.getBoilerPlate(
+                                                   "Message Received in service: " + context.getFlowConstruct().getName()
+                                                       + ". Content is: " + StringMessageUtils.truncate(contents, 100, true),
+                                                   '*', 80);
 
     logger.info(msg);
 

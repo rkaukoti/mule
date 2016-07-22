@@ -107,7 +107,7 @@ public final class HttpTransactionContext {
   Set<CompletionHandler<HttpTransactionContext>> reqFullySentHandlers;
 
   private HttpTransactionContext(final GrizzlyAsyncHttpProvider provider, final Connection connection,
-      final GrizzlyResponseFuture future, final Request ahcRequest) {
+                                 final GrizzlyResponseFuture future, final Request ahcRequest) {
 
     this.provider = provider;
     this.connection = connection;
@@ -161,7 +161,7 @@ public final class HttpTransactionContext {
   // -------------------------------------------------------- Constructors
 
   static HttpTransactionContext startTransaction(final Connection connection, final GrizzlyAsyncHttpProvider provider,
-      final Request request, final GrizzlyResponseFuture future) {
+                                                 final Request request, final GrizzlyResponseFuture future) {
     return new HttpTransactionContext(provider, connection, future, request);
   }
 
@@ -257,8 +257,7 @@ public final class HttpTransactionContext {
     reqFullySentHandlers.add(completionHandler);
   }
 
-  private synchronized boolean removeRequestSentCompletionHandler(
-      final CompletionHandler<HttpTransactionContext> completionHandler) {
+  private synchronized boolean removeRequestSentCompletionHandler(final CompletionHandler<HttpTransactionContext> completionHandler) {
     return reqFullySentHandlers != null ? reqFullySentHandlers.remove(completionHandler) : false;
   }
 

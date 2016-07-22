@@ -87,7 +87,7 @@ public class MessageFilter extends AbstractFilteringMessageProcessor implements 
     MessagingException messagingException = new MessagingException(event, ex, this);
     String docName = LocationExecutionContextProvider.getDocName(filter);
     messagingException.getInfo().put("Filter",
-        docName != null ? String.format("%s (%s)", filter.toString(), docName) : filter.toString());
+                                     docName != null ? String.format("%s (%s)", filter.toString(), docName) : filter.toString());
     return messagingException;
   }
 

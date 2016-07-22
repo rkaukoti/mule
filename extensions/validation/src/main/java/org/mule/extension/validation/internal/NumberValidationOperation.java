@@ -38,12 +38,13 @@ public class NumberValidationOperation extends ValidationSupport {
    * @param event the current {@link MuleEvent}
    */
   public void isNumber(String value, @Optional String locale, @Optional String pattern, @Optional String minValue,
-      @Optional String maxValue, NumberType numberType, @ParameterGroup ValidationOptions options, MuleEvent event,
-      @UseConfig ValidationExtension config) throws Exception {
+                       @Optional String maxValue, NumberType numberType, @ParameterGroup ValidationOptions options,
+                       MuleEvent event, @UseConfig ValidationExtension config)
+      throws Exception {
 
     ValidationContext context = createContext(options, event, config);
     Validator validator = new NumberValidator(value, parseLocale(locale), pattern, parseNumber(minValue, numberType),
-        parseNumber(maxValue, numberType), numberType, context);
+                                              parseNumber(maxValue, numberType), numberType, context);
 
     validateWith(validator, context, event);
   }

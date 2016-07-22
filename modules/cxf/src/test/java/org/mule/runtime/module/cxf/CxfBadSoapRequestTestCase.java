@@ -43,7 +43,7 @@ public class CxfBadSoapRequestTestCase extends FunctionalTestCase {
             + "<request xmlns=\"http://www.muleumo.org\">Bad Request</request>" + "</ssss>" + "</soap:Body>" + "</soap:Envelope>";
 
     MuleMessage reply = client.send("http://localhost:" + dynamicPort.getNumber() + "/services/TestComponent",
-        getTestMuleMessage(soapRequest), HTTP_REQUEST_OPTIONS);
+                                    getTestMuleMessage(soapRequest), HTTP_REQUEST_OPTIONS);
 
     assertNotNull(reply);
     assertNotNull(reply.getPayload());
@@ -63,6 +63,6 @@ public class CxfBadSoapRequestTestCase extends FunctionalTestCase {
     assertEquals(1, fault.size());
     Element faultStringElement = (Element) fault.get(0);
     assertEquals("Message part {http://www.muleumo.org}ssss was not recognized.  (Does it exist in service WSDL?)",
-        faultStringElement.getStringValue());
+                 faultStringElement.getStringValue());
   }
 }

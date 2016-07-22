@@ -93,8 +93,8 @@ public class MuleConfigurationConfigurator implements MuleContextAware, SmartFac
     if (defaultExceptionStrategyName != null) {
       MessagingExceptionHandler messagingExceptionHandler = muleContext.getRegistry().lookupObject(defaultExceptionStrategyName);
       if (messagingExceptionHandler == null) {
-        throw new MuleRuntimeException(CoreMessages.createStaticMessage(
-            String.format("No global exception strategy defined with name %s.", defaultExceptionStrategyName)));
+        throw new MuleRuntimeException(CoreMessages.createStaticMessage(String
+            .format("No global exception strategy defined with name %s.", defaultExceptionStrategyName)));
       }
       if (messagingExceptionHandler instanceof MessagingExceptionHandlerAcceptor) {
         MessagingExceptionHandlerAcceptor messagingExceptionHandlerAcceptor =

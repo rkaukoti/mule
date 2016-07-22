@@ -24,7 +24,7 @@ public class TransportEndpointDefinitionParser extends AddressedEndpointDefiniti
   }
 
   public TransportEndpointDefinitionParser(String metaOrProtocol, boolean isMeta, Class endpoint,
-      String[] requiredAddressAttributes) {
+                                           String[] requiredAddressAttributes) {
     this(metaOrProtocol, isMeta, endpoint, requiredAddressAttributes, new String[] {});
   }
 
@@ -36,20 +36,21 @@ public class TransportEndpointDefinitionParser extends AddressedEndpointDefiniti
    * @param requiredProperties A list of property names that are required if "address" isn't present
    */
   public TransportEndpointDefinitionParser(String metaOrProtocol, boolean isMeta, Class endpoint,
-      String[] requiredAddressAttributes, String[] requiredProperties) {
+                                           String[] requiredAddressAttributes, String[] requiredProperties) {
     super(metaOrProtocol, isMeta, new ChildEndpointDefinitionParser(endpoint), requiredAddressAttributes, requiredProperties);
   }
 
   public TransportEndpointDefinitionParser(String metaOrProtocol, boolean isMeta, Class endpoint, String[] endpointAttributes,
-      String[][] requiredAddressAttributes, String[][] requiredProperties) {
+                                           String[][] requiredAddressAttributes, String[][] requiredProperties) {
     this(metaOrProtocol, isMeta, endpoint, endpointAttributes, URIBuilder.ALL_ATTRIBUTES, requiredAddressAttributes,
-        requiredProperties);
+         requiredProperties);
   }
 
   public TransportEndpointDefinitionParser(String metaOrProtocol, boolean isMeta, Class endpoint, String[] endpointAttributes,
-      String[] addressAttributes, String[][] requiredAddressAttributes, String[][] requiredProperties) {
+                                           String[] addressAttributes, String[][] requiredAddressAttributes,
+                                           String[][] requiredProperties) {
     super(metaOrProtocol, isMeta, new ChildEndpointDefinitionParser(endpoint), endpointAttributes, addressAttributes,
-        requiredAddressAttributes, requiredProperties);
+          requiredAddressAttributes, requiredProperties);
   }
 
 }

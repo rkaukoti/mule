@@ -278,7 +278,7 @@ public class HttpMuleMessageFactory extends AbstractMuleMessageFactory {
           addQueryParamToMap(httpParams, unescape(token, encoding), null);
         } else if (idx > 0) {
           addQueryParamToMap(httpParams, unescape(token.substring(0, idx), encoding),
-              unescape(token.substring(idx + 1), encoding));
+                             unescape(token.substring(idx + 1), encoding));
         }
       }
     }

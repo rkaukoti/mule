@@ -67,7 +67,8 @@ public final class OperationMessageProcessor extends ExtensionComponent implemen
   private OperationExecutor operationExecutor;
 
   public OperationMessageProcessor(RuntimeExtensionModel extensionModel, RuntimeOperationModel operationModel,
-      String configurationProviderName, String target, ResolverSet resolverSet, ExtensionManagerAdapter extensionManager) {
+                                   String configurationProviderName, String target, ResolverSet resolverSet,
+                                   ExtensionManagerAdapter extensionManager) {
     super(extensionModel, operationModel, configurationProviderName, extensionManager);
     this.extensionModel = extensionModel;
     this.operationModel = operationModel;
@@ -152,9 +153,10 @@ public final class OperationMessageProcessor extends ExtensionComponent implemen
     if (!configurationModel.getOperationModel(operationModel.getName()).isPresent()
         && !configurationModel.getExtensionModel().getOperationModel(operationModel.getName()).isPresent()) {
       throw new IllegalOperationException(String.format(
-          "Flow '%s' defines an usage of operation '%s' which points to configuration '%s'. "
-              + "The selected config does not support that operation.",
-          flowConstruct.getName(), operationModel.getName(), configurationProvider.getName()));
+                                                        "Flow '%s' defines an usage of operation '%s' which points to configuration '%s'. "
+                                                            + "The selected config does not support that operation.",
+                                                        flowConstruct.getName(), operationModel.getName(),
+                                                        configurationProvider.getName()));
     }
   }
 }

@@ -119,10 +119,8 @@ public class DefaultMuleMessageTestCase extends AbstractMuleContextTestCase {
     message = MuleMessage.builder(message).removeOutboundAttachment("attachment").build();
     assertEquals(0, message.getOutboundAttachmentNames().size());
 
-    message = MuleMessage.builder(message)
-        .addOutboundAttachment("spi-props",
-            IOUtils.toDataHandler("spi-props", IOUtils.getResourceAsUrl("test-spi.properties", getClass()), MediaType.TEXT))
-        .build();
+    message = MuleMessage.builder(message).addOutboundAttachment("spi-props", IOUtils
+        .toDataHandler("spi-props", IOUtils.getResourceAsUrl("test-spi.properties", getClass()), MediaType.TEXT)).build();
 
 
     assertTrue(message.getOutboundAttachmentNames().contains("spi-props"));

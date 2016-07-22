@@ -136,7 +136,7 @@ public class MessagingException extends MuleException {
             addInfo(PAYLOAD_TYPE_INFO_KEY, muleMessage.getDataType().getType().getName());
             try {
               addInfo(PAYLOAD_INFO_KEY,
-                  muleContext.getTransformationService().transform(muleMessage, DataType.STRING).getPayload());
+                      muleContext.getTransformationService().transform(muleMessage, DataType.STRING).getPayload());
             } catch (Exception e) {
               addInfo(PAYLOAD_INFO_KEY, format("%s while getting payload: %s", e.getClass().getName(), e.getMessage()));
             }

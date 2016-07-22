@@ -110,8 +110,8 @@ public class CxfInboundMessageProcessor extends AbstractInterceptingMessageProce
   @Override
   public void initialise() throws InitialisationException {
     if (bus == null) {
-      throw new InitialisationException(
-          MessageFactory.createStaticMessage("No CXF bus instance, this component has not been initialized properly."), this);
+      throw new InitialisationException(MessageFactory
+          .createStaticMessage("No CXF bus instance, this component has not been initialized properly."), this);
     }
 
     final HttpRequestPropertyManager httpRequestPropertyManager =

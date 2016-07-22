@@ -38,8 +38,8 @@ public class CopyAttachmentsTransformer extends AbstractMessageTransformer {
     try {
       if (wildcardAttachmentNameEvaluator.hasWildcards()) {
         final Builder builder = MuleMessage.builder(message);
-        wildcardAttachmentNameEvaluator.processValues(message.getInboundAttachmentNames(),
-            matchedValue -> builder.addOutboundAttachment(matchedValue, message.getInboundAttachment(matchedValue)));
+        wildcardAttachmentNameEvaluator.processValues(message.getInboundAttachmentNames(), matchedValue -> builder
+            .addOutboundAttachment(matchedValue, message.getInboundAttachment(matchedValue)));
         event.setMessage(builder.build());
       } else {
         String attachmentName = attachmentNameEvaluator.resolveValue(event).toString();

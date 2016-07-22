@@ -48,8 +48,8 @@ public class ArtifactArchiveInstaller {
 
     final String baseName = FilenameUtils.getBaseName(artifactUrl.toString());
     if (baseName.contains("%20")) {
-      throw new DeploymentInitException(
-          MessageFactory.createStaticMessage("Mule artifact name may not contain spaces: " + baseName));
+      throw new DeploymentInitException(MessageFactory
+          .createStaticMessage("Mule artifact name may not contain spaces: " + baseName));
     }
 
     File artifactDir = null;

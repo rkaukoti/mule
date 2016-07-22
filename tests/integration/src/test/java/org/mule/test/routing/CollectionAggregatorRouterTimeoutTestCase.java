@@ -63,7 +63,7 @@ public class CollectionAggregatorRouterTimeoutTestCase extends FunctionalTestCas
     // should receive only the first part
     assertThat("Aggregator received wrong number of messages.", aggregator.getReceivedMessagesCount(), is(1));
     assertThat("Wrong message received", ((List<MuleMessage>) aggregator.getLastReceivedMessage()).get(0).getPayload(),
-        is("first"));
+               is("first"));
 
     // wait for the vortex timeout (6000ms for vortext + 2000ms for aggregator
     // timeout + some extra for a test)

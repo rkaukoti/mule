@@ -22,7 +22,7 @@ public class HttpThreadingProfileDefinitionParser extends ThreadingProfileDefini
   }
 
   public HttpThreadingProfileDefinitionParser(String propertyName, String defaults,
-      Class<? extends ThreadingProfile> threadingProfileClass) {
+                                              Class<? extends ThreadingProfile> threadingProfileClass) {
     super(propertyName, defaults, threadingProfileClass);
   }
 

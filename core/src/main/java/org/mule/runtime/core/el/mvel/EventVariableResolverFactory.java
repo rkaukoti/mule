@@ -28,7 +28,7 @@ public class EventVariableResolverFactory extends MessageVariableResolverFactory
    * incurred by using a builder.
    */
   public EventVariableResolverFactory(ParserConfiguration parserConfiguration, MuleContext muleContext, MuleEvent event,
-      VariableResolverFactory next) {
+                                      VariableResolverFactory next) {
     this(parserConfiguration, muleContext, event);
     setNextFactory(next);
   }
@@ -40,7 +40,7 @@ public class EventVariableResolverFactory extends MessageVariableResolverFactory
         return new MuleImmutableVariableResolver<FlowContext>(FLOW, (new FlowContext(event.getFlowConstruct())), null);
       } else if (MVELExpressionLanguageContext.MULE_EVENT_INTERNAL_VARIABLE.equals(name)) {
         return new MuleImmutableVariableResolver<MuleEvent>(MVELExpressionLanguageContext.MULE_EVENT_INTERNAL_VARIABLE, event,
-            null);
+                                                            null);
       }
     }
     return super.getVariableResolver(name);

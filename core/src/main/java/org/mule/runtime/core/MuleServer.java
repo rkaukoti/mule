@@ -310,7 +310,8 @@ public class MuleServer implements Runnable {
   protected ConfigurationBuilder createConfigurationBuilder() throws ConfigurationException {
     try {
       return (ConfigurationBuilder) ClassUtils.instanciateClass(getConfigBuilderClassName(),
-          new Object[] {configurationResources, emptyMap(), APP}, MuleServer.class);
+                                                                new Object[] {configurationResources, emptyMap(), APP},
+                                                                MuleServer.class);
     } catch (Exception e) {
       throw new ConfigurationException(CoreMessages.failedToLoad(getConfigBuilderClassName()), e);
     }

@@ -71,18 +71,16 @@ public class MultiStreamMule1692TestCase extends FunctionalTestCase {
     final CountDownLatch latch = new CountDownLatch(1);
     final AtomicReference<String> message = new AtomicReference<String>();
     ((FunctionalStreamingTestComponent) ftc).setEventCallback(newCallback(latch, message), TEST_MESSAGE.length());
-    client.dispatch(
-        ((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("testComponent")).getMessageSource()).getAddress(),
-        TEST_MESSAGE, new HashMap());
+    client.dispatch(((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("testComponent")).getMessageSource())
+        .getAddress(), TEST_MESSAGE, new HashMap());
     latch.await(10, TimeUnit.SECONDS);
     assertEquals(RESULT, message.get());
 
     final CountDownLatch latch2 = new CountDownLatch(1);
     final AtomicReference<String> message2 = new AtomicReference<String>();
     ((FunctionalStreamingTestComponent) ftc).setEventCallback(newCallback(latch2, message2), TEST_MESSAGE_2.length());
-    client.dispatch(
-        ((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("testComponent")).getMessageSource()).getAddress(),
-        TEST_MESSAGE_2, new HashMap());
+    client.dispatch(((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("testComponent")).getMessageSource())
+        .getAddress(), TEST_MESSAGE_2, new HashMap());
     latch2.await(10, TimeUnit.SECONDS);
     assertEquals(RESULT_2, message2.get());
   }

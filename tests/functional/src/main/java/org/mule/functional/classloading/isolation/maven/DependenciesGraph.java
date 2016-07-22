@@ -38,7 +38,7 @@ public class DependenciesGraph {
    *        dependency and value the {@link Set} of {@link MavenArtifact} dependencies of it
    */
   public DependenciesGraph(MavenArtifact rootArtifact, Set<MavenArtifact> dependencies,
-      Map<MavenArtifact, Set<MavenArtifact>> transitiveDependencies) {
+                           Map<MavenArtifact, Set<MavenArtifact>> transitiveDependencies) {
     this.rootArtifact = rootArtifact;
     this.dependencies = dependencies;
     this.transitiveDependencies = transitiveDependencies;

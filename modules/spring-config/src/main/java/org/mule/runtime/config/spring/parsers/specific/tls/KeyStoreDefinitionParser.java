@@ -11,8 +11,8 @@ import org.mule.runtime.config.spring.parsers.processors.CheckExclusiveAttribute
 public class KeyStoreDefinitionParser extends ParentDefinitionParser {
 
   public KeyStoreDefinitionParser() {
-    registerPreProcessor(new CheckExclusiveAttributes(
-        new String[][] {new String[] {AbstractMuleBeanDefinitionParser.ATTRIBUTE_CLASS}, new String[] {"type"}}));
+    registerPreProcessor(new CheckExclusiveAttributes(new String[][] {
+        new String[] {AbstractMuleBeanDefinitionParser.ATTRIBUTE_CLASS}, new String[] {"type"}}));
     addAlias("path", "keyStore");
     addAlias(AbstractMuleBeanDefinitionParser.ATTRIBUTE_CLASS, "keyStoreType");
     addAlias("type", "keyStoreType");

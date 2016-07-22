@@ -47,15 +47,14 @@ public class WatermarkFactoryBean extends AbstractFactoryBean<Watermark> impleme
   protected Watermark createInstance() throws Exception {
     if (this.selector != null) {
       if (!StringUtils.isEmpty(this.updateExpression)) {
-        throw new IllegalArgumentException(
-            "You specified a watermark with both an update expression and a selector and/or a selector.\n"
-                + "Those cannot co-exist. You have to either specify an updateExpression or selector options");
+        throw new IllegalArgumentException("You specified a watermark with both an update expression and a selector and/or a selector.\n"
+            + "Those cannot co-exist. You have to either specify an updateExpression or selector options");
       }
       String selectorExpression =
           StringUtils.isEmpty(this.selectorExpression) ? DEFAULT_SELECTOR_EXPRESSION : this.selectorExpression;
 
       return new SelectorWatermark(this.acquireObjectStore(), this.variable, this.defaultExpression, this.selector,
-          selectorExpression);
+                                   selectorExpression);
     } else {
       return new UpdateExpressionWatermark(this.acquireObjectStore(), this.variable, this.defaultExpression, updateExpression);
     }

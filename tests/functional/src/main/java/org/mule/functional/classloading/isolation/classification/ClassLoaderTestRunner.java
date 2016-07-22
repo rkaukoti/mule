@@ -21,7 +21,7 @@ public final class ClassLoaderTestRunner {
   private ArtifactClassLoader applicationClassLoader;
 
   public ClassLoaderTestRunner(ArtifactClassLoader containerClassLoader, List<ArtifactClassLoader> pluginsArtifactClassLoaders,
-      ArtifactClassLoader applicationClassLoader) {
+                               ArtifactClassLoader applicationClassLoader) {
     this.containerClassLoader = containerClassLoader;
     this.pluginsArtifactClassLoaders = pluginsArtifactClassLoaders;
     this.applicationClassLoader = applicationClassLoader;

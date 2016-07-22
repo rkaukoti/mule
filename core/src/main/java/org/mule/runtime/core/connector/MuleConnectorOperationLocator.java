@@ -56,7 +56,8 @@ public class MuleConnectorOperationLocator implements ConnectorOperationLocator,
 
   @Override
   public MessageProcessor locateConnectorOperation(String url, OperationOptions operationOptions,
-      MessageExchangePattern exchangePattern) throws MuleException {
+                                                   MessageExchangePattern exchangePattern)
+      throws MuleException {
     for (ConnectorOperationProvider connectorOperationProvider : connectorOperationProviders) {
       if (connectorOperationProvider.supportsUrl(url)) {
         return connectorOperationProvider.getMessageProcessor(url, operationOptions, exchangePattern);

@@ -58,7 +58,7 @@ public final class StoreCommand {
    * @param overwrite if should overwrite a file that already exist or not.
    */
   public void store(RetrieverConnection connection, MuleMessage muleMessage, String folderName, String localDirectory,
-      final String fileName, Integer emailId, boolean overwrite) {
+                    final String fileName, Integer emailId, boolean overwrite) {
     Folder folder = connection.getFolder(folderName, READ_ONLY);
     executor.execute(muleMessage, emailId, id -> {
       try {

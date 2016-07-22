@@ -44,11 +44,11 @@ public class CustomTimeoutThrottleRequestFilter implements RequestFilter {
       }
       if (!available.tryAcquire(ctx.getRequest().getRequestTimeout(), MILLISECONDS)) {
         throw new FilterException(String.format("No slot available for processing Request %s with AsyncHandler %s",
-            ctx.getRequest(), ctx.getAsyncHandler()));
+                                                ctx.getRequest(), ctx.getAsyncHandler()));
       }
     } catch (InterruptedException e) {
-      throw new FilterException(
-          String.format("Interrupted Request %s with AsyncHandler %s", ctx.getRequest(), ctx.getAsyncHandler()));
+      throw new FilterException(String.format("Interrupted Request %s with AsyncHandler %s", ctx.getRequest(),
+                                              ctx.getAsyncHandler()));
     }
 
     return new FilterContext.FilterContextBuilder(ctx).asyncHandler(new AsyncHandlerWrapper(ctx.getAsyncHandler())).build();

@@ -14,8 +14,8 @@ import org.mule.runtime.core.api.lifecycle.Callable;
 public class NullComponent implements Callable {
 
   public Object onCall(MuleEventContext context) throws Exception {
-    throw new UnsupportedOperationException(
-        "This service cannot receive messages. Service is: " + context.getFlowConstruct().getName());
+    throw new UnsupportedOperationException("This service cannot receive messages. Service is: "
+        + context.getFlowConstruct().getName());
   }
 
 }

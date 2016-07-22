@@ -53,7 +53,8 @@ public class JmsXRedeliveryHandler extends AbstractRedeliveryHandler {
       deliveryCount = message.getIntProperty(JmsConstants.JMS_X_DELIVERY_COUNT);
     } catch (NumberFormatException nex) {
       throw new MuleRuntimeException(MessageFactory.createStaticMessage(String.format(
-          "Invalid use of %s. Message is flagged with JMSRedelivered, but JMSXDeliveryCount is not set", getClass().getName())));
+                                                                                      "Invalid use of %s. Message is flagged with JMSRedelivered, but JMSXDeliveryCount is not set",
+                                                                                      getClass().getName())));
     }
 
     int redeliveryCount = deliveryCount - 1;

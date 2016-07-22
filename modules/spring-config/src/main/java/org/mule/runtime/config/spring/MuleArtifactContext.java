@@ -114,13 +114,15 @@ public class MuleArtifactContext extends AbstractXmlApplicationContext {
    * @since 3.7.0
    */
   public MuleArtifactContext(MuleContext muleContext, ConfigResource[] artifactConfigResources,
-      OptionalObjectsController optionalObjectsController, Map<String, String> artifactProperties, ArtifactType artifactType)
+                             OptionalObjectsController optionalObjectsController, Map<String, String> artifactProperties,
+                             ArtifactType artifactType)
       throws BeansException {
     this(muleContext, convert(artifactConfigResources), optionalObjectsController, artifactProperties, artifactType);
   }
 
   public MuleArtifactContext(MuleContext muleContext, Resource[] artifactConfigResources,
-      OptionalObjectsController optionalObjectsController, Map<String, String> artifactProperties, ArtifactType artifactType) {
+                             OptionalObjectsController optionalObjectsController, Map<String, String> artifactProperties,
+                             ArtifactType artifactType) {
     checkArgument(optionalObjectsController != null, "optionalObjectsController cannot be null");
     this.muleContext = muleContext;
     this.artifactConfigResources = artifactConfigResources;
@@ -202,9 +204,10 @@ public class MuleArtifactContext extends AbstractXmlApplicationContext {
 
   private Document getXmlDocument(Resource artifactResource) {
     try {
-      Document document = new MuleDocumentLoader().loadDocument(new InputSource(artifactResource.getInputStream()),
-          new DelegatingEntityResolver(Thread.currentThread().getContextClassLoader()), new DefaultHandler(), VALIDATION_XSD,
-          true);
+      Document document =
+          new MuleDocumentLoader().loadDocument(new InputSource(artifactResource.getInputStream()),
+                                                new DelegatingEntityResolver(Thread.currentThread().getContextClassLoader()),
+                                                new DefaultHandler(), VALIDATION_XSD, true);
       return document;
     } catch (Exception e) {
       throw new MuleRuntimeException(e);
@@ -218,9 +221,10 @@ public class MuleArtifactContext extends AbstractXmlApplicationContext {
     registerEditors(beanFactory);
 
     addBeanPostProcessors(beanFactory, new MuleContextPostProcessor(muleContext), new GlobalNamePostProcessor(),
-        new PostRegistrationActionsPostProcessor((MuleRegistryHelper) muleContext.getRegistry()),
-        new DiscardedOptionalBeanPostProcessor(optionalObjectsController, (DefaultListableBeanFactory) beanFactory),
-        new LifecycleStatePostProcessor(muleContext.getLifecycleManager().getState()));
+                          new PostRegistrationActionsPostProcessor((MuleRegistryHelper) muleContext.getRegistry()),
+                          new DiscardedOptionalBeanPostProcessor(optionalObjectsController,
+                                                                 (DefaultListableBeanFactory) beanFactory),
+                          new LifecycleStatePostProcessor(muleContext.getLifecycleManager().getState()));
 
     beanFactory.registerSingleton(OBJECT_MULE_CONTEXT, muleContext);
   }
@@ -252,15 +256,19 @@ public class MuleArtifactContext extends AbstractXmlApplicationContext {
         applicationModel.executeOnEveryMuleComponentTree(componentModel -> {
           if (componentModel.isRoot()) {
             beanDefinitionFactory.resolveComponentRecursively(applicationModel.getRootComponentModel(), componentModel,
-                beanFactory, (resolvedComponentModel, registry) -> {
-                  if (resolvedComponentModel.isRoot()) {
-                    String nameAttribute = resolvedComponentModel.getNameAttribute();
-                    if (resolvedComponentModel.getIdentifier().equals(CONFIGURATION_IDENTIFIER)) {
-                      nameAttribute = OBJECT_MULE_CONFIGURATION;
-                    }
-                    registry.registerBeanDefinition(nameAttribute, resolvedComponentModel.getBeanDefinition());
-                  }
-                }, null);
+                                                              beanFactory, (resolvedComponentModel, registry) -> {
+                                                                if (resolvedComponentModel.isRoot()) {
+                                                                  String nameAttribute =
+                                                                      resolvedComponentModel.getNameAttribute();
+                                                                  if (resolvedComponentModel.getIdentifier()
+                                                                      .equals(CONFIGURATION_IDENTIFIER)) {
+                                                                    nameAttribute = OBJECT_MULE_CONFIGURATION;
+                                                                  }
+                                                                  registry.registerBeanDefinition(nameAttribute,
+                                                                                                  resolvedComponentModel
+                                                                                                      .getBeanDefinition());
+                                                                }
+                                                              }, null);
           }
         });
       } else {
@@ -287,7 +295,7 @@ public class MuleArtifactContext extends AbstractXmlApplicationContext {
     }
     BeanDefinitionRegistry beanDefinitionRegistry = (BeanDefinitionRegistry) beanFactory;
     beanDefinitionRegistry.registerBeanDefinition(OBJECT_MULE_CONFIGURATION,
-        genericBeanDefinition(MuleConfigurationConfigurator.class).getBeanDefinition());
+                                                  genericBeanDefinition(MuleConfigurationConfigurator.class).getBeanDefinition());
   }
 
   protected BeanDefinitionReader createBeanDefinitionReader(DefaultListableBeanFactory beanFactory) {
@@ -317,9 +325,9 @@ public class MuleArtifactContext extends AbstractXmlApplicationContext {
 
   private void registerAnnotationConfigProcessors(BeanDefinitionRegistry registry, Object source) {
     registerAnnotationConfigProcessor(registry, CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME,
-        ConfigurationClassPostProcessor.class, source);
+                                      ConfigurationClassPostProcessor.class, source);
     registerAnnotationConfigProcessor(registry, REQUIRED_ANNOTATION_PROCESSOR_BEAN_NAME,
-        RequiredAnnotationBeanPostProcessor.class, source);
+                                      RequiredAnnotationBeanPostProcessor.class, source);
     registerInjectorProcessor(registry);
   }
 
@@ -356,8 +364,8 @@ public class MuleArtifactContext extends AbstractXmlApplicationContext {
     // Copy all postProcessors defined in the defaultMuleConfig so that they get applied to the child container
     DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory(getInternalParentBeanFactory());
     beanFactory.setAutowireCandidateResolver(new ContextAnnotationAutowireCandidateResolver());
-    beanFactory.setInstantiationStrategy(
-        new LaxInstantiationStrategyWrapper(new CglibSubclassingInstantiationStrategy(), optionalObjectsController));
+    beanFactory.setInstantiationStrategy(new LaxInstantiationStrategyWrapper(new CglibSubclassingInstantiationStrategy(),
+                                                                             optionalObjectsController));
 
     return beanFactory;
   }

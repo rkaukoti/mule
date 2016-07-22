@@ -114,7 +114,8 @@ public class FunctionalStreamingTestComponent implements Callable {
   }
 
   private void doCallback(byte[] startData, long startDataSize, byte[] endData, long endDataSize, long endRingPointer,
-      long streamLength, MuleEventContext context) throws Exception {
+                          long streamLength, MuleEventContext context)
+      throws Exception {
     // make a nice summary of the data
     StringBuilder result = new StringBuilder("Received stream");
     result.append("; length: ");
@@ -136,9 +137,8 @@ public class FunctionalStreamingTestComponent implements Callable {
 
     summary = result.toString();
 
-    String msg = StringMessageUtils.getBoilerPlate(
-        "Message Received in service: " + context.getFlowConstruct().getName() + ". " + summary + "\n callback: " + eventCallback,
-        '*', 80);
+    String msg = StringMessageUtils.getBoilerPlate("Message Received in service: " + context.getFlowConstruct().getName() + ". "
+        + summary + "\n callback: " + eventCallback, '*', 80);
 
     logger.info(msg);
 

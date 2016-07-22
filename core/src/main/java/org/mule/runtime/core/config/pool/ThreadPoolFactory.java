@@ -33,8 +33,8 @@ public abstract class ThreadPoolFactory implements MuleContextAware {
     ThreadPoolFactory threadPoolFactory = selector.select(threadPoolFactoryServices.iterator());
 
     if (threadPoolFactory == null) {
-      throw new MuleRuntimeException(
-          MessageFactory.createStaticMessage("Couldn't find config via SPI mechanism. Corrupted Mule core jar?"));
+      throw new MuleRuntimeException(MessageFactory
+          .createStaticMessage("Couldn't find config via SPI mechanism. Corrupted Mule core jar?"));
     }
 
     return threadPoolFactory;

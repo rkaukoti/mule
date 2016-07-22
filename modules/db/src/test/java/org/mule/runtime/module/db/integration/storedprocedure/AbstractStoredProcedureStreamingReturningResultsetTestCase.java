@@ -29,7 +29,7 @@ import static org.mule.runtime.module.db.integration.model.Planet.VENUS;
 public abstract class AbstractStoredProcedureStreamingReturningResultsetTestCase extends AbstractDbIntegrationTestCase {
 
   public AbstractStoredProcedureStreamingReturningResultsetTestCase(String dataSourceConfigResource,
-      AbstractTestDatabase testDatabase) {
+                                                                    AbstractTestDatabase testDatabase) {
     super(dataSourceConfigResource, testDatabase);
   }
 
@@ -47,8 +47,10 @@ public abstract class AbstractStoredProcedureStreamingReturningResultsetTestCase
     responses.add(response);
 
     assertEquals(3, responses.size());
-    assertThat(responses, AllOf.allOf(ContainsMessage.mapPayloadWith("NAME", MARS.getName()),
-        ContainsMessage.mapPayloadWith("NAME", EARTH.getName()), ContainsMessage.mapPayloadWith("NAME", VENUS.getName())));
+    assertThat(responses,
+               AllOf.allOf(ContainsMessage.mapPayloadWith("NAME", MARS.getName()),
+                           ContainsMessage.mapPayloadWith("NAME", EARTH.getName()),
+                           ContainsMessage.mapPayloadWith("NAME", VENUS.getName())));
   }
 
   @Test

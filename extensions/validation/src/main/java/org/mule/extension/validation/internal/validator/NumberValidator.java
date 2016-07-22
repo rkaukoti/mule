@@ -53,7 +53,7 @@ public class NumberValidator extends AbstractValidator {
   private Message errorMessage;
 
   public NumberValidator(String value, Locale locale, String pattern, Number minValue, Number maxValue, NumberType numberType,
-      ValidationContext validationContext) {
+                         ValidationContext validationContext) {
     super(validationContext);
     this.value = value;
     this.locale = locale;

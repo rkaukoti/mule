@@ -69,7 +69,7 @@ public class ExceptionStrategyTestCase extends FunctionalTestCase {
     assertNotNull(response);
     assertTrue(getPayloadAsString(response).contains("<faultstring>"));
     assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()),
-        response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
+                 response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
     assertTrue(latch.await(3000, TimeUnit.MILLISECONDS));
   }
 
@@ -84,7 +84,7 @@ public class ExceptionStrategyTestCase extends FunctionalTestCase {
     assertNotNull(response);
     assertTrue(getPayloadAsString(response).contains("<faultstring>"));
     assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()),
-        response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
+                 response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
     assertTrue(latch.await(3000, TimeUnit.MILLISECONDS));
   }
 
@@ -108,12 +108,12 @@ public class ExceptionStrategyTestCase extends FunctionalTestCase {
     latch = new CountDownLatch(1);
     registerExceptionNotificationListener();
     MuleMessage response = client.send("http://localhost:" + dynamicPort.getNumber() + "/proxyExceptionStrategy",
-        getTestMuleMessage(requestPayload), HTTP_REQUEST_OPTIONS);
+                                       getTestMuleMessage(requestPayload), HTTP_REQUEST_OPTIONS);
     assertNotNull(response);
     assertTrue(getPayloadAsString(response).contains("<faultstring>"));
 
     assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()),
-        response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
+                 response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
     assertTrue(latch.await(3000, TimeUnit.MILLISECONDS));
   }
 

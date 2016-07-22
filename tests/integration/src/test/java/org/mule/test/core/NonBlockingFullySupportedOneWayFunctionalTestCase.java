@@ -91,13 +91,13 @@ public class NonBlockingFullySupportedOneWayFunctionalTestCase extends Functiona
   @Test
   public void filterBeforeNonBlockingRejects() throws Exception {
     assertThat(flowRunner("filterBeforeNonBlockingRejects").withPayload(TEST_MESSAGE).asynchronously().nonBlocking().run(),
-        is(nullValue()));
+               is(nullValue()));
   }
 
   @Test
   public void filterAfterEnricherBeforeNonBlocking() throws Exception {
     assertThat(flowRunner("filterAfterEnricherBeforeNonBlocking").withPayload(TEST_MESSAGE).asynchronously().nonBlocking().run(),
-        is(nullValue()));
+               is(nullValue()));
   }
 
   @Test

@@ -36,7 +36,7 @@ public class HttpPollingFunctionalTestCase extends FunctionalTestCase {
       @Override
       public void eventReceived(MuleEventContext context, Object component) throws Exception {
         assertEquals("The Accept header should be set on the incoming message", "application/xml",
-            context.getMessage().<String>getInboundProperty("Accept"));
+                     context.getMessage().<String>getInboundProperty("Accept"));
       }
     });
 

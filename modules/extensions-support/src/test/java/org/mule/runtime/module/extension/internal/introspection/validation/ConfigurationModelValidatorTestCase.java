@@ -42,8 +42,9 @@ public class ConfigurationModelValidatorTestCase extends AbstractMuleTestCase {
 
   private ExtensionModel modelFor(Class<?> connectorClass) {
     DescribingContext context = new DefaultDescribingContext(connectorClass.getClassLoader());
-    return extensionFactory.createFrom(
-        new AnnotationsBasedDescriber(connectorClass, new StaticVersionResolver(getProductVersion())).describe(context), context);
+    return extensionFactory
+        .createFrom(new AnnotationsBasedDescriber(connectorClass, new StaticVersionResolver(getProductVersion()))
+            .describe(context), context);
   }
 
   private void validate(Class<?> connectorClass) {

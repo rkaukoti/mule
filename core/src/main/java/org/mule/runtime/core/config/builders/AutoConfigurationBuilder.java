@@ -83,13 +83,13 @@ public class AutoConfigurationBuilder extends AbstractResourceConfigurationBuild
 
         ConfigResource[] constructorArg = new ConfigResource[configs.size()];
         System.arraycopy(configs.toArray(), 0, constructorArg, 0, configs.size());
-        ConfigurationBuilder cb = (ConfigurationBuilder) ClassUtils.instanciateClass(className,
-            new Object[] {constructorArg, getArtifactProperties(), artifactType});
+        ConfigurationBuilder cb = (ConfigurationBuilder) ClassUtils
+            .instanciateClass(className, new Object[] {constructorArg, getArtifactProperties(), artifactType});
         if (parentContext != null && cb instanceof ParentMuleContextAwareConfigurationBuilder) {
           ((ParentMuleContextAwareConfigurationBuilder) cb).setParentContext(parentContext);
         } else if (parentContext != null) {
-          throw new MuleRuntimeException(CoreMessages.createStaticMessage(
-              String.format("ConfigurationBuilder %s does not support domain context", cb.getClass().getCanonicalName())));
+          throw new MuleRuntimeException(CoreMessages.createStaticMessage(String
+              .format("ConfigurationBuilder %s does not support domain context", cb.getClass().getCanonicalName())));
         }
         cb.configure(muleContext);
       }

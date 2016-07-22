@@ -85,9 +85,9 @@ public abstract class AbstractOAuthAuthorizationTestCase extends FunctionalTestC
   }
 
   protected void configureWireMockToExpectOfflineTokenPathRequestForAuthorizationCodeGrantType(String accessToken) {
-    configureWireMockToExpectTokenPathRequestForAuthorizationCodeGrantTypeWithBody(
-        "{" + "\"" + OAuthConstants.ACCESS_TOKEN_PARAMETER + "\":\"" + accessToken + "\"," + "\""
-            + OAuthConstants.EXPIRES_IN_PARAMETER + "\":" + EXPIRES_IN + "," + "\"}");
+    configureWireMockToExpectTokenPathRequestForAuthorizationCodeGrantTypeWithBody("{" + "\""
+        + OAuthConstants.ACCESS_TOKEN_PARAMETER + "\":\"" + accessToken + "\"," + "\"" + OAuthConstants.EXPIRES_IN_PARAMETER
+        + "\":" + EXPIRES_IN + "," + "\"}");
   }
 
   protected void configureWireMockToExpectTokenPathRequestForAuthorizationCodeGrantTypeWithBody(String body) {
@@ -102,8 +102,7 @@ public abstract class AbstractOAuthAuthorizationTestCase extends FunctionalTestC
     configureWireMockToExpectTokenPathRequestForClientCredentialsGrantType(ACCESS_TOKEN);
   }
 
-  protected void configureWireMockToExpectTokenPathRequestForClientCredentialsGrantTypeWithMapResponse(
-      ImmutableMap customParameters) {
+  protected void configureWireMockToExpectTokenPathRequestForClientCredentialsGrantTypeWithMapResponse(ImmutableMap customParameters) {
     configureWireMockToExpectTokenPathRequestForClientCredentialsGrantTypeWithMapResponse(ACCESS_TOKEN, customParameters);
   }
 
@@ -116,11 +115,11 @@ public abstract class AbstractOAuthAuthorizationTestCase extends FunctionalTestC
 
   protected void configureWireMockToExpectTokenPathRequestForClientCredentialsGrantTypeWithMapResponse(String accessToken) {
     configureWireMockToExpectTokenPathRequestForClientCredentialsGrantTypeWithMapResponse(accessToken,
-        new ImmutableMap.Builder().build());
+                                                                                          new ImmutableMap.Builder().build());
   }
 
   private void configureWireMockToExpectTokenPathRequestForClientCredentialsGrantTypeWithMapResponse(String accessToken,
-      ImmutableMap customParameters) {
+                                                                                                     ImmutableMap customParameters) {
     customParameters = new ImmutableMap.Builder().putAll(customParameters).put(OAuthConstants.ACCESS_TOKEN_PARAMETER, accessToken)
         .put(OAuthConstants.EXPIRES_IN_PARAMETER, EXPIRES_IN).build();
     final ImmutableMap.Builder bodyParametersMapBuilder = new ImmutableMap.Builder();
@@ -134,15 +133,15 @@ public abstract class AbstractOAuthAuthorizationTestCase extends FunctionalTestC
 
   protected void verifyRequestDoneToTokenUrlForAuthorizationCode() throws UnsupportedEncodingException {
     wireMockRule.verify(postRequestedFor(urlEqualTo(TOKEN_PATH))
-        .withRequestBody(
-            containing(OAuthConstants.CLIENT_ID_PARAMETER + "=" + URLEncoder.encode(clientId.getValue(), UTF_8.name())))
+        .withRequestBody(containing(OAuthConstants.CLIENT_ID_PARAMETER + "="
+            + URLEncoder.encode(clientId.getValue(), UTF_8.name())))
         .withRequestBody(containing(OAuthConstants.CODE_PARAMETER + "=" + URLEncoder.encode(AUTHENTICATION_CODE, UTF_8.name())))
-        .withRequestBody(
-            containing(OAuthConstants.CLIENT_SECRET_PARAMETER + "=" + URLEncoder.encode(clientSecret.getValue(), UTF_8.name())))
+        .withRequestBody(containing(OAuthConstants.CLIENT_SECRET_PARAMETER + "="
+            + URLEncoder.encode(clientSecret.getValue(), UTF_8.name())))
         .withRequestBody(containing(OAuthConstants.GRANT_TYPE_PARAMETER + "="
             + URLEncoder.encode(OAuthConstants.GRANT_TYPE_AUTHENTICATION_CODE, UTF_8.name())))
-        .withRequestBody(
-            containing(OAuthConstants.REDIRECT_URI_PARAMETER + "=" + URLEncoder.encode(redirectUrl.getValue(), UTF_8.name()))));
+        .withRequestBody(containing(OAuthConstants.REDIRECT_URI_PARAMETER + "="
+            + URLEncoder.encode(redirectUrl.getValue(), UTF_8.name()))));
   }
 
   protected void verifyRequestDoneToTokenUrlForClientCredentials() throws UnsupportedEncodingException {
@@ -160,13 +159,13 @@ public abstract class AbstractOAuthAuthorizationTestCase extends FunctionalTestC
             + URLEncoder.encode(OAuthConstants.GRANT_TYPE_CLIENT_CREDENTIALS, UTF_8.name())));
     if (encodeInBody == true) {
       verification
-          .withRequestBody(
-              containing(OAuthConstants.CLIENT_ID_PARAMETER + "=" + URLEncoder.encode(clientId.getValue(), UTF_8.name())))
-          .withRequestBody(containing(
-              OAuthConstants.CLIENT_SECRET_PARAMETER + "=" + URLEncoder.encode(clientSecret.getValue(), UTF_8.name())));
+          .withRequestBody(containing(OAuthConstants.CLIENT_ID_PARAMETER + "="
+              + URLEncoder.encode(clientId.getValue(), UTF_8.name())))
+          .withRequestBody(containing(OAuthConstants.CLIENT_SECRET_PARAMETER + "="
+              + URLEncoder.encode(clientSecret.getValue(), UTF_8.name())));
     } else {
-      verification.withHeader(HttpHeaders.Names.AUTHORIZATION, containing(
-          "Basic " + Base64.encodeBase64String(format("%s:%s", clientId.getValue(), clientSecret.getValue()).getBytes())));
+      verification.withHeader(HttpHeaders.Names.AUTHORIZATION, containing("Basic "
+          + Base64.encodeBase64String(format("%s:%s", clientId.getValue(), clientSecret.getValue()).getBytes())));
     }
     if (scope != null) {
       verification.withRequestBody(containing(OAuthConstants.SCOPE_PARAMETER + "=" + URLEncoder.encode(scope, UTF_8.name())));

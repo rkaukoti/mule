@@ -42,7 +42,8 @@ public class HttpRequestToMuleMessage {
   private static Logger logger = LoggerFactory.getLogger(HttpRequestToMuleMessage.class);
 
   public static MuleMessage transform(final HttpRequestContext requestContext, final MuleContext muleContext,
-      Boolean parseRequest, ListenerPath listenerPath) throws HttpRequestParsingException {
+                                      Boolean parseRequest, ListenerPath listenerPath)
+      throws HttpRequestParsingException {
     final HttpRequest request = requestContext.getRequest();
 
     final MediaType mediaType = getMediaType(request.getHeaderValueIgnoreCase(CONTENT_TYPE), getDefaultEncoding(muleContext));
@@ -59,7 +60,7 @@ public class HttpRequestToMuleMessage {
             if (mediaType.matches(HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED)) {
               try {
                 payload = decodeUrlEncodedBody(IOUtils.toString(((InputStreamHttpEntity) entity).getInputStream()),
-                    mediaType.getCharset().get());
+                                               mediaType.getCharset().get());
               } catch (IllegalArgumentException e) {
                 throw new HttpRequestParsingException("Cannot decode x-www-form-urlencoded payload", e);
               }

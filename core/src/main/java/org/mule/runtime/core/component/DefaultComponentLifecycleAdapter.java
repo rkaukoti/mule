@@ -78,7 +78,8 @@ public class DefaultComponentLifecycleAdapter implements LifecycleAdapter {
   private boolean disposed = false;
 
   public DefaultComponentLifecycleAdapter(Object componentObject, JavaComponent component, FlowConstruct flowConstruct,
-      MuleContext muleContext) throws MuleException {
+                                          MuleContext muleContext)
+      throws MuleException {
     if (muleContext == null) {
       throw new IllegalStateException("No muleContext provided");
     }
@@ -99,7 +100,8 @@ public class DefaultComponentLifecycleAdapter implements LifecycleAdapter {
   }
 
   public DefaultComponentLifecycleAdapter(Object componentObject, JavaComponent component, FlowConstruct flowConstruct,
-      EntryPointResolverSet entryPointResolver, MuleContext muleContext) throws MuleException {
+                                          EntryPointResolverSet entryPointResolver, MuleContext muleContext)
+      throws MuleException {
 
     this(componentObject, component, flowConstruct, muleContext);
     this.entryPointResolver = entryPointResolver;
@@ -128,8 +130,8 @@ public class DefaultComponentLifecycleAdapter implements LifecycleAdapter {
     if (metaData.size() == 0) {
       return null;
     } else if (metaData.size() > 1) {
-      throw new IllegalArgumentException(
-          CoreMessages.objectHasMoreThanOnePostConstructAnnotation(object.getClass()).getMessage());
+      throw new IllegalArgumentException(CoreMessages.objectHasMoreThanOnePostConstructAnnotation(object.getClass())
+          .getMessage());
     } else {
       Method m = (Method) metaData.get(0).getMember();
       new JSR250ValidatorProcessor().validateLifecycleMethod(m);

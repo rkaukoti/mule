@@ -23,8 +23,8 @@ public class InboundExceptionDetailsProcessorTestCase extends AbstractMessagePro
     mp.setMuleContext(muleContext);
     MuleEvent event = createTestInboundEvent(endpoint);
 
-    event.setMessage(
-        MuleMessage.builder(event.getMessage()).exceptionPayload(new DefaultExceptionPayload(new RuntimeException())).build());
+    event.setMessage(MuleMessage.builder(event.getMessage()).exceptionPayload(new DefaultExceptionPayload(new RuntimeException()))
+        .build());
 
     MuleEvent result = mp.process(event);
 

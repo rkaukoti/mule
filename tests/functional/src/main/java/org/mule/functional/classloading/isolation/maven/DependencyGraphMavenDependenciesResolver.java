@@ -81,8 +81,8 @@ public class DependencyGraphMavenDependenciesResolver implements MavenDependenci
       Path dependenciesPath = Paths.get(dependenciesGraphFile.toURI());
       BasicFileAttributes view = Files.getFileAttributeView(dependenciesPath, BasicFileAttributeView.class).readAttributes();
       logger.debug(
-          "Building maven dependencies graph using depgraph-maven-plugin output file: '{}', created: {}, last modified: {}",
-          dependenciesGraphFile, view.creationTime(), view.lastModifiedTime());
+                   "Building maven dependencies graph using depgraph-maven-plugin output file: '{}', created: {}, last modified: {}",
+                   dependenciesGraphFile, view.creationTime(), view.lastModifiedTime());
 
 
       LinkedHashMap<MavenArtifact, Set<MavenArtifact>> mavenArtifactsDependencies = new LinkedHashMap<>();
@@ -96,8 +96,7 @@ public class DependencyGraphMavenDependenciesResolver implements MavenDependenci
             mavenArtifactsDependencies.get(from).add(to);
           });
       if (mavenArtifactsDependencies.isEmpty()) {
-        throw new IllegalStateException(
-            "depgraph-maven-plugin output file read but no dependencies found, something may be wrong please check the dot file");
+        throw new IllegalStateException("depgraph-maven-plugin output file read but no dependencies found, something may be wrong please check the dot file");
       }
       MavenArtifact rootArtifact = mavenArtifactsDependencies.keySet().stream().findFirst().get();
       Set<MavenArtifact> dependencies = mavenArtifactsDependencies.get(rootArtifact);
@@ -112,13 +111,13 @@ public class DependencyGraphMavenDependenciesResolver implements MavenDependenci
     URL dependenciesListFileURL =
         DependencyGraphMavenDependenciesResolver.class.getClassLoader().getResource(DEPENDENCIES_GRAPH_FILE_NAME);
     if (dependenciesListFileURL == null) {
-      throw new IllegalStateException(
-          DEPENDENCIES_GRAPH_FILE_NAME + " not found, the maven plugin 'depgraph-maven-plugin ' should be executed first.");
+      throw new IllegalStateException(DEPENDENCIES_GRAPH_FILE_NAME
+          + " not found, the maven plugin 'depgraph-maven-plugin ' should be executed first.");
     }
     File file = new File(dependenciesListFileURL.getFile());
     if (!file.exists()) {
-      throw new IllegalStateException(
-          String.format("Unable to resolve dependencies for test due to file '%s' was not found", DEPENDENCIES_GRAPH_FILE_NAME));
+      throw new IllegalStateException(String.format("Unable to resolve dependencies for test due to file '%s' was not found",
+                                                    DEPENDENCIES_GRAPH_FILE_NAME));
     }
 
     return file;

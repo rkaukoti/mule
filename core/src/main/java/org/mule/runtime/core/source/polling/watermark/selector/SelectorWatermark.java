@@ -31,7 +31,7 @@ public class SelectorWatermark extends Watermark implements Initialisable, MuleC
   private MuleContext muleContext;
 
   public SelectorWatermark(ObjectStore<Serializable> objectStore, String variable, String defaultExpression,
-      WatermarkSelectorBroker selectorBroker, String selectorExpression) {
+                           WatermarkSelectorBroker selectorBroker, String selectorExpression) {
     super(objectStore, variable, defaultExpression);
     this.selectorBroker = selectorBroker;
     this.selectorExpression = selectorExpression;
@@ -42,10 +42,9 @@ public class SelectorWatermark extends Watermark implements Initialisable, MuleC
     try {
       this.muleContext.getExpressionManager().validateExpression(this.selectorExpression);
     } catch (InvalidExpressionException e) {
-      throw new InitialisationException(
-          MessageFactory.createStaticMessage(String
-              .format("selector-expression requires a valid MEL expression. '%s' was found instead", this.selectorExpression)),
-          e, this);
+      throw new InitialisationException(MessageFactory.createStaticMessage(String
+          .format("selector-expression requires a valid MEL expression. '%s' was found instead", this.selectorExpression)), e,
+                                        this);
     }
   }
 

@@ -55,7 +55,7 @@ public class SelectStreamingExceptionTestCase extends AbstractDbIntegrationTestC
     for (int i = 0; i < POOL_CONNECTIONS + 1; ++i) {
       MessagingException e = flowRunner("selectStreamingException").withPayload(TEST_MESSAGE).runExpectingException();
       assertThat("Iteration " + i, e.getMessage(),
-          is("Table/View 'NOT_EXISTS' does not exist. (java.sql.SQLSyntaxErrorException)."));
+                 is("Table/View 'NOT_EXISTS' does not exist. (java.sql.SQLSyntaxErrorException)."));
     }
   }
 

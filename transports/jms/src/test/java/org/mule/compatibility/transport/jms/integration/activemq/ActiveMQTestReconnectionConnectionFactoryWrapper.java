@@ -66,9 +66,10 @@ public class ActiveMQTestReconnectionConnectionFactoryWrapper extends ActiveMQCo
     registration();
     connection = super.createQueueConnection();
     return (QueueConnection) Proxy.newProxyInstance(ActiveMQTestReconnectionConnectionFactoryWrapper.class.getClassLoader(),
-        new Class[] {Connection.class, TopicConnection.class, QueueConnection.class, StatsCapable.class, Closeable.class,
-            StreamConnection.class, TransportListener.class},
-        this);
+                                                    new Class[] {Connection.class, TopicConnection.class, QueueConnection.class,
+                                                        StatsCapable.class, Closeable.class, StreamConnection.class,
+                                                        TransportListener.class},
+                                                    this);
   }
 
   @Override
@@ -76,9 +77,10 @@ public class ActiveMQTestReconnectionConnectionFactoryWrapper extends ActiveMQCo
     registration();
     connection = super.createQueueConnection(user, passwd);
     return (QueueConnection) Proxy.newProxyInstance(ActiveMQTestReconnectionConnectionFactoryWrapper.class.getClassLoader(),
-        new Class[] {Connection.class, TopicConnection.class, QueueConnection.class, StatsCapable.class, Closeable.class,
-            StreamConnection.class, TransportListener.class},
-        this);
+                                                    new Class[] {Connection.class, TopicConnection.class, QueueConnection.class,
+                                                        StatsCapable.class, Closeable.class, StreamConnection.class,
+                                                        TransportListener.class},
+                                                    this);
   }
 
   @Override
@@ -86,9 +88,10 @@ public class ActiveMQTestReconnectionConnectionFactoryWrapper extends ActiveMQCo
     registration();
     connection = super.createTopicConnection();
     return (TopicConnection) Proxy.newProxyInstance(ActiveMQTestReconnectionConnectionFactoryWrapper.class.getClassLoader(),
-        new Class[] {Connection.class, TopicConnection.class, QueueConnection.class, StatsCapable.class, Closeable.class,
-            StreamConnection.class, TransportListener.class},
-        this);
+                                                    new Class[] {Connection.class, TopicConnection.class, QueueConnection.class,
+                                                        StatsCapable.class, Closeable.class, StreamConnection.class,
+                                                        TransportListener.class},
+                                                    this);
   }
 
   @Override
@@ -96,9 +99,10 @@ public class ActiveMQTestReconnectionConnectionFactoryWrapper extends ActiveMQCo
     registration();
     connection = super.createTopicConnection(user, passwd);
     return (TopicConnection) Proxy.newProxyInstance(ActiveMQTestReconnectionConnectionFactoryWrapper.class.getClassLoader(),
-        new Class[] {Connection.class, TopicConnection.class, QueueConnection.class, StatsCapable.class, Closeable.class,
-            StreamConnection.class, TransportListener.class},
-        this);
+                                                    new Class[] {Connection.class, TopicConnection.class, QueueConnection.class,
+                                                        StatsCapable.class, Closeable.class, StreamConnection.class,
+                                                        TransportListener.class},
+                                                    this);
   }
 
   // For InvocationHandler interface

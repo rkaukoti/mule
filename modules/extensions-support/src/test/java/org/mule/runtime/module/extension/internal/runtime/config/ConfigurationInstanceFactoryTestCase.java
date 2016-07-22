@@ -142,8 +142,7 @@ public class ConfigurationInstanceFactoryTestCase extends AbstractMuleTestCase {
     }
 
     @Override
-    public ConnectionHandlingStrategy<Banana> getHandlingStrategy(
-        ConnectionHandlingStrategyFactory<Banana> handlingStrategyFactory) {
+    public ConnectionHandlingStrategy<Banana> getHandlingStrategy(ConnectionHandlingStrategyFactory<Banana> handlingStrategyFactory) {
       return handlingStrategyFactory.cached();
     }
   }

@@ -27,7 +27,7 @@ public class PersistentXaTransactionContext implements XaQueueTransactionContext
   private Xid xid;
 
   public PersistentXaTransactionContext(XaTxQueueTransactionJournal simpleTxQueueTransactionJournal, QueueProvider queueProvider,
-      Xid xid) {
+                                        Xid xid) {
     this.transactionJournal = simpleTxQueueTransactionJournal;
     this.queueProvider = queueProvider;
     this.xid = xid;

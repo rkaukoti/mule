@@ -34,7 +34,7 @@ public final class UdpClient implements SocketClient {
   private final SocketAddress socketAddress;
 
   public UdpClient(DatagramSocket socket, ConnectionSettings connectionSettings, UdpSocketProperties socketProperties,
-      ObjectSerializer objectSerializer) {
+                   ObjectSerializer objectSerializer) {
     this.objectSerializer = objectSerializer;
     this.socketProperties = socketProperties;
     this.socket = socket;

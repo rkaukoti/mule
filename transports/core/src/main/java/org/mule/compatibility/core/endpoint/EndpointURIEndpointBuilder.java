@@ -79,8 +79,8 @@ public class EndpointURIEndpointBuilder extends AbstractEndpointBuilder {
     setRetryPolicyTemplate(source.getRetryPolicyTemplate());
     setExchangePattern(source.getExchangePattern());
     setMuleContext(source.getMuleContext());
-    setMessageProcessors(
-        source.getMessageProcessors().isEmpty() ? Collections.<MessageProcessor>emptyList() : source.getMessageProcessors());
+    setMessageProcessors(source.getMessageProcessors().isEmpty() ? Collections.<MessageProcessor>emptyList()
+        : source.getMessageProcessors());
     setResponseMessageProcessors(source.getResponseMessageProcessors().isEmpty() ? Collections.<MessageProcessor>emptyList()
         : source.getResponseMessageProcessors());
     setDisableTransportTransformer(source.isDisableTransportTransformer());

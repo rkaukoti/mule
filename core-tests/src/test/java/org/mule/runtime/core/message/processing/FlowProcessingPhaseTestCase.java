@@ -181,9 +181,9 @@ public class FlowProcessingPhaseTestCase extends AbstractMuleTestCase {
     when(mockMessagingException.handled()).thenReturn(true);
     phase.runPhase(mockRequestResponseTemplate, mockContext, mockNotifier);
     verify(notificationHelper).fireNotification(any(MessageSource.class), any(MuleEvent.class), isNull(String.class),
-        any(FlowConstruct.class), eq(MESSAGE_RESPONSE));
+                                                any(FlowConstruct.class), eq(MESSAGE_RESPONSE));
     verify(notificationHelper, never()).fireNotification(any(MessageSource.class), any(MuleEvent.class), isNull(String.class),
-        any(FlowConstruct.class), eq(MESSAGE_ERROR_RESPONSE));
+                                                         any(FlowConstruct.class), eq(MESSAGE_ERROR_RESPONSE));
   }
 
   @Test
@@ -193,9 +193,9 @@ public class FlowProcessingPhaseTestCase extends AbstractMuleTestCase {
     when(mockMessagingException.handled()).thenReturn(false);
     phase.runPhase(mockRequestResponseTemplate, mockContext, mockNotifier);
     verify(notificationHelper, never()).fireNotification(any(MessageSource.class), any(MuleEvent.class), isNull(String.class),
-        any(FlowConstruct.class), eq(MESSAGE_RESPONSE));
+                                                         any(FlowConstruct.class), eq(MESSAGE_RESPONSE));
     verify(notificationHelper).fireNotification(any(MessageSource.class), any(MuleEvent.class), isNull(String.class),
-        any(FlowConstruct.class), eq(MESSAGE_ERROR_RESPONSE));
+                                                any(FlowConstruct.class), eq(MESSAGE_ERROR_RESPONSE));
   }
 
   private void verifyOnlySuccessfulWasCalled() {

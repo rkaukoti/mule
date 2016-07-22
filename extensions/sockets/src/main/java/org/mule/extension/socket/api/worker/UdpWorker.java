@@ -39,7 +39,7 @@ public final class UdpWorker extends SocketWorker {
   private final ObjectSerializer objectSerializer;
 
   public UdpWorker(DatagramSocket socket, DatagramPacket packet, ObjectSerializer objectSerializer,
-      MessageHandler<InputStream, SocketAttributes> messageHandler) {
+                   MessageHandler<InputStream, SocketAttributes> messageHandler) {
     super(messageHandler);
     this.socket = socket;
     this.packet = packet;
@@ -60,8 +60,8 @@ public final class UdpWorker extends SocketWorker {
           sendPacket.setSocketAddress(packet.getSocketAddress());
           socket.send(sendPacket);
         } catch (IOException e) {
-          exceptionCallback.onException(new IOException(
-              format("An error occurred while sending UDP packet to address '%s'", packet.getSocketAddress().toString(), e)));
+          exceptionCallback.onException(new IOException(format("An error occurred while sending UDP packet to address '%s'",
+                                                               packet.getSocketAddress().toString(), e)));
         }
       }
 

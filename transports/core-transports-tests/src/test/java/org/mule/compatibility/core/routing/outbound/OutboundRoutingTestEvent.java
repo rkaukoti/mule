@@ -109,7 +109,7 @@ public class OutboundRoutingTestEvent implements MuleEvent {
   @Override
   public String transformMessageToString() throws TransformerException {
     return new String((byte[]) transformMessage(DataType.BYTE_ARRAY),
-        message.getDataType().getMediaType().getCharset().orElse(getDefaultEncoding(getMuleContext())));
+                      message.getDataType().getMediaType().getCharset().orElse(getDefaultEncoding(getMuleContext())));
   }
 
   @Override

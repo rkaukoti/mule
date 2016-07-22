@@ -100,8 +100,8 @@ public class ExpressionFilter implements Filter, MuleContextAware {
     // class-loader to used is to switch it out here. We may want to consider
     // passing the class-loader to the ExpressionManager and only doing this for
     // certain ExpressionEvaluators further in.
-    return withContextClassLoader(expressionEvaluationClassLoader,
-        () -> muleContext.getExpressionManager().evaluateBoolean(getFullExpression(), event, nullReturnsTrue, !nullReturnsTrue));
+    return withContextClassLoader(expressionEvaluationClassLoader, () -> muleContext.getExpressionManager()
+        .evaluateBoolean(getFullExpression(), event, nullReturnsTrue, !nullReturnsTrue));
   }
 
   protected String getFullExpression() {

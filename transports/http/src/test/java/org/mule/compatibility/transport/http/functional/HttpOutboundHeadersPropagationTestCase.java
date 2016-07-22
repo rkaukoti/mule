@@ -36,8 +36,8 @@ public class HttpOutboundHeadersPropagationTestCase extends HttpFunctionalTestCa
   @Test
   public void outboundHttpContentTypeTest() throws Exception {
     MuleClient client = muleContext.getClient();
-    client.dispatch("vm://in",
-        MuleMessage.builder().payload("HelloWorld!").addOutboundProperty("custom-header", "value-custom-header").build());
+    client.dispatch("vm://in", MuleMessage.builder().payload("HelloWorld!")
+        .addOutboundProperty("custom-header", "value-custom-header").build());
 
     MuleMessage reply = client.request("vm://out", RECEIVE_TIMEOUT);
     Map<String, Object> headers = (Map<String, Object>) reply.getPayload();

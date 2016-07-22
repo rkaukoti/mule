@@ -163,8 +163,8 @@ public class DefaultMuleMessageBuilderTestCase extends AbstractMuleTestCase {
   @Test
   public void inboundPropertyMapCopy() {
     Map<String, Serializable> inboundProperties = singletonMap(PROPERTY_KEY, PROPERTY_VALUE);
-    MuleMessage copy = new DefaultMuleMessageBuilder(
-        new DefaultMuleMessageBuilder().payload(TEST_PAYLOAD).inboundProperties(inboundProperties).build()).build();
+    MuleMessage copy = new DefaultMuleMessageBuilder(new DefaultMuleMessageBuilder().payload(TEST_PAYLOAD)
+        .inboundProperties(inboundProperties).build()).build();
 
     assertThat(copy.getInboundProperty(PROPERTY_KEY), equalTo(PROPERTY_VALUE));
     assertThat(copy.getInboundPropertyDataType(PROPERTY_KEY), equalTo(STRING));
@@ -186,8 +186,8 @@ public class DefaultMuleMessageBuilderTestCase extends AbstractMuleTestCase {
   @Test
   public void outboundPropertyMapCopy() {
     Map<String, Serializable> outboundProperties = singletonMap(PROPERTY_KEY, PROPERTY_VALUE);
-    MuleMessage copy = new DefaultMuleMessageBuilder(
-        new DefaultMuleMessageBuilder().payload(TEST_PAYLOAD).outboundProperties(outboundProperties).build()).build();
+    MuleMessage copy = new DefaultMuleMessageBuilder(new DefaultMuleMessageBuilder().payload(TEST_PAYLOAD)
+        .outboundProperties(outboundProperties).build()).build();
 
     assertThat(copy.getOutboundProperty(PROPERTY_KEY), equalTo(PROPERTY_VALUE));
     assertThat(copy.getOutboundPropertyDataType(PROPERTY_KEY), equalTo(STRING));
@@ -254,8 +254,8 @@ public class DefaultMuleMessageBuilderTestCase extends AbstractMuleTestCase {
   public void inboundAttachmentMapCopy() {
     final DataHandler attachmentValue = new DataHandler(ATTACHMENT_VALUE, TEXT.toString());
     Map<String, DataHandler> inboundAttachments = singletonMap(ATTACHMENT_KEY, attachmentValue);
-    MuleMessage copy = new DefaultMuleMessageBuilder(
-        new DefaultMuleMessageBuilder().payload(TEST_PAYLOAD).inboundAttachments(inboundAttachments).build()).build();
+    MuleMessage copy = new DefaultMuleMessageBuilder(new DefaultMuleMessageBuilder().payload(TEST_PAYLOAD)
+        .inboundAttachments(inboundAttachments).build()).build();
 
     assertThat(copy.getInboundAttachment(ATTACHMENT_KEY), equalTo(attachmentValue));
     assertThat(copy.getInboundAttachmentNames(), hasSize(1));
@@ -277,8 +277,8 @@ public class DefaultMuleMessageBuilderTestCase extends AbstractMuleTestCase {
   public void outboundAttachmentMapCopy() {
     final DataHandler attachmentValue = new DataHandler(ATTACHMENT_VALUE, TEXT.toString());
     Map<String, DataHandler> outboundAttachments = singletonMap(ATTACHMENT_KEY, attachmentValue);
-    MuleMessage copy = new DefaultMuleMessageBuilder(
-        new DefaultMuleMessageBuilder().payload(TEST_PAYLOAD).outboundAttachments(outboundAttachments).build()).build();
+    MuleMessage copy = new DefaultMuleMessageBuilder(new DefaultMuleMessageBuilder().payload(TEST_PAYLOAD)
+        .outboundAttachments(outboundAttachments).build()).build();
 
     assertThat(copy.getOutboundAttachment(ATTACHMENT_KEY), equalTo(attachmentValue));
     assertThat(copy.getOutboundAttachmentNames(), hasSize(1));

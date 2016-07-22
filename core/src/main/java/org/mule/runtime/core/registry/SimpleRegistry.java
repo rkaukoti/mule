@@ -137,8 +137,9 @@ public class SimpleRegistry extends TransientRegistry implements LifecycleRegist
           field.set(object, dependency);
         }
       } catch (Exception e) {
-        throw new RuntimeException(
-            String.format("Could not inject dependency on field %s of type %s", field.getName(), object.getClass().getName()), e);
+        throw new RuntimeException(String.format("Could not inject dependency on field %s of type %s", field.getName(),
+                                                 object.getClass().getName()),
+                                   e);
       }
     }
 

@@ -119,8 +119,7 @@ public class SftpConnectionProvider extends AbstractFtpConnectionProvider<SftpFi
    * {@inheritDoc}
    */
   @Override
-  public ConnectionHandlingStrategy<SftpFileSystem> getHandlingStrategy(
-      ConnectionHandlingStrategyFactory<SftpFileSystem> handlingStrategyFactory) {
+  public ConnectionHandlingStrategy<SftpFileSystem> getHandlingStrategy(ConnectionHandlingStrategyFactory<SftpFileSystem> handlingStrategyFactory) {
     return handlingStrategyFactory.supportsPooling();
   }
 

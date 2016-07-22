@@ -44,8 +44,7 @@ public class AsyncMessageProcessorsFactoryBean extends AbstractAnnotatedObject
       } else if (processor instanceof MessageProcessorBuilder) {
         builder.chain((MessageProcessorBuilder) processor);
       } else {
-        throw new IllegalArgumentException(
-            "MessageProcessorBuilder should only have MessageProcessor's or MessageProcessorBuilder's configured");
+        throw new IllegalArgumentException("MessageProcessorBuilder should only have MessageProcessor's or MessageProcessorBuilder's configured");
       }
     }
     AsyncDelegateMessageProcessor delegate = new AsyncDelegateMessageProcessor(builder.build(), processingStrategy, name);

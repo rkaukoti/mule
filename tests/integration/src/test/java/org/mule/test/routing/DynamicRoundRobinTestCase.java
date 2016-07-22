@@ -63,15 +63,15 @@ public class DynamicRoundRobinTestCase extends DynamicRouterTestCase {
   public void testMultipleDynamicRouters() throws Exception {
     initCustomResolver();
     runFlowAndAssertResponse(MULTIPLE_ROUND_ROBIN, Collections.<String, Object>singletonMap(FIRST_ROUTER_VAR, FIRST_ROUTER),
-        LETTER_A);
+                             LETTER_A);
     runFlowAndAssertResponse(MULTIPLE_ROUND_ROBIN, Collections.<String, Object>singletonMap(FIRST_ROUTER_VAR, FIRST_ROUTER),
-        LETTER_B);
+                             LETTER_B);
     runFlowAndAssertResponse(MULTIPLE_ROUND_ROBIN, Collections.<String, Object>singletonMap(FIRST_ROUTER_VAR, !FIRST_ROUTER),
-        LETTER_A);
+                             LETTER_A);
     runFlowAndAssertResponse(MULTIPLE_ROUND_ROBIN, Collections.<String, Object>singletonMap(FIRST_ROUTER_VAR, FIRST_ROUTER),
-        LETTER_C);
+                             LETTER_C);
     runFlowAndAssertResponse(MULTIPLE_ROUND_ROBIN, Collections.<String, Object>singletonMap(FIRST_ROUTER_VAR, !FIRST_ROUTER),
-        LETTER_B);
+                             LETTER_B);
   }
 
   @Test

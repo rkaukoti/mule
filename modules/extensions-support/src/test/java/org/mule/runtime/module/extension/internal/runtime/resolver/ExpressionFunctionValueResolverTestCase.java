@@ -43,7 +43,7 @@ public class ExpressionFunctionValueResolverTestCase extends AbstractMuleContext
   @Test
   public void testEqualExpressionFunctions() {
     assertThat(INTEGER_EXPRESSION_FUNCTION,
-        is(equalTo(new ExpressionFunction(INTEGER_EXPRESSION, toMetadataType(Integer.class)))));
+               is(equalTo(new ExpressionFunction(INTEGER_EXPRESSION, toMetadataType(Integer.class)))));
   }
 
   @Test

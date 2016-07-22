@@ -50,11 +50,11 @@ public class MuleTransportsNamespaceHandler extends AbstractMuleNamespaceHandler
   public void init() {
     // Core
     registerBeanDefinitionParser("until-successful",
-        new ChildDefinitionParser("messageProcessor", EndpointDlqUntilSuccessful.class));
+                                 new ChildDefinitionParser("messageProcessor", EndpointDlqUntilSuccessful.class));
     registerBeanDefinitionParser("request-reply",
-        new ChildDefinitionParser("messageProcessor", SimpleAsyncEndpointRequestReplyRequester.class));
+                                 new ChildDefinitionParser("messageProcessor", SimpleAsyncEndpointRequestReplyRequester.class));
     registerBeanDefinitionParser("default-exception-strategy",
-        new ExceptionStrategyDefinitionParser(DefaultMessagingExceptionStrategy.class));
+                                 new ExceptionStrategyDefinitionParser(DefaultMessagingExceptionStrategy.class));
 
     // Endpoint elements
     registerBeanDefinitionParser("endpoint", new OrphanEndpointDefinitionParser(EndpointURIEndpointBuilder.class));
@@ -64,10 +64,12 @@ public class MuleTransportsNamespaceHandler extends AbstractMuleNamespaceHandler
     registerBeanDefinitionParser("response", new ResponseDefinitionParser());
 
     // Connector elements
-    registerBeanDefinitionParser("dispatcher-threading-profile", new ThreadingProfileDefinitionParser(
-        "dispatcherThreadingProfile", MuleProperties.OBJECT_DEFAULT_MESSAGE_DISPATCHER_THREADING_PROFILE));
-    registerBeanDefinitionParser("receiver-threading-profile", new ThreadingProfileDefinitionParser("receiverThreadingProfile",
-        MuleProperties.OBJECT_DEFAULT_MESSAGE_RECEIVER_THREADING_PROFILE));
+    registerBeanDefinitionParser("dispatcher-threading-profile",
+                                 new ThreadingProfileDefinitionParser("dispatcherThreadingProfile",
+                                                                      MuleProperties.OBJECT_DEFAULT_MESSAGE_DISPATCHER_THREADING_PROFILE));
+    registerBeanDefinitionParser("receiver-threading-profile",
+                                 new ThreadingProfileDefinitionParser("receiverThreadingProfile",
+                                                                      MuleProperties.OBJECT_DEFAULT_MESSAGE_RECEIVER_THREADING_PROFILE));
     registerBeanDefinitionParser("service-overrides", new ServiceOverridesDefinitionParser());
     registerBeanDefinitionParser("custom-connector", new MuleOrphanDefinitionParser(true));
 
@@ -77,7 +79,7 @@ public class MuleTransportsNamespaceHandler extends AbstractMuleNamespaceHandler
     // Scripting
     registerBeanDefinitionParser("component", new ComponentDelegatingDefinitionParser(DefaultJavaWithBindingComponent.class));
     registerBeanDefinitionParser("pooled-component",
-        new ComponentDelegatingDefinitionParser(PooledJavaWithBindingsComponent.class));
+                                 new ComponentDelegatingDefinitionParser(PooledJavaWithBindingsComponent.class));
     registerMuleBeanDefinitionParser("binding", new BindingDefinitionParser("interfaceBinding", DefaultInterfaceBinding.class));
 
     // Security
@@ -101,19 +103,20 @@ public class MuleTransportsNamespaceHandler extends AbstractMuleNamespaceHandler
     registerBeanDefinitionParser("simple-service", ssParser);
 
     registerBeanDefinitionParser("simple-client",
-        new MessageProcessorDefinitionParser(SimpleClientWithDecoupledEndpointFactoryBean.class));
+                                 new MessageProcessorDefinitionParser(SimpleClientWithDecoupledEndpointFactoryBean.class));
     registerBeanDefinitionParser("jaxws-client",
-        new MessageProcessorDefinitionParser(JaxWsClientWithDecoupledEndpointFactoryBean.class));
+                                 new MessageProcessorDefinitionParser(JaxWsClientWithDecoupledEndpointFactoryBean.class));
     registerBeanDefinitionParser("proxy-client",
-        new MessageProcessorDefinitionParser(ProxyClientWithDecoupledEndpointFactoryBean.class));
+                                 new MessageProcessorDefinitionParser(ProxyClientWithDecoupledEndpointFactoryBean.class));
 
     registerBeanDefinitionParser("wrapper-component", new ComponentDefinitionParser(WebServiceWrapperComponent.class));
 
     // Management
     registerBeanDefinitionParser("publish-notifications",
-        new DefaultNameMuleOrphanDefinitionParser(EndpointNotificationLoggerAgent.class));
-    MuleDefinitionParserConfiguration defaultJmxParser = registerMuleBeanDefinitionParser("jmx-default-config",
-        new DefaultNameMuleOrphanDefinitionParser(DefaultTransportJmxSupportAgent.class));
+                                 new DefaultNameMuleOrphanDefinitionParser(EndpointNotificationLoggerAgent.class));
+    MuleDefinitionParserConfiguration defaultJmxParser =
+        registerMuleBeanDefinitionParser("jmx-default-config",
+                                         new DefaultNameMuleOrphanDefinitionParser(DefaultTransportJmxSupportAgent.class));
     defaultJmxParser.addAlias("registerMx4jAdapter", "loadMx4jAgent");
     defaultJmxParser.addAlias("registerLog4j", "loadLog4jAgent");
   }

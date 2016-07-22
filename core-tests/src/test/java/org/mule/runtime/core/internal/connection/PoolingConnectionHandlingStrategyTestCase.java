@@ -140,8 +140,9 @@ public class PoolingConnectionHandlingStrategyTestCase extends AbstractMuleConte
 
   @Test(expected = ConnectionException.class)
   public void failDueToInvalidConnection() throws ConnectionException {
-    when(connectionProvider.validate(anyVararg())).thenReturn(ConnectionValidationResult.failure("Invalid username or password",
-        ConnectionExceptionCode.INCORRECT_CREDENTIALS, new Exception("401: UNAUTHORIZED")));
+    when(connectionProvider.validate(anyVararg())).thenReturn(ConnectionValidationResult
+        .failure("Invalid username or password", ConnectionExceptionCode.INCORRECT_CREDENTIALS,
+                 new Exception("401: UNAUTHORIZED")));
     strategy.getConnectionHandler().getConnection();
   }
 

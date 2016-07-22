@@ -66,15 +66,14 @@ public class UntilSuccessful extends AbstractOutboundRouter implements UntilSucc
   @Override
   public void initialise() throws InitialisationException {
     if (routes.isEmpty()) {
-      throw new InitialisationException(
-          MessageFactory.createStaticMessage("One message processor must be configured within UntilSuccessful."), this);
+      throw new InitialisationException(MessageFactory
+          .createStaticMessage("One message processor must be configured within UntilSuccessful."), this);
     }
 
     if (routes.size() > 1) {
-      throw new InitialisationException(
-          MessageFactory.createStaticMessage("Only one message processor is allowed within UntilSuccessful."
-              + " Use a Processor Chain to group several message processors into one."),
-          this);
+      throw new InitialisationException(MessageFactory
+          .createStaticMessage("Only one message processor is allowed within UntilSuccessful."
+              + " Use a Processor Chain to group several message processors into one."), this);
     }
 
     setWaitTime();
@@ -122,9 +121,8 @@ public class UntilSuccessful extends AbstractOutboundRouter implements UntilSucc
     if (deadLetterQueue instanceof MessageProcessor) {
       dlqMP = (MessageProcessor) deadLetterQueue;
     } else {
-      throw new InitialisationException(
-          MessageFactory.createStaticMessage("deadLetterQueue-ref is not a valid mesage processor: " + deadLetterQueue), null,
-          this);
+      throw new InitialisationException(MessageFactory
+          .createStaticMessage("deadLetterQueue-ref is not a valid mesage processor: " + deadLetterQueue), null, this);
     }
   }
 
@@ -132,12 +130,13 @@ public class UntilSuccessful extends AbstractOutboundRouter implements UntilSucc
     boolean hasSeconds = secondsBetweenRetries != null;
     boolean hasMillis = millisBetweenRetries != null;
 
-    Preconditions.checkArgument(!(hasSeconds && hasMillis),
-        "Can't specify millisBetweenRetries and secondsBetweenRetries properties at the same time. Please specify only one and remember that secondsBetweenRetries is deprecated.");
+    Preconditions
+        .checkArgument(!(hasSeconds && hasMillis),
+                       "Can't specify millisBetweenRetries and secondsBetweenRetries properties at the same time. Please specify only one and remember that secondsBetweenRetries is deprecated.");
 
     if (hasSeconds) {
-      logger.warn(
-          "You're using the secondsBetweenRetries in the until-successful router. That attribute was deprecated in favor of the new millisBetweenRetries."
+      logger
+          .warn("You're using the secondsBetweenRetries in the until-successful router. That attribute was deprecated in favor of the new millisBetweenRetries."
               + "Please consider updating your config since the old attribute will be removed in Mule 4");
 
       setMillisBetweenRetries(TimeUnit.SECONDS.toMillis(secondsBetweenRetries));
@@ -156,8 +155,8 @@ public class UntilSuccessful extends AbstractOutboundRouter implements UntilSucc
 
   @Override
   public ScheduledThreadPoolExecutor createScheduledRetriesPool(final String threadPrefix) {
-    return new ScheduledThreadPoolExecutor(1,
-        new NamedThreadFactory(threadPrefix + "_retries", Thread.currentThread().getContextClassLoader()));
+    return new ScheduledThreadPoolExecutor(1, new NamedThreadFactory(threadPrefix + "_retries",
+                                                                     Thread.currentThread().getContextClassLoader()));
   }
 
   @Override

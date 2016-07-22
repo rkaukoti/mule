@@ -57,7 +57,8 @@ public abstract class TransactedPollingMessageReceiver extends AbstractPollingMe
    */
   @Deprecated
   public TransactedPollingMessageReceiver(Connector connector, FlowConstruct flowConstruct, final InboundEndpoint endpoint,
-      long frequency) throws CreateException {
+                                          long frequency)
+      throws CreateException {
     this(connector, flowConstruct, endpoint);
     this.setFrequency(frequency);
   }
@@ -138,8 +139,9 @@ public abstract class TransactedPollingMessageReceiver extends AbstractPollingMe
           final CountDownLatch countdown = new CountDownLatch(messages.size());
           for (Object message : messages) {
             try {
-              this.getWorkManager().scheduleWork(
-                  new MessageProcessorWorker(pt, countdown, endpoint.getMuleContext().getExceptionListener(), message));
+              this.getWorkManager()
+                  .scheduleWork(new MessageProcessorWorker(pt, countdown, endpoint.getMuleContext().getExceptionListener(),
+                                                           message));
             } catch (Exception e) {
               countdown.countDown();
               throw e;
@@ -174,7 +176,7 @@ public abstract class TransactedPollingMessageReceiver extends AbstractPollingMe
     private final SystemExceptionHandler exceptionHandler;
 
     public MessageProcessorWorker(ExecutionTemplate<MuleEvent> pt, CountDownLatch latch, SystemExceptionHandler exceptionHandler,
-        Object message) {
+                                  Object message) {
       this.pt = pt;
       this.message = message;
       this.latch = latch;

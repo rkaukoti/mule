@@ -93,8 +93,8 @@ public class MetadataKeyIdObjectResolverTestCase {
   @Test
   public void failToResolveWithNotInstantiableKey() throws MetadataResolvingException {
     exception.expect(MetadataResolvingException.class);
-    exception.expectMessage(
-        is("MetadataKey object of type 'NotInstantiableClass' from the component 'SomeOperation' could not be instantiated"));
+    exception
+        .expectMessage(is("MetadataKey object of type 'NotInstantiableClass' from the component 'SomeOperation' could not be instantiated"));
     exception.expectCause(is(instanceOf(NoSuchMethodException.class)));
 
     setParameters(continentParam, countryParam, cityParam);
@@ -128,8 +128,8 @@ public class MetadataKeyIdObjectResolverTestCase {
   @Test
   public void failToResolveWithMultipleChildren() throws MetadataResolvingException {
     exception.expect(MetadataResolvingException.class);
-    exception.expectMessage(
-        is("MetadataKey used for Metadata resolution must only have one child per level. Key 'USA' has [SFO, NY] as children."));
+    exception
+        .expectMessage(is("MetadataKey used for Metadata resolution must only have one child per level. Key 'USA' has [SFO, NY] as children."));
 
     final MetadataKey invalidMetadataKey = newKey(AMERICA, CONTINENT)
         .withChild(newKey(USA, COUNTRY).withChild(newKey(SFO, CITY)).withChild(newKey(NY, CITY))).build();
@@ -142,8 +142,8 @@ public class MetadataKeyIdObjectResolverTestCase {
   @Test
   public void failToResolveWithInvalidKeyIdParam() throws MetadataResolvingException {
     exception.expect(MetadataResolvingException.class);
-    exception.expectMessage(is(
-        "'Boolean' type is invalid for MetadataKeyId parameters, use String type instead. Affecting component: 'SomeOperation'"));
+    exception
+        .expectMessage(is("'Boolean' type is invalid for MetadataKeyId parameters, use String type instead. Affecting component: 'SomeOperation'"));
 
     setParameters(continentParam);
     setMetadataKeyIdModelProperty(Boolean.class);

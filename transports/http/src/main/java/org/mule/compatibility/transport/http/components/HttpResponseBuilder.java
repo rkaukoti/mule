@@ -126,8 +126,8 @@ public class HttpResponseBuilder extends AbstractMessageProcessorOwner
   private void copyCorrelationIdProperties(HttpResponse response, MuleMessage message) {
     message.getCorrelation().getId().ifPresent(v -> {
       response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_ID_PROPERTY, v));
-      message.getCorrelation().getGroupSize().ifPresent(
-          s -> response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_GROUP_SIZE_PROPERTY, valueOf(s))));
+      message.getCorrelation().getGroupSize().ifPresent(s -> response
+          .setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_GROUP_SIZE_PROPERTY, valueOf(s))));
       message.getCorrelation().getSequence()
           .ifPresent(s -> response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_SEQUENCE_PROPERTY, valueOf(s))));
     });
@@ -209,8 +209,8 @@ public class HttpResponseBuilder extends AbstractMessageProcessorOwner
       for (CookieWrapper cookie : cookies) {
         try {
           cookie.parse(event, muleContext.getExpressionManager());
-          response.addHeader(
-              new Header(HttpConstants.HEADER_COOKIE_SET, CookieHelper.formatCookieForASetCookieHeader(cookie.createCookie())));
+          response.addHeader(new Header(HttpConstants.HEADER_COOKIE_SET,
+                                        CookieHelper.formatCookieForASetCookieHeader(cookie.createCookie())));
 
         } catch (Exception e) {
           throw new DefaultMuleException(e);

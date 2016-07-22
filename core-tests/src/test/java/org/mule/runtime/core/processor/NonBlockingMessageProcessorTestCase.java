@@ -60,7 +60,7 @@ public class NonBlockingMessageProcessorTestCase extends AbstractMuleContextTest
     Flow flow = MuleTestUtils.getTestFlow(muleContext);
     flow.setProcessingStrategy(new NonBlockingProcessingStrategy());
     return new DefaultMuleEvent(MuleMessage.builder().payload(TEST_MESSAGE).build(), MessageExchangePattern.REQUEST_RESPONSE,
-        new SensingNullReplyToHandler(), flow);
+                                new SensingNullReplyToHandler(), flow);
   }
 
   private class TestNonBlockingProcessor extends AbstractNonBlockingMessageProcessor {

@@ -209,9 +209,8 @@ public class MessageAttachmentsTestCase extends AbstractELTestCase {
 
   @Test
   public void inboundPutAll() throws Exception {
-    assertUnsupportedOperation(
-        "message.inboundAttachments.putAll(['foo': new DataHandler(new URL('http://val1')),'bar': new DataHandler(new URL('http://val2'))])",
-        event);
+    assertUnsupportedOperation("message.inboundAttachments.putAll(['foo': new DataHandler(new URL('http://val1')),'bar': new DataHandler(new URL('http://val2'))])",
+                               event);
   }
 
   @Test
@@ -320,9 +319,8 @@ public class MessageAttachmentsTestCase extends AbstractELTestCase {
   public void outboundPutAll() throws Exception {
     MuleEvent event = getTestEvent("");
     MuleMessage message = event.getMessage();
-    evaluate(
-        "message.outboundAttachments.putAll(['foo': new DataHandler(new URL('http://val1')),'bar': new DataHandler(new URL('http://val2'))])",
-        event);
+    evaluate("message.outboundAttachments.putAll(['foo': new DataHandler(new URL('http://val1')),'bar': new DataHandler(new URL('http://val2'))])",
+             event);
     assertEquals(DataHandler.class, ((DataHandler) evaluate("message.outboundAttachments['foo']", event)).getClass());
     assertEquals(DataHandler.class, evaluate("message.outboundAttachments['bar']", event).getClass());
   }

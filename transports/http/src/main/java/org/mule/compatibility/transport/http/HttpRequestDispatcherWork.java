@@ -60,8 +60,9 @@ public class HttpRequestDispatcherWork implements Runnable, Expirable {
               HttpMessageReceiver httpMessageReceiver = httpConnector.lookupReceiver(socket, requestLine);
               httpMessageReceiver.processRequest(httpServerConnection);
             } catch (NoReceiverForEndpointException e) {
-              httpServerConnection.writeFailureResponse(HttpConstants.SC_NOT_FOUND,
-                  HttpMessages.cannotBindToAddress(httpServerConnection.getFullUri()).toString());
+              httpServerConnection
+                  .writeFailureResponse(HttpConstants.SC_NOT_FOUND,
+                                        HttpMessages.cannotBindToAddress(httpServerConnection.getFullUri()).toString());
             }
           }
         } finally {

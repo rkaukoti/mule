@@ -71,7 +71,7 @@ public class MuleRegistryHelperTestCase extends AbstractMuleContextTestCase {
     Scheduler scheduler = scheduler();
     register(scheduler);
     assertEquals(scheduler,
-        muleContext.getRegistry().lookupScheduler(s -> s.equalsIgnoreCase("schedulerName")).iterator().next());
+                 muleContext.getRegistry().lookupScheduler(s -> s.equalsIgnoreCase("schedulerName")).iterator().next());
   }
 
   @Test

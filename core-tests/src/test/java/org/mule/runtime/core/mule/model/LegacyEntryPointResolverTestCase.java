@@ -146,8 +146,8 @@ public class LegacyEntryPointResolverTestCase extends AbstractMuleContextTestCas
 
     // those are usually set on the endpoint and copied over to the message
     MuleEvent event = RequestContext.getEventContext().getEvent();
-    event.setMessage(
-        MuleMessage.builder(event.getMessage()).addOutboundProperty(METHOD_PROPERTY_NAME, INVALID_METHOD_NAME).build());
+    event.setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty(METHOD_PROPERTY_NAME, INVALID_METHOD_NAME)
+        .build());
 
     Apple apple = new Apple();
     apple.setAppleCleaner(new FruitCleaner() {

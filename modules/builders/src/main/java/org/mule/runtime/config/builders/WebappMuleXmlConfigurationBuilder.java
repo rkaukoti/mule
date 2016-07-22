@@ -85,10 +85,10 @@ public class WebappMuleXmlConfigurationBuilder extends SpringXmlConfigurationBui
 
   @Override
   protected ApplicationContext doCreateApplicationContext(MuleContext muleContext, ConfigResource[] artifactConfigResources,
-      OptionalObjectsController optionalObjectsController) {
+                                                          OptionalObjectsController optionalObjectsController) {
     Resource[] artifactConfigServletContextResources = preProcessResources(artifactConfigResources);
     return new MuleArtifactContext(muleContext, artifactConfigServletContextResources, optionalObjectsController, emptyMap(),
-        APP);
+                                   APP);
   }
 
   private Resource[] preProcessResources(ConfigResource[] configResources) {
@@ -113,8 +113,8 @@ public class WebappMuleXmlConfigurationBuilder extends SpringXmlConfigurationBui
       // "classpath*:beanRefContext.xml"
       BeanFactoryLocator locator = ContextSingletonBeanFactoryLocator.getInstance(locatorFactorySelector);
       if (logger.isDebugEnabled()) {
-        logger.debug(
-            "Getting parent context definition: using parent context key of '" + parentContextKey + "' with BeanFactoryLocator");
+        logger.debug("Getting parent context definition: using parent context key of '" + parentContextKey
+            + "' with BeanFactoryLocator");
       }
       parentContext = (ApplicationContext) locator.useBeanFactory(parentContextKey).getFactory();
     }

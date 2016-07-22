@@ -66,14 +66,14 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase {
 
 
   public HttpProxyTemplateTestCase(String configFile, String requestThreadNameSubString, String responeThreadNameSubString,
-      boolean nonBlocking) {
+                                   boolean nonBlocking) {
     this.configFile = configFile;
     this.requestThreadNameSubString = requestThreadNameSubString;
     this.responeThreadNameSubString = responeThreadNameSubString;
     this.nonBlocking = nonBlocking;
     if (nonBlocking) {
       systemProperty = new SystemProperty(MuleProperties.MULE_DEFAULT_PROCESSING_STRATEGY,
-          ProcessingStrategyUtils.NON_BLOCKING_PROCESSING_STRATEGY);
+                                          ProcessingStrategyUtils.NON_BLOCKING_PROCESSING_STRATEGY);
     }
   }
 
@@ -161,7 +161,8 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase {
 
       @Override
       public void handleRequest(org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request,
-          HttpServletResponse response) throws IOException {
+                                HttpServletResponse response)
+          throws IOException {
         extractHeadersFromBaseRequest(baseRequest);
 
         latch.release();
@@ -308,7 +309,8 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase {
   }
 
   protected void handleRequest(org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request,
-      HttpServletResponse response) throws IOException {
+                               HttpServletResponse response)
+      throws IOException {
     if (consumeAllRequest) {
       extractBaseRequestParts(baseRequest);
     }
@@ -330,7 +332,8 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase {
 
     @Override
     public void handleRequest(org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request,
-        HttpServletResponse response) throws IOException {
+                              HttpServletResponse response)
+        throws IOException {
       response.setContentType(request.getContentType());
       response.setStatus(HttpServletResponse.SC_OK);
       response.getWriter().print(selectRequestPartToReturn(baseRequest));

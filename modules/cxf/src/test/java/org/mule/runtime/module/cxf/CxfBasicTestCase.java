@@ -57,7 +57,7 @@ public class CxfBasicTestCase extends FunctionalTestCase {
     MuleClient client = muleContext.getClient();
     InputStream xml = getClass().getResourceAsStream("/direct/direct-request.xml");
     MuleMessage result = client.send("http://localhost:" + dynamicPort.getNumber() + "/services/Echo",
-        MuleMessage.builder().payload(xml).mediaType(APP_SOAP_XML).build(), HTTP_REQUEST_OPTIONS);
+                                     MuleMessage.builder().payload(xml).mediaType(APP_SOAP_XML).build(), HTTP_REQUEST_OPTIONS);
     assertTrue(getPayloadAsString(result).contains("Hello!"));
     String ct = result.getDataType().getMediaType().toRfcString();
     assertEquals("text/xml; charset=UTF-8", ct);
@@ -67,7 +67,7 @@ public class CxfBasicTestCase extends FunctionalTestCase {
   public void testEchoWsdl() throws Exception {
     MuleClient client = muleContext.getClient();
     MuleMessage result = client.send("http://localhost:" + dynamicPort.getNumber() + "/services/Echo" + "?wsdl",
-        MuleMessage.builder().nullPayload().build(), HTTP_REQUEST_OPTIONS);
+                                     MuleMessage.builder().nullPayload().build(), HTTP_REQUEST_OPTIONS);
     assertNotNull(result.getPayload());
     XMLUnit.compareXML(echoWsdl, getPayloadAsString(result));
   }

@@ -48,14 +48,15 @@ public abstract class AbstractUntilSuccessfulProcessingStrategy implements Until
 
     final MuleMessage msg = returnEvent.getMessage();
     if (msg == null) {
-      throw new MuleRuntimeException(MessageFactory.createStaticMessage(
-          "No message found in response to processing, which is therefore considered failed for event: " + event));
+      throw new MuleRuntimeException(MessageFactory
+          .createStaticMessage("No message found in response to processing, which is therefore considered failed for event: "
+              + event));
     }
 
     final boolean errorDetected = untilSuccessfulConfiguration.getFailureExpressionFilter().accept(returnEvent);
     if (errorDetected) {
-      throw new MuleRuntimeException(
-          MessageFactory.createStaticMessage("Failure expression positive when processing event: " + event));
+      throw new MuleRuntimeException(MessageFactory
+          .createStaticMessage("Failure expression positive when processing event: " + event));
     }
     return returnEvent;
   }
@@ -113,7 +114,7 @@ public abstract class AbstractUntilSuccessfulProcessingStrategy implements Until
       }
     } catch (final Exception e) {
       throw new MessagingException(MessageFactory.createStaticMessage("Failed to prepare message for processing"), event, e,
-          getUntilSuccessfulConfiguration().getRouter());
+                                   getUntilSuccessfulConfiguration().getRouter());
     }
   }
 

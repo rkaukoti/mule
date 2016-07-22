@@ -84,7 +84,7 @@ public abstract class AbstractAddVariablePropertyTransformerTestCase extends Abs
 
     verifyAdded(event, PLAIN_STRING_KEY, PLAIN_STRING_VALUE);
     assertThat(getVariableDataType(event, PLAIN_STRING_KEY),
-        like(String.class, MediaType.ANY, getDefaultEncoding(mockMuleContext)));
+               like(String.class, MediaType.ANY, getDefaultEncoding(mockMuleContext)));
   }
 
   @Test
@@ -96,7 +96,7 @@ public abstract class AbstractAddVariablePropertyTransformerTestCase extends Abs
 
     verifyAdded(event, PLAIN_STRING_KEY, EXPRESSION_VALUE);
     assertThat(getVariableDataType(event, PLAIN_STRING_KEY),
-        like(String.class, MediaType.ANY, getDefaultEncoding(mockMuleContext)));
+               like(String.class, MediaType.ANY, getDefaultEncoding(mockMuleContext)));
   }
 
   @Test
@@ -108,7 +108,7 @@ public abstract class AbstractAddVariablePropertyTransformerTestCase extends Abs
 
     verifyAdded(event, EXPRESSION_VALUE, PLAIN_STRING_VALUE);
     assertThat(getVariableDataType(event, EXPRESSION_VALUE),
-        like(String.class, MediaType.ANY, getDefaultEncoding(mockMuleContext)));
+               like(String.class, MediaType.ANY, getDefaultEncoding(mockMuleContext)));
   }
 
   @Test
@@ -133,7 +133,7 @@ public abstract class AbstractAddVariablePropertyTransformerTestCase extends Abs
 
     verifyAdded(event, PLAIN_STRING_KEY, PLAIN_STRING_VALUE);
     assertThat(getVariableDataType(event, PLAIN_STRING_KEY),
-        like(String.class, APPLICATION_XML, getDefaultEncoding(mockMuleContext)));
+               like(String.class, APPLICATION_XML, getDefaultEncoding(mockMuleContext)));
   }
 
   protected abstract DataType getVariableDataType(MuleEvent event, String key);

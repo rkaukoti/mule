@@ -86,7 +86,7 @@ public abstract class AbstractFileSystem implements FileSystem {
    */
   @Override
   public TreeNode list(FileConnectorConfig config, String directoryPath, boolean recursive, MuleMessage message,
-      Predicate<FileAttributes> matcher) {
+                       Predicate<FileAttributes> matcher) {
     return getListCommand().list(config, directoryPath, recursive, message, matcher);
   }
 
@@ -95,7 +95,7 @@ public abstract class AbstractFileSystem implements FileSystem {
    */
   @Override
   public OperationResult<InputStream, FileAttributes> read(FileConnectorConfig config, MuleMessage message, String filePath,
-      boolean lock) {
+                                                           boolean lock) {
     return getReadCommand().read(config, message, filePath, lock);
   }
 
@@ -104,7 +104,7 @@ public abstract class AbstractFileSystem implements FileSystem {
    */
   @Override
   public void write(FileConnectorConfig config, String filePath, Object content, FileWriteMode mode, MuleEvent event,
-      boolean lock, boolean createParentDirectories, String encoding) {
+                    boolean lock, boolean createParentDirectories, String encoding) {
     getWriteCommand().write(config, filePath, content, mode, event, lock, createParentDirectories, encoding);
   }
 
@@ -113,7 +113,7 @@ public abstract class AbstractFileSystem implements FileSystem {
    */
   @Override
   public void copy(FileConnectorConfig config, String sourcePath, String targetDirectory, boolean overwrite,
-      boolean createParentDirectories, MuleEvent event) {
+                   boolean createParentDirectories, MuleEvent event) {
     getCopyCommand().copy(config, sourcePath, targetDirectory, overwrite, createParentDirectories, event);
   }
 
@@ -122,7 +122,7 @@ public abstract class AbstractFileSystem implements FileSystem {
    */
   @Override
   public void move(FileConnectorConfig config, String sourcePath, String targetDirectory, boolean overwrite,
-      boolean createParentDirectories) {
+                   boolean createParentDirectories) {
     getMoveCommand().move(config, sourcePath, targetDirectory, overwrite, createParentDirectories);
   }
 

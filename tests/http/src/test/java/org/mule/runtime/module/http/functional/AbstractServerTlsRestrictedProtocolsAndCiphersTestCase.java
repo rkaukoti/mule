@@ -58,7 +58,7 @@ public abstract class AbstractServerTlsRestrictedProtocolsAndCiphersTestCase ext
     final CountDownLatch latch = new CountDownLatch(1);
 
     SSLSocket socket = createSocket(new String[] {SERVER_CIPHER_SUITE_ENABLED, SERVER_CIPHER_SUITE_DISABLED},
-        new String[] {SERVER_PROTOCOL_ENABLED, SERVER_PROTOCOL_DISABLED});
+                                    new String[] {SERVER_PROTOCOL_ENABLED, SERVER_PROTOCOL_DISABLED});
 
     socket.addHandshakeCompletedListener(handshakeCompletedEvent -> latch.countDown());
 

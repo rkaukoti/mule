@@ -68,7 +68,7 @@ public class TrackingWorkManager implements WorkManager {
 
     if (logger.isDebugEnabled()) {
       logger.debug(String.format("Stop waiting for works completion. There are %s works unfinished works",
-          workTracker.pendingWorks().size()));
+                                 workTracker.pendingWorks().size()));
     }
 
     workTracker.dispose();
@@ -138,7 +138,7 @@ public class TrackingWorkManager implements WorkManager {
 
       TrackeableWork trackeableWork = new TrackeableWork(work);
       return delegateHolder.getWorkManager().startWork(trackeableWork, startTimeout, execContext,
-          workListenerWrapperFactory.create(work, workListener));
+                                                       workListenerWrapperFactory.create(work, workListener));
     } catch (WorkException e) {
       workTracker.removeWork(work);
       throw e;
@@ -174,7 +174,7 @@ public class TrackingWorkManager implements WorkManager {
       TrackeableWork trackeableWork = new TrackeableWork(work);
 
       delegateHolder.getWorkManager().scheduleWork(trackeableWork, startTimeout, execContext,
-          workListenerWrapperFactory.create(work, workListener));
+                                                   workListenerWrapperFactory.create(work, workListener));
     } catch (WorkException e) {
       workTracker.removeWork(work);
       throw e;

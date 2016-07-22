@@ -66,7 +66,7 @@ public class SubtypesModelValidatorTestCase extends AbstractMuleTestCase {
   public void invalidNotSubtypesOfBaseType() {
     Map<MetadataType, List<MetadataType>> subtypes = new HashMap<>();
     subtypes.put(toMetadataType(BaseCustomInterface.class),
-        asList(toMetadataType(AbstractPojo.class), toMetadataType(CustomInterface.class)));
+                 asList(toMetadataType(AbstractPojo.class), toMetadataType(CustomInterface.class)));
 
     when(extensionModel.getModelProperty(SubTypesModelProperty.class))
         .thenReturn(Optional.of(new SubTypesModelProperty(subtypes)));

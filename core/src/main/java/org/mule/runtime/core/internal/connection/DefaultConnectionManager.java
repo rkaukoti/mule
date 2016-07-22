@@ -161,8 +161,7 @@ public final class DefaultConnectionManager implements ConnectionManagerAdapter,
     }
   }
 
-  private <Connection> ConnectionHandlingStrategyAdapter<Connection> getManagementStrategy(
-      ConnectionProvider<Connection> connectionProvider) {
+  private <Connection> ConnectionHandlingStrategyAdapter<Connection> getManagementStrategy(ConnectionProvider<Connection> connectionProvider) {
     PoolingProfile poolingProfile;
     if (connectionProvider instanceof ConnectionProviderWrapper) {
       poolingProfile = ((ConnectionProviderWrapper) connectionProvider).getPoolingProfile().orElse(getDefaultPoolingProfile());

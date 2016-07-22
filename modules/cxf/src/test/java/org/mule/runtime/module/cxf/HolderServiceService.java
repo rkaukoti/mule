@@ -30,8 +30,8 @@ public class HolderServiceService extends Service {
     try {
       url = new URL("echoHolder.wsdl");
     } catch (MalformedURLException e) {
-      java.util.logging.Logger.getLogger(HolderServiceService.class.getName()).log(java.util.logging.Level.INFO,
-          "Can not initialize the default wsdl from {0}", "echoHolder.wsdl");
+      java.util.logging.Logger.getLogger(HolderServiceService.class.getName())
+          .log(java.util.logging.Level.INFO, "Can not initialize the default wsdl from {0}", "echoHolder.wsdl");
     }
     WSDL_LOCATION = url;
   }

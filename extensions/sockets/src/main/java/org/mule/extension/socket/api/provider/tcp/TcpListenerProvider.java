@@ -108,8 +108,7 @@ public final class TcpListenerProvider implements ConnectionProvider<TcpListener
    * {@inheritDoc}
    */
   @Override
-  public ConnectionHandlingStrategy<TcpListenerConnection> getHandlingStrategy(
-      ConnectionHandlingStrategyFactory<TcpListenerConnection> handlingStrategyFactory) {
+  public ConnectionHandlingStrategy<TcpListenerConnection> getHandlingStrategy(ConnectionHandlingStrategyFactory<TcpListenerConnection> handlingStrategyFactory) {
     return handlingStrategyFactory.none();
   }
 
@@ -117,7 +116,7 @@ public final class TcpListenerProvider implements ConnectionProvider<TcpListener
   public void initialise() throws InitialisationException {
     if (tlsContext != null && !tlsContext.isKeyStoreConfigured()) {
       throw new InitialisationException(CoreMessages.createStaticMessage("KeyStore must be configured for server side SSL"),
-          this);
+                                        this);
     }
 
     initialiseIfNeeded(tlsContext);

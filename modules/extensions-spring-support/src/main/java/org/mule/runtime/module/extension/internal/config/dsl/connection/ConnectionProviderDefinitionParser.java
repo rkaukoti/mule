@@ -34,7 +34,8 @@ public final class ConnectionProviderDefinitionParser extends ExtensionDefinitio
   private final DslElementDeclaration connectionDsl;
 
   public ConnectionProviderDefinitionParser(Builder definition, ConnectionProviderModel providerModel,
-      DslElementResolver dslElementResolver, MuleContext muleContext, ExtensionParsingContext parsingContext) {
+                                            DslElementResolver dslElementResolver, MuleContext muleContext,
+                                            ExtensionParsingContext parsingContext) {
     super(definition, dslElementResolver, parsingContext);
     this.providerModel = providerModel;
     this.muleContext = muleContext;

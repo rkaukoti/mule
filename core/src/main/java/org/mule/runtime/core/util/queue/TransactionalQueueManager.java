@@ -43,7 +43,7 @@ public class TransactionalQueueManager extends AbstractQueueManager {
   @Override
   public synchronized QueueSession getQueueSession() {
     return new TransactionalQueueSession(this, queueXaResourceManager, queueXaResourceManager, xaTransactionRecoverer,
-        localTxTransactionJournal, getMuleContext());
+                                         localTxTransactionJournal, getMuleContext());
   }
 
   protected DefaultQueueStore createQueueStore(String name, QueueConfiguration config) {
@@ -61,10 +61,10 @@ public class TransactionalQueueManager extends AbstractQueueManager {
     String workingDirectory = getMuleContext().getConfiguration().getWorkingDirectory();
     int queueTransactionFilesSizeInMegabytes = getMuleContext().getConfiguration().getMaxQueueTransactionFilesSizeInMegabytes();
     localTxTransactionJournal = new LocalTxQueueTransactionJournal(workingDirectory + File.separator + "queue-tx-log",
-        getMuleContext(), queueTransactionFilesSizeInMegabytes);
+                                                                   getMuleContext(), queueTransactionFilesSizeInMegabytes);
     localTxQueueTransactionRecoverer = new LocalTxQueueTransactionRecoverer(localTxTransactionJournal, this);
     xaTransactionJournal = new XaTxQueueTransactionJournal(workingDirectory + File.separator + "queue-xa-tx-log",
-        getMuleContext(), queueTransactionFilesSizeInMegabytes);
+                                                           getMuleContext(), queueTransactionFilesSizeInMegabytes);
     xaTransactionRecoverer = new XaTransactionRecoverer(xaTransactionJournal, this);
   }
 

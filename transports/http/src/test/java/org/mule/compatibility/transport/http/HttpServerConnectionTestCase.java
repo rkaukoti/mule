@@ -119,8 +119,12 @@ public class HttpServerConnectionTestCase extends AbstractMuleContextEndpointTes
   }
 
   private void configureValidRequestForSocketInputStream() throws IOException {
-    when(mockSocket.getInputStream()).thenReturn(new ByteArrayInputStream(String.format("GET %s HTTP/1.1\n\nGET %s HTTP/1.1\n",
-        "/service/order?param1=value1&param2=value2", "/?param1=value1&param2=value2").getBytes()));
+    when(mockSocket
+        .getInputStream()).thenReturn(
+                                      new ByteArrayInputStream(String
+                                          .format("GET %s HTTP/1.1\n\nGET %s HTTP/1.1\n",
+                                                  "/service/order?param1=value1&param2=value2", "/?param1=value1&param2=value2")
+                                          .getBytes()));
   }
 
   @Test

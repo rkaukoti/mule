@@ -47,7 +47,7 @@ public class LocatedMuleExceptionTestCase extends AbstractMuleContextTestCase {
 
     LocatedMuleException lme = new LocatedMuleException(annotated);
     assertThat(lme.getInfo().get(LocatedMuleException.INFO_LOCATION_KEY).toString(),
-        is("Mock@1 @ app:muleApp.xml:10 (Mock Component)"));
+               is("Mock@1 @ app:muleApp.xml:10 (Mock Component)"));
   }
 
   @Test
@@ -61,7 +61,7 @@ public class LocatedMuleExceptionTestCase extends AbstractMuleContextTestCase {
 
     LocatedMuleException lme = new LocatedMuleException(namedAnnotated);
     assertThat(lme.getInfo().get(LocatedMuleException.INFO_LOCATION_KEY).toString(),
-        is("/mockComponent @ app:muleConfig.xml:6 (Mock Component)"));
+               is("/mockComponent @ app:muleConfig.xml:6 (Mock Component)"));
   }
 
   @Test

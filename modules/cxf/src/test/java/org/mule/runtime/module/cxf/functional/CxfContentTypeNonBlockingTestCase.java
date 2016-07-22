@@ -36,7 +36,7 @@ public class CxfContentTypeNonBlockingTestCase extends FunctionalTestCase {
     MuleMessage request = MuleMessage.builder().payload(requestPayload).build();
     MuleClient client = muleContext.getClient();
     MuleMessage received = client.send("http://localhost:" + dynamicPort.getNumber() + "/hello", request,
-        newOptions().method(POST.name()).disableStatusCodeValidation().build());
+                                       newOptions().method(POST.name()).disableStatusCodeValidation().build());
     String contentType = received.getDataType().getMediaType().toRfcString();
     assertNotNull(contentType);
     assertTrue(contentType.contains("charset"));
@@ -47,7 +47,7 @@ public class CxfContentTypeNonBlockingTestCase extends FunctionalTestCase {
     MuleMessage request = MuleMessage.builder().payload("hello").build();
     MuleClient client = muleContext.getClient();
     MuleMessage received = client.send("http://localhost:" + dynamicPort.getNumber() + "/helloClient", request,
-        newOptions().method(POST.name()).disableStatusCodeValidation().build());
+                                       newOptions().method(POST.name()).disableStatusCodeValidation().build());
     String contentType = received.getInboundProperty("contentType");
     assertNotNull(contentType);
     assertTrue(contentType.contains("charset"));
@@ -59,7 +59,7 @@ public class CxfContentTypeNonBlockingTestCase extends FunctionalTestCase {
     MuleMessage request = MuleMessage.builder().payload("hello").build();
     MuleClient client = muleContext.getClient();
     MuleMessage received = client.send("http://localhost:" + dynamicPort.getNumber() + "/helloClientProxy", request,
-        newOptions().method(POST.name()).disableStatusCodeValidation().build());
+                                       newOptions().method(POST.name()).disableStatusCodeValidation().build());
     String contentType = received.getInboundProperty("contentType");
     assertNotNull(contentType);
     assertTrue(contentType.contains("charset"));

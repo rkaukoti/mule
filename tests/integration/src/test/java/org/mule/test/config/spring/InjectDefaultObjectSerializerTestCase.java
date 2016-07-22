@@ -51,7 +51,7 @@ public class InjectDefaultObjectSerializerTestCase extends FunctionalTestCase {
         muleContext.getInjector().inject(new TestObjectSerializerInjectionTarget());
     assertThat(muleContext.getObjectSerializer(), is(sameInstance(injectionTarget.getObjectSerializer())));
     assertThat(injectionTarget.getObjectSerializer(),
-        is(sameInstance(muleContext.getRegistry().get(MuleProperties.OBJECT_SERIALIZER))));
+               is(sameInstance(muleContext.getRegistry().get(MuleProperties.OBJECT_SERIALIZER))));
   }
 
   public static class TestObjectSerializerInjectionTarget {

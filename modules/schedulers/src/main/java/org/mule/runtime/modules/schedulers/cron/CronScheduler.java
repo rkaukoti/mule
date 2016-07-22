@@ -191,7 +191,7 @@ public class CronScheduler extends PollScheduler<PollingWorker> implements MuleC
     factoryProperties.setProperty(QUARTZ_INSTANCE_NAME_PROPERTY, context.getConfiguration().getId() + "-" + name);
     factoryProperties.setProperty(THREAD_POLL_CLASS_PROPERTY, THREAD_POLL_CLASS);
     factoryProperties.setProperty(THREAD_POOL_COUNT_PROPERTY,
-        String.valueOf(context.getDefaultMessageReceiverThreadingProfile().getMaxThreadsActive()));
+                                  String.valueOf(context.getDefaultMessageReceiverThreadingProfile().getMaxThreadsActive()));
     return factoryProperties;
   }
 

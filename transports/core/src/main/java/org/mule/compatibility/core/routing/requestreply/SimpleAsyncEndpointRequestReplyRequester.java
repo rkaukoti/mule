@@ -25,8 +25,7 @@ public class SimpleAsyncEndpointRequestReplyRequester extends SimpleAsyncRequest
   @Override
   protected void verifyReplyMessageSource(MessageSource messageSource) {
     if (!(messageSource instanceof InboundEndpoint)) {
-      throw new IllegalArgumentException(
-          "Only an InboundEndpoint reply MessageSource is supported with SimpleAsyncEndpointRequestReplyRequester");
+      throw new IllegalArgumentException("Only an InboundEndpoint reply MessageSource is supported with SimpleAsyncEndpointRequestReplyRequester");
     }
   }
 

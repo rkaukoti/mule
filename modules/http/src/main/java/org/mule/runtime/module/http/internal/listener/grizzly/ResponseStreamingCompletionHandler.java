@@ -39,9 +39,9 @@ public class ResponseStreamingCompletionHandler extends BaseResponseCompletionHa
   private volatile boolean isDone;
 
   public ResponseStreamingCompletionHandler(final FilterChainContext ctx, final HttpRequestPacket request,
-      final HttpResponse httpResponse, ResponseStatusCallback responseStatusCallback) {
+                                            final HttpResponse httpResponse, ResponseStatusCallback responseStatusCallback) {
     Preconditions.checkArgument((httpResponse.getEntity() instanceof InputStreamHttpEntity),
-        "http response must have an input stream entity");
+                                "http response must have an input stream entity");
     this.ctx = ctx;
     httpResponsePacket = buildHttpResponsePacket(request, httpResponse);
     inputStream = ((InputStreamHttpEntity) httpResponse.getEntity()).getInputStream();
@@ -111,8 +111,8 @@ public class ResponseStreamingCompletionHandler extends BaseResponseCompletionHa
   @Override
   public void cancelled() {
     close();
-    responseStatusCallback.responseSendFailure(
-        new DefaultMuleException(CoreMessages.createStaticMessage("Http response sending task was cancelled")));
+    responseStatusCallback.responseSendFailure(new DefaultMuleException(CoreMessages
+        .createStaticMessage("Http response sending task was cancelled")));
     resume();
   }
 

@@ -117,7 +117,7 @@ public class CheckExclusiveAttributes implements PreProcessor {
     }
 
     public static CheckExclusiveAttributesException createForDisjunctGroups(Element element,
-        Collection<AttributeSet> allMatchingSets) {
+                                                                            Collection<AttributeSet> allMatchingSets) {
       String message = createMessage(element, allMatchingSets);
       return new CheckExclusiveAttributesException(message);
     }
@@ -136,7 +136,7 @@ public class CheckExclusiveAttributes implements PreProcessor {
     }
 
     public static CheckExclusiveAttributesException createForInsufficientAttributes(Element element,
-        Collection<AttributeSet> attributeSets) {
+                                                                                    Collection<AttributeSet> attributeSets) {
       StringBuilder buf = new StringBuilder("Attributes of Element ");
       buf.append(SpringXMLUtils.elementToString(element));
       buf.append(" do not satisfy the exclusive groups");

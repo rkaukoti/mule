@@ -16,7 +16,7 @@ public class BooleanAttributeSelectionDefinitionParser extends AbstractParallelD
   private MuleDefinitionParser whenFalse;
 
   public BooleanAttributeSelectionDefinitionParser(String attribute, boolean dflt, MuleDefinitionParser whenTrue,
-      MuleDefinitionParser whenFalse) {
+                                                   MuleDefinitionParser whenFalse) {
     super(new MuleDefinitionParser[] {whenTrue, whenFalse});
     this.attribute = attribute;
     this.dflt = dflt;

@@ -71,14 +71,14 @@ public class SpringRegistry extends AbstractRegistry implements LifecycleRegistr
   }
 
   public SpringRegistry(ConfigurableApplicationContext applicationContext, ApplicationContext parentContext,
-      MuleContext muleContext) {
+                        MuleContext muleContext) {
     super(REGISTRY_ID, muleContext);
     applicationContext.setParent(parentContext);
     setApplicationContext(applicationContext);
   }
 
   public SpringRegistry(String id, ConfigurableApplicationContext applicationContext, ApplicationContext parentContext,
-      MuleContext muleContext) {
+                        MuleContext muleContext) {
     super(id, muleContext);
     applicationContext.setParent(parentContext);
     setApplicationContext(applicationContext);
@@ -183,7 +183,7 @@ public class SpringRegistry extends AbstractRegistry implements LifecycleRegistr
   public Object lookupObject(String key, boolean applyLifecycle) {
     if (StringUtils.isBlank(key)) {
       logger.warn(createStaticMessage("Detected a lookup attempt with an empty or null key").getMessage(),
-          new Throwable().fillInStackTrace());
+                  new Throwable().fillInStackTrace());
       return null;
     }
 
@@ -358,8 +358,7 @@ public class SpringRegistry extends AbstractRegistry implements LifecycleRegistr
       return dependents;
     }
 
-    throw new UnsupportedOperationException(
-        "This operation is only available when this registry is backed by a ConfigurableApplicationContext");
+    throw new UnsupportedOperationException("This operation is only available when this registry is backed by a ConfigurableApplicationContext");
   }
 
   @Override
@@ -437,8 +436,8 @@ public class SpringRegistry extends AbstractRegistry implements LifecycleRegistr
         }
       } else {
         // since the context has not yet bean initialized, we register a bean definition instead.
-        registeredBeanDefinitionsBeforeInitialization.put(key,
-            genericBeanDefinition(ConstantFactoryBean.class).addConstructorArgValue(value).getBeanDefinition());
+        registeredBeanDefinitionsBeforeInitialization
+            .put(key, genericBeanDefinition(ConstantFactoryBean.class).addConstructorArgValue(value).getBeanDefinition());
       }
     }
   }

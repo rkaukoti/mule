@@ -32,8 +32,8 @@ public class Log4jAgent extends AbstractAgent {
 
   @Override
   public void initialise() throws InitialisationException {
-    logger.warn(
-        "Log4jAgent is deprecated since Mule 3.6.0. This will no longer function since log4j2 supports JMX out of the box. +"
+    logger
+        .warn("Log4jAgent is deprecated since Mule 3.6.0. This will no longer function since log4j2 supports JMX out of the box. +"
             + "Check migration guide for more information");
   }
 

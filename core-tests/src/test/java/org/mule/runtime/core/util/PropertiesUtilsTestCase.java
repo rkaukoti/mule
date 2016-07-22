@@ -98,8 +98,9 @@ public class PropertiesUtilsTestCase extends AbstractMuleTestCase {
 
   @Test
   public void testLoadAllProperties() {
-    Properties properties = PropertiesUtils.loadAllProperties(
-        "META-INF/services/org/mule/runtime/core/config/mule-exception-codes.properties", this.getClass().getClassLoader());
+    Properties properties =
+        PropertiesUtils.loadAllProperties("META-INF/services/org/mule/runtime/core/config/mule-exception-codes.properties",
+                                          this.getClass().getClassLoader());
     assertThat((String) properties.get("java.lang.IllegalArgumentException"), is("104000"));
     assertThat((String) properties.get("org.mule.runtime.core.api.MuleException"), is("10000"));
   }
@@ -107,15 +108,16 @@ public class PropertiesUtilsTestCase extends AbstractMuleTestCase {
   @Test
   public void testLoadAllPropertiesNoFile() {
     Properties properties = PropertiesUtils.loadAllProperties("META-INF/services/org/mule/config/mule-non-existent.properties",
-        this.getClass().getClassLoader());
+                                                              this.getClass().getClassLoader());
     assertThat(properties, IsNull.notNullValue());
     assertThat(properties.isEmpty(), is(true));
   }
 
   @Test
   public void testLoadAllPropertiesEmptyFile() {
-    Properties properties = PropertiesUtils.loadAllProperties(
-        "META-INF/services/org/mule/runtime/core/config/mule-empty.properties", this.getClass().getClassLoader());
+    Properties properties =
+        PropertiesUtils.loadAllProperties("META-INF/services/org/mule/runtime/core/config/mule-empty.properties",
+                                          this.getClass().getClassLoader());
     assertThat(properties, IsNull.notNullValue());
     assertThat(properties.isEmpty(), is(true));
   }

@@ -34,16 +34,17 @@ import java.util.List;
 public class NonBlockingProcessorExecutor extends BlockingProcessorExecutor {
 
   private static final Logger logger = LoggerFactory.getLogger(NonBlockingProcessorExecutor.class);
-  final OneTimeWarning fallbackWarning = new OneTimeWarning(logger,
-      "The message processor {} does not currently support non-blocking execution and "
-          + "processing will now fall back to blocking.  The 'non-blocking' processing strategy is "
-          + "not recommended if unsupported message processors are being used.  ");
+  final OneTimeWarning fallbackWarning =
+      new OneTimeWarning(logger,
+                         "The message processor {} does not currently support non-blocking execution and "
+                             + "processing will now fall back to blocking.  The 'non-blocking' processing strategy is "
+                             + "not recommended if unsupported message processors are being used.  ");
   private final ReplyToHandler replyToHandler;
   private final MessageExchangePattern messageExchangePattern;
 
 
   public NonBlockingProcessorExecutor(MuleEvent event, List<MessageProcessor> processors,
-      MessageProcessorExecutionTemplate executionTemplate, boolean copyOnVoidEvent) {
+                                      MessageProcessorExecutionTemplate executionTemplate, boolean copyOnVoidEvent) {
     super(event, processors, executionTemplate, copyOnVoidEvent);
     this.replyToHandler = event.getReplyToHandler();
     this.messageExchangePattern = event.getExchangePattern();

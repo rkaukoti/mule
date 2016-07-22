@@ -53,8 +53,8 @@ public class SelectJavaArrayUdtTestCase extends AbstractDbIntegrationTestCase {
     final MuleMessage response = responseEvent.getMessage();
 
     assertRecords(response.getPayload(),
-        new Record(new Field("REGION_NAME", NORTHWEST.getName()), new Field("ZIPS", NORTHWEST.getZips())),
-        new Record(new Field("REGION_NAME", SOUTHWEST.getName()), new Field("ZIPS", SOUTHWEST.getZips())));
+                  new Record(new Field("REGION_NAME", NORTHWEST.getName()), new Field("ZIPS", NORTHWEST.getZips())),
+                  new Record(new Field("REGION_NAME", SOUTHWEST.getName()), new Field("ZIPS", SOUTHWEST.getZips())));
   }
 
   @Test
@@ -63,7 +63,7 @@ public class SelectJavaArrayUdtTestCase extends AbstractDbIntegrationTestCase {
     final MuleMessage response = responseEvent.getMessage();
 
     assertRecords(response.getPayload(),
-        new Record(new Field("CONTACT_NAME", CONTACT1.getName()), new Field("DETAILS", CONTACT1.getDetails())),
-        new Record(new Field("CONTACT_NAME", CONTACT2.getName()), new Field("DETAILS", CONTACT2.getDetails())));
+                  new Record(new Field("CONTACT_NAME", CONTACT1.getName()), new Field("DETAILS", CONTACT1.getDetails())),
+                  new Record(new Field("CONTACT_NAME", CONTACT2.getName()), new Field("DETAILS", CONTACT2.getDetails())));
   }
 }

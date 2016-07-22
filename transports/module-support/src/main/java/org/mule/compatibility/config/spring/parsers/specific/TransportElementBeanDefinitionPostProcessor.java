@@ -106,7 +106,7 @@ public class TransportElementBeanDefinitionPostProcessor implements CommonBeanDe
       Object lastMessageProcessor = messageProcessors.get(messageProcessors.size() - 1);
       if (lastMessageProcessor instanceof AbstractBeanDefinition) {
         if (areMatchingTypes(MessageProcessorChainFactoryBean.class,
-            ((AbstractBeanDefinition) lastMessageProcessor).getBeanClass())) {
+                             ((AbstractBeanDefinition) lastMessageProcessor).getBeanClass())) {
           messageProcessors.remove(messageProcessors.size() - 1);
         }
       }
@@ -125,7 +125,7 @@ public class TransportElementBeanDefinitionPostProcessor implements CommonBeanDe
           BeanDefinitionBuilder.genericBeanDefinition(MessageProcessorChainFactoryBean.class);
       beanDefinitionBuilder.addPropertyValue("messageProcessors", responseMessageProcessorsBeanList);
       modelBeanDefinition.getPropertyValues().addPropertyValue("responseMessageProcessors",
-          beanDefinitionBuilder.getBeanDefinition());
+                                                               beanDefinitionBuilder.getBeanDefinition());
     });
     return messageProcessors;
   }

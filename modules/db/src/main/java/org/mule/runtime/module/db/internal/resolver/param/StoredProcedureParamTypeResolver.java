@@ -57,7 +57,8 @@ public class StoredProcedureParamTypeResolver implements ParamTypeResolver {
   }
 
   private Map<Integer, DbType> getStoredProcedureParamTypes(DbConnection connection, String storedProcedureName,
-      ResultSet procedureColumns) throws SQLException {
+                                                            ResultSet procedureColumns)
+      throws SQLException {
     Map<Integer, DbType> paramTypes = new HashMap<Integer, DbType>();
 
     int position = 1;
@@ -69,7 +70,7 @@ public class StoredProcedureParamTypeResolver implements ParamTypeResolver {
       if (logger.isDebugEnabled()) {
         String name = procedureColumns.getString(PARAM_NAME_COLUN_INDEX);
         logger.debug(String.format("Resolved parameter type: Store procedure: %s Name: %s Index: %s Type ID: %s Type Name: %s",
-            storedProcedureName, name, position, typeId, typeName));
+                                   storedProcedureName, name, position, typeId, typeName));
       }
 
       DbType dbType;

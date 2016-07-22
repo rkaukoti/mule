@@ -34,8 +34,8 @@ public class GenericStatementResultIteratorFactoryTestCase extends AbstractMuleT
   public void createsIterator() throws Exception {
     DbConnection connection = createMockConnection(true);
 
-    StatementResultIterator statementResultIterator = resultIteratorFactory.create(connection, statement,
-        new QueryTemplate(null, STORE_PROCEDURE_CALL, Collections.<QueryParam>emptyList()), null);
+    StatementResultIterator statementResultIterator = resultIteratorFactory
+        .create(connection, statement, new QueryTemplate(null, STORE_PROCEDURE_CALL, Collections.<QueryParam>emptyList()), null);
 
     assertThat(statementResultIterator, instanceOf(StatementResultIterator.class));
   }

@@ -26,9 +26,9 @@ public class InOutAsyncTestCase extends FunctionalTestCase {
     MuleClient client = muleContext.getClient();
 
     MuleMessage result = client.send("inboundEndpoint",
-        MuleMessage.builder().payload("some data")
-            // Almost any endpoint can be used here
-            .replyTo("jms://client-reply").build());
+                                     MuleMessage.builder().payload("some data")
+                                         // Almost any endpoint can be used here
+                                         .replyTo("jms://client-reply").build());
     assertNotNull(result);
     assertEquals("got it!", getPayloadAsString(result));
 

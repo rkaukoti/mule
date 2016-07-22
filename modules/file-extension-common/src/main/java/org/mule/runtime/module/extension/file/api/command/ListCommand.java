@@ -31,5 +31,5 @@ public interface ListCommand {
    * @throws IllegalArgumentException if {@code directoryPath} points to a file which doesn't exists or is not a directory
    */
   TreeNode list(FileConnectorConfig config, String directoryPath, boolean recursive, MuleMessage message,
-      Predicate<FileAttributes> matcher);
+                Predicate<FileAttributes> matcher);
 }

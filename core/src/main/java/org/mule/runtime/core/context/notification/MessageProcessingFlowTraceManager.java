@@ -101,8 +101,9 @@ public class MessageProcessingFlowTraceManager extends LocationExecutionContextP
    * @see DefaultFlowCallStack#setCurrentProcessorPath(String)
    */
   public void onMessageProcessorNotificationPreInvoke(MessageProcessorNotification notification) {
-    String resolveProcessorRepresentation = resolveProcessorRepresentation(muleContext.getConfiguration().getId(),
-        notification.getProcessorPath(), notification.getProcessor());
+    String resolveProcessorRepresentation =
+        resolveProcessorRepresentation(muleContext.getConfiguration().getId(), notification.getProcessorPath(),
+                                       notification.getProcessor());
     if (notification.getSource().getProcessorsTrace() instanceof DefaultProcessorsTrace) {
       ((DefaultProcessorsTrace) notification.getSource().getProcessorsTrace())
           .addExecutedProcessors(resolveProcessorRepresentation);

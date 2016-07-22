@@ -60,8 +60,8 @@ public class TestConnector extends AbstractConnector {
       }
     });
 
-    setRetryPolicyTemplate(
-        (RetryPolicyTemplate) muleContext.getRegistry().lookupObject(MuleProperties.OBJECT_DEFAULT_RETRY_POLICY_TEMPLATE));
+    setRetryPolicyTemplate((RetryPolicyTemplate) muleContext.getRegistry()
+        .lookupObject(MuleProperties.OBJECT_DEFAULT_RETRY_POLICY_TEMPLATE));
   }
 
   @Override

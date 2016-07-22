@@ -56,17 +56,17 @@ public class AuthorizationCodeAuthorizationFailureTestCase extends AbstractAutho
   @Test
   public void urlRedirectHandlerDoNotRetrieveAuthorizationCodeWithOnCompleteRedirect() throws Exception {
     testWithSystemProperty(EXPECTED_STATUS_CODE_SYSTEM_PROPERTY, valueOf(NO_AUTHORIZATION_CODE_STATUS),
-        new MuleTestUtils.TestCallback() {
+                           new MuleTestUtils.TestCallback() {
 
-          @Override
-          public void run() throws Exception {
-            Response response = Get(getRedirectUrlWithOnCompleteUrlQueryParam()).connectTimeout(REQUEST_TIMEOUT)
-                .socketTimeout(REQUEST_TIMEOUT).execute();
-            response.returnResponse();
+                             @Override
+                             public void run() throws Exception {
+                               Response response = Get(getRedirectUrlWithOnCompleteUrlQueryParam())
+                                   .connectTimeout(REQUEST_TIMEOUT).socketTimeout(REQUEST_TIMEOUT).execute();
+                               response.returnResponse();
 
-            FlowAssert.verify();
-          }
-        });
+                               FlowAssert.verify();
+                             }
+                           });
   }
 
   @Test
@@ -81,16 +81,16 @@ public class AuthorizationCodeAuthorizationFailureTestCase extends AbstractAutho
     configureWireMockToExpectTokenPathRequestForAuthorizationCodeGrantTypeAndFail();
 
     testWithSystemProperty(EXPECTED_STATUS_CODE_SYSTEM_PROPERTY, valueOf(TOKEN_URL_CALL_FAILED_STATUS),
-        new MuleTestUtils.TestCallback() {
+                           new MuleTestUtils.TestCallback() {
 
-          @Override
-          public void run() throws Exception {
-            Get(getRedirectUrlWithOnCompleteUrlAndCodeQueryParams()).connectTimeout(REQUEST_TIMEOUT)
-                .socketTimeout(REQUEST_TIMEOUT).execute();
+                             @Override
+                             public void run() throws Exception {
+                               Get(getRedirectUrlWithOnCompleteUrlAndCodeQueryParams()).connectTimeout(REQUEST_TIMEOUT)
+                                   .socketTimeout(REQUEST_TIMEOUT).execute();
 
-            FlowAssert.verify();
-          }
-        });
+                               FlowAssert.verify();
+                             }
+                           });
 
     verifyCallToRedirectUrlFails();
   }
@@ -107,16 +107,16 @@ public class AuthorizationCodeAuthorizationFailureTestCase extends AbstractAutho
     configureWireMockToExpectTokenPathRequestForAuthorizationCodeGrantType(null, null);
 
     testWithSystemProperty(EXPECTED_STATUS_CODE_SYSTEM_PROPERTY, valueOf(TOKEN_NOT_FOUND_STATUS),
-        new MuleTestUtils.TestCallback() {
+                           new MuleTestUtils.TestCallback() {
 
-          @Override
-          public void run() throws Exception {
-            Get(getRedirectUrlWithOnCompleteUrlAndCodeQueryParams()).connectTimeout(REQUEST_TIMEOUT)
-                .socketTimeout(REQUEST_TIMEOUT).execute();
+                             @Override
+                             public void run() throws Exception {
+                               Get(getRedirectUrlWithOnCompleteUrlAndCodeQueryParams()).connectTimeout(REQUEST_TIMEOUT)
+                                   .socketTimeout(REQUEST_TIMEOUT).execute();
 
-            FlowAssert.verify();
-          }
-        });
+                               FlowAssert.verify();
+                             }
+                           });
 
   }
 

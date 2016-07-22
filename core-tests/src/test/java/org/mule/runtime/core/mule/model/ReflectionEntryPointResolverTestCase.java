@@ -67,7 +67,7 @@ public class ReflectionEntryPointResolverTestCase extends AbstractMuleContextTes
     ReflectionEntryPointResolver resolver = new ReflectionEntryPointResolver();
     InvocationResult result = resolver.invoke(new FruitBowl(), getTestEventContext(new Fruit[] {new Apple(), new Orange()}));
     assertEquals("Test should have failed because the arguments were not wrapped properly: ", result.getState(),
-        InvocationResult.State.FAILED);
+                 InvocationResult.State.FAILED);
   }
 
   @Test

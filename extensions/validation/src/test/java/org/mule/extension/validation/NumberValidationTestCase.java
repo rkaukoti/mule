@@ -26,7 +26,7 @@ public class NumberValidationTestCase extends ValidationTestCase {
   private final NumberType numberType;
 
   public NumberValidationTestCase(String name, Number value, Number minValue, Number maxValue, Number lowerBoundaryViolation,
-      Number upperBoundaryViolation, NumberType numberType) {
+                                  Number upperBoundaryViolation, NumberType numberType) {
     this.value = value.toString();
     this.minValue = minValue;
     this.maxValue = maxValue;
@@ -57,12 +57,12 @@ public class NumberValidationTestCase extends ValidationTestCase {
     assertValid(configureNumberValidationRunner(flowRunner(FLOW_NAME), value, minValue, maxValue));
     final String invalid = "unparseable";
     assertInvalid(configureNumberValidationRunner(flowRunner(FLOW_NAME), invalid, minValue, maxValue),
-        messages.invalidNumberType(invalid, numberType.name()));
+                  messages.invalidNumberType(invalid, numberType.name()));
 
     assertInvalid(configureNumberValidationRunner(flowRunner(FLOW_NAME), upperBoundaryViolation, minValue, maxValue),
-        messages.greaterThan(upperBoundaryViolation, maxValue));
+                  messages.greaterThan(upperBoundaryViolation, maxValue));
     assertInvalid(configureNumberValidationRunner(flowRunner(FLOW_NAME), lowerBoundaryViolation, minValue, maxValue),
-        messages.lowerThan(lowerBoundaryViolation, minValue));
+                  messages.lowerThan(lowerBoundaryViolation, minValue));
   }
 
   private FlowRunner configureNumberValidationRunner(FlowRunner runner, Object value, Object minValue, Object maxValue) {

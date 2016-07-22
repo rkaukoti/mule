@@ -32,5 +32,5 @@ public interface WriteCommand {
    * @throws IllegalArgumentException if an illegal combination of arguments is supplied
    */
   void write(FileConnectorConfig config, String filePath, Object content, FileWriteMode mode, MuleEvent event, boolean lock,
-      boolean createParentDirectory, String encoding);
+             boolean createParentDirectory, String encoding);
 }

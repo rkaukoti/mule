@@ -34,7 +34,7 @@ public class CollectionAggregatorRouterSerializationTestCase extends FunctionalT
   @Test
   public void eventGroupDeserialization() throws Exception {
     muleContext.getRegistry().registerObject(MuleProperties.OBJECT_STORE_DEFAULT_IN_MEMORY_NAME,
-        new EventGroupSerializerObjectStore<Serializable>());
+                                             new EventGroupSerializerObjectStore<Serializable>());
     List<String> list = Arrays.asList("first", "second");
     flowRunner("splitter").withPayload(list).asynchronously().run();
 

@@ -46,8 +46,8 @@ public class DependencyResolverTestCase extends AbstractMuleTestCase {
   @Test
   public void excludeRootSelectProvidedDependenciesOnlyTestTransitiveDependencies() {
     builder = new DependencyResolver(new Configuration().setMavenDependencyGraph(buildDefaultDependencies())
-        .selectDependencies(
-            new DependenciesFilter().match(dependency -> dependency.isProvidedScope()).onlyCollectTransitiveDependencies())
+        .selectDependencies(new DependenciesFilter().match(dependency -> dependency.isProvidedScope())
+            .onlyCollectTransitiveDependencies())
         .collectTransitiveDependencies(new TransitiveDependenciesFilter().match(dependency -> dependency.isTestScope())
             .evaluateTransitiveDependenciesWhenPredicateFails()));
 
@@ -64,8 +64,8 @@ public class DependencyResolverTestCase extends AbstractMuleTestCase {
             .match(dependency -> dependency.getArtifactId().equals(selectedRootArtifactHolder.get().getArtifactId())
                 || (rootArtifact.getArtifactId().equals(selectedRootArtifactHolder.get().getArtifactId())
                     && dependency.isProvidedScope())))
-        .collectTransitiveDependencies(
-            new TransitiveDependenciesFilter().match(transitiveDependency -> transitiveDependency.isProvidedScope())));
+        .collectTransitiveDependencies(new TransitiveDependenciesFilter()
+            .match(transitiveDependency -> transitiveDependency.isProvidedScope())));
 
     Set<MavenArtifact> dependencies = builder.resolveDependencies();
 
@@ -161,7 +161,7 @@ public class DependencyResolverTestCase extends AbstractMuleTestCase {
   @Test
   public void excludeRootOnlyProvidedAndTransitiveDependencies() {
     dom4JArtifact = buildMavenArtifact(dom4JArtifact.getGroupId(), dom4JArtifact.getArtifactId(), dom4JArtifact.getType(),
-        dom4JArtifact.getVersion(), "compile");
+                                       dom4JArtifact.getVersion(), "compile");
 
     Set<MavenArtifact> commonsCliDependencies = new HashSet<>();
     commonsCliDependencies.add(dom4JArtifact);

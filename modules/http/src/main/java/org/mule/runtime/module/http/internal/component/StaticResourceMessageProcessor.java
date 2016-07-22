@@ -59,8 +59,7 @@ public class StaticResourceMessageProcessor implements MessageProcessor, Initial
   @Override
   public MuleEvent process(MuleEvent event) throws MuleException {
     if (StringUtils.isEmpty(resourceBase)) {
-      throw new ConfigurationException(
-          createStaticMessage("No ResourceBase Defined as part of the static resource message processor."));
+      throw new ConfigurationException(createStaticMessage("No ResourceBase Defined as part of the static resource message processor."));
     }
 
     String path = event.getMessage().getInboundProperty(HTTP_REQUEST_PATH_PROPERTY);
@@ -113,7 +112,7 @@ public class StaticResourceMessageProcessor implements MessageProcessor, Initial
       resultEvent = new DefaultMuleEvent(message, event);
     } catch (IOException e) {
       throw new ResourceNotFoundException(createStaticMessage(format("The file: %s was not found.", resourceBase + path)), event,
-          this);
+                                          this);
     } finally {
       IOUtils.closeQuietly(in);
     }

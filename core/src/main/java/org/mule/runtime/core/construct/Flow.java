@@ -149,7 +149,7 @@ public class Flow extends AbstractPipeline implements MessageProcessor, StageNam
     if (result != null && !(result instanceof VoidMuleEvent)) {
       // Create new event with original FlowConstruct, ReplyToHandler and synchronous
       result = new DefaultMuleEvent(result, original.getFlowConstruct(), original.getReplyToHandler(),
-          original.getReplyToDestination(), original.isSynchronous());
+                                    original.getReplyToDestination(), original.isSynchronous());
     }
     resetRequestContextEvent(result);
     return result;
@@ -197,7 +197,7 @@ public class Flow extends AbstractPipeline implements MessageProcessor, StageNam
     if (processingStrategy instanceof AsynchronousProcessingStrategy
         && ((AsynchronousProcessingStrategy) processingStrategy).getMaxThreads() != null) {
       statistics = new FlowConstructStatistics(getConstructType(), name,
-          ((AsynchronousProcessingStrategy) processingStrategy).getMaxThreads());
+                                               ((AsynchronousProcessingStrategy) processingStrategy).getMaxThreads());
     } else {
       statistics = new FlowConstructStatistics(getConstructType(), name);
     }

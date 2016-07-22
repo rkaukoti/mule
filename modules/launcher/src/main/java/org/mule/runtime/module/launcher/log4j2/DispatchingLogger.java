@@ -50,7 +50,7 @@ abstract class DispatchingLogger extends Logger {
   private Method updateConfigurationMethod = null;
 
   DispatchingLogger(Logger originalLogger, int ownerClassLoaderHash, LoggerContext loggerContext, ContextSelector contextSelector,
-      MessageFactory messageFactory) {
+                    MessageFactory messageFactory) {
     super(loggerContext, originalLogger.getName(), messageFactory);
     this.originalLogger = originalLogger;
     this.contextSelector = contextSelector;

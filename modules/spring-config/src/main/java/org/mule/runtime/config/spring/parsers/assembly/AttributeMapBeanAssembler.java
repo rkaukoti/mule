@@ -15,7 +15,7 @@ import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 public class AttributeMapBeanAssembler extends AbstractMapBeanAssembler {
 
   public AttributeMapBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
-      PropertyConfiguration targetConfig, BeanDefinition target) {
+                                   PropertyConfiguration targetConfig, BeanDefinition target) {
     super(beanConfig, bean, targetConfig, target);
   }
 

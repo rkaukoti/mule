@@ -60,8 +60,8 @@ public class EmptyValidator extends AbstractValidator {
       }
     } else {
       throw new IllegalArgumentException(String.format(
-          "Only instances of Map, Collection, Array and String can be checked for emptyness. Instance of %s was found instead",
-          value.getClass().getName()));
+                                                       "Only instances of Map, Collection, Array and String can be checked for emptyness. Instance of %s was found instead",
+                                                       value.getClass().getName()));
     }
 
     return ok();

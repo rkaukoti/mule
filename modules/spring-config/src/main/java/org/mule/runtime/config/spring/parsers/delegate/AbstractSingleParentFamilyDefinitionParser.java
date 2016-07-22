@@ -49,7 +49,7 @@ public abstract class AbstractSingleParentFamilyDefinitionParser extends Abstrac
   }
 
   protected AbstractBeanDefinition doSingleBean(int index, MuleDefinitionParser parser, Element element,
-      ParserContext parserContext) {
+                                                ParserContext parserContext) {
     if (0 != index) {
       ((MuleChildDefinitionParser) parser).forceParent(firstDefinition);
       // we need this because we often block "everything but" which would mean

@@ -68,8 +68,7 @@ public final class UdpRequesterProvider implements ConnectionProvider<UdpRequest
   }
 
   @Override
-  public ConnectionHandlingStrategy<UdpRequesterConnection> getHandlingStrategy(
-      ConnectionHandlingStrategyFactory<UdpRequesterConnection> handlingStrategyFactory) {
+  public ConnectionHandlingStrategy<UdpRequesterConnection> getHandlingStrategy(ConnectionHandlingStrategyFactory<UdpRequesterConnection> handlingStrategyFactory) {
     return handlingStrategyFactory.supportsPooling();
   }
 }

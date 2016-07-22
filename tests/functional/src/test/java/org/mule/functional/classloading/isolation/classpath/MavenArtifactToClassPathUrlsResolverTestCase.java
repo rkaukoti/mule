@@ -63,16 +63,16 @@ public class MavenArtifactToClassPathUrlsResolverTestCase extends AbstractMuleTe
   @Test
   public void resolveURLUsingGroupIdArtifactId() throws Exception {
     assertURL(coreArtifact, Lists.newArrayList(buildArtifactUrlMock(commonCliArtifact), coreArtifactMavenRepoURL),
-        coreArtifactMavenRepoURL);
+              coreArtifactMavenRepoURL);
     verifyZeroInteractions(mapping);
   }
 
   @Test
   public void resolveUrlMultiModuleMapping() throws Exception {
     when(mapping.getFolderName(utilsCoreArtifact.getArtifactId())).thenReturn(UTILS_CORE_MODULE_FOLDER);
-    assertURL(utilsCoreArtifact,
-        Lists.newArrayList(buildArtifactUrlMock(commonCliArtifact), coreArtifactMavenRepoURL, utilsCoreArtifactMultiModuleURL),
-        utilsCoreArtifactMultiModuleURL);
+    assertURL(utilsCoreArtifact, Lists.newArrayList(buildArtifactUrlMock(commonCliArtifact), coreArtifactMavenRepoURL,
+                                                    utilsCoreArtifactMultiModuleURL),
+              utilsCoreArtifactMultiModuleURL);
     verify(mapping);
   }
 

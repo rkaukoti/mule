@@ -31,8 +31,8 @@ public class TransactionalQueueSession extends AbstractQueueSession implements Q
   private LocalQueueTransactionContext singleResourceTxContext;
 
   public TransactionalQueueSession(QueueProvider queueProvider, QueueXaResourceManager xaResourceManager,
-      AbstractResourceManager resourceManager, XaTransactionRecoverer xaTransactionRecoverer,
-      LocalTxQueueTransactionJournal localTxTransactionJournal, MuleContext muleContext) {
+                                   AbstractResourceManager resourceManager, XaTransactionRecoverer xaTransactionRecoverer,
+                                   LocalTxQueueTransactionJournal localTxTransactionJournal, MuleContext muleContext) {
     super(queueProvider, muleContext);
     this.localTxTransactionJournal = localTxTransactionJournal;
     this.resourceManager = resourceManager;

@@ -42,13 +42,13 @@ public final class ConnectionProviderObjectBuilder extends ParameterGroupAwareOb
    *        is provided
    */
   public ConnectionProviderObjectBuilder(RuntimeConnectionProviderModel providerModel, ResolverSet resolverSet,
-      ConnectionManagerAdapter connectionManager) {
+                                         ConnectionManagerAdapter connectionManager) {
     this(providerModel, resolverSet, null, false, null, connectionManager);
   }
 
   public ConnectionProviderObjectBuilder(RuntimeConnectionProviderModel providerModel, ResolverSet resolverSet,
-      PoolingProfile poolingProfile, boolean disableValidation, RetryPolicyTemplate retryPolicyTemplate,
-      ConnectionManagerAdapter connectionManager) {
+                                         PoolingProfile poolingProfile, boolean disableValidation,
+                                         RetryPolicyTemplate retryPolicyTemplate, ConnectionManagerAdapter connectionManager) {
     super(providerModel.getConnectionProviderFactory().getObjectType(), providerModel, resolverSet);
     this.providerModel = providerModel;
     this.poolingProfile = poolingProfile;

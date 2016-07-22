@@ -48,7 +48,7 @@ public interface FileSystem {
    * @throws IllegalArgumentException if {@code directoryPath} points to a file which doesn't exists or is not a directory
    */
   TreeNode list(FileConnectorConfig config, String directoryPath, boolean recursive, MuleMessage message,
-      Predicate<FileAttributes> matcher);
+                Predicate<FileAttributes> matcher);
 
   /**
    * Obtains the content and metadata of a file at a given path.
@@ -72,7 +72,7 @@ public interface FileSystem {
    * @throws IllegalArgumentException if the file at the given path doesn't exists
    */
   OperationResult<InputStream, FileAttributes> read(FileConnectorConfig config, MuleMessage message, String filePath,
-      boolean lock);
+                                                    boolean lock);
 
   /**
    * Writes the {@code content} into the file pointed by {@code filePath}.
@@ -110,7 +110,7 @@ public interface FileSystem {
    * @throws IllegalArgumentException if an illegal combination of arguments is supplied
    */
   void write(FileConnectorConfig config, String filePath, Object content, FileWriteMode mode, MuleEvent event, boolean lock,
-      boolean createParentDirectories, String encoding);
+             boolean createParentDirectories, String encoding);
 
   /**
    * Copies the file at the {@code sourcePath} into the {@code targetPath}.
@@ -138,7 +138,7 @@ public interface FileSystem {
    * @throws IllegalArgumentException if an illegal combination of arguments is supplied
    */
   void copy(FileConnectorConfig config, String sourcePath, String targetPath, boolean overwrite, boolean createParentDirectories,
-      MuleEvent event);
+            MuleEvent event);
 
   /**
    * Moves the file at the {@code sourcePath} into the {@code targetPath}.

@@ -37,7 +37,7 @@ public class BeanUtilsTestCase extends AbstractMuleTestCase {
   @Test
   public void testBeanPropertiesOnAProxy() throws Exception {
     OrangeInterface o = (OrangeInterface) Proxy.newProxyInstance(getClass().getClassLoader(), new Class[] {OrangeInterface.class},
-        new OrangeInvocationHandler(new Orange()));
+                                                                 new OrangeInvocationHandler(new Orange()));
 
     BeanUtils.populateWithoutFail(o, map, true);
 

@@ -39,7 +39,7 @@ public class RemoveAttachmentTransformer extends AbstractMessageTransformer {
       if (wildcardAttributeEvaluator.hasWildcards()) {
         final Builder builder = MuleMessage.builder(event.getMessage());
         wildcardAttributeEvaluator.processValues(message.getOutboundAttachmentNames(),
-            matchedValue -> builder.removeOutboundAttachment(matchedValue));
+                                                 matchedValue -> builder.removeOutboundAttachment(matchedValue));
         event.setMessage(builder.build());
       } else {
         Object keyValue = nameEvaluator.resolveValue(event);

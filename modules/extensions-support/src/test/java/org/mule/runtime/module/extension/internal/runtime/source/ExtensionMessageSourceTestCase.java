@@ -365,7 +365,7 @@ public class ExtensionMessageSourceTestCase extends AbstractMuleContextTestCase 
 
   private ExtensionMessageSource getNewExtensionMessageSourceInstance() throws MuleException {
     ExtensionMessageSource messageSource = new ExtensionMessageSource(extensionModel, sourceModel, sourceFactory, CONFIG_NAME,
-        threadingProfile, retryPolicyTemplate, extensionManager);
+                                                                      threadingProfile, retryPolicyTemplate, extensionManager);
     messageSource.setListener(messageProcessor);
     messageSource.setFlowConstruct(flowConstruct);
     muleContext.getInjector().inject(messageSource);

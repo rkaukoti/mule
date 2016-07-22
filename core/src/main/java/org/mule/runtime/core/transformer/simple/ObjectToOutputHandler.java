@@ -77,8 +77,8 @@ public class ObjectToOutputHandler extends AbstractTransformer implements Discov
         }
       };
     } else {
-      throw new TransformerException(
-          MessageFactory.createStaticMessage("Unable to convert " + src.getClass() + " to OutputHandler."));
+      throw new TransformerException(MessageFactory
+          .createStaticMessage("Unable to convert " + src.getClass() + " to OutputHandler."));
     }
   }
 

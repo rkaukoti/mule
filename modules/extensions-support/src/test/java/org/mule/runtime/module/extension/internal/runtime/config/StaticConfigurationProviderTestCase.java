@@ -76,8 +76,9 @@ public class StaticConfigurationProviderTestCase extends AbstractConfigurationPr
     when(resolverSet.getResolvers()).thenReturn(parameters);
     when(resolverSet.isDynamic()).thenReturn(false);
 
-    provider = (LifecycleAwareConfigurationProvider) new DefaultConfigurationProviderFactory().createStaticConfigurationProvider(
-        CONFIG_NAME, configurationModel, resolverSet, new StaticValueResolver<>(connectionProvider), muleContext);
+    provider = (LifecycleAwareConfigurationProvider) new DefaultConfigurationProviderFactory()
+        .createStaticConfigurationProvider(CONFIG_NAME, configurationModel, resolverSet,
+                                           new StaticValueResolver<>(connectionProvider), muleContext);
     super.before();
   }
 

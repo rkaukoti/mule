@@ -45,7 +45,8 @@ public class RetrieverOperations {
   // TODO: ADD PAGINATION SUPPORT WHEN AVAILABLE
   @Summary("List all the emails in the given Mailbox Folder")
   public List<MuleMessage> list(@UseConfig RetrieverConfiguration config, @Connection RetrieverConnection connection,
-      @Optional(defaultValue = INBOX_FOLDER) String mailboxFolder, @Optional EmailPredicateBuilder matcher) {
+                                @Optional(defaultValue = INBOX_FOLDER) String mailboxFolder,
+                                @Optional EmailPredicateBuilder matcher) {
     return listCommand.list(connection, mailboxFolder, config.isEagerlyFetchContent(), buildMatcher(matcher));
   }
 
@@ -73,9 +74,9 @@ public class RetrieverOperations {
   // TODO: annotated the parameter localDirectory with @Path when available
   @Summary("Stores an specified email into a local directory")
   public void store(@Connection RetrieverConnection connection, MuleMessage muleMessage, String localDirectory,
-      @Optional(defaultValue = INBOX_FOLDER) String mailboxFolder, @Optional String fileName,
-      @Optional @Summary("Email ID Number of the email to delete") @DisplayName("Email ID") Integer emailId,
-      @Optional(defaultValue = "false") @DisplayName("Should Overwrite") boolean overwrite) {
+                    @Optional(defaultValue = INBOX_FOLDER) String mailboxFolder, @Optional String fileName,
+                    @Optional @Summary("Email ID Number of the email to delete") @DisplayName("Email ID") Integer emailId,
+                    @Optional(defaultValue = "false") @DisplayName("Should Overwrite") boolean overwrite) {
     storeCommand.store(connection, muleMessage, mailboxFolder, localDirectory, fileName, emailId, overwrite);
   }
 
@@ -100,8 +101,8 @@ public class RetrieverOperations {
    */
   @Summary("Deletes an email from the given Mailbox Folder")
   public void delete(MuleMessage message, @Connection RetrieverConnection connection,
-      @Optional(defaultValue = INBOX_FOLDER) String mailboxFolder,
-      @Optional @Summary("Email ID Number of the email to delete") @DisplayName("Email ID") Integer emailId) {
+                     @Optional(defaultValue = INBOX_FOLDER) String mailboxFolder,
+                     @Optional @Summary("Email ID Number of the email to delete") @DisplayName("Email ID") Integer emailId) {
     deleteCommand.delete(message, connection, mailboxFolder, emailId);
   }
 

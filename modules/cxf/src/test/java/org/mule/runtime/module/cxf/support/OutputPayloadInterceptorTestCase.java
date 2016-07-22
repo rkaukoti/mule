@@ -50,7 +50,7 @@ public class OutputPayloadInterceptorTestCase extends AbstractMuleContextTestCas
 
     final String[] arrayOf2Strings1Null = {someString, "someOther String", null};
     assertTrue(Arrays.equals(new String[] {arrayOf2Strings1Null[0], arrayOf2Strings1Null[1]},
-        (Object[]) interceptor.cleanUpPayload(arrayOf2Strings1Null)));
+                             (Object[]) interceptor.cleanUpPayload(arrayOf2Strings1Null)));
   }
 
   @Test
@@ -63,7 +63,7 @@ public class OutputPayloadInterceptorTestCase extends AbstractMuleContextTestCas
 
     final Object[] arrayOf2Objects1Null = {someInteger, null, new Object(), MessageContentsList.REMOVED_MARKER};
     assertTrue(Arrays.equals(new Object[] {arrayOf2Objects1Null[0], arrayOf2Objects1Null[2]},
-        (Object[]) interceptor.cleanUpPayload(arrayOf2Objects1Null)));
+                             (Object[]) interceptor.cleanUpPayload(arrayOf2Objects1Null)));
   }
 
   @Test

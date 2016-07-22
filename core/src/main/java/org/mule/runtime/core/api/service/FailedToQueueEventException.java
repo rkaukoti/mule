@@ -25,7 +25,7 @@ public class FailedToQueueEventException extends MessagingException {
   }
 
   public FailedToQueueEventException(Message message, MuleEvent event, Throwable cause,
-      MessageProcessor failingMessageProcessor) {
+                                     MessageProcessor failingMessageProcessor) {
     super(message, event, cause, failingMessageProcessor);
   }
 }

@@ -64,7 +64,7 @@ public class MessageEnricher extends AbstractMessageProcessorOwner implements No
   }
 
   protected void enrich(MuleEvent currentEvent, MuleEvent enrichmentEvent, String sourceExpressionArg, String targetExpressionArg,
-      ExpressionManager expressionManager) {
+                        ExpressionManager expressionManager) {
     if (StringUtils.isEmpty(sourceExpressionArg)) {
       sourceExpressionArg = "#[payload:]";
     }

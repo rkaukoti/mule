@@ -61,8 +61,8 @@ public class DefaultReplyToHandler implements ReplyToHandler, Serializable, Dese
     // anyway as it should never be true from a replyTo dispatch
     event.removeFlowVariable(MULE_REMOTE_SYNC_PROPERTY);
 
-    event.setMessage(
-        MuleMessage.builder(event.getMessage()).replyTo(null).removeOutboundProperty(MULE_REMOTE_SYNC_PROPERTY).build());
+    event.setMessage(MuleMessage.builder(event.getMessage()).replyTo(null).removeOutboundProperty(MULE_REMOTE_SYNC_PROPERTY)
+        .build());
 
     // TODO See MULE-9307 - re-add behaviour to process reply to destination dispatching with new connectors
   }

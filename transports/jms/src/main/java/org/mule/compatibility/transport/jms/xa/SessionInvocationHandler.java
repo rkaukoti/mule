@@ -92,22 +92,22 @@ public class SessionInvocationHandler implements TargetInvocationHandler {
 
     if (result instanceof TopicSubscriber) {
       result = Proxy.newProxyInstance(Session.class.getClassLoader(), new Class[] {TopicSubscriber.class},
-          new ConsumerProducerInvocationHandler(this, result));
+                                      new ConsumerProducerInvocationHandler(this, result));
     } else if (result instanceof QueueReceiver) {
       result = Proxy.newProxyInstance(Session.class.getClassLoader(), new Class[] {QueueReceiver.class},
-          new ConsumerProducerInvocationHandler(this, result));
+                                      new ConsumerProducerInvocationHandler(this, result));
     } else if (result instanceof MessageConsumer) {
       result = Proxy.newProxyInstance(Session.class.getClassLoader(), new Class[] {MessageConsumer.class},
-          new ConsumerProducerInvocationHandler(this, result));
+                                      new ConsumerProducerInvocationHandler(this, result));
     } else if (result instanceof TopicPublisher) {
       result = Proxy.newProxyInstance(Session.class.getClassLoader(), new Class[] {TopicPublisher.class},
-          new ConsumerProducerInvocationHandler(this, result));
+                                      new ConsumerProducerInvocationHandler(this, result));
     } else if (result instanceof QueueSender) {
       result = Proxy.newProxyInstance(Session.class.getClassLoader(), new Class[] {QueueSender.class},
-          new ConsumerProducerInvocationHandler(this, result));
+                                      new ConsumerProducerInvocationHandler(this, result));
     } else if (result instanceof MessageProducer) {
       result = Proxy.newProxyInstance(Session.class.getClassLoader(), new Class[] {MessageProducer.class},
-          new ConsumerProducerInvocationHandler(this, result));
+                                      new ConsumerProducerInvocationHandler(this, result));
     }
     return result;
   }

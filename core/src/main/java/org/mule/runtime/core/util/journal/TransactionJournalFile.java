@@ -54,7 +54,7 @@ class TransactionJournalFile<T, K extends JournalEntry<T>> {
    * @param transactionCompletePredicate a callback to determine if a transaction is complete.
    */
   public TransactionJournalFile(File journalFile, JournalEntrySerializer journalEntrySerializer,
-      TransactionCompletePredicate transactionCompletePredicate, Long clearFileMinimumSizeInBytes) {
+                                TransactionCompletePredicate transactionCompletePredicate, Long clearFileMinimumSizeInBytes) {
     this.journalFile = journalFile;
     this.journalEntrySerializer = journalEntrySerializer;
     this.clearFileMinimumSizeInBytes = clearFileMinimumSizeInBytes;

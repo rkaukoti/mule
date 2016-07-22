@@ -92,8 +92,9 @@ public class PreparedBulkUpdateMessageProcessorDebugInfoTestCase extends Abstrac
         .thenReturn(Collections.singletonList(new QueryParamValue(null, EARTH.getName())))
         .thenReturn(Collections.singletonList(new QueryParamValue(null, MARS.getName())));
 
-    PreparedBulkUpdateMessageProcessor processor = new PreparedBulkUpdateMessageProcessor(dbConfigResolver, queryResolver, null,
-        NOT_SUPPORTED, Collections.singletonList(UPDATE), paramValueResolver);
+    PreparedBulkUpdateMessageProcessor processor =
+        new PreparedBulkUpdateMessageProcessor(dbConfigResolver, queryResolver, null, NOT_SUPPORTED,
+                                               Collections.singletonList(UPDATE), paramValueResolver);
     processor.setMuleContext(muleContext);
 
     final List<FieldDebugInfo<?>> debugInfo = processor.getDebugInfo(event);

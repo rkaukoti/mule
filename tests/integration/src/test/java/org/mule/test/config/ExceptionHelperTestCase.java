@@ -73,20 +73,23 @@ public class ExceptionHelperTestCase extends AbstractMuleTestCase {
   @Test
   public void getNonMuleExceptionCause() {
     assertThat(ExceptionHelper.getNonMuleException(new ResolverException(CoreMessages.failedToBuildMessage(), null)),
-        IsNull.<Object>nullValue());
-    assertThat(ExceptionHelper.getNonMuleException(new ResolverException(CoreMessages.failedToBuildMessage(),
-        new ConfigurationException(CoreMessages.failedToBuildMessage(), null))), IsNull.<Object>nullValue());
-    assertThat(
-        ExceptionHelper.getNonMuleException(new ResolverException(CoreMessages.failedToBuildMessage(),
-            new ConfigurationException(CoreMessages.failedToBuildMessage(), new IllegalArgumentException()))),
-        IsInstanceOf.instanceOf(IllegalArgumentException.class));
-    assertThat(
-        ExceptionHelper.getNonMuleException(new ResolverException(CoreMessages.failedToBuildMessage(),
-            new ConfigurationException(CoreMessages.failedToBuildMessage(),
-                new IllegalArgumentException(new NullPointerException())))),
-        IsInstanceOf.instanceOf(IllegalArgumentException.class));
+               IsNull.<Object>nullValue());
+    assertThat(ExceptionHelper
+        .getNonMuleException(new ResolverException(CoreMessages.failedToBuildMessage(),
+                                                   new ConfigurationException(CoreMessages.failedToBuildMessage(), null))),
+               IsNull.<Object>nullValue());
+    assertThat(ExceptionHelper
+        .getNonMuleException(new ResolverException(CoreMessages.failedToBuildMessage(),
+                                                   new ConfigurationException(CoreMessages.failedToBuildMessage(),
+                                                                              new IllegalArgumentException()))),
+               IsInstanceOf.instanceOf(IllegalArgumentException.class));
+    assertThat(ExceptionHelper
+        .getNonMuleException(new ResolverException(CoreMessages.failedToBuildMessage(),
+                                                   new ConfigurationException(CoreMessages.failedToBuildMessage(),
+                                                                              new IllegalArgumentException(new NullPointerException())))),
+               IsInstanceOf.instanceOf(IllegalArgumentException.class));
     assertThat(ExceptionHelper.getNonMuleException(new IllegalArgumentException()),
-        IsInstanceOf.instanceOf(IllegalArgumentException.class));
+               IsInstanceOf.instanceOf(IllegalArgumentException.class));
   }
 
   @Test
@@ -109,12 +112,12 @@ public class ExceptionHelperTestCase extends AbstractMuleTestCase {
       fail("Expected exception");
     } catch (Exception e) {
       assertThat(ExceptionHelper.getExceptionStack(e),
-          StringByLineMatcher.matchesLineByLine("foo \\(org.mule.runtime.core.api.DefaultMuleException\\)",
-              "  org.mule.test.config.ExceptionHelperTestCase\\$1\\$1.execute\\(ExceptionHelperTestCase.java:[0-9]+\\)",
-              "  org.apache.commons.collections.CollectionUtils.forAllDo\\(CollectionUtils.java:[0-9]+\\)",
-              "  org.mule.test.config.ExceptionHelperTestCase\\$1.execute\\(ExceptionHelperTestCase.java:[0-9]+\\)",
-              "  org.mule.test.config.ExceptionHelperTestCase.generateStackEntries\\(ExceptionHelperTestCase.java:[0-9]+\\)",
-              "  \\(" + (calls + 13) + " more...\\)")); // recursive
+                 StringByLineMatcher.matchesLineByLine("foo \\(org.mule.runtime.core.api.DefaultMuleException\\)",
+                                                       "  org.mule.test.config.ExceptionHelperTestCase\\$1\\$1.execute\\(ExceptionHelperTestCase.java:[0-9]+\\)",
+                                                       "  org.apache.commons.collections.CollectionUtils.forAllDo\\(CollectionUtils.java:[0-9]+\\)",
+                                                       "  org.mule.test.config.ExceptionHelperTestCase\\$1.execute\\(ExceptionHelperTestCase.java:[0-9]+\\)",
+                                                       "  org.mule.test.config.ExceptionHelperTestCase.generateStackEntries\\(ExceptionHelperTestCase.java:[0-9]+\\)",
+                                                       "  \\(" + (calls + 13) + " more...\\)")); // recursive
     }
   }
 
@@ -139,17 +142,17 @@ public class ExceptionHelperTestCase extends AbstractMuleTestCase {
       fail("Expected exception");
     } catch (Exception e) {
       assertThat(ExceptionHelper.getExceptionStack(e),
-          StringByLineMatcher.matchesLineByLine("foo \\(org.mule.runtime.core.api.DefaultMuleException\\)",
-              "  org.mule.test.config.ExceptionHelperTestCase\\$2\\$1.compareTo\\(ExceptionHelperTestCase.java:[0-9]+\\)",
-              "  org.apache.commons.collections.comparators.ComparableComparator.compare\\(ComparableComparator.java:[0-9]+\\)",
-              "  java.util.*", // Collections.sort
-              "  java.util.*", // Collections.sort
-              "  java.util.*", // Collections.sort
-              "  java.util.*", // Collections.sort
-              "  java.util.*", // Collections.sort
-              "  org.mule.test.config.ExceptionHelperTestCase\\$2.execute\\(ExceptionHelperTestCase.java:[0-9]+\\)",
-              "  org.mule.test.config.ExceptionHelperTestCase.generateStackEntries\\(ExceptionHelperTestCase.java:[0-9]+\\)",
-              "  \\(" + (calls + 13) + " more...\\)")); // recursive
+                 StringByLineMatcher.matchesLineByLine("foo \\(org.mule.runtime.core.api.DefaultMuleException\\)",
+                                                       "  org.mule.test.config.ExceptionHelperTestCase\\$2\\$1.compareTo\\(ExceptionHelperTestCase.java:[0-9]+\\)",
+                                                       "  org.apache.commons.collections.comparators.ComparableComparator.compare\\(ComparableComparator.java:[0-9]+\\)",
+                                                       "  java.util.*", // Collections.sort
+                                                       "  java.util.*", // Collections.sort
+                                                       "  java.util.*", // Collections.sort
+                                                       "  java.util.*", // Collections.sort
+                                                       "  java.util.*", // Collections.sort
+                                                       "  org.mule.test.config.ExceptionHelperTestCase\\$2.execute\\(ExceptionHelperTestCase.java:[0-9]+\\)",
+                                                       "  org.mule.test.config.ExceptionHelperTestCase.generateStackEntries\\(ExceptionHelperTestCase.java:[0-9]+\\)",
+                                                       "  \\(" + (calls + 13) + " more...\\)")); // recursive
     }
   }
 
@@ -167,11 +170,11 @@ public class ExceptionHelperTestCase extends AbstractMuleTestCase {
       });
     } catch (Exception e) {
       assertThat(ExceptionHelper.getExceptionStack(e),
-          StringByLineMatcher.matchesLineByLine("foo \\(org.mule.runtime.core.api.DefaultMuleException\\)",
-              "  org.mule.test.config.ExceptionHelperTestCase\\$3.execute\\(ExceptionHelperTestCase.java:[0-9]+\\)",
-              "  org.mule.test.config.ExceptionHelperTestCase.generateStackEntries\\(ExceptionHelperTestCase.java:[0-9]+\\)",
-              "  org.mule.test.config.ExceptionHelperTestCase.generateStackEntries\\(ExceptionHelperTestCase.java:[0-9]+\\)",
-              "  \\(" + (calls + 12) + " more...\\)")); // recursive
+                 StringByLineMatcher.matchesLineByLine("foo \\(org.mule.runtime.core.api.DefaultMuleException\\)",
+                                                       "  org.mule.test.config.ExceptionHelperTestCase\\$3.execute\\(ExceptionHelperTestCase.java:[0-9]+\\)",
+                                                       "  org.mule.test.config.ExceptionHelperTestCase.generateStackEntries\\(ExceptionHelperTestCase.java:[0-9]+\\)",
+                                                       "  org.mule.test.config.ExceptionHelperTestCase.generateStackEntries\\(ExceptionHelperTestCase.java:[0-9]+\\)",
+                                                       "  \\(" + (calls + 12) + " more...\\)")); // recursive
     }
   }
 

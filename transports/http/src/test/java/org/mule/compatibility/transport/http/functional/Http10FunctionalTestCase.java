@@ -42,8 +42,9 @@ public class Http10FunctionalTestCase extends FunctionalTestCase {
   @Test
   public void testHttp10EnforceNonChunking() throws Exception {
     HttpClient client = setupHttpClient();
-    GetMethod request = new GetMethod(
-        ((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("Streaming")).getMessageSource()).getAddress());
+    GetMethod request =
+        new GetMethod(((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("Streaming")).getMessageSource())
+            .getAddress());
     client.executeMethod(request);
     assertEquals("hello", request.getResponseBodyAsString());
 

@@ -77,14 +77,15 @@ public class MuleContainer {
 
     this.deploymentService = new MuleDeploymentService(containerClassLoader);
     this.repositoryService = new RepositoryServiceFactory().createRepositoryService();
-    this.coreExtensionManager = new DefaultMuleCoreExtensionManagerServer(
-        new ClasspathMuleCoreExtensionDiscoverer(containerClassLoader), new ReflectionMuleCoreExtensionDependencyResolver());
+    this.coreExtensionManager =
+        new DefaultMuleCoreExtensionManagerServer(new ClasspathMuleCoreExtensionDiscoverer(containerClassLoader),
+                                                  new ReflectionMuleCoreExtensionDependencyResolver());
 
     init(args);
   }
 
   public MuleContainer(DeploymentService deploymentService, RepositoryService repositoryService,
-      MuleCoreExtensionManagerServer coreExtensionManager) {
+                       MuleCoreExtensionManagerServer coreExtensionManager) {
     this(new String[0], deploymentService, repositoryService, coreExtensionManager);
   }
 
@@ -92,7 +93,8 @@ public class MuleContainer {
    * Configure the server with command-line arguments.
    */
   public MuleContainer(String[] args, DeploymentService deploymentService, RepositoryService repositoryService,
-      MuleCoreExtensionManagerServer coreExtensionManager) throws IllegalArgumentException {
+                       MuleCoreExtensionManagerServer coreExtensionManager)
+      throws IllegalArgumentException {
     // TODO(pablo.kraan): remove the args argument and use the already existing setters to set everything needed
     this.deploymentService = deploymentService;
     this.coreExtensionManager = coreExtensionManager;
@@ -144,9 +146,9 @@ public class MuleContainer {
     File executionFolder = MuleFoldersUtil.getExecutionFolder();
     if (!executionFolder.exists()) {
       if (!executionFolder.mkdirs()) {
-        throw new MuleRuntimeException(CoreMessages.createStaticMessage(
-            String.format("Could not create folder %s, validate that the process has permissions over that directory",
-                executionFolder.getAbsolutePath())));
+        throw new MuleRuntimeException(CoreMessages.createStaticMessage(String.format(
+                                                                                      "Could not create folder %s, validate that the process has permissions over that directory",
+                                                                                      executionFolder.getAbsolutePath())));
       }
     }
   }

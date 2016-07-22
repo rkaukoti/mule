@@ -19,7 +19,7 @@ import java.util.Map;
 public abstract class AbstractMapBeanAssembler extends DefaultBeanAssembler {
 
   public AbstractMapBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
-      PropertyConfiguration targetConfig, BeanDefinition target) {
+                                  PropertyConfiguration targetConfig, BeanDefinition target) {
     super(beanConfig, bean, targetConfig, target);
   }
 

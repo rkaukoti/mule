@@ -36,7 +36,7 @@ public abstract class AbstractJavaWithBindingsComponent extends AbstractJavaComp
   }
 
   public AbstractJavaWithBindingsComponent(ObjectFactory objectFactory, EntryPointResolverSet entryPointResolverSet,
-      List<InterfaceBinding> bindings) {
+                                           List<InterfaceBinding> bindings) {
     super(objectFactory, entryPointResolverSet);
     if (bindings != null) {
       this.bindings = bindings;
@@ -73,7 +73,7 @@ public abstract class AbstractJavaWithBindingsComponent extends AbstractJavaComp
       lifecycleAdapter = new NullLifecycleAdapterWithBindings(object, this, flowConstruct, entryPointResolverSet, muleContext);
     } else {
       lifecycleAdapter = new DefaultComponentLifecycleAdapterWithBindingsFactory().create(object, this, flowConstruct,
-          entryPointResolverSet, muleContext);
+                                                                                          entryPointResolverSet, muleContext);
     }
     lifecycleAdapter.initialise();
     return lifecycleAdapter;

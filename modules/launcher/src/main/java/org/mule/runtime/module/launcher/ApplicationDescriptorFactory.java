@@ -48,7 +48,7 @@ public class ApplicationDescriptorFactory implements ArtifactDescriptorFactory<A
   private final ArtifactPluginDescriptorLoader artifactPluginDescriptorLoader;
 
   public ApplicationDescriptorFactory(ArtifactPluginDescriptorLoader artifactPluginDescriptorLoader,
-      ArtifactPluginRepository applicationPluginRepository) {
+                                      ArtifactPluginRepository applicationPluginRepository) {
     checkArgument(artifactPluginDescriptorLoader != null, "ApplicationPluginDescriptorFactory cannot be null");
     checkArgument(applicationPluginRepository != null, "ApplicationPluginRepository cannot be null");
     this.applicationPluginRepository = applicationPluginRepository;
@@ -141,8 +141,8 @@ public class ApplicationDescriptorFactory implements ArtifactDescriptorFactory<A
     for (String pluginZip : pluginZips) {
       String unpackDestinationFolder = appDescriptor.getName() + separator + PLUGINS_FOLDER + separator;
       File pluginZipFile = new File(pluginsDir, pluginZip);
-      pds.add(artifactPluginDescriptorLoader.load(pluginZipFile,
-          new File(MuleContainerBootstrapUtils.getMuleTmpDir(), unpackDestinationFolder)));
+      pds.add(artifactPluginDescriptorLoader
+          .load(pluginZipFile, new File(MuleContainerBootstrapUtils.getMuleTmpDir(), unpackDestinationFolder)));
     }
     return pds;
   }

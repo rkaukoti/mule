@@ -70,8 +70,9 @@ public class XsltTransformerXXETest extends FunctionalTestCase {
 
   private String makeInput() {
     return String.format(
-        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" + "<!DOCTYPE spi_doc_type[ <!ENTITY spi_entity_ref SYSTEM 'file:%s'>]>\n"
-            + "<root>\n" + "<elem>&spi_entity_ref;</elem>\n" + "<something/>\n" + "</root>",
-        IOUtils.getResourceAsUrl("xxe-passwd.txt", this.getClass()).getPath());
+                         "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+                             + "<!DOCTYPE spi_doc_type[ <!ENTITY spi_entity_ref SYSTEM 'file:%s'>]>\n" + "<root>\n"
+                             + "<elem>&spi_entity_ref;</elem>\n" + "<something/>\n" + "</root>",
+                         IOUtils.getResourceAsUrl("xxe-passwd.txt", this.getClass()).getPath());
   }
 }

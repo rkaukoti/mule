@@ -66,7 +66,7 @@ public class MuleEventToHttpRequest {
 
 
   public MuleEventToHttpRequest(DefaultHttpRequester requester, MuleContext muleContext, AttributeEvaluator requestStreamingMode,
-      AttributeEvaluator sendBody) {
+                                AttributeEvaluator sendBody) {
     this.requester = requester;
     this.muleContext = muleContext;
     this.requestStreamingMode = requestStreamingMode;
@@ -196,9 +196,8 @@ public class MuleEventToHttpRequest {
 
       if (contentType == null || contentType.equals(APPLICATION_X_WWW_FORM_URLENCODED.toRfcString())) {
         if (muleEvent.getMessage().getPayload() instanceof Map) {
-          String body = HttpParser.encodeString(
-              muleEvent.getMessage().getDataType().getMediaType().getCharset().orElse(getDefaultEncoding(muleContext)),
-              (Map) payload);
+          String body = HttpParser.encodeString(muleEvent.getMessage().getDataType().getMediaType().getCharset()
+              .orElse(getDefaultEncoding(muleContext)), (Map) payload);
           requestBuilder.addHeader(CONTENT_TYPE, APPLICATION_X_WWW_FORM_URLENCODED.toRfcString());
           return new ByteArrayHttpEntity(body.getBytes());
         }

@@ -39,7 +39,8 @@ class ReceiverFileInputStream extends FileInputStream {
   }
 
   public ReceiverFileInputStream(File sourceFile, boolean deleteOnClose, File destinationFile,
-      InputStreamCloseListener closeListener) throws FileNotFoundException {
+                                 InputStreamCloseListener closeListener)
+      throws FileNotFoundException {
     this(sourceFile, deleteOnClose, destinationFile);
     this.closeListener = closeListener;
   }

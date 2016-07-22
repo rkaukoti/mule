@@ -67,7 +67,7 @@ final class SchemaDocumenter {
 
 
   private void documentOperations(RoundEnvironment roundEnv, ProcessingEnvironment processingEnv,
-      ExtensionDeclaration extensionDeclaration) {
+                                  ExtensionDeclaration extensionDeclaration) {
     final Map<String, Element> methods = getOperationMethods(roundEnv, processingEnv);
 
     try {
@@ -88,7 +88,7 @@ final class SchemaDocumenter {
       }
     } catch (Exception e) {
       throw new MuleRuntimeException(MessageFactory.createStaticMessage("Exception found while trying to document XSD schema"),
-          e);
+                                     e);
     }
   }
 
@@ -102,7 +102,7 @@ final class SchemaDocumenter {
   }
 
   private void documentConfigurations(ExtensionDeclaration extensionDeclaration, TypeElement extensionElement,
-      RoundEnvironment roundEnvironment) {
+                                      RoundEnvironment roundEnvironment) {
     if (extensionDeclaration.getConfigurations().size() > 1) {
       for (TypeElement configurationElement : getTypeElementsAnnotatedWith(Configuration.class, roundEnvironment)) {
         ConfigurationDeclaration configurationDeclaration = findMatchingConfiguration(extensionDeclaration, configurationElement);
@@ -135,7 +135,7 @@ final class SchemaDocumenter {
   }
 
   private ConfigurationDeclaration findMatchingConfiguration(ExtensionDeclaration extensionDeclaration,
-      final TypeElement configurationElement) {
+                                                             final TypeElement configurationElement) {
     return (ConfigurationDeclaration) CollectionUtils.find(extensionDeclaration.getConfigurations(), object -> {
       Configuration configuration = configurationElement.getAnnotation(Configuration.class);
       ConfigurationDeclaration configurationDeclaration = (ConfigurationDeclaration) object;

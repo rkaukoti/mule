@@ -40,8 +40,9 @@ public class AuthorizationCodeMultitenantTestCase extends AbstractOAuthAuthoriza
   public static final String NO_STATE = null;
 
   @Rule
-  public SystemProperty localAuthorizationUrl = new SystemProperty("local.authorization.url",
-      String.format("http://localhost:%d/authorization", localHostPort.getNumber()));
+  public SystemProperty localAuthorizationUrl =
+      new SystemProperty("local.authorization.url",
+                         String.format("http://localhost:%d/authorization", localHostPort.getNumber()));
   @Rule
   public SystemProperty authorizationUrl =
       new SystemProperty("authorization.url", String.format("http://localhost:%d" + AUTHORIZE_PATH, oauthServerPort.getNumber()));
@@ -105,8 +106,8 @@ public class AuthorizationCodeMultitenantTestCase extends AbstractOAuthAuthoriza
     }
 
     Request
-        .Get(
-            localAuthorizationUrl.getValue() + "?" + HttpParser.encodeQueryString(localAuthorizationUrlParametersBuilder.build()))
+        .Get(localAuthorizationUrl.getValue() + "?"
+            + HttpParser.encodeQueryString(localAuthorizationUrlParametersBuilder.build()))
         .connectTimeout(REQUEST_TIMEOUT).socketTimeout(REQUEST_TIMEOUT).execute();
 
     AuthorizationRequestAsserter.create((findAll(getRequestedFor(urlMatching(AUTHORIZE_PATH + ".*"))).get(0)))

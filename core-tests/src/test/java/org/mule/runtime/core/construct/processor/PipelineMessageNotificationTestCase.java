@@ -333,10 +333,12 @@ public class PipelineMessageNotificationTestCase extends AbstractMuleTestCase {
       // Event is not same, because it's copied
       verify(notificationManager, times(1))
           .fireNotification(argThat(new PipelineMessageNotificiationArgumentMatcher(PROCESS_ASYNC_COMPLETE, false, null)));
-      verify(notificationManager, times(1)).fireNotification(
-          argThat(new PipelineMessageNotificiationArgumentMatcher(ExceptionStrategyNotification.PROCESS_START, false, null)));
-      verify(notificationManager, times(1)).fireNotification(
-          argThat(new PipelineMessageNotificiationArgumentMatcher(ExceptionStrategyNotification.PROCESS_END, false, null)));
+      verify(notificationManager, times(1))
+          .fireNotification(argThat(new PipelineMessageNotificiationArgumentMatcher(ExceptionStrategyNotification.PROCESS_START,
+                                                                                    false, null)));
+      verify(notificationManager, times(1))
+          .fireNotification(argThat(new PipelineMessageNotificiationArgumentMatcher(ExceptionStrategyNotification.PROCESS_END,
+                                                                                    false, null)));
       verify(notificationManager, times(6)).fireNotification(any(PipelineMessageNotification.class));
       return true;
     }));

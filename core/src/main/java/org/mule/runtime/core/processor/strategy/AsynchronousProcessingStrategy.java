@@ -24,18 +24,19 @@ public class AsynchronousProcessingStrategy extends AbstractThreadingProfileProc
 
   @Override
   public void configureProcessors(List<MessageProcessor> processors,
-      org.mule.runtime.core.api.processor.StageNameSource nameSource, MessageProcessorChainBuilder chainBuilder,
-      MuleContext muleContext) {
+                                  org.mule.runtime.core.api.processor.StageNameSource nameSource,
+                                  MessageProcessorChainBuilder chainBuilder, MuleContext muleContext) {
     if (processors.size() > 0) {
       chainBuilder.chain(createAsyncMessageProcessor(nameSource, muleContext));
       synchronousProcessingStrategy.configureProcessors(processors, nameSource, chainBuilder, muleContext);
     }
   }
 
-  protected AsyncInterceptingMessageProcessor createAsyncMessageProcessor(
-      org.mule.runtime.core.api.processor.StageNameSource nameSource, MuleContext muleContext) {
+  protected AsyncInterceptingMessageProcessor createAsyncMessageProcessor(org.mule.runtime.core.api.processor.StageNameSource nameSource,
+                                                                          MuleContext muleContext) {
     return new AsyncInterceptingMessageProcessor(createThreadingProfile(muleContext),
-        getThreadPoolName(nameSource.getName(), muleContext), muleContext.getConfiguration().getShutdownTimeout());
+                                                 getThreadPoolName(nameSource.getName(), muleContext),
+                                                 muleContext.getConfiguration().getShutdownTimeout());
   }
 
 }

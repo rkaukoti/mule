@@ -353,7 +353,7 @@ public class FakeMuleServer {
   }
 
   private void copyExplodedArtifactFromClasspathFolderToDeployFolder(String artifactFolder, File artifactDirectory,
-      String artifactName) {
+                                                                     String artifactName) {
     ReentrantLock lock = this.deploymentService.getLock();
     lock.lock();
     try {

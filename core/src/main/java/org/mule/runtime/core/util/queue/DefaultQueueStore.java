@@ -39,7 +39,7 @@ public class DefaultQueueStore implements RecoverableQueueStore {
     }
     if (this.config.isPersistent()) {
       delegate = new DualRandomAccessFileQueueStoreDelegate(this.name, muleContext.getConfiguration().getWorkingDirectory(),
-          muleContext, this.config.getCapacity());
+                                                            muleContext, this.config.getCapacity());
     } else {
       delegate = new DefaultQueueStoreDelegate(this.config.getCapacity());
     }
@@ -99,8 +99,8 @@ public class DefaultQueueStore implements RecoverableQueueStore {
     if (this.delegate instanceof TransactionalQueueStoreDelegate) {
       ((TransactionalQueueStoreDelegate) delegate).remove(value);
     } else {
-      throw new NotImplementedException(
-          String.format("Queue of type %s does not support remove", delegate.getClass().getCanonicalName()));
+      throw new NotImplementedException(String.format("Queue of type %s does not support remove",
+                                                      delegate.getClass().getCanonicalName()));
     }
   }
 
@@ -108,8 +108,8 @@ public class DefaultQueueStore implements RecoverableQueueStore {
     if (this.delegate instanceof TransactionalQueueStoreDelegate) {
       return ((TransactionalQueueStoreDelegate) delegate).contains(value);
     } else {
-      throw new NotImplementedException(
-          String.format("Queue of type %s does not support contains", delegate.getClass().getCanonicalName()));
+      throw new NotImplementedException(String.format("Queue of type %s does not support contains",
+                                                      delegate.getClass().getCanonicalName()));
     }
   }
 
@@ -117,8 +117,8 @@ public class DefaultQueueStore implements RecoverableQueueStore {
     if (this.delegate instanceof TransactionalQueueStoreDelegate) {
       ((TransactionalQueueStoreDelegate) delegate).close();
     } else {
-      throw new NotImplementedException(
-          String.format("Queue of type %s does not support close", delegate.getClass().getCanonicalName()));
+      throw new NotImplementedException(String.format("Queue of type %s does not support close",
+                                                      delegate.getClass().getCanonicalName()));
     }
   }
 

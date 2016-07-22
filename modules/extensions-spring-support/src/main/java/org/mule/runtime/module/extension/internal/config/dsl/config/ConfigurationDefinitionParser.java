@@ -35,7 +35,8 @@ public final class ConfigurationDefinitionParser extends ExtensionDefinitionPars
   private final DslElementDeclaration configDsl;
 
   public ConfigurationDefinitionParser(Builder definition, RuntimeConfigurationModel configurationModel,
-      DslElementResolver dslResolver, MuleContext muleContext, ExtensionParsingContext parsingContext) {
+                                       DslElementResolver dslResolver, MuleContext muleContext,
+                                       ExtensionParsingContext parsingContext) {
     super(definition, dslResolver, parsingContext);
     this.configurationModel = configurationModel;
     this.muleContext = muleContext;
@@ -60,7 +61,7 @@ public final class ConfigurationDefinitionParser extends ExtensionDefinitionPars
     if (!getConnectedComponents(configurationModel).isEmpty()) {
       definitionBuilder.withSetterParameterDefinition("requiresConnection", fromFixedValue(true).build());
       definitionBuilder.withSetterParameterDefinition("connectionProviderResolver",
-          fromChildConfiguration(ConnectionProviderResolver.class).build());
+                                                      fromChildConfiguration(ConnectionProviderResolver.class).build());
     }
   }
 

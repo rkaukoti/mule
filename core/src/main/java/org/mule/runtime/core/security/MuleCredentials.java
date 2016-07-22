@@ -43,8 +43,8 @@ public class MuleCredentials implements Credentials, Serializable {
 
     int i = header.indexOf(' ');
     if (i == -1) {
-      throw new IllegalArgumentException(
-          CoreMessages.headerMalformedValueIs(MuleProperties.MULE_USER_PROPERTY, header).toString());
+      throw new IllegalArgumentException(CoreMessages.headerMalformedValueIs(MuleProperties.MULE_USER_PROPERTY, header)
+          .toString());
     }
 
     String scheme = header.substring(0, i);

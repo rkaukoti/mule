@@ -83,8 +83,8 @@ public class ActiveMQJmsConnectorTestCase extends FunctionalTestCase {
 
     assertNotNull(c.getConnectionFactory());
     assertTrue(c.getConnectionFactory() instanceof CachingConnectionFactory);
-    assertTrue(
-        ((CachingConnectionFactory) c.getConnectionFactory()).getTargetConnectionFactory() instanceof ActiveMQConnectionFactory);
+    assertTrue(((CachingConnectionFactory) c.getConnectionFactory())
+        .getTargetConnectionFactory() instanceof ActiveMQConnectionFactory);
     assertEquals(Session.DUPS_OK_ACKNOWLEDGE, c.getAcknowledgementMode());
     assertNull(c.getUsername());
     assertNull(c.getPassword());

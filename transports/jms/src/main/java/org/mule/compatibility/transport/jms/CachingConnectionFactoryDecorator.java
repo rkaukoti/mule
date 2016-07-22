@@ -22,7 +22,7 @@ public class CachingConnectionFactoryDecorator extends AbstractConnectionFactory
 
   @Override
   protected ConnectionFactory doDecorate(ConnectionFactory connectionFactory, JmsConnector jmsConnector,
-      MuleContext muleContext) {
+                                         MuleContext muleContext) {
     if (resolveReuseSessionsEnabled(jmsConnector)) {
       cachingConnectionFactory =
           new CustomCachingConnectionFactory(connectionFactory, jmsConnector.getUsername(), jmsConnector.getPassword());

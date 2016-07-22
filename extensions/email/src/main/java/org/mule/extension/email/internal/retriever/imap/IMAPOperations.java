@@ -46,8 +46,8 @@ public class IMAPOperations {
    * @param emailId Email ID Number of the email to mark as read, if there is no email in the incoming {@link MuleMessage}.
    */
   public void markAsRead(MuleMessage message, @Connection RetrieverConnection connection,
-      @Optional(defaultValue = INBOX_FOLDER) String mailboxFolder,
-      @Optional @Summary("Email ID Number of the email to mark as read") @DisplayName("Email ID") Integer emailId) {
+                         @Optional(defaultValue = INBOX_FOLDER) String mailboxFolder,
+                         @Optional @Summary("Email ID Number of the email to mark as read") @DisplayName("Email ID") Integer emailId) {
     setFlagCommand.set(message, connection, mailboxFolder, emailId, SEEN);
   }
 
@@ -67,8 +67,8 @@ public class IMAPOperations {
    * @param emailId Email ID Number of the email to mark as deleted, if there is no email in the incoming {@link MuleMessage}.
    */
   public void markAsDeleted(MuleMessage message, @Connection RetrieverConnection connection,
-      @Optional(defaultValue = INBOX_FOLDER) String mailboxFolder,
-      @Optional @Summary("Email ID Number of the email to mark as deleted") @DisplayName("Email ID") Integer emailId) {
+                            @Optional(defaultValue = INBOX_FOLDER) String mailboxFolder,
+                            @Optional @Summary("Email ID Number of the email to mark as deleted") @DisplayName("Email ID") Integer emailId) {
     setFlagCommand.set(message, connection, mailboxFolder, emailId, DELETED);
   }
 
@@ -80,7 +80,7 @@ public class IMAPOperations {
    *        deleted
    */
   public void expungeFolder(@Connection RetrieverConnection connection,
-      @Optional(defaultValue = INBOX_FOLDER) String mailboxFolder) {
+                            @Optional(defaultValue = INBOX_FOLDER) String mailboxFolder) {
     expungeCommand.expunge(connection, mailboxFolder);
   }
 }

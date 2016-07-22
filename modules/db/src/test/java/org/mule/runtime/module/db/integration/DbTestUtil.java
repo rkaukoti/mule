@@ -31,6 +31,6 @@ public class DbTestUtil {
 
   public static void assertExpectedUpdateCount(int expected, int actual) {
     assertTrue(String.format("Update count is neither the expected one %s nor Statement.SUCCESS_NO_INFO", expected),
-        expected == actual || Statement.SUCCESS_NO_INFO == actual);
+               expected == actual || Statement.SUCCESS_NO_INFO == actual);
   }
 }

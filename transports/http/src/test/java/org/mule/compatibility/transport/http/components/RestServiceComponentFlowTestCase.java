@@ -21,8 +21,9 @@ import static org.junit.Assert.assertTrue;
 public class RestServiceComponentFlowTestCase extends FunctionalTestCase {
 
   public static final String FLOW_NAME = "WORMS";
-  public static final String FLOW_URL = MessageFormat.format("{0}header:serviceUrl{1}",
-      ExpressionManager.DEFAULT_EXPRESSION_PREFIX, ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
+  public static final String FLOW_URL =
+      MessageFormat.format("{0}header:serviceUrl{1}", ExpressionManager.DEFAULT_EXPRESSION_PREFIX,
+                           ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
 
   @Override
   protected String getConfigFile() {

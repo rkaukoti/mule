@@ -36,8 +36,7 @@ public class ResponseMessageProcessorsFactoryBean implements FactoryBean, MuleCo
       } else if (processor instanceof MessageProcessorBuilder) {
         builder.chain((MessageProcessorBuilder) processor);
       } else {
-        throw new IllegalArgumentException(
-            "MessageProcessorBuilder should only have MessageProcessor's or MessageProcessorBuilder's configured");
+        throw new IllegalArgumentException("MessageProcessorBuilder should only have MessageProcessor's or MessageProcessorBuilder's configured");
       }
     }
     ResponseMessageProcessorAdapter responseAdapter = new ResponseMessageProcessorAdapter();

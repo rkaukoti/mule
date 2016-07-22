@@ -46,8 +46,8 @@ public class XaTransaction extends AbstractTransaction {
 
   protected void doBegin() throws TransactionException {
     if (txManager == null) {
-      throw new IllegalStateException(
-          CoreMessages.objectNotRegistered("javax.transaction.TransactionManager", "Transaction Manager").getMessage());
+      throw new IllegalStateException(CoreMessages
+          .objectNotRegistered("javax.transaction.TransactionManager", "Transaction Manager").getMessage());
     }
 
     try {
@@ -282,8 +282,8 @@ public class XaTransaction extends AbstractTransaction {
     TransactionManager txManager = muleContext.getTransactionManager();
 
     if (txManager == null) {
-      throw new IllegalStateException(
-          CoreMessages.objectNotRegistered("javax.transaction.TransactionManager", "Transaction Manager").getMessage());
+      throw new IllegalStateException(CoreMessages
+          .objectNotRegistered("javax.transaction.TransactionManager", "Transaction Manager").getMessage());
     }
     try {
       txManager.resume(transaction);
@@ -298,8 +298,8 @@ public class XaTransaction extends AbstractTransaction {
     TransactionManager txManager = muleContext.getTransactionManager();
 
     if (txManager == null) {
-      throw new IllegalStateException(
-          CoreMessages.objectNotRegistered("javax.transaction.TransactionManager", "Transaction Manager").getMessage());
+      throw new IllegalStateException(CoreMessages
+          .objectNotRegistered("javax.transaction.TransactionManager", "Transaction Manager").getMessage());
     }
     try {
       transaction = txManager.suspend();

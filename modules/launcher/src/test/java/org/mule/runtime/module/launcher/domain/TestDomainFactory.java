@@ -16,7 +16,7 @@ public class TestDomainFactory extends DefaultDomainFactory {
   private boolean failOnDispose;
 
   public TestDomainFactory(DeployableArtifactClassLoaderFactory<DomainDescriptor> domainClassLoaderFactory,
-      ArtifactClassLoader containerClassLoader) {
+                           ArtifactClassLoader containerClassLoader) {
     super(domainClassLoaderFactory, new DefaultDomainManager(), containerClassLoader);
   }
 

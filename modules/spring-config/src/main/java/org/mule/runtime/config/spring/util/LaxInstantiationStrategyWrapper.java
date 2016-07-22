@@ -70,7 +70,8 @@ public class LaxInstantiationStrategyWrapper implements InstantiationStrategy {
 
   @Override
   public Object instantiate(RootBeanDefinition bd, String beanName, BeanFactory owner, Object factoryBean, Method factoryMethod,
-      Object... args) throws BeansException {
+                            Object... args)
+      throws BeansException {
     return withContextClassLoader(getClassLoader(bd), () -> {
       try {
         return delegate.instantiate(bd, beanName, owner, factoryBean, factoryMethod, args);

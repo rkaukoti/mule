@@ -95,21 +95,27 @@ public class MuleDeploymentService implements DeploymentService {
     final ApplicationDescriptorFactory applicationDescriptorFactory =
         new ApplicationDescriptorFactory(artifactPluginDescriptorLoader, artifactPluginRepository);
 
-    ApplicationClassLoaderBuilderFactory applicationClassLoaderBuilderFactory = new ApplicationClassLoaderBuilderFactory(
-        applicationClassLoaderFactory, artifactPluginRepository, artifactPluginFactory, artifactPluginDescriptorLoader);
+    ApplicationClassLoaderBuilderFactory applicationClassLoaderBuilderFactory =
+        new ApplicationClassLoaderBuilderFactory(applicationClassLoaderFactory, artifactPluginRepository, artifactPluginFactory,
+                                                 artifactPluginDescriptorLoader);
 
-    DefaultApplicationFactory applicationFactory = new DefaultApplicationFactory(applicationClassLoaderBuilderFactory,
-        applicationDescriptorFactory, artifactPluginRepository, domainManager);
+    DefaultApplicationFactory applicationFactory =
+        new DefaultApplicationFactory(applicationClassLoaderBuilderFactory, applicationDescriptorFactory,
+                                      artifactPluginRepository, domainManager);
     applicationFactory.setDeploymentListener(applicationDeploymentListener);
 
     ArtifactDeployer<Application> applicationMuleDeployer = new DefaultArtifactDeployer<>();
     ArtifactDeployer<Domain> domainMuleDeployer = new DefaultArtifactDeployer<>();
 
     this.applicationDeployer = new DefaultArchiveDeployer<>(applicationMuleDeployer, applicationFactory, applications,
-        deploymentLock, NOP_ARTIFACT_DEPLOYMENT_TEMPLATE);
+                                                            deploymentLock, NOP_ARTIFACT_DEPLOYMENT_TEMPLATE);
     this.applicationDeployer.setDeploymentListener(applicationDeploymentListener);
-    this.domainDeployer = new DomainArchiveDeployer(new DefaultArchiveDeployer<>(domainMuleDeployer, domainFactory, domains,
-        deploymentLock, new DomainDeploymentTemplate(applicationDeployer, this)), applicationDeployer, this);
+    this.domainDeployer = new DomainArchiveDeployer(
+                                                    new DefaultArchiveDeployer<>(domainMuleDeployer, domainFactory, domains,
+                                                                                 deploymentLock,
+                                                                                 new DomainDeploymentTemplate(applicationDeployer,
+                                                                                                              this)),
+                                                    applicationDeployer, this);
     this.domainDeployer.setDeploymentListener(domainDeploymentListener);
     this.deploymentDirectoryWatcher =
         new DeploymentDirectoryWatcher(domainDeployer, applicationDeployer, domains, applications, deploymentLock);

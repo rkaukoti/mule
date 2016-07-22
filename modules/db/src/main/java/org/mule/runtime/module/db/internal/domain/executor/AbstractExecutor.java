@@ -37,7 +37,8 @@ public abstract class AbstractExecutor {
   }
 
   protected void doProcessParameters(PreparedStatement statement, QueryTemplate queryTemplate, List<QueryParamValue> paramValues,
-      SingleQueryLogger queryLogger) throws SQLException {
+                                     SingleQueryLogger queryLogger)
+      throws SQLException {
     int valueIndex = 0;
 
     for (int paramIndex = 1, inputParamsSize = queryTemplate.getParams().size(); paramIndex <= inputParamsSize; paramIndex++) {

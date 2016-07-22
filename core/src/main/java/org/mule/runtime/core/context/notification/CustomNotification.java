@@ -32,16 +32,16 @@ public class CustomNotification extends ServerNotification {
   public CustomNotification(Object message, int action) {
     super(message, action);
     if (action < CUSTOM_EVENT_ACTION_START_RANGE && action > 0) {
-      throw new IllegalArgumentException(
-          "Action range must be greater than CUSTOM_ACTION_START_RANGE (" + CUSTOM_EVENT_ACTION_START_RANGE + ")");
+      throw new IllegalArgumentException("Action range must be greater than CUSTOM_ACTION_START_RANGE ("
+          + CUSTOM_EVENT_ACTION_START_RANGE + ")");
     }
   }
 
   public CustomNotification(Object message, int action, String resourceId) {
     super(message, action, resourceId);
     if (action < CUSTOM_EVENT_ACTION_START_RANGE && action > 0) {
-      throw new IllegalArgumentException(
-          "Action range must be greater than CUSTOM_ACTION_START_RANGE (" + CUSTOM_EVENT_ACTION_START_RANGE + ")");
+      throw new IllegalArgumentException("Action range must be greater than CUSTOM_ACTION_START_RANGE ("
+          + CUSTOM_EVENT_ACTION_START_RANGE + ")");
     }
   }
 

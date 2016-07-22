@@ -79,8 +79,8 @@ public class ServerNotificationManager implements Work, Disposable, ServerNotifi
     } else if (value instanceof Class) {
       clazz = (Class) value;
     } else {
-      throw new IllegalArgumentException(
-          "Notification types and listeners must be a Class with fully qualified class name. Value is: " + value);
+      throw new IllegalArgumentException("Notification types and listeners must be a Class with fully qualified class name. Value is: "
+          + value);
     }
     return clazz;
   }
@@ -233,8 +233,7 @@ public class ServerNotificationManager implements Work, Disposable, ServerNotifi
     return Collections.unmodifiableMap(configuration.getInterfaceToTypes());
   }
 
-  public void setInterfaceToTypes(
-      Map<Class<? extends ServerNotificationListener>, Set<Class<? extends ServerNotification>>> interfaceToEvents)
+  public void setInterfaceToTypes(Map<Class<? extends ServerNotificationListener>, Set<Class<? extends ServerNotification>>> interfaceToEvents)
       throws ClassNotFoundException {
     configuration.addAllInterfaceToTypes(interfaceToEvents);
   }

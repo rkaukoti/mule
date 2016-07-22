@@ -22,6 +22,6 @@ public class PgpNamespaceHandler extends NamespaceHandlerSupport {
     registerBeanDefinitionParser("security-filters", new ParentDefinitionParser());
     registerBeanDefinitionParser("security-filter", new SecurityFilterDefinitionParser(PGPSecurityFilter.class));
     registerBeanDefinitionParser("keybased-encryption-strategy",
-        new ChildDefinitionParser("encryptionStrategy", KeyBasedEncryptionStrategy.class));
+                                 new ChildDefinitionParser("encryptionStrategy", KeyBasedEncryptionStrategy.class));
   }
 }

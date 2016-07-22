@@ -26,8 +26,8 @@ public class InvalidSetVariableTestCase extends AbstractMuleTestCase {
 
   @Parameterized.Parameters
   public static Collection<Object[]> data() {
-    return Arrays.asList(
-        new Object[][] {{"org/mule/properties/invalid-set-property.xml"}, {"org/mule/properties/invalid-set-variable.xml"}});
+    return Arrays.asList(new Object[][] {{"org/mule/properties/invalid-set-property.xml"},
+        {"org/mule/properties/invalid-set-variable.xml"}});
   }
 
   @Test(expected = InitialisationException.class)

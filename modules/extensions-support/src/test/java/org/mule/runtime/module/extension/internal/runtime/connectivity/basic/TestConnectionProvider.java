@@ -67,8 +67,7 @@ public class TestConnectionProvider implements ConnectionProvider<Object> {
   }
 
   @Override
-  public ConnectionHandlingStrategy<Object> getHandlingStrategy(
-      ConnectionHandlingStrategyFactory<Object> connectionHandlingStrategyFactory) {
+  public ConnectionHandlingStrategy<Object> getHandlingStrategy(ConnectionHandlingStrategyFactory<Object> connectionHandlingStrategyFactory) {
     return connectionHandlingStrategyFactory.none();
   }
 }

@@ -127,8 +127,8 @@ public class CompositeDeploymentListener implements DeploymentListener, Deployme
   }
 
   private void logNotificationProcessingError(String appName, DeploymentListener listener, String notification, Throwable error) {
-    logger.error(
-        String.format("Listener '%s' failed to process notification '%s' for application '%s'", listener, notification, appName),
-        error);
+    logger.error(String.format("Listener '%s' failed to process notification '%s' for application '%s'", listener, notification,
+                               appName),
+                 error);
   }
 }

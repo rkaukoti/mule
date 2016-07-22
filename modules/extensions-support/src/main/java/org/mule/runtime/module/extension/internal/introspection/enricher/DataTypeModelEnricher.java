@@ -47,12 +47,12 @@ public final class DataTypeModelEnricher extends AbstractAnnotatedModelEnricher 
           if (annotation != null) {
             if (isVoid(method)) {
               throw new IllegalModelDefinitionException(String.format(
-                  "Operation '%s' of extension '%s' is void yet requires the ability to change the content metadata."
-                      + " Mutating the content metadata requires an operation with a return type.",
-                  declaration.getName(), declaration.getName()));
+                                                                      "Operation '%s' of extension '%s' is void yet requires the ability to change the content metadata."
+                                                                          + " Mutating the content metadata requires an operation with a return type.",
+                                                                      declaration.getName(), declaration.getName()));
             }
-            declaration.addParameter(
-                newParameter(MIME_TYPE_PARAMETER_NAME, "The mime type of the payload that this operation outputs."));
+            declaration.addParameter(newParameter(MIME_TYPE_PARAMETER_NAME,
+                                                  "The mime type of the payload that this operation outputs."));
             declaration
                 .addParameter(newParameter(ENCODING_PARAMETER_NAME, "The encoding of the payload that this operation outputs."));
           }

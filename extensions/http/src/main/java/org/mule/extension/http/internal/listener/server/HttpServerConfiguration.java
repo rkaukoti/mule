@@ -23,7 +23,7 @@ public class HttpServerConfiguration {
   private final WorkManagerSource workManagerSource;
 
   public HttpServerConfiguration(String host, int port, TlsContextFactory tlsContextFactory, boolean usePersistentConnections,
-      int connectionIdleTimeout, WorkManagerSource workManagerSource) {
+                                 int connectionIdleTimeout, WorkManagerSource workManagerSource) {
     this.host = host;
     this.port = port;
     this.tlsContextFactory = tlsContextFactory;
@@ -98,7 +98,7 @@ public class HttpServerConfiguration {
 
     public HttpServerConfiguration build() {
       return new HttpServerConfiguration(host, port, tlsContextFactory, usePersistentConnections, connectionIdleTimeout,
-          workManagerSource);
+                                         workManagerSource);
     }
   }
 }

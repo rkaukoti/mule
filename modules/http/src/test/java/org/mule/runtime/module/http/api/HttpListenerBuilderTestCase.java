@@ -126,7 +126,7 @@ public class HttpListenerBuilderTestCase extends AbstractMuleTestCase {
     new HttpListenerBuilder(createMuleContext()).setFlow(mockFlow).setHost(HOST).setPort(PORT).setPath(PATH).build();
 
     verify(mockListenerConnectionManager).createServer(eq(new ServerAddress(IP, PORT)), any(WorkManagerSource.class), eq(true),
-        eq(DefaultHttpListenerConfig.DEFAULT_CONNECTION_IDLE_TIMEOUT));
+                                                       eq(DefaultHttpListenerConfig.DEFAULT_CONNECTION_IDLE_TIMEOUT));
   }
 
   @Test
@@ -137,7 +137,8 @@ public class HttpListenerBuilderTestCase extends AbstractMuleTestCase {
         .setPort(PORT).setPath(PATH).build();
 
     verify(mockListenerConnectionManager).createSslServer(eq(new ServerAddress(IP, PORT)), any(WorkManagerSource.class),
-        eq(mockTlsContextFactory), eq(true), eq(DefaultHttpListenerConfig.DEFAULT_CONNECTION_IDLE_TIMEOUT));
+                                                          eq(mockTlsContextFactory), eq(true),
+                                                          eq(DefaultHttpListenerConfig.DEFAULT_CONNECTION_IDLE_TIMEOUT));
   }
 
   @Test
@@ -154,7 +155,7 @@ public class HttpListenerBuilderTestCase extends AbstractMuleTestCase {
   private MuleContext createMuleContext() throws Exception {
     MuleContext muleContext = new DefaultMuleContextFactory().createMuleContext();
     muleContext.getRegistry().registerObject(HttpListenerConnectionManager.HTTP_LISTENER_CONNECTION_MANAGER,
-        mockListenerConnectionManager);
+                                             mockListenerConnectionManager);
 
     return muleContext;
   }

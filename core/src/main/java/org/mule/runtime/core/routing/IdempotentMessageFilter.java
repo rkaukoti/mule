@@ -45,10 +45,10 @@ public class IdempotentMessageFilter extends AbstractFilteringMessageProcessor
   protected String storePrefix;
 
   protected String idExpression = MessageFormat.format("{0}message:id{1}", ExpressionManager.DEFAULT_EXPRESSION_PREFIX,
-      ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
+                                                       ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
 
   protected String valueExpression = MessageFormat.format("{0}message:id{1}", ExpressionManager.DEFAULT_EXPRESSION_PREFIX,
-      ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
+                                                          ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
 
   public IdempotentMessageFilter() {
     super();
@@ -58,7 +58,7 @@ public class IdempotentMessageFilter extends AbstractFilteringMessageProcessor
   public void initialise() throws InitialisationException {
     if (storePrefix == null) {
       storePrefix = String.format("%s.%s.%s", ThreadNameHelper.getPrefix(muleContext),
-          (flowConstruct == null ? "" : flowConstruct.getName()), this.getClass().getName());
+                                  (flowConstruct == null ? "" : flowConstruct.getName()), this.getClass().getName());
     }
     if (store == null) {
       this.store = createMessageIdStore();

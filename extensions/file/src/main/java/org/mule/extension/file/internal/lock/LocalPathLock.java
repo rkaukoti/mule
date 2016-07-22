@@ -58,8 +58,8 @@ public final class LocalPathLock implements PathLock {
       return isLocked();
     } catch (AccessDeniedException e) {
       release();
-      throw new IllegalArgumentException(
-          format("Could not obtain lock on path ''%s'' because access was denied by the operating system", path));
+      throw new IllegalArgumentException(format("Could not obtain lock on path ''%s'' because access was denied by the operating system",
+                                                path));
     } catch (Exception e) {
       release();
       if (LOGGER.isInfoEnabled()) {

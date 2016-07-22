@@ -98,7 +98,8 @@ public class DefaultEndpointMessageProcessorChainFactory implements EndpointMess
 
   @Override
   public MessageProcessor createInboundMessageProcessorChain(InboundEndpoint endpoint, FlowConstruct flowConstruct,
-      MessageProcessor target) throws MuleException {
+                                                             MessageProcessor target)
+      throws MuleException {
     // -- REQUEST CHAIN --
     DefaultMessageProcessorChainBuilder requestChainBuilder = new EndpointMessageProcessorChainBuilder(endpoint, flowConstruct);
     requestChainBuilder.setName("InboundEndpoint '" + endpoint.getEndpointURI().getUri() + "' request chain");

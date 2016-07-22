@@ -339,8 +339,7 @@ public class MuleMQJmsConnector extends JmsConnector {
         StringBuilder msg = new StringBuilder("MuleMQJmsConnector.onException() received exception: ");
         msg.append(th.getMessage());
         msg.append("Older Messages will be discarded by MULE MQ.To prevent message loss use transacted outbound-endpoint");
-        msg.append(
-            "Refer to 'Queue Capacity' at http://www.mulesoft.org/display/MQ/Configuring+Mule+MQ#ConfiguringMuleMQ-ConfiguringQueues");
+        msg.append("Refer to 'Queue Capacity' at http://www.mulesoft.org/display/MQ/Configuring+Mule+MQ#ConfiguringMuleMQ-ConfiguringQueues");
         // This error does not mean that connection has been closed. Log Capacity
         // is full warn and return.
         logger.warn(msg.toString(), th);

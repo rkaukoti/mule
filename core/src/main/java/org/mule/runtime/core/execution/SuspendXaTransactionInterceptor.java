@@ -21,7 +21,7 @@ public class SuspendXaTransactionInterceptor<T> implements ExecutionInterceptor<
   private final boolean processOnException;
 
   public SuspendXaTransactionInterceptor(ExecutionInterceptor<T> next, TransactionConfig transactionConfig,
-      boolean processOnException) {
+                                         boolean processOnException) {
     this.next = next;
     this.transactionConfig = transactionConfig;
     this.processOnException = processOnException;

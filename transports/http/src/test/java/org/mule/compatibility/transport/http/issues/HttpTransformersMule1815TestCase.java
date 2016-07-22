@@ -75,9 +75,9 @@ public class HttpTransformersMule1815TestCase extends FunctionalTestCase {
   @Test
   public void testInbound() throws Exception {
     assertEquals(
-        // this reads backwards - innermost is first in chain
-        StringAppendTestTransformer.append(" transformed 2", StringAppendTestTransformer.appendDefault(OUTBOUND_MESSAGE))
-            + " Received",
-        getPayloadAsString(sendTo("inbound")));
+                 // this reads backwards - innermost is first in chain
+                 StringAppendTestTransformer.append(" transformed 2", StringAppendTestTransformer.appendDefault(OUTBOUND_MESSAGE))
+                     + " Received",
+                 getPayloadAsString(sendTo("inbound")));
   }
 }

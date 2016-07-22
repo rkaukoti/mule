@@ -77,17 +77,17 @@ public class CxfNamespaceHandler extends AbstractMuleNamespaceHandler {
     registerBeanDefinitionParser("jibx-databinding", new ChildDefinitionParser(CxfConstants.DATA_BINDING, JibxDataBinding.class));
     registerBeanDefinitionParser("stax-databinding", new ChildDefinitionParser(CxfConstants.DATA_BINDING, StaxDataBinding.class));
     registerBeanDefinitionParser("source-databinding",
-        new ChildDefinitionParser(CxfConstants.DATA_BINDING, SourceDataBinding.class));
+                                 new ChildDefinitionParser(CxfConstants.DATA_BINDING, SourceDataBinding.class));
     registerBeanDefinitionParser("aegis-databinding",
-        new ChildDefinitionParser(CxfConstants.DATA_BINDING, AegisDatabinding.class));
+                                 new ChildDefinitionParser(CxfConstants.DATA_BINDING, AegisDatabinding.class));
     registerBeanDefinitionParser("custom-databinding", new ChildDefinitionParser(CxfConstants.DATA_BINDING));
 
     registerBeanDefinitionParser(CxfConstants.IN_INTERCEPTORS, new ChildListDefinitionParser(CxfConstants.IN_INTERCEPTORS));
     registerBeanDefinitionParser(CxfConstants.IN_FAULT_INTERCEPTORS,
-        new ChildListDefinitionParser(CxfConstants.IN_FAULT_INTERCEPTORS));
+                                 new ChildListDefinitionParser(CxfConstants.IN_FAULT_INTERCEPTORS));
     registerBeanDefinitionParser(CxfConstants.OUT_INTERCEPTORS, new ChildListDefinitionParser(CxfConstants.OUT_INTERCEPTORS));
     registerBeanDefinitionParser(CxfConstants.OUT_FAULT_INTERCEPTORS,
-        new ChildListDefinitionParser(CxfConstants.OUT_FAULT_INTERCEPTORS));
+                                 new ChildListDefinitionParser(CxfConstants.OUT_FAULT_INTERCEPTORS));
 
     registerBeanDefinitionParser("stax", new SimpleBeanDefinitionParser(StaxFeature.class));
 

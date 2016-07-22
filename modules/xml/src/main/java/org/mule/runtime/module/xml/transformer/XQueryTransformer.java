@@ -211,7 +211,7 @@ public class XQueryTransformer extends AbstractXmlTransformer implements Disposa
           transformer.bindAtomicValue(paramKey, o.toString(), connection.createAtomicType(XQItemType.XQBASETYPE_STRING));
         } else if (o instanceof Boolean) {
           transformer.bindBoolean(paramKey, ((Boolean) o).booleanValue(),
-              connection.createAtomicType(XQItemType.XQBASETYPE_BOOLEAN));
+                                  connection.createAtomicType(XQItemType.XQBASETYPE_BOOLEAN));
         } else if (o instanceof Byte) {
           transformer.bindByte(paramKey, ((Byte) o).byteValue(), connection.createAtomicType(XQItemType.XQBASETYPE_BYTE));
         } else if (o instanceof Short) {
@@ -229,8 +229,8 @@ public class XQueryTransformer extends AbstractXmlTransformer implements Disposa
         } else if (o instanceof Node) {
           transformer.bindDocument(paramKey, new DOMSource((Node) o), connection.createNodeType());
         } else {
-          logger.warn(
-              String.format("Cannot bind value for key '%s' because type '%s' is not supported", key, o.getClass().getName()));
+          logger.warn(String.format("Cannot bind value for key '%s' because type '%s' is not supported", key,
+                                    o.getClass().getName()));
         }
       }
     }
@@ -257,13 +257,14 @@ public class XQueryTransformer extends AbstractXmlTransformer implements Disposa
   protected void bindDocument(Object src, XQPreparedExpression transformer) throws Exception {
     if (src instanceof byte[]) {
       transformer.bindDocument(new QName(SOURCE_DOCUMENT_NAMESPACE), new StreamSource(new ByteArrayInputStream((byte[]) src)),
-          connection.createDocumentType());
+                               connection.createDocumentType());
     } else if (src instanceof InputStream) {
       transformer.bindDocument(new QName(SOURCE_DOCUMENT_NAMESPACE), new StreamSource((InputStream) src),
-          connection.createDocumentType());
+                               connection.createDocumentType());
     } else if (src instanceof String) {
       transformer.bindDocument(new QName(SOURCE_DOCUMENT_NAMESPACE),
-          new StreamSource(new ByteArrayInputStream(((String) src).getBytes())), connection.createDocumentType());
+                               new StreamSource(new ByteArrayInputStream(((String) src).getBytes())),
+                               connection.createDocumentType());
     } else if (src instanceof Document) {
       transformer.bindNode(new QName(SOURCE_DOCUMENT_NAMESPACE), (Document) src, connection.createDocumentType());
     } else if (src instanceof Element) {

@@ -67,7 +67,7 @@ public class MuleEventToHttpRequest {
 
 
   public MuleEventToHttpRequest(HttpRequesterConfig config, String uri, String method, HttpStreamingType streamingMode,
-      HttpSendBodyMode sendBodyMode, String source) {
+                                HttpSendBodyMode sendBodyMode, String source) {
     this.config = config;
     this.uri = uri;
     this.method = method;
@@ -134,7 +134,8 @@ public class MuleEventToHttpRequest {
   }
 
   private HttpEntity createRequestEntity(HttpRequestBuilder requestBuilder, MuleEvent muleEvent, String resolvedMethod,
-      Map<String, DataHandler> parts) throws MessagingException {
+                                         Map<String, DataHandler> parts)
+      throws MessagingException {
     boolean customSource = false;
     Object oldPayload = null;
     HttpEntity entity;
@@ -178,7 +179,8 @@ public class MuleEventToHttpRequest {
   }
 
   private HttpEntity createRequestEntityFromPayload(HttpRequestBuilder requestBuilder, MuleEvent muleEvent,
-      Map<String, DataHandler> parts) throws MessagingException {
+                                                    Map<String, DataHandler> parts)
+      throws MessagingException {
     Object payload = muleEvent.getMessage().getPayload();
 
     if (!parts.isEmpty()) {

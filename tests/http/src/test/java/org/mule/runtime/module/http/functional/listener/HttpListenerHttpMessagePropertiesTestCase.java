@@ -117,7 +117,7 @@ public class HttpListenerHttpMessagePropertiesTestCase extends AbstractHttpTestC
     assertThat(retrivedQueryParams.get(QUERY_PARAM_NAME), is(QUERY_PARAM_SECOND_VALUE));
     assertThat(retrivedQueryParams.getAll(QUERY_PARAM_NAME).size(), is(2));
     assertThat(retrivedQueryParams.getAll(QUERY_PARAM_NAME),
-        Matchers.containsInAnyOrder(new String[] {QUERY_PARAM_VALUE, QUERY_PARAM_SECOND_VALUE}));
+               Matchers.containsInAnyOrder(new String[] {QUERY_PARAM_VALUE, QUERY_PARAM_SECOND_VALUE}));
   }
 
   @Test
@@ -160,7 +160,7 @@ public class HttpListenerHttpMessagePropertiesTestCase extends AbstractHttpTestC
   @Test
   public void getAllUriParams() throws Exception {
     final String url = String.format("http://localhost:%s/%s/%s/%s", listenPort.getNumber(), FIRST_URI_PARAM,
-        SECOND_URI_PARAM_VALUE, THIRD_URI_PARAM_VALUE);
+                                     SECOND_URI_PARAM_VALUE, THIRD_URI_PARAM_VALUE);
     Post(url).connectTimeout(RECEIVE_TIMEOUT).execute();
     final MuleMessage message = muleContext.getClient().request("test://out", RECEIVE_TIMEOUT);
     ParameterMap uriParams = getAttributes(message).getUriParams();

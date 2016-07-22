@@ -65,7 +65,7 @@ public class MonitoredObjectStoreWrapper<T extends Serializable>
   }
 
   public MonitoredObjectStoreWrapper(ListableObjectStore<StoredObject<T>> baseStore, int maxEntries, int entryTTL,
-      int expirationInterval) {
+                                     int expirationInterval) {
     this.baseStore = baseStore;
     this.maxEntries = maxEntries;
     this.entryTTL = entryTTL;
@@ -199,8 +199,8 @@ public class MonitoredObjectStoreWrapper<T extends Serializable>
     }
 
     if (expirationInterval <= 0) {
-      throw new IllegalArgumentException(
-          CoreMessages.propertyHasInvalidValue("expirationInterval", new Integer(expirationInterval)).toString());
+      throw new IllegalArgumentException(CoreMessages
+          .propertyHasInvalidValue("expirationInterval", new Integer(expirationInterval)).toString());
     }
 
     if (scheduler == null) {

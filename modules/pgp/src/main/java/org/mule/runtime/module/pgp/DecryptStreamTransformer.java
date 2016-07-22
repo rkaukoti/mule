@@ -47,7 +47,8 @@ public class DecryptStreamTransformer implements StreamTransformer {
   private long bytesWrote;
 
   public DecryptStreamTransformer(InputStream toBeDecrypted, PGPPublicKey publicKey, PGPSecretKey secretKey, String password,
-      Provider provider) throws IOException {
+                                  Provider provider)
+      throws IOException {
     Validate.notNull(toBeDecrypted, "The toBeDecrypted should not be null");
     Validate.notNull(publicKey, "The publicKey should not be null");
     Validate.notNull(secretKey, "The secretKey should not be null");

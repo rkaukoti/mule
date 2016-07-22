@@ -36,7 +36,7 @@ public class SystemPropertyProcessingStrategyConfigTestCase extends FunctionalTe
   private Class<? extends ProcessingStrategy> expectedStrategyType;
 
   public SystemPropertyProcessingStrategyConfigTestCase(String name, String[] configFiles,
-      Class<? extends ProcessingStrategy> expectedStrategyType) {
+                                                        Class<? extends ProcessingStrategy> expectedStrategyType) {
     this.configFiles = configFiles;
     this.expectedStrategyType = expectedStrategyType;
   }

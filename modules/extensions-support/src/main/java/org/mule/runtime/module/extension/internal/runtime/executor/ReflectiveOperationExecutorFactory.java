@@ -39,8 +39,8 @@ public final class ReflectiveOperationExecutorFactory<T> implements OperationExe
     try {
       delegate = implementationClass.newInstance();
     } catch (Exception e) {
-      throw new MuleRuntimeException(
-          createStaticMessage("Could not create instance of operation class " + implementationClass.getName()), e);
+      throw new MuleRuntimeException(createStaticMessage("Could not create instance of operation class "
+          + implementationClass.getName()), e);
     }
 
     return new ReflectiveMethodOperationExecutor(operationMethod, delegate);

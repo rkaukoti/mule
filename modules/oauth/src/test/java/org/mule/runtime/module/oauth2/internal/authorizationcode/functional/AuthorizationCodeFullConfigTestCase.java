@@ -49,14 +49,17 @@ public class AuthorizationCodeFullConfigTestCase extends AbstractOAuthAuthorizat
   public final String CUSTOM_RESPONSE_PARAMETER2_VALUE = "token-resp-value2";
 
   @Rule
-  public SystemProperty localAuthorizationUrl = new SystemProperty("local.authorization.url",
-      String.format("%s://localhost:%d/authorization", getProtocol(), localHostPort.getNumber()));
+  public SystemProperty localAuthorizationUrl =
+      new SystemProperty("local.authorization.url",
+                         String.format("%s://localhost:%d/authorization", getProtocol(), localHostPort.getNumber()));
   @Rule
-  public SystemProperty authorizationUrl = new SystemProperty("authorization.url",
-      String.format("%s://localhost:%d" + AUTHORIZE_PATH, getProtocol(), oauthHttpsServerPort.getNumber()));
+  public SystemProperty authorizationUrl =
+      new SystemProperty("authorization.url",
+                         String.format("%s://localhost:%d" + AUTHORIZE_PATH, getProtocol(), oauthHttpsServerPort.getNumber()));
   @Rule
-  public SystemProperty tokenUrl = new SystemProperty("token.url",
-      String.format("%s://localhost:%d" + TOKEN_PATH, getProtocol(), oauthHttpsServerPort.getNumber()));
+  public SystemProperty tokenUrl =
+      new SystemProperty("token.url",
+                         String.format("%s://localhost:%d" + TOKEN_PATH, getProtocol(), oauthHttpsServerPort.getNumber()));
   @Rule
   public SystemProperty authenticationRequestParam1 = new SystemProperty("auth.request.param1", "auth-req-param1");
   @Rule
@@ -79,7 +82,7 @@ public class AuthorizationCodeFullConfigTestCase extends AbstractOAuthAuthorizat
   @Parameterized.Parameters
   public static Collection<Object[]> parameters() {
     return Arrays.asList(new Object[] {"authorization-code/authorization-code-full-config-tls-global.xml"},
-        new Object[] {"authorization-code/authorization-code-full-config-tls-nested.xml"});
+                         new Object[] {"authorization-code/authorization-code-full-config-tls-nested.xml"});
   }
 
   @Override
@@ -115,15 +118,16 @@ public class AuthorizationCodeFullConfigTestCase extends AbstractOAuthAuthorizat
             .put(customTokenResponseParameter2Name.getValue(), CUSTOM_RESPONSE_PARAMETER2_VALUE).build();
 
 
-    wireMockRule.stubFor(post(urlEqualTo(TOKEN_PATH)).willReturn(
-        aResponse().withHeader(HttpHeaders.Names.CONTENT_TYPE, HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED.toRfcString())
-            .withBody(HttpParser.encodeString(UTF_8, tokenUrlResponseParameters))));
+    wireMockRule.stubFor(post(urlEqualTo(TOKEN_PATH)).willReturn(aResponse()
+        .withHeader(HttpHeaders.Names.CONTENT_TYPE, HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED.toRfcString())
+        .withBody(HttpParser.encodeString(UTF_8, tokenUrlResponseParameters))));
 
     final ImmutableMap<Object, Object> redirectUrlQueryParams = ImmutableMap.builder()
         .put(OAuthConstants.CODE_PARAMETER, AUTHENTICATION_CODE).put(OAuthConstants.STATE_PARAMETER, state.getValue()).build();
 
     muleContext.getClient().send(redirectUrl.getValue() + "?" + HttpParser.encodeQueryString(redirectUrlQueryParams),
-        MuleMessage.builder().nullPayload().build(), newOptions().tlsContextFactory(createClientTlsContextFactory()).build());
+                                 MuleMessage.builder().nullPayload().build(),
+                                 newOptions().tlsContextFactory(createClientTlsContextFactory()).build());
 
     verifyRequestDoneToTokenUrlForAuthorizationCode();
 

@@ -21,7 +21,7 @@ public final class DefaultExceptionEnricherFactory implements ExceptionEnricherF
       enricher = enricherType.newInstance();
     } catch (Exception e) {
       throw new MuleRuntimeException(createStaticMessage("Could not create ExceptionEnricher of type " + enricherType.getName()),
-          e);
+                                     e);
     }
   }
 

@@ -220,7 +220,7 @@ public class TcpConnector extends AbstractConnector {
     }
     try {
       return new CallbackOutputStream(new DataOutputStream(new BufferedOutputStream(socket.getOutputStream())),
-          () -> releaseSocket(socket, endpoint));
+                                      () -> releaseSocket(socket, endpoint));
     } catch (IOException e) {
       throw new MessagingException(TransportCoreMessages.failedToGetOutputStream(), message, endpoint.getMuleContext(), e);
     }

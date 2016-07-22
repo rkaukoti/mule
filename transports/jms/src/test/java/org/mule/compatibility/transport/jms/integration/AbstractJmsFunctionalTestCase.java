@@ -236,8 +236,8 @@ public abstract class AbstractJmsFunctionalTestCase extends FunctionalTestCase {
       final String configFile = getConfigFile();
       // multiple configs arent' supported by this mechanism, validate and fail if needed
       if (StringUtils.splitAndTrim(configFile, ",; ").length > 1) {
-        throw new IllegalArgumentException(
-            "Parameterized tests don't support multiple " + "config files as input: " + configFile);
+        throw new IllegalArgumentException("Parameterized tests don't support multiple " + "config files as input: "
+            + configFile);
       }
 
       String resources = configFile.substring(configFile.lastIndexOf("/") + 1);

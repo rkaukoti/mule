@@ -72,7 +72,7 @@ public class HttpClientMessageRequester extends AbstractMessageRequester {
       } else {
         releaseConn = true;
         throw new ReceiveException(HttpMessages.requestFailedWithStatus(httpMethod.getStatusLine().toString()), endpoint,
-            timeout);
+                                   timeout);
       }
     } catch (ReceiveException e) {
       releaseConn = true;

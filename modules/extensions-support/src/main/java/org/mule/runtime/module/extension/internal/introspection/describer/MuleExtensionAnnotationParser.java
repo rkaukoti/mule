@@ -83,7 +83,7 @@ public final class MuleExtensionAnnotationParser {
   public static Extension getExtension(Class<?> extensionType) {
     Extension extension = extensionType.getAnnotation(Extension.class);
     checkState(extension != null, String.format("%s is not a Mule extension since it's not annotated with %s",
-        extensionType.getName(), Extension.class.getName()));
+                                                extensionType.getName(), Extension.class.getName()));
     return extension;
   }
 
@@ -114,7 +114,7 @@ public final class MuleExtensionAnnotationParser {
   }
 
   public static <T extends Annotation> List<T> parseRepeatableAnnotation(Class<?> extensionType, Class<T> annotation,
-      Function<Annotation, T[]> containerConsumer) {
+                                                                         Function<Annotation, T[]> containerConsumer) {
     List<T> annotationDeclarations = ImmutableList.of();
 
     Repeatable repeatableContainer = annotation.getAnnotation(Repeatable.class);
@@ -134,7 +134,7 @@ public final class MuleExtensionAnnotationParser {
   }
 
   private static void parseGroupParameters(MetadataType parameterType, List<ParsedParameter> parsedParameters,
-      ClassTypeLoader typeLoader) {
+                                           ClassTypeLoader typeLoader) {
     stream(getType(parameterType).getDeclaredFields()).filter(MuleExtensionAnnotationParser::isParameterOrParameterContainer)
         .forEach(field -> {
           final Map<Class<? extends Annotation>, Annotation> annotations = toMap(field.getAnnotations());
@@ -154,7 +154,8 @@ public final class MuleExtensionAnnotationParser {
   }
 
   private static ParsedParameter doParseParameter(String paramName, MetadataType metadataType,
-      Map<Class<? extends Annotation>, Annotation> annotations, ClassLoader classLoader) {
+                                                  Map<Class<? extends Annotation>, Annotation> annotations,
+                                                  ClassLoader classLoader) {
     ParsedParameter parameter = new ParsedParameter(annotations);
     parameter.setAdvertised(shouldAdvertise(metadataType, annotations, classLoader));
 
@@ -177,7 +178,7 @@ public final class MuleExtensionAnnotationParser {
   }
 
   private static boolean shouldAdvertise(MetadataType parameterType, Map<Class<? extends Annotation>, Annotation> annotations,
-      ClassLoader classLoader) {
+                                         ClassLoader classLoader) {
     return !(IMPLICIT_ARGUMENT_TYPES.contains(getType(parameterType, classLoader)) || annotations.containsKey(UseConfig.class)
         || annotations.containsKey(Connection.class));
   }
@@ -229,7 +230,7 @@ public final class MuleExtensionAnnotationParser {
   }
 
   static LayoutModelProperty parseLayoutAnnotations(AnnotatedElement annotatedElement, String name,
-      LayoutModelPropertyBuilder builder) {
+                                                    LayoutModelPropertyBuilder builder) {
     if (isDisplayAnnotationPresent(annotatedElement)) {
       parseLayoutAnnotations(annotatedElement, builder);
       parsePlacementAnnotation(annotatedElement, builder);

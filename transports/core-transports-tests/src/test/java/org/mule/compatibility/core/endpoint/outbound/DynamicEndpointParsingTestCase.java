@@ -43,8 +43,7 @@ public class DynamicEndpointParsingTestCase extends AbstractMuleContextEndpointT
 
   @Test(expected = MalformedEndpointException.class)
   public void testExpressionInSchemeIsForbidden() throws Exception {
-    createRequestResponseEndpoint(
-        "#[message.outboundProperties.scheme]://#[message.outboundProperties.host]:#[message.outboundProperties:port]");
+    createRequestResponseEndpoint("#[message.outboundProperties.scheme]://#[message.outboundProperties.host]:#[message.outboundProperties:port]");
   }
 
   @Test(expected = MalformedEndpointException.class)
@@ -54,15 +53,16 @@ public class DynamicEndpointParsingTestCase extends AbstractMuleContextEndpointT
 
   @Test(expected = MalformedEndpointException.class)
   public void testDynamicInboundEndpointNotAllowed() throws Exception {
-    EndpointURIEndpointBuilder endpointBuilder = new EndpointURIEndpointBuilder(
-        "test://#[message.outboundProperties.host]:#[message.outboundProperties.port]", muleContext);
+    EndpointURIEndpointBuilder endpointBuilder =
+        new EndpointURIEndpointBuilder("test://#[message.outboundProperties.host]:#[message.outboundProperties.port]",
+                                       muleContext);
     endpointBuilder.buildInboundEndpoint();
   }
 
   @Test
   public void testMEPOverridingInUri() throws Exception {
     OutboundEndpoint endpoint = createEndpoint("test://#[message.outboundProperties.host]:#[message.outboundProperties.port]",
-        MessageExchangePattern.ONE_WAY);
+                                               MessageExchangePattern.ONE_WAY);
 
     assertTrue(endpoint instanceof DynamicOutboundEndpoint);
 
@@ -74,8 +74,8 @@ public class DynamicEndpointParsingTestCase extends AbstractMuleContextEndpointT
     assertSame(VoidMuleEvent.getInstance(), response);
 
     // Now test set on the endpoint
-    endpoint = createRequestResponseEndpoint(
-        "test://#[message.outboundProperties.host]:#[message.outboundProperties.port]?exchangePattern=REQUEST_RESPONSE");
+    endpoint =
+        createRequestResponseEndpoint("test://#[message.outboundProperties.host]:#[message.outboundProperties.port]?exchangePattern=REQUEST_RESPONSE");
 
     assertTrue(endpoint instanceof DynamicOutboundEndpoint);
 

@@ -29,7 +29,7 @@ public class NotificationUtils {
   private NotificationUtils() {}
 
   public static void addMessageProcessorPathElements(List<MessageProcessor> processors,
-      MessageProcessorPathElement parentElement) {
+                                                     MessageProcessorPathElement parentElement) {
     if (processors == null) {
       return;
     }
@@ -65,7 +65,7 @@ public class NotificationUtils {
   }
 
   private static Map<MessageProcessor, String> buildPaths(MessageProcessorPathElement element,
-      Map<MessageProcessor, String> elements) {
+                                                          Map<MessageProcessor, String> elements) {
     if (element.getMessageProcessor() != null) {
       elements.put(element.getMessageProcessor(), element.getPath());
     }

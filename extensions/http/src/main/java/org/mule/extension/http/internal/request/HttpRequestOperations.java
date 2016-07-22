@@ -70,16 +70,27 @@ public class HttpRequestOperations {
   @Summary("Executes a HTTP Request")
   @MetadataScope(keysResolver = HttpMetadataResolver.class, outputResolver = HttpMetadataResolver.class)
   public OperationResult<Object, HttpResponseAttributes> request(String path, @Optional(defaultValue = "GET") String method,
-      @Optional @Placement(tab = ADVANCED, group = URL_OVERRIDE_CONFIGURATION, order = 1) String host,
-      @Optional @Placement(tab = ADVANCED, group = URL_OVERRIDE_CONFIGURATION, order = 2) Integer port, @Optional String source,
-      @Optional @Placement(tab = ADVANCED, group = OTHER_SETTINGS) Boolean followRedirects,
-      @Optional @Placement(tab = ADVANCED, group = OTHER_SETTINGS) Boolean parseResponse,
-      @Optional @Placement(tab = ADVANCED, group = OTHER_SETTINGS) HttpStreamingType requestStreamingMode,
-      @Optional @Placement(tab = ADVANCED, group = OTHER_SETTINGS) HttpSendBodyMode sendBodyMode,
-      @Optional @Placement(tab = ADVANCED, group = OTHER_SETTINGS) Integer responseTimeout,
-      @Optional @Placement(tab = ADVANCED, group = "Status Code Settings") ResponseValidator responseValidator,
-      @Optional HttpRequesterRequestBuilder requestBuilder, @MetadataKeyId String key, @Connection HttpClient client,
-      @UseConfig HttpRequesterConfig config, MuleEvent muleEvent) throws MuleException {
+                                                                 @Optional @Placement(tab = ADVANCED,
+                                                                     group = URL_OVERRIDE_CONFIGURATION, order = 1) String host,
+                                                                 @Optional @Placement(tab = ADVANCED,
+                                                                     group = URL_OVERRIDE_CONFIGURATION, order = 2) Integer port,
+                                                                 @Optional String source,
+                                                                 @Optional @Placement(tab = ADVANCED,
+                                                                     group = OTHER_SETTINGS) Boolean followRedirects,
+                                                                 @Optional @Placement(tab = ADVANCED,
+                                                                     group = OTHER_SETTINGS) Boolean parseResponse,
+                                                                 @Optional @Placement(tab = ADVANCED,
+                                                                     group = OTHER_SETTINGS) HttpStreamingType requestStreamingMode,
+                                                                 @Optional @Placement(tab = ADVANCED,
+                                                                     group = OTHER_SETTINGS) HttpSendBodyMode sendBodyMode,
+                                                                 @Optional @Placement(tab = ADVANCED,
+                                                                     group = OTHER_SETTINGS) Integer responseTimeout,
+                                                                 @Optional @Placement(tab = ADVANCED,
+                                                                     group = "Status Code Settings") ResponseValidator responseValidator,
+                                                                 @Optional HttpRequesterRequestBuilder requestBuilder,
+                                                                 @MetadataKeyId String key, @Connection HttpClient client,
+                                                                 @UseConfig HttpRequesterConfig config, MuleEvent muleEvent)
+      throws MuleException {
     HttpRequesterRequestBuilder resolvedBuilder = requestBuilder != null ? requestBuilder : new HttpRequesterRequestBuilder();
     UriParameters uriParameters = client.getDefaultUriParameters();
 

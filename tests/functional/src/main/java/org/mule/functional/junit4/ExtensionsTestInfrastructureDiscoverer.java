@@ -66,7 +66,7 @@ public class ExtensionsTestInfrastructureDiscoverer {
    * @throws {@link RuntimeException} if there was an error while creating the MANIFEST.MF file
    */
   public ExtensionsTestInfrastructureDiscoverer(ExtensionManagerAdapter extensionManagerAdapter,
-      File generatedResourcesDirectory) {
+                                                File generatedResourcesDirectory) {
     try {
       this.extensionManager = extensionManagerAdapter;
       this.generatedResourcesDirectory = generatedResourcesDirectory;
@@ -138,7 +138,7 @@ public class ExtensionsTestInfrastructureDiscoverer {
     private final Map<String, StringBuilder> contents = new HashMap<>();
 
     private ExtensionsTestInfrastructureResourcesGenerator(Collection<GeneratedResourceFactory> resourceFactories,
-        File targetDirectory) {
+                                                           File targetDirectory) {
       super(resourceFactories);
       this.targetDirectory = targetDirectory;
     }
