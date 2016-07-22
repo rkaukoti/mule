@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.model.resolvers;
 
@@ -16,9 +16,9 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * An Entry-point resolver that allows the user to set one or more acceptable method names to look for. For each method reflection will be
- * used to see if the method accepts the current payload types (the results are cached to improve performance). There has to be at least one
- * method name set on this resolver
+ * An Entry-point resolver that allows the user to set one or more acceptable method names to look for. For each method reflection
+ * will be used to see if the method accepts the current payload types (the results are cached to improve performance). There has
+ * to be at least one method name set on this resolver
  */
 public class ExplicitMethodEntryPointResolver extends AbstractEntryPointResolver {
 

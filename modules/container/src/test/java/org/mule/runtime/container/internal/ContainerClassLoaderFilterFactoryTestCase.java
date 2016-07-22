@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.container.internal;
@@ -28,7 +28,8 @@ public class ContainerClassLoaderFilterFactoryTestCase extends AbstractMuleTestC
     final List<MuleModule> muleModules = new ArrayList<>();
     muleModules.add(new TestModuleBuilder("module1").exportingPackages("org.foo1", "org.foo1.bar")
         .exportingPaths("META-INF", "META-INF/docs1").build());
-    muleModules.add(new TestModuleBuilder("module2").exportingPackages("org.foo2").exportingPaths("META-INF", "META-INF/docs2").build());
+    muleModules
+        .add(new TestModuleBuilder("module2").exportingPackages("org.foo2").exportingPaths("META-INF", "META-INF/docs2").build());
 
     final ClassLoaderFilter classLoaderFilter = factory.create(Collections.emptySet(), muleModules);
 

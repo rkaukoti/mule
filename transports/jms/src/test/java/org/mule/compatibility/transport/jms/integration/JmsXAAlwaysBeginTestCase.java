@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.integration;
 
@@ -20,6 +20,7 @@ import javax.transaction.xa.Xid;
 import static org.junit.Assert.assertEquals;
 
 public class JmsXAAlwaysBeginTestCase extends AbstractJmsFunctionalTestCase {
+
   protected static final Logger logger = LoggerFactory.getLogger(JmsXAAlwaysBeginTestCase.class);
   private static final List<Xid> committedTx = new CopyOnWriteArrayList<Xid>();
   private static final List<Xid> rolledbackTx = new CopyOnWriteArrayList<Xid>();
@@ -69,6 +70,7 @@ public class JmsXAAlwaysBeginTestCase extends AbstractJmsFunctionalTestCase {
 
   @Ignore
   public static class TestResource implements XAResource {
+
     protected int _timeout = 0;
 
     @Override

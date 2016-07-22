@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.domain.type;
@@ -97,11 +97,11 @@ public class MetadataDbTypeManager implements DbTypeManager {
   }
 
   /**
-   * According to documentation STRUCT and DISTINCT types with name different than "STRUCT" and "DISTINCT" should be considered user defined
-   * types: http://docs.oracle.com/javase/7/docs/api/java/sql/DatabaseMetaData.html#getTypeInfo() Note: documentation says nothing about
-   * ARRAY types with a different name than ARRAY, but postgres returns two different user defined types for each defined table, one with
-   * the name of the table and type STRUCT, and another one with the name of the table prefixed by an underscore and type ARRAY. We assume
-   * that ARRAY is behaving the same as STRUCT and DISTINCT in this aspect.
+   * According to documentation STRUCT and DISTINCT types with name different than "STRUCT" and "DISTINCT" should be considered
+   * user defined types: http://docs.oracle.com/javase/7/docs/api/java/sql/DatabaseMetaData.html#getTypeInfo() Note: documentation
+   * says nothing about ARRAY types with a different name than ARRAY, but postgres returns two different user defined types for
+   * each defined table, one with the name of the table and type STRUCT, and another one with the name of the table prefixed by an
+   * underscore and type ARRAY. We assume that ARRAY is behaving the same as STRUCT and DISTINCT in this aspect.
    */
   private boolean isUserDefinedType(DbType dbType) {
     return isTypeDerivedFrom(dbType, JdbcTypes.STRUCT_DB_TYPE) || isTypeDerivedFrom(dbType, JdbcTypes.DISTINCT_DB_TYPE)

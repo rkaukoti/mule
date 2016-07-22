@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring;
 
@@ -118,10 +118,11 @@ import static org.springframework.beans.factory.support.BeanDefinitionBuilder.ge
 /**
  * This class configured all the services available in a {@code MuleContext}.
  * <p>
- * There's a predefined set of services plus a configurable set of services provided by {@code MuleContext#getCustomizationService}.
+ * There's a predefined set of services plus a configurable set of services provided by
+ * {@code MuleContext#getCustomizationService}.
  * <p>
- * This class takes cares of registering bean definitions for each of the provided services so dependency injection can be propertly done
- * through the use of {@link javax.inject.Inject}.
+ * This class takes cares of registering bean definitions for each of the provided services so dependency injection can be
+ * propertly done through the use of {@link javax.inject.Inject}.
  *
  * @since 4.0
  */
@@ -131,9 +132,9 @@ class SpringMuleContextServiceConfigurator {
   private static final Logger LOGGER = LoggerFactory.getLogger(SpringMuleContextServiceConfigurator.class);
   private static final ImmutableSet<String> APPLICATION_ONLY_SERVICES =
       ImmutableSet.<String>builder().add(OBJECT_SECURITY_MANAGER).add(OBJECT_DEFAULT_MESSAGE_PROCESSING_MANAGER)
-          .add(OBJECT_MULE_STREAM_CLOSER_SERVICE).add(OBJECT_CONVERTER_RESOLVER).add(OBJECT_LOCK_FACTORY).add(OBJECT_LOCK_PROVIDER)
-          .add(OBJECT_PROCESSING_TIME_WATCHER).add(OBJECT_CONNECTOR_MESSAGE_PROCESSOR_LOCATOR).add(OBJECT_EXCEPTION_LOCATION_PROVIDER)
-          .add(OBJECT_MESSAGE_PROCESSING_FLOW_TRACE_MANAGER).build();
+          .add(OBJECT_MULE_STREAM_CLOSER_SERVICE).add(OBJECT_CONVERTER_RESOLVER).add(OBJECT_LOCK_FACTORY)
+          .add(OBJECT_LOCK_PROVIDER).add(OBJECT_PROCESSING_TIME_WATCHER).add(OBJECT_CONNECTOR_MESSAGE_PROCESSOR_LOCATOR)
+          .add(OBJECT_EXCEPTION_LOCATION_PROVIDER).add(OBJECT_MESSAGE_PROCESSING_FLOW_TRACE_MANAGER).build();
   private static final ImmutableMap<String, String> OBJECT_STORE_NAME_TO_LOCAL_OBJECT_STORE_NAME =
       ImmutableMap.<String, String>builder().put(OBJECT_STORE_DEFAULT_IN_MEMORY_NAME, OBJECT_LOCAL_STORE_IN_MEMORY)
           .put(OBJECT_STORE_DEFAULT_PERSISTENT_NAME, OBJECT_LOCAL_STORE_PERSISTENT)
@@ -155,28 +156,37 @@ class SpringMuleContextServiceConfigurator {
       .put(OBJECT_METADATA_MANAGER, getBeanDefinition(MuleMetadataManager.class))
       .put(OBJECT_OBJECT_NAME_PROCESSOR, getBeanDefinition(MuleObjectNameProcessor.class))
       .put(OBJECT_SERIALIZER,
-          getBeanDefinitionBuilder(DefaultObjectSerializerFactoryBean.class).addDependsOn(OBJECT_MULE_CONFIGURATION).getBeanDefinition())
+          getBeanDefinitionBuilder(DefaultObjectSerializerFactoryBean.class).addDependsOn(OBJECT_MULE_CONFIGURATION)
+              .getBeanDefinition())
       .put(OBJECT_NOTIFICATION_MANAGER, createNotificationManagerBeanDefinition())
       .put(OBJECT_STORE_DEFAULT_IN_MEMORY_NAME,
-          getBeanDefinitionBuilder(ConstantFactoryBean.class).addConstructorArgReference(OBJECT_LOCAL_STORE_IN_MEMORY).getBeanDefinition())
-      .put(OBJECT_LOCAL_STORE_IN_MEMORY, getBeanDefinition(DefaultObjectStoreFactoryBean.class, "createDefaultInMemoryObjectStore"))
+          getBeanDefinitionBuilder(ConstantFactoryBean.class).addConstructorArgReference(OBJECT_LOCAL_STORE_IN_MEMORY)
+              .getBeanDefinition())
+      .put(OBJECT_LOCAL_STORE_IN_MEMORY,
+          getBeanDefinition(DefaultObjectStoreFactoryBean.class, "createDefaultInMemoryObjectStore"))
       .put(OBJECT_STORE_DEFAULT_PERSISTENT_NAME,
-          getBeanDefinitionBuilder(ConstantFactoryBean.class).addConstructorArgReference(OBJECT_LOCAL_STORE_PERSISTENT).getBeanDefinition())
-      .put(OBJECT_LOCAL_STORE_PERSISTENT, getBeanDefinition(DefaultObjectStoreFactoryBean.class, "createDefaultPersistentObjectStore"))
+          getBeanDefinitionBuilder(ConstantFactoryBean.class).addConstructorArgReference(OBJECT_LOCAL_STORE_PERSISTENT)
+              .getBeanDefinition())
+      .put(OBJECT_LOCAL_STORE_PERSISTENT,
+          getBeanDefinition(DefaultObjectStoreFactoryBean.class, "createDefaultPersistentObjectStore"))
       .put(DEFAULT_USER_OBJECT_STORE_NAME,
           getBeanDefinitionBuilder(ConstantFactoryBean.class).addConstructorArgReference(DEFAULT_LOCAL_USER_OBJECT_STORE_NAME)
               .getBeanDefinition())
-      .put(DEFAULT_LOCAL_USER_OBJECT_STORE_NAME, getBeanDefinition(DefaultObjectStoreFactoryBean.class, "createDefaultUserObjectStore"))
+      .put(DEFAULT_LOCAL_USER_OBJECT_STORE_NAME,
+          getBeanDefinition(DefaultObjectStoreFactoryBean.class, "createDefaultUserObjectStore"))
       .put(DEFAULT_USER_TRANSIENT_OBJECT_STORE_NAME,
-          getBeanDefinitionBuilder(ConstantFactoryBean.class).addConstructorArgReference(DEFAULT_LOCAL_TRANSIENT_USER_OBJECT_STORE_NAME)
-              .getBeanDefinition())
+          getBeanDefinitionBuilder(ConstantFactoryBean.class)
+              .addConstructorArgReference(DEFAULT_LOCAL_TRANSIENT_USER_OBJECT_STORE_NAME).getBeanDefinition())
       .put(DEFAULT_LOCAL_TRANSIENT_USER_OBJECT_STORE_NAME,
           getBeanDefinition(DefaultObjectStoreFactoryBean.class, "createDefaultUserTransientObjectStore"))
       .put(OBJECT_STORE_MANAGER, getBeanDefinition(MuleObjectStoreManager.class))
-      .put(QUEUE_STORE_DEFAULT_PERSISTENT_NAME, getBeanDefinition(DefaultObjectStoreFactoryBean.class, "createDefaultPersistentQueueStore"))
-      .put(QUEUE_STORE_DEFAULT_IN_MEMORY_NAME, getBeanDefinition(DefaultObjectStoreFactoryBean.class, "createDefaultInMemoryQueueStore"))
+      .put(QUEUE_STORE_DEFAULT_PERSISTENT_NAME,
+          getBeanDefinition(DefaultObjectStoreFactoryBean.class, "createDefaultPersistentQueueStore"))
+      .put(QUEUE_STORE_DEFAULT_IN_MEMORY_NAME,
+          getBeanDefinition(DefaultObjectStoreFactoryBean.class, "createDefaultInMemoryQueueStore"))
       .put(OBJECT_QUEUE_MANAGER,
-          getBeanDefinitionBuilder(ConstantFactoryBean.class).addConstructorArgReference(OBJECT_LOCAL_QUEUE_MANAGER).getBeanDefinition())
+          getBeanDefinitionBuilder(ConstantFactoryBean.class).addConstructorArgReference(OBJECT_LOCAL_QUEUE_MANAGER)
+              .getBeanDefinition())
       .put(OBJECT_LOCAL_QUEUE_MANAGER, getBeanDefinition(DelegateQueueManager.class))
       .put(OBJECT_DEFAULT_THREADING_PROFILE, getBeanDefinition(ChainedThreadingProfile.class))
       .put(OBJECT_DEFAULT_SERVICE_THREADING_PROFILE, getBeanDefinition(ChainedThreadingProfile.class))
@@ -295,8 +305,8 @@ class SpringMuleContextServiceConfigurator {
 
   private void createQueueManagerBeanDefinitions() {
     if (customizationService.getCustomizedService(OBJECT_QUEUE_MANAGER).isPresent()) {
-      registerBeanDefinition(OBJECT_LOCAL_QUEUE_MANAGER,
-          getBeanDefinitionBuilder(ConstantFactoryBean.class).addConstructorArgReference(OBJECT_LOCAL_QUEUE_MANAGER).getBeanDefinition());
+      registerBeanDefinition(OBJECT_LOCAL_QUEUE_MANAGER, getBeanDefinitionBuilder(ConstantFactoryBean.class)
+          .addConstructorArgReference(OBJECT_LOCAL_QUEUE_MANAGER).getBeanDefinition());
     } else {
       registerBeanDefinition(OBJECT_LOCAL_QUEUE_MANAGER, getBeanDefinition(DelegateQueueManager.class));
     }
@@ -309,7 +319,8 @@ class SpringMuleContextServiceConfigurator {
         beanDefinitionRegistry.registerAlias(objectStoreLocal.getKey(), objectStoreLocal.getValue());
         customService.getServiceClass().ifPresent(serviceClass -> {
           anyBaseStoreWasRedefined.set(true);
-          beanDefinitionRegistry.registerBeanDefinition(objectStoreLocal.getValue(), defaultContextServices.get(objectStoreLocal.getKey()));
+          beanDefinitionRegistry.registerBeanDefinition(objectStoreLocal.getValue(),
+              defaultContextServices.get(objectStoreLocal.getKey()));
         });
       });
     });
@@ -320,7 +331,8 @@ class SpringMuleContextServiceConfigurator {
               .addPropertyValue("basePersistentStoreKey", new RuntimeBeanReference(OBJECT_STORE_DEFAULT_PERSISTENT_NAME))
               .addPropertyValue("baseTransientStoreKey", new RuntimeBeanReference(OBJECT_STORE_DEFAULT_IN_MEMORY_NAME))
               .addPropertyValue("basePersistentUserStoreKey", new RuntimeBeanReference(DEFAULT_LOCAL_USER_OBJECT_STORE_NAME))
-              .addPropertyValue("baseTransientUserStoreKey", new RuntimeBeanReference(DEFAULT_LOCAL_TRANSIENT_USER_OBJECT_STORE_NAME))
+              .addPropertyValue("baseTransientUserStoreKey",
+                  new RuntimeBeanReference(DEFAULT_LOCAL_TRANSIENT_USER_OBJECT_STORE_NAME))
               .getBeanDefinition());
     } else {
       beanDefinitionRegistry.registerAlias(OBJECT_STORE_MANAGER, LOCAL_OBJECT_STORE_MANAGER);

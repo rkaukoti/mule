@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
@@ -26,7 +26,8 @@ public class ShortcutComponentDefinitionParser extends ComponentDefinitionParser
 
     GenericBeanDefinition objectFactoryBeanDefinition = new GenericBeanDefinition();
     objectFactoryBeanDefinition.setBeanClass(OBJECT_FACTORY_TYPE);
-    objectFactoryBeanDefinition.getPropertyValues().addPropertyValue(AbstractObjectFactory.ATTRIBUTE_OBJECT_CLASS_NAME, className);
+    objectFactoryBeanDefinition.getPropertyValues().addPropertyValue(AbstractObjectFactory.ATTRIBUTE_OBJECT_CLASS_NAME,
+        className);
 
     builder.addPropertyValue("objectFactory", objectFactoryBeanDefinition);
     super.parseChild(element, parserContext, builder);

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core;
 
@@ -166,8 +166,8 @@ public class MuleEventTestCase extends AbstractMuleContextEndpointTestCase {
 
   private MuleEvent createEventToSerialize() throws Exception {
     createAndRegisterTransformersEndpointBuilderService();
-    InboundEndpoint endpoint =
-        getEndpointFactory().getInboundEndpoint(MuleEndpointTestUtils.lookupEndpointBuilder(muleContext.getRegistry(), "epBuilderTest"));
+    InboundEndpoint endpoint = getEndpointFactory()
+        .getInboundEndpoint(MuleEndpointTestUtils.lookupEndpointBuilder(muleContext.getRegistry(), "epBuilderTest"));
     Flow flow = (Flow) muleContext.getRegistry().lookupFlowConstruct("appleService");
     return getTestEvent(TEST_PAYLOAD);
   }
@@ -215,6 +215,7 @@ public class MuleEventTestCase extends AbstractMuleContextEndpointTestCase {
   }
 
   private static class TestEventTransformer extends AbstractTransformer {
+
     @Override
     public Object doTransform(Object src, Charset encoding) throws TransformerException {
       return "Transformed Test Data";

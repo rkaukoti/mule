@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor.chain;
 
@@ -35,11 +35,12 @@ import java.util.List;
 import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
 
 /**
- * Builder needs to return a composite rather than the first MessageProcessor in the chain. This is so that if this chain is nested in
- * another chain the next MessageProcessor in the parent chain is not injected into the first in the nested chain.
+ * Builder needs to return a composite rather than the first MessageProcessor in the chain. This is so that if this chain is
+ * nested in another chain the next MessageProcessor in the parent chain is not injected into the first in the nested chain.
  */
-public abstract class AbstractMessageProcessorChain extends AbstractAnnotatedObject implements NonBlockingMessageProcessor,
-    MessageProcessorChain, Lifecycle, FlowConstructAware, MuleContextAware, MessageProcessorContainer, MessagingExceptionHandlerAware {
+public abstract class AbstractMessageProcessorChain extends AbstractAnnotatedObject
+    implements NonBlockingMessageProcessor, MessageProcessorChain, Lifecycle, FlowConstructAware, MuleContextAware,
+    MessageProcessorContainer, MessagingExceptionHandlerAware {
 
   protected final transient Logger log = LoggerFactory.getLogger(getClass());
   protected String name;

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.socket.internal;
 
@@ -10,6 +10,7 @@ import org.mule.compatibility.transport.socket.api.TcpClientSocketProperties;
  * Default mutable implementation of the {@code TcpClientSocketProperties} interface.
  */
 public class DefaultTcpClientSocketProperties implements TcpClientSocketProperties {
+
   // Use default value of 'true' even though Socket default is false because optimizing to reduce amount of network
   // traffic over latency is hardly ever a concern today.
   private static final boolean DEFAULT_SEND_TCP_NO_DELAY = true;

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.construct;
 
@@ -27,12 +27,13 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Experimental implementation that supports a single dynamic pipeline due to restrictions imposed by intercepting message processors and
- * their lifecycle.
+ * Experimental implementation that supports a single dynamic pipeline due to restrictions imposed by intercepting message
+ * processors and their lifecycle.
  *
  * If more than one client tries to use the functionality the 2nd one will fail due to pipeline ID verification.
  */
-public class DynamicPipelineMessageProcessor extends AbstractInterceptingMessageProcessor implements DynamicPipeline, NonBlockingSupported {
+public class DynamicPipelineMessageProcessor extends AbstractInterceptingMessageProcessor
+    implements DynamicPipeline, NonBlockingSupported {
 
   private String pipelineId;
   private AbstractMessageProcessorChain preChain;
@@ -134,6 +135,7 @@ public class DynamicPipelineMessageProcessor extends AbstractInterceptingMessage
   }
 
   private class Builder implements DynamicPipelineBuilder {
+
     private List<MessageProcessor> preList = new ArrayList<MessageProcessor>();
     private List<MessageProcessor> postList = new ArrayList<MessageProcessor>();
 

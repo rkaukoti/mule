@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.issues;
 
@@ -21,18 +21,18 @@ public class ResponseTransformerMule2165TestCase extends FunctionalTestCase {
   // and it seems vaguely reasonable.
 
   /*
-   * RM Described as: 1. Client dispatch = "outbound" 2. First Service receiver = "inbound" 3. First Service dispatch (first endpoint) =
-   * "outbound" 4. Second Service receiver = "inbound" 5. Response transformer from SecondComponent = "response" Note that because the
-   * response transformer is configured locally on the outbound endppoint it only gets called once
+   * RM Described as: 1. Client dispatch = "outbound" 2. First Service receiver = "inbound" 3. First Service dispatch (first
+   * endpoint) = "outbound" 4. Second Service receiver = "inbound" 5. Response transformer from SecondComponent = "response" Note
+   * that because the response transformer is configured locally on the outbound endppoint it only gets called once
    */
   public static final String LOCAL_RESPONSE = MESSAGE + " outbound inbound outbound inbound response";
   // an alternative in 1.4 is " outbound outbound response response" for the global
   // transformers, which also makes some sense
   /*
-   * RM Described as: 1. Client dispatch = "outbound" 2. First Service receiver = "inbound" 3. First Service dispatch (first endpoint) =
-   * "outbound" 4. Second Service receiver = "inbound" 5. Response transformer from SecondComponent = "response" 6. Response from outbound
-   * endpoint (to the service) = "response" Note that because the global outbound inpoint is also the inbound endpoint of the bounce service
-   * The "response" ResponseTransformer gets called twice
+   * RM Described as: 1. Client dispatch = "outbound" 2. First Service receiver = "inbound" 3. First Service dispatch (first
+   * endpoint) = "outbound" 4. Second Service receiver = "inbound" 5. Response transformer from SecondComponent = "response" 6.
+   * Response from outbound endpoint (to the service) = "response" Note that because the global outbound inpoint is also the
+   * inbound endpoint of the bounce service The "response" ResponseTransformer gets called twice
    */
   public static final String GLOBAL_RESPONSE = LOCAL_RESPONSE + " response";
 

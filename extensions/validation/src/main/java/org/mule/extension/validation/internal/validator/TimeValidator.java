@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.validation.internal.validator;
 
@@ -35,7 +35,8 @@ public class TimeValidator extends AbstractValidator {
 
   @Override
   public ValidationResult validate(MuleEvent event) {
-    org.apache.commons.validator.routines.TimeValidator validator = org.apache.commons.validator.routines.TimeValidator.getInstance();
+    org.apache.commons.validator.routines.TimeValidator validator =
+        org.apache.commons.validator.routines.TimeValidator.getInstance();
     Locale locale = new Locale(this.locale);
     if (pattern != null) {
       if (!validator.isValid(time, pattern, locale)) {

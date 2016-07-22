@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.sql.executor;
@@ -66,12 +66,14 @@ public class StatementResultIteratorTestCase extends AbstractMuleTestCase {
 
   @Before
   public void configureResultSetHandler() throws Exception {
-    when(resultSetHandler.processResultSet(argThat(any(DbConnection.class)), argThat(any(ResultSet.class)))).then(new Answer<Object>() {
-      @Override
-      public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
-        return invocationOnMock.getArguments()[1];
-      }
-    });
+    when(resultSetHandler.processResultSet(argThat(any(DbConnection.class)), argThat(any(ResultSet.class))))
+        .then(new Answer<Object>() {
+
+          @Override
+          public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
+            return invocationOnMock.getArguments()[1];
+          }
+        });
   }
 
   @Test

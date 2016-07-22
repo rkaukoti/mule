@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.el;
 
@@ -47,6 +47,7 @@ public class ExpressionLanguageExtensionTestCase extends AbstractELTestCase {
   @Override
   protected ConfigurationBuilder getBuilder() throws Exception {
     return new DefaultsConfigurationBuilder() {
+
       @Override
       public void configure(MuleContext muleContext) throws ConfigurationException {
         super.configure(muleContext);
@@ -206,6 +207,7 @@ public class ExpressionLanguageExtensionTestCase extends AbstractELTestCase {
       }
       context.addVariable("a", a);
       context.addVariable("b", b, new VariableAssignmentCallback<String>() {
+
         @Override
         public void assignValue(String name, String value, String newValue) {
           b = newValue;
@@ -220,6 +222,7 @@ public class ExpressionLanguageExtensionTestCase extends AbstractELTestCase {
         // continue - test will fail.
       }
       context.declareFunction("f", new ExpressionLanguageFunction() {
+
         @Override
         public Object call(Object[] params, ExpressionLanguageContext context) {
           return "called param[0]=" + params[0] + ",param[1]=" + params[1] + ",app.name="
@@ -227,12 +230,14 @@ public class ExpressionLanguageExtensionTestCase extends AbstractELTestCase {
         }
       });
       context.declareFunction("muleContext", new ExpressionLanguageFunction() {
+
         @Override
         public Object call(Object[] params, ExpressionLanguageContext context) {
           return context.getVariable(MVELExpressionLanguageContext.MULE_CONTEXT_INTERNAL_VARIABLE);
         }
       });
       context.declareFunction("muleMessage", new ExpressionLanguageFunction() {
+
         @Override
         public Object call(Object[] params, ExpressionLanguageContext context) {
           return context.getVariable(MVELExpressionLanguageContext.MULE_MESSAGE_INTERNAL_VARIABLE);

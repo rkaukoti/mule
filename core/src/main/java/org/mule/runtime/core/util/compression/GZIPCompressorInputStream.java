@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.compression;
 
@@ -15,6 +15,7 @@ import java.util.zip.DeflaterInputStream;
  * Implements an input stream for compressing input data in the GZIP compression format.
  */
 public class GZIPCompressorInputStream extends DeflaterInputStream {
+
   // GZIP header magic number.
   private final static int GZIP_MAGIC = 0x8b1f;
 
@@ -131,6 +132,7 @@ public class GZIPCompressorInputStream extends DeflaterInputStream {
    * Helper inner class containing the length and position of the internal buffer.
    */
   private class Buffer {
+
     public byte[] data;
     public int position;
     public int length;

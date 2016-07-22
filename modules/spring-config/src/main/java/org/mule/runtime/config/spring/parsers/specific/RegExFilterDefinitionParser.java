@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.regex.Pattern;
 
 public class RegExFilterDefinitionParser extends FilterDefinitionParser {
+
   public RegExFilterDefinitionParser() {
     super(RegExFilter.class);
     addMapping("flags", new FlagsMapping());
@@ -22,6 +23,7 @@ public class RegExFilterDefinitionParser extends FilterDefinitionParser {
    * Map a comma-separated string to an Integer object that can be used to set the flags on a {@link RegExFilter}.
    */
   public static class FlagsMapping implements ValueMap {
+
     private static final Map<String, Integer> FlagsMapping;
 
     static {

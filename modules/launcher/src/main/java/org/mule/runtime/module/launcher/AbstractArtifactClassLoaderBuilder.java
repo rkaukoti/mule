@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher;
 
@@ -71,7 +71,8 @@ public abstract class AbstractArtifactClassLoaderBuilder<T extends AbstractArtif
   /**
    * Creates an {@link AbstractArtifactClassLoaderBuilder}.
    *
-   * @param artifactClassLoaderFactory factory for the classloader specific to the artifact resource and classes. Must be not null.
+   * @param artifactClassLoaderFactory factory for the classloader specific to the artifact resource and classes. Must be not
+   *        null.
    * @param artifactPluginRepository repository of plugins contained by the runtime. Must be not null.
    * @param artifactPluginFactory factory for creating artifact plugins. Must be not null.
    * @param artifactPluginDescriptorLoader loader for plugin zip files into their descriptors. Must be not null.
@@ -90,15 +91,16 @@ public abstract class AbstractArtifactClassLoaderBuilder<T extends AbstractArtif
   }
 
   /**
-   * Implementation must redefine this method and it should provide the root class loader which is going to be used as parent class loader
-   * for every other class loader created by this builder.
+   * Implementation must redefine this method and it should provide the root class loader which is going to be used as parent
+   * class loader for every other class loader created by this builder.
    *
    * @return the root class loader for all other class loaders
    */
   abstract ArtifactClassLoader getParentClassLoader();
 
   /**
-   * @param artifactId unique identifier for this artifact. For instance, for Applications, it can be the app name. Must be not null.
+   * @param artifactId unique identifier for this artifact. For instance, for Applications, it can be the app name. Must be not
+   *        null.
    * @return the builder
    */
   public T setArtifactId(String artifactId) {
@@ -137,8 +139,8 @@ public abstract class AbstractArtifactClassLoaderBuilder<T extends AbstractArtif
   }
 
   /**
-   * Creates a new {@code ArtifactClassLoader} using the provided configuration. It will create the proper class loader hierarchy and
-   * filters the artifact resources and plugins classes and resources are resolve correctly.
+   * Creates a new {@code ArtifactClassLoader} using the provided configuration. It will create the proper class loader hierarchy
+   * and filters the artifact resources and plugins classes and resources are resolve correctly.
    *
    * @return a {@code ArtifactClassLoader} created from the provided configuration.
    * @throws IOException exception cause when it was not possible to access the file provided as dependencies
@@ -203,9 +205,9 @@ public abstract class AbstractArtifactClassLoaderBuilder<T extends AbstractArtif
     final List<ArtifactPluginDescriptor> containerPlugins = new LinkedList<>();
     for (ArtifactPluginDescriptor appPluginDescriptor : artifactPluginRepository.getContainerArtifactPluginDescriptors()) {
       if (containsApplicationPluginDescriptor(appPluginDescriptor)) {
-        final String msg =
-            format("Failed to deploy artifact [%s], plugin [%s] is already bundled within the container and cannot be included in artifact",
-                artifactId, appPluginDescriptor.getName());
+        final String msg = format(
+            "Failed to deploy artifact [%s], plugin [%s] is already bundled within the container and cannot be included in artifact",
+            artifactId, appPluginDescriptor.getName());
         throw new DeploymentException(createStaticMessage(msg));
       }
 
@@ -233,11 +235,12 @@ public abstract class AbstractArtifactClassLoaderBuilder<T extends AbstractArtif
       ArtifactPlugin artifactPlugin = artifactPluginFactory.create(artifactPluginDescriptor, parent);
       artifactPluginClassLoaders.add(artifactPlugin.getArtifactClassLoader());
 
-      final FilteringArtifactClassLoader filteringPluginClassLoader =
-          new FilteringArtifactClassLoader(artifactPlugin.getArtifactClassLoader(), artifactPlugin.getDescriptor().getClassLoaderFilter());
+      final FilteringArtifactClassLoader filteringPluginClassLoader = new FilteringArtifactClassLoader(
+          artifactPlugin.getArtifactClassLoader(), artifactPlugin.getDescriptor().getClassLoaderFilter());
       classLoaders.add(filteringPluginClassLoader);
     }
-    return new CompositeArtifactClassLoader("appPlugins", parent.getClassLoader(), classLoaders, parent.getClassLoaderLookupPolicy());
+    return new CompositeArtifactClassLoader("appPlugins", parent.getClassLoader(), classLoaders,
+        parent.getClassLoaderLookupPolicy());
   }
 
 }

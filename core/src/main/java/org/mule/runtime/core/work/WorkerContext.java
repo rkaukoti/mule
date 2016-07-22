@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.work;
 
@@ -35,6 +35,7 @@ public class WorkerContext implements Work {
    * Null WorkListener used as the default WorkListener.
    */
   private static final WorkListener NULL_WORK_LISTENER = new WorkAdapter() {
+
     @Override
     public void workRejected(WorkEvent event) {
       if (event.getException() != null) {
@@ -108,8 +109,8 @@ public class WorkerContext implements Work {
    * @param aWork Work to be wrapped.
    * @param aStartTimeout a time duration (in milliseconds) within which the execution of the Work instance must start.
    * @param execContext an object containing the execution context with which the submitted Work instance must be executed.
-   * @param workListener an object which would be notified when the various Work processing events (work accepted, work rejected, work
-   *        started,
+   * @param workListener an object which would be notified when the various Work processing events (work accepted, work rejected,
+   *        work started,
    */
   public WorkerContext(Work aWork, long aStartTimeout, ExecutionContext execContext, WorkListener workListener) {
     worker = aWork;
@@ -125,8 +126,8 @@ public class WorkerContext implements Work {
   }
 
   /**
-   * Gets the priority level of the thread, which will be dispatched to process this work. This priority level must be the same one for a
-   * given resource adapter.
+   * Gets the priority level of the thread, which will be dispatched to process this work. This priority level must be the same
+   * one for a given resource adapter.
    *
    * @return The priority level of the thread to be dispatched to process the wrapped Work instance.
    */
@@ -135,8 +136,8 @@ public class WorkerContext implements Work {
   }
 
   /**
-   * Defines the thread priority level of the thread, which will be dispatched to process this work. This priority level must be the same
-   * one for a given resource adapter.
+   * Defines the thread priority level of the thread, which will be dispatched to process this work. This priority level must be
+   * the same one for a given resource adapter.
    *
    * @param aPriority Priority of the thread to be used to process the wrapped Work instance.
    */
@@ -173,8 +174,8 @@ public class WorkerContext implements Work {
   }
 
   /**
-   * Used by a Work executor in order to know if this work, which should be accepted but not started has timed out. This method MUST be
-   * called prior to retry the execution of a Work.
+   * Used by a Work executor in order to know if this work, which should be accepted but not started has timed out. This method
+   * MUST be called prior to retry the execution of a Work.
    *
    * @return true if the Work has timed out and false otherwise.
    */

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.requester;
 
@@ -25,12 +25,13 @@ import static org.junit.Assert.assertThat;
 import static org.junit.internal.matchers.ThrowableMessageMatcher.hasMessage;
 
 /**
- * Sets up two HTTPS clients using a regular trust-store, but one of them insecure. Then two HTTPS servers: one will return a certificate
- * present in the trust-store but with an invalid SAN extension, the other will return a certificate that's not in the trust-store. Verifies
- * that only the insecure client is successful.
+ * Sets up two HTTPS clients using a regular trust-store, but one of them insecure. Then two HTTPS servers: one will return a
+ * certificate present in the trust-store but with an invalid SAN extension, the other will return a certificate that's not in the
+ * trust-store. Verifies that only the insecure client is successful.
  */
 @RunWith(Parameterized.class)
 public class HttpRequestTlsInsecureTestCase extends AbstractHttpTestCase {
+
   @Parameterized.Parameter
   public String config;
 
@@ -41,7 +42,8 @@ public class HttpRequestTlsInsecureTestCase extends AbstractHttpTestCase {
 
   @Parameterized.Parameters
   public static Collection<Object[]> parameters() {
-    return Arrays.asList(new Object[][] {{"http-request-insecure-hostname-config.xml"}, {"http-request-insecure-certificate-config.xml"}});
+    return Arrays
+        .asList(new Object[][] {{"http-request-insecure-hostname-config.xml"}, {"http-request-insecure-certificate-config.xml"}});
   }
 
   @Override

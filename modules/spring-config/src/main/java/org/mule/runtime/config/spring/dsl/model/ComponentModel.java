@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.dsl.model;
 
@@ -21,18 +21,18 @@ import static com.google.common.collect.ImmutableMap.copyOf;
 import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.NAME_ATTRIBUTE;
 
 /**
- * An {@code ComponentModel} represents the user configuration of a component (flow, config, message processor, etc) defined in an artifact
- * configuration file.
+ * An {@code ComponentModel} represents the user configuration of a component (flow, config, message processor, etc) defined in an
+ * artifact configuration file.
  * <p/>
- * Every {@code ComponentModel} represents the configuration of a core configuration or an extension configuration. Which configuration
- * element this object represents is identified by a {@link org.mule.runtime.config.spring.dsl.model.ComponentIdentifier} that can be
- * retrieved using {@code #getIdentifier}.
+ * Every {@code ComponentModel} represents the configuration of a core configuration or an extension configuration. Which
+ * configuration element this object represents is identified by a
+ * {@link org.mule.runtime.config.spring.dsl.model.ComponentIdentifier} that can be retrieved using {@code #getIdentifier}.
  * <p/>
- * It may have simple configuration parameters which are retrieve by using {@code #getParameters} or complex parameters which are retrieved
- * using {@code #getInnerComponents}.
+ * It may have simple configuration parameters which are retrieve by using {@code #getParameters} or complex parameters which are
+ * retrieved using {@code #getInnerComponents}.
  * <p/>
- * There's a set of configuration attributes or custom attributes that may not be mapped directly to the object that runs on runtime but may
- * be hold by a {@code ComponentModel}. Those attributes are retrieved by using {@code #getCustomAttributes}.
+ * There's a set of configuration attributes or custom attributes that may not be mapped directly to the object that runs on
+ * runtime but may be hold by a {@code ComponentModel}. Those attributes are retrieved by using {@code #getCustomAttributes}.
  *
  * @since 4.0
  */
@@ -165,8 +165,8 @@ public class ComponentModel {
 
   /**
    * @param parameterName configuration parameter name
-   * @return true if the value provided for the configuration parameter was get from the DSL schema, false if it was explicitly defined in
-   *         the config
+   * @return true if the value provided for the configuration parameter was get from the DSL schema, false if it was explicitly
+   *         defined in the config
    */
   public boolean isParameterValueProvidedBySchema(String parameterName) {
     return this.schemaValueParameter.contains(parameterName);
@@ -267,8 +267,8 @@ public class ComponentModel {
     }
 
     /**
-     * Adds a custom attribute to the {@code ComponentModel}. This custom attribute is meant to hold metadata of the configuration and not
-     * to be used to instantiate the runtime object that corresponds to this configuration.
+     * Adds a custom attribute to the {@code ComponentModel}. This custom attribute is meant to hold metadata of the configuration
+     * and not to be used to instantiate the runtime object that corresponds to this configuration.
      *
      * @param name custom attribute name.
      * @param value custom attribute value.

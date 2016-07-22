@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.capability.xml.schema;
 
@@ -16,16 +16,16 @@ import static java.util.Optional.empty;
 import static java.util.Optional.of;
 
 /**
- * Base class for {@link GeneratedResourceFactory} implementations which generate resources needed to support configuring extensions through
- * XML
+ * Base class for {@link GeneratedResourceFactory} implementations which generate resources needed to support configuring
+ * extensions through XML
  *
  * @since 4.0
  */
 abstract class AbstractXmlResourceFactory implements GeneratedResourceFactory {
 
   /**
-   * Tests the given {@code extensionModel} to be enriched with the {@link XmlModelProperty}. If the property is present, then it delegates
-   * into {@link #generateXmlResource(ExtensionModel, XmlModelProperty)}.
+   * Tests the given {@code extensionModel} to be enriched with the {@link XmlModelProperty}. If the property is present, then it
+   * delegates into {@link #generateXmlResource(ExtensionModel, XmlModelProperty)}.
    * <p>
    * Otherwise, it returns {@link Optional#empty()}
    *

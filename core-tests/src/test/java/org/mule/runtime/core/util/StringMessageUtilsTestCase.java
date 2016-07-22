@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -16,6 +16,7 @@ import static org.junit.Assert.assertTrue;
 
 @SmallTest
 public class StringMessageUtilsTestCase extends AbstractMuleTestCase {
+
   @Test
   public void toStringOnStringShouldReturnTheString() {
     String input = "Oscar";
@@ -118,8 +119,8 @@ public class StringMessageUtilsTestCase extends AbstractMuleTestCase {
   @Test
   public void testBoilerPlateSingleLine() {
     String plate = StringMessageUtils.getBoilerPlate("Single message.", '*', 12);
-    assertEquals(SystemUtils.LINE_SEPARATOR + "************" + SystemUtils.LINE_SEPARATOR + "* Single   *" + SystemUtils.LINE_SEPARATOR
-        + "* message. *" + SystemUtils.LINE_SEPARATOR + "************", plate);
+    assertEquals(SystemUtils.LINE_SEPARATOR + "************" + SystemUtils.LINE_SEPARATOR + "* Single   *"
+        + SystemUtils.LINE_SEPARATOR + "* message. *" + SystemUtils.LINE_SEPARATOR + "************", plate);
   }
 
   @Test
@@ -130,9 +131,9 @@ public class StringMessageUtilsTestCase extends AbstractMuleTestCase {
     msgs.add("Boiler Plate");
 
     String plate = StringMessageUtils.getBoilerPlate(msgs, '*', 12);
-    assertEquals(SystemUtils.LINE_SEPARATOR + "************" + SystemUtils.LINE_SEPARATOR + "* This     *" + SystemUtils.LINE_SEPARATOR
-        + "* is a     *" + SystemUtils.LINE_SEPARATOR + "* Boiler   *" + SystemUtils.LINE_SEPARATOR + "* Plate    *"
-        + SystemUtils.LINE_SEPARATOR + "************", plate);
+    assertEquals(SystemUtils.LINE_SEPARATOR + "************" + SystemUtils.LINE_SEPARATOR + "* This     *"
+        + SystemUtils.LINE_SEPARATOR + "* is a     *" + SystemUtils.LINE_SEPARATOR + "* Boiler   *" + SystemUtils.LINE_SEPARATOR
+        + "* Plate    *" + SystemUtils.LINE_SEPARATOR + "************", plate);
 
   }
 
@@ -144,13 +145,13 @@ public class StringMessageUtilsTestCase extends AbstractMuleTestCase {
     msgs.add("Boiler Plate Message that should get wrapped to the next line if it is working properly");
 
     String plate = StringMessageUtils.getBoilerPlate(msgs, '*', 12);
-    assertEquals(SystemUtils.LINE_SEPARATOR + "************" + SystemUtils.LINE_SEPARATOR + "* This     *" + SystemUtils.LINE_SEPARATOR
-        + "* is a     *" + SystemUtils.LINE_SEPARATOR + "* Boiler   *" + SystemUtils.LINE_SEPARATOR + "* Plate    *"
-        + SystemUtils.LINE_SEPARATOR + "* Message  *" + SystemUtils.LINE_SEPARATOR + "* that     *" + SystemUtils.LINE_SEPARATOR
-        + "* should   *" + SystemUtils.LINE_SEPARATOR + "* get      *" + SystemUtils.LINE_SEPARATOR + "* wrapped  *"
-        + SystemUtils.LINE_SEPARATOR + "* to the   *" + SystemUtils.LINE_SEPARATOR + "* next     *" + SystemUtils.LINE_SEPARATOR
-        + "* line if  *" + SystemUtils.LINE_SEPARATOR + "* it is    *" + SystemUtils.LINE_SEPARATOR + "* working  *"
-        + SystemUtils.LINE_SEPARATOR + "* properly *" + SystemUtils.LINE_SEPARATOR + "************", plate);
+    assertEquals(SystemUtils.LINE_SEPARATOR + "************" + SystemUtils.LINE_SEPARATOR + "* This     *"
+        + SystemUtils.LINE_SEPARATOR + "* is a     *" + SystemUtils.LINE_SEPARATOR + "* Boiler   *" + SystemUtils.LINE_SEPARATOR
+        + "* Plate    *" + SystemUtils.LINE_SEPARATOR + "* Message  *" + SystemUtils.LINE_SEPARATOR + "* that     *"
+        + SystemUtils.LINE_SEPARATOR + "* should   *" + SystemUtils.LINE_SEPARATOR + "* get      *" + SystemUtils.LINE_SEPARATOR
+        + "* wrapped  *" + SystemUtils.LINE_SEPARATOR + "* to the   *" + SystemUtils.LINE_SEPARATOR + "* next     *"
+        + SystemUtils.LINE_SEPARATOR + "* line if  *" + SystemUtils.LINE_SEPARATOR + "* it is    *" + SystemUtils.LINE_SEPARATOR
+        + "* working  *" + SystemUtils.LINE_SEPARATOR + "* properly *" + SystemUtils.LINE_SEPARATOR + "************", plate);
   }
 
   @Test
@@ -167,6 +168,7 @@ public class StringMessageUtilsTestCase extends AbstractMuleTestCase {
   }
 
   private class TestObject {
+
     private String myName;
 
     public TestObject(String name) {
@@ -179,6 +181,7 @@ public class StringMessageUtilsTestCase extends AbstractMuleTestCase {
   }
 
   private class AnotherTestObject extends TestObject {
+
     public AnotherTestObject(String name) {
       super(name);
     }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.security.tls;
 
@@ -43,36 +43,37 @@ import static org.mule.runtime.core.api.config.MuleProperties.SYSTEM_PROPERTY_PR
  * <p/>
  * <h2>Introduction</h2>
  * <p/>
- * This class was introduced to centralise the work of TLS/SSL configuration. It is intended to be backwards compatible with earlier code
- * (as much as possible) and so is perhaps more complex than would be necessary if starting from zero - the main source of confusion is the
- * distinction between direct and indirect creation of sockets and stores.
+ * This class was introduced to centralise the work of TLS/SSL configuration. It is intended to be backwards compatible with
+ * earlier code (as much as possible) and so is perhaps more complex than would be necessary if starting from zero - the main
+ * source of confusion is the distinction between direct and indirect creation of sockets and stores.
  * <p/>
  * <h2>Configuration</h2>
  * <p/>
- * The documentation in this class is intended more for programmers than end uses. If you are configuring a connector the interfaces
- * {@link org.mule.runtime.core.api.security.TlsIndirectTrustStore}, {@link TlsDirectTrustStore}, {@link TlsDirectKeyStore} and
- * {@link TlsIndirectKeyStore} should provide guidance to individual properties. In addition you should check the documentation for the
- * specific protocol / connector used and may also need to read the discussion on direct and indirect socket and store creation below (or,
- * more simply, just use whichever key store interface your connector implements!).
+ * The documentation in this class is intended more for programmers than end uses. If you are configuring a connector the
+ * interfaces {@link org.mule.runtime.core.api.security.TlsIndirectTrustStore}, {@link TlsDirectTrustStore},
+ * {@link TlsDirectKeyStore} and {@link TlsIndirectKeyStore} should provide guidance to individual properties. In addition you
+ * should check the documentation for the specific protocol / connector used and may also need to read the discussion on direct
+ * and indirect socket and store creation below (or, more simply, just use whichever key store interface your connector
+ * implements!).
  * <p/>
  * <h2>Programming</h2>
  * <p/>
- * This class is intended to be used as a delegate as we typically want to add security to an already existing connector (so we inherit from
- * that connector, implement the appropriate interfaces from {@link org.mule.runtime.core.api.security.TlsIndirectTrustStore},
- * {@link TlsDirectTrustStore}, {@link TlsDirectKeyStore} and {@link TlsIndirectKeyStore}, and then forward calls to the interfaces to an
- * instance of this class).
+ * This class is intended to be used as a delegate as we typically want to add security to an already existing connector (so we
+ * inherit from that connector, implement the appropriate interfaces from
+ * {@link org.mule.runtime.core.api.security.TlsIndirectTrustStore}, {@link TlsDirectTrustStore}, {@link TlsDirectKeyStore} and
+ * {@link TlsIndirectKeyStore}, and then forward calls to the interfaces to an instance of this class).
  * <p/>
  * <p>
- * For setting System properties (and reading them) use {@link TlsPropertiesMapper}. This can take a "namespace" which can then be used by
- * {@link TlsPropertiesSocketFactory} to construct an appropriate socket factory. This approach (storing to properties and then retrieving
- * that information later in a socket factory) lets us pass TLS/SSL configuration into libraries that are configured by specifying on the
- * socket factory class.
+ * For setting System properties (and reading them) use {@link TlsPropertiesMapper}. This can take a "namespace" which can then be
+ * used by {@link TlsPropertiesSocketFactory} to construct an appropriate socket factory. This approach (storing to properties and
+ * then retrieving that information later in a socket factory) lets us pass TLS/SSL configuration into libraries that are
+ * configured by specifying on the socket factory class.
  * </p>
  * <p/>
  * <h2>Direct and Indirect Socket and Store Creation</h2>
  * <p/>
- * For the SSL transport, which historically defined parameters for many different secure transports, the configuration interfaces worked as
- * follows:
+ * For the SSL transport, which historically defined parameters for many different secure transports, the configuration interfaces
+ * worked as follows:
  * <p/>
  * <dl>
  * <dt>{@link TlsDirectTrustStore}</dt>
@@ -86,20 +87,23 @@ import static org.mule.runtime.core.api.config.MuleProperties.SYSTEM_PROPERTY_PR
  * Historically, many other transports relied on the indirect configurations defined above. So they implemented
  * {@link org.mule.runtime.core.api.security.TlsIndirectTrustStore} (a superclass of {@link TlsDirectTrustStore}) and relied on
  * {@link TlsIndirectKeyStore} from the SSL configuration. For continuity these interfaces continue to be used, even though the
- * configurations are now typically (see individual connector/protocol documentation) specific to a protocol or connector. <em>Note - these
- * interfaces are new, but the original code had those methods, used as described. The new interfaces only make things explicit.</em>
+ * configurations are now typically (see individual connector/protocol documentation) specific to a protocol or connector.
+ * <em>Note - these interfaces are new, but the original code had those methods, used as described. The new interfaces only make
+ * things explicit.</em>
  * <p/>
  * <p>
- * <em>Note for programmers</em> One way to understand the above is to see that many protocols are handled by libraries that are configured
- * by providing either properties or a socket factory. In both cases (the latter via {@link TlsPropertiesSocketFactory}) we continue to use
- * properties and the "indirect" interface. Note also that the mapping in {@link TlsPropertiesMapper} correctly handles the asymmetry, so an
- * initial call to {@link TlsConfiguration} uses the keystore defined via {@link TlsDirectKeyStore}, but when a {@link TlsConfiguration} is
- * retrieved from System proerties using {@link TlsPropertiesMapper#readFromProperties(TlsConfiguration, java.util.Properties)} the
- * "indirect" properties are supplied as "direct" values, meaning that the "indirect" socket factory can be retrieved from
- * {@link #getKeyManagerFactory()}. It just works.
+ * <em>Note for programmers</em> One way to understand the above is to see that many protocols are handled by libraries that are
+ * configured by providing either properties or a socket factory. In both cases (the latter via
+ * {@link TlsPropertiesSocketFactory}) we continue to use properties and the "indirect" interface. Note also that the mapping in
+ * {@link TlsPropertiesMapper} correctly handles the asymmetry, so an initial call to {@link TlsConfiguration} uses the keystore
+ * defined via {@link TlsDirectKeyStore}, but when a {@link TlsConfiguration} is retrieved from System proerties using
+ * {@link TlsPropertiesMapper#readFromProperties(TlsConfiguration, java.util.Properties)} the "indirect" properties are supplied
+ * as "direct" values, meaning that the "indirect" socket factory can be retrieved from {@link #getKeyManagerFactory()}. It just
+ * works.
  * </p>
  */
 public final class TlsConfiguration implements TlsDirectTrustStore, TlsDirectKeyStore, TlsIndirectKeyStore {
+
   public static final String DEFAULT_KEYSTORE = ".keystore";
   public static final String DEFAULT_KEYSTORE_TYPE = KeyStore.getDefaultType();
   public static final String DEFAULT_KEYMANAGER_ALGORITHM = KeyManagerFactory.getDefaultAlgorithm();
@@ -110,7 +114,8 @@ public final class TlsConfiguration implements TlsDirectTrustStore, TlsDirectKey
   public static final String DEFAULT_SECURITY_MODEL = "default";
   public static final String FIPS_SECURITY_MODEL = "fips140-2";
 
-  public static final String DISABLE_SYSTEM_PROPERTIES_MAPPING_PROPERTY = SYSTEM_PROPERTY_PREFIX + "tls.disableSystemPropertiesMapping";
+  public static final String DISABLE_SYSTEM_PROPERTIES_MAPPING_PROPERTY =
+      SYSTEM_PROPERTY_PREFIX + "tls.disableSystemPropertiesMapping";
 
   private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -591,7 +596,8 @@ public final class TlsConfiguration implements TlsDirectTrustStore, TlsDirectKey
     if (tlsProperties != null ? !tlsProperties.equals(that.tlsProperties) : that.tlsProperties != null) {
       return false;
     }
-    if (trustManagerAlgorithm != null ? !trustManagerAlgorithm.equals(that.trustManagerAlgorithm) : that.trustManagerAlgorithm != null) {
+    if (trustManagerAlgorithm != null ? !trustManagerAlgorithm.equals(that.trustManagerAlgorithm)
+        : that.trustManagerAlgorithm != null) {
       return false;
     }
     if (trustManagerFactory != null ? !trustManagerFactory.equals(that.trustManagerFactory) : that.trustManagerFactory != null) {

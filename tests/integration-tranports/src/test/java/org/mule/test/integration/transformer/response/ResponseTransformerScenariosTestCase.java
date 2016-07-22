@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.transformer.response;
 
@@ -22,6 +22,7 @@ import static org.junit.Assert.assertThat;
 import static org.mule.runtime.core.api.config.MuleProperties.MULE_DISABLE_TRANSPORT_TRANSFORMER_PROPERTY;
 
 public class ResponseTransformerScenariosTestCase extends FunctionalTestCase {
+
   @ClassRule
   public static DynamicPort httpPort1 = new DynamicPort("port1");
   @ClassRule
@@ -95,8 +96,8 @@ public class ResponseTransformerScenariosTestCase extends FunctionalTestCase {
     MuleClient client = muleContext.getClient();
     MuleMessage message = client.send("vm://chainedRouterOutboundEndpointResponseTransformer", "request", null);
     assertThat(message, notNullValue());
-    assertThat(getPayloadAsString(message), is(
-        equalTo("request" + VM_OUTBOUND + VM_INBOUND + VM_OUT_IN_RESP + VM_OUT_IN_RESP + CUSTOM_RESPONSE + CUSTOM_RESPONSE + VM_RESPONSE)));
+    assertThat(getPayloadAsString(message), is(equalTo("request" + VM_OUTBOUND + VM_INBOUND + VM_OUT_IN_RESP + VM_OUT_IN_RESP
+        + CUSTOM_RESPONSE + CUSTOM_RESPONSE + VM_RESPONSE)));
   }
 
   @Test

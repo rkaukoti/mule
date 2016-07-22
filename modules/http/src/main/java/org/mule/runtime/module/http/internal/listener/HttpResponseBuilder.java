@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.listener;
 
@@ -57,6 +57,7 @@ import static org.mule.runtime.module.http.api.requester.HttpStreamingType.ALWAY
 import static org.mule.runtime.module.http.api.requester.HttpStreamingType.AUTO;
 
 public class HttpResponseBuilder extends HttpMessageBuilder implements Initialisable, MuleContextAware {
+
   public static final String MULTIPART = "multipart";
   private Logger logger = LoggerFactory.getLogger(getClass());
   private String statusCode;
@@ -87,8 +88,8 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
     reasonPhraseEvaluator = new AttributeEvaluator(reasonPhrase).initialize(muleContext.getExpressionManager());
   }
 
-  public HttpResponse build(org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder httpResponseBuilder, MuleEvent event)
-      throws MessagingException {
+  public HttpResponse build(org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder httpResponseBuilder,
+      MuleEvent event) throws MessagingException {
     final HttpResponseHeaderBuilder httpResponseHeaderBuilder = new HttpResponseHeaderBuilder();
     final Set<String> outboundProperties = event.getMessage().getOutboundPropertyNames();
 
@@ -160,8 +161,8 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
       } else {
         try {
           ByteArrayHttpEntity byteArrayHttpEntity = new ByteArrayHttpEntity(event.getMessageAsBytes());
-          resolveEncoding(httpResponseHeaderBuilder, existingTransferEncoding, existingContentLength, supportsTransferEncoding(event),
-              byteArrayHttpEntity);
+          resolveEncoding(httpResponseHeaderBuilder, existingTransferEncoding, existingContentLength,
+              supportsTransferEncoding(event), byteArrayHttpEntity);
           httpEntity = byteArrayHttpEntity;
         } catch (Exception e) {
           throw new RuntimeException(e);
@@ -287,7 +288,8 @@ public class HttpResponseBuilder extends HttpMessageBuilder implements Initialis
   private void warnNoMultipartContentTypeButMultipartEntity(String contentType) {
     if (!multipartEntityWithNoMultipartContentyTypeWarned) {
       logger.warn(String.format(
-          "Sending http response with Content-Type %s but the message has attachment and a multipart entity is generated", contentType));
+          "Sending http response with Content-Type %s but the message has attachment and a multipart entity is generated",
+          contentType));
       multipartEntityWithNoMultipartContentyTypeWarned = true;
     }
   }

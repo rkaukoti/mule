@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring;
 
@@ -58,8 +58,8 @@ import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_MULE_CONFIG
 
 
 /**
- * This parser enables Mule to parse heirarchical bean structures using spring Namespace handling There are 4 base DefinitionParsers
- * supplied in Mule that most Parsers will extend from, these are
+ * This parser enables Mule to parse heirarchical bean structures using spring Namespace handling There are 4 base
+ * DefinitionParsers supplied in Mule that most Parsers will extend from, these are
  * {@link org.mule.runtime.config.spring.parsers.AbstractChildDefinitionParser}
  * {@link org.mule.runtime.config.spring.parsers.AbstractMuleBeanDefinitionParser}
  * {@link org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser}
@@ -133,8 +133,8 @@ public class MuleHierarchicalBeanDefinitionParserDelegate extends BeanDefinition
         if (shouldUseNewMechanism(element)) {
           ComponentModel parentComponentModel =
               applicationModelSupplier.get().findComponentDefinitionModel((Element) element.getParentNode());
-          beanDefinitionFactory.resolveComponentRecursively(parentComponentModel, componentModel, getReaderContext().getRegistry(),
-              (resolvedComponent, registry) -> {
+          beanDefinitionFactory.resolveComponentRecursively(parentComponentModel, componentModel,
+              getReaderContext().getRegistry(), (resolvedComponent, registry) -> {
                 if (resolvedComponent.isRoot()) {
                   String name = resolvedComponent.getNameAttribute();
                   if (name == null) {
@@ -148,9 +148,11 @@ public class MuleHierarchicalBeanDefinitionParserDelegate extends BeanDefinition
                   registry.registerBeanDefinition(name, resolvedComponent.getBeanDefinition());
                 }
               }, (mpElement, beanDefinition) -> {
-                // We don't want the bean definition to be automatically injected in the parent bean in this cases since the parent is using
+                // We don't want the bean definition to be automatically injected in the parent bean in this cases since the
+                // parent is using
                 // the new parsing mechanism.
-                // Here it will always be a nested element. We use a fake bean definition so it does not try to validate the ID if it thinks
+                // Here it will always be a nested element. We use a fake bean definition so it does not try to validate the ID if
+                // it thinks
                 // is a global element
                 return parseCustomElement(mpElement, BeanDefinitionBuilder.genericBeanDefinition().getBeanDefinition());
               });
@@ -256,8 +258,8 @@ public class MuleHierarchicalBeanDefinitionParserDelegate extends BeanDefinition
   /**
    * Determines if the {@code element} must be parsed using the new mechanism or the old one.
    *
-   * It will use the new mechanism if it's not a root element or if the parent has not been parsed with the old mechanism or if there's not
-   * a {@code org.mule.runtime.config.spring.dsl.api.ComponentBuildingDefinition} defined for the {@code element}.
+   * It will use the new mechanism if it's not a root element or if the parent has not been parsed with the old mechanism or if
+   * there's not a {@code org.mule.runtime.config.spring.dsl.api.ComponentBuildingDefinition} defined for the {@code element}.
    *
    * @param element xml element from the XML configuration file.
    * @return true if the parsing should be done with the new mechanism, false otherwise.

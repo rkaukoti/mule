@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.multipart;
 
@@ -38,6 +38,7 @@ import java.util.concurrent.ConcurrentMap;
  * @see LazyList
  */
 public class MultiMap<K> implements ConcurrentMap<K, Object> {
+
   Map<K, Object> _map;
   ConcurrentMap<K, Object> _cmap;
 
@@ -96,8 +97,8 @@ public class MultiMap<K> implements ConcurrentMap<K, Object> {
   /* ------------------------------------------------------------ */
 
   /**
-   * Get value as String. Single valued items are converted to a String with the toString() Object method. Multi valued entries are
-   * converted to a comma separated List. No quoting of commas within values is performed.
+   * Get value as String. Single valued items are converted to a String with the toString() Object method. Multi valued entries
+   * are converted to a comma separated List. No quoting of commas within values is performed.
    *
    * @param name The entry key.
    * @return String value.

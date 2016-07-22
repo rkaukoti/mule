@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.config;
 
@@ -28,8 +28,8 @@ import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils
  * Reusable and thread-safe factory that creates instances of {@link ConfigurationInstance}
  * <p>
  * The created instances will be of concrete type {@link LifecycleAwareConfigurationInstance}, which means that all the
- * {@link InterceptorFactory interceptor factories} obtained through {@link RuntimeConfigurationModel#getInterceptorFactories()} will be
- * exercised per each created instance
+ * {@link InterceptorFactory interceptor factories} obtained through {@link RuntimeConfigurationModel#getInterceptorFactories()}
+ * will be exercised per each created instance
  *
  * @param <T> the generic type of the returned {@link ConfigurationInstance} instances
  * @since 4.0
@@ -40,7 +40,8 @@ public final class ConfigurationInstanceFactory<T> {
 
   private final RuntimeConfigurationModel configurationModel;
   private final ConfigurationObjectBuilder<T> configurationObjectBuilder;
-  private final ImplicitConnectionProviderFactory implicitConnectionProviderFactory = new DefaultImplicitConnectionProviderFactory();
+  private final ImplicitConnectionProviderFactory implicitConnectionProviderFactory =
+      new DefaultImplicitConnectionProviderFactory();
   private final boolean requiresConnection;
 
   /**
@@ -58,10 +59,10 @@ public final class ConfigurationInstanceFactory<T> {
   /**
    * Creates a new instance using the given {@code event} to obtain the configuration's parameter values.
    * <p>
-   * This method tries to automatically infer a {@link ConnectionProvider}. The first step is to determine if the {@link ExtensionModel}
-   * which owns the {@link #configurationModel} has any {@link OperationModel} which requires a connection. If the answer is no, then it
-   * just provides a {@code null} connection provider. Otherwise, it uses a {@link ImplicitConnectionProviderFactory} to construct an
-   * implicit {@link ConnectionProvider}.
+   * This method tries to automatically infer a {@link ConnectionProvider}. The first step is to determine if the
+   * {@link ExtensionModel} which owns the {@link #configurationModel} has any {@link OperationModel} which requires a connection.
+   * If the answer is no, then it just provides a {@code null} connection provider. Otherwise, it uses a
+   * {@link ImplicitConnectionProviderFactory} to construct an implicit {@link ConnectionProvider}.
    *
    * @param name the name of the configuration to return
    * @param event the current {@link MuleEvent}
@@ -71,8 +72,8 @@ public final class ConfigurationInstanceFactory<T> {
   public ConfigurationInstance<T> createConfiguration(String name, MuleEvent event) throws MuleException {
     ValueResolver<ConnectionProvider> providerResolver;
     if (requiresConnection) {
-      providerResolver =
-          new StaticValueResolver<>(implicitConnectionProviderFactory.createImplicitConnectionProvider(name, configurationModel, event));
+      providerResolver = new StaticValueResolver<>(
+          implicitConnectionProviderFactory.createImplicitConnectionProvider(name, configurationModel, event));
     } else {
       providerResolver = NULL_CONNECTION_PROVIDER;
     }
@@ -83,8 +84,8 @@ public final class ConfigurationInstanceFactory<T> {
   /**
    * Creates a new instance using the given {@code event} to obtain the configuration's parameter values.
    * <p>
-   * This method overload allows specifying a {@link ValueResolver} to provide the {@link ConnectionProvider} that the configuration will
-   * use to obtain connections. If the connection does not need such a concept you can provide a {@code null}
+   * This method overload allows specifying a {@link ValueResolver} to provide the {@link ConnectionProvider} that the
+   * configuration will use to obtain connections. If the connection does not need such a concept you can provide a {@code null}
    *
    * @param name the name of the configuration to return
    * @param event the current {@link MuleEvent}
@@ -97,8 +98,8 @@ public final class ConfigurationInstanceFactory<T> {
     Optional<ConnectionProvider> connectionProvider = Optional.ofNullable(connectionProviderResolver.resolve(event));
     T configValue = createConfigurationInstance(name, event);
 
-    return new LifecycleAwareConfigurationInstance<>(name, configurationModel, configValue, createInterceptors(configurationModel),
-        connectionProvider);
+    return new LifecycleAwareConfigurationInstance<>(name, configurationModel, configValue,
+        createInterceptors(configurationModel), connectionProvider);
   }
 
   /**
@@ -113,8 +114,8 @@ public final class ConfigurationInstanceFactory<T> {
       Optional<ConnectionProvider> connectionProvider) throws MuleException {
     T configValue = createConfigurationInstance(name, resolverSetResult);
 
-    return new LifecycleAwareConfigurationInstance<>(name, configurationModel, configValue, createInterceptors(configurationModel),
-        connectionProvider);
+    return new LifecycleAwareConfigurationInstance<>(name, configurationModel, configValue,
+        createInterceptors(configurationModel), connectionProvider);
   }
 
   private T createConfigurationInstance(String name, ResolverSetResult resolverSetResult) throws MuleException {

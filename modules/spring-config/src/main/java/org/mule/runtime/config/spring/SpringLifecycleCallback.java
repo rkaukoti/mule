@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring;
 
@@ -19,12 +19,12 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * A {@link RegistryLifecycleCallback} to be used with instances of {@link SpringRegistry}. For each object in which a {@link Lifecycle}
- * phase is going to be applied, it detects all the dependencies for that object and applies the same phase on those dependencies first
- * (recursively).
+ * A {@link RegistryLifecycleCallback} to be used with instances of {@link SpringRegistry}. For each object in which a
+ * {@link Lifecycle} phase is going to be applied, it detects all the dependencies for that object and applies the same phase on
+ * those dependencies first (recursively).
  * <p/>
- * This guarantees that if object A depends on object B and C, necessary lifecycle phases will have been applied on B and C before it is
- * applied to A
+ * This guarantees that if object A depends on object B and C, necessary lifecycle phases will have been applied on B and C before
+ * it is applied to A
  *
  * @since 3.7.0
  */
@@ -45,6 +45,7 @@ class SpringLifecycleCallback extends RegistryLifecycleCallback<SpringRegistry> 
     }
 
     Iterable<DependencyNode> orderedNodes = new TreeTraverser<DependencyNode>() {
+
       @Override
       public Iterable children(DependencyNode node) {
         return node.getChilds();

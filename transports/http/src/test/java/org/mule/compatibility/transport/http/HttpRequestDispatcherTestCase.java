@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -98,6 +98,7 @@ public class HttpRequestDispatcherTestCase extends AbstractMuleTestCase {
     sustituteLifecycleManager();
     when(mockConnectorLifecycleManager.getState().isStarted()).thenReturn(true);
     when(mockRetryTemplate.execute(any(RetryCallback.class), any(WorkManager.class))).thenAnswer(new Answer<Object>() {
+
       @Override
       public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
         acceptCalledLath.release();
@@ -114,6 +115,7 @@ public class HttpRequestDispatcherTestCase extends AbstractMuleTestCase {
 
       Prober prober = new PollingProber(100, 1);
       prober.check(new Probe() {
+
         @Override
         public boolean isSatisfied() {
           try {
@@ -160,6 +162,7 @@ public class HttpRequestDispatcherTestCase extends AbstractMuleTestCase {
     sustituteLifecycleManager();
     when(mockConnectorLifecycleManager.getState().isStarted()).thenReturn(true);
     when(mockRetryTemplate.execute(any(RetryCallback.class), any(WorkManager.class))).thenAnswer(new Answer<RetryContext>() {
+
       @Override
       public RetryContext answer(InvocationOnMock invocationOnMock) throws Throwable {
         ((RetryCallback) invocationOnMock.getArguments()[0]).doWork(mockRetryContext);
@@ -167,6 +170,7 @@ public class HttpRequestDispatcherTestCase extends AbstractMuleTestCase {
       }
     });
     Mockito.doAnswer(new Answer<Object>() {
+
       @Override
       public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
         acceptCalledLath.release();
@@ -203,6 +207,7 @@ public class HttpRequestDispatcherTestCase extends AbstractMuleTestCase {
 
   private Thread createDispatcherThread(final HttpRequestDispatcher httpRequestDispatcher) {
     Thread requestDispatcherThread = new Thread() {
+
       @Override
       public void run() {
         httpRequestDispatcher.run();

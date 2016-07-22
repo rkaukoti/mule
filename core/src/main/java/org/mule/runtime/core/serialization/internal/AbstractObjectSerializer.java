@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.serialization.internal;
 
@@ -19,8 +19,8 @@ import java.io.OutputStream;
 import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
- * Base class for implementations of {@link org.mule.runtime.core.api.serialization.ObjectSerializer} This class implements all the base
- * behavioral contract allowing its extensions to only care about the actual serialization/deserialization part.
+ * Base class for implementations of {@link org.mule.runtime.core.api.serialization.ObjectSerializer} This class implements all
+ * the base behavioral contract allowing its extensions to only care about the actual serialization/deserialization part.
  *
  * @since 3.7.0
  */

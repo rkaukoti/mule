@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.api.transport;
 
@@ -18,9 +18,9 @@ import org.mule.runtime.core.api.MuleException;
 public interface MessageRequesterFactory {
 
   /**
-   * Controls whether dispatchers are cached or created per request. Note that if an exception occurs in the requester, it is automatically
-   * disposed of and a new one is created for the next request. This allows requesters to recover from loss of connection and other faults.
-   * When invoked by
+   * Controls whether dispatchers are cached or created per request. Note that if an exception occurs in the requester, it is
+   * automatically disposed of and a new one is created for the next request. This allows requesters to recover from loss of
+   * connection and other faults. When invoked by
    * {@link #validate(org.mule.compatibility.core.api.endpoint.InboundEndpoint, org.mule.compatibility.core.api.transport.MessageRequester)}
    * it takes precedence over the dispatcher's own return value of
    * {@link org.mule.compatibility.core.api.transport.MessageDispatcher#validate()}.
@@ -30,7 +30,8 @@ public interface MessageRequesterFactory {
   boolean isCreateRequesterPerRequest();
 
   /**
-   * Creates a new message requester instance, initialised with the passed endpoint. The returned instance should be immediately useable.
+   * Creates a new message requester instance, initialised with the passed endpoint. The returned instance should be immediately
+   * useable.
    *
    * @param endpoint the endoint for which this requester should be created
    * @return a properly created <code>MessageRequester</code> for this transport
@@ -49,8 +50,8 @@ public interface MessageRequesterFactory {
   void activate(InboundEndpoint endpoint, MessageRequester requester) throws MuleException;
 
   /**
-   * Invoked <strong>after</strong> the requester is returned from a client but <strong>before</strong> it is prepared for return to its
-   * pool via
+   * Invoked <strong>after</strong> the requester is returned from a client but <strong>before</strong> it is prepared for return
+   * to its pool via
    * {@link #passivate(org.mule.compatibility.core.api.endpoint.InboundEndpoint, org.mule.compatibility.core.api.transport.MessageRequester)}.
    *
    * @param endpoint the endpoint of the requester

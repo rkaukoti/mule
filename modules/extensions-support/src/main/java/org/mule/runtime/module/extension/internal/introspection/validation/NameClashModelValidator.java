@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
@@ -43,9 +43,10 @@ import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
  * <ul>
  * <li>The {@link Named#getName()} value of all the {@link ConfigurationModel}, {@link OperationModel} and
  * {@link ConnectionProviderModel}</li>
- * <li>Makes sure that there no two {@link ParameterModel}s with the same name but different types, for those which represent an object</li>
- * <li>Makes sure that no {@link ConfigurationModel}, {@link OperationModel} or {@link ConnectionProviderModel} have parameters with
- * repeated name</li>
+ * <li>Makes sure that there no two {@link ParameterModel}s with the same name but different types, for those which represent an
+ * object</li>
+ * <li>Makes sure that no {@link ConfigurationModel}, {@link OperationModel} or {@link ConnectionProviderModel} have parameters
+ * with repeated name</li>
  * </ul>
  *
  * @since 4.0
@@ -113,16 +114,19 @@ public final class NameClashModelValidator implements ModelValidator {
     private void validateOperation(OperationModel operation) {
       validateParameterNames(operation);
       // Check clash between each operation and its parameters type
-      operation.getParameterModels().stream().forEach(
-          parameterModel -> validateClash(operation.getName(), getType(parameterModel.getType()).getName(), "operation", "argument"));
+      operation.getParameterModels().stream().forEach(parameterModel -> validateClash(operation.getName(),
+          getType(parameterModel.getType()).getName(), "operation", "argument"));
     }
 
     private void validateParameterNames(ParameterizedModel model) {
       Set<String> repeatedParameters = collectRepeatedNames(model.getParameterModels());
       if (!repeatedParameters.isEmpty()) {
         throw new IllegalModelDefinitionException(
-            format("Extension '%s' defines the %s '%s' which has parameters " + "with repeated names. Offending parameters are: [%s]",
-                extensionModel.getName(), model.getClass().getSimpleName(), model.getName(), Joiner.on(",").join(repeatedParameters)));
+            format(
+                "Extension '%s' defines the %s '%s' which has parameters "
+                    + "with repeated names. Offending parameters are: [%s]",
+                extensionModel.getName(), model.getClass().getSimpleName(), model.getName(),
+                Joiner.on(",").join(repeatedParameters)));
       }
     }
 
@@ -168,7 +172,8 @@ public final class NameClashModelValidator implements ModelValidator {
         List<Named> values = (List<Named>) entry.getValue();
         if (values.size() > 1) {
           Set<String> offendingTypes = values.stream().map(Named::getName).collect(toSet());
-          StringBuilder errorMessage = new StringBuilder(format("Extension '%s' contains %d ", extensionModel.getName(), values.size()));
+          StringBuilder errorMessage =
+              new StringBuilder(format("Extension '%s' contains %d ", extensionModel.getName(), values.size()));
 
           final int top = offendingTypes.size() - 1;
           int i = 0;

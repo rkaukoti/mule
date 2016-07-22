@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.processor;
 
@@ -18,11 +18,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * MessageProcessor implementation that logs the current element of a value evaluated from it using an expression evaluator. By default the
- * current messages is logged using the {@link Level#DEBUG} level to the 'org.mule.runtime.core.api.processor.LoggerMessageProcessor'
- * category. The level and category can both be configured to suit your needs.
+ * MessageProcessor implementation that logs the current element of a value evaluated from it using an expression evaluator. By
+ * default the current messages is logged using the {@link Level#DEBUG} level to the
+ * 'org.mule.runtime.core.api.processor.LoggerMessageProcessor' category. The level and category can both be configured to suit
+ * your needs.
  */
 public class LoggerMessageProcessor extends AbstractAnnotatedObject implements MessageProcessor, Initialisable, MuleContextAware {
+
   protected transient Logger logger;
 
   protected String message;
@@ -90,6 +92,7 @@ public class LoggerMessageProcessor extends AbstractAnnotatedObject implements M
 
   public enum LogLevel {
     ERROR {
+
       @Override
       public void log(Logger logger, Object object) {
         logger.error(object == null ? null : object.toString());
@@ -101,6 +104,7 @@ public class LoggerMessageProcessor extends AbstractAnnotatedObject implements M
       }
     },
     WARN {
+
       @Override
       public void log(Logger logger, Object object) {
         logger.warn(object == null ? null : object.toString());
@@ -112,6 +116,7 @@ public class LoggerMessageProcessor extends AbstractAnnotatedObject implements M
       }
     },
     INFO {
+
       @Override
       public void log(Logger logger, Object object) {
         logger.info(object == null ? null : object.toString());
@@ -123,6 +128,7 @@ public class LoggerMessageProcessor extends AbstractAnnotatedObject implements M
       }
     },
     DEBUG {
+
       @Override
       public void log(Logger logger, Object object) {
         logger.debug(object == null ? null : object.toString());
@@ -134,6 +140,7 @@ public class LoggerMessageProcessor extends AbstractAnnotatedObject implements M
       }
     },
     TRACE {
+
       @Override
       public void log(Logger logger, Object object) {
         logger.trace(object == null ? null : object.toString());

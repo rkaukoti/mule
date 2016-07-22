@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.dsl.spring;
 
@@ -19,12 +19,13 @@ import static org.mule.runtime.config.spring.dsl.processor.xml.CoreXmlNamespaceI
 import static org.mule.runtime.config.spring.dsl.processor.xml.XmlCustomAttributeHandler.from;
 
 /**
- * Processor of the chain of responsibility that knows how to create the {@link org.springframework.beans.factory.config.BeanDefinition} for
- * an filter reference element.
+ * Processor of the chain of responsibility that knows how to create the
+ * {@link org.springframework.beans.factory.config.BeanDefinition} for an filter reference element.
  *
  * @since 4.0
  */
 class FilterReferenceBeanDefinitionCreator extends BeanDefinitionCreator {
+
   private static final ComponentIdentifier FILTER_REFERENCE_IDENTIFIER =
       new ComponentIdentifier.Builder().withNamespace(CORE_NAMESPACE_NAME).withName(FILTER_REFERENCE_ELEMENT).build();
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.tls.internal;
 
@@ -31,8 +31,8 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 /**
- * Default implementation of the {@code TlsContextFactory} interface, which delegates all its operations to a {@code TlsConfiguration}
- * object. Only enabled cipher suites and protocols will not delegate to it if configured.
+ * Default implementation of the {@code TlsContextFactory} interface, which delegates all its operations to a
+ * {@code TlsConfiguration} object. Only enabled cipher suites and protocols will not delegate to it if configured.
  */
 public class DefaultTlsContextFactory implements TlsContextFactory, Initialisable {
 
@@ -86,9 +86,9 @@ public class DefaultTlsContextFactory implements TlsContextFactory, Initialisabl
   }
 
   private void globalConfigNotHonored(String element, String[] elementArray) throws InitialisationException {
-    throw new InitialisationException(MessageFactory
-        .createStaticMessage(String.format("Some selected %1$s are invalid. Valid %1$s according to your TLS configuration file are: %2$s",
-            element, Joiner.on(", ").join(elementArray))),
+    throw new InitialisationException(MessageFactory.createStaticMessage(
+        String.format("Some selected %1$s are invalid. Valid %1$s according to your TLS configuration file are: %2$s", element,
+            Joiner.on(", ").join(elementArray))),
         this);
   }
 
@@ -248,6 +248,7 @@ public class DefaultTlsContextFactory implements TlsContextFactory, Initialisabl
   @Override
   public TlsContextKeyStoreConfiguration getKeyStoreConfiguration() {
     return new TlsContextKeyStoreConfiguration() {
+
       @Override
       public String getAlias() {
         return getKeyAlias();
@@ -283,6 +284,7 @@ public class DefaultTlsContextFactory implements TlsContextFactory, Initialisabl
   @Override
   public TlsContextTrustStoreConfiguration getTrustStoreConfiguration() {
     return new TlsContextTrustStoreConfiguration() {
+
       @Override
       public String getPath() {
         return getTrustStorePath();

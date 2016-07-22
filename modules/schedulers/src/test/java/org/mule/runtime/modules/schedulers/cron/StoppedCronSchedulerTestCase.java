@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.modules.schedulers.cron;
 
@@ -17,6 +17,7 @@ import static junit.framework.Assert.assertEquals;
 
 
 public class StoppedCronSchedulerTestCase extends FunctionalTestCase {
+
   private static List<String> foo = new ArrayList<String>();
 
   @Override
@@ -33,7 +34,8 @@ public class StoppedCronSchedulerTestCase extends FunctionalTestCase {
   }
 
   private void runSchedulersOnce() throws Exception {
-    Collection<Scheduler> schedulers = muleContext.getRegistry().lookupScheduler(Schedulers.flowConstructPollingSchedulers("pollfoo"));
+    Collection<Scheduler> schedulers =
+        muleContext.getRegistry().lookupScheduler(Schedulers.flowConstructPollingSchedulers("pollfoo"));
 
     for (Scheduler scheduler : schedulers) {
       scheduler.schedule();

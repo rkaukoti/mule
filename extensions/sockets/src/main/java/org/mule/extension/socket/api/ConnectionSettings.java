@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.api;
 
@@ -15,8 +15,8 @@ import static org.mule.runtime.core.util.StringUtils.isBlank;
 /**
  * Groups host and port fields.
  * <p>
- * This can be used for representing where a socket should bind in order to listen for connections, or which address should the socket
- * connect to as well.
+ * This can be used for representing where a socket should bind in order to listen for connections, or which address should the
+ * socket connect to as well.
  *
  * @since 4.0
  */
@@ -50,8 +50,8 @@ public class ConnectionSettings {
   }
 
   /**
-   * If the port is {@code null}, let's the system choose a suitable port If the host is {@code null} uses the IP address wildcard address.
-   * See {@link InetSocketAddress} for more information
+   * If the port is {@code null}, let's the system choose a suitable port If the host is {@code null} uses the IP address wildcard
+   * address. See {@link InetSocketAddress} for more information
    *
    * @return a valid {@link InetSocketAddress} to be used for binding
    */

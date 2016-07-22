@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime;
 
@@ -14,13 +14,13 @@ import org.mule.runtime.extension.api.runtime.operation.OperationExecutor;
 import java.util.Optional;
 
 /**
- * Adapter interface which expands the contract of {@link OperationContext} which functionality that is internal to this implementation of
- * the extensions API and shouldn't be accessible for the extensions themselves.
+ * Adapter interface which expands the contract of {@link OperationContext} which functionality that is internal to this
+ * implementation of the extensions API and shouldn't be accessible for the extensions themselves.
  * <p/>
- * Among other things, it adds the concept of variables, which are key-value pairs in order to contain state that is not specific to the
- * operation but to the extensions framework itself. It's not to contain operation parameters as its {@link #getParameter(String)} counter
- * part. It's meant for things like connection pointers, state to be shared between {@link Interceptor interceptors} and
- * {@link OperationExecutor operation executors}, etc.
+ * Among other things, it adds the concept of variables, which are key-value pairs in order to contain state that is not specific
+ * to the operation but to the extensions framework itself. It's not to contain operation parameters as its
+ * {@link #getParameter(String)} counter part. It's meant for things like connection pointers, state to be shared between
+ * {@link Interceptor interceptors} and {@link OperationExecutor operation executors}, etc.
  *
  * @since 3.7.0
  */

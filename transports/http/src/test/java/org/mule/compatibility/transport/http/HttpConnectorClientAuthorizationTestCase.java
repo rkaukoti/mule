@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -38,13 +38,15 @@ import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 @RunWith(MockitoJUnitRunner.class)
 public class HttpConnectorClientAuthorizationTestCase extends AbstractMuleContextEndpointTestCase {
+
   private static final String CREDENTIALS_USER = "myUser";
 
   private static final String CREDENTIALS_PASSWORD = "myPassword";
 
   private static final String URI_WITHOUT_CREDENTIALS = "http://localhost:60127";
 
-  private static final String URI_WITH_CREDENTIALS = "http://" + CREDENTIALS_USER + ":" + CREDENTIALS_PASSWORD + "@localhost:60127";
+  private static final String URI_WITH_CREDENTIALS =
+      "http://" + CREDENTIALS_USER + ":" + CREDENTIALS_PASSWORD + "@localhost:60127";
 
   private static final String HEADER_AUTHORIZATION_VALUE = "headerAuthValue";
 

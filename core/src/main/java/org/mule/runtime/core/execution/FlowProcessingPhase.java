@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.execution;
 
@@ -36,9 +36,10 @@ public class FlowProcessingPhase extends NotificationFiringProcessingPhase<FlowP
   }
 
   @Override
-  public void runPhase(final FlowProcessingPhaseTemplate flowProcessingPhaseTemplate, final MessageProcessContext messageProcessContext,
-      final PhaseResultNotifier phaseResultNotifier) {
+  public void runPhase(final FlowProcessingPhaseTemplate flowProcessingPhaseTemplate,
+      final MessageProcessContext messageProcessContext, final PhaseResultNotifier phaseResultNotifier) {
     Work flowExecutionWork = new Work() {
+
       @Override
       public void release() {}
 
@@ -47,10 +48,10 @@ public class FlowProcessingPhase extends NotificationFiringProcessingPhase<FlowP
         try {
           try {
             final AtomicReference exceptionThrownDuringFlowProcessing = new AtomicReference();
-            TransactionalErrorHandlingExecutionTemplate transactionTemplate =
-                TransactionalErrorHandlingExecutionTemplate.createMainExecutionTemplate(
-                    messageProcessContext.getFlowConstruct().getMuleContext(), (messageProcessContext.getTransactionConfig() == null
-                        ? new MuleTransactionConfig() : messageProcessContext.getTransactionConfig()),
+            TransactionalErrorHandlingExecutionTemplate transactionTemplate = TransactionalErrorHandlingExecutionTemplate
+                .createMainExecutionTemplate(messageProcessContext.getFlowConstruct().getMuleContext(),
+                    (messageProcessContext.getTransactionConfig() == null ? new MuleTransactionConfig()
+                        : messageProcessContext.getTransactionConfig()),
                     messageProcessContext.getFlowConstruct().getExceptionListener());
             MuleEvent response = transactionTemplate.execute(() -> {
               try {

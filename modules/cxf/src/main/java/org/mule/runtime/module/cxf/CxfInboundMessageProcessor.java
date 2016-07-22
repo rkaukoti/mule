@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf;
 
@@ -80,8 +80,8 @@ import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.
 
 /**
  * The CxfInboundMessageProcessor performs inbound CXF processing, sending an event through the CXF service, then on to the next
- * MessageProcessor. This processor gets built by a MessageProcessorBuilder which is responsible for configuring it and the {@link Server}
- * that it dispatches to.
+ * MessageProcessor. This processor gets built by a MessageProcessorBuilder which is responsible for configuring it and the
+ * {@link Server} that it dispatches to.
  */
 public class CxfInboundMessageProcessor extends AbstractInterceptingMessageProcessor implements Lifecycle, NonBlockingSupported {
 
@@ -114,7 +114,8 @@ public class CxfInboundMessageProcessor extends AbstractInterceptingMessageProce
           MessageFactory.createStaticMessage("No CXF bus instance, this component has not been initialized properly."), this);
     }
 
-    final HttpRequestPropertyManager httpRequestPropertyManager = muleContext.getRegistry().get(HTTP_REQUEST_PROPERTY_MANAGER_KEY);
+    final HttpRequestPropertyManager httpRequestPropertyManager =
+        muleContext.getRegistry().get(HTTP_REQUEST_PROPERTY_MANAGER_KEY);
     requestPropertyManager = httpRequestPropertyManager != null ? httpRequestPropertyManager : new HttpRequestPropertyManager();
   }
 
@@ -223,11 +224,13 @@ public class CxfInboundMessageProcessor extends AbstractInterceptingMessageProce
         final ReplyToHandler originalReplyToHandler = event.getReplyToHandler();
 
         event = new DefaultMuleEvent(event, new NonBlockingReplyToHandler() {
+
           @Override
           public void processReplyTo(MuleEvent responseEvent, MuleMessage returnMessage, Object replyTo) throws MuleException {
             try {
               // CXF execution chain was suspended, so we need to resume it.
-              // The MuleInvoker component will be recalled, by using the CxfConstants.NON_BLOCKING_RESPONSE flag we force using the
+              // The MuleInvoker component will be recalled, by using the CxfConstants.NON_BLOCKING_RESPONSE flag we force using
+              // the
               // received response event instead of re-invoke the flow
               exchange.put(CxfConstants.MULE_EVENT, responseEvent);
               exchange.put(CxfConstants.NON_BLOCKING_RESPONSE, true);
@@ -326,7 +329,8 @@ public class CxfInboundMessageProcessor extends AbstractInterceptingMessageProce
       if (soapAction != null && !soapAction.isEmpty()) {
         List<String> soapActions = new ArrayList<>();
         // An HTTP client MUST use [SOAPAction] header field when issuing a SOAP HTTP Request.
-        // The header field value of empty string ("") means that the intent of the SOAP message is provided by the HTTP Request-URI.
+        // The header field value of empty string ("") means that the intent of the SOAP message is provided by the HTTP
+        // Request-URI.
         // No value means that there is no indication of the intent of the message.
         soapActions.add(soapAction);
         protocolHeaders.put(SoapBindingConstants.SOAP_ACTION, soapActions);

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.file.comparator;
 
@@ -13,11 +13,12 @@ import java.util.Comparator;
 
 /**
  * <p>
- * <code>OlderComparatorComparator</code> is a {@link Comparator} of File which is capable of comparing files for equality based on their
- * modification dates.
+ * <code>OlderComparatorComparator</code> is a {@link Comparator} of File which is capable of comparing files for equality based
+ * on their modification dates.
  * </p>
  */
 public class OlderFirstComparator implements Comparator {
+
   @Override
   public int compare(Object o1, Object o2) {
     if (o1 instanceof File && o2 instanceof File) {

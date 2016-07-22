@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.management.agent;
 
@@ -74,8 +74,8 @@ public class DefaultJmxSupportAgent extends AbstractAgent {
   }
 
   /**
-   * A lifecycle method where implementor should free up any resources. If an exception is thrown it should just be logged and processing
-   * should continue. This method should not throw Runtime exceptions.
+   * A lifecycle method where implementor should free up any resources. If an exception is thrown it should just be logged and
+   * processing should continue. This method should not throw Runtime exceptions.
    */
   @Override
   public void dispose() {
@@ -83,12 +83,13 @@ public class DefaultJmxSupportAgent extends AbstractAgent {
   }
 
   /**
-   * Method used to perform any initialisation work. If a fatal error occurs during initialisation an <code>InitialisationException</code>
-   * should be thrown, causing the Mule instance to shutdown. If the error is recoverable, say by retrying to connect, a
-   * <code>RecoverableException</code> should be thrown. There is no guarantee that by throwing a Recoverable exception that the Mule
-   * instance will not shut down.
+   * Method used to perform any initialisation work. If a fatal error occurs during initialisation an
+   * <code>InitialisationException</code> should be thrown, causing the Mule instance to shutdown. If the error is recoverable,
+   * say by retrying to connect, a <code>RecoverableException</code> should be thrown. There is no guarantee that by throwing a
+   * Recoverable exception that the Mule instance will not shut down.
    *
-   * @throws org.mule.runtime.core.api.lifecycle.InitialisationException if a fatal error occurs causing the Mule instance to shutdown
+   * @throws org.mule.runtime.core.api.lifecycle.InitialisationException if a fatal error occurs causing the Mule instance to
+   *         shutdown
    */
   @Override
   public void initialise() throws InitialisationException {
@@ -183,8 +184,8 @@ public class DefaultJmxSupportAgent extends AbstractAgent {
 
     // if defaults haven't been used
     if (StringUtils.isBlank(remotingUri)) {
-      remotingUri = MessageFormat.format("service:jmx:rmi:///jndi/rmi://{0}:{1}/server", StringUtils.defaultString(host, DEFAULT_HOST),
-          StringUtils.defaultString(port, DEFAULT_PORT));
+      remotingUri = MessageFormat.format("service:jmx:rmi:///jndi/rmi://{0}:{1}/server",
+          StringUtils.defaultString(host, DEFAULT_HOST), StringUtils.defaultString(port, DEFAULT_PORT));
     }
 
     if (credentials != null && !credentials.isEmpty()) {

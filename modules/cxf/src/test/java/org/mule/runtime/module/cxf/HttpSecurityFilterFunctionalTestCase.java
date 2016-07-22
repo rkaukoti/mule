@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf;
 
@@ -62,8 +62,10 @@ public class HttpSecurityFilterFunctionalTestCase extends AbstractHttpSecurityTe
       int status = client.executeMethod(get);
       assertEquals(UNAUTHORIZED.getStatusCode(), status);
       String expectedMessage =
-          String.format("Registered authentication is set to org.mule.runtime.module.http.internal.filter.HttpBasicAuthenticationFilter "
-              + "but there was no security context on the session. Authentication denied on endpoint %s.", get.getURI().getURI());
+          String.format(
+              "Registered authentication is set to org.mule.runtime.module.http.internal.filter.HttpBasicAuthenticationFilter "
+                  + "but there was no security context on the session. Authentication denied on endpoint %s.",
+              get.getURI().getURI());
       assertThat(get.getResponseBodyAsString(), startsWith(expectedMessage));
     } finally {
       get.releaseConnection();
@@ -85,11 +87,10 @@ public class HttpSecurityFilterFunctionalTestCase extends AbstractHttpSecurityTe
       int status = client.executeMethod(post);
       assertEquals(UNAUTHORIZED.getStatusCode(), status);
       assertThat(post.getResponseBodyAsString(),
-          startsWith(
-              String.format(
-                  "Registered authentication is set to org.mule.runtime.module.http.internal.filter.HttpBasicAuthenticationFilter "
-                      + "but there was no security context on the session. Authentication denied on endpoint %s.",
-                  post.getURI().getURI())));
+          startsWith(String.format(
+              "Registered authentication is set to org.mule.runtime.module.http.internal.filter.HttpBasicAuthenticationFilter "
+                  + "but there was no security context on the session. Authentication denied on endpoint %s.",
+              post.getURI().getURI())));
     } finally {
       post.releaseConnection();
     }
@@ -97,8 +98,8 @@ public class HttpSecurityFilterFunctionalTestCase extends AbstractHttpSecurityTe
 
   @Test
   public void testAuthenticationFailureBadCredentialsGet() throws Exception {
-    doGet(null, "localhost", "anonX", "anonX", "http://localhost:" + dynamicPort1.getNumber() + "/services/Echo/echo/echo/hello", true,
-        401);
+    doGet(null, "localhost", "anonX", "anonX", "http://localhost:" + dynamicPort1.getNumber() + "/services/Echo/echo/echo/hello",
+        true, 401);
   }
 
   @Test
@@ -113,13 +114,14 @@ public class HttpSecurityFilterFunctionalTestCase extends AbstractHttpSecurityTe
 
   @Test
   public void testAuthenticationAuthorisedGet() throws Exception {
-    doGet(null, "localhost", "anon", "anon", "http://localhost:" + dynamicPort1.getNumber() + "/services/Echo/echo/echo/hello", false, 200);
+    doGet(null, "localhost", "anon", "anon", "http://localhost:" + dynamicPort1.getNumber() + "/services/Echo/echo/echo/hello",
+        false, 200);
   }
 
   @Test
   public void testAuthenticationAuthorisedGetHttps() throws Exception {
-    doGet(null, "localhost", "anon", "anon", "https://localhost:" + dynamicPort2.getNumber() + "/services/Echo/echo/echo/hello", false,
-        200);
+    doGet(null, "localhost", "anon", "anon", "https://localhost:" + dynamicPort2.getNumber() + "/services/Echo/echo/echo/hello",
+        false, 200);
   }
 
   @Test
@@ -134,7 +136,8 @@ public class HttpSecurityFilterFunctionalTestCase extends AbstractHttpSecurityTe
 
   @Test
   public void testAuthenticationAuthorisedWithHandshakeGet() throws Exception {
-    doGet(null, "localhost", "anon", "anon", "http://localhost:" + dynamicPort1.getNumber() + "/services/Echo/echo/echo/hello", true, 200);
+    doGet(null, "localhost", "anon", "anon", "http://localhost:" + dynamicPort1.getNumber() + "/services/Echo/echo/echo/hello",
+        true, 200);
   }
 
   @Test
@@ -146,8 +149,8 @@ public class HttpSecurityFilterFunctionalTestCase extends AbstractHttpSecurityTe
   @Ignore
   @Test
   public void testAuthenticationAuthorisedWithHandshakeAndBadRealmGet() throws Exception {
-    doGet("blah", "localhost", "anon", "anon", "http://localhost:" + dynamicPort1.getNumber() + "/services/Echo/echo/echo/hello", true,
-        401);
+    doGet("blah", "localhost", "anon", "anon", "http://localhost:" + dynamicPort1.getNumber() + "/services/Echo/echo/echo/hello",
+        true, 401);
   }
 
   // TODO Realm validation seems to be completely ignored
@@ -159,16 +162,18 @@ public class HttpSecurityFilterFunctionalTestCase extends AbstractHttpSecurityTe
 
   @Test
   public void testAuthenticationAuthorisedWithHandshakeAndRealmGet() throws Exception {
-    doGet("mule-realm", "localhost", "ross", "ross", "http://localhost:" + dynamicPort1.getNumber() + "/services/Echo/echo/echo/hello",
-        true, 200);
+    doGet("mule-realm", "localhost", "ross", "ross",
+        "http://localhost:" + dynamicPort1.getNumber() + "/services/Echo/echo/echo/hello", true, 200);
   }
 
   @Test
   public void testAuthenticationAuthorisedWithHandshakeAndRealmPost() throws Exception {
-    doPost("mule-realm", "localhost", "ross", "ross", "http://localhost:" + dynamicPort1.getNumber() + "/services/Echo", true, 200);
+    doPost("mule-realm", "localhost", "ross", "ross", "http://localhost:" + dynamicPort1.getNumber() + "/services/Echo", true,
+        200);
   }
 
-  private void doGet(String realm, String host, String user, String pass, String url, boolean handshake, int result) throws Exception {
+  private void doGet(String realm, String host, String user, String pass, String url, boolean handshake, int result)
+      throws Exception {
     HttpClient client = new HttpClient();
     client.getParams().setAuthenticationPreemptive(true);
     client.getState().setCredentials(new AuthScope(host, -1, realm), new UsernamePasswordCredentials(user, pass));
@@ -188,7 +193,8 @@ public class HttpSecurityFilterFunctionalTestCase extends AbstractHttpSecurityTe
     }
   }
 
-  private void doPost(String realm, String host, String user, String pass, String url, boolean handshake, int result) throws Exception {
+  private void doPost(String realm, String host, String user, String pass, String url, boolean handshake, int result)
+      throws Exception {
     HttpClient client = new HttpClient();
     client.getParams().setAuthenticationPreemptive(true);
     client.getState().setCredentials(new AuthScope(host, -1, realm), new UsernamePasswordCredentials(user, pass));

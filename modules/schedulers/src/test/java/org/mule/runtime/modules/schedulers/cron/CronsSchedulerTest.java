@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.modules.schedulers.cron;
 
@@ -25,6 +25,7 @@ import static org.junit.Assert.assertTrue;
  * </p>
  */
 public class CronsSchedulerTest extends FunctionalTestCase {
+
   private static List<String> foo = new ArrayList<String>();
   private static List<String> bar = new ArrayList<String>();
 
@@ -87,7 +88,8 @@ public class CronsSchedulerTest extends FunctionalTestCase {
   }
 
   private void runSchedulersOnce() throws Exception {
-    Collection<Scheduler> schedulers = muleContext.getRegistry().lookupScheduler(Schedulers.flowConstructPollingSchedulers("pollfoo"));
+    Collection<Scheduler> schedulers =
+        muleContext.getRegistry().lookupScheduler(Schedulers.flowConstructPollingSchedulers("pollfoo"));
 
     for (Scheduler scheduler : schedulers) {
       scheduler.schedule();
@@ -95,7 +97,8 @@ public class CronsSchedulerTest extends FunctionalTestCase {
   }
 
   private void stopSchedulers() throws MuleException {
-    Collection<Scheduler> schedulers = muleContext.getRegistry().lookupScheduler(Schedulers.flowConstructPollingSchedulers("pollfoo"));
+    Collection<Scheduler> schedulers =
+        muleContext.getRegistry().lookupScheduler(Schedulers.flowConstructPollingSchedulers("pollfoo"));
 
     for (Scheduler scheduler : schedulers) {
       scheduler.stop();
@@ -103,6 +106,7 @@ public class CronsSchedulerTest extends FunctionalTestCase {
   }
 
   public static class FooComponent {
+
     public boolean process(String s) {
       synchronized (foo) {
 
@@ -116,6 +120,7 @@ public class CronsSchedulerTest extends FunctionalTestCase {
   }
 
   public static class BarComponent {
+
     public boolean process(String s) {
       synchronized (bar) {
         if (bar.size() < 10) {

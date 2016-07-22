@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.transformer.simple;
@@ -52,7 +52,8 @@ public class SetPayloadMessageProcessorTestCase extends AbstractMuleContextTestC
 
     when(muleContext.getExpressionManager()).thenReturn(expressionManager);
     when(muleContext.getConfiguration()).thenReturn(mock(MuleConfiguration.class));
-    when(expressionManager.parse(anyString(), any(MuleEvent.class))).thenAnswer(invocation -> (String) invocation.getArguments()[0]);
+    when(expressionManager.parse(anyString(), any(MuleEvent.class)))
+        .thenAnswer(invocation -> (String) invocation.getArguments()[0]);
 
     muleMessage = MuleMessage.builder().payload("").build();
     muleEvent = new DefaultMuleEvent(muleMessage, getTestFlow());

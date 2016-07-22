@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.config.spring.parsers;
 
@@ -9,10 +9,11 @@ import org.mule.test.config.spring.parsers.beans.OrphanBean;
 
 /**
  * This constructs a <em>temporary</em> bean whose contents are injected into a parent map by
- * {@link org.mule.runtime.config.spring.parsers.assembly.DefaultBeanAssembler}. Since this occurs <em>before</em> child elements are
- * processed this will <em>cannot</em> handle nested elements.
+ * {@link org.mule.runtime.config.spring.parsers.assembly.DefaultBeanAssembler}. Since this occurs <em>before</em> child elements
+ * are processed this will <em>cannot</em> handle nested elements.
  */
 public class MapEntryCombinerTestCase extends AbstractNamespaceTestCase {
+
   @Override
   protected String getConfigFile() {
     return "org/mule/config/spring/parsers/map-entry-combiner-test.xml";

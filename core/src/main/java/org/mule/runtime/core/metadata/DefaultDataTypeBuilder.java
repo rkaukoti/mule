@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.metadata;
 
@@ -37,10 +37,12 @@ import static org.mule.runtime.core.util.generics.GenericsUtils.getCollectionTyp
  * @since 4.0
  */
 public class DefaultDataTypeBuilder implements DataTypeBuilder, DataTypeBuilder.DataTypeCollectionTypeBuilder {
+
   private static ConcurrentHashMap<String, ProxyIndicator> proxyClassCache = new ConcurrentHashMap<>();
 
   private static LoadingCache<DefaultDataTypeBuilder, DataType> dataTypeCache =
       newBuilder().softValues().build(new CacheLoader<DefaultDataTypeBuilder, DataType>() {
+
         @Override
         public DataType load(DefaultDataTypeBuilder key) throws Exception {
           return key.doBuild();
@@ -151,8 +153,8 @@ public class DefaultDataTypeBuilder implements DataTypeBuilder, DataTypeBuilder.
   }
 
   /**
-   * Sets the given types for the {@link DefaultCollectionDataType} to be built. See {@link DefaultCollectionDataType#getType()} and
-   * {@link DefaultCollectionDataType#getItemDataType()}.
+   * Sets the given types for the {@link DefaultCollectionDataType} to be built. See {@link DefaultCollectionDataType#getType()}
+   * and {@link DefaultCollectionDataType#getItemDataType()}.
    *
    * @param itemType the java type to set.
    * @return this builder.
@@ -174,8 +176,8 @@ public class DefaultDataTypeBuilder implements DataTypeBuilder, DataTypeBuilder.
   /**
    * Sets the given mediaType string. See {@link DataType#getMediaType()}.
    * <p>
-   * If the media type for the given string has a {@code charset} parameter, that will be set as the charset for the {@link DataType} being
-   * built. That charset can be overridden by calling {@link #charset(String)}.
+   * If the media type for the given string has a {@code charset} parameter, that will be set as the charset for the
+   * {@link DataType} being built. That charset can be overridden by calling {@link #charset(String)}.
    *
    * @param mediaType the media type string to set
    * @return this builder.
@@ -323,6 +325,7 @@ public class DefaultDataTypeBuilder implements DataTypeBuilder, DataTypeBuilder.
    * map value
    */
   private static final class ProxyIndicator {
+
     private final WeakReference<Class> targetClassRef;
     private final boolean isProxy;
 

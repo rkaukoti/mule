@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.requester;
 
@@ -132,7 +132,8 @@ public class HttpRequestOutboundPartsTestCase extends AbstractHttpRequestTestCas
 
   @Test
   public void sendingAttachmentBiggerThanAsyncWriteQueueSizeWorksOverHttps() throws Exception {
-    // Grizzly defines the maxAsyncWriteQueueSize as 4 times the sendBufferSize (org.glassfish.grizzly.nio.transport.TCPNIOConnection).
+    // Grizzly defines the maxAsyncWriteQueueSize as 4 times the sendBufferSize
+    // (org.glassfish.grizzly.nio.transport.TCPNIOConnection).
     int maxAsyncWriteQueueSize = Integer.valueOf(sendBufferSize.getValue()) * 4;
     // Set a part bigger than the queue size.
     addPartToSend(TEST_PART_NAME, new byte[maxAsyncWriteQueueSize * 2], TEXT);

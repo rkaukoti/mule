@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.management.agent;
 
@@ -42,9 +42,11 @@ import javax.management.ReflectionException;
 import javax.xml.transform.TransformerFactoryConfigurationError;
 
 /**
- * <code>Mx4jAgent</code> configures an Mx4J Http Adaptor for Jmx management, statistics and configuration viewing of a Mule instance.
+ * <code>Mx4jAgent</code> configures an Mx4J Http Adaptor for Jmx management, statistics and configuration viewing of a Mule
+ * instance.
  */
 public class Mx4jAgent extends AbstractAgent {
+
   public static final String HTTP_ADAPTER_OBJECT_NAME = "name=Mx4jHttpAdapter";
   public static final String DEFAULT_HOSTNAME = "localhost";
   public static final int DEFAULT_PORT = 9999;
@@ -186,7 +188,8 @@ public class Mx4jAgent extends AbstractAgent {
   /**
    * Unregister all Mx4j MBeans if there are any left over the old deployment
    */
-  protected void unregisterMBeansIfNecessary() throws MalformedObjectNameException, InstanceNotFoundException, MBeanRegistrationException {
+  protected void unregisterMBeansIfNecessary()
+      throws MalformedObjectNameException, InstanceNotFoundException, MBeanRegistrationException {
     if (mBeanServer != null && mBeanServer.isRegistered(adaptorName)) {
       mBeanServer.unregisterMBean(adaptorName);
     }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.el.mvel;
 
@@ -69,6 +69,7 @@ public class MVELExpressionLanguageContext extends MuleBaseVariableResolverFacto
   @Override
   public <T> void addFinalVariable(String name, T value) {
     addVariable(name, value, new VariableAssignmentCallback<T>() {
+
       @Override
       public void assignValue(String name, T value, T newValue) {
         throw new ImmutableElementException(CoreMessages.expressionFinalVariableCannotBeAssignedValue(name).getMessage());
@@ -127,7 +128,8 @@ public class MVELExpressionLanguageContext extends MuleBaseVariableResolverFacto
   @Override
   public void declareFunction(String name, ExpressionLanguageFunction function) {
     try {
-      addFinalVariable(name, new FunctionInstance(new MVELFunctionAdaptor(name, function, new ParserContext(parserConfiguration))));
+      addFinalVariable(name,
+          new FunctionInstance(new MVELFunctionAdaptor(name, function, new ParserContext(parserConfiguration))));
     } finally {
       // Clear AbstractParser.parserContext ThreadLocal once Function has been created.
       AbstractParser.resetParserContext();

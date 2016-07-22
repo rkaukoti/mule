@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.core.context.notification;
 
@@ -17,12 +17,13 @@ import static org.mule.runtime.core.context.notification.ConnectorMessageNotific
 import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_RESPONSE;
 
 public class ConnectorMessageNotificationTestCase extends AbstractNotificationTestCase {
+
   private static final String FLOW_ID = "testFlow";
   private static final String MULE_CLIENT_ID = "MuleClient";
 
   private static final int TIMEOUT = 1000;
-  private static final HttpRequestOptions GET_OPTIONS = HttpRequestOptionsBuilder.newOptions().method(HttpConstants.Methods.GET.name())
-      .responseTimeout(TIMEOUT).disableStatusCodeValidation().build();
+  private static final HttpRequestOptions GET_OPTIONS = HttpRequestOptionsBuilder.newOptions()
+      .method(HttpConstants.Methods.GET.name()).responseTimeout(TIMEOUT).disableStatusCodeValidation().build();
 
   @Rule
   public DynamicPort port = new DynamicPort("port");

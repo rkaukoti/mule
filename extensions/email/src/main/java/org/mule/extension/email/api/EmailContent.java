@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.email.api;
 
@@ -16,7 +16,8 @@ import org.mule.runtime.extension.api.annotation.param.display.Text;
 import static org.mule.extension.email.internal.util.EmailConnectorUtils.TEXT_PLAIN;
 
 /**
- * Represents and enables the construction of the content of an email with a body of type "text/*" and a specific character encoding.
+ * Represents and enables the construction of the content of an email with a body of type "text/*" and a specific character
+ * encoding.
  *
  * @since 4.0
  */

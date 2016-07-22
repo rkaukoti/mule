@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.capability.xml;
 
@@ -91,7 +91,8 @@ public class ExtensionResourcesGeneratorAnnotationProcessorTestCase extends Abst
     assertXpath(generatedSchema, "//xs:element[@name='ignore-operation-should-be-ignored']/xs:annotation/xs:documentation", "");
     assertXpath(generatedSchema, "//xs:element[@name='private-operation-should-be-ignored']/xs:annotation/xs:documentation", "");
 
-    assertXpath(generatedSchema, "//xs:element[@name='operation-with-blank-parameter-description']/xs:annotation/xs:documentation",
+    assertXpath(generatedSchema,
+        "//xs:element[@name='operation-with-blank-parameter-description']/xs:annotation/xs:documentation",
         "Test Operation with blank parameter description");
     assertXpath(generatedSchema,
         "//xs:complexType[@name='OperationWithBlankParameterDescriptionType']/xs:complexContent/xs:extension/xs:attribute[@name='value']/xs:annotation/xs:documentation",
@@ -118,6 +119,7 @@ public class ExtensionResourcesGeneratorAnnotationProcessorTestCase extends Abst
     folder = new File(folder, "src/test/java/" + getClass().getPackage().getName().replaceAll("\\.", "/"));
 
     File[] files = folder.listFiles(new FilenameFilter() {
+
       @Override
       public boolean accept(File dir, String name) {
         return name.endsWith(".java");

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
@@ -18,8 +18,8 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 /**
- * Allows for parsing either a shortcut component configuration by delegating to two different component parses depending on the existence
- * of the class attribute. If the class attribute is used then an embedded object factory element cannot be used.
+ * Allows for parsing either a shortcut component configuration by delegating to two different component parses depending on the
+ * existence of the class attribute. If the class attribute is used then an embedded object factory element cannot be used.
  *
  * <pre>
  * &lt;component class=&quot;&quot;&gt;
@@ -56,11 +56,11 @@ public class ComponentDelegatingDefinitionParser extends AbstractParallelDelegat
   }
 
   /**
-   * Given that the service object-factory is extensible and new object factory types can be implemented and used by substitution, the only
-   * way of checking for the existence of an object-factory if by object factory element convention.<br>
-   * This pre-processor checks for the existence of a <i>"class"</i> attribute on the service, and throws an exception if the service has
-   * any elements that match the object factory element convention (i.e. that end in "object"). NOTE: We used to test by exclusion here
-   * allowing all other elements, but that no longer works now extensible interceptors elements can be used.
+   * Given that the service object-factory is extensible and new object factory types can be implemented and used by substitution,
+   * the only way of checking for the existence of an object-factory if by object factory element convention.<br>
+   * This pre-processor checks for the existence of a <i>"class"</i> attribute on the service, and throws an exception if the
+   * service has any elements that match the object factory element convention (i.e. that end in "object"). NOTE: We used to test
+   * by exclusion here allowing all other elements, but that no longer works now extensible interceptors elements can be used.
    */
   class CheckExclusiveClassAttributeObjectFactory implements PreProcessor {
 
@@ -90,6 +90,7 @@ public class ComponentDelegatingDefinitionParser extends AbstractParallelDelegat
   }
 
   public class CheckExclusiveClassAttributeObjectFactoryException extends IllegalStateException {
+
     private static final long serialVersionUID = 4625276914151932111L;
 
     CheckExclusiveClassAttributeObjectFactoryException(String message) {

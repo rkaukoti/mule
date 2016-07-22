@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.config;
 
@@ -41,6 +41,7 @@ import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.l
  * Tests the "jms" namespace.
  */
 public class JmsNamespaceHandlerTestCase extends FunctionalTestCase {
+
   public JmsNamespaceHandlerTestCase() {
     setStartContext(false);
   }
@@ -160,7 +161,8 @@ public class JmsNamespaceHandlerTestCase extends FunctionalTestCase {
     assertNotNull(filter3);
     assertTrue(filter3 instanceof JmsPropertyFilter);
 
-    InboundEndpoint inboundEndpoint = (InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("testService")).getMessageSource();
+    InboundEndpoint inboundEndpoint =
+        (InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("testService")).getMessageSource();
 
     assertNotNull(inboundEndpoint);
     assertEquals(1, inboundEndpoint.getProperties().size());
@@ -196,7 +198,8 @@ public class JmsNamespaceHandlerTestCase extends FunctionalTestCase {
     assertEquals("org.mule.compatibility.transport.jms.test.JmsTestContextFactory", connector.getJndiInitialFactory());
     assertEquals("jndi://test", connector.getJndiProviderUrl());
     assertEquals("jms/connectionFactory", connector.getConnectionFactoryJndiName());
-    assertEquals("org.mule.compatibility.transport.jms.test.TestConnectionFactory", connector.getConnectionFactory().getClass().getName());
+    assertEquals("org.mule.compatibility.transport.jms.test.TestConnectionFactory",
+        connector.getConnectionFactory().getClass().getName());
     assertTrue(connector.isJndiDestinations());
     assertTrue(connector.isForceJndiDestinations());
     assertEquals("value", connector.getJndiProviderProperties().get("key"));

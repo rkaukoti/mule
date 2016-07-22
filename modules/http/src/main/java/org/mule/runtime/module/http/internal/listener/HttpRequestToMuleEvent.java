@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.listener;
 
@@ -81,8 +81,8 @@ public class HttpRequestToMuleEvent {
           if (mediaType != null) {
             if (mediaType.matches(HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED)) {
               try {
-                payload =
-                    decodeUrlEncodedBody(IOUtils.toString(((InputStreamHttpEntity) entity).getInputStream()), mediaType.getCharset().get());
+                payload = decodeUrlEncodedBody(IOUtils.toString(((InputStreamHttpEntity) entity).getInputStream()),
+                    mediaType.getCharset().get());
               } catch (IllegalArgumentException e) {
                 throw new HttpRequestParsingException("Cannot decode x-www-form-urlencoded payload", e);
               }
@@ -122,7 +122,8 @@ public class HttpRequestToMuleEvent {
   }
 
   /**
-   * See <a href="http://www8.org/w8-papers/5c-protocols/key/key.html#SECTION00070000000000000000" >Internet address conservation</a>.
+   * See <a href="http://www8.org/w8-papers/5c-protocols/key/key.html#SECTION00070000000000000000" >Internet address
+   * conservation</a>.
    */
   private static String resolveTargetHost(HttpRequest request) {
     String hostHeaderValue = request.getHeaderValueIgnoreCase(HOST);

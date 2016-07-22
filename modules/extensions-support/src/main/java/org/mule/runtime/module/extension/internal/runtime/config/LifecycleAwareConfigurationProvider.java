@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.config;
 
@@ -34,8 +34,8 @@ import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getClassLoader;
 
 /**
- * Base class for implementations of {@link ConfigurationProvider} which keep track of the {@link ConfigurationInstance} they generate and
- * propagate lifecycle and IoC into them.
+ * Base class for implementations of {@link ConfigurationProvider} which keep track of the {@link ConfigurationInstance} they
+ * generate and propagate lifecycle and IoC into them.
  * <p/>
  * It also implements the other common concerns of every {@link ConfigurationProvider}, leaving implementations with the need to
  * &quot;just&quot; implement {@link #get(Object)}
@@ -141,8 +141,8 @@ public abstract class LifecycleAwareConfigurationProvider<T> implements Configur
   }
 
   /**
-   * Implementations are to invoke this method everytime they create a new {@link ConfigurationInstance} so that they're kept track of and
-   * the lifecycle can be propagated
+   * Implementations are to invoke this method everytime they create a new {@link ConfigurationInstance} so that they're kept
+   * track of and the lifecycle can be propagated
    *
    * @param configuration a newly created {@link ConfigurationInstance}
    */

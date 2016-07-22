@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.api.worker;
 
@@ -31,8 +31,8 @@ import static org.mule.extension.socket.internal.SocketUtils.createMuleMessage;
 
 /**
  * Only one worker will be created per each new TCP connection accepted by the
- * {@link TcpListenerConnection#listen(MuleContext, MessageHandler)}, This class is responsible for reading from that connection is closed
- * by the sender, or {@link Source} is stopped.
+ * {@link TcpListenerConnection#listen(MuleContext, MessageHandler)}, This class is responsible for reading from that connection
+ * is closed by the sender, or {@link Source} is stopped.
  *
  * @since 4.0
  */
@@ -48,7 +48,8 @@ public final class TcpWorker extends SocketWorker {
   private boolean dataInWorkFinished = false;
   private AtomicBoolean moreMessages = new AtomicBoolean(true); // can be set on completion's callback
 
-  public TcpWorker(Socket socket, TcpProtocol protocol, MessageHandler<InputStream, SocketAttributes> messageHandler) throws IOException {
+  public TcpWorker(Socket socket, TcpProtocol protocol, MessageHandler<InputStream, SocketAttributes> messageHandler)
+      throws IOException {
     super(messageHandler);
     this.socket = socket;
     this.protocol = protocol;
@@ -56,6 +57,7 @@ public final class TcpWorker extends SocketWorker {
     underlyingIn = new BufferedInputStream(socket.getInputStream());
     dataOut = new BufferedOutputStream(socket.getOutputStream());
     dataIn = new TcpInputStream(underlyingIn) {
+
       @Override
       public void close() throws IOException {
         // Don't actually close the stream, we just want to know if the
@@ -137,14 +139,15 @@ public final class TcpWorker extends SocketWorker {
 
       SocketAttributes attributes = new ImmutableSocketAttributes(socket);
       messageHandler.handle(createMuleMessage(content, attributes), new CompletionHandler<MuleEvent, Exception, MuleEvent>() {
+
         @Override
         public void onCompletion(MuleEvent muleEvent, ExceptionCallback<MuleEvent, Exception> exceptionCallback) {
           try {
             protocol.write(dataOut, muleEvent.getMessage().getPayload(), encoding);
             dataOut.flush();
           } catch (IOException e) {
-            exceptionCallback.onException(new IOException(
-                format("An error occurred while sending TCP response to address '%s'", socket.getRemoteSocketAddress().toString(), e)));
+            exceptionCallback.onException(new IOException(format("An error occurred while sending TCP response to address '%s'",
+                socket.getRemoteSocketAddress().toString(), e)));
           }
         }
 

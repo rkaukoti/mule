@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.extension.socket.ssl;
@@ -43,7 +43,8 @@ public class SslCertificatesTestCase extends SocketExtensionTestCase {
   protected void doTests(int numberOfMessages) throws Exception {
 
     for (int i = 0; i < numberOfMessages; ++i) {
-      org.mule.runtime.core.api.MuleMessage muleMessage = flowRunner("ssl-send-and-receive").withPayload(TEST_STRING).run().getMessage();
+      org.mule.runtime.core.api.MuleMessage muleMessage =
+          flowRunner("ssl-send-and-receive").withPayload(TEST_STRING).run().getMessage();
 
       String payload = IOUtils.toString((InputStream) muleMessage.getPayload());
       assertThat(payload, is(notNullValue()));

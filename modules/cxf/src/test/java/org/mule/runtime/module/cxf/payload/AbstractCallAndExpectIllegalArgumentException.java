@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.payload;
 
@@ -20,6 +20,7 @@ import static org.junit.Assert.fail;
  * {@link TreatNullPayloadAsVoidTestCase}.
  */
 abstract class AbstractCallAndExpectIllegalArgumentException implements CallAndExpect {
+
   private final String outputEndpointName;
   private final Object payload;
   private final MuleContext muleContext;
@@ -38,7 +39,8 @@ abstract class AbstractCallAndExpectIllegalArgumentException implements CallAndE
       fail(here() + " should have thrown an exception");
     } catch (MuleException e) {
       e.printStackTrace();
-      assertTrue(here() + ", exception {" + e + "} must be a " + DispatchException.class.getSimpleName(), e instanceof DispatchException);
+      assertTrue(here() + ", exception {" + e + "} must be a " + DispatchException.class.getSimpleName(),
+          e instanceof DispatchException);
       assertTrue(here() + ", exception.getCause() {" + e + "} must be a " + IllegalArgumentException.class.getName(),
           e.getCause() instanceof IllegalArgumentException);
       assertEquals(here(), expectedIllegalArgumentExceptionMessage(), e.getCause().getMessage());

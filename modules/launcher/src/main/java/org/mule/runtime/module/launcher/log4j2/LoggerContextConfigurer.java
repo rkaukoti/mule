@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.log4j2;
 
@@ -43,15 +43,16 @@ import java.util.List;
 import java.util.zip.Deflater;
 
 /**
- * This component grabs a {link MuleLoggerContext} which has just been created reading a configuration file and applies configuration
- * changes to it so that it complies with mule's logging strategy.
+ * This component grabs a {link MuleLoggerContext} which has just been created reading a configuration file and applies
+ * configuration changes to it so that it complies with mule's logging strategy.
  * <p/>
  * Its basic functions are:
  * <ul>
- * <li>Disable log4j's shutdown hook so that it doesn't collide with mule's {@link ShutdownListener}, which would result in a classloader
- * leak.</li>
+ * <li>Disable log4j's shutdown hook so that it doesn't collide with mule's {@link ShutdownListener}, which would result in a
+ * classloader leak.</li>
  * <li>When using a default configuration (one which doesn't come from a config file), the console appender is removed</li>
- * <li>if the classloader is an {@link ArtifactClassLoader}, then it adds a rolling file appender to collect the artifact's logs</li>
+ * <li>if the classloader is an {@link ArtifactClassLoader}, then it adds a rolling file appender to collect the artifact's
+ * logs</li>
  * <li>if the configuration did not include a monitorInterval, then one is set to a default value of 60</li>
  * <li>if the context is standalone, then it adds a rolling file appender associated to the artifact</li>
  * <li>if the context is not standalone, then it just logs to a file named mule-main.log</li>
@@ -95,8 +96,8 @@ final class LoggerContextConfigurer {
     try {
       ClassUtils.setFieldValue(context.getConfiguration(), "isShutdownHookEnabled", false, true);
     } catch (Exception e) {
-      throw new MuleRuntimeException(MessageFactory.createStaticMessage("Could not configure shutdown hook. Unexpected configuration type"),
-          e);
+      throw new MuleRuntimeException(
+          MessageFactory.createStaticMessage("Could not configure shutdown hook. Unexpected configuration type"), e);
     }
 
   }
@@ -121,7 +122,8 @@ final class LoggerContextConfigurer {
     try {
       return ClassUtils.getFieldValue(configuration, "listeners", true);
     } catch (Exception e) {
-      throw new MuleRuntimeException(MessageFactory.createStaticMessage("Could not get listeners. Unexpected configuration type"), e);
+      throw new MuleRuntimeException(MessageFactory.createStaticMessage("Could not get listeners. Unexpected configuration type"),
+          e);
     }
   }
 
@@ -132,8 +134,8 @@ final class LoggerContextConfigurer {
   }
 
   private void forceConsoleAppender(MuleLoggerContext context) {
-    Appender appender =
-        ConsoleAppender.createAppender(createLayout(context.getConfiguration()), null, null, FORCED_CONSOLE_APPENDER_NAME, null, null);
+    Appender appender = ConsoleAppender.createAppender(createLayout(context.getConfiguration()), null, null,
+        FORCED_CONSOLE_APPENDER_NAME, null, null);
     doAddAppender(context, appender);
   }
 
@@ -146,8 +148,8 @@ final class LoggerContextConfigurer {
   private RollingFileAppender createRollingFileAppender(String logFilePath, String filePattern, String appenderName,
       Configuration configuration) {
     TriggeringPolicy triggeringPolicy = TimeBasedTriggeringPolicy.createPolicy("1", "true");
-    RolloverStrategy rolloverStrategy =
-        DefaultRolloverStrategy.createStrategy("30", "1", null, String.valueOf(Deflater.NO_COMPRESSION), null, true, configuration);
+    RolloverStrategy rolloverStrategy = DefaultRolloverStrategy.createStrategy("30", "1", null,
+        String.valueOf(Deflater.NO_COMPRESSION), null, true, configuration);
 
     return RollingFileAppender.createAppender(logFilePath, logFilePath + filePattern, "true", appenderName, "true", null, null,
         triggeringPolicy, rolloverStrategy, createLayout(configuration), null, null, null, null, configuration);
@@ -175,7 +177,8 @@ final class LoggerContextConfigurer {
 
       addDefaultAppender(context, logFile.getAbsolutePath());
     } else {
-      // If the artifact logging is configured using the global config file and there is no file appender for the artifact, then configure a
+      // If the artifact logging is configured using the global config file and there is no file appender for the artifact, then
+      // configure a
       // default one
       if (isUrlInsideDirectory(context.getConfigFile(), MuleContainerBootstrapUtils.getMuleConfDir())) {
         if (!hasFileAppender(context)) {

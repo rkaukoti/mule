@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.support;
 
@@ -61,8 +61,10 @@ public class MuleHeadersOutInterceptor extends AbstractMuleHeaderInterceptor {
 
     if (muleHeaders.getCorrelationId() != null) {
       mule_header.appendChild(buildMuleHeader(owner_doc, MULE_CORRELATION_ID_PROPERTY, muleHeaders.getCorrelationId()));
-      mule_header.appendChild(buildMuleHeader(owner_doc, MULE_CORRELATION_GROUP_SIZE_PROPERTY, muleHeaders.getCorrelationGroup()));
-      mule_header.appendChild(buildMuleHeader(owner_doc, MULE_CORRELATION_SEQUENCE_PROPERTY, muleHeaders.getCorrelationSequence()));
+      mule_header
+          .appendChild(buildMuleHeader(owner_doc, MULE_CORRELATION_GROUP_SIZE_PROPERTY, muleHeaders.getCorrelationGroup()));
+      mule_header
+          .appendChild(buildMuleHeader(owner_doc, MULE_CORRELATION_SEQUENCE_PROPERTY, muleHeaders.getCorrelationSequence()));
     }
     if (muleHeaders.getReplyTo() != null) {
       mule_header.appendChild(buildMuleHeader(owner_doc, MULE_REPLY_TO_PROPERTY, muleHeaders.getReplyTo()));

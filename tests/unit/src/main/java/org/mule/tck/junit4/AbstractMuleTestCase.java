@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.tck.junit4;
 
@@ -31,10 +31,11 @@ import java.util.Map;
 import static org.junit.Assume.assumeThat;
 
 /**
- * <code>AbstractMuleTestCase</code> is a base class for Mule test cases. This implementation provides services to test code for creating
- * mock and test objects.
+ * <code>AbstractMuleTestCase</code> is a base class for Mule test cases. This implementation provides services to test code for
+ * creating mock and test objects.
  */
 public abstract class AbstractMuleTestCase {
+
   public static final String TEST_PAYLOAD = "test";
 
   public static final String TESTING_MODE_PROPERTY_NAME = "mule.testingMode";
@@ -106,8 +107,8 @@ public abstract class AbstractMuleTestCase {
       }
     }
     if (filteredThreads > 0) {
-      logThreadsResult(
-          String.format("Hung threads count: %d. Test case: %s. Thread names:%s", filteredThreads, testCaseName, builder.toString()));
+      logThreadsResult(String.format("Hung threads count: %d. Test case: %s. Thread names:%s", filteredThreads, testCaseName,
+          builder.toString()));
     } else {
       logThreadsResult(String.format("No hung threads. Test case: %s", testCaseName));
     }
@@ -145,8 +146,8 @@ public abstract class AbstractMuleTestCase {
   }
 
   /**
-   * Defines the number of seconds that a test has in order to run before throwing a timeout. If the property if not defined then uses the
-   * <code>DEFAULT_MULE_TEST_TIMEOUT_SECS</code> constant.
+   * Defines the number of seconds that a test has in order to run before throwing a timeout. If the property if not defined then
+   * uses the <code>DEFAULT_MULE_TEST_TIMEOUT_SECS</code> constant.
    *
    * @return the timeout value expressed in seconds
    */
@@ -224,6 +225,7 @@ public abstract class AbstractMuleTestCase {
 
   private void skipTestWhenDisabledInCurrentEnvironment() {
     assumeThat(this, new BaseMatcher<AbstractMuleTestCase>() {
+
       @Override
       public boolean matches(Object o) {
         return !(isDisabledInThisEnvironment() || isDisabledInThisEnvironment(name.getMethodName()));
@@ -239,8 +241,8 @@ public abstract class AbstractMuleTestCase {
   /**
    * Indicates whether the test should fail when a timeout is reached.
    * <p/>
-   * This feature was added to support old test cases that depend on 3rd-party resources such as a public web service. In such cases it may
-   * be desirable to not fail the test upon timeout but rather to simply log a warning.
+   * This feature was added to support old test cases that depend on 3rd-party resources such as a public web service. In such
+   * cases it may be desirable to not fail the test upon timeout but rather to simply log a warning.
    *
    * @return true if it must fail on timeout and false otherwise. Default value is true.
    */

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal;
 
@@ -36,8 +36,8 @@ public class ExpressionSupportTestCase extends ExtensionFunctionalTestCase {
 
   @Parameters(name = "{0}")
   public static Collection<Object[]> data() {
-    return Arrays
-        .asList(new Object[][] {{"heisenberg-invalid-expression-parameter.xml"}, {"heisenberg-fixed-parameter-with-expression.xml"}});
+    return Arrays.asList(
+        new Object[][] {{"heisenberg-invalid-expression-parameter.xml"}, {"heisenberg-fixed-parameter-with-expression.xml"}});
   }
 
   @Override
@@ -55,6 +55,7 @@ public class ExpressionSupportTestCase extends ExtensionFunctionalTestCase {
     expectedException.expect(InitialisationException.class);
     expectedException.expectCause(instanceOf(IllegalArgumentException.class));
     expectedException.expectCause(new TypeSafeMatcher<Throwable>() {
+
       @Override
       protected boolean matchesSafely(Throwable exception) {
         return exception.getMessage().contains("expressions");

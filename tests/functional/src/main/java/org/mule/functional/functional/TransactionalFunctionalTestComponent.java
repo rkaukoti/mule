@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.functional;
 
@@ -10,9 +10,11 @@ import org.mule.runtime.core.api.transaction.TransactionException;
 import org.mule.runtime.core.config.i18n.MessageFactory;
 
 /**
- * This service is useful for unit tests involving transactionality because it will roll back the current transaction upon message arrival.
+ * This service is useful for unit tests involving transactionality because it will roll back the current transaction upon message
+ * arrival.
  */
 public class TransactionalFunctionalTestComponent extends FunctionalTestComponent {
+
   private boolean expectTransaction = true;
   private boolean rollback = true;
 

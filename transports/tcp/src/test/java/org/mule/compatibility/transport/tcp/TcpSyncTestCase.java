@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.tcp;
 
@@ -31,8 +31,9 @@ public class TcpSyncTestCase extends FunctionalTestCase {
 
   protected MuleMessage send(Object payload) throws Exception {
     MuleClient client = muleContext.getClient();
-    return client.send(((InboundEndpoint) (((Flow) muleContext.getRegistry().lookupObject("service"))).getMessageSource()).getAddress(),
-        payload, null);
+    return client.send(
+        ((InboundEndpoint) (((Flow) muleContext.getRegistry().lookupObject("service"))).getMessageSource()).getAddress(), payload,
+        null);
   }
 
   @Test

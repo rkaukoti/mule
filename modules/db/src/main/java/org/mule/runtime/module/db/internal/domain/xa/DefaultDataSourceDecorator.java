@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.db.internal.domain.xa;
 
@@ -21,7 +21,8 @@ public class DefaultDataSourceDecorator implements DataSourceDecorator {
   private static final Logger logger = LoggerFactory.getLogger(DefaultDataSourceDecorator.class);
 
   @Override
-  public DataSource decorate(DataSource dataSource, String dataSourceName, DbPoolingProfile dbPoolingProfile, MuleContext muleContext) {
+  public DataSource decorate(DataSource dataSource, String dataSourceName, DbPoolingProfile dbPoolingProfile,
+      MuleContext muleContext) {
     Preconditions.checkState(appliesTo(dataSource, muleContext),
         "DefaultDataSourceDecorator cannot be applied to data source " + dataSource);
     if (dbPoolingProfile != null) {

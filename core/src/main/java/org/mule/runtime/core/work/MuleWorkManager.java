@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.work;
 
@@ -29,19 +29,20 @@ import javax.resource.spi.work.WorkException;
 import javax.resource.spi.work.WorkListener;
 
 /**
- * <code>MuleWorkManager</code> is a JCA Work manager implementation used to manage thread allocation for Mule components and connectors.
- * This code has been adapted from the Geronimo implementation.
+ * <code>MuleWorkManager</code> is a JCA Work manager implementation used to manage thread allocation for Mule components and
+ * connectors. This code has been adapted from the Geronimo implementation.
  */
 public class MuleWorkManager implements WorkManager, MuleContextAware {
+
   /**
    * logger used by this class
    */
   protected static final Logger logger = LoggerFactory.getLogger(MuleWorkManager.class);
 
   /**
-   * Forced shutdown delay. The time the workManager will wait while threads are being interrupted. The graceful shutdown timeout which is
-   * the amount of time that the workManager will wait while the workManager completed pending and currently executing jobs is configured
-   * using {@link MuleConfiguration}.
+   * Forced shutdown delay. The time the workManager will wait while threads are being interrupted. The graceful shutdown timeout
+   * which is the amount of time that the workManager will wait while the workManager completed pending and currently executing
+   * jobs is configured using {@link MuleConfiguration}.
    */
   private static final long FORCEFUL_SHUTDOWN_TIMEOUT = 5000L;
 
@@ -57,8 +58,8 @@ public class MuleWorkManager implements WorkManager, MuleContextAware {
   private final WorkExecutor startWorkExecutor = new StartWorkExecutor();
   private final WorkExecutor syncWorkExecutor = new SyncWorkExecutor();
   /**
-   * The actual pool of threads used by this MuleWorkManager to process the Work instances submitted via the (do,start,schedule)Work
-   * methods.
+   * The actual pool of threads used by this MuleWorkManager to process the Work instances submitted via the
+   * (do,start,schedule)Work methods.
    */
   private volatile ExecutorService workExecutorService;
   private int gracefulShutdownTimeout;
@@ -100,8 +101,8 @@ public class MuleWorkManager implements WorkManager, MuleContextAware {
                 outstanding.isEmpty() ? "No" : Integer.toString(outstanding.size())));
           } else {
             if (!outstanding.isEmpty()) {
-              logger.warn(
-                  MessageFormat.format("Pool {0} terminated; {1} work items were cancelled.", name, Integer.toString(outstanding.size())));
+              logger.warn(MessageFormat.format("Pool {0} terminated; {1} work items were cancelled.", name,
+                  Integer.toString(outstanding.size())));
             }
           }
         }
@@ -139,7 +140,8 @@ public class MuleWorkManager implements WorkManager, MuleContextAware {
     return System.currentTimeMillis() - workWrapper.getAcceptedTime();
   }
 
-  public long startWork(Work work, long startTimeout, ExecutionContext execContext, WorkListener workListener) throws WorkException {
+  public long startWork(Work work, long startTimeout, ExecutionContext execContext, WorkListener workListener)
+      throws WorkException {
     WorkerContext workWrapper = new WorkerContext(work, startTimeout, execContext, workListener);
     workWrapper.setThreadPriority(Thread.currentThread().getPriority());
     executeWork(workWrapper, startWorkExecutor);
@@ -152,7 +154,8 @@ public class MuleWorkManager implements WorkManager, MuleContextAware {
     executeWork(workWrapper, scheduleWorkExecutor);
   }
 
-  public void scheduleWork(Work work, long startTimeout, ExecutionContext execContext, WorkListener workListener) throws WorkException {
+  public void scheduleWork(Work work, long startTimeout, ExecutionContext execContext, WorkListener workListener)
+      throws WorkException {
     WorkerContext workWrapper = new WorkerContext(work, startTimeout, execContext, workListener);
     workWrapper.setThreadPriority(Thread.currentThread().getPriority());
     executeWork(workWrapper, scheduleWorkExecutor);

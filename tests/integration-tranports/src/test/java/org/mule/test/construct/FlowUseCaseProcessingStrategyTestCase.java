@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.construct;
 
@@ -40,8 +40,8 @@ public class FlowUseCaseProcessingStrategyTestCase extends FunctionalTestCase {
   public void testHTTPStatusCodeExceptionSyncStrategy() throws MuleException {
     MuleClient client = muleContext.getClient();
     final HttpRequestOptions httpRequestOptions = newOptions().disableStatusCodeValidation().build();
-    MuleMessage exception =
-        client.send("http://localhost:" + dynamicPort.getNumber(), MuleMessage.builder().nullPayload().build(), httpRequestOptions);
+    MuleMessage exception = client.send("http://localhost:" + dynamicPort.getNumber(),
+        MuleMessage.builder().nullPayload().build(), httpRequestOptions);
     assertThat(exception.getInboundProperty("http.status", 0), is(500));
   }
 

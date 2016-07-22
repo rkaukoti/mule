@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.config;
 
@@ -30,19 +30,20 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * <code>ExceptionHelper</code> provides a number of helper functions that can be useful for dealing with Mule exceptions. This class has 3
- * core functions -
+ * <code>ExceptionHelper</code> provides a number of helper functions that can be useful for dealing with Mule exceptions. This
+ * class has 3 core functions -
  * <p/>
- * 1. ErrorCode lookup. A corresponding Mule error code can be found using for a given Mule exception 2. Additional Error information such
- * as Java doc url for a given exception can be resolved using this class 3. Error code mappings can be looked up by providing the the
- * protocol to map to and the Mule exception.
+ * 1. ErrorCode lookup. A corresponding Mule error code can be found using for a given Mule exception 2. Additional Error
+ * information such as Java doc url for a given exception can be resolved using this class 3. Error code mappings can be looked up
+ * by providing the the protocol to map to and the Mule exception.
  */
 
 public final class ExceptionHelper {
+
   public static final String SERVICE_ROOT = "META-INF/services/";
   /**
-   * This is the property to set the error code to no the message it is the property name the Transport provider uses set the set the error
-   * code on the underlying message
+   * This is the property to set the error code to no the message it is the property name the Transport provider uses set the set
+   * the error code on the underlying message
    */
   public static final String ERROR_CODE_PROPERTY = "error.code.property";
   /**
@@ -171,6 +172,7 @@ public final class ExceptionHelper {
   private static MuleContextNotificationListener<MuleContextNotification> createClearCacheListenerOnContextDispose(
       final MuleContext muleContext) {
     return new MuleContextNotificationListener<MuleContextNotification>() {
+
       @Override
       public void onNotification(MuleContextNotification notification) {
         if (notification.getAction() == MuleContextNotification.CONTEXT_DISPOSED) {
@@ -195,8 +197,8 @@ public final class ExceptionHelper {
   }
 
   /**
-   * Maps an exception thrown for a certain protocol to an error. When there's no specific error for such transport it will return a generic
-   * error. Most likely the returned error is an integer code.
+   * Maps an exception thrown for a certain protocol to an error. When there's no specific error for such transport it will return
+   * a generic error. Most likely the returned error is an integer code.
    *
    * @param protocol scheme for the transport
    * @param exception exception mapped to error
@@ -367,8 +369,8 @@ public final class ExceptionHelper {
 
   private static boolean isMuleInternalClass(String className) {
     /*
-     * Sacrifice the code quality for the sake of keeping things simple - the alternative would be to pass MuleContext into every exception
-     * constructor.
+     * Sacrifice the code quality for the sake of keeping things simple - the alternative would be to pass MuleContext into every
+     * exception constructor.
      */
     for (String mulePackage : DefaultMuleConfiguration.stackTraceFilter) {
       if (className.startsWith(mulePackage)) {
@@ -474,13 +476,14 @@ public final class ExceptionHelper {
           ++processedMuleElements;
         }
 
-        buf.append("  ").append(stackTraceElement.getClassName()).append(".").append(stackTraceElement.getMethodName()).append("(")
-            .append(stackTraceElement.getFileName()).append(":").append(stackTraceElement.getLineNumber()).append(")")
+        buf.append("  ").append(stackTraceElement.getClassName()).append(".").append(stackTraceElement.getMethodName())
+            .append("(").append(stackTraceElement.getFileName()).append(":").append(stackTraceElement.getLineNumber()).append(")")
             .append(SystemUtils.LINE_SEPARATOR);
       }
 
       if (root.getStackTrace().length - processedElements > 0) {
-        buf.append("  (").append(root.getStackTrace().length - processedElements).append(" more...)").append(SystemUtils.LINE_SEPARATOR);
+        buf.append("  (").append(root.getStackTrace().length - processedElements).append(" more...)")
+            .append(SystemUtils.LINE_SEPARATOR);
       }
     }
 
@@ -571,6 +574,7 @@ public final class ExceptionHelper {
   }
 
   public static interface ExceptionEvaluator<T> {
+
     T evaluate(Throwable e);
   }
 }

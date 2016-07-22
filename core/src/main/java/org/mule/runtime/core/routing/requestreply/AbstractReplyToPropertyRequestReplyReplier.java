@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing.requestreply;
 
@@ -41,7 +41,8 @@ public abstract class AbstractReplyToPropertyRequestReplyReplier extends Abstrac
 
   protected abstract boolean shouldProcessEvent(MuleEvent event);
 
-  protected void processReplyTo(MuleEvent event, MuleEvent result, ReplyToHandler replyToHandler, Object replyTo) throws MuleException {
+  protected void processReplyTo(MuleEvent event, MuleEvent result, ReplyToHandler replyToHandler, Object replyTo)
+      throws MuleException {
     if (result != null && replyToHandler != null) {
       String requestor = result.getMessage().getOutboundProperty(MuleProperties.MULE_REPLY_TO_REQUESTOR_PROPERTY);
       if ((requestor != null && !requestor.equals(event.getFlowConstruct().getName())) || requestor == null) {

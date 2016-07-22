@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.source;
 
@@ -20,6 +20,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.fail;
 
 public class StartableCompositeMessageSourceTestCase extends AbstractMuleContextTestCase {
+
   protected SensingNullMessageProcessor listener;
   protected SensingNullMessageProcessor listener2;
   protected StartableCompositeMessageSource compositeSource;
@@ -140,6 +141,7 @@ public class StartableCompositeMessageSourceTestCase extends AbstractMuleContext
   }
 
   protected class NullMessageSource implements MessageSource, Startable, Stoppable {
+
     MuleEvent event;
     MessageProcessor listener;
     boolean started = false;

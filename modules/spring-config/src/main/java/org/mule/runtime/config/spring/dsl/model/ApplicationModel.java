@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.dsl.model;
 
@@ -47,11 +47,13 @@ import static org.mule.runtime.extension.api.util.NameUtils.pluralize;
  * An {@code ApplicationModel} holds a representation of all the artifact configuration using an abstract model to represent any
  * configuration option.
  * <p/>
- * This model is represented by a set of {@link org.mule.runtime.config.spring.dsl.model.ComponentModel}. Each {@code ComponentModel} holds
- * a piece of configuration and may have children {@code ComponentModel}s as defined in the artifact configuration.
+ * This model is represented by a set of {@link org.mule.runtime.config.spring.dsl.model.ComponentModel}. Each
+ * {@code ComponentModel} holds a piece of configuration and may have children {@code ComponentModel}s as defined in the artifact
+ * configuration.
  * <p/>
- * Once the set of {@code ComponentModel} gets created from the application {@link org.mule.runtime.config.spring.dsl.processor.ConfigFile}s
- * the {@code ApplicationModel} executes a set of common validations dictated by the configuration semantics.
+ * Once the set of {@code ComponentModel} gets created from the application
+ * {@link org.mule.runtime.config.spring.dsl.processor.ConfigFile}s the {@code ApplicationModel} executes a set of common
+ * validations dictated by the configuration semantics.
  *
  * @since 4.0
  */
@@ -129,7 +131,8 @@ public class ApplicationModel {
   public static final ComponentIdentifier SPRING_PROPERTY_PLACEHOLDER_IDENTIFIER =
       new ComponentIdentifier.Builder().withNamespace(SPRING_CONTEXT_NAMESPACE).withName(PROPERTY_PLACEHOLDER_ELEMENT).build();
 
-  private static ImmutableSet<ComponentIdentifier> ignoredNameValidationComponentList = ImmutableSet.<ComponentIdentifier>builder()
+  private static ImmutableSet<ComponentIdentifier> ignoredNameValidationComponentList = ImmutableSet
+      .<ComponentIdentifier>builder()
       .add(new ComponentIdentifier.Builder().withNamespace(MULE_ROOT_ELEMENT).withName("flow-ref").build())
       .add(new ComponentIdentifier.Builder().withNamespace(MULE_ROOT_ELEMENT).withName("alias").build())
       .add(new ComponentIdentifier.Builder().withNamespace(MULE_ROOT_ELEMENT).withName("in-memory-store").build())
@@ -138,7 +141,8 @@ public class ApplicationModel {
       .add(new ComponentIdentifier.Builder().withNamespace(MULE_ROOT_ELEMENT).withName("custom-encryption-strategy").build())
       .add(new ComponentIdentifier.Builder().withNamespace(MULE_ROOT_ELEMENT).withName("secret-key-encryption-strategy").build())
       .add(new ComponentIdentifier.Builder().withNamespace(MULE_ROOT_ELEMENT).withName("import").build())
-      .add(new ComponentIdentifier.Builder().withNamespace(MULE_ROOT_ELEMENT).withName("string-to-byte-array-transformer").build())
+      .add(
+          new ComponentIdentifier.Builder().withNamespace(MULE_ROOT_ELEMENT).withName("string-to-byte-array-transformer").build())
       .add(new ComponentIdentifier.Builder().withNamespace(MULE_ROOT_ELEMENT).withName("append-string-transformer").build())
       .add(new ComponentIdentifier.Builder().withNamespace(MULE_ROOT_ELEMENT).withName("security-manager").build())
       .add(new ComponentIdentifier.Builder().withNamespace(TEST_NAMESPACE).withName("queue").build())
@@ -153,7 +157,8 @@ public class ApplicationModel {
       .add(new ComponentIdentifier.Builder().withNamespace(SPRING_NAMESPACE).withName("property").build())
       .add(new ComponentIdentifier.Builder().withNamespace(SPRING_NAMESPACE).withName("bean").build())
       .add(new ComponentIdentifier.Builder().withNamespace(SPRING_SECURITY_NAMESPACE).withName("user").build())
-      .add(new ComponentIdentifier.Builder().withNamespace(MULE_SECURITY_NAMESPACE).withName("delegate-security-provider").build())
+      .add(
+          new ComponentIdentifier.Builder().withNamespace(MULE_SECURITY_NAMESPACE).withName("delegate-security-provider").build())
       .add(new ComponentIdentifier.Builder().withNamespace(MULE_SECURITY_NAMESPACE).withName("security-manager").build())
       .add(new ComponentIdentifier.Builder().withNamespace(MULE_XML_NAMESPACE).withName("xslt-transformer").build())
       .add(new ComponentIdentifier.Builder().withNamespace(MULE_XML_NAMESPACE).withName("alias").build())
@@ -169,9 +174,12 @@ public class ApplicationModel {
       .add(new ComponentIdentifier.Builder().withNamespace(HTTP_NAMESPACE).withName("inbound-endpoint").build())
       .add(new ComponentIdentifier.Builder().withNamespace(HTTP_NAMESPACE).withName("set-cookie").build())
       .add(new ComponentIdentifier.Builder().withNamespace(HTTP_NAMESPACE).withName("header").build())
-      .add(new ComponentIdentifier.Builder().withNamespace(HTTP_NAMESPACE).withName("http-response-to-object-transformer").build())
-      .add(new ComponentIdentifier.Builder().withNamespace(HTTP_NAMESPACE).withName("http-response-to-string-transformer").build())
-      .add(new ComponentIdentifier.Builder().withNamespace(HTTP_NAMESPACE).withName("message-to-http-response-transformer").build())
+      .add(
+          new ComponentIdentifier.Builder().withNamespace(HTTP_NAMESPACE).withName("http-response-to-object-transformer").build())
+      .add(
+          new ComponentIdentifier.Builder().withNamespace(HTTP_NAMESPACE).withName("http-response-to-string-transformer").build())
+      .add(new ComponentIdentifier.Builder().withNamespace(HTTP_NAMESPACE).withName("message-to-http-response-transformer")
+          .build())
       .add(new ComponentIdentifier.Builder().withNamespace(HTTP_NAMESPACE).withName("object-to-http-request-transformer").build())
       .add(new ComponentIdentifier.Builder().withNamespace(BATCH_NAMESPACE).withName("step").build())
       .add(new ComponentIdentifier.Builder().withNamespace(BATCH_NAMESPACE).withName("execute").build())
@@ -221,7 +229,8 @@ public class ApplicationModel {
     }
     for (String propertyFileLocation : locations) {
       Properties properties = new Properties();
-      try (InputStream propertiesFileInputStream = currentThread().getContextClassLoader().getResourceAsStream(propertyFileLocation)) {
+      try (InputStream propertiesFileInputStream =
+          currentThread().getContextClassLoader().getResourceAsStream(propertyFileLocation)) {
         properties.load(propertiesFileInputStream);
         applicationProperties.putAll(properties);
       } catch (IOException e) {
@@ -280,7 +289,8 @@ public class ApplicationModel {
     if (muleComponentModels.isEmpty() || !isMuleConfigurationFile()) {
       return;
     }
-    // TODO MULE-9692 all this validations will be moved to an entity that does the validation and allows to aggregate all validations
+    // TODO MULE-9692 all this validations will be moved to an entity that does the validation and allows to aggregate all
+    // validations
     // instead of failing fast.
     validateNameIsNotRepeated();
     validateNameIsOnlyOnTopLevelElements();
@@ -299,12 +309,10 @@ public class ApplicationModel {
           Optional<ComponentModel> childOptional =
               findRelatedChildForParameter(componentModel.getInnerComponents(), mapChildName, listOrPojoChildName);
           if (childOptional.isPresent() && !childOptional.get().getIdentifier().equals(SPRING_PROPERTY_IDENTIFIER)) {
-            throw new MuleRuntimeException(
-                createStaticMessage(
-                    format(
-                        "Component %s has a child element %s which is used for the same purpose of the configuration parameter %s. "
-                            + "Only one must be used.",
-                        componentModel.getIdentifier(), childOptional.get().getIdentifier(), parameterName)));
+            throw new MuleRuntimeException(createStaticMessage(format(
+                "Component %s has a child element %s which is used for the same purpose of the configuration parameter %s. "
+                    + "Only one must be used.",
+                componentModel.getIdentifier(), childOptional.get().getIdentifier(), parameterName)));
           }
         }
       }
@@ -386,8 +394,8 @@ public class ApplicationModel {
         if (component.getParameters().get(WHEN_CHOICE_ES_ATTRIBUTE) != null
             && !componentNode.getParentNode().getLocalName().equals(CHOICE_EXCEPTION_STRATEGY)
             && !componentNode.getParentNode().getLocalName().equals(MULE_ROOT_ELEMENT)) {
-          throw new MuleRuntimeException(
-              createStaticMessage("Only exception strategies within a choice-exception-strategy can have when attribute specified"));
+          throw new MuleRuntimeException(createStaticMessage(
+              "Only exception strategies within a choice-exception-strategy can have when attribute specified"));
         }
       }
     });
@@ -400,9 +408,9 @@ public class ApplicationModel {
         topLevelComponent.getInnerComponents().stream().filter(this::isMuleComponent).forEach((topLevelComponentChild -> {
           executeOnComponentTree(topLevelComponentChild, (component) -> {
             if (component.getNameAttribute() != null && !ignoredNameValidationComponentList.contains(component.getIdentifier())) {
-              throw new MuleRuntimeException(
-                  createStaticMessage("Only top level elements can have a name attribute. Component %s has attribute name with value %s",
-                      component.getIdentifier(), component.getNameAttribute()));
+              throw new MuleRuntimeException(createStaticMessage(
+                  "Only top level elements can have a name attribute. Component %s has attribute name with value %s",
+                  component.getIdentifier(), component.getNameAttribute()));
             }
           }, true);
         }));
@@ -429,8 +437,8 @@ public class ApplicationModel {
     }
   }
 
-  private void executeOnComponentTree(final ComponentModel component, final Consumer<ComponentModel> task, boolean avoidSpringElements)
-      throws MuleRuntimeException {
+  private void executeOnComponentTree(final ComponentModel component, final Consumer<ComponentModel> task,
+      boolean avoidSpringElements) throws MuleRuntimeException {
     if (component.getIdentifier().getNamespace().equals(SPRING_NAMESPACE) && avoidSpringElements) {
       // TODO MULE-9648: for now do no process beans inside spring
       return;
@@ -498,8 +506,8 @@ public class ApplicationModel {
   }
 
   /**
-   * TODO MULE-9688: When the model it's made immutable we will also provide the parent component for navigation and this will not be needed
-   * anymore.
+   * TODO MULE-9688: When the model it's made immutable we will also provide the parent component for navigation and this will not
+   * be needed anymore.
    *
    * @return the root component model
    */

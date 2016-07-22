@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.internal.connection;
 
@@ -31,7 +31,8 @@ import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.stopIfNeeded;
  * @param <Connection> the generic type of the connections that the {@link #delegate} produces
  * @since 4.0
  */
-public abstract class ConnectionProviderWrapper<Connection> implements ConnectionProvider<Connection>, HasPoolingProfile, Lifecycle {
+public abstract class ConnectionProviderWrapper<Connection>
+    implements ConnectionProvider<Connection>, HasPoolingProfile, Lifecycle {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ConnectionProviderWrapper.class);
   private final ConnectionProvider<Connection> delegate;
@@ -69,7 +70,8 @@ public abstract class ConnectionProviderWrapper<Connection> implements Connectio
   }
 
   @Override
-  public ConnectionHandlingStrategy<Connection> getHandlingStrategy(ConnectionHandlingStrategyFactory<Connection> handlingStrategyFactory) {
+  public ConnectionHandlingStrategy<Connection> getHandlingStrategy(
+      ConnectionHandlingStrategyFactory<Connection> handlingStrategyFactory) {
     return delegate.getHandlingStrategy(handlingStrategyFactory);
   }
 

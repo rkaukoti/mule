@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.requester;
 
@@ -32,6 +32,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class HttpRequestAuthTestCase extends AbstractHttpRequestTestCase {
+
   private int requestCount = 0;
 
   @Override
@@ -57,8 +58,8 @@ public class HttpRequestAuthTestCase extends AbstractHttpRequestTestCase {
   }
 
   private void assertValidRequest(String flowName, String user, String password, boolean preemptive) throws Exception {
-    MuleEvent event = flowRunner(flowName).withPayload(TEST_MESSAGE).withFlowVariable("user", user).withFlowVariable("password", password)
-        .withFlowVariable("preemptive", preemptive).run();
+    MuleEvent event = flowRunner(flowName).withPayload(TEST_MESSAGE).withFlowVariable("user", user)
+        .withFlowVariable("password", password).withFlowVariable("preemptive", preemptive).run();
 
     assertThat(getPayloadAsString(event.getMessage()), equalTo(DEFAULT_RESPONSE));
   }
@@ -88,6 +89,7 @@ public class HttpRequestAuthTestCase extends AbstractHttpRequestTestCase {
     basicConstraintMapping.setPathSpec("/*");
 
     ConstraintSecurityHandler basicSecurityHandler = new ConstraintSecurityHandler() {
+
       @Override
       public void handle(String pathInContext, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
           throws IOException, ServletException {

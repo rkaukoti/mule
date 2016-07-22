@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.listener;
 
@@ -86,8 +86,8 @@ public class HttpListenerHttpMessagePropertiesTestCase extends AbstractHttpTestC
 
   @Test
   public void getWithQueryParams() throws Exception {
-    final ImmutableMap<String, Object> queryParams = ImmutableMap.<String, Object>builder().put(QUERY_PARAM_NAME, QUERY_PARAM_VALUE)
-        .put(SECOND_QUERY_PARAM_NAME, SECOND_QUERY_PARAM_VALUE).build();
+    final ImmutableMap<String, Object> queryParams = ImmutableMap.<String, Object>builder()
+        .put(QUERY_PARAM_NAME, QUERY_PARAM_VALUE).put(SECOND_QUERY_PARAM_NAME, SECOND_QUERY_PARAM_VALUE).build();
     final String uri = "/?" + buildQueryString(queryParams);
     final String url = String.format("http://localhost:%s" + uri, listenPort.getNumber());
     Request.Get(url).connectTimeout(RECEIVE_TIMEOUT).execute();
@@ -105,8 +105,8 @@ public class HttpListenerHttpMessagePropertiesTestCase extends AbstractHttpTestC
 
   @Test
   public void getWithQueryParamMultipleValues() throws Exception {
-    final ImmutableMap<String, Object> queryParams =
-        ImmutableMap.<String, Object>builder().put(QUERY_PARAM_NAME, Arrays.asList(QUERY_PARAM_VALUE, QUERY_PARAM_SECOND_VALUE)).build();
+    final ImmutableMap<String, Object> queryParams = ImmutableMap.<String, Object>builder()
+        .put(QUERY_PARAM_NAME, Arrays.asList(QUERY_PARAM_VALUE, QUERY_PARAM_SECOND_VALUE)).build();
     final String url = String.format("http://localhost:%s/?" + buildQueryString(queryParams), listenPort.getNumber());
     Request.Get(url).connectTimeout(RECEIVE_TIMEOUT).execute();
     final MuleMessage message = muleContext.getClient().request("test://out", RECEIVE_TIMEOUT);
@@ -159,8 +159,8 @@ public class HttpListenerHttpMessagePropertiesTestCase extends AbstractHttpTestC
 
   @Test
   public void getAllUriParams() throws Exception {
-    final String url = String.format("http://localhost:%s/%s/%s/%s", listenPort.getNumber(), FIRST_URI_PARAM, SECOND_URI_PARAM_VALUE,
-        THIRD_URI_PARAM_VALUE);
+    final String url = String.format("http://localhost:%s/%s/%s/%s", listenPort.getNumber(), FIRST_URI_PARAM,
+        SECOND_URI_PARAM_VALUE, THIRD_URI_PARAM_VALUE);
     Post(url).connectTimeout(RECEIVE_TIMEOUT).execute();
     final MuleMessage message = muleContext.getClient().request("test://out", RECEIVE_TIMEOUT);
     ParameterMap uriParams = getAttributes(message).getUriParams();
@@ -186,7 +186,8 @@ public class HttpListenerHttpMessagePropertiesTestCase extends AbstractHttpTestC
   public void postUriParamEncoded() throws Exception {
     final String uriParamValue = "uri param value";
     final String uriParamValueEncoded = URLEncoder.encode(uriParamValue, Charsets.UTF_8.displayName());
-    final String url = String.format("http://localhost:%s/some-path/%s/some-other-path", listenPort.getNumber(), uriParamValueEncoded);
+    final String url =
+        String.format("http://localhost:%s/some-path/%s/some-other-path", listenPort.getNumber(), uriParamValueEncoded);
     Post(url).connectTimeout(RECEIVE_TIMEOUT).execute();
     final MuleMessage message = muleContext.getClient().request("test://out", RECEIVE_TIMEOUT);
     ParameterMap uriParams = getAttributes(message).getUriParams();

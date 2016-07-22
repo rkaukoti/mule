@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.db.internal.domain.type.oracle;
 
@@ -18,6 +18,7 @@ import java.sql.SQLException;
  * Defines a structured data type for the {@link #ORACLE_XMLTYPE_CLASS} class
  */
 public class OracleXmlType extends StructuredDbType {
+
   public static final String ORACLE_XMLTYPE_CLASS = "oracle.xdb.XMLType";
   private static final int OPAQUE_TYPE_ID = 2007;
   private static final String XML_TYPE_INTERNAL_NAME = "SYS.XMLTYPE";

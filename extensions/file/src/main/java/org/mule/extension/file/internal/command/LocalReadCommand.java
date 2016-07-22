@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.file.internal.command;
 
@@ -38,7 +38,8 @@ public final class LocalReadCommand extends LocalFileCommand implements ReadComm
    * {@inheritDoc}
    */
   @Override
-  public OperationResult<InputStream, FileAttributes> read(FileConnectorConfig config, MuleMessage message, String filePath, boolean lock) {
+  public OperationResult<InputStream, FileAttributes> read(FileConnectorConfig config, MuleMessage message, String filePath,
+      boolean lock) {
     Path path = resolveExistingPath(config, filePath);
     if (Files.isDirectory(path)) {
       throw cannotReadDirectoryException(path);
@@ -55,7 +56,7 @@ public final class LocalReadCommand extends LocalFileCommand implements ReadComm
     InputStream payload = new FileInputStream(path, pathLock);
     FileAttributes fileAttributes = new LocalFileAttributes(path);
     MediaType fileMediaType = fileSystem.getFileMessageMediaType(message.getDataType().getMediaType(), fileAttributes);
-    return OperationResult.<InputStream, FileAttributes>builder().output(payload).mediaType(fileMediaType).attributes(fileAttributes)
-        .build();
+    return OperationResult.<InputStream, FileAttributes>builder().output(payload).mediaType(fileMediaType)
+        .attributes(fileAttributes).build();
   }
 }

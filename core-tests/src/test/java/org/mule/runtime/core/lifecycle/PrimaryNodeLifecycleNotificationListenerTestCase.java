@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.lifecycle;
 
@@ -82,7 +82,8 @@ public class PrimaryNodeLifecycleNotificationListenerTestCase extends AbstractMu
   public void testOnNotificationWithLifecycleStateEnabledStarted() throws MuleException {
     mockStartableAndLifecycleStateEnabled = mock(StartableAndLifecycleStateEnabled.class, Answers.RETURNS_DEEP_STUBS.get());
     when(mockStartableAndLifecycleStateEnabled.getLifecycleState().isStarted()).thenReturn(true);
-    this.notificationListener = new PrimaryNodeLifecycleNotificationListener(mockStartableAndLifecycleStateEnabled, mockMuleContext);
+    this.notificationListener =
+        new PrimaryNodeLifecycleNotificationListener(mockStartableAndLifecycleStateEnabled, mockMuleContext);
     this.notificationListener.onNotification(mockServerNotification);
     verify(mockStartableAndLifecycleStateEnabled, times(1)).start();
   }
@@ -91,7 +92,8 @@ public class PrimaryNodeLifecycleNotificationListenerTestCase extends AbstractMu
   public void testOnNotificationWithLifecycleStateEnabledStopped() throws MuleException {
     mockStartableAndLifecycleStateEnabled = mock(StartableAndLifecycleStateEnabled.class, Answers.RETURNS_DEEP_STUBS.get());
     when(mockStartableAndLifecycleStateEnabled.getLifecycleState().isStarted()).thenReturn(false);
-    this.notificationListener = new PrimaryNodeLifecycleNotificationListener(mockStartableAndLifecycleStateEnabled, mockMuleContext);
+    this.notificationListener =
+        new PrimaryNodeLifecycleNotificationListener(mockStartableAndLifecycleStateEnabled, mockMuleContext);
     this.notificationListener.onNotification(mockServerNotification);
     verify(mockStartableAndLifecycleStateEnabled, times(0)).start();
   }

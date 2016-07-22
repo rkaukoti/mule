@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.queue;
 
@@ -158,7 +158,8 @@ class RandomAccessFileQueueStore {
   }
 
   /**
-   * Removes data from the queue according to a {@link RawDataSelector} instance that determines if a certain element must be removed.
+   * Removes data from the queue according to a {@link RawDataSelector} instance that determines if a certain element must be
+   * removed.
    *
    * @param rawDataSelector to determine if the element must be removed.
    * @return true if an element was removed
@@ -210,8 +211,8 @@ class RandomAccessFileQueueStore {
   }
 
   /**
-   * Deletes the files backing this queue. This method must only be invoked after {@link #close()} has been executed on {@code this}
-   * instance
+   * Deletes the files backing this queue. This method must only be invoked after {@link #close()} has been executed on
+   * {@code this} instance
    */
   public synchronized void delete() {
     queueFileProvider.delete();

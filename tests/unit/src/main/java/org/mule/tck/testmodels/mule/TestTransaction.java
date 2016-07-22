@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.tck.testmodels.mule;
 
@@ -13,10 +13,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.transaction.Transaction;
 
 /**
- * A test transaction that does nothing on commit or rollback. The transaction does retain a status so that developers can determine if the
- * the transaction was rolled back or committed.
+ * A test transaction that does nothing on commit or rollback. The transaction does retain a status so that developers can
+ * determine if the the transaction was rolled back or committed.
  */
 public class TestTransaction extends AbstractSingleResourceTransaction {
+
   private AtomicBoolean committed = new AtomicBoolean(false);
   private AtomicBoolean rolledBack = new AtomicBoolean(false);
 

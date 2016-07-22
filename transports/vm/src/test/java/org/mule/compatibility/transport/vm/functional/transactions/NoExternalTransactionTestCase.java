@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.vm.functional.transactions;
 
@@ -20,8 +20,8 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertSame;
 
 /**
- * Test transaction behavior when "joinExternal" is set to disallow joining external transactions There is one test per legal transactional
- * behavior (e.g. ALWAYS_BEGIN).
+ * Test transaction behavior when "joinExternal" is set to disallow joining external transactions There is one test per legal
+ * transactional behavior (e.g. ALWAYS_BEGIN).
  */
 public class NoExternalTransactionTestCase extends AbstractExternalTransactionTestCase {
 
@@ -51,6 +51,7 @@ public class NoExternalTransactionTestCase extends AbstractExternalTransactionTe
     // This will throw, becasue nested transactions are not supported
     try {
       executionTemplate.execute(new ExecutionCallback<String>() {
+
         @Override
         public String process() throws Exception {
           return "OK";
@@ -65,6 +66,7 @@ public class NoExternalTransactionTestCase extends AbstractExternalTransactionTe
 
     // now try with no active transaction
     executionTemplate.execute(new ExecutionCallback<String>() {
+
       @Override
       public String process() throws Exception {
         Transaction muleTx = tm.getTransaction();
@@ -94,6 +96,7 @@ public class NoExternalTransactionTestCase extends AbstractExternalTransactionTe
     // This will throw, because nested transactions are not supported
     try {
       tt.execute(new ExecutionCallback<String>() {
+
         @Override
         public String process() throws Exception {
           return "OK";
@@ -108,6 +111,7 @@ public class NoExternalTransactionTestCase extends AbstractExternalTransactionTe
 
     // now try with no active transaction
     tt.execute(new ExecutionCallback<String>() {
+
       @Override
       public String process() throws Exception {
         Transaction muleTx = tm.getTransaction();
@@ -134,6 +138,7 @@ public class NoExternalTransactionTestCase extends AbstractExternalTransactionTe
     tx.enlistResource(resource1);
     resource1.setValue(14);
     String result = tt.execute(new ExecutionCallback<String>() {
+
       @Override
       public String process() throws Exception {
         Transaction muleTx = tm.getTransaction();
@@ -152,6 +157,7 @@ public class NoExternalTransactionTestCase extends AbstractExternalTransactionTe
     assertEquals(14, resource1.getPersistentValue());
 
     result = tt.execute(new ExecutionCallback<String>() {
+
       @Override
       public String process() throws Exception {
         Transaction muleTx = tm.getTransaction();
@@ -176,6 +182,7 @@ public class NoExternalTransactionTestCase extends AbstractExternalTransactionTe
     try {
       // Thjis will throw, because Mule sees no transaction to join
       executionTemplate.execute(new ExecutionCallback<String>() {
+
         @Override
         public String process() throws Exception {
           Transaction muleTx = tm.getTransaction();
@@ -196,6 +203,7 @@ public class NoExternalTransactionTestCase extends AbstractExternalTransactionTe
     // try with no active transaction.. Should still throw
     try {
       executionTemplate.execute(new ExecutionCallback<String>() {
+
         @Override
         public String process() throws Exception {
           return "OK";
@@ -219,6 +227,7 @@ public class NoExternalTransactionTestCase extends AbstractExternalTransactionTe
     tx.enlistResource(resource1);
     assertNotNull(tx);
     String result = tt.execute(new ExecutionCallback<String>() {
+
       @Override
       public String process() throws Exception {
         Transaction muleTx = tm.getTransaction();
@@ -239,6 +248,7 @@ public class NoExternalTransactionTestCase extends AbstractExternalTransactionTe
 
     // try with no active transaction.. Should run with none
     result = tt.execute(new ExecutionCallback<String>() {
+
       @Override
       public String process() throws Exception {
         Transaction muleTx = tm.getTransaction();
@@ -262,6 +272,7 @@ public class NoExternalTransactionTestCase extends AbstractExternalTransactionTe
 
     // This will not throw since Mule sees no transaction
     String result = tt.execute(new ExecutionCallback<String>() {
+
       @Override
       public String process() throws Exception {
         resource1.setValue(14);

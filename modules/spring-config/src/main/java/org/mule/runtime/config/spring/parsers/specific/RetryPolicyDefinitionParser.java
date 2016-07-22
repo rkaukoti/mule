@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
@@ -40,8 +40,9 @@ public class RetryPolicyDefinitionParser extends OptionalChildDefinitionParser {
     if (isConfigElement(element)) {
       element.setAttribute(ATTRIBUTE_ID, OBJECT_DEFAULT_RETRY_POLICY_TEMPLATE);
       return false;
-    } else if (getParentElement(element).getSchemaTypeInfo().isDerivedFrom(MULE_EXTENSION_CONNECTION_PROVIDER_TYPE.getNamespaceURI(),
-        MULE_EXTENSION_CONNECTION_PROVIDER_TYPE.getLocalPart(), DERIVATION_EXTENSION)) {
+    } else if (getParentElement(element).getSchemaTypeInfo().isDerivedFrom(
+        MULE_EXTENSION_CONNECTION_PROVIDER_TYPE.getNamespaceURI(), MULE_EXTENSION_CONNECTION_PROVIDER_TYPE.getLocalPart(),
+        DERIVATION_EXTENSION)) {
       return false;
     } else if (getParentElement(element).getSchemaTypeInfo().isDerivedFrom(MULE_ABSTRACT_MESSAGE_SOURCE_TYPE.getNamespaceURI(),
         MULE_ABSTRACT_MESSAGE_SOURCE_TYPE.getLocalPart(), DERIVATION_EXTENSION)) {
@@ -81,8 +82,8 @@ public class RetryPolicyDefinitionParser extends OptionalChildDefinitionParser {
    * <test:connector name="testConnector8"> <spring:property name="retryPolicyTemplate">
    * <spring:bean class="org.mule.runtime.core.retry.async.AsynchronousRetryTemplate"> <spring:constructor-arg>
    * <spring:bean name="delegate" class="org.mule.runtime.core.retry.policies.SimpleRetryPolicyTemplate">
-   * <spring:property name="count" value="5"/> <spring:property name="frequency" value="1000"/> </spring:bean> </spring:constructor-arg>
-   * </spring:bean> </spring:property> </test:connector>
+   * <spring:property name="count" value="5"/> <spring:property name="frequency" value="1000"/> </spring:bean>
+   * </spring:constructor-arg> </spring:bean> </spring:property> </test:connector>
    */
   @Override
   protected void parseChild(Element element, ParserContext parserContext, BeanDefinitionBuilder builder) {

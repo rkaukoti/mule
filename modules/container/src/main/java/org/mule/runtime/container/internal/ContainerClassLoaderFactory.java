@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.container.internal;
@@ -33,8 +33,8 @@ import java.util.Set;
 public class ContainerClassLoaderFactory {
 
   /**
-   * System package define all the prefixes that must be loaded only from the container classLoader, but then are filtered depending on what
-   * is part of the exposed API.
+   * System package define all the prefixes that must be loaded only from the container classLoader, but then are filtered
+   * depending on what is part of the exposed API.
    */
   public static final Set<String> SYSTEM_PACKAGES = ImmutableSet.of("org.mule.runtime", "com.mulesoft.mule.runtime");
 
@@ -42,22 +42,22 @@ public class ContainerClassLoaderFactory {
   /**
    * Boot packages define all the prefixes that must be loaded from the container classLoader without being filtered
    */
-  public static final Set<String> BOOT_PACKAGES = ImmutableSet.of("java", "javax.accessibility", "javax.activation", "javax.activity",
-      "javax.annotation", "javax.crypto", "javax.imageio", "javax.jws", "javax.lang.model", "javax.management", "javax.naming", "javax.net",
-      "javax.print", "javax.rmi", "javax.script", "javax.security", "javax.smartcardio", "javax.sound", "javax.sql", "javax.swing",
-      "javax.tools", "javax.transaction", "javax.resource", "javax.xml",
+  public static final Set<String> BOOT_PACKAGES = ImmutableSet.of("java", "javax.accessibility", "javax.activation",
+      "javax.activity", "javax.annotation", "javax.crypto", "javax.imageio", "javax.jws", "javax.lang.model", "javax.management",
+      "javax.naming", "javax.net", "javax.print", "javax.rmi", "javax.script", "javax.security", "javax.smartcardio",
+      "javax.sound", "javax.sql", "javax.swing", "javax.tools", "javax.transaction", "javax.resource", "javax.xml",
       // Java EE
       "javax.jms", "javax.servlet", "javax.ws", "javax.mail", "javax.inject", "org.xml.sax", "org.apache.xerces",
-      "org.apache.logging.log4j", "org.slf4j", "org.apache.commons.logging", "org.apache.log4j", "org.dom4j", "org.w3c.dom", "com.sun",
-      "sun", "org.springframework", "org.mule.mvel2");
+      "org.apache.logging.log4j", "org.slf4j", "org.apache.commons.logging", "org.apache.log4j", "org.dom4j", "org.w3c.dom",
+      "com.sun", "sun", "org.springframework", "org.mule.mvel2");
   private ModuleDiscoverer moduleDiscoverer = new ClasspathModuleDiscoverer(this.getClass().getClassLoader());
 
   /**
    * Creates the classLoader to represent the Mule container.
    *
    * @param parentClassLoader parent classLoader. Can be null.
-   * @return a non null {@link ArtifactClassLoader} containing container code that can be used as parent classloader for other mule
-   *         artifacts.
+   * @return a non null {@link ArtifactClassLoader} containing container code that can be used as parent classloader for other
+   *         mule artifacts.
    */
   public ArtifactClassLoader createContainerClassLoader(final ClassLoader parentClassLoader) {
     final List<MuleModule> muleModules = moduleDiscoverer.discover();
@@ -69,8 +69,8 @@ public class ContainerClassLoaderFactory {
    * Creates the container lookup policy to be used by child class loaders.
    *
    * @param muleModules list of modules that would be used to register in the filter based of the class loader.
-   * @return a non null {@link ClassLoaderLookupPolicy} that contains the lookup policies for boot, system packages. plus exported packages
-   *         by the given list of {@link MuleModule}.
+   * @return a non null {@link ClassLoaderLookupPolicy} that contains the lookup policies for boot, system packages. plus exported
+   *         packages by the given list of {@link MuleModule}.
    */
   protected ClassLoaderLookupPolicy getContainerClassLoaderLookupPolicy(List<MuleModule> muleModules) {
     final Set<String> parentOnlyPackages = new HashSet<>(getBootPackages());
@@ -99,7 +99,8 @@ public class ContainerClassLoaderFactory {
   }
 
   /**
-   * Creates a {@link Map<String, ClassLoaderLookupStrategy>} with PARENT_ONLY strategy for the packages exported by the mule modules.
+   * Creates a {@link Map<String, ClassLoaderLookupStrategy>} with PARENT_ONLY strategy for the packages exported by the mule
+   * modules.
    *
    * @param muleModules to be used for colleting the exported packages
    * @return a {@link Map<String, ClassLoaderLookupStrategy>} for the exported packages as PARENT_ONLY
@@ -132,14 +133,15 @@ public class ContainerClassLoaderFactory {
   }
 
   /**
-   * @return a {@link Set} of packages that define all the prefixes that must be loaded from the container classLoader without being
-   *         filtered
+   * @return a {@link Set} of packages that define all the prefixes that must be loaded from the container classLoader without
+   *         being filtered
    */
   protected Set<String> getBootPackages() {
     return BOOT_PACKAGES;
   }
 
   private static final class MuleContainerClassLoader extends MuleArtifactClassLoader {
+
     static {
       registerAsParallelCapable();
     }

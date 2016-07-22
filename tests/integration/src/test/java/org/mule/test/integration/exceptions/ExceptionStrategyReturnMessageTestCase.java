@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.exceptions;
 
@@ -19,6 +19,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 public class ExceptionStrategyReturnMessageTestCase extends FunctionalTestCase {
+
   @Override
   protected String getConfigFile() {
     return "org/mule/test/integration/exceptions/exception-strategy-return-message.xml";
@@ -46,6 +47,7 @@ public class ExceptionStrategyReturnMessageTestCase extends FunctionalTestCase {
   }
 
   public static class TestExceptionStrategy extends AbstractMessagingExceptionStrategy {
+
     @Override
     public MuleEvent handleException(Exception exception, MuleEvent event) {
       MuleEvent result = super.handleException(exception, event);

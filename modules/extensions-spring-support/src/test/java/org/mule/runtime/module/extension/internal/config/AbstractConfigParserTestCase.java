@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.config;
 
@@ -50,6 +50,7 @@ public class AbstractConfigParserTestCase extends ExtensionFunctionalTestCase {
   protected static final String SEASON_2_KEY = "s02";
   protected static final List<Long> MONTHLY_INCOMES = Arrays.asList(ArrayUtils.toObject(new long[] {12000, 500}));
   protected static final Map<String, List<String>> DEATHS_BY_SEASON = new HashMap<String, List<String>>() {
+
     {
       put(SEASON_1_KEY, Arrays.asList("emilio", "domingo"));
       put(SEASON_2_KEY, Arrays.asList("tuco", "tortuga"));

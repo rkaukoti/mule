@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -35,8 +35,8 @@ import java.util.Set;
 import static org.mule.runtime.core.api.LocatedMuleException.INFO_LOCATION_KEY;
 
 /**
- * ` * The <code>Foreach</code> MessageProcessor allows iterating over a collection payload, or any collection obtained by an expression,
- * generating a message for each element.
+ * ` * The <code>Foreach</code> MessageProcessor allows iterating over a collection payload, or any collection obtained by an
+ * expression, generating a message for each element.
  * <p/>
  * The number of the message being processed is stored in <code>#[variable:counter]</code> and the root message is store in
  * <code>#[flowVars.rootMessage]</code>. Both variables may be renamed by means of {@link #setCounterVariableName(String)} and

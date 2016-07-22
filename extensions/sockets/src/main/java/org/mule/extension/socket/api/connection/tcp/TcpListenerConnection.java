@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.api.connection.tcp;
 
@@ -43,8 +43,8 @@ public final class TcpListenerConnection extends AbstractTcpConnection implement
   private final SimpleServerSocketFactory serverSocketFactory;
   private ServerSocket serverSocket;
 
-  public TcpListenerConnection(ConnectionSettings connectionSettings, TcpProtocol protocol, TcpServerSocketProperties socketProperties,
-      SimpleServerSocketFactory serverSocketFactory) throws ConnectionException {
+  public TcpListenerConnection(ConnectionSettings connectionSettings, TcpProtocol protocol,
+      TcpServerSocketProperties socketProperties, SimpleServerSocketFactory serverSocketFactory) throws ConnectionException {
     super(connectionSettings, protocol);
     this.socketProperties = socketProperties;
     this.serverSocketFactory = serverSocketFactory;
@@ -53,15 +53,16 @@ public final class TcpListenerConnection extends AbstractTcpConnection implement
   /**
    * One worker is created per accepted connection.
    * <p>
-   * The new {@link Socket} used for responding has the same {@link TcpSocketProperties} settings as the listener socket used in the
-   * {@link Source}.
+   * The new {@link Socket} used for responding has the same {@link TcpSocketProperties} settings as the listener socket used in
+   * the {@link Source}.
    *
-   * @throws ConnectionException if the socket was close while blocked on {@link DatagramSocket#receive(DatagramPacket)} method and the
-   *         close was not intentionally done by the {@link UdpListenerConnection#disconnect()} method.
+   * @throws ConnectionException if the socket was close while blocked on {@link DatagramSocket#receive(DatagramPacket)} method
+   *         and the close was not intentionally done by the {@link UdpListenerConnection#disconnect()} method.
    * @throws IOException if the socket was close while blocked on {@link DatagramSocket#receive(DatagramPacket)} method.
    */
   @Override
-  public SocketWorker listen(MessageHandler<InputStream, SocketAttributes> messageHandler) throws IOException, ConnectionException {
+  public SocketWorker listen(MessageHandler<InputStream, SocketAttributes> messageHandler)
+      throws IOException, ConnectionException {
     Socket newConnection = acceptConnection();
     configureConnection(newConnection, socketProperties);
     return new TcpWorker(newConnection, protocol, messageHandler);
@@ -78,8 +79,8 @@ public final class TcpListenerConnection extends AbstractTcpConnection implement
 
   /**
    * Configures the {@link ServerSocket} instance with the {@link TcpServerSocketProperties} parameters. It does not invoke
-   * {@link ServerSocket#accept()} because that would block the method causing an incompatible behaviour with the {@link Source} that uses
-   * this connection.
+   * {@link ServerSocket#accept()} because that would block the method causing an incompatible behaviour with the {@link Source}
+   * that uses this connection.
    */
   @Override
   public void connect() throws ConnectionException {
@@ -105,7 +106,8 @@ public final class TcpListenerConnection extends AbstractTcpConnection implement
       serverSocket.bind(address, socketProperties.getReceiveBacklog());
     } catch (IOException e) {
       throw new ConnectionException(
-          format("Could not bind socket to host '%s' and port '%d'", connectionSettings.getHost(), connectionSettings.getPort()), e);
+          format("Could not bind socket to host '%s' and port '%d'", connectionSettings.getHost(), connectionSettings.getPort()),
+          e);
     }
 
   }
@@ -127,7 +129,8 @@ public final class TcpListenerConnection extends AbstractTcpConnection implement
 
   /**
    * @return a {@link Socket} from a received connection
-   * @throws ConnectionException if the socket was closed by a different means than invoking {@link TcpListenerConnection#disconnect}
+   * @throws ConnectionException if the socket was closed by a different means than invoking
+   *         {@link TcpListenerConnection#disconnect}
    * @throws IOException if the socket was closed while blocked in {@link ServerSocket#accept()}
    * @throws SocketTimeoutException if {@link TcpServerSocketProperties#getServerTimeout()} is reached.
    */

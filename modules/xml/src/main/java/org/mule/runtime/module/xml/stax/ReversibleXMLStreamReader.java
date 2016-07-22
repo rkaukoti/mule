@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.stax;
 
@@ -30,6 +30,7 @@ import javax.xml.stream.events.Namespace;
 import javax.xml.stream.events.XMLEvent;
 
 public class ReversibleXMLStreamReader extends DelegateXMLStreamReader {
+
   private List<XMLEvent> events;
   private XMLEvent current;
   private int replayIndex;
@@ -43,9 +44,9 @@ public class ReversibleXMLStreamReader extends DelegateXMLStreamReader {
   @Override
   public int nextTag() throws XMLStreamException {
     int eventType = next();
-    while ((eventType == XMLStreamConstants.CHARACTERS && isWhiteSpace()) || (eventType == XMLStreamConstants.CDATA && isWhiteSpace())
-        || eventType == XMLStreamConstants.SPACE || eventType == XMLStreamConstants.PROCESSING_INSTRUCTION
-        || eventType == XMLStreamConstants.COMMENT) {
+    while ((eventType == XMLStreamConstants.CHARACTERS && isWhiteSpace())
+        || (eventType == XMLStreamConstants.CDATA && isWhiteSpace()) || eventType == XMLStreamConstants.SPACE
+        || eventType == XMLStreamConstants.PROCESSING_INSTRUCTION || eventType == XMLStreamConstants.COMMENT) {
       eventType = next();
     }
     if (eventType != XMLStreamConstants.START_ELEMENT && eventType != XMLStreamConstants.END_ELEMENT) {
@@ -182,8 +183,8 @@ public class ReversibleXMLStreamReader extends DelegateXMLStreamReader {
     int eventType = next();
     StringBuilder buf = new StringBuilder();
     while (eventType != XMLStreamConstants.END_ELEMENT) {
-      if (eventType == XMLStreamConstants.CHARACTERS || eventType == XMLStreamConstants.CDATA || eventType == XMLStreamConstants.SPACE
-          || eventType == XMLStreamConstants.ENTITY_REFERENCE) {
+      if (eventType == XMLStreamConstants.CHARACTERS || eventType == XMLStreamConstants.CDATA
+          || eventType == XMLStreamConstants.SPACE || eventType == XMLStreamConstants.ENTITY_REFERENCE) {
         buf.append(getText());
       } else if (eventType == XMLStreamConstants.PROCESSING_INSTRUCTION || eventType == XMLStreamConstants.COMMENT) {
         // skipping

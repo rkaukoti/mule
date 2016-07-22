@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core;
 
@@ -16,8 +16,8 @@ import java.util.List;
 import javax.inject.Inject;
 
 /**
- * Resolves data type conversion finding an appropriate converter that is able to execute the required transformation. The lookup is
- * executed dynamically using the discovering of transformers using the application's {@link MuleContext}
+ * Resolves data type conversion finding an appropriate converter that is able to execute the required transformation. The lookup
+ * is executed dynamically using the discovering of transformers using the application's {@link MuleContext}
  */
 public class DynamicDataTypeConversionResolver implements DataTypeConversionResolver {
 

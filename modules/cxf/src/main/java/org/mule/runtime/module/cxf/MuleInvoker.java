@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf;
 
@@ -35,6 +35,7 @@ import javax.script.ScriptException;
  * Invokes a Mule Service via a CXF binding.
  */
 public class MuleInvoker implements Invoker {
+
   private final CxfInboundMessageProcessor cxfMmessageProcessor;
   private Class<?> targetClass;
 
@@ -44,13 +45,14 @@ public class MuleInvoker implements Invoker {
   }
 
   /**
-   * Returns a Method that has the same declaring class as the class of targetObject to avoid the IllegalArgumentException when invoking the
-   * method on the target object. The methodToMatch will be returned if the targetObject doesn't have a similar method.
+   * Returns a Method that has the same declaring class as the class of targetObject to avoid the IllegalArgumentException when
+   * invoking the method on the target object. The methodToMatch will be returned if the targetObject doesn't have a similar
+   * method.
    *
    * @param methodToMatch The method to be used when finding a matching method in targetObject
    * @param targetClass The class to search in for the method.
-   * @return The methodToMatch if no such method exist in the class of targetObject; otherwise, a method from the class of targetObject
-   *         matching the matchToMethod method.
+   * @return The methodToMatch if no such method exist in the class of targetObject; otherwise, a method from the class of
+   *         targetObject matching the matchToMethod method.
    */
   private static Method matchMethod(Method methodToMatch, Class<?> targetClass) {
     for (Class<?> iface : targetClass.getInterfaces()) {
@@ -73,9 +75,9 @@ public class MuleInvoker implements Invoker {
   }
 
   /**
-   * Given a method, which may come from an interface, and a targetClass used in the current AOP invocation, find the most specific method
-   * if there is one. E.g. the method may be IFoo.bar() and the target class may be DefaultFoo. In this case, the method may be
-   * DefaultFoo.bar(). This enables attributes on that method to be found.
+   * Given a method, which may come from an interface, and a targetClass used in the current AOP invocation, find the most
+   * specific method if there is one. E.g. the method may be IFoo.bar() and the target class may be DefaultFoo. In this case, the
+   * method may be DefaultFoo.bar(). This enables attributes on that method to be found.
    *
    * @param method method to be invoked, which may come from an interface
    * @param targetClass target class for the curren invocation. May be <code>null</code> or may not even implement the method.
@@ -105,7 +107,8 @@ public class MuleInvoker implements Invoker {
       try {
         Object payload = extractPayload(exchange.getInMessage());
         Class payloadClass = payload != null ? payload.getClass() : Object.class;
-        event.setMessage(MuleMessage.builder(event.getMessage()).payload(payload).mediaType(cxfMmessageProcessor.getMimeType()).build());
+        event.setMessage(
+            MuleMessage.builder(event.getMessage()).payload(payload).mediaType(cxfMmessageProcessor.getMimeType()).build());
         BindingOperationInfo bop = exchange.get(BindingOperationInfo.class);
         Service svc = exchange.get(Service.class);
         if (!cxfMmessageProcessor.isProxy()) {

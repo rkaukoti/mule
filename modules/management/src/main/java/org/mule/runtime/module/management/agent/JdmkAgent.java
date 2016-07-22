@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.management.agent;
 
@@ -21,11 +21,13 @@ import javax.management.ObjectName;
 import javax.management.ReflectionException;
 
 /**
- * <code>JdmkAgent</code> configures an Jdmk Http Adaptor for Jmx management, statistics and configuration viewing of a Mule instance.
+ * <code>JdmkAgent</code> configures an Jdmk Http Adaptor for Jmx management, statistics and configuration viewing of a Mule
+ * instance.
  * <p/>
  * TODO MULE-1353
  */
 public class JdmkAgent extends AbstractAgent {
+
   /**
    * A FQN of the adaptor class to instantiate via reflection.
    */

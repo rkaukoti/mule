@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.domain.database;
@@ -37,6 +37,7 @@ import javax.xml.namespace.QName;
  * Creates {@link DbConfig} for generic data bases
  */
 public class GenericDbConfigFactory implements ConfigurableDbConfigFactory {
+
   private List<DbType> customDataTypes;
   private RetryPolicyTemplate retryPolicyTemplate;
 
@@ -48,14 +49,14 @@ public class GenericDbConfigFactory implements ConfigurableDbConfigFactory {
     if (retryPolicyTemplate == null) {
       connectionFactory = simpleConnectionFactory;
     } else {
-      connectionFactory =
-          new RetryConnectionFactory(retryPolicyTemplate, new AnnotatedConnectionFactory(name, simpleConnectionFactory, annotations));
+      connectionFactory = new RetryConnectionFactory(retryPolicyTemplate,
+          new AnnotatedConnectionFactory(name, simpleConnectionFactory, annotations));
     }
 
     DbTypeManager dbTypeManager = doCreateTypeManager();
 
-    DbConnectionFactory dbConnectionFactory = new TransactionalDbConnectionFactory(new TransactionCoordinationDbTransactionManager(),
-        dbTypeManager, connectionFactory, dataSource);
+    DbConnectionFactory dbConnectionFactory = new TransactionalDbConnectionFactory(
+        new TransactionCoordinationDbTransactionManager(), dbTypeManager, connectionFactory, dataSource);
 
     return doCreateDbConfig(dataSource, dbTypeManager, dbConnectionFactory, name);
   }

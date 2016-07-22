@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.transformers;
 
@@ -20,18 +20,19 @@ import javax.jms.StreamMessage;
 import javax.jms.TextMessage;
 
 /**
- * <code>JMSMessageToObject</code> Will convert a <code>javax.jms.Message</code> or sub-type into an object by extracting the message
- * payload. Users of this transformer can set different return types on the transform to control the way it behaves.
+ * <code>JMSMessageToObject</code> Will convert a <code>javax.jms.Message</code> or sub-type into an object by extracting the
+ * message payload. Users of this transformer can set different return types on the transform to control the way it behaves.
  * <ul>
  * <li>javax.jms.TextMessage - java.lang.String</li>
  * <li>javax.jms.ObjectMessage - java.lang.Object</li>
- * <li>javax.jms.BytesMessage - Byte[]. Note that the transformer will check if the payload is compressed and automatically uncompress the
- * message.</li>
+ * <li>javax.jms.BytesMessage - Byte[]. Note that the transformer will check if the payload is compressed and automatically
+ * uncompress the message.</li>
  * <li>javax.jms.MapMessage - java.util.Map</li>
  * <li>javax.jms.StreamMessage - java.util.Vector of objects from the Stream Message.</li>
  * </ul>
  */
 public class JMSMessageToObject extends AbstractJmsTransformer {
+
   public JMSMessageToObject() {
     super();
   }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.file;
 
@@ -58,6 +58,7 @@ import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_STORE_MANAG
  */
 
 public class FileMessageReceiver extends AbstractPollingMessageReceiver {
+
   public static final String COMPARATOR_CLASS_NAME_PROPERTY = "comparator";
   public static final String COMPARATOR_REVERSE_ORDER_PROPERTY = "reverseOrder";
   public static final String MULE_TRANSPORT_FILE_SINGLEPOLLINSTANCE = "mule.transport.file.singlepollinstance";
@@ -79,8 +80,8 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver {
   private boolean poolOnPrimaryInstanceOnly;
   private ObjectStore<String> filesBeingProcessingObjectStore;
 
-  public FileMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint, String readDir, String moveDir,
-      String moveToPattern, long frequency) throws CreateException {
+  public FileMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint, String readDir,
+      String moveDir, String moveToPattern, long frequency) throws CreateException {
     super(connector, flowConstruct, endpoint);
     this.fileConnector = (FileConnector) connector;
 
@@ -312,8 +313,8 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver {
     if (fileConnector.isStreaming()) {
       processWithStreaming(sourceFile, (ReceiverFileInputStream) originalPayload, executionTemplate, finalMessage);
     } else {
-      processWithoutStreaming(originalSourceFilePath, originalSourceFileName, originalSourceDirectory, sourceFile, destinationFile,
-          executionTemplate, finalMessage);
+      processWithoutStreaming(originalSourceFilePath, originalSourceFileName, originalSourceDirectory, sourceFile,
+          destinationFile, executionTemplate, finalMessage);
     }
   }
 
@@ -352,9 +353,9 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver {
     }
   }
 
-  private void processWithoutStreaming(String originalSourceFile, final String originalSourceFileName, final String originalSourceDirectory,
-      final File sourceFile, final File destinationFile, ExecutionTemplate<MuleEvent> executionTemplate, final MuleMessage finalMessage)
-      throws DefaultMuleException {
+  private void processWithoutStreaming(String originalSourceFile, final String originalSourceFileName,
+      final String originalSourceDirectory, final File sourceFile, final File destinationFile,
+      ExecutionTemplate<MuleEvent> executionTemplate, final MuleMessage finalMessage) throws DefaultMuleException {
     try {
       executionTemplate.execute(() -> {
         moveAndDelete(sourceFile, destinationFile, originalSourceFileName, originalSourceDirectory, finalMessage);
@@ -413,7 +414,8 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver {
   }
 
   /* Left for baackward compatibility */
-  protected ReceiverFileInputStream createReceiverFileInputStream(File sourceFile, File destinationFile) throws FileNotFoundException {
+  protected ReceiverFileInputStream createReceiverFileInputStream(File sourceFile, File destinationFile)
+      throws FileNotFoundException {
     return new ReceiverFileInputStream(sourceFile, fileConnector.isAutoDelete(), destinationFile);
   }
 
@@ -432,8 +434,8 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver {
     }
   }
 
-  private void moveAndDelete(final File sourceFile, File destinationFile, String originalSourceFileName, String originalSourceDirectory,
-      MuleMessage message) throws MuleException {
+  private void moveAndDelete(final File sourceFile, File destinationFile, String originalSourceFileName,
+      String originalSourceDirectory, MuleMessage message) throws MuleException {
     // If we are moving the file to a read directory, move it there now and
     // hand over a reference to the
     // File in its moved location
@@ -443,7 +445,8 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver {
         FileUtils.moveFile(sourceFile, destinationFile);
       } catch (IOException e) {
         // move didn't work - bail out (will attempt rollback)
-        throw new DefaultMuleException(FileMessages.failedToMoveFile(sourceFile.getAbsolutePath(), destinationFile.getAbsolutePath()));
+        throw new DefaultMuleException(
+            FileMessages.failedToMoveFile(sourceFile.getAbsolutePath(), destinationFile.getAbsolutePath()));
       }
 
       // create new Message for destinationFile
@@ -472,8 +475,8 @@ public class FileMessageReceiver extends AbstractPollingMessageReceiver {
   }
 
   /**
-   * Try to acquire a lock on a file and release it immediately. Usually used as a quick check to see if another process is still holding
-   * onto the file, e.g. a large file (more than 100MB) is still being written to.
+   * Try to acquire a lock on a file and release it immediately. Usually used as a quick check to see if another process is still
+   * holding onto the file, e.g. a large file (more than 100MB) is still being written to.
    *
    * @param sourceFile file to check
    * @return <code>true</code> if the file can be locked

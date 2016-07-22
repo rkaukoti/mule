@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
@@ -25,11 +25,11 @@ import static org.mule.runtime.core.util.Preconditions.checkArgument;
 /**
  * A {@link ValueResolver} which evaluates a MEL expressions and tries to ensure that the output is always of a certain type.
  * <p>
- * If the MEL expression does not return a value of that type, then it tries to locate a {@link Transformer} which can do the transformation
- * from the obtained type to the expected one.
+ * If the MEL expression does not return a value of that type, then it tries to locate a {@link Transformer} which can do the
+ * transformation from the obtained type to the expected one.
  * <p>
- * It resolves the expressions by making use of the {@link AttributeEvaluator} so that it's compatible with simple expressions and templates
- * alike
+ * It resolves the expressions by making use of the {@link AttributeEvaluator} so that it's compatible with simple expressions and
+ * templates alike
  *
  * @since 3.7.0
  */

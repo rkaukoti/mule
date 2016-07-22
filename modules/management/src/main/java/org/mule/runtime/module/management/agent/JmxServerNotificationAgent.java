@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.management.agent;
 
@@ -26,6 +26,7 @@ import javax.management.ObjectName;
  * An agent that propergates Mule Server notifications to Jmx.
  */
 public class JmxServerNotificationAgent extends AbstractNotificationLoggerAgent {
+
   public static final String LISTENER_JMX_OBJECT_NAME = "type=org.mule.Notification,name=MuleNotificationListener";
   public static final String BROADCASTER_JMX_OBJECT_NAME = "type=org.mule.Notification,name=MuleNotificationBroadcaster";
   public static final String DEFAULT_AGENT_NAME = "Jmx Notification Agent";
@@ -111,6 +112,7 @@ public class JmxServerNotificationAgent extends AbstractNotificationLoggerAgent 
   }
 
   public static interface NotificationListenerMBean {
+
     List<Notification> getNotificationsList();
 
     int getListSize();
@@ -118,11 +120,13 @@ public class JmxServerNotificationAgent extends AbstractNotificationLoggerAgent 
     void setListSize(int listSize);
   }
 
-  public static class BroadcastNotificationService extends NotificationBroadcasterSupport implements BroadcastNotificationServiceMBean {
+  public static class BroadcastNotificationService extends NotificationBroadcasterSupport
+      implements BroadcastNotificationServiceMBean {
     // no methods
   }
 
   public static class NotificationListener implements NotificationListenerMBean, javax.management.NotificationListener {
+
     private int listSize = 100;
 
     private List<Notification> notifs;

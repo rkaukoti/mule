@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.execution;
 
@@ -57,12 +57,13 @@ class MessageProcessorNotificationExecutionInterceptor implements MessageProcess
     if (nonBlocking && responseProcessing) {
       final ReplyToHandler originalReplyToHandler = event.getReplyToHandler();
       eventToProcess = new DefaultMuleEvent(event, new NonBlockingReplyToHandler() {
+
         @Override
         public void processReplyTo(MuleEvent result, MuleMessage returnMessage, Object replyTo) throws MuleException {
 
           if (fireNotification) {
-            fireNotification(notificationManager, event.getFlowConstruct(), result != null ? result : event, messageProcessor, null,
-                MessageProcessorNotification.MESSAGE_PROCESSOR_POST_INVOKE);
+            fireNotification(notificationManager, event.getFlowConstruct(), result != null ? result : event, messageProcessor,
+                null, MessageProcessorNotification.MESSAGE_PROCESSOR_POST_INVOKE);
           }
           originalReplyToHandler.processReplyTo(result, returnMessage, replyTo);
         }
@@ -71,8 +72,8 @@ class MessageProcessorNotificationExecutionInterceptor implements MessageProcess
         public void processExceptionReplyTo(MessagingException exception, Object replyTo) {
           if (fireNotification) {
             MuleEvent result = exception.getEvent();
-            fireNotification(notificationManager, event.getFlowConstruct(), result != null ? result : event, messageProcessor, null,
-                MessageProcessorNotification.MESSAGE_PROCESSOR_POST_INVOKE);
+            fireNotification(notificationManager, event.getFlowConstruct(), result != null ? result : event, messageProcessor,
+                null, MessageProcessorNotification.MESSAGE_PROCESSOR_POST_INVOKE);
           }
           originalReplyToHandler.processExceptionReplyTo(exception, replyTo);
         }
@@ -96,16 +97,17 @@ class MessageProcessorNotificationExecutionInterceptor implements MessageProcess
       throw exceptionThrown;
     } finally {
       if (!NonBlockingVoidMuleEvent.getInstance().equals(result) && fireNotification) {
-        fireNotification(notificationManager, event.getFlowConstruct(), result != null ? result : event, messageProcessor, exceptionThrown,
-            MessageProcessorNotification.MESSAGE_PROCESSOR_POST_INVOKE);
+        fireNotification(notificationManager, event.getFlowConstruct(), result != null ? result : event, messageProcessor,
+            exceptionThrown, MessageProcessorNotification.MESSAGE_PROCESSOR_POST_INVOKE);
       }
     }
     return result;
   }
 
-  protected void fireNotification(ServerNotificationManager serverNotificationManager, FlowConstruct flowConstruct, MuleEvent event,
-      MessageProcessor processor, MessagingException exceptionThrown, int action) {
-    if (serverNotificationManager != null && serverNotificationManager.isNotificationEnabled(MessageProcessorNotification.class)) {
+  protected void fireNotification(ServerNotificationManager serverNotificationManager, FlowConstruct flowConstruct,
+      MuleEvent event, MessageProcessor processor, MessagingException exceptionThrown, int action) {
+    if (serverNotificationManager != null
+        && serverNotificationManager.isNotificationEnabled(MessageProcessorNotification.class)) {
       if (flowConstruct instanceof MessageProcessorPathResolver
           && ((MessageProcessorPathResolver) flowConstruct).getProcessorPath(processor) != null) {
         serverNotificationManager

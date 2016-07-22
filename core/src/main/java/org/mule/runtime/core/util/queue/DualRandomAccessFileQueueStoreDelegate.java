@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.queue;
 
@@ -23,11 +23,12 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 /**
  * {@link TransactionalQueueStoreDelegate} implementation using two files for storing the queue data.
  * <p/>
- * Entries are stored in the queue file until a certain size in the file. After that size is reached a new file is created and used to store
- * new entries until the previous file queue entries are consumed, in which case the file is cleaned and reused for new entries once the
- * second files gets full.
+ * Entries are stored in the queue file until a certain size in the file. After that size is reached a new file is created and
+ * used to store new entries until the previous file queue entries are consumed, in which case the file is cleaned and reused for
+ * new entries once the second files gets full.
  */
-public class DualRandomAccessFileQueueStoreDelegate extends AbstractQueueStoreDelegate implements TransactionalQueueStoreDelegate {
+public class DualRandomAccessFileQueueStoreDelegate extends AbstractQueueStoreDelegate
+    implements TransactionalQueueStoreDelegate {
 
   public static final String MAX_LENGTH_PER_FILE_PROPERTY_KEY = "mule.queue.maxlength";
   private static final int ONE_MEGABYTE = 1024 * 1024;
@@ -48,22 +49,26 @@ public class DualRandomAccessFileQueueStoreDelegate extends AbstractQueueStoreDe
   private RandomAccessFileQueueStore randomAccessFileQueueStore1;
   private RandomAccessFileQueueStore randomAccessFileQueueStore2;
 
-  public DualRandomAccessFileQueueStoreDelegate(String queueName, String workingDirectory, MuleContext muleContext, int capacity) {
+  public DualRandomAccessFileQueueStoreDelegate(String queueName, String workingDirectory, MuleContext muleContext,
+      int capacity) {
     super(capacity);
     this.muleContext = muleContext;
     serializer = muleContext.getObjectSerializer();
     File queuesDirectory = getQueuesDirectory(workingDirectory);
     if (!queuesDirectory.exists()) {
-      Preconditions.checkState(queuesDirectory.mkdirs(), "Could not create queue store directory " + queuesDirectory.getAbsolutePath());
+      Preconditions.checkState(queuesDirectory.mkdirs(),
+          "Could not create queue store directory " + queuesDirectory.getAbsolutePath());
     }
-    randomAccessFileQueueStore1 = new RandomAccessFileQueueStore(new QueueFileProvider(queuesDirectory, queueName + QUEUE_STORE_1_SUFFIX));
-    randomAccessFileQueueStore2 = new RandomAccessFileQueueStore(new QueueFileProvider(queuesDirectory, queueName + QUEUE_STORE_2_SUFFIX));
+    randomAccessFileQueueStore1 =
+        new RandomAccessFileQueueStore(new QueueFileProvider(queuesDirectory, queueName + QUEUE_STORE_1_SUFFIX));
+    randomAccessFileQueueStore2 =
+        new RandomAccessFileQueueStore(new QueueFileProvider(queuesDirectory, queueName + QUEUE_STORE_2_SUFFIX));
     queueControlDataFile = new QueueControlDataFile(new QueueFileProvider(queuesDirectory, queueName + QUEUE_DATA_CONTROL_SUFFIX),
         randomAccessFileQueueStore1.getFile(), randomAccessFileQueueStore2.getFile());
-    writeFile = queueControlDataFile.getCurrentWriteFile().getAbsolutePath().equals(randomAccessFileQueueStore1.getFile().getAbsolutePath())
-        ? randomAccessFileQueueStore1 : randomAccessFileQueueStore2;
-    readFile = queueControlDataFile.getCurrentReadFile().getAbsolutePath().equals(randomAccessFileQueueStore1.getFile().getAbsolutePath())
-        ? randomAccessFileQueueStore1 : randomAccessFileQueueStore2;
+    writeFile = queueControlDataFile.getCurrentWriteFile().getAbsolutePath().equals(
+        randomAccessFileQueueStore1.getFile().getAbsolutePath()) ? randomAccessFileQueueStore1 : randomAccessFileQueueStore2;
+    readFile = queueControlDataFile.getCurrentReadFile().getAbsolutePath().equals(
+        randomAccessFileQueueStore1.getFile().getAbsolutePath()) ? randomAccessFileQueueStore1 : randomAccessFileQueueStore2;
     filesLock = new ReentrantReadWriteLock();
 
     if (logger.isDebugEnabled()) {
@@ -210,6 +215,7 @@ public class DualRandomAccessFileQueueStoreDelegate extends AbstractQueueStoreDe
 
   private RawDataSelector createDataSelector(final Serializable value) {
     return new RawDataSelector() {
+
       @Override
       public boolean isSelectedData(byte[] data) {
         return deserialize(data).equals(value);

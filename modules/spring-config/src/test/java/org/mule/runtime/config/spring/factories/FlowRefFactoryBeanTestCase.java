@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.factories;
 
@@ -140,13 +140,16 @@ public class FlowRefFactoryBeanTestCase extends AbstractMuleTestCase {
     MuleEvent event = mock(MuleEvent.class);
     when(event.getFlowConstruct()).thenReturn(flowConstruct);
 
-    MessageProcessor targetSubFlowConstructAware = (MessageProcessor) mock(FlowConstructAware.class, INITIALIZABLE_MESSAGE_PROCESSOR);
+    MessageProcessor targetSubFlowConstructAware =
+        (MessageProcessor) mock(FlowConstructAware.class, INITIALIZABLE_MESSAGE_PROCESSOR);
     when(targetSubFlowConstructAware.process(event)).thenReturn(result);
-    MessageProcessor targetMuleContextAwareAware = (MessageProcessor) mock(MuleContextAware.class, INITIALIZABLE_MESSAGE_PROCESSOR);
+    MessageProcessor targetMuleContextAwareAware =
+        (MessageProcessor) mock(MuleContextAware.class, INITIALIZABLE_MESSAGE_PROCESSOR);
     when(targetMuleContextAwareAware.process(event)).thenReturn(result);
 
     MessageProcessorChain targetSubFlowChain = mock(MessageProcessorChain.class, INITIALIZABLE_MESSAGE_PROCESSOR);
-    when(targetSubFlowChain.getMessageProcessors()).thenReturn(Arrays.asList(targetSubFlowConstructAware, targetMuleContextAwareAware));
+    when(targetSubFlowChain.getMessageProcessors())
+        .thenReturn(Arrays.asList(targetSubFlowConstructAware, targetMuleContextAwareAware));
 
     FlowRefFactoryBean flowRefFactoryBean = createDynamicFlowRefFactoryBean(targetSubFlowChain);
     flowRefFactoryBean.getObject().process(event);
@@ -194,7 +197,8 @@ public class FlowRefFactoryBeanTestCase extends AbstractMuleTestCase {
     return createFlowRefFactoryBean(DYNAMIC_REFERENCED_FLOW);
   }
 
-  private void verifyProcess(FlowRefFactoryBean flowRefFactoryBean, MessageProcessor target, int lifecycleRounds) throws Exception {
+  private void verifyProcess(FlowRefFactoryBean flowRefFactoryBean, MessageProcessor target, int lifecycleRounds)
+      throws Exception {
     assertSame(result, flowRefFactoryBean.getObject().process(mock(MuleEvent.class)));
     assertSame(result, flowRefFactoryBean.getObject().process(mock(MuleEvent.class)));
 

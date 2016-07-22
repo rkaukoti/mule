@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.api.config;
@@ -9,10 +9,14 @@ public class DefaultThreadingProfileConfig {
 
   public static final String MAX_THREADS_ACTIVE_PROPERTY =
       MuleProperties.SYSTEM_PROPERTY_PREFIX + "defaultThreadingProfile.maxThreadsActive";
-  public static final String MAX_THREADS_IDLE_PROPERTY = MuleProperties.SYSTEM_PROPERTY_PREFIX + "defaultThreadingProfile.maxThreadsIdle";
-  public static final String MAX_BUFFER_SIZE_PROPERTY = MuleProperties.SYSTEM_PROPERTY_PREFIX + "defaultThreadingProfile.maxBufferSize";
-  public static final String MAX_THREAD_TTL_PROPERTY = MuleProperties.SYSTEM_PROPERTY_PREFIX + "defaultThreadingProfile.maxThreadTTL";
-  public static final String MAX_WAIT_TIMEOUT_PROPERTY = MuleProperties.SYSTEM_PROPERTY_PREFIX + "defaultThreadingProfile.maxWaitTimeout";
+  public static final String MAX_THREADS_IDLE_PROPERTY =
+      MuleProperties.SYSTEM_PROPERTY_PREFIX + "defaultThreadingProfile.maxThreadsIdle";
+  public static final String MAX_BUFFER_SIZE_PROPERTY =
+      MuleProperties.SYSTEM_PROPERTY_PREFIX + "defaultThreadingProfile.maxBufferSize";
+  public static final String MAX_THREAD_TTL_PROPERTY =
+      MuleProperties.SYSTEM_PROPERTY_PREFIX + "defaultThreadingProfile.maxThreadTTL";
+  public static final String MAX_WAIT_TIMEOUT_PROPERTY =
+      MuleProperties.SYSTEM_PROPERTY_PREFIX + "defaultThreadingProfile.maxWaitTimeout";
 
   /**
    * Default value for MAX_THREADS_ACTIVE

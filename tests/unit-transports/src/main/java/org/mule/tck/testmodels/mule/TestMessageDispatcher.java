@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.tck.testmodels.mule;
 
@@ -19,6 +19,7 @@ import org.mule.runtime.core.api.routing.RoutingException;
 import org.mule.tck.processor.TestNonBlockingProcessor;
 
 public class TestMessageDispatcher extends AbstractMessageDispatcher {
+
   private TestNonBlockingProcessor nonBlockingProcessor = new TestNonBlockingProcessor();
 
   public TestMessageDispatcher(final OutboundEndpoint endpoint) {
@@ -62,6 +63,7 @@ public class TestMessageDispatcher extends AbstractMessageDispatcher {
       try {
         final MuleMessage response = event.getMessage();
         event = new DefaultMuleEvent(event, new ReplyToHandler() {
+
           @Override
           public void processReplyTo(MuleEvent event, MuleMessage returnMessage, Object replyTo) {
             completionHandler.onCompletion(response, (ExceptionCallback<Void, Exception>) (exception -> {

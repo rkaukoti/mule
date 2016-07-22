@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.vm;
 
@@ -10,10 +10,12 @@ import org.mule.runtime.core.api.transaction.TransactionException;
 import org.mule.runtime.core.api.transaction.UniversalTransactionFactory;
 
 public class VMTransactionFactory implements UniversalTransactionFactory {
+
   public static UniversalTransactionFactory factoryDelegate = new VMTransactionFactoryDelegate();
 
   /**
-   * @deprecated For customizing the behavior of VM transport the whole {@link org.mule.util.queue.QueueManager} should be override
+   * @deprecated For customizing the behavior of VM transport the whole {@link org.mule.util.queue.QueueManager} should be
+   *             override
    */
   @Deprecated
   public static void setFactoryDelegate(UniversalTransactionFactory factoryDelegate) {
@@ -43,6 +45,7 @@ public class VMTransactionFactory implements UniversalTransactionFactory {
    * Create normal VM transactions
    */
   static class VMTransactionFactoryDelegate implements UniversalTransactionFactory {
+
     @Override
     public Transaction beginTransaction(MuleContext muleContext) throws TransactionException {
       VMTransaction tx = new VMTransaction(muleContext);

@@ -1,16 +1,17 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.assembly.configuration;
 
 import java.util.Map;
 
 /**
- * Allow initial mutation; first call of reset stores values as reference and allows further temporary mutation; further calls to reset
- * return to reference.
+ * Allow initial mutation; first call of reset stores values as reference and allows further temporary mutation; further calls to
+ * reset return to reference.
  */
 public class ReusablePropertyConfiguration implements PropertyConfiguration {
+
   private PropertyConfiguration reference;
   private PropertyConfiguration delegate;
 

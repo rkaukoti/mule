@@ -1,16 +1,18 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport.service;
 
 import org.mule.runtime.core.config.i18n.MessageFactory;
 
 /**
- * <code>TransportServiceNotFoundException</code> is thorown if no matching service endpoint descriptor is found for the connector protocol.
+ * <code>TransportServiceNotFoundException</code> is thorown if no matching service endpoint descriptor is found for the connector
+ * protocol.
  */
 
 public class TransportServiceNotFoundException extends TransportFactoryException {
+
   /**
    * Serial version
    */

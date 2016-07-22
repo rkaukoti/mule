@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -21,6 +21,7 @@ import static org.junit.Assert.assertTrue;
 
 @SmallTest
 public class TemplateParserTestCase extends AbstractMuleTestCase {
+
   @Test
   public void squareBracesParserDefaultConfiguration() {
     TemplateParser tp = TemplateParser.createSquareBracesStyleParser();
@@ -173,6 +174,7 @@ public class TemplateParserTestCase extends AbstractMuleTestCase {
     final String expectedResult = "Hello|Hi";
 
     String result = tp.parse(null, "#[evaluator: 'Hello|Hi']", new TemplateParser.TemplateCallback() {
+
       public Object match(String token) {
 
         return expectedResult;
@@ -189,6 +191,7 @@ public class TemplateParserTestCase extends AbstractMuleTestCase {
     String expression = "#[zero[one[two[three[four[five]]]]]]";
     assertTrue(tp.isValid(expression));
     String result = tp.parse(null, expression, new TemplateParser.TemplateCallback() {
+
       @Override
       public Object match(String token) {
         return token;
@@ -204,6 +207,7 @@ public class TemplateParserTestCase extends AbstractMuleTestCase {
     String expression = "#[zero#[one#[two#[three#[four#[five]]]]]]";
     assertTrue(tp.isValid(expression));
     String result = tp.parse(null, expression, new TemplateParser.TemplateCallback() {
+
       @Override
       public Object match(String token) {
         return token;
@@ -219,6 +223,7 @@ public class TemplateParserTestCase extends AbstractMuleTestCase {
     final String expectedResult = "'hi'+'world'";
 
     String result = tp.parse(null, "#['hi'+'world']", new TemplateParser.TemplateCallback() {
+
       public Object match(String token) {
 
         return token;
@@ -235,6 +240,7 @@ public class TemplateParserTestCase extends AbstractMuleTestCase {
     final String expectedResult = "null";
 
     String result = tp.parse(null, "#[expression that returns null]", new TemplateParser.TemplateCallback() {
+
       public Object match(String token) {
         return null;
       }

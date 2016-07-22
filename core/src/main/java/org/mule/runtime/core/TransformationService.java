@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core;
 
@@ -46,29 +46,29 @@ public class TransformationService {
   }
 
   /**
-   * Applies a list of transformers returning the result of the transformation as a new message instance. If the list of transformers is
-   * empty or transformation would be redundant then the same message instances will be returned.
+   * Applies a list of transformers returning the result of the transformation as a new message instance. If the list of
+   * transformers is empty or transformation would be redundant then the same message instances will be returned.
    *
    * @param event the event being processed
    * @param transformers the transformers to apply to the message payload
    * @return the result of transformation
-   * @throws TransformerException if a transformation error occurs or one or more of the transformers passed in a are incompatible with the
-   *         message payload
+   * @throws TransformerException if a transformation error occurs or one or more of the transformers passed in a are incompatible
+   *         with the message payload
    */
-  public MuleMessage applyTransformers(final MuleMessage message, final MuleEvent event, final List<? extends Transformer> transformers)
-      throws MuleException {
+  public MuleMessage applyTransformers(final MuleMessage message, final MuleEvent event,
+      final List<? extends Transformer> transformers) throws MuleException {
     return applyAllTransformers(message, event, transformers);
   }
 
   /**
-   * Applies a list of transformers returning the result of the transformation as a new message instance. If the list of transformers is
-   * empty or transformation would be redundant then the same message instances will be returned.
+   * Applies a list of transformers returning the result of the transformation as a new message instance. If the list of
+   * transformers is empty or transformation would be redundant then the same message instances will be returned.
    *
    * @param event the event being processed
    * @param transformers the transformers to apply to the message payload
    * @return the result of transformation
-   * @throws TransformerException if a transformation error occurs or one or more of the transformers passed in a are incompatible with the
-   *         message payload
+   * @throws TransformerException if a transformation error occurs or one or more of the transformers passed in a are incompatible
+   *         with the message payload
    */
   public MuleMessage applyTransformers(final MuleMessage message, final MuleEvent event, final Transformer... transformers)
       throws MuleException {
@@ -76,17 +76,17 @@ public class TransformationService {
   }
 
   /**
-   * Attempts to obtain the payload of this message with the desired Class type. This will try and resolve a transformer that can do this
-   * transformation. If a transformer cannot be found an exception is thrown. Any transformers added to the registry will be checked for
-   * compatibility
+   * Attempts to obtain the payload of this message with the desired Class type. This will try and resolve a transformer that can
+   * do this transformation. If a transformer cannot be found an exception is thrown. Any transformers added to the registry will
+   * be checked for compatibility
    * <p/>
-   * If the existing payload is consumable (i.e. can't be read twice) then the existing payload of the message will be replaced with a
-   * byte[] representation as part of this operations.
+   * If the existing payload is consumable (i.e. can't be read twice) then the existing payload of the message will be replaced
+   * with a byte[] representation as part of this operations.
    * <p/>
    *
    * @param outputDataType the desired return type
-   * @return The converted payload of this message. Note that this method will not alter the payload of this message *unless* the payload is
-   *         an InputStream in which case the stream will be read and the payload will become the fully read stream.
+   * @return The converted payload of this message. Note that this method will not alter the payload of this message *unless* the
+   *         payload is an InputStream in which case the stream will be read and the payload will become the fully read stream.
    * @throws TransformerException if a transformer cannot be found or there is an error during transformation of the payload
    */
   public MuleMessage transform(MuleMessage message, DataType outputDataType) throws TransformerException {
@@ -99,8 +99,8 @@ public class TransformationService {
   /**
    * Obtains a {@link String} representation of the message payload for logging without throwing exception.
    * <p/>
-   * If the existing payload is consumable (i.e. can't be read twice) then the existing payload of the message will be replaced with a
-   * byte[] representation as part of this operations.
+   * If the existing payload is consumable (i.e. can't be read twice) then the existing payload of the message will be replaced
+   * with a byte[] representation as part of this operations.
    *
    * @return message payload as object
    */
@@ -113,11 +113,11 @@ public class TransformationService {
   }
 
   /**
-   * Obtains a {@link String} representation of the message payload for logging without throwing exception. If encoding is required it will
-   * use the encoding set on the message.
+   * Obtains a {@link String} representation of the message payload for logging without throwing exception. If encoding is
+   * required it will use the encoding set on the message.
    * <p>
-   * If the existing payload is consumable (i.e. can't be read twice) or an exception occurs during transformation then the an exeption
-   * won't be thrown but rather a description of the payload type will be returned.
+   * If the existing payload is consumable (i.e. can't be read twice) or an exception occurs during transformation then the an
+   * exeption won't be thrown but rather a description of the payload type will be returned.
    *
    * @return message payload as a String or message with the payload type if payload can't be converted to a String
    */
@@ -133,8 +133,8 @@ public class TransformationService {
     return "Payload is a stream of type: " + type;
   }
 
-  private MuleMessage applyAllTransformers(final MuleMessage message, final MuleEvent event, final List<? extends Transformer> transformers)
-      throws MuleException {
+  private MuleMessage applyAllTransformers(final MuleMessage message, final MuleEvent event,
+      final List<? extends Transformer> transformers) throws MuleException {
     MuleMessage result = message;
     if (!transformers.isEmpty()) {
       for (int index = 0; index < transformers.size(); index++) {
@@ -233,14 +233,15 @@ public class TransformationService {
   }
 
   /**
-   * Attempts to obtain the payload of this message with the desired Class type. This will try and resolve a transformer that can do this
-   * transformation. If a transformer cannot be found an exception is thrown. Any transformers added to the registry will be checked for
-   * compatibility.
+   * Attempts to obtain the payload of this message with the desired Class type. This will try and resolve a transformer that can
+   * do this transformation. If a transformer cannot be found an exception is thrown. Any transformers added to the registry will
+   * be checked for compatibility.
    *
    * @param resultType the desired return type
    * @param encoding the encoding to use if required
-   * @return The converted payload of this message. Note that this method will not alter the payload of this message <b>unless</b> the
-   *         payload is an {@link InputStream} in which case the stream will be read and the payload will become the fully read stream.
+   * @return The converted payload of this message. Note that this method will not alter the payload of this message <b>unless</b>
+   *         the payload is an {@link InputStream} in which case the stream will be read and the payload will become the fully
+   *         read stream.
    * @throws TransformerException if a transformer cannot be found or there is an error during transformation of the payload.
    */
   @SuppressWarnings("unchecked")

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.source;
 
@@ -109,9 +109,11 @@ public class ClusterizableMessageSourceWrapperTestCase extends AbstractMuleTestC
     when(muleContext.isPrimaryPollingInstance()).thenReturn(true);
     wrapper.setMuleContext(muleContext);
     Mockito.doAnswer(new Answer<Void>() {
+
       @Override
       public Void answer(InvocationOnMock invocationOnMock) throws Throwable {
-        ((PrimaryNodeLifecycleNotificationListener) invocationOnMock.getArguments()[0]).onNotification(new ClusterNodeNotification("", 1));
+        ((PrimaryNodeLifecycleNotificationListener) invocationOnMock.getArguments()[0])
+            .onNotification(new ClusterNodeNotification("", 1));
         return null;
       }
     }).when(muleContext).registerListener(isA(PrimaryNodeLifecycleNotificationListener.class));
@@ -127,9 +129,11 @@ public class ClusterizableMessageSourceWrapperTestCase extends AbstractMuleTestC
     final PrimaryNodeLifecycleNotificationListener[] primaryNodeLifecycleNotificationListener =
         new PrimaryNodeLifecycleNotificationListener[1];
     Mockito.doAnswer(new Answer<Void>() {
+
       @Override
       public Void answer(InvocationOnMock invocationOnMock) throws Throwable {
-        primaryNodeLifecycleNotificationListener[0] = (PrimaryNodeLifecycleNotificationListener) invocationOnMock.getArguments()[0];
+        primaryNodeLifecycleNotificationListener[0] =
+            (PrimaryNodeLifecycleNotificationListener) invocationOnMock.getArguments()[0];
         return null;
       }
     }).when(muleContext).registerListener(isA(PrimaryNodeLifecycleNotificationListener.class));

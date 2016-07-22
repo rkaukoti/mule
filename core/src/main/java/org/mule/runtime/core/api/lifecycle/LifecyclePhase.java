@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.lifecycle;
 
@@ -10,9 +10,9 @@ import org.mule.runtime.core.lifecycle.LifecycleObject;
 import java.util.Set;
 
 /**
- * Encapsulates the notion of a lifecycle phase i.e. 'stop'. Implementations of this class are responsible for invoking the lifecycle phase
- * on a set of objects and also for knowing which phases can preceed and go after it. This objects are configurable so that lifecycles can
- * be customised.
+ * Encapsulates the notion of a lifecycle phase i.e. 'stop'. Implementations of this class are responsible for invoking the
+ * lifecycle phase on a set of objects and also for knowing which phases can preceed and go after it. This objects are
+ * configurable so that lifecycles can be customised.
  *
  * Note that users wouldn't normally customise the lifecycle of the server.
  */

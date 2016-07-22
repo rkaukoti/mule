@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.jndi;
 
@@ -311,10 +311,11 @@ public class DefaultSpringJndiContext implements Context, Serializable {
   }
 
   /**
-   * internalBind is intended for use only during setup or possibly by suitably synchronized superclasses. It binds every possible lookup
-   * into a map in each context. To do this, each context strips off one name segment and if necessary creates a new context for it. Then it
-   * asks that context to bind the remaining name. It returns a map containing all the bindings from the next context, plus the context it
-   * just created (if it in fact created it). (the names are suitably extended by the segment originally lopped off).
+   * internalBind is intended for use only during setup or possibly by suitably synchronized superclasses. It binds every possible
+   * lookup into a map in each context. To do this, each context strips off one name segment and if necessary creates a new
+   * context for it. Then it asks that context to bind the remaining name. It returns a map containing all the bindings from the
+   * next context, plus the context it just created (if it in fact created it). (the names are suitably extended by the segment
+   * originally lopped off).
    */
   protected Map internalBind(String name, Object value) throws NamingException {
     return internalBind(name, value, false);

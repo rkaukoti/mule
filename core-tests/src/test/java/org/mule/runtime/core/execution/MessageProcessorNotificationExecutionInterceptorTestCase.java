@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.execution;
 
@@ -43,6 +43,7 @@ import static org.junit.Assert.fail;
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
 public class MessageProcessorNotificationExecutionInterceptorTestCase extends AbstractMuleTestCase {
+
   @Mock
   private ServerNotificationManager mockNotificationManager;
   @Mock
@@ -83,6 +84,7 @@ public class MessageProcessorNotificationExecutionInterceptorTestCase extends Ab
     Mockito.when(mockNextInterceptor.execute(mockMessageProcessor, mockMuleEvent)).thenReturn(mockResultMuleEvent);
     Mockito.when(mockNotificationManager.isNotificationEnabled(MessageProcessorNotification.class)).thenReturn(true);
     Mockito.doAnswer(new Answer<Object>() {
+
       @Override
       public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
         serverNotifications.add((ServerNotification) invocationOnMock.getArguments()[0]);
@@ -110,6 +112,7 @@ public class MessageProcessorNotificationExecutionInterceptorTestCase extends Ab
     Mockito.when(mockNextInterceptor.execute(mockMessageProcessor, mockMuleEvent)).thenReturn(mockResultMuleEvent);
     Mockito.when(mockNotificationManager.isNotificationEnabled(MessageProcessorNotification.class)).thenReturn(true);
     Mockito.doAnswer(new Answer<Object>() {
+
       @Override
       public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
         serverNotifications.add((ServerNotification) invocationOnMock.getArguments()[0]);
@@ -124,8 +127,8 @@ public class MessageProcessorNotificationExecutionInterceptorTestCase extends Ab
   }
 
   /**
-   * Validates that event to be processed is set to RequestContext for those cases whenever a messageProcessor modifies the RC during its
-   * execution.
+   * Validates that event to be processed is set to RequestContext for those cases whenever a messageProcessor modifies the RC
+   * during its execution.
    */
   @Test
   public void requestContextSetBeforeProcessingEventBlockingPrcocessor() throws MuleException {
@@ -135,6 +138,7 @@ public class MessageProcessorNotificationExecutionInterceptorTestCase extends Ab
     Mockito.when(mockNextInterceptor.execute(mockMessageProcessor, mockMuleEvent)).thenReturn(mockResultMuleEvent);
     Mockito.when(mockNotificationManager.isNotificationEnabled(MessageProcessorNotification.class)).thenReturn(true);
     Mockito.doAnswer(new Answer<Object>() {
+
       @Override
       public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
         serverNotifications.add((ServerNotification) invocationOnMock.getArguments()[0]);
@@ -154,13 +158,14 @@ public class MessageProcessorNotificationExecutionInterceptorTestCase extends Ab
   }
 
   /**
-   * Validates that event to be processed is copied and set to RequestContext for those cases whenever a messageProcessor modifies the RC
-   * during its execution.
+   * Validates that event to be processed is copied and set to RequestContext for those cases whenever a messageProcessor modifies
+   * the RC during its execution.
    */
   @Test
   public void requestContextSetBeforeProcessingEventNonBlockingPrcocessor() throws MuleException {
     final List<ServerNotification> serverNotifications = new ArrayList<ServerNotification>();
-    mockMessageProcessor = Mockito.mock(MessageProcessor.class, Mockito.withSettings().extraInterfaces(NonBlockingMessageProcessor.class));
+    mockMessageProcessor =
+        Mockito.mock(MessageProcessor.class, Mockito.withSettings().extraInterfaces(NonBlockingMessageProcessor.class));
 
     Mockito.when(mockMessageProcessor.process(mockMuleEvent)).thenReturn(mockResultMuleEvent);
     Mockito.when(mockMuleEvent.getMuleContext().getNotificationManager()).thenReturn(mockNotificationManager);
@@ -174,6 +179,7 @@ public class MessageProcessorNotificationExecutionInterceptorTestCase extends Ab
 
     Mockito.when(mockNotificationManager.isNotificationEnabled(MessageProcessorNotification.class)).thenReturn(true);
     Mockito.doAnswer(new Answer<Object>() {
+
       @Override
       public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
         serverNotifications.add((ServerNotification) invocationOnMock.getArguments()[0]);
@@ -203,6 +209,7 @@ public class MessageProcessorNotificationExecutionInterceptorTestCase extends Ab
     Mockito.when(mockMuleEvent.isNotificationsEnabled()).thenReturn(true);
     Mockito.when(mockNotificationManager.isNotificationEnabled(MessageProcessorNotification.class)).thenReturn(true);
     Mockito.doAnswer(new Answer<Object>() {
+
       @Override
       public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
         serverNotifications.add((ServerNotification) invocationOnMock.getArguments()[0]);
@@ -232,6 +239,7 @@ public class MessageProcessorNotificationExecutionInterceptorTestCase extends Ab
     Mockito.when(mockMuleEvent.getMuleContext().getNotificationManager()).thenReturn(mockNotificationManager);
     Mockito.when(mockNotificationManager.isNotificationEnabled(MessageProcessorNotification.class)).thenReturn(true);
     Mockito.doAnswer(new Answer<Object>() {
+
       @Override
       public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
         serverNotifications.add((ServerNotification) invocationOnMock.getArguments()[0]);

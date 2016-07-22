@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.spring.security;
 
@@ -11,6 +11,7 @@ import org.springframework.security.core.GrantedAuthority;
 import java.util.Map;
 
 public class SpringAuthenticationAdapter implements Authentication {
+
   private static final long serialVersionUID = -5906282218126929871L;
 
   private org.springframework.security.core.Authentication delegate;
@@ -21,12 +22,13 @@ public class SpringAuthenticationAdapter implements Authentication {
     this(authentication, null);
   }
 
-  public SpringAuthenticationAdapter(org.springframework.security.core.Authentication authentication, Map<String, Object> properties) {
+  public SpringAuthenticationAdapter(org.springframework.security.core.Authentication authentication,
+      Map<String, Object> properties) {
     this(authentication, properties, null);
   }
 
-  public SpringAuthenticationAdapter(org.springframework.security.core.Authentication authentication, Map<String, Object> properties,
-      MuleEvent event) {
+  public SpringAuthenticationAdapter(org.springframework.security.core.Authentication authentication,
+      Map<String, Object> properties, MuleEvent event) {
     this.delegate = authentication;
     this.properties = properties;
     this.event = event;

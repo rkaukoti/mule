@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal;
 
@@ -59,8 +59,9 @@ abstract class BaseExtensionDeclarationTestCase extends AbstractMuleTestCase {
     return new DefaultDescribingContext(extensionDeclarer, getClass().getClassLoader());
   }
 
-  protected void assertParameter(ParameterModel parameterModel, String name, String description, ExpressionSupport expressionSupport,
-      boolean required, MetadataType metadataType, Class<? extends MetadataType> qualifier, Object defaultValue) {
+  protected void assertParameter(ParameterModel parameterModel, String name, String description,
+      ExpressionSupport expressionSupport, boolean required, MetadataType metadataType, Class<? extends MetadataType> qualifier,
+      Object defaultValue) {
     assertThat(parameterModel, is(notNullValue()));
     assertThat(parameterModel.getName(), equalTo(name));
     assertThat(parameterModel.getDescription(), equalTo(description));
@@ -76,7 +77,8 @@ abstract class BaseExtensionDeclarationTestCase extends AbstractMuleTestCase {
     }
   }
 
-  protected void assertDataType(MetadataType metadataType, Class<?> expectedRawType, Class<? extends MetadataType> typeQualifier) {
+  protected void assertDataType(MetadataType metadataType, Class<?> expectedRawType,
+      Class<? extends MetadataType> typeQualifier) {
     assertThat(metadataType, is(instanceOf(typeQualifier)));
     assertThat(expectedRawType.isAssignableFrom(getType(metadataType)), is(true));
   }

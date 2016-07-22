@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -23,8 +23,8 @@ public class TransportMessageProcessContext implements MessageProcessContext {
   private WorkManager flowExecutionWorkManager;
 
   /**
-   * Creates an instance that executes the flow in the current thread. Calling #supportsAsynchronousProcessing method will always return
-   * false since there's not work manager specified for the flow execution.
+   * Creates an instance that executes the flow in the current thread. Calling #supportsAsynchronousProcessing method will always
+   * return false since there's not work manager specified for the flow execution.
    *
    * @param messageReceiver receiver of the message
    */
@@ -33,8 +33,8 @@ public class TransportMessageProcessContext implements MessageProcessContext {
   }
 
   /**
-   * Creates an instance that executes the flow using the supplied WorkManager. Calling #supportsAsynchronousProcessing method will always
-   * return true since there's a WorkManager available to execute the flow.
+   * Creates an instance that executes the flow using the supplied WorkManager. Calling #supportsAsynchronousProcessing method
+   * will always return true since there's a WorkManager available to execute the flow.
    *
    * @param messageReceiver receiver of the message
    * @param flowExecutionWorkManager the work manager to use for the flow execution

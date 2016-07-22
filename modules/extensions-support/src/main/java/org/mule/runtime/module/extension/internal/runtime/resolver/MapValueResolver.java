@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
@@ -20,8 +20,8 @@ import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.checkInstantiable;
 
 /**
- * A {@link ValueResolver} that takes a list of {@link ValueResolver}s and upon invocation of {@link #resolve(MuleEvent)} it return a
- * {@link Map} of values with the outcome of each original resolver.
+ * A {@link ValueResolver} that takes a list of {@link ValueResolver}s and upon invocation of {@link #resolve(MuleEvent)} it
+ * return a {@link Map} of values with the outcome of each original resolver.
  * <p/>
  * This class implements {@link Lifecycle} and propagates those events to each of the {@code resolvers}
  *
@@ -41,7 +41,8 @@ public final class MapValueResolver<K, V> implements ValueResolver<Map<K, V>> {
    * @param keyResolvers a not {@code null} {@link List} of resolvers for map key params
    * @param valueResolvers a not {@code null} {@link List} of resolvers for map value params
    */
-  public MapValueResolver(Class<? extends Map> mapType, List<ValueResolver<K>> keyResolvers, List<ValueResolver<V>> valueResolvers) {
+  public MapValueResolver(Class<? extends Map> mapType, List<ValueResolver<K>> keyResolvers,
+      List<ValueResolver<V>> valueResolvers) {
     checkInstantiable(mapType);
     checkArgument(keyResolvers != null && valueResolvers != null, "resolvers cannot be null");
     checkArgument(keyResolvers.size() == valueResolvers.size(), "exactly one valueResolver for each keyResolver is required");

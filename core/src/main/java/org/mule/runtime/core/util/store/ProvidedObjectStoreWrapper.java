@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.store;
 
@@ -12,11 +12,14 @@ import org.mule.runtime.core.api.store.ObjectStoreException;
 import java.io.Serializable;
 
 /**
- * Will wrap a provided object store or a newly created one with the provided factory, with the provided having precedence if present.
+ * Will wrap a provided object store or a newly created one with the provided factory, with the provided having precedence if
+ * present.
  * <p/>
- * In the case the factory is used and a fresh object store is created, its lifecycle management will be delegated by this wrapper.
+ * In the case the factory is used and a fresh object store is created, its lifecycle management will be delegated by this
+ * wrapper.
  */
 public class ProvidedObjectStoreWrapper<T extends Serializable> implements ObjectStore<T>, Disposable {
+
   private final boolean provided;
   private ObjectStore<T> wrapped;
 

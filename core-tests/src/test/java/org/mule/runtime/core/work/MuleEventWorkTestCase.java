@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.work;
 
@@ -32,8 +32,8 @@ public class MuleEventWorkTestCase extends AbstractMuleContextTestCase {
     super.doSetUp();
     // Create a dummy event and give it some properties
     originalEvent = getTestEvent("test");
-    originalEvent.setMessage(
-        MuleMessage.builder(originalEvent.getMessage()).addOutboundProperty("test", "val").addOutboundProperty("test2", "val2").build());
+    originalEvent.setMessage(MuleMessage.builder(originalEvent.getMessage()).addOutboundProperty("test", "val")
+        .addOutboundProperty("test2", "val2").build());
     OptimizedRequestContext.unsafeSetEvent(originalEvent);
   }
 

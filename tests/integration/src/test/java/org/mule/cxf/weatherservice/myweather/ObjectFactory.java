@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.cxf.weatherservice.myweather;
 
@@ -11,17 +11,19 @@ import javax.xml.namespace.QName;
 
 
 /**
- * This object contains factory methods for each Java content interface and Java element interface generated in the com.myweather package.
+ * This object contains factory methods for each Java content interface and Java element interface generated in the com.myweather
+ * package.
  * <p>
  * An ObjectFactory allows you to programatically construct new instances of the Java representation for XML content. The Java
- * representation of XML content can consist of schema derived interfaces and classes representing the binding of schema type definitions,
- * element declarations and model groups. Factory methods for each of these are provided in this class.
+ * representation of XML content can consist of schema derived interfaces and classes representing the binding of schema type
+ * definitions, element declarations and model groups. Factory methods for each of these are provided in this class.
  */
 @XmlRegistry
 public class ObjectFactory {
 
   private final static QName _WeatherReturn_QNAME = new QName("http://ws.cdyne.com/WeatherWS/", "WeatherReturn");
-  private final static QName _ArrayOfWeatherDescription_QNAME = new QName("http://ws.cdyne.com/WeatherWS/", "ArrayOfWeatherDescription");
+  private final static QName _ArrayOfWeatherDescription_QNAME =
+      new QName("http://ws.cdyne.com/WeatherWS/", "ArrayOfWeatherDescription");
   private final static QName _ForecastReturn_QNAME = new QName("http://ws.cdyne.com/WeatherWS/", "ForecastReturn");
 
   /**
@@ -140,7 +142,8 @@ public class ObjectFactory {
    */
   @XmlElementDecl(namespace = "http://ws.cdyne.com/WeatherWS/", name = "ArrayOfWeatherDescription")
   public JAXBElement<ArrayOfWeatherDescription> createArrayOfWeatherDescription(ArrayOfWeatherDescription value) {
-    return new JAXBElement<ArrayOfWeatherDescription>(_ArrayOfWeatherDescription_QNAME, ArrayOfWeatherDescription.class, null, value);
+    return new JAXBElement<ArrayOfWeatherDescription>(_ArrayOfWeatherDescription_QNAME, ArrayOfWeatherDescription.class, null,
+        value);
   }
 
   /**

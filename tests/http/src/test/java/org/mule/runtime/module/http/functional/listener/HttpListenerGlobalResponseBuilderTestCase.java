@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.listener;
 
@@ -56,13 +56,15 @@ public class HttpListenerGlobalResponseBuilderTestCase extends AbstractHttpTestC
 
   @Test
   public void globalResponseBuilderCustomized() throws Exception {
-    final String url = String.format("http://localhost:%s/%s", listenPort.getNumber(), globalResponseBuilderCustomizedPath.getValue());
+    final String url =
+        String.format("http://localhost:%s/%s", listenPort.getNumber(), globalResponseBuilderCustomizedPath.getValue());
     testResponseHeaders(url, Arrays.asList("Mule 3.6.0", "Mule 3.7.0"));
   }
 
   @Test
   public void globalCompositeResponseBuilder() throws Exception {
-    final String url = String.format("http://localhost:%s/%s", listenPort.getNumber(), globalCompositeResponseBuilderPath.getValue());
+    final String url =
+        String.format("http://localhost:%s/%s", listenPort.getNumber(), globalCompositeResponseBuilderPath.getValue());
     testResponseHeaders(url, Arrays.asList("Mule 3.6.0", "Mule 3.7.0", "Mule 3.8.0"));
   }
 
@@ -72,6 +74,7 @@ public class HttpListenerGlobalResponseBuilderTestCase extends AbstractHttpTestC
     assertThat(isDateValid(httpResponse.getFirstHeader(HttpHeaders.Names.DATE).getValue()), Is.is(true));
     final Header[] userAgentHeaders = httpResponse.getHeaders(HttpHeaders.Names.USER_AGENT);
     final Collection<String> headerValues = CollectionUtils.collect(Arrays.asList(userAgentHeaders), new Transformer() {
+
       @Override
       public Object transform(Object input) {
         Header header = (Header) input;
@@ -79,7 +82,8 @@ public class HttpListenerGlobalResponseBuilderTestCase extends AbstractHttpTestC
       }
     });
     assertThat(userAgentHeaders.length, is(userAgentHeaderValues.size()));
-    assertThat(headerValues, Matchers.containsInAnyOrder(userAgentHeaderValues.toArray(new String[userAgentHeaderValues.size()])));
+    assertThat(headerValues,
+        Matchers.containsInAnyOrder(userAgentHeaderValues.toArray(new String[userAgentHeaderValues.size()])));
   }
 
 

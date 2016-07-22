@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.listener;
 
@@ -32,6 +32,7 @@ public class SystemExceptionListener {
     try {
       final SystemExceptionHandler exceptionListener = muleContext.getExceptionListener();
       muleContext.setExceptionListener(new SystemExceptionHandler() {
+
         @Override
         public void handleException(Exception exception, RollbackSourceCallback rollbackMethod) {
           try {
@@ -51,6 +52,7 @@ public class SystemExceptionListener {
         }
       });
       muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>() {
+
         @Override
         public void onNotification(ExceptionNotification notification) {
           exceptionNotifications.add(notification);
@@ -82,7 +84,8 @@ public class SystemExceptionListener {
   }
 
   /**
-   * @param timeout milliseconds to wait when calling {@link #waitUntilAllNotificationsAreReceived()} for an exception to be handled
+   * @param timeout milliseconds to wait when calling {@link #waitUntilAllNotificationsAreReceived()} for an exception to be
+   *        handled
    */
   public SystemExceptionListener setTimeoutInMillis(int timeout) {
     this.timeout = timeout;

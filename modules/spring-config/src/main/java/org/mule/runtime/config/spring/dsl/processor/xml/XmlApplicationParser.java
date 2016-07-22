@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.config.spring.dsl.processor.xml;
@@ -32,10 +32,11 @@ import static org.mule.runtime.config.spring.dsl.processor.xml.CoreXmlNamespaceI
 import static org.mule.runtime.config.spring.dsl.processor.xml.XmlCustomAttributeHandler.to;
 
 /**
- * Simple parser that transforms an XML document to a set of {@link org.mule.runtime.config.spring.dsl.processor.ConfigLine} objects.
+ * Simple parser that transforms an XML document to a set of {@link org.mule.runtime.config.spring.dsl.processor.ConfigLine}
+ * objects.
  * <p>
- * It uses the SPI interface {@link org.mule.runtime.config.spring.dsl.api.xml.XmlNamespaceInfoProvider} to locate for all namespace info
- * provided and normalize the namespace from the XML document.
+ * It uses the SPI interface {@link org.mule.runtime.config.spring.dsl.api.xml.XmlNamespaceInfoProvider} to locate for all
+ * namespace info provided and normalize the namespace from the XML document.
  *
  * @since 4.0
  */
@@ -69,7 +70,8 @@ public class XmlApplicationParser {
         return matchingXmlNamespaceInfo.get().getNamespace();
       }
     }
-    // TODO MULE-9638 for now since just return a fake value since guava cache does not support null values. When done right throw a
+    // TODO MULE-9638 for now since just return a fake value since guava cache does not support null values. When done right throw
+    // a
     // configuration exception with a meaningful message if there's no info provider defined
     return UNDEFINED_NAMESPACE;
   }

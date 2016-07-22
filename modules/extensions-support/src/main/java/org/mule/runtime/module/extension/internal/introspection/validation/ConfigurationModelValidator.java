@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
@@ -19,9 +19,11 @@ import org.mule.runtime.module.extension.internal.model.property.ConfigTypeModel
 import static org.mule.metadata.java.api.utils.JavaTypeUtils.getType;
 
 /**
- * {@link ModelValidator} which applies to {@link ExtensionModel}s which contains {@link ConfigurationModel}s and {@link OperationModel}s .
+ * {@link ModelValidator} which applies to {@link ExtensionModel}s which contains {@link ConfigurationModel}s and
+ * {@link OperationModel}s .
  * <p>
- * This validator makes sure that all {@link OperationModel operations } are compatible with the defined {@link ConfigurationModel c}
+ * This validator makes sure that all {@link OperationModel operations } are compatible with the defined {@link ConfigurationModel
+ * c}
  *
  * @since 4.0
  */
@@ -37,7 +39,8 @@ public final class ConfigurationModelValidator implements ModelValidator {
       }
 
       for (Class clazz : configParams.keySet()) {
-        final ConfigurationFactory configurationFactory = ((RuntimeConfigurationModel) configurationModel).getConfigurationFactory();
+        final ConfigurationFactory configurationFactory =
+            ((RuntimeConfigurationModel) configurationModel).getConfigurationFactory();
         if (!clazz.isAssignableFrom(configurationFactory.getObjectType())) {
           throw new IllegalConfigurationModelDefinitionException(String.format(
               "Extension '%s' defines the '%s' configuration. However, the extension's operations %s expect configurations of type '%s'. "

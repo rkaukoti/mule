@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.validation;
 
@@ -71,8 +71,8 @@ public class BasicValidationTestCase extends ValidationTestCase {
   @Test
   public void url() throws Exception {
     assertValid(flowRunner("url").withPayload(VALID_URL));
-    assertValid(
-        flowRunner("url").withPayload("http://username:password@example.com:8042/over/there/index.dtb?type=animal&name=narwhal#nose"));
+    assertValid(flowRunner("url")
+        .withPayload("http://username:password@example.com:8042/over/there/index.dtb?type=animal&name=narwhal#nose"));
     assertInvalid(flowRunner("url").withPayload(INVALID_URL), messages.invalidUrl("here"));
   }
 
@@ -264,7 +264,8 @@ public class BasicValidationTestCase extends ValidationTestCase {
         messages.lowerThanMinSize(value, minLength, expectedSize));
   }
 
-  private FlowRunner configureSizeValidationRunner(FlowRunner runner, Object value, int minLength, int maxLength) throws Exception {
+  private FlowRunner configureSizeValidationRunner(FlowRunner runner, Object value, int minLength, int maxLength)
+      throws Exception {
     runner.withPayload(value).withFlowVariable("minLength", minLength).withFlowVariable("maxLength", maxLength);
 
     return runner;

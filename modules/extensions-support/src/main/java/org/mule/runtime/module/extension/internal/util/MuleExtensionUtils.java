@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.util;
 
@@ -101,7 +101,8 @@ public class MuleExtensionUtils {
    * @return a {@link List} of {@link ParameterModel}. Can be empty but will never be {@code null}
    */
   public static List<ParameterModel> getDynamicParameters(ParameterizedModel model) {
-    return model.getParameterModels().stream().filter(parameter -> acceptsExpressions(parameter.getExpressionSupport())).collect(toList());
+    return model.getParameterModels().stream().filter(parameter -> acceptsExpressions(parameter.getExpressionSupport()))
+        .collect(toList());
   }
 
   /**
@@ -113,8 +114,8 @@ public class MuleExtensionUtils {
   }
 
   /**
-   * Returns a {@link List} with all the {@link ComponentModel} available to the {@code configurationModel} which requires a connection.
-   * This includes both {@link SourceModel} and {@link OperationModel}.
+   * Returns a {@link List} with all the {@link ComponentModel} available to the {@code configurationModel} which requires a
+   * connection. This includes both {@link SourceModel} and {@link OperationModel}.
    *
    * @param configurationModel a {@link RuntimeConfigurationModel}
    * @return a {@link List} of {@link ComponentModel}. It might be empty but will never be {@code null}
@@ -122,6 +123,7 @@ public class MuleExtensionUtils {
   public static List<ComponentModel> getConnectedComponents(RuntimeConfigurationModel configurationModel) {
     List<ComponentModel> connectedModels = new LinkedList<>();
     new IdempotentExtensionWalker() {
+
       @Override
       public void onOperation(OperationModel model) {
         collect(model);
@@ -143,9 +145,9 @@ public class MuleExtensionUtils {
   }
 
   /**
-   * Returns all the {@link ConnectionProviderModel} instances available for the given {@code configurationModel}. The {@link List} will
-   * first contain those defined at a {@link ConfigurationModel#getConnectionProviders()} level and finally the ones at
-   * {@link ExtensionModel#getConnectionProviders()}
+   * Returns all the {@link ConnectionProviderModel} instances available for the given {@code configurationModel}. The
+   * {@link List} will first contain those defined at a {@link ConfigurationModel#getConnectionProviders()} level and finally the
+   * ones at {@link ExtensionModel#getConnectionProviders()}
    *
    * @param configurationModel a {@link RuntimeConfigurationModel}
    * @return a {@link List}. Might be empty but will never be {@code null}
@@ -156,8 +158,8 @@ public class MuleExtensionUtils {
   }
 
   public static Class<?> getOperationsConnectionType(ExtensionModel extensionModel) {
-    Set<Class<?>> connectionTypes = extensionModel.getOperationModels()
-        .stream().map(operation -> operation.getModelProperty(ConnectivityModelProperty.class)
+    Set<Class<?>> connectionTypes = extensionModel.getOperationModels().stream()
+        .map(operation -> operation.getModelProperty(ConnectivityModelProperty.class)
             .map(ConnectivityModelProperty::getConnectionType).orElse(null))
         .filter(type -> type != null).map(JavaTypeUtils::getType).collect(toSet());
 
@@ -217,9 +219,9 @@ public class MuleExtensionUtils {
   /**
    * Returns the default value associated with the given annotation.
    * <p>
-   * The reason for this method to be instead of simply using {@link Optional#defaultValue()} is a limitation on the Java language to have
-   * an annotation which defaults to a {@code null} value. For that reason, this method tests the default value for equality against the
-   * {@link Optional#NULL}. If such test is positive, then {@code null} is returned.
+   * The reason for this method to be instead of simply using {@link Optional#defaultValue()} is a limitation on the Java language
+   * to have an annotation which defaults to a {@code null} value. For that reason, this method tests the default value for
+   * equality against the {@link Optional#NULL}. If such test is positive, then {@code null} is returned.
    * <p>
    * If a {@code null} {@code optional} is supplied, then this method returns {@code null}
    *
@@ -238,11 +240,11 @@ public class MuleExtensionUtils {
   /**
    * Tests the given {@code object} to be annotated with {@link Optional}.
    * <p>
-   * If the annotation is present, then a default value is extracted by the rules of {@link #getDefaultValue(Optional)}. Otherwise,
-   * {@code null} is returned.
+   * If the annotation is present, then a default value is extracted by the rules of {@link #getDefaultValue(Optional)}.
+   * Otherwise, {@code null} is returned.
    * <p>
-   * Notice that a {@code null} return value doesn't necessarily mean that the annotation is not present. It could well be that {@code null}
-   * happens to be the default value.
+   * Notice that a {@code null} return value doesn't necessarily mean that the annotation is not present. It could well be that
+   * {@code null} happens to be the default value.
    *
    * @param object an object potentially annotated with {@link Optional}
    * @return A default value or {@code null}
@@ -294,13 +296,13 @@ public class MuleExtensionUtils {
    * @return A {@link Method} or {@code null} if the {@code operationDeclaration} was defined by other means
    */
   public static Method getImplementingMethod(OperationDeclaration operationDeclaration) {
-    return operationDeclaration.getModelProperty(ImplementingMethodModelProperty.class).map(ImplementingMethodModelProperty::getMethod)
-        .orElse(null);
+    return operationDeclaration.getModelProperty(ImplementingMethodModelProperty.class)
+        .map(ImplementingMethodModelProperty::getMethod).orElse(null);
   }
 
   /**
-   * If the {@code extensionModel} contains a {@link ClassLoaderModelProperty}, then it returns the {@link ClassLoader} associated to such
-   * property.
+   * If the {@code extensionModel} contains a {@link ClassLoaderModelProperty}, then it returns the {@link ClassLoader} associated
+   * to such property.
    *
    * @param extensionModel a {@link ExtensionModel}
    * @return a {@link ClassLoader}
@@ -330,8 +332,8 @@ public class MuleExtensionUtils {
 
       if (!configNameField.getDeclaringClass().isInstance(target)) {
         throw new IllegalConfigurationModelDefinitionException(
-            String.format("field '%s' is annotated with @%s but not defined on an instance of type '%s'", configNameField.toString(),
-                ConfigName.class.getSimpleName(), target.getClass().getName()));
+            String.format("field '%s' is annotated with @%s but not defined on an instance of type '%s'",
+                configNameField.toString(), ConfigName.class.getSimpleName(), target.getClass().getName()));
       }
 
       configNameField.setAccessible(true);

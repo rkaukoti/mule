@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.compression;
 
@@ -16,10 +16,11 @@ import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
 /**
- * <code>GZipCompression</code> is a CompressionStrategy implementation using the GZip library included in the JDK java.util.zip. This is
- * the default CompressionStrategy used by the CompressionHelper discovery when no other implementation is discovered.
+ * <code>GZipCompression</code> is a CompressionStrategy implementation using the GZip library included in the JDK java.util.zip.
+ * This is the default CompressionStrategy used by the CompressionHelper discovery when no other implementation is discovered.
  */
 public class GZipCompression implements CompressionStrategy {
+
   public static final int DEFAULT_BUFFER_SIZE = 32768;
 
   /**
@@ -28,8 +29,8 @@ public class GZipCompression implements CompressionStrategy {
   private static final Logger logger = LoggerFactory.getLogger(GZipCompression.class);
 
   /**
-   * Determines if a byte array is compressed. The java.util.zip GZip implementaiton does not expose the GZip header so it is difficult to
-   * determine if a string is compressed.
+   * Determines if a byte array is compressed. The java.util.zip GZip implementaiton does not expose the GZip header so it is
+   * difficult to determine if a string is compressed.
    *
    * @param bytes an array of bytes
    * @return true if the array is compressed or false otherwise
@@ -108,9 +109,9 @@ public class GZipCompression implements CompressionStrategy {
     // TODO add strict behaviour as option
     if (!isCompressed(bytes)) {
       /*
-       * if (strict) { // throw a specific exception here to allow users of this method to // diffientiate between general IOExceptions and
-       * an invalid format logger.warn("Data is not of type GZIP compressed." + " The data may not have been compressed in the first
-       * place."); throw new CompressionException("Not in GZIP format"); }
+       * if (strict) { // throw a specific exception here to allow users of this method to // diffientiate between general
+       * IOExceptions and an invalid format logger.warn("Data is not of type GZIP compressed." + " The data may not have been
+       * compressed in the first place."); throw new CompressionException("Not in GZIP format"); }
        */
 
       // nothing to uncompress

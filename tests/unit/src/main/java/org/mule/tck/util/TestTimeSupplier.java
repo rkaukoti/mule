@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.tck.util;
 
@@ -11,12 +11,12 @@ import java.util.concurrent.TimeUnit;
 import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
- * A test {@link TimeSupplier} for externalizing the system time. It is initialised at a given initial {@link #timeInMillis} using the
- * {@link #TestTimeSupplier(long)} constructor. The value can be retrieved through the {@link #get()} method.
+ * A test {@link TimeSupplier} for externalizing the system time. It is initialised at a given initial {@link #timeInMillis} using
+ * the {@link #TestTimeSupplier(long)} constructor. The value can be retrieved through the {@link #get()} method.
  * <p/>
- * The usefulness of ths class comes from the behavior provided by the {@link #move(long, TimeUnit)} method which allows changing that value
- * per the tests needs. After invoking this method, you can retrieved the modified value through the {@link #get()} method, although there's
- * no way to retrieve the original one after {@link #move(long, TimeUnit)} has been invoked.
+ * The usefulness of ths class comes from the behavior provided by the {@link #move(long, TimeUnit)} method which allows changing
+ * that value per the tests needs. After invoking this method, you can retrieved the modified value through the {@link #get()}
+ * method, although there's no way to retrieve the original one after {@link #move(long, TimeUnit)} has been invoked.
  *
  * @since 4.0
  */

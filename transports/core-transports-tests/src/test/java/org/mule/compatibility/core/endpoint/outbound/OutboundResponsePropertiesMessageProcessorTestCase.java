@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.endpoint.outbound;
 
@@ -32,8 +32,8 @@ public class OutboundResponsePropertiesMessageProcessorTestCase extends Abstract
     mp.setListener(event -> {
       // return event with same payload but no properties
       try {
-        return new DefaultMuleEvent(MuleMessage.builder().payload(event.getMessage().getPayload()).build(), REQUEST_RESPONSE, getTestFlow(),
-            getTestSession(null, muleContext));
+        return new DefaultMuleEvent(MuleMessage.builder().payload(event.getMessage().getPayload()).build(), REQUEST_RESPONSE,
+            getTestFlow(), getTestSession(null, muleContext));
       } catch (Exception e) {
         throw new RuntimeException(e);
       }

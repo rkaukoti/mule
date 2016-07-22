@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.application;
 
@@ -23,8 +23,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * This tests verifies that the {@link org.mule.runtime.module.launcher.application.DefaultMuleApplication} status is set correctly
- * depending on its {@link org.mule.runtime.core.api.MuleContext}'s lifecycle phase
+ * This tests verifies that the {@link org.mule.runtime.module.launcher.application.DefaultMuleApplication} status is set
+ * correctly depending on its {@link org.mule.runtime.core.api.MuleContext}'s lifecycle phase
  */
 public class DefaultMuleApplicationStatusTestCase extends AbstractMuleContextTestCase {
 
@@ -110,6 +110,7 @@ public class DefaultMuleApplicationStatusTestCase extends AbstractMuleContextTes
   private void assertStatus(final ApplicationStatus status) {
     PollingProber prober = new PollingProber(PROBER_TIMEOUT, PROBER_INTERVAL);
     prober.check(new JUnitProbe() {
+
       @Override
       protected boolean test() throws Exception {
         assertThat(application.getStatus(), is(status));
@@ -118,7 +119,8 @@ public class DefaultMuleApplicationStatusTestCase extends AbstractMuleContextTes
 
       @Override
       public String describeFailure() {
-        return String.format("Application remained at status %s instead of moving to %s", application.getStatus().name(), status.name());
+        return String.format("Application remained at status %s instead of moving to %s", application.getStatus().name(),
+            status.name());
       }
     });
 

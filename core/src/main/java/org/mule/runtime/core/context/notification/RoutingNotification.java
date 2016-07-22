@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.context.notification;
 
@@ -8,10 +8,11 @@ import org.mule.runtime.core.api.MuleMessage;
 import org.mule.runtime.core.api.context.notification.ServerNotification;
 
 /**
- * Is fired by routers. Currently only Async-Reply routers use this when an event is received for an event group that has already been
- * processed.
+ * Is fired by routers. Currently only Async-Reply routers use this when an event is received for an event group that has already
+ * been processed.
  */
 public class RoutingNotification extends ServerNotification {
+
   public static final int MISSED_ASYNC_REPLY = ROUTING_EVENT_ACTION_START_RANGE + 1;
   public static final int ASYNC_REPLY_TIMEOUT = ROUTING_EVENT_ACTION_START_RANGE + 2;
   public static final int CORRELATION_TIMEOUT = ROUTING_EVENT_ACTION_START_RANGE + 3;

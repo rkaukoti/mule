@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.construct;
 
@@ -35,6 +35,7 @@ import static org.junit.Assert.assertThat;
 import static org.mule.runtime.core.processor.AsyncInterceptingMessageProcessor.SYNCHRONOUS_NONBLOCKING_EVENT_ERROR_MESSAGE;
 
 public class FlowRefTestCase extends FunctionalTestCase {
+
   private static String FLOW1_SENSING_PROCESSOR_NAME = "NonBlockingFlow1SensingProcessor";
   private static String FLOW2_SENSING_PROCESSOR_NAME = "NonBlockingFlow2SensingProcessor";
   private static String TO_SYNC_FLOW1_SENSING_PROCESSOR_NAME = "NonBlockingToSyncFlow1SensingProcessor";
@@ -70,7 +71,8 @@ public class FlowRefTestCase extends FunctionalTestCase {
     flowRunner("flow2").withPayload("0").withFlowVariable("letter", "J").run();
 
     assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.size(), is(1));
-    assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.get(0), is("/flow2/processors/0/sub-flow-J/subprocessors/0"));
+    assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.get(0),
+        is("/flow2/processors/0/sub-flow-J/subprocessors/0"));
   }
 
   @Test
@@ -78,8 +80,10 @@ public class FlowRefTestCase extends FunctionalTestCase {
     flowRunner("flow3").withPayload("0").withFlowVariable("letter", "J").run();
 
     assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.size(), is(2));
-    assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.get(0), is("/flow3/processors/0/sub-flow-J/subprocessors/0"));
-    assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.get(1), is("/flow3/processors/1/sub-flow-J/subprocessors/0"));
+    assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.get(0),
+        is("/flow3/processors/0/sub-flow-J/subprocessors/0"));
+    assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.get(1),
+        is("/flow3/processors/1/sub-flow-J/subprocessors/0"));
   }
 
   @Test
@@ -89,9 +93,12 @@ public class FlowRefTestCase extends FunctionalTestCase {
     flowRunner("flow3").withPayload("0").withFlowVariable("letter", "J").run();
 
     assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.size(), is(3));
-    assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.get(0), is("/flow2/processors/0/sub-flow-J/subprocessors/0"));
-    assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.get(1), is("/flow3/processors/0/sub-flow-J/subprocessors/0"));
-    assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.get(2), is("/flow3/processors/1/sub-flow-J/subprocessors/0"));
+    assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.get(0),
+        is("/flow2/processors/0/sub-flow-J/subprocessors/0"));
+    assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.get(1),
+        is("/flow3/processors/0/sub-flow-J/subprocessors/0"));
+    assertThat(ProcessorPathAssertingProcessor.traversedProcessorPaths.get(2),
+        is("/flow3/processors/1/sub-flow-J/subprocessors/0"));
   }
 
   @Test
@@ -136,7 +143,8 @@ public class FlowRefTestCase extends FunctionalTestCase {
         .connectTimeout(RECEIVE_TIMEOUT).bodyString(TEST_MESSAGE, ContentType.TEXT_PLAIN).execute();
     HttpResponse httpResponse = response.returnResponse();
     assertThat(httpResponse.getStatusLine().getStatusCode(), is(500));
-    assertThat(IOUtils.toString(httpResponse.getEntity().getContent()), containsString(SYNCHRONOUS_NONBLOCKING_EVENT_ERROR_MESSAGE));
+    assertThat(IOUtils.toString(httpResponse.getEntity().getContent()),
+        containsString(SYNCHRONOUS_NONBLOCKING_EVENT_ERROR_MESSAGE));
   }
 
   @Test

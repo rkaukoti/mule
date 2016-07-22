@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.routing;
 
@@ -18,6 +18,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class CorrelationResequencerTestCase extends FunctionalTestCase {
+
   private CountDownLatch receiveLatch = new CountDownLatch(6);
 
   @Override
@@ -31,6 +32,7 @@ public class CorrelationResequencerTestCase extends FunctionalTestCase {
 
     FunctionalTestComponent testComponent = getFunctionalTestComponent("sorted");
     testComponent.setEventCallback(new EventCallback() {
+
       @Override
       public void eventReceived(MuleEventContext context, Object component) throws Exception {
         receiveLatch.countDown();

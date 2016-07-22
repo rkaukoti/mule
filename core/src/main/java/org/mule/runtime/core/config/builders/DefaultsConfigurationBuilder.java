@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.config.builders;
 
@@ -80,6 +80,7 @@ import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
  * </ul>
  */
 public class DefaultsConfigurationBuilder extends AbstractConfigurationBuilder {
+
   @Override
   protected void doConfigure(MuleContext muleContext) throws Exception {
     MuleRegistry registry = muleContext.getRegistry();
@@ -91,17 +92,21 @@ public class DefaultsConfigurationBuilder extends AbstractConfigurationBuilder {
     registry.registerObject(OBJECT_MULE_CONTEXT, muleContext);
     registerObject(OBJECT_SECURITY_MANAGER, new MuleSecurityManager(), muleContext);
 
-    registerObject(OBJECT_STORE_DEFAULT_IN_MEMORY_NAME, DefaultObjectStoreFactoryBean.createDefaultInMemoryObjectStore(), muleContext);
+    registerObject(OBJECT_STORE_DEFAULT_IN_MEMORY_NAME, DefaultObjectStoreFactoryBean.createDefaultInMemoryObjectStore(),
+        muleContext);
 
-    registerObject(OBJECT_STORE_DEFAULT_PERSISTENT_NAME, DefaultObjectStoreFactoryBean.createDefaultPersistentObjectStore(), muleContext);
+    registerObject(OBJECT_STORE_DEFAULT_PERSISTENT_NAME, DefaultObjectStoreFactoryBean.createDefaultPersistentObjectStore(),
+        muleContext);
 
     registerLocalObjectStoreManager(muleContext, registry);
 
-    registerObject(QUEUE_STORE_DEFAULT_IN_MEMORY_NAME, DefaultObjectStoreFactoryBean.createDefaultInMemoryQueueStore(), muleContext);
-    registerObject(QUEUE_STORE_DEFAULT_PERSISTENT_NAME, DefaultObjectStoreFactoryBean.createDefaultPersistentQueueStore(), muleContext);
-    registerObject(DEFAULT_USER_OBJECT_STORE_NAME, DefaultObjectStoreFactoryBean.createDefaultUserObjectStore(), muleContext);
-    registerObject(DEFAULT_USER_TRANSIENT_OBJECT_STORE_NAME, DefaultObjectStoreFactoryBean.createDefaultUserTransientObjectStore(),
+    registerObject(QUEUE_STORE_DEFAULT_IN_MEMORY_NAME, DefaultObjectStoreFactoryBean.createDefaultInMemoryQueueStore(),
         muleContext);
+    registerObject(QUEUE_STORE_DEFAULT_PERSISTENT_NAME, DefaultObjectStoreFactoryBean.createDefaultPersistentQueueStore(),
+        muleContext);
+    registerObject(DEFAULT_USER_OBJECT_STORE_NAME, DefaultObjectStoreFactoryBean.createDefaultUserObjectStore(), muleContext);
+    registerObject(DEFAULT_USER_TRANSIENT_OBJECT_STORE_NAME,
+        DefaultObjectStoreFactoryBean.createDefaultUserTransientObjectStore(), muleContext);
     registerObject(OBJECT_STORE_MANAGER, new MuleObjectStoreManager(), muleContext);
     registerObject(OBJECT_DEFAULT_MESSAGE_PROCESSING_MANAGER, new MuleMessageProcessingManager(), muleContext);
 
@@ -149,9 +154,12 @@ public class DefaultsConfigurationBuilder extends AbstractConfigurationBuilder {
     ThreadingProfile defaultThreadingProfile = new ChainedThreadingProfile();
     registerObject(OBJECT_DEFAULT_THREADING_PROFILE, defaultThreadingProfile, muleContext);
 
-    registerObject(OBJECT_DEFAULT_MESSAGE_RECEIVER_THREADING_PROFILE, new ChainedThreadingProfile(defaultThreadingProfile), muleContext);
-    registerObject(OBJECT_DEFAULT_MESSAGE_REQUESTER_THREADING_PROFILE, new ChainedThreadingProfile(defaultThreadingProfile), muleContext);
-    registerObject(OBJECT_DEFAULT_MESSAGE_DISPATCHER_THREADING_PROFILE, new ChainedThreadingProfile(defaultThreadingProfile), muleContext);
+    registerObject(OBJECT_DEFAULT_MESSAGE_RECEIVER_THREADING_PROFILE, new ChainedThreadingProfile(defaultThreadingProfile),
+        muleContext);
+    registerObject(OBJECT_DEFAULT_MESSAGE_REQUESTER_THREADING_PROFILE, new ChainedThreadingProfile(defaultThreadingProfile),
+        muleContext);
+    registerObject(OBJECT_DEFAULT_MESSAGE_DISPATCHER_THREADING_PROFILE, new ChainedThreadingProfile(defaultThreadingProfile),
+        muleContext);
     registerObject(OBJECT_DEFAULT_SERVICE_THREADING_PROFILE, new ChainedThreadingProfile(defaultThreadingProfile), muleContext);
   }
 }

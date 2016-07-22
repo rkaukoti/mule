@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.construct;
 
@@ -143,7 +143,8 @@ public class FlowTestCase extends AbstractFlowConstuctTestCase {
     reset(dynamicProcessorContainer);
     FlowMap dynamicContainerFlowMap = mock(FlowMap.class);
     when(dynamicContainerFlowMap.resolvePath(processorInSubflow)).thenReturn("/sub_dyn/subprocessors/0");
-    when(dynamicContainerFlowMap.getFlowMap()).thenReturn(Collections.singletonMap(processorInSubflow, "/sub_dyn/subprocessors/0"));
+    when(dynamicContainerFlowMap.getFlowMap())
+        .thenReturn(Collections.singletonMap(processorInSubflow, "/sub_dyn/subprocessors/0"));
     when(dynamicProcessorContainer.buildInnerPaths()).thenReturn(dynamicContainerFlowMap);
     assertThat(flow.getProcessorPath(processorInSubflow), is("/sub_dyn/subprocessors/0"));
     verify(dynamicProcessorContainer, times(1)).buildInnerPaths();
@@ -210,10 +211,12 @@ public class FlowTestCase extends AbstractFlowConstuctTestCase {
   @Test
   public void testFailStartingMessageSourceOnLifecycleShouldStopStartedPipelineProcesses() throws Exception {
     MessageSource mockMessageSource = mock(MessageSource.class, withSettings().extraInterfaces(Startable.class, Stoppable.class));
-    doThrow(new LifecycleException(mock(Message.class), "Error starting component")).when(((Startable) mockMessageSource)).start();
+    doThrow(new LifecycleException(mock(Message.class), "Error starting component")).when(((Startable) mockMessageSource))
+        .start();
     flow.setMessageSource(mockMessageSource);
 
-    MessageProcessor mockMessageProcessor = mock(MessageProcessor.class, withSettings().extraInterfaces(Startable.class, Stoppable.class));
+    MessageProcessor mockMessageProcessor =
+        mock(MessageProcessor.class, withSettings().extraInterfaces(Startable.class, Stoppable.class));
     flow.getMessageProcessors().add(mockMessageProcessor);
 
     flow.initialise();

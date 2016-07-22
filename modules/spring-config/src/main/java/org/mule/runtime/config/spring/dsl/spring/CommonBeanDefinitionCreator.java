@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.dsl.spring;
 
@@ -81,8 +81,8 @@ public class CommonBeanDefinitionCreator extends BeanDefinitionCreator {
   public static List<PropertyValue> getPropertyValueFromPropertiesComponent(ComponentModel propertyComponentModel) {
     List<PropertyValue> propertyValues = new ArrayList<>();
     propertyComponentModel.getInnerComponents().stream().forEach(entryComponentModel -> {
-      propertyValues
-          .add(new PropertyValue(entryComponentModel.getParameters().get("key"), entryComponentModel.getParameters().get("value")));
+      propertyValues.add(
+          new PropertyValue(entryComponentModel.getParameters().get("key"), entryComponentModel.getParameters().get("value")));
     });
     return propertyValues;
   }
@@ -114,8 +114,9 @@ public class CommonBeanDefinitionCreator extends BeanDefinitionCreator {
     if (areMatchingTypes(Filter.class, beanClass)) {
       boolean failOnUnaccepted = false;
       Object processorWhenUnaccepted = null;
-      newBeanDefinition = BeanDefinitionBuilder.rootBeanDefinition(MessageFilter.class).addConstructorArgValue(originalBeanDefinition)
-          .addConstructorArgValue(failOnUnaccepted).addConstructorArgValue(processorWhenUnaccepted).getBeanDefinition();
+      newBeanDefinition =
+          BeanDefinitionBuilder.rootBeanDefinition(MessageFilter.class).addConstructorArgValue(originalBeanDefinition)
+              .addConstructorArgValue(failOnUnaccepted).addConstructorArgValue(processorWhenUnaccepted).getBeanDefinition();
       return (AbstractBeanDefinition) newBeanDefinition;
     } else if (areMatchingTypes(SecurityFilter.class, beanClass)) {
       newBeanDefinition = BeanDefinitionBuilder.rootBeanDefinition(SecurityFilterMessageProcessor.class)
@@ -145,7 +146,8 @@ public class CommonBeanDefinitionCreator extends BeanDefinitionCreator {
     return true;
   }
 
-  private BeanDefinitionBuilder createBeanDefinitionBuilder(ComponentModel componentModel, ComponentBuildingDefinition buildingDefinition) {
+  private BeanDefinitionBuilder createBeanDefinitionBuilder(ComponentModel componentModel,
+      ComponentBuildingDefinition buildingDefinition) {
     BeanDefinitionBuilder beanDefinitionBuilder;
     if (buildingDefinition.getObjectFactoryType() != null) {
       beanDefinitionBuilder = createBeanDefinitionBuilderFromObjectFactory(componentModel, buildingDefinition);
@@ -190,7 +192,8 @@ public class CommonBeanDefinitionCreator extends BeanDefinitionCreator {
     }
   }
 
-  private Class<?> retrieveComponentType(final ComponentModel componentModel, ComponentBuildingDefinition componentBuildingDefinition) {
+  private Class<?> retrieveComponentType(final ComponentModel componentModel,
+      ComponentBuildingDefinition componentBuildingDefinition) {
     ObjectTypeVisitor objectTypeVisitor = new ObjectTypeVisitor(componentModel);
     componentBuildingDefinition.getTypeDefinition().visit(objectTypeVisitor);
     return objectTypeVisitor.getType();
@@ -199,9 +202,9 @@ public class CommonBeanDefinitionCreator extends BeanDefinitionCreator {
   private BeanDefinitionBuilder createBeanDefinitionBuilderFromObjectFactory(final ComponentModel componentModel,
       final ComponentBuildingDefinition componentBuildingDefinition) {
     /*
-     * We need this to allow spring create the object using a FactoryBean but using the object factory setters and getters so we create as
-     * FactoryBean a dynamic class that will have the same attributes and methods as the ObjectFactory that the user defined. This way our
-     * API does not expose spring specific classes.
+     * We need this to allow spring create the object using a FactoryBean but using the object factory setters and getters so we
+     * create as FactoryBean a dynamic class that will have the same attributes and methods as the ObjectFactory that the user
+     * defined. This way our API does not expose spring specific classes.
      */
     ObjectTypeVisitor objectTypeVisitor = new ObjectTypeVisitor(componentModel);
     componentBuildingDefinition.getTypeDefinition().visit(objectTypeVisitor);
@@ -213,6 +216,7 @@ public class CommonBeanDefinitionCreator extends BeanDefinitionCreator {
     enhancer.setCallbackType(MethodInterceptor.class);
     Class factoryBeanClass = enhancer.createClass();
     Enhancer.registerStaticCallbacks(factoryBeanClass, new Callback[] {new MethodInterceptor() {
+
       @Override
       public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
         if (method.getName().equals("isSingleton")) {
@@ -257,12 +261,15 @@ public class CommonBeanDefinitionCreator extends BeanDefinitionCreator {
   }
 
   private void processObjectConstructionParameters(final ComponentModel componentModel,
-      final ComponentBuildingDefinition componentBuildingDefinition, final BeanDefinitionBuilderHelper beanDefinitionBuilderHelper) {
-    new ComponentConfigurationBuilder(componentModel, componentBuildingDefinition, beanDefinitionBuilderHelper).processConfiguration();
+      final ComponentBuildingDefinition componentBuildingDefinition,
+      final BeanDefinitionBuilderHelper beanDefinitionBuilderHelper) {
+    new ComponentConfigurationBuilder(componentModel, componentBuildingDefinition, beanDefinitionBuilderHelper)
+        .processConfiguration();
 
   }
 
   public interface BeanDefinitionPostProcessor {
+
     void postProcess(ComponentModel componentModel, AbstractBeanDefinition beanDefinition);
   }
 

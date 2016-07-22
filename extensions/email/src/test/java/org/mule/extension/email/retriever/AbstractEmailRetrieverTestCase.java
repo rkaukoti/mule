@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.extension.email.retriever;
@@ -76,8 +76,8 @@ public abstract class AbstractEmailRetrieverTestCase extends EmailConnectorTestC
   @Before
   public void sendInitialEmailBatch() throws MessagingException {
     for (int i = 0; i < 10; i++) {
-      user.deliver(newMessage(testSession).to(singletonList(JUANI_EMAIL)).fromAddresses(ESTEBAN_EMAIL).cc(singletonList(ALE_EMAIL))
-          .withContent(EMAIL_CONTENT).withSubject(EMAIL_SUBJECT).build());
+      user.deliver(newMessage(testSession).to(singletonList(JUANI_EMAIL)).fromAddresses(ESTEBAN_EMAIL)
+          .cc(singletonList(ALE_EMAIL)).withContent(EMAIL_CONTENT).withSubject(EMAIL_SUBJECT).build());
     }
   }
 
@@ -93,8 +93,8 @@ public abstract class AbstractEmailRetrieverTestCase extends EmailConnectorTestC
   public void retrieveMatchingSubjectAndFromAddress() throws Exception {
     for (int i = 0; i < 5; i++) {
       String fromEmail = format("address.%s@enterprise.com", i);
-      user.deliver(newMessage(testSession).to(singletonList(ESTEBAN_EMAIL)).cc(singletonList(ALE_EMAIL)).withContent(EMAIL_CONTENT)
-          .withSubject("Non Matching Subject").fromAddresses(fromEmail).build());
+      user.deliver(newMessage(testSession).to(singletonList(ESTEBAN_EMAIL)).cc(singletonList(ALE_EMAIL))
+          .withContent(EMAIL_CONTENT).withSubject("Non Matching Subject").fromAddresses(fromEmail).build());
     }
 
     List<MuleMessage> messages = runFlowAndGetMessages(RETRIEVE_MATCH_SUBJECT_AND_FROM);

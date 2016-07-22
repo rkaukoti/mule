@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.management.support;
 
@@ -16,9 +16,9 @@ import javax.management.MBeanServerFactory;
 public abstract class AbstractJmxSupport implements JmxSupport {
 
   /**
-   * Resolve JMX domain clash by adding an incremented number suffix to the name. E.g. if 'Mule.TradeProcessor' is already registered with
-   * the accessible MBeanServer, will return 'Mule.TradeProcessor.1'. If the latter one is already registered, will return
-   * 'Mule.TradeProcessor.2' and so on.
+   * Resolve JMX domain clash by adding an incremented number suffix to the name. E.g. if 'Mule.TradeProcessor' is already
+   * registered with the accessible MBeanServer, will return 'Mule.TradeProcessor.1'. If the latter one is already registered,
+   * will return 'Mule.TradeProcessor.2' and so on.
    * <p/>
    * If no clash detected, returns the domain name unmodified.
    *

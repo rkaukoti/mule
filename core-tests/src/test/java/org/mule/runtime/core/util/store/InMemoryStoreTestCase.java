@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.store;
 
@@ -17,6 +17,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class InMemoryStoreTestCase extends AbstractMuleTestCase {
+
   private InMemoryObjectStore<String> store = null;
 
   @After
@@ -175,11 +176,12 @@ public class InMemoryStoreTestCase extends AbstractMuleTestCase {
 
   /**
    * Special subclass that coordinates with the expire thread. Upon calling <code>initialize</code> the scheduler in
-   * {@link AbstractMonitoredObjectStore} runs once. The tests in this test case rely on the fact that no expiry happens during their
-   * execution. This implementation waits for the first run of the expire method in initialize and only then continues with the execution of
-   * the current thread.
+   * {@link AbstractMonitoredObjectStore} runs once. The tests in this test case rely on the fact that no expiry happens during
+   * their execution. This implementation waits for the first run of the expire method in initialize and only then continues with
+   * the execution of the current thread.
    */
   private static class NonExpiringInMemoryObjectStore extends InMemoryObjectStore<String> {
+
     private CountDownLatch expireLatch;
 
     public NonExpiringInMemoryObjectStore() {

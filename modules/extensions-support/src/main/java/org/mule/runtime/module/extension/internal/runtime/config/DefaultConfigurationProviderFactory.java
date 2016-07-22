@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.config;
 
@@ -31,9 +31,9 @@ public final class DefaultConfigurationProviderFactory implements ConfigurationP
    * {@inheritDoc}
    */
   @Override
-  public <T> ConfigurationProvider<T> createDynamicConfigurationProvider(String name, RuntimeConfigurationModel configurationModel,
-      ResolverSet resolverSet, ValueResolver<ConnectionProvider> connectionProviderResolver, DynamicConfigPolicy dynamicConfigPolicy)
-      throws Exception {
+  public <T> ConfigurationProvider<T> createDynamicConfigurationProvider(String name,
+      RuntimeConfigurationModel configurationModel, ResolverSet resolverSet,
+      ValueResolver<ConnectionProvider> connectionProviderResolver, DynamicConfigPolicy dynamicConfigPolicy) throws Exception {
     configureConnectionProviderResolver(name, connectionProviderResolver);
     return new DynamicConfigurationProvider<>(name, configurationModel, resolverSet, connectionProviderResolver,
         dynamicConfigPolicy.getExpirationPolicy());
@@ -44,7 +44,8 @@ public final class DefaultConfigurationProviderFactory implements ConfigurationP
    */
   @Override
   public <T> ConfigurationProvider<T> createStaticConfigurationProvider(String name, RuntimeConfigurationModel configurationModel,
-      ResolverSet resolverSet, ValueResolver<ConnectionProvider> connectionProviderResolver, MuleContext muleContext) throws Exception {
+      ResolverSet resolverSet, ValueResolver<ConnectionProvider> connectionProviderResolver, MuleContext muleContext)
+      throws Exception {
     return withExtensionClassLoader(configurationModel.getExtensionModel(), () -> {
       configureConnectionProviderResolver(name, connectionProviderResolver);
       ConfigurationInstance<T> configuration;
@@ -52,10 +53,8 @@ public final class DefaultConfigurationProviderFactory implements ConfigurationP
         configuration = new ConfigurationInstanceFactory<T>(configurationModel, resolverSet).createConfiguration(name,
             getInitialiserEvent(muleContext), connectionProviderResolver);
       } catch (MuleException e) {
-        throw new ConfigurationException(
-            createStaticMessage(
-                String.format("Could not create configuration '%s' for the '%s'", name, configurationModel.getExtensionModel().getName())),
-            e);
+        throw new ConfigurationException(createStaticMessage(String.format("Could not create configuration '%s' for the '%s'",
+            name, configurationModel.getExtensionModel().getName())), e);
       }
 
       return new StaticConfigurationProvider<>(name, configurationModel, configuration);

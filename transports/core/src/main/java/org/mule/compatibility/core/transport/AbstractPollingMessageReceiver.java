@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -23,10 +23,11 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * <code>AbstractPollingMessageReceiver</code> implements a base class for polling message receivers. The receiver provides a
- * {@link #poll()} method that implementations must implement to execute their custom code. Note that the receiver will not poll if the
- * associated connector is not started.
+ * {@link #poll()} method that implementations must implement to execute their custom code. Note that the receiver will not poll
+ * if the associated connector is not started.
  */
 public abstract class AbstractPollingMessageReceiver extends AbstractMessageReceiver {
+
   public static final long DEFAULT_POLL_FREQUENCY = 1000;
   public static final TimeUnit DEFAULT_POLL_TIMEUNIT = TimeUnit.MILLISECONDS;
 
@@ -58,8 +59,8 @@ public abstract class AbstractPollingMessageReceiver extends AbstractMessageRece
   }
 
   /**
-   * This method registers this receiver for periodic polling ticks with the connectors scheduler. Subclasses can override this in case they
-   * want to handle their polling differently.
+   * This method registers this receiver for periodic polling ticks with the connectors scheduler. Subclasses can override this in
+   * case they want to handle their polling differently.
    *
    * @see ScheduledExecutorService#scheduleWithFixedDelay(Runnable, long, long, TimeUnit)
    */
@@ -70,13 +71,14 @@ public abstract class AbstractPollingMessageReceiver extends AbstractMessageRece
       // polled database or network is slow or returns large amounts of
       // data.
       PollingReceiverWorker pollingReceiverWorker = this.createWork();
-      ScheduledFuture schedule = connector.getScheduler().scheduleWithFixedDelay(new PollingReceiverWorkerSchedule(pollingReceiverWorker),
-          DEFAULT_STARTUP_DELAY, this.getFrequency(), this.getTimeUnit());
+      ScheduledFuture schedule =
+          connector.getScheduler().scheduleWithFixedDelay(new PollingReceiverWorkerSchedule(pollingReceiverWorker),
+              DEFAULT_STARTUP_DELAY, this.getFrequency(), this.getTimeUnit());
       schedules.put(schedule, pollingReceiverWorker);
 
       if (logger.isDebugEnabled()) {
-        logger.debug(ObjectUtils.identityToShortString(this) + " scheduled " + ObjectUtils.identityToShortString(schedule) + " with "
-            + frequency + " " + getTimeUnit() + " polling frequency");
+        logger.debug(ObjectUtils.identityToShortString(this) + " scheduled " + ObjectUtils.identityToShortString(schedule)
+            + " with " + frequency + " " + getTimeUnit() + " polling frequency");
       }
     }
   }
@@ -107,8 +109,8 @@ public abstract class AbstractPollingMessageReceiver extends AbstractMessageRece
         i.remove();
 
         if (logger.isDebugEnabled()) {
-          logger.debug(
-              ObjectUtils.identityToShortString(this) + " cancelled polling schedule: " + ObjectUtils.identityToShortString(schedule));
+          logger.debug(ObjectUtils.identityToShortString(this) + " cancelled polling schedule: "
+              + ObjectUtils.identityToShortString(schedule));
         }
       }
     }
@@ -146,9 +148,9 @@ public abstract class AbstractPollingMessageReceiver extends AbstractMessageRece
 
   /**
    * The preferred number of messages to process in the current batch. We need to drain the queue quickly, but not by slamming the
-   * workManager too hard. It is impossible to determine this more precisely without proper load statistics/feedback or some kind of "event
-   * cost estimate". Therefore we just try to use half of the receiver's workManager, since it is shared with receivers for other endpoints.
-   * TODO make this user-settable
+   * workManager too hard. It is impossible to determine this more precisely without proper load statistics/feedback or some kind
+   * of "event cost estimate". Therefore we just try to use half of the receiver's workManager, since it is shared with receivers
+   * for other endpoints. TODO make this user-settable
    *
    * @param available the number if messages currently available to be processed
    */

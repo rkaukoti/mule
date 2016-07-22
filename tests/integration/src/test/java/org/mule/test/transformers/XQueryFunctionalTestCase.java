@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.transformers;
 
@@ -20,6 +20,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public class XQueryFunctionalTestCase extends FunctionalTestCase {
+
   @Override
   protected String getConfigFile() {
     return "org/mule/test/integration/xml/xquery-functional-test.xml";
@@ -34,7 +35,8 @@ public class XQueryFunctionalTestCase extends FunctionalTestCase {
 
     // Read in src and result data
     String srcData = IOUtils.getResourceAsString("org/mule/test/integration/xml/cd-catalog.xml", getClass());
-    String resultData = IOUtils.getResourceAsString("org/mule/test/integration/xml/cd-catalog-result-with-params.xml", getClass());
+    String resultData =
+        IOUtils.getResourceAsString("org/mule/test/integration/xml/cd-catalog-result-with-params.xml", getClass());
 
     // These are the message properties that will get passed into the XQuery context
     Map<String, Serializable> props = new HashMap<>();

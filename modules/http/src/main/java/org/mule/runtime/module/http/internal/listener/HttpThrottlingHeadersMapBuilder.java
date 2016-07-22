@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.listener;
 
@@ -25,9 +25,12 @@ public class HttpThrottlingHeadersMapBuilder {
 
   public Map<String, String> build() {
     Map<String, String> throttlingHeaders = new HashMap<String, String>();
-    addToMapIfNotNull(throttlingHeaders, HttpMessageProcessorTemplate.X_RATE_LIMIT_LIMIT_HEADER, this.maximumRequestAllowedPerPeriod);
-    addToMapIfNotNull(throttlingHeaders, HttpMessageProcessorTemplate.X_RATE_LIMIT_REMAINING_HEADER, this.remainingRequestInCurrentPeriod);
-    addToMapIfNotNull(throttlingHeaders, HttpMessageProcessorTemplate.X_RATE_LIMIT_RESET_HEADER, this.timeUntilNextPeriodInMillis);
+    addToMapIfNotNull(throttlingHeaders, HttpMessageProcessorTemplate.X_RATE_LIMIT_LIMIT_HEADER,
+        this.maximumRequestAllowedPerPeriod);
+    addToMapIfNotNull(throttlingHeaders, HttpMessageProcessorTemplate.X_RATE_LIMIT_REMAINING_HEADER,
+        this.remainingRequestInCurrentPeriod);
+    addToMapIfNotNull(throttlingHeaders, HttpMessageProcessorTemplate.X_RATE_LIMIT_RESET_HEADER,
+        this.timeUntilNextPeriodInMillis);
     return throttlingHeaders;
   }
 

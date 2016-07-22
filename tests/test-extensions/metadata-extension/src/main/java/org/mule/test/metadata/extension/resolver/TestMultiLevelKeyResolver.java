@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.metadata.extension.resolver;
 
@@ -24,6 +24,7 @@ import static org.mule.runtime.api.metadata.MetadataKeyBuilder.newKey;
 import static org.mule.test.metadata.extension.resolver.TestMetadataResolverUtils.APPLICATION_JAVA_MIME_TYPE;
 
 public class TestMultiLevelKeyResolver implements MetadataKeysResolver, MetadataContentResolver<LocationKey> {
+
   public static final String ERROR_MESSAGE = "LocationKey type metadata key was not injected properly in the MetadataResolver";
 
   // continents
@@ -47,12 +48,14 @@ public class TestMultiLevelKeyResolver implements MetadataKeysResolver, Metadata
   }
 
   public static MetadataKey buildAmericaKey() {
-    return newKey(AMERICA).withDisplayName(AMERICA).withChild(newKey(ARGENTINA).withChild(newKey(BUENOS_AIRES)).withChild(newKey(LA_PLATA)))
+    return newKey(AMERICA).withDisplayName(AMERICA)
+        .withChild(newKey(ARGENTINA).withChild(newKey(BUENOS_AIRES)).withChild(newKey(LA_PLATA)))
         .withChild(newKey(USA).withDisplayName(USA_DISPLAY_NAME).withChild(newKey(SAN_FRANCISCO))).build();
   }
 
   @Override
-  public MetadataType getContentMetadata(MetadataContext context, LocationKey key) throws MetadataResolvingException, ConnectionException {
+  public MetadataType getContentMetadata(MetadataContext context, LocationKey key)
+      throws MetadataResolvingException, ConnectionException {
     checkLocationKey(key);
     final ObjectTypeBuilder objectBuilder =
         BaseTypeBuilder.create(new MetadataFormat(key.toString(), key.toString(), APPLICATION_JAVA_MIME_TYPE)).objectType();

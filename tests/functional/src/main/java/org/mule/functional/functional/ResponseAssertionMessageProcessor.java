@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.functional;
 
@@ -59,6 +59,7 @@ public class ResponseAssertionMessageProcessor extends AssertionMessageProcessor
     if (event.isAllowNonBlocking() && event.getReplyToHandler() != null) {
       final ReplyToHandler originalReplyToHandler = event.getReplyToHandler();
       event = new DefaultMuleEvent(event, new NonBlockingReplyToHandler() {
+
         @Override
         public void processReplyTo(MuleEvent event, MuleMessage returnMessage, Object replyTo) throws MuleException {
           originalReplyToHandler.processReplyTo(processResponse(event), null, null);
@@ -155,8 +156,8 @@ public class ResponseAssertionMessageProcessor extends AssertionMessageProcessor
   }
 
   /**
-   * The semantics of the count are as follows: - count was set & count processes were done => ok - count was set & count processes were not
-   * done => fail - count was not set & at least one processing were done => ok
+   * The semantics of the count are as follows: - count was set & count processes were done => ok - count was set & count
+   * processes were not done => fail - count was not set & at least one processing were done => ok
    */
   synchronized private boolean isResponseProcessesCountCorrect() throws InterruptedException {
     boolean countReached = responseLatch.await(timeout, TimeUnit.MILLISECONDS);

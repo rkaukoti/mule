@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.artifact.classloader;
@@ -33,8 +33,8 @@ public class MuleClassLoaderLookupPolicy implements ClassLoaderLookupPolicy {
    * Creates a new lookup policy based on the provided configuration.
    *
    * @param lookupStrategies lookup strategy to use with specific packages. Non null.
-   * @param rootSystemPackages packages that must use {@link ClassLoaderLookupStrategy#PARENT_ONLY}. Any inner package extending from a
-   *        system package root will use the same approach.
+   * @param rootSystemPackages packages that must use {@link ClassLoaderLookupStrategy#PARENT_ONLY}. Any inner package extending
+   *        from a system package root will use the same approach.
    */
   public MuleClassLoaderLookupPolicy(Map<String, ClassLoaderLookupStrategy> lookupStrategies, Set<String> rootSystemPackages) {
     checkArgument(lookupStrategies != null, "Lookup strategies cannot be null");
@@ -44,7 +44,8 @@ public class MuleClassLoaderLookupPolicy implements ClassLoaderLookupPolicy {
     this.lookupStrategies = new HashMap<>(configuredlookupStrategies);
   }
 
-  private Map<String, ClassLoaderLookupStrategy> normalizeLookupStrategies(Map<String, ClassLoaderLookupStrategy> lookupStrategies) {
+  private Map<String, ClassLoaderLookupStrategy> normalizeLookupStrategies(
+      Map<String, ClassLoaderLookupStrategy> lookupStrategies) {
     final Map<String, ClassLoaderLookupStrategy> result = new HashMap<>();
 
     for (String packageName : lookupStrategies.keySet()) {

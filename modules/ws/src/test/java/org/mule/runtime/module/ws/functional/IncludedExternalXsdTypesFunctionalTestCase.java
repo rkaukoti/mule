@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.ws.functional;
 
@@ -23,10 +23,11 @@ import javax.servlet.http.HttpServletResponse;
 import static org.mule.runtime.core.util.ClassUtils.getClassPathRoot;
 
 /**
- * Uses a WSDL definition file that imports the types from another WSDL file, which includes the schema from yet another XSD file but via
- * HTTP.
+ * Uses a WSDL definition file that imports the types from another WSDL file, which includes the schema from yet another XSD file
+ * but via HTTP.
  */
 public class IncludedExternalXsdTypesFunctionalTestCase extends IncludedXsdTypesFunctionalTestCase {
+
   @Rule
   public DynamicPort httpPort = new DynamicPort("httpPort");
   @Rule
@@ -43,8 +44,8 @@ public class IncludedExternalXsdTypesFunctionalTestCase extends IncludedXsdTypes
 
   private void createWsdlFile() throws IOException {
     // the WSDL must reference a dynamic HTTP port so we have to create it
-    String modifiedWsdl =
-        String.format(IOUtils.getResourceAsString("TestIncludedExternalTypeDefinitionsFormat.wsdl", this.getClass()), httpPort.getValue());
+    String modifiedWsdl = String.format(
+        IOUtils.getResourceAsString("TestIncludedExternalTypeDefinitionsFormat.wsdl", this.getClass()), httpPort.getValue());
     String testRoot = getClassPathRoot(IncludedExternalXsdTypesFunctionalTestCase.class).getPath();
     wsdl = new File(testRoot + "TestIncludedExternalTypeDefinitions.wsdl");
     FileUtils.writeStringToFile(wsdl, modifiedWsdl);
@@ -64,6 +65,7 @@ public class IncludedExternalXsdTypesFunctionalTestCase extends IncludedXsdTypes
   }
 
   private class SchemaProviderHandler extends AbstractHandler {
+
     @Override
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
         throws IOException, ServletException {

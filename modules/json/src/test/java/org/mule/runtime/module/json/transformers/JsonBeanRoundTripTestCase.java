@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.json.transformers;
 
@@ -13,12 +13,14 @@ import org.mule.tck.testmodels.fruit.Orange;
 import static org.junit.Assert.fail;
 
 /**
- * For this test I picked difficult beans in that they are not real beans, so I could test how to use mixins to decorate the objects
+ * For this test I picked difficult beans in that they are not real beans, so I could test how to use mixins to decorate the
+ * objects
  * <p/>
- * FruitCleaner is ignored since there is no concrete implementation to construct bitten - is ignored because the Orange because there is no
- * setter method. On the apple I tested using a constructor
+ * FruitCleaner is ignored since there is no concrete implementation to construct bitten - is ignored because the Orange because
+ * there is no setter method. On the apple I tested using a constructor
  */
 public class JsonBeanRoundTripTestCase extends AbstractTransformerTestCase {
+
   // Note that Banana has been excluded
   public static final String JSON_STRING =
       "{\"apple\":{\"bitten\":true,\"washed\":false,\"seed\":null},\"orange\":{\"brand\":\"JuicyFruit\",\"segments\":8,\"radius\":3.45,\"listProperties\":null,\"mapProperties\":null,\"arrayProperties\":null}}";

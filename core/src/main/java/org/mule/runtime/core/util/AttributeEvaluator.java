@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -14,8 +14,8 @@ import org.mule.runtime.core.metadata.TypedValue;
 import java.util.regex.Pattern;
 
 /**
- * This class acts as a wrapper for configuration attributes that support simple text, expression or regular expressions. It can be extended
- * to support other cases too.
+ * This class acts as a wrapper for configuration attributes that support simple text, expression or regular expressions. It can
+ * be extended to support other cases too.
  */
 public class AttributeEvaluator {
 
@@ -93,8 +93,8 @@ public class AttributeEvaluator {
     } else if (value instanceof String) {
       return Integer.parseInt((String) value);
     } else {
-      throw new MuleRuntimeException(
-          CoreMessages.createStaticMessage(String.format("Value was required as integer but is of type: %s", value.getClass().getName())));
+      throw new MuleRuntimeException(CoreMessages
+          .createStaticMessage(String.format("Value was required as integer but is of type: %s", value.getClass().getName())));
     }
   }
 

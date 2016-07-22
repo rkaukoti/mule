@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.transformer.simple;
@@ -23,7 +23,8 @@ import org.mule.runtime.core.util.AttributeEvaluator;
 /**
  * Modifies the payload of a {@link MuleMessage} according to the provided value.
  */
-public class SetPayloadMessageProcessor extends AbstractAnnotatedObject implements MessageProcessor, MuleContextAware, Initialisable {
+public class SetPayloadMessageProcessor extends AbstractAnnotatedObject
+    implements MessageProcessor, MuleContextAware, Initialisable {
 
   private DataType dataType;
   private AttributeEvaluator valueEvaluator = new AttributeEvaluator(null);
@@ -39,7 +40,8 @@ public class SetPayloadMessageProcessor extends AbstractAnnotatedObject implemen
       builder.payload(typedValue.getValue()).mediaType(typedValue.getDataType().getMediaType());
     } else {
       Object value = resolveValue(event);
-      final DataTypeParamsBuilder dataTypeBuilder = DataType.builder(dataType).type(value == null ? Object.class : value.getClass());
+      final DataTypeParamsBuilder dataTypeBuilder =
+          DataType.builder(dataType).type(value == null ? Object.class : value.getClass());
       builder.payload(value).mediaType(dataTypeBuilder.build().getMediaType());
     }
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher;
 
@@ -35,10 +35,11 @@ import java.util.Map;
 
 public class MuleContainer {
 
-  public static final String CLI_OPTIONS[][] = {{"builder", "true", "Configuration Builder Type"}, {"config", "true", "Configuration File"},
-      {"idle", "false", "Whether to run in idle (unconfigured) mode"}, {"main", "true", "Main Class"}, {"mode", "true", "Run Mode"},
-      {"props", "true", "Startup Properties"}, {"production", "false", "Production Mode"},
-      {"debug", "false", "Configure Mule for JPDA remote debugging."}, {"app", "true", "Application to start"}};
+  public static final String CLI_OPTIONS[][] =
+      {{"builder", "true", "Configuration Builder Type"}, {"config", "true", "Configuration File"},
+          {"idle", "false", "Whether to run in idle (unconfigured) mode"}, {"main", "true", "Main Class"},
+          {"mode", "true", "Run Mode"}, {"props", "true", "Startup Properties"}, {"production", "false", "Production Mode"},
+          {"debug", "false", "Configure Mule for JPDA remote debugging."}, {"app", "true", "Application to start"}};
 
   /**
    * logger used by this class
@@ -46,8 +47,8 @@ public class MuleContainer {
   private static final Logger logger;
 
   /**
-   * A properties file to be read at startup. This can be useful for setting properties which depend on the run-time environment (dev, test,
-   * production).
+   * A properties file to be read at startup. This can be useful for setting properties which depend on the run-time environment
+   * (dev, test, production).
    */
   private static String startupPropertiesFile = null;
 
@@ -71,12 +72,13 @@ public class MuleContainer {
 
   public MuleContainer(String[] args) {
     final ContainerClassLoaderFactory containerClassLoaderFactory = new ContainerClassLoaderFactory();
-    final ArtifactClassLoader containerClassLoader = containerClassLoaderFactory.createContainerClassLoader(getClass().getClassLoader());
+    final ArtifactClassLoader containerClassLoader =
+        containerClassLoaderFactory.createContainerClassLoader(getClass().getClassLoader());
 
     this.deploymentService = new MuleDeploymentService(containerClassLoader);
     this.repositoryService = new RepositoryServiceFactory().createRepositoryService();
-    this.coreExtensionManager = new DefaultMuleCoreExtensionManagerServer(new ClasspathMuleCoreExtensionDiscoverer(containerClassLoader),
-        new ReflectionMuleCoreExtensionDependencyResolver());
+    this.coreExtensionManager = new DefaultMuleCoreExtensionManagerServer(
+        new ClasspathMuleCoreExtensionDiscoverer(containerClassLoader), new ReflectionMuleCoreExtensionDependencyResolver());
 
     init(args);
   }
@@ -142,8 +144,8 @@ public class MuleContainer {
     File executionFolder = MuleFoldersUtil.getExecutionFolder();
     if (!executionFolder.exists()) {
       if (!executionFolder.mkdirs()) {
-        throw new MuleRuntimeException(CoreMessages
-            .createStaticMessage(String.format("Could not create folder %s, validate that the process has permissions over that directory",
+        throw new MuleRuntimeException(CoreMessages.createStaticMessage(
+            String.format("Could not create folder %s, validate that the process has permissions over that directory",
                 executionFolder.getAbsolutePath())));
       }
     }
@@ -253,8 +255,8 @@ public class MuleContainer {
   }
 
   /**
-   * This class is installed only for MuleContainer running as commandline app. A clean Mule shutdown can be achieved by disposing the
-   * {@link org.mule.runtime.core.DefaultMuleContext}.
+   * This class is installed only for MuleContainer running as commandline app. A clean Mule shutdown can be achieved by disposing
+   * the {@link org.mule.runtime.core.DefaultMuleContext}.
    */
   private class MuleShutdownHook extends Thread {
 

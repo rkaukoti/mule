@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.processor;
@@ -84,7 +84,8 @@ public class PreparedBulkUpdateMessageProcessorDebugInfoTestCase extends Abstrac
     when(dbConfigResolver.resolve(event)).thenReturn(dbConfig);
     when(dbConfig.getConnectionFactory()).thenReturn(dbConnectionFactory);
 
-    when(queryResolver.resolve(argThat(equalTo(connection)), any(MuleEvent.class))).thenReturn(new Query(QUERY_TEMPLATE_WITH_NAMED_PARAM));
+    when(queryResolver.resolve(argThat(equalTo(connection)), any(MuleEvent.class)))
+        .thenReturn(new Query(QUERY_TEMPLATE_WITH_NAMED_PARAM));
 
     final ParamValueResolver paramValueResolver = mock(ParamValueResolver.class);
     when(paramValueResolver.resolveParams(any(MuleEvent.class), any(List.class)))

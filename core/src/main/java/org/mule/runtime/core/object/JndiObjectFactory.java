@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.object;
 
@@ -20,10 +20,11 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
 public class JndiObjectFactory implements ObjectFactory {
+
   protected final Logger logger = LoggerFactory.getLogger(getClass());
   /**
-   * If true, the object is looked up from JNDI each time create() is called, otherwise it is looked up once and stored locally. Default
-   * value is false.
+   * If true, the object is looked up from JNDI each time create() is called, otherwise it is looked up once and stored locally.
+   * Default value is false.
    */
   private boolean lookupOnEachCall = false;
   private String objectName;

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.domain.xa;
 
@@ -32,8 +32,8 @@ public class XaTransactionManagerTestCase extends DomainFunctionalTestCase {
     thrown.expect(InitialisationException.class);
     thrown.expect(hasMessage(containsString(
         "No qualifying bean of type [org.mule.runtime.core.api.transaction.TransactionManagerFactory] is defined: expected single matching bean but found 2:")));
-    thrown.expect(
-        ThrowableRootCauseMatcher.hasRootCause(IsInstanceOf.<ConfigurationException>instanceOf(NoUniqueBeanDefinitionException.class)));
+    thrown.expect(ThrowableRootCauseMatcher
+        .hasRootCause(IsInstanceOf.<ConfigurationException>instanceOf(NoUniqueBeanDefinitionException.class)));
     super.setUpMuleContexts();
   }
 
@@ -44,7 +44,8 @@ public class XaTransactionManagerTestCase extends DomainFunctionalTestCase {
 
   @Override
   public ApplicationConfig[] getConfigResources() {
-    return new ApplicationConfig[] {new ApplicationConfig(APPLICATION_NAME, new String[] {"domain/xa/app-with-tx-manager-config.xml"})};
+    return new ApplicationConfig[] {
+        new ApplicationConfig(APPLICATION_NAME, new String[] {"domain/xa/app-with-tx-manager-config.xml"})};
   }
 
   @Test

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.context;
 
@@ -131,6 +131,7 @@ public class DefaultMuleContextTestCase extends AbstractMuleTestCase {
     final String clusterId = "some-id";
     context = muleContextFactory.createMuleContext();
     context.getRegistry().registerObject(MuleProperties.OBJECT_CLUSTER_CONFIGURATION, new ClusterConfiguration() {
+
       @Override
       public String getClusterId() {
         return clusterId;
@@ -165,7 +166,8 @@ public class DefaultMuleContextTestCase extends AbstractMuleTestCase {
   @Test
   public void getStreamCloserService() throws Exception {
     context = muleContextFactory.createMuleContext();
-    StreamCloserService serviceFromRegistry = context.getRegistry().lookupObject(MuleProperties.OBJECT_MULE_STREAM_CLOSER_SERVICE);
+    StreamCloserService serviceFromRegistry =
+        context.getRegistry().lookupObject(MuleProperties.OBJECT_MULE_STREAM_CLOSER_SERVICE);
     MuleRegistryHelper registry = spy((MuleRegistryHelper) context.getRegistry());
     ((DefaultMuleContext) context).setMuleRegistry(registry);
 

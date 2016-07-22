@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.multipart;
 
@@ -26,6 +26,7 @@ import static junit.framework.Assert.assertTrue;
  * Test class for the {@link MultiPartInputStream}.
  */
 public class MultiPartInputStreamTestCase extends AbstractMuleTestCase {
+
   private static final String MULTIPART_BOUNDARY = "----------------------------299df9f9431b";
   private static final int NUMBER_OF_PARTS = 3;
   private static final String TMP_DIR = "./multipartTmpDir";

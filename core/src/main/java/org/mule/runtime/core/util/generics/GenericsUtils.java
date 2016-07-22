@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.generics;
 
@@ -19,8 +19,8 @@ import java.util.Map;
  * Helper class for determining element types of collections and maps.
  * <p/>
  * <p>
- * Mainly intended for usage within the framework, determining the target type of values to be added to a collection or map (to be able to
- * attempt type conversion if appropriate).
+ * Mainly intended for usage within the framework, determining the target type of values to be added to a collection or map (to be
+ * able to attempt type conversion if appropriate).
  * <p/>
  * author: Spring
  */
@@ -49,7 +49,8 @@ public class GenericsUtils {
   }
 
   /**
-   * Determine the generic value type of the given Map class (if it declares one through a generic superclass or generic interface).
+   * Determine the generic value type of the given Map class (if it declares one through a generic superclass or generic
+   * interface).
    *
    * @param mapClass the map class to introspect
    * @return the generic type, or <code>null</code> if none
@@ -72,8 +73,8 @@ public class GenericsUtils {
    * Determine the generic element type of the given Collection field.
    *
    * @param collectionField the collection field to introspect
-   * @param nestingLevel the nesting level of the target type (typically 1; e.g. in case of a List of Lists, 1 would indicate the nested
-   *        List, whereas 2 would indicate the element of the nested List)
+   * @param nestingLevel the nesting level of the target type (typically 1; e.g. in case of a List of Lists, 1 would indicate the
+   *        nested List, whereas 2 would indicate the element of the nested List)
    * @return the generic type, or <code>null</code> if none
    */
   public static Class<?> getCollectionFieldType(Field collectionField, int nestingLevel) {
@@ -94,8 +95,8 @@ public class GenericsUtils {
    * Determine the generic key type of the given Map field.
    *
    * @param mapField the map field to introspect
-   * @param nestingLevel the nesting level of the target type (typically 1; e.g. in case of a List of Lists, 1 would indicate the nested
-   *        List, whereas 2 would indicate the element of the nested List)
+   * @param nestingLevel the nesting level of the target type (typically 1; e.g. in case of a List of Lists, 1 would indicate the
+   *        nested List, whereas 2 would indicate the element of the nested List)
    * @return the generic type, or <code>null</code> if none
    */
   public static Class<?> getMapKeyFieldType(Field mapField, int nestingLevel) {
@@ -116,8 +117,8 @@ public class GenericsUtils {
    * Determine the generic value type of the given Map field.
    *
    * @param mapField the map field to introspect
-   * @param nestingLevel the nesting level of the target type (typically 1; e.g. in case of a List of Lists, 1 would indicate the nested
-   *        List, whereas 2 would indicate the element of the nested List)
+   * @param nestingLevel the nesting level of the target type (typically 1; e.g. in case of a List of Lists, 1 would indicate the
+   *        nested List, whereas 2 would indicate the element of the nested List)
    * @return the generic type, or <code>null</code> if none
    */
   public static Class<?> getMapValueFieldType(Field mapField, int nestingLevel) {
@@ -170,8 +171,8 @@ public class GenericsUtils {
    * If the specified nesting level is higher than 1, the element type of a nested Collection/Map will be analyzed.
    *
    * @param method the method to check the return type for
-   * @param nestingLevel the nesting level of the target type (typically 1; e.g. in case of a List of Lists, 1 would indicate the nested
-   *        List, whereas 2 would indicate the element of the nested List)
+   * @param nestingLevel the nesting level of the target type (typically 1; e.g. in case of a List of Lists, 1 would indicate the
+   *        nested List, whereas 2 would indicate the element of the nested List)
    * @return the generic type, or <code>null</code> if none
    */
   public static Class<?> getCollectionReturnType(Method method, int nestingLevel) {
@@ -192,8 +193,8 @@ public class GenericsUtils {
    * Determine the generic key type of the given Map return type.
    *
    * @param method the method to check the return type for
-   * @param nestingLevel the nesting level of the target type (typically 1; e.g. in case of a List of Lists, 1 would indicate the nested
-   *        List, whereas 2 would indicate the element of the nested List)
+   * @param nestingLevel the nesting level of the target type (typically 1; e.g. in case of a List of Lists, 1 would indicate the
+   *        nested List, whereas 2 would indicate the element of the nested List)
    * @return the generic type, or <code>null</code> if none
    */
   public static Class<?> getMapKeyReturnType(Method method, int nestingLevel) {
@@ -214,8 +215,8 @@ public class GenericsUtils {
    * Determine the generic value type of the given Map return type.
    *
    * @param method the method to check the return type for
-   * @param nestingLevel the nesting level of the target type (typically 1; e.g. in case of a List of Lists, 1 would indicate the nested
-   *        List, whereas 2 would indicate the element of the nested List)
+   * @param nestingLevel the nesting level of the target type (typically 1; e.g. in case of a List of Lists, 1 would indicate the
+   *        nested List, whereas 2 would indicate the element of the nested List)
    * @return the generic type, or <code>null</code> if none
    */
   public static Class<?> getMapValueReturnType(Method method, int nestingLevel) {
@@ -232,7 +233,8 @@ public class GenericsUtils {
    * @return the generic type, or <code>null</code> if none
    */
   private static Class<?> getGenericParameterType(MethodParameter methodParam, Class<?> source, int typeIndex) {
-    return extractType(methodParam, GenericTypeResolver.getTargetType(methodParam), source, typeIndex, methodParam.getNestingLevel(), 1);
+    return extractType(methodParam, GenericTypeResolver.getTargetType(methodParam), source, typeIndex,
+        methodParam.getNestingLevel(), 1);
   }
 
   /**
@@ -282,7 +284,8 @@ public class GenericsUtils {
       }
     }
     if (resolvedType instanceof ParameterizedType) {
-      return extractTypeFromParameterizedType(methodParam, (ParameterizedType) resolvedType, source, typeIndex, nestingLevel, currentLevel);
+      return extractTypeFromParameterizedType(methodParam, (ParameterizedType) resolvedType, source, typeIndex, nestingLevel,
+          currentLevel);
     } else if (resolvedType instanceof Class<?>) {
       Class<?> resolvedClass = (Class<?>) resolvedType;
       return extractTypeFromClass(methodParam, resolvedClass, source, typeIndex, nestingLevel, currentLevel);
@@ -322,7 +325,8 @@ public class GenericsUtils {
     if (source != null && !source.isAssignableFrom(rawType)) {
       return null;
     }
-    Class<?> fromSuperclassOrInterface = extractTypeFromClass(methodParam, rawType, source, typeIndex, nestingLevel, currentLevel);
+    Class<?> fromSuperclassOrInterface =
+        extractTypeFromClass(methodParam, rawType, source, typeIndex, nestingLevel, currentLevel);
     if (fromSuperclassOrInterface != null) {
       return fromSuperclassOrInterface;
     }

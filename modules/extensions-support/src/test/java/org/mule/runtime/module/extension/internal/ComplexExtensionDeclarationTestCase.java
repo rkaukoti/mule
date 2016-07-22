@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal;
 
@@ -72,7 +72,8 @@ public class ComplexExtensionDeclarationTestCase extends BaseExtensionDeclaratio
 
   @Test
   public void listenerSource() {
-    SourceModel source = extensionModel.getConfigurationModel(LISTENER_CONFIG_NAME).get().getSourceModel(LISTEN_MESSAGE_SOURCE).get();
+    SourceModel source =
+        extensionModel.getConfigurationModel(LISTENER_CONFIG_NAME).get().getSourceModel(LISTEN_MESSAGE_SOURCE).get();
     assertDataType(source.getOutput().getType(), InputStream.class, BinaryType.class);
     assertDataType(source.getOutputAttributes().getType(), Serializable.class, ObjectType.class);
     assertThat(source.getParameterModels(), hasSize(1));
@@ -119,9 +120,11 @@ public class ComplexExtensionDeclarationTestCase extends BaseExtensionDeclaratio
 
   @Test
   public void connectionProvider() {
-    ConnectionProviderModel provider = extensionModel.getConfigurationModel(REQUESTER_CONFIG_NAME).get().getConnectionProviders().get(0);
+    ConnectionProviderModel provider =
+        extensionModel.getConfigurationModel(REQUESTER_CONFIG_NAME).get().getConnectionProviders().get(0);
     assertThat(provider.getName(), is(REQUESTER_PROVIDER));
-    assertThat(((RuntimeConnectionProviderModel) provider).getConnectionType(), equalTo(REQUESTER_CONNECTION_PROVIDER_CONNECTION_TYPE));
+    assertThat(((RuntimeConnectionProviderModel) provider).getConnectionType(),
+        equalTo(REQUESTER_CONNECTION_PROVIDER_CONNECTION_TYPE));
   }
 
   @Override

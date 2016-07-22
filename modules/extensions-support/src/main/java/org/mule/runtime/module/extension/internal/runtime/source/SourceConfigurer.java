@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.source;
 
@@ -48,12 +48,14 @@ public final class SourceConfigurer {
    * @return the configured instance
    */
   public Source configure(Source source) throws MuleException {
-    ParameterGroupAwareObjectBuilder<Source> builder = new ParameterGroupAwareObjectBuilder<Source>(source.getClass(), model, resolverSet) {
-      @Override
-      protected Source instantiateObject() {
-        return source;
-      }
-    };
+    ParameterGroupAwareObjectBuilder<Source> builder =
+        new ParameterGroupAwareObjectBuilder<Source>(source.getClass(), model, resolverSet) {
+
+          @Override
+          protected Source instantiateObject() {
+            return source;
+          }
+        };
 
     try {
       return builder.build(MuleExtensionUtils.getInitialiserEvent(muleContext));

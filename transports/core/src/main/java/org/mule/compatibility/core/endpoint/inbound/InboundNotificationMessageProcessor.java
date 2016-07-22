@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.endpoint.inbound;
 
@@ -16,6 +16,7 @@ import org.mule.runtime.core.util.ObjectUtils;
  * Publishes a {@link EndpointMessageNotification}'s when a message is received.
  */
 public class InboundNotificationMessageProcessor implements MessageProcessor {
+
   protected InboundEndpoint endpoint;
 
   public InboundNotificationMessageProcessor(InboundEndpoint endpoint) {

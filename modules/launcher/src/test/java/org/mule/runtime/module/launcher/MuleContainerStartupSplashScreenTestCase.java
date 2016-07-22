@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher;
 
@@ -15,11 +15,13 @@ import static org.hamcrest.Matchers.not;
 import static org.mule.runtime.core.util.FileUtils.newFile;
 
 public class MuleContainerStartupSplashScreenTestCase extends AbstractSplashScreenTestCase<MuleContainerStartupSplashScreen> {
+
   private static final String FIRST_PATCH = "SE-4242-3.8.0.jar";
   private static final String SECOND_PATCH = "SE-9999-3.7.3.jar";
-  private static final String COMPLEX_LOG_PART = "* Applied patches:                                                   *\n" + "*  - "
-      + FIRST_PATCH + "                                               *\n" + "*  - " + SECOND_PATCH
-      + "                                               *\n" + "* Mule system properties:                                            *\n";
+  private static final String COMPLEX_LOG_PART = "* Applied patches:                                                   *\n"
+      + "*  - " + FIRST_PATCH + "                                               *\n" + "*  - " + SECOND_PATCH
+      + "                                               *\n"
+      + "* Mule system properties:                                            *\n";
 
   @BeforeClass
   public static void setUpPatches() {

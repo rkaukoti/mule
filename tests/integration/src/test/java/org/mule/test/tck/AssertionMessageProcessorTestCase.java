@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.tck;
 
@@ -30,6 +30,7 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AssertionMessageProcessorTestCase extends AbstractMuleTestCase {
+
   protected final String TRUE_EXPRESSION = "trueExpression";
   protected final String FALSE_EXPRESSION = "falseExpression";
   protected FlowConstruct flowConstruct;
@@ -48,8 +49,10 @@ public class AssertionMessageProcessorTestCase extends AbstractMuleTestCase {
     when(mockEvent.getMessage()).thenReturn(muleMessage);
     expressionManager = mock(DefaultExpressionManager.class);
     when(expressionManager.isValidExpression(anyString())).thenReturn(true);
-    when(expressionManager.evaluateBoolean(eq(TRUE_EXPRESSION), any(MuleEvent.class), anyBoolean(), anyBoolean())).thenReturn(true);
-    when(expressionManager.evaluateBoolean(eq(FALSE_EXPRESSION), any(MuleEvent.class), anyBoolean(), anyBoolean())).thenReturn(false);
+    when(expressionManager.evaluateBoolean(eq(TRUE_EXPRESSION), any(MuleEvent.class), anyBoolean(), anyBoolean()))
+        .thenReturn(true);
+    when(expressionManager.evaluateBoolean(eq(FALSE_EXPRESSION), any(MuleEvent.class), anyBoolean(), anyBoolean()))
+        .thenReturn(false);
 
     when(muleContext.getExpressionManager()).thenReturn(expressionManager);
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -43,8 +43,9 @@ import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_I
 import static org.mule.runtime.core.util.NumberUtils.toInt;
 
 /**
- * <code>JmsMessageDispatcher</code> is responsible for dispatching messages to JMS destinations. All JMS semantics apply and settings such
- * as replyTo and QoS properties are read from the event properties or defaults are used (according to the JMS specification)
+ * <code>JmsMessageDispatcher</code> is responsible for dispatching messages to JMS destinations. All JMS semantics apply and
+ * settings such as replyTo and QoS properties are read from the event properties or defaults are used (according to the JMS
+ * specification)
  */
 public class JmsMessageDispatcher extends AbstractMessageDispatcher {
 
@@ -57,8 +58,8 @@ public class JmsMessageDispatcher extends AbstractMessageDispatcher {
     this.connector = (JmsConnector) endpoint.getConnector();
     disableTemporaryDestinations = connector.isDisableTemporaryReplyToDestinations()
         || ("true".equals(endpoint.getProperty(JmsConstants.DISABLE_TEMP_DESTINATIONS_PROPERTY)));
-    returnOriginalMessageAsReply =
-        connector.isReturnOriginalMessageAsReply() || ("true".equals(endpoint.getProperty(JmsConstants.RETURN_ORIGINAL_MESSAGE_PROPERTY)));
+    returnOriginalMessageAsReply = connector.isReturnOriginalMessageAsReply()
+        || ("true".equals(endpoint.getProperty(JmsConstants.RETURN_ORIGINAL_MESSAGE_PROPERTY)));
     if (returnOriginalMessageAsReply && !disableTemporaryDestinations) {
       logger.warn(
           "The returnOriginalMessageAsReply property will be ignored because disableTemporaryReplyToDestinations=false.  You need to disable temporary ReplyTo destinations in order for this propery to take effect.");
@@ -130,8 +131,8 @@ public class JmsMessageDispatcher extends AbstractMessageDispatcher {
         logger.debug("Sending message of type " + ClassUtils.getSimpleName(jmsMessage.getClass()));
         logger.debug("Sending JMS Message type " + jmsMessage.getJMSType() + "\n  JMSMessageID=" + jmsMessage.getJMSMessageID()
             + "\n  JMSCorrelationID=" + jmsMessage.getJMSCorrelationID() + "\n  JMSDeliveryMode="
-            + (persistent ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT) + "\n  JMSPriority=" + priority + "\n  JMSReplyTo="
-            + jmsMessage.getJMSReplyTo());
+            + (persistent ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT) + "\n  JMSPriority=" + priority
+            + "\n  JMSReplyTo=" + jmsMessage.getJMSReplyTo());
       }
 
       session = connector.getTransactionalResource(endpoint);
@@ -155,18 +156,20 @@ public class JmsMessageDispatcher extends AbstractMessageDispatcher {
         final int timeout = endpoint.getResponseTimeout();
 
         if (completionHandler != null) {
-          internalNonBlockingSendAndReceive(session, producer, consumer, replyTo, jmsMessage, topic, ttl, priority, persistent, transacted,
-              timeout, completionHandler);
+          internalNonBlockingSendAndReceive(session, producer, consumer, replyTo, jmsMessage, topic, ttl, priority, persistent,
+              transacted, timeout, completionHandler);
           delayedCleanup = true;
           return null;
         } else {
           try {
             if (topic) {
-              return internalBlockingSendAndAwait(consumer, producer, replyTo, jmsMessage, topic, ttl, priority, persistent, timeout);
+              return internalBlockingSendAndAwait(consumer, producer, replyTo, jmsMessage, topic, ttl, priority, persistent,
+                  timeout);
             }
 
             else {
-              return internalBlockingSendAndReceive(producer, consumer, replyTo, jmsMessage, topic, ttl, priority, persistent, timeout);
+              return internalBlockingSendAndReceive(producer, consumer, replyTo, jmsMessage, topic, ttl, priority, persistent,
+                  timeout);
             }
           } finally {
             closeConsumer(session, consumer, replyTo);
@@ -183,8 +186,8 @@ public class JmsMessageDispatcher extends AbstractMessageDispatcher {
     }
   }
 
-  private MuleMessage internalSend(MessageProducer producer, Message jmsMessage, boolean topic, long ttl, int priority, boolean persistent)
-      throws Exception {
+  private MuleMessage internalSend(MessageProducer producer, Message jmsMessage, boolean topic, long ttl, int priority,
+      boolean persistent) throws Exception {
     connector.getJmsSupport().send(producer, jmsMessage, persistent, priority, ttl, topic, endpoint);
     return returnOriginalMessageAsReply ? createMuleMessage(jmsMessage) : null;
   }
@@ -220,10 +223,12 @@ public class JmsMessageDispatcher extends AbstractMessageDispatcher {
     return createResponseMuleMessage(result, replyTo);
   }
 
-  private void internalNonBlockingSendAndReceive(final Session session, final MessageProducer producer, final MessageConsumer consumer,
-      final Destination replyTo, Message jmsMessage, boolean topic, long ttl, int priority, boolean persistent, final boolean transacted,
-      int timeout, final CompletionHandler<MuleMessage, Exception, Void> completionHandler) throws JMSException {
+  private void internalNonBlockingSendAndReceive(final Session session, final MessageProducer producer,
+      final MessageConsumer consumer, final Destination replyTo, Message jmsMessage, boolean topic, long ttl, int priority,
+      boolean persistent, final boolean transacted, int timeout,
+      final CompletionHandler<MuleMessage, Exception, Void> completionHandler) throws JMSException {
     final TimerTask closeConsumerTask = new TimerTask() {
+
       @Override
       public void run() {
         try {
@@ -238,6 +243,7 @@ public class JmsMessageDispatcher extends AbstractMessageDispatcher {
       }
     };
     consumer.setMessageListener(new CompletionHandlerReplyToListener(new CompletionHandler<Message, Exception, Void>() {
+
       @Override
       public void onCompletion(Message result, ExceptionCallback<Void, Exception> exceptionCallback) {
         try {
@@ -327,8 +333,8 @@ public class JmsMessageDispatcher extends AbstractMessageDispatcher {
   }
 
   /**
-   * Resolve the value of correlationID that should be used for the JMS Message. This is done here and not as part of transformation because
-   * of the need for visibility of MuleEvent and OutboundEndpoint.
+   * Resolve the value of correlationID that should be used for the JMS Message. This is done here and not as part of
+   * transformation because of the need for visibility of MuleEvent and OutboundEndpoint.
    *
    * @param event the current MuleEvent
    */
@@ -337,8 +343,8 @@ public class JmsMessageDispatcher extends AbstractMessageDispatcher {
   }
 
   /**
-   * Resolve the value of Mule correlationID that should be send as a JMS header. This is done here and not as part of transformation
-   * because of the need for visibility of MuleEvent and OutboundEndpoint.
+   * Resolve the value of Mule correlationID that should be send as a JMS header. This is done here and not as part of
+   * transformation because of the need for visibility of MuleEvent and OutboundEndpoint.
    *
    * @param event the current MuleEvent
    */
@@ -356,8 +362,8 @@ public class JmsMessageDispatcher extends AbstractMessageDispatcher {
   }
 
   /**
-   * This method is called before the current message is transformed. It can be used to do any message body or header processing before the
-   * transformer is called.
+   * This method is called before the current message is transformed. It can be used to do any message body or header processing
+   * before the transformer is called.
    *
    * @param message the current MuleMessage Being processed
    */
@@ -394,8 +400,8 @@ public class JmsMessageDispatcher extends AbstractMessageDispatcher {
    *
    * @param msg The JMS message that will be sent
    * @param event the current event
-   * @throws JMSException if the JmsMessage cannot be written to, this should not happen because the JMSMessage passed in will always be
-   *         newly created
+   * @throws JMSException if the JmsMessage cannot be written to, this should not happen because the JMSMessage passed in will
+   *         always be newly created
    */
   protected void processMessage(Message msg, MuleEvent event) throws JMSException {
     // template Method
@@ -407,15 +413,15 @@ public class JmsMessageDispatcher extends AbstractMessageDispatcher {
    * @param msg The JMS message that will be sent
    * @param event the current event
    * @return true if this request should honour any JMSReplyTo settings on the message
-   * @throws JMSException if the JmsMessage cannot be written to, this should not happen because the JMSMessage passed in will always be
-   *         newly created
+   * @throws JMSException if the JmsMessage cannot be written to, this should not happen because the JMSMessage passed in will
+   *         always be newly created
    */
   protected boolean isHandleReplyTo(Message msg, MuleEvent event) throws JMSException {
     return connector.supportsProperty(JmsConstants.JMS_REPLY_TO);
   }
 
-  protected MessageConsumer createReplyToConsumer(Message jmsMessage, MuleEvent event, Session session, Destination replyTo, boolean topic)
-      throws JMSException {
+  protected MessageConsumer createReplyToConsumer(Message jmsMessage, MuleEvent event, Session session, Destination replyTo,
+      boolean topic) throws JMSException {
     String selector = null;
     // Only used by topics
     String durableName;
@@ -439,15 +445,16 @@ public class JmsMessageDispatcher extends AbstractMessageDispatcher {
       if (durableName == null && durable && topic) {
         durableName = "mule." + connector.getName() + "." + event.getMessageSourceURI();
         if (logger.isDebugEnabled()) {
-          logger.debug("Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: " + durableName);
+          logger.debug(
+              "Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: " + durableName);
         }
       }
     }
     return connector.getJmsSupport().createConsumer(session, replyTo, selector, connector.isNoLocal(), null, topic, endpoint);
   }
 
-  protected Destination getReplyToDestination(Message message, Session session, MuleEvent event, boolean remoteSync, boolean topic)
-      throws JMSException, EndpointException, InitialisationException {
+  protected Destination getReplyToDestination(Message message, Session session, MuleEvent event, boolean remoteSync,
+      boolean topic) throws JMSException, EndpointException, InitialisationException {
     Destination replyTo = null;
 
     // Some JMS implementations might not support the ReplyTo property.
@@ -514,6 +521,7 @@ public class JmsMessageDispatcher extends AbstractMessageDispatcher {
   }
 
   protected class LatchReplyToListener implements MessageListener {
+
     private final Latch latch;
     private final WaitableBoolean released = new WaitableBoolean(false);
     private volatile Message message;
@@ -543,6 +551,7 @@ public class JmsMessageDispatcher extends AbstractMessageDispatcher {
   }
 
   private class CompletionHandlerReplyToListener implements MessageListener {
+
     private final CompletionHandler<Message, Exception, Void> completionHandler;
 
     public CompletionHandlerReplyToListener(CompletionHandler<Message, Exception, Void> completionHandler) {

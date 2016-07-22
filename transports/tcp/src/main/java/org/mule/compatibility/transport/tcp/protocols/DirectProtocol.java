@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.tcp.protocols;
 
@@ -13,10 +13,10 @@ import java.io.InputStream;
 import java.text.MessageFormat;
 
 /**
- * The DirectProtocol class is an application level tcp protocol that does nothing. The socket is read until no more bytes are (momentarily)
- * available (previously the transfer buffer also had to be full on the previous read, which made stronger requirements on the underlying
- * network). On slow networks {@link org.mule.compatibility.transport.tcp.protocols.EOFProtocol} and
- * {@link org.mule.compatibility.transport.tcp.protocols.LengthProtocol} may be more reliable.
+ * The DirectProtocol class is an application level tcp protocol that does nothing. The socket is read until no more bytes are
+ * (momentarily) available (previously the transfer buffer also had to be full on the previous read, which made stronger
+ * requirements on the underlying network). On slow networks {@link org.mule.compatibility.transport.tcp.protocols.EOFProtocol}
+ * and {@link org.mule.compatibility.transport.tcp.protocols.LengthProtocol} may be more reliable.
  *
  * <p>
  * Writing simply writes the data to the socket.
@@ -81,8 +81,8 @@ public class DirectProtocol extends AbstractByteProtocol {
   }
 
   /**
-   * Decide whether to repeat transfer. This implementation does so if more data are available. Note that previously, while documented as
-   * such, there was also the additional requirement that the previous transfer completely used the transfer buffer.
+   * Decide whether to repeat transfer. This implementation does so if more data are available. Note that previously, while
+   * documented as such, there was also the additional requirement that the previous transfer completely used the transfer buffer.
    *
    * @param len Amount transferred last call (-1 on EOF or socket error)
    * @param available Amount available

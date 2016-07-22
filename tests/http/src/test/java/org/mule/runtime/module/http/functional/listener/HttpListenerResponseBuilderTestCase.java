@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.listener;
 
@@ -39,7 +39,8 @@ public class HttpListenerResponseBuilderTestCase extends AbstractHttpTestCase {
   @Rule
   public SystemProperty headerResponseBuilderPath = new SystemProperty("headerResponseBuilderPath", "headerResponseBuilderPath");
   @Rule
-  public SystemProperty headersResponseBuilderPath = new SystemProperty("headersResponseBuilderPath", "headersResponseBuilderPath");
+  public SystemProperty headersResponseBuilderPath =
+      new SystemProperty("headersResponseBuilderPath", "headersResponseBuilderPath");
   @Rule
   public SystemProperty headersOverrideResponseBuilderPath =
       new SystemProperty("headersOverrideResponseBuilderPath", "headersOverrideResponseBuilderPath");
@@ -47,8 +48,8 @@ public class HttpListenerResponseBuilderTestCase extends AbstractHttpTestCase {
   public SystemProperty defaultReasonPhraseResponseBuilderPath =
       new SystemProperty("defaultReasonPhraseResponseBuilderPath", "defaultReasonPhraseResponseBuilderPath");
   @Rule
-  public SystemProperty noReasonPhraseUnknownStatusCodeResponseBuilderPath =
-      new SystemProperty("noReasonPhraseUnknownStatusCodeResponseBuilderPath", "noReasonPhraseUnknownStatusCodeResponseBuilderPath");
+  public SystemProperty noReasonPhraseUnknownStatusCodeResponseBuilderPath = new SystemProperty(
+      "noReasonPhraseUnknownStatusCodeResponseBuilderPath", "noReasonPhraseUnknownStatusCodeResponseBuilderPath");
   @Rule
   public SystemProperty errorEmptyResponseBuilderPath =
       new SystemProperty("errorEmptyResponseBuilderPath", "errorEmptyResponseBuilderPath");
@@ -65,8 +66,8 @@ public class HttpListenerResponseBuilderTestCase extends AbstractHttpTestCase {
   public SystemProperty errorHeadersOverrideResponseBuilderPath =
       new SystemProperty("errorHeadersOverrideResponseBuilderPath", "errorHeadersOverrideResponseBuilderPath");
   @Rule
-  public SystemProperty responseBuilderAndErrorResponseBuilderNotTheSamePath =
-      new SystemProperty("responseBuilderAndErrorResponseBuilderNotTheSamePath", "responseBuilderAndErrorResponseBuilderNotTheSamePath");
+  public SystemProperty responseBuilderAndErrorResponseBuilderNotTheSamePath = new SystemProperty(
+      "responseBuilderAndErrorResponseBuilderNotTheSamePath", "responseBuilderAndErrorResponseBuilderNotTheSamePath");
 
   @Override
   protected String getConfigFile() {
@@ -153,7 +154,8 @@ public class HttpListenerResponseBuilderTestCase extends AbstractHttpTestCase {
     final String url = getUrl(responseBuilderAndErrorResponseBuilderNotTheSamePath);
     final Response successfulResponse = Request.Get(url).connectTimeout(TIMEOUT).socketTimeout(10000000).execute();
     assertThat(successfulResponse.returnResponse().getStatusLine().getStatusCode(), is(202));
-    final Response failureResponse = Request.Get(url).addHeader(FAIL, "true").connectTimeout(TIMEOUT).socketTimeout(TIMEOUT).execute();
+    final Response failureResponse =
+        Request.Get(url).addHeader(FAIL, "true").connectTimeout(TIMEOUT).socketTimeout(TIMEOUT).execute();
     assertThat(failureResponse.returnResponse().getStatusLine().getStatusCode(), is(505));
   }
 
@@ -161,7 +163,8 @@ public class HttpListenerResponseBuilderTestCase extends AbstractHttpTestCase {
     return String.format("http://localhost:%s/%s", listenPort.getNumber(), pathSystemProperty.getValue());
   }
 
-  private HttpResponse statusLineResponseBuilderTest(String url, int expectedStatus, String expectedReasonPhrase) throws IOException {
+  private HttpResponse statusLineResponseBuilderTest(String url, int expectedStatus, String expectedReasonPhrase)
+      throws IOException {
     final Response response = Request.Get(url).connectTimeout(DEFAULT_TIMEOUT).execute();
     final HttpResponse httpResponse = response.returnResponse();
     System.out.println(ArrayUtils.toString(httpResponse.getAllHeaders()));

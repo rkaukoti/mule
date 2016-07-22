@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.config;
 
@@ -76,14 +76,18 @@ public class CxfNamespaceHandler extends AbstractMuleNamespaceHandler {
     registerBeanDefinitionParser("jaxb-databinding", new ChildDefinitionParser(CxfConstants.DATA_BINDING, JAXBDataBinding.class));
     registerBeanDefinitionParser("jibx-databinding", new ChildDefinitionParser(CxfConstants.DATA_BINDING, JibxDataBinding.class));
     registerBeanDefinitionParser("stax-databinding", new ChildDefinitionParser(CxfConstants.DATA_BINDING, StaxDataBinding.class));
-    registerBeanDefinitionParser("source-databinding", new ChildDefinitionParser(CxfConstants.DATA_BINDING, SourceDataBinding.class));
-    registerBeanDefinitionParser("aegis-databinding", new ChildDefinitionParser(CxfConstants.DATA_BINDING, AegisDatabinding.class));
+    registerBeanDefinitionParser("source-databinding",
+        new ChildDefinitionParser(CxfConstants.DATA_BINDING, SourceDataBinding.class));
+    registerBeanDefinitionParser("aegis-databinding",
+        new ChildDefinitionParser(CxfConstants.DATA_BINDING, AegisDatabinding.class));
     registerBeanDefinitionParser("custom-databinding", new ChildDefinitionParser(CxfConstants.DATA_BINDING));
 
     registerBeanDefinitionParser(CxfConstants.IN_INTERCEPTORS, new ChildListDefinitionParser(CxfConstants.IN_INTERCEPTORS));
-    registerBeanDefinitionParser(CxfConstants.IN_FAULT_INTERCEPTORS, new ChildListDefinitionParser(CxfConstants.IN_FAULT_INTERCEPTORS));
+    registerBeanDefinitionParser(CxfConstants.IN_FAULT_INTERCEPTORS,
+        new ChildListDefinitionParser(CxfConstants.IN_FAULT_INTERCEPTORS));
     registerBeanDefinitionParser(CxfConstants.OUT_INTERCEPTORS, new ChildListDefinitionParser(CxfConstants.OUT_INTERCEPTORS));
-    registerBeanDefinitionParser(CxfConstants.OUT_FAULT_INTERCEPTORS, new ChildListDefinitionParser(CxfConstants.OUT_FAULT_INTERCEPTORS));
+    registerBeanDefinitionParser(CxfConstants.OUT_FAULT_INTERCEPTORS,
+        new ChildListDefinitionParser(CxfConstants.OUT_FAULT_INTERCEPTORS));
 
     registerBeanDefinitionParser("stax", new SimpleBeanDefinitionParser(StaxFeature.class));
 

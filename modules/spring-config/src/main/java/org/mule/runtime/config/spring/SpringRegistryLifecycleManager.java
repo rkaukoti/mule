@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring;
 
@@ -87,22 +87,23 @@ public class SpringRegistryLifecycleManager extends RegistryLifecycleManager {
       initOrderedObjects.add(new NotificationLifecycleObject(Initialisable.class));
       setOrderedLifecycleObjects(initOrderedObjects);
 
-      setIgnoredObjectTypes(new Class[] {ExtensionManager.class, SpringRegistry.class, SpringRegistryBootstrap.class, Component.class,
-          MessageSource.class, InterceptingMessageProcessor.class, AbstractMessageProcessorOwner.class, MessagingExceptionHandler.class,
-          AbstractAsyncRequestReplyRequester.class, OutboundRouter.class, MessageProcessorChain.class, MuleContext.class});
+      setIgnoredObjectTypes(new Class[] {ExtensionManager.class, SpringRegistry.class, SpringRegistryBootstrap.class,
+          Component.class, MessageSource.class, InterceptingMessageProcessor.class, AbstractMessageProcessorOwner.class,
+          MessagingExceptionHandler.class, AbstractAsyncRequestReplyRequester.class, OutboundRouter.class,
+          MessageProcessorChain.class, MuleContext.class});
     }
   }
 
   /**
-   * A lifecycle phase that will delegate to the {@link org.mule.runtime.config.spring.SpringRegistry#doDispose()} method which in turn will
-   * destroy the application context managed by this registry
+   * A lifecycle phase that will delegate to the {@link org.mule.runtime.config.spring.SpringRegistry#doDispose()} method which in
+   * turn will destroy the application context managed by this registry
    */
   class SpringContextDisposePhase extends MuleContextDisposePhase {
 
     public SpringContextDisposePhase() {
       super();
-      setIgnoredObjectTypes(new Class[] {Component.class, MessageSource.class, InterceptingMessageProcessor.class, OutboundRouter.class,
-          Transformer.class, MuleContext.class, ServerNotificationManager.class});
+      setIgnoredObjectTypes(new Class[] {Component.class, MessageSource.class, InterceptingMessageProcessor.class,
+          OutboundRouter.class, Transformer.class, MuleContext.class, ServerNotificationManager.class});
     }
 
     @Override

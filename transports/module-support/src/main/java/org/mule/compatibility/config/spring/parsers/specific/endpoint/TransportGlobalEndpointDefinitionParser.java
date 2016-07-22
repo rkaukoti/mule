@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.config.spring.parsers.specific.endpoint;
 
@@ -40,8 +40,8 @@ public class TransportGlobalEndpointDefinitionParser extends AddressedEndpointDe
    * @param requiredAddressAttributes A list of attribute names that are required if "address" isn't present
    * @param requiredProperties A list of property names that are required if "address" isn't present
    */
-  public TransportGlobalEndpointDefinitionParser(String metaOrProtocol, boolean isMeta, Class clazz, String[] requiredAddressAttributes,
-      String[] requiredProperties) {
+  public TransportGlobalEndpointDefinitionParser(String metaOrProtocol, boolean isMeta, Class clazz,
+      String[] requiredAddressAttributes, String[] requiredProperties) {
     super(metaOrProtocol, isMeta, new OrphanEndpointDefinitionParser(clazz), requiredAddressAttributes, requiredProperties);
   }
 

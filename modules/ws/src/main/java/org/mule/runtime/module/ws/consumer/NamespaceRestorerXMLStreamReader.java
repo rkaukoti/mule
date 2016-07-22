@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.ws.consumer;
 
@@ -16,10 +16,11 @@ import javax.xml.stream.events.Namespace;
 import javax.xml.stream.events.StartElement;
 
 /**
- * XMLStreamReader decorator that restores XML Namespace declarations. By default, it will restore the namespaces on the first declaration,
- * but this can be overriden
+ * XMLStreamReader decorator that restores XML Namespace declarations. By default, it will restore the namespaces on the first
+ * declaration, but this can be overriden
  */
 public class NamespaceRestorerXMLStreamReader extends ScopeSaverXMLStreamReader {
+
   private List<Namespace> namespaces;
   private List<String> nsBlacklist = new ArrayList<String>();
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.requester;
 
@@ -73,7 +73,8 @@ public class HttpRequestWithMuleClientTestCase extends AbstractHttpTestCase {
     final MuleMessage receivedMessage = getMessageReceivedByFlow();
     assertThat(receivedMessage, notNullValue());
     assertThat(getPayloadAsString(receivedMessage), is(TEST_MESSAGE));
-    assertThat(receivedMessage.getInboundProperty(HttpHeaders.Names.TRANSFER_ENCODING), Is.<Object>is(HttpHeaders.Values.CHUNKED));
+    assertThat(receivedMessage.getInboundProperty(HttpHeaders.Names.TRANSFER_ENCODING),
+        Is.<Object>is(HttpHeaders.Values.CHUNKED));
   }
 
   @Test
@@ -93,7 +94,8 @@ public class HttpRequestWithMuleClientTestCase extends AbstractHttpTestCase {
     assertThat(getPayloadAsString(response), is(TEST_MESSAGE));
     final MuleMessage receivedMessage = getMessageReceivedByFlow();
     assertThat(getPayloadAsString(receivedMessage), is(TEST_MESSAGE));
-    assertThat(receivedMessage.getInboundProperty(HttpConstants.RequestProperties.HTTP_METHOD_PROPERTY), Is.<Object>is(PUT_HTTP_METHOD));
+    assertThat(receivedMessage.getInboundProperty(HttpConstants.RequestProperties.HTTP_METHOD_PROPERTY),
+        Is.<Object>is(PUT_HTTP_METHOD));
   }
 
   @Test
@@ -124,14 +126,16 @@ public class HttpRequestWithMuleClientTestCase extends AbstractHttpTestCase {
   @Test
   public void sendDisableRedirectByRequestConfig() throws Exception {
     final HttpRequestOptions options = newOptions().method(PUT_HTTP_METHOD).requestConfig(getRequestConfig()).build();
-    final MuleMessage response = muleContext.getClient().send(getRedirectUrl(), MuleMessage.builder().nullPayload().build(), options);
+    final MuleMessage response =
+        muleContext.getClient().send(getRedirectUrl(), MuleMessage.builder().nullPayload().build(), options);
     assertThat(getPayloadAsString(response), is(TEST_RESPONSE));
   }
 
   @Test
   public void disableStatusCodeValidation() throws Exception {
     final HttpRequestOptions options = newOptions().disableStatusCodeValidation().build();
-    final MuleMessage response = muleContext.getClient().send(getFailureUrl(), MuleMessage.builder().nullPayload().build(), options);
+    final MuleMessage response =
+        muleContext.getClient().send(getFailureUrl(), MuleMessage.builder().nullPayload().build(), options);
     assertThat(response.getInboundProperty(HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY), Is.<Object>is(500));
   }
 
@@ -171,6 +175,7 @@ public class HttpRequestWithMuleClientTestCase extends AbstractHttpTestCase {
   }
 
   public static class LatchMessageProcessor implements MessageProcessor {
+
     public static Latch latch = new Latch();
 
     @Override

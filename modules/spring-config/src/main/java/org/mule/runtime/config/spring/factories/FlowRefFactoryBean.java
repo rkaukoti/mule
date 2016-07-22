@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.factories;
 
@@ -87,6 +87,7 @@ public class FlowRefFactoryBean extends AbstractAnnotatedObject
       throw new MuleRuntimeException(CoreMessages.objectIsNull(name));
     } else if (!referenceCache.containsKey(name)) {
       MessageProcessor dynamicReference = new FlowRefMessageProcessorContainer() {
+
         @Override
         public MuleEvent process(MuleEvent event) throws MuleException {
           // Need to initialize because message processor won't be managed by parent
@@ -97,6 +98,7 @@ public class FlowRefFactoryBean extends AbstractAnnotatedObject
           // Because this is created dynamically annotations cannot be injected by Spring and so
           // FlowRefMessageProcessor is not used here.
           return new NonBlockingMessageProcessor() {
+
             @Override
             public MuleEvent process(MuleEvent event) throws MuleException {
               return dynamicMessageProcessor.process(event);
@@ -158,6 +160,7 @@ public class FlowRefFactoryBean extends AbstractAnnotatedObject
     }
     if (referencedFlow instanceof FlowConstruct) {
       return new FlowRefMessageProcessor() {
+
         @Override
         public MuleEvent process(MuleEvent event) throws MuleException {
           return referencedFlow.process(event);
@@ -192,6 +195,7 @@ public class FlowRefFactoryBean extends AbstractAnnotatedObject
   }
 
   private abstract class FlowRefMessageProcessor implements NonBlockingMessageProcessor, AnnotatedObject {
+
     @Override
     public Object getAnnotation(QName name) {
       return FlowRefFactoryBean.this.getAnnotation(name);
@@ -208,7 +212,9 @@ public class FlowRefFactoryBean extends AbstractAnnotatedObject
     }
   }
 
-  private abstract class FlowRefMessageProcessorContainer extends FlowRefMessageProcessor implements DynamicMessageProcessorContainer {
+  private abstract class FlowRefMessageProcessorContainer extends FlowRefMessageProcessor
+      implements DynamicMessageProcessorContainer {
+
     private MessageProcessorPathElement pathElement;
     private MessageProcessor dynamicMessageProcessor;
 

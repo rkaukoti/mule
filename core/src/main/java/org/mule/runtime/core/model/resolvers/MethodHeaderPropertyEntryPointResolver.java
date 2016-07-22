@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.model.resolvers;
 
@@ -15,8 +15,9 @@ import org.mule.runtime.core.util.ClassUtils;
 import java.lang.reflect.Method;
 
 /**
- * This resolver will look for a {@link org.mule.runtime.core.api.config.MuleProperties#MULE_METHOD_PROPERTY} property on the incoming event
- * to determine which method to invoke Users can customise the name of the property used to look up the method name on the event
+ * This resolver will look for a {@link org.mule.runtime.core.api.config.MuleProperties#MULE_METHOD_PROPERTY} property on the
+ * incoming event to determine which method to invoke Users can customise the name of the property used to look up the method name
+ * on the event
  */
 public class MethodHeaderPropertyEntryPointResolver extends AbstractEntryPointResolver {
 
@@ -111,7 +112,8 @@ public class MethodHeaderPropertyEntryPointResolver extends AbstractEntryPointRe
       }
     } else {
       if (!fallback) {
-        throw new NoSuchMethodException(CoreMessages.methodWithParamsNotFoundOnObject("null", "unknown", component.getClass()).toString());
+        throw new NoSuchMethodException(
+            CoreMessages.methodWithParamsNotFoundOnObject("null", "unknown", component.getClass()).toString());
       }
     }
   }

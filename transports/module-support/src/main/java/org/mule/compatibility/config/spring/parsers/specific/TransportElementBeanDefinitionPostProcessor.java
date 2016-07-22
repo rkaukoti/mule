@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.config.spring.parsers.specific;
 
@@ -29,11 +29,11 @@ import static org.mule.runtime.config.spring.dsl.spring.PropertyComponentUtils.g
 import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_MULE_CONTEXT;
 
 /**
- * This is a post processor that will run for every {@link ComponentModel} parsing. In case that the {@code ComponentModel} is an endpoint
- * then this class will do specific parsing for endpoints by manipulating the {@code BeanDefinition}.
+ * This is a post processor that will run for every {@link ComponentModel} parsing. In case that the {@code ComponentModel} is an
+ * endpoint then this class will do specific parsing for endpoints by manipulating the {@code BeanDefinition}.
  *
- * The complex logic to parse endpoints is not required anymore and we have created this class to avoid polluting the new parsing mechanism
- * with transport specific logic.
+ * The complex logic to parse endpoints is not required anymore and we have created this class to avoid polluting the new parsing
+ * mechanism with transport specific logic.
  *
  * @since 4.0
  */
@@ -105,7 +105,8 @@ public class TransportElementBeanDefinitionPostProcessor implements CommonBeanDe
     if (messageProcessors != null) {
       Object lastMessageProcessor = messageProcessors.get(messageProcessors.size() - 1);
       if (lastMessageProcessor instanceof AbstractBeanDefinition) {
-        if (areMatchingTypes(MessageProcessorChainFactoryBean.class, ((AbstractBeanDefinition) lastMessageProcessor).getBeanClass())) {
+        if (areMatchingTypes(MessageProcessorChainFactoryBean.class,
+            ((AbstractBeanDefinition) lastMessageProcessor).getBeanClass())) {
           messageProcessors.remove(messageProcessors.size() - 1);
         }
       }
@@ -117,11 +118,14 @@ public class TransportElementBeanDefinitionPostProcessor implements CommonBeanDe
       ManagedList responseMessageProcessorsBeanList = new ManagedList();
       responseComponentModel.getInnerComponents().forEach(responseProcessorComponentModel -> {
         BeanDefinition beanDefinition = responseProcessorComponentModel.getBeanDefinition();
-        responseMessageProcessorsBeanList.add(beanDefinition != null ? beanDefinition : responseProcessorComponentModel.getBeanReference());
+        responseMessageProcessorsBeanList
+            .add(beanDefinition != null ? beanDefinition : responseProcessorComponentModel.getBeanReference());
       });
-      BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(MessageProcessorChainFactoryBean.class);
+      BeanDefinitionBuilder beanDefinitionBuilder =
+          BeanDefinitionBuilder.genericBeanDefinition(MessageProcessorChainFactoryBean.class);
       beanDefinitionBuilder.addPropertyValue("messageProcessors", responseMessageProcessorsBeanList);
-      modelBeanDefinition.getPropertyValues().addPropertyValue("responseMessageProcessors", beanDefinitionBuilder.getBeanDefinition());
+      modelBeanDefinition.getPropertyValues().addPropertyValue("responseMessageProcessors",
+          beanDefinitionBuilder.getBeanDefinition());
     });
     return messageProcessors;
   }
@@ -171,7 +175,8 @@ public class TransportElementBeanDefinitionPostProcessor implements CommonBeanDe
   }
 
   private void processSpecificAddressAttribute(ComponentModel componentModel, AbstractBeanDefinition modelBeanDefinition) {
-    if (componentModel.getIdentifier().getNamespace().equals("jms") && !componentModel.getParameters().containsKey(REFERENCE_ATTRIBUTE)) {
+    if (componentModel.getIdentifier().getNamespace().equals("jms")
+        && !componentModel.getParameters().containsKey(REFERENCE_ATTRIBUTE)) {
       StringBuilder address = new StringBuilder("jms://");
       if (componentModel.getParameters().containsKey("queue")) {
         address.append(componentModel.getParameters().get("queue"));

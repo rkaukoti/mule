@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.source.polling.schedule;
 
@@ -78,6 +78,7 @@ public class FixedFrequencyScheduler<T extends Runnable> extends PollScheduler<T
   public void initialise() throws InitialisationException {
     try {
       lifecycleManager.fireInitialisePhase(new LifecycleCallback<Scheduler>() {
+
         @Override
         public void onTransition(String phaseName, Scheduler object) throws MuleException {
           executor = Executors.newSingleThreadScheduledExecutor();
@@ -91,14 +92,15 @@ public class FixedFrequencyScheduler<T extends Runnable> extends PollScheduler<T
 
   /**
    * <p>
-   * Starts the Scheduling of a Task. Can be called several times, if the {@link Scheduler} is already started or if it is starting then the
-   * start request is omitted
+   * Starts the Scheduling of a Task. Can be called several times, if the {@link Scheduler} is already started or if it is
+   * starting then the start request is omitted
    * </p>
    */
   @Override
   public void start() throws MuleException {
     if (isNotStarted()) {
       lifecycleManager.fireStartPhase(new LifecycleCallback<Scheduler>() {
+
         @Override
         public void onTransition(String phaseName, Scheduler object) throws MuleException {
           executor.shutdown();
@@ -113,14 +115,15 @@ public class FixedFrequencyScheduler<T extends Runnable> extends PollScheduler<T
 
   /**
    * <p>
-   * Stops the Scheduling of a Task. Can be called several times, if the {@link Scheduler} is already stopped or if it is stopping then the
-   * stop request is omitted
+   * Stops the Scheduling of a Task. Can be called several times, if the {@link Scheduler} is already stopped or if it is stopping
+   * then the stop request is omitted
    * </p>
    */
   @Override
   public synchronized void stop() throws MuleException {
     if (isNotStopped()) {
       lifecycleManager.fireStopPhase(new LifecycleCallback<Scheduler>() {
+
         @Override
         public void onTransition(String phaseName, Scheduler object) throws MuleException {
           executor.shutdown();
@@ -151,6 +154,7 @@ public class FixedFrequencyScheduler<T extends Runnable> extends PollScheduler<T
   public void dispose() {
     try {
       lifecycleManager.fireDisposePhase(new LifecycleCallback<Scheduler>() {
+
         @Override
         public void onTransition(String phaseName, Scheduler object) throws MuleException {
           try {

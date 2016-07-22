@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.tcp.other;
 
@@ -15,7 +15,8 @@ import java.net.Socket;
 import static org.junit.Assert.assertEquals;
 
 /**
- * This was an attempt to understand the issue we saw with HTTP closing early. Unfortunately, it doesn't shed any light on the problem.
+ * This was an attempt to understand the issue we saw with HTTP closing early. Unfortunately, it doesn't shed any light on the
+ * problem.
  */
 public class SocketTimingExperimentTestCase extends AbstractMuleTestCase {
 

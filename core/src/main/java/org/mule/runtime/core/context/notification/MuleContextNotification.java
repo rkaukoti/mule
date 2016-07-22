@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.context.notification;
 
@@ -9,10 +9,11 @@ import org.mule.runtime.core.api.context.notification.BlockingServerEvent;
 import org.mule.runtime.core.api.context.notification.ServerNotification;
 
 /**
- * <code>MuleContextNotification</code> is fired when an event such as the mule context starting occurs. The payload of this event will
- * always be a reference to the muleContext.
+ * <code>MuleContextNotification</code> is fired when an event such as the mule context starting occurs. The payload of this event
+ * will always be a reference to the muleContext.
  */
 public class MuleContextNotification extends ServerNotification implements BlockingServerEvent {
+
   public static final int CONTEXT_INITIALISING = CONTEXT_EVENT_ACTION_START_RANGE + 1;
   public static final int CONTEXT_INITIALISED = CONTEXT_EVENT_ACTION_START_RANGE + 2;
   public static final int CONTEXT_STARTING = CONTEXT_EVENT_ACTION_START_RANGE + 3;
@@ -67,7 +68,8 @@ public class MuleContextNotification extends ServerNotification implements Block
 
   @Override
   public String toString() {
-    return EVENT_NAME + "{" + "action=" + getActionName(action) + ", resourceId=" + resourceIdentifier + ", timestamp=" + timestamp + "}";
+    return EVENT_NAME + "{" + "action=" + getActionName(action) + ", resourceId=" + resourceIdentifier + ", timestamp="
+        + timestamp + "}";
   }
 
 }

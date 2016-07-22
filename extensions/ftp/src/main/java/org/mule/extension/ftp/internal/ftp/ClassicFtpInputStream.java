@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.ftp.internal.ftp;
 
@@ -25,8 +25,8 @@ import java.util.function.Supplier;
  */
 public class ClassicFtpInputStream extends FtpInputStream {
 
-  private ClassicFtpInputStream(Supplier<InputStream> streamSupplier, ConnectionHandler<FtpFileSystem> connectionHandler, PathLock lock)
-      throws ConnectionException {
+  private ClassicFtpInputStream(Supplier<InputStream> streamSupplier, ConnectionHandler<FtpFileSystem> connectionHandler,
+      PathLock lock) throws ConnectionException {
     super(streamSupplier, connectionHandler, lock);
   }
 
@@ -41,13 +41,15 @@ public class ClassicFtpInputStream extends FtpInputStream {
    * @return a new {@link FtpInputStream}
    * @throws ConnectionException if a connection could not be established
    */
-  public static FtpInputStream newInstance(FtpConnector config, FtpFileAttributes attributes, PathLock lock) throws ConnectionException {
+  public static FtpInputStream newInstance(FtpConnector config, FtpFileAttributes attributes, PathLock lock)
+      throws ConnectionException {
     ConnectionHandler<FtpFileSystem> connectionHandler = getConnectionHandler(config);
     return new ClassicFtpInputStream(getStreamSupplier(attributes, connectionHandler), connectionHandler, lock);
   }
 
   /**
-   * Invokes {@link ClassicFtpFileSystem#awaitCommandCompletion()} to make sure that the operation is completed before closing the stream
+   * Invokes {@link ClassicFtpFileSystem#awaitCommandCompletion()} to make sure that the operation is completed before closing the
+   * stream
    */
   @Override
   protected void beforeClose() throws IOException {

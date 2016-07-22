@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.exception;
 
@@ -40,9 +40,10 @@ import static java.text.MessageFormat.format;
 import static org.apache.commons.lang.StringUtils.defaultString;
 
 /**
- * This is the base class for exception strategies which contains several helper methods. However, you should probably inherit from
- * <code>AbstractMessagingExceptionStrategy</code> (if you are creating a Messaging Exception Strategy) or
- * <code>AbstractSystemExceptionStrategy</code> (if you are creating a System Exception Strategy) rather than directly from this class.
+ * This is the base class for exception strategies which contains several helper methods. However, you should probably inherit
+ * from <code>AbstractMessagingExceptionStrategy</code> (if you are creating a Messaging Exception Strategy) or
+ * <code>AbstractSystemExceptionStrategy</code> (if you are creating a System Exception Strategy) rather than directly from this
+ * class.
  */
 public abstract class AbstractExceptionListener extends AbstractMessageProcessorOwner implements GlobalNameableObject {
 
@@ -123,8 +124,9 @@ public abstract class AbstractExceptionListener extends AbstractMessageProcessor
   }
 
   /**
-   * The initialise method is call every time the Exception stategy is assigned to a service or connector. This implementation ensures that
-   * initialise is called only once. The actual initialisation code is contained in the <code>doInitialise()</code> method.
+   * The initialise method is call every time the Exception stategy is assigned to a service or connector. This implementation
+   * ensures that initialise is called only once. The actual initialisation code is contained in the <code>doInitialise()</code>
+   * method.
    */
   @Override
   public final synchronized void initialise() throws InitialisationException {
@@ -151,8 +153,8 @@ public abstract class AbstractExceptionListener extends AbstractMessageProcessor
 
   /**
    * Routes the current exception to an error endpoint such as a Dead Letter Queue (jms) This method is only invoked if there is a
-   * MuleMessage available to dispatch. The message dispatched from this method will be an <code>ExceptionMessage</code> which contains the
-   * exception thrown the MuleMessage and any context information.
+   * MuleMessage available to dispatch. The message dispatched from this method will be an <code>ExceptionMessage</code> which
+   * contains the exception thrown the MuleMessage and any context information.
    *
    * @param event the MuleEvent being processed when the exception occurred
    * @param t the exception thrown. This will be sent with the ExceptionMessage
@@ -162,7 +164,8 @@ public abstract class AbstractExceptionListener extends AbstractMessageProcessor
     if (!messageProcessors.isEmpty()) {
       try {
         if (logger.isDebugEnabled()) {
-          logger.debug("Message being processed is: " + (muleContext.getTransformationService().getPayloadForLogging(event.getMessage())));
+          logger.debug(
+              "Message being processed is: " + (muleContext.getTransformationService().getPayloadForLogging(event.getMessage())));
         }
         String component = "Unknown";
         if (event.getFlowConstruct() != null) {
@@ -192,6 +195,7 @@ public abstract class AbstractExceptionListener extends AbstractMessageProcessor
   protected MulticastingRouter buildRouter() {
     // Create an outbound router with all endpoints configured on the exception strategy
     MulticastingRouter router = new MulticastingRouter() {
+
       @Override
       protected void setMessageProperties(FlowConstruct session, MuleEvent event, MessageProcessor target) {
         // No reply-to or correlation for exception targets, at least for now anyway.
@@ -230,8 +234,8 @@ public abstract class AbstractExceptionListener extends AbstractMessageProcessor
   }
 
   /**
-   * Logs a fatal error message to the logging system. This should be used mostly if an error occurs in the exception listener itself. This
-   * implementation logs the the message itself to the logs if it is not null
+   * Logs a fatal error message to the logging system. This should be used mostly if an error occurs in the exception listener
+   * itself. This implementation logs the the message itself to the logs if it is not null
    *
    * @param event The MuleEvent currently being processed
    * @param t the fatal exception to log
@@ -257,8 +261,8 @@ public abstract class AbstractExceptionListener extends AbstractMessageProcessor
   }
 
   /**
-   * Fires a server notification to all registered {@link org.mule.runtime.core.api.context.notification.ExceptionNotificationListener}
-   * eventManager.
+   * Fires a server notification to all registered
+   * {@link org.mule.runtime.core.api.context.notification.ExceptionNotificationListener} eventManager.
    *
    * @param notification the notification to fire.
    */

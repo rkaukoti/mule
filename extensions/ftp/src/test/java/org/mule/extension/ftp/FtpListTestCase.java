@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.ftp;
 
@@ -24,6 +24,7 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertThat;
 
 public class FtpListTestCase extends FtpConnectorTestCase {
+
   private static final String TEST_FILE_PATTERN = "test-file-%d.html";
   private static final String SUB_DIRECTORY_NAME = "subDirectory";
   private static final String CONTENT = "foo";
@@ -105,7 +106,8 @@ public class FtpListTestCase extends FtpConnectorTestCase {
   public void listWithoutPath() throws Exception {
     TreeNode node = (TreeNode) flowRunner("listWithoutPath").run().getMessage().getPayload();
 
-    assertThat(node.getAttributes().getPath(), is(equalTo(Paths.get(testHarness.getWorkingDirectory()).toAbsolutePath().toString())));
+    assertThat(node.getAttributes().getPath(),
+        is(equalTo(Paths.get(testHarness.getWorkingDirectory()).toAbsolutePath().toString())));
     assertThat(node.getChilds(), hasSize(6));
   }
 

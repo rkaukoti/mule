@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.file.internal;
 
@@ -50,11 +50,13 @@ import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessa
 @Export(classes = {LocalFileAttributes.class, FileEventType.class, ListenerFileAttributes.class, EventedFileAttributes.class,
     DeletedFileAttributes.class})
 public class FileConnector extends FileConnectorConfig {
+
   private static final Logger LOGGER = LoggerFactory.getLogger(FileConnector.class);
 
   /**
-   * The directory to be considered as the root of every relative path used with this connector. If not provided, it will default to the
-   * value of the {@code user.home} system property. If that system property is not set, then the connector will fail to initialise.
+   * The directory to be considered as the root of every relative path used with this connector. If not provided, it will default
+   * to the value of the {@code user.home} system property. If that system property is not set, then the connector will fail to
+   * initialise.
    */
   @Parameter
   @Optional
@@ -71,16 +73,16 @@ public class FileConnector extends FileConnectorConfig {
     if (baseDir == null) {
       baseDir = System.getProperty("user.home");
       if (baseDir == null) {
-        throw new InitialisationException(
-            createStaticMessage("Could not obtain user's home directory. Please provide a explicit value for the baseDir parameter"), this);
+        throw new InitialisationException(createStaticMessage(
+            "Could not obtain user's home directory. Please provide a explicit value for the baseDir parameter"), this);
       }
 
       LOGGER.warn("File connector '{}' does not specify the baseDir property. Defaulting to '{}'", getConfigName(), baseDir);
     }
     Path baseDirPath = Paths.get(baseDir);
     if (Files.notExists(baseDirPath)) {
-      throw new InitialisationException(createStaticMessage(format("Provided baseDir '%s' does not exists", baseDirPath.toAbsolutePath())),
-          this);
+      throw new InitialisationException(
+          createStaticMessage(format("Provided baseDir '%s' does not exists", baseDirPath.toAbsolutePath())), this);
     }
     if (!Files.isDirectory(baseDirPath)) {
       throw new InitialisationException(

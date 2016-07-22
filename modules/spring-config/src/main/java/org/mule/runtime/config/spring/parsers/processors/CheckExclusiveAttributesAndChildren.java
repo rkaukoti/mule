@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.processors;
 
@@ -24,6 +24,7 @@ import java.util.regex.Pattern;
  * Attributes and children elements cannot appear together. Child names are either node names or types.
  */
 public class CheckExclusiveAttributesAndChildren implements PreProcessor {
+
   private final static Pattern TYPE_REGEXP = Pattern.compile("\\{(.*)\\}(.*)");
 
   private final Set<String> attributeNames;
@@ -95,12 +96,13 @@ public class CheckExclusiveAttributesAndChildren implements PreProcessor {
     final String childElementName = child.getLocalName();
 
     if (childrenNames.contains(childElementName)) {
-      throw new CheckExclusiveAttributesAndChildrenException("Element " + SpringXMLUtils.elementToString(element) + " can't contain child "
-          + childElementName + " because it defines attribute " + attributeName);
+      throw new CheckExclusiveAttributesAndChildrenException("Element " + SpringXMLUtils.elementToString(element)
+          + " can't contain child " + childElementName + " because it defines attribute " + attributeName);
     }
   }
 
   private static class ChildType {
+
     String ns;
     String name;
 
@@ -117,6 +119,7 @@ public class CheckExclusiveAttributesAndChildren implements PreProcessor {
   }
 
   public static class CheckExclusiveAttributesAndChildrenException extends IllegalStateException {
+
     private static final long serialVersionUID = 8661524219979354246L;
 
     public CheckExclusiveAttributesAndChildrenException(String message) {

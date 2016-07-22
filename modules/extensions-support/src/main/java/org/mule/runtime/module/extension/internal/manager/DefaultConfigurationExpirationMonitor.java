@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.manager;
 
@@ -23,9 +23,9 @@ import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import static org.mule.runtime.core.util.concurrent.ThreadNameHelper.getPrefix;
 
 /**
- * Default implementation of {@link ConfigurationExpirationMonitor} which schedules tasks that run on a given {@link #frequency} to check
- * for dynamic configuration instances which should be expired. The selected instances are expired by being unregistered and having the
- * shutdown lifecycle applied to them.
+ * Default implementation of {@link ConfigurationExpirationMonitor} which schedules tasks that run on a given {@link #frequency}
+ * to check for dynamic configuration instances which should be expired. The selected instances are expired by being unregistered
+ * and having the shutdown lifecycle applied to them.
  * <p/>
  * Instances of this class are immutable and should be built through a {@link Builder} which can be obtained through the
  * {@link Builder#newBuilder(ExtensionRegistry, MuleContext)} method
@@ -45,13 +45,14 @@ public final class DefaultConfigurationExpirationMonitor implements Configuratio
   private DefaultConfigurationExpirationMonitor() {}
 
   /**
-   * Starts a scheduler which fires expiration tasks on the given {@link #frequency} and executes the {@link #expirationHandler} on each
-   * matching configuration instance
+   * Starts a scheduler which fires expiration tasks on the given {@link #frequency} and executes the {@link #expirationHandler}
+   * on each matching configuration instance
    */
   @Override
   public void beginMonitoring() {
     // TODO: Change the executor type when MULE-8870 is implemented
-    executor = Executors.newSingleThreadScheduledExecutor(r -> new Thread(r, getPrefix(muleContext) + "extension.expiration.manager"));
+    executor =
+        Executors.newSingleThreadScheduledExecutor(r -> new Thread(r, getPrefix(muleContext) + "extension.expiration.manager"));
     executor.scheduleWithFixedDelay(() -> expire(), frequency, frequency, timeUnit);
   }
 
@@ -84,8 +85,9 @@ public final class DefaultConfigurationExpirationMonitor implements Configuratio
       expirationHandler.accept(key, config);
       LOGGER.debug("Configuration of key {} was expired", key);
     } catch (Exception e) {
-      LOGGER.error(String.format("Could not process expiration for dynamic config '%s' of type '%s'. Will try again on next cycle", key,
-          config.getClass().getName()), e);
+      LOGGER
+          .error(String.format("Could not process expiration for dynamic config '%s' of type '%s'. Will try again on next cycle",
+              key, config.getClass().getName()), e);
     }
   }
 
@@ -145,8 +147,9 @@ public final class DefaultConfigurationExpirationMonitor implements Configuratio
     }
 
     /**
-     * Provides a {@link BiConsumer} which receives each expired config instance and provides the behavior of how to expire it. The
-     * {@link BiConsumer} will receive the instance registration key as the first argument and the instance itself as the second
+     * Provides a {@link BiConsumer} which receives each expired config instance and provides the behavior of how to expire it.
+     * The {@link BiConsumer} will receive the instance registration key as the first argument and the instance itself as the
+     * second
      *
      * @param expirationHandler a {@link BiConsumer} which acts as a expiration handler
      * @return {@code this} instance

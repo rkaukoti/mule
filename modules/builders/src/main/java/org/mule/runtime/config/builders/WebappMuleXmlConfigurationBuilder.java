@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.builders;
 
@@ -35,14 +35,15 @@ import static java.util.Collections.emptyMap;
 import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
 
 /**
- * <code>WebappMuleXmlConfigurationBuilder</code> will first try and load config resources using the ServletContext and if this fails then
- * it will attempt to load config resource from the classpath.
+ * <code>WebappMuleXmlConfigurationBuilder</code> will first try and load config resources using the ServletContext and if this
+ * fails then it will attempt to load config resource from the classpath.
  * <li>ServletContext resources should be relative to the webapp root directory and start with '/'.
  * <li>Classpath resources should be in the webapp classpath and should not start with '/'.
  *
  * @see org.mule.runtime.config.spring.SpringXmlConfigurationBuilder
  */
 public class WebappMuleXmlConfigurationBuilder extends SpringXmlConfigurationBuilder {
+
   /**
    * Logger used by this class
    */
@@ -55,7 +56,8 @@ public class WebappMuleXmlConfigurationBuilder extends SpringXmlConfigurationBui
     context = servletContext;
   }
 
-  public WebappMuleXmlConfigurationBuilder(ServletContext servletContext, String[] configResources) throws ConfigurationException {
+  public WebappMuleXmlConfigurationBuilder(ServletContext servletContext, String[] configResources)
+      throws ConfigurationException {
     super(configResources, emptyMap(), APP);
     context = servletContext;
   }
@@ -85,7 +87,8 @@ public class WebappMuleXmlConfigurationBuilder extends SpringXmlConfigurationBui
   protected ApplicationContext doCreateApplicationContext(MuleContext muleContext, ConfigResource[] artifactConfigResources,
       OptionalObjectsController optionalObjectsController) {
     Resource[] artifactConfigServletContextResources = preProcessResources(artifactConfigResources);
-    return new MuleArtifactContext(muleContext, artifactConfigServletContextResources, optionalObjectsController, emptyMap(), APP);
+    return new MuleArtifactContext(muleContext, artifactConfigServletContextResources, optionalObjectsController, emptyMap(),
+        APP);
   }
 
   private Resource[] preProcessResources(ConfigResource[] configResources) {
@@ -97,8 +100,8 @@ public class WebappMuleXmlConfigurationBuilder extends SpringXmlConfigurationBui
   }
 
   /**
-   * Used to lookup parent spring ApplicationContext. This allows a parent spring ApplicatonContet to be provided in the same way you would
-   * configure a parent ApplicationContext for a spring WebAppplicationContext
+   * Used to lookup parent spring ApplicationContext. This allows a parent spring ApplicatonContet to be provided in the same way
+   * you would configure a parent ApplicationContext for a spring WebAppplicationContext
    */
   protected ApplicationContext loadParentContext(ServletContext servletContext) throws BeansException {
     ApplicationContext parentContext = null;
@@ -110,7 +113,8 @@ public class WebappMuleXmlConfigurationBuilder extends SpringXmlConfigurationBui
       // "classpath*:beanRefContext.xml"
       BeanFactoryLocator locator = ContextSingletonBeanFactoryLocator.getInstance(locatorFactorySelector);
       if (logger.isDebugEnabled()) {
-        logger.debug("Getting parent context definition: using parent context key of '" + parentContextKey + "' with BeanFactoryLocator");
+        logger.debug(
+            "Getting parent context definition: using parent context key of '" + parentContextKey + "' with BeanFactoryLocator");
       }
       parentContext = (ApplicationContext) locator.useBeanFactory(parentContextKey).getFactory();
     }
@@ -119,6 +123,7 @@ public class WebappMuleXmlConfigurationBuilder extends SpringXmlConfigurationBui
   }
 
   class ServletContextOrClassPathConfigResource extends ConfigResource {
+
     public ServletContextOrClassPathConfigResource(String resourceName) throws IOException {
       super(resourceName, null);
     }
@@ -126,8 +131,9 @@ public class WebappMuleXmlConfigurationBuilder extends SpringXmlConfigurationBui
   }
 
   /**
-   * Combines {@link ServletContextResource} and {@link ClassPathResource} to create a {@link Resource} implementation that first tries to
-   * load a resource using the {@link ServletContext} and then fails back to use try to load the resource from the classpath.
+   * Combines {@link ServletContextResource} and {@link ClassPathResource} to create a {@link Resource} implementation that first
+   * tries to load a resource using the {@link ServletContext} and then fails back to use try to load the resource from the
+   * classpath.
    */
   class ServletContextOrClassPathResource extends AbstractResource {
 

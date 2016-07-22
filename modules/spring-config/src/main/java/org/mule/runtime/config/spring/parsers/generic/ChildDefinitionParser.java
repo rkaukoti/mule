@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.generic;
 
@@ -8,10 +8,11 @@ import org.mule.runtime.config.spring.parsers.AbstractChildDefinitionParser;
 import org.w3c.dom.Element;
 
 /**
- * Creates a definition parser that will construct a single child element and inject it into the parent object (the enclosing XML element).
+ * Creates a definition parser that will construct a single child element and inject it into the parent object (the enclosing XML
+ * element).
  *
- * The parser will set all attributes defined in the Xml as bean properties and will process any nested elements as bean properties too,
- * except the correct Definition parser for the element will be looked up automatically.
+ * The parser will set all attributes defined in the Xml as bean properties and will process any nested elements as bean
+ * properties too, except the correct Definition parser for the element will be looked up automatically.
  */
 public class ChildDefinitionParser extends AbstractChildDefinitionParser {
 

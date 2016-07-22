@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.dsl.spring;
 
@@ -13,8 +13,8 @@ import java.util.Optional;
 import static org.springframework.beans.factory.support.BeanDefinitionBuilder.genericBeanDefinition;
 
 /**
- * Abstract construct of a chain of responsibility to create a {@link org.springframework.beans.factory.config.BeanDefinition} from a
- * {@code org.mule.runtime.config.spring.dsl.model.ComponentModel}.
+ * Abstract construct of a chain of responsibility to create a {@link org.springframework.beans.factory.config.BeanDefinition}
+ * from a {@code org.mule.runtime.config.spring.dsl.model.ComponentModel}.
  *
  * @since 4.0
  */
@@ -42,8 +42,8 @@ abstract class BeanDefinitionCreator {
   }
 
   /**
-   * Instances of {@code BeanDefinitionCreator} that will be responsible to create the {@code BeanDefinition} must return true to this call,
-   * otherwise they must do nothing.
+   * Instances of {@code BeanDefinitionCreator} that will be responsible to create the {@code BeanDefinition} must return true to
+   * this call, otherwise they must do nothing.
    *
    * @param createBeanDefinitionRequest the creation request.
    * @return true if it created the {@code BeanDefinition}, false otherwise.
@@ -52,7 +52,8 @@ abstract class BeanDefinitionCreator {
 
   protected BeanDefinition getConvertibleBeanDefinition(Class<?> type, Object value, Optional<TypeConverter> converter) {
     if (converter.isPresent()) {
-      return genericBeanDefinition(ConstantFactoryBean.class).addConstructorArgValue(converter.get().convert(value)).getBeanDefinition();
+      return genericBeanDefinition(ConstantFactoryBean.class).addConstructorArgValue(converter.get().convert(value))
+          .getBeanDefinition();
     } else {
       return genericBeanDefinition(type).addConstructorArgValue(value).getBeanDefinition();
     }

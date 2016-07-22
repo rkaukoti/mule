@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.util.ftp;
 
@@ -18,6 +18,7 @@ import java.io.IOException;
  * Ftp client wrapper for working with an FTP server.
  */
 public class FtpClient {
+
   public static final int TIMEOUT = 5000; // just to make sure we don't hang the test on invalid connection attempts
   protected final transient Logger logger = LoggerFactory.getLogger(this.getClass());
   FTPClient ftpClient = null;
@@ -137,7 +138,8 @@ public class FtpClient {
       if (fileObjs[i].isFile()) // delete the file
       {
         ftpClient.deleteFile(fileObjs[i].getName());
-      } else if (fileObjs[i].isDirectory() && (getFileList(ftpClient.printWorkingDirectory() + "/" + fileObjs[i].getName()).length > 0)) {
+      } else if (fileObjs[i].isDirectory()
+          && (getFileList(ftpClient.printWorkingDirectory() + "/" + fileObjs[i].getName()).length > 0)) {
         recursiveDelete(ftpClient.printWorkingDirectory() + "/" + fileObjs[i].getName());
         deleteDir(ftpClient.printWorkingDirectory() + "/" + fileObjs[i].getName()); // safe to delete dir now that it's empty
       } else if (fileObjs[i].isDirectory()) // delete the empty directory

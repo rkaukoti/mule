@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.tck.junit4;
 
@@ -59,10 +59,11 @@ import static org.mule.tck.junit4.TestsLogConfigurationHelper.configureLoggingFo
  * Extends {@link AbstractMuleTestCase} providing access to a {@link MuleContext} instance and tools for manage it.
  */
 public abstract class AbstractMuleContextTestCase extends AbstractMuleTestCase {
+
   public static final String WORKING_DIRECTORY_SYSTEM_PROPERTY_KEY = "workingDirectory";
   /**
-   * Top-level directories under <code>.mule</code> which are not deleted on each test case recycle. This is required, e.g. to play nice
-   * with transaction manager recovery service object store.
+   * Top-level directories under <code>.mule</code> which are not deleted on each test case recycle. This is required, e.g. to
+   * play nice with transaction manager recovery service object store.
    */
   public static final String[] IGNORED_DOT_MULE_DIRS = new String[] {"transaction-log"};
   /**
@@ -70,9 +71,9 @@ public abstract class AbstractMuleContextTestCase extends AbstractMuleTestCase {
    */
   public static final String TEST_MESSAGE = "Test Message";
   /**
-   * Default timeout for multithreaded tests (using CountDownLatch, WaitableBoolean, etc.), in milliseconds. The higher this value, the more
-   * reliable the test will be, so it should be set high for Continuous Integration. However, this can waste time during day-to-day
-   * development cycles, so you may want to temporarily lower it while debugging.
+   * Default timeout for multithreaded tests (using CountDownLatch, WaitableBoolean, etc.), in milliseconds. The higher this
+   * value, the more reliable the test will be, so it should be set high for Continuous Integration. However, this can waste time
+   * during day-to-day development cycles, so you may want to temporarily lower it while debugging.
    */
   public static final long LOCK_TIMEOUT = 30000;
   /**
@@ -80,8 +81,8 @@ public abstract class AbstractMuleContextTestCase extends AbstractMuleTestCase {
    */
   public static final int RECEIVE_TIMEOUT = 5000;
   /**
-   * The context used to run this test. Context will be created per class or per method depending on {@link #disposeContextPerClass}. The
-   * context will be started only when {@link #startContext} is true.
+   * The context used to run this test. Context will be created per class or per method depending on
+   * {@link #disposeContextPerClass}. The context will be started only when {@link #startContext} is true.
    */
   protected static MuleContext muleContext;
   private static boolean logConfigured;
@@ -95,8 +96,8 @@ public abstract class AbstractMuleContextTestCase extends AbstractMuleTestCase {
    */
   private boolean startContext = false;
   /**
-   * Indicates if the context should be instantiated per context. Default is false, which means that a context will be instantiated per test
-   * method.
+   * Indicates if the context should be instantiated per context. Default is false, which means that a context will be
+   * instantiated per test method.
    */
   private boolean disposeContextPerClass;
 
@@ -375,10 +376,10 @@ public abstract class AbstractMuleContextTestCase extends AbstractMuleTestCase {
   }
 
   /**
-   * Create an object of instance <code>clazz</code>. It will then register the object with the registry so that any dependencies are
-   * injected and then the object will be initialised. Note that if the object needs to be configured with additional state that cannot be
-   * passed into the constructor you should create an instance first set any additional data on the object then call
-   * {@link #initialiseObject(Object)}.
+   * Create an object of instance <code>clazz</code>. It will then register the object with the registry so that any dependencies
+   * are injected and then the object will be initialised. Note that if the object needs to be configured with additional state
+   * that cannot be passed into the constructor you should create an instance first set any additional data on the object then
+   * call {@link #initialiseObject(Object)}.
    *
    * @param clazz the class to create an instance of.
    * @param <T> Object of this type will be returned
@@ -390,10 +391,10 @@ public abstract class AbstractMuleContextTestCase extends AbstractMuleTestCase {
   }
 
   /**
-   * Create an object of instance <code>clazz</code>. It will then register the object with the registry so that any dependencies are
-   * injected and then the object will be initialised. Note that if the object needs to be configured with additional state that cannot be
-   * passed into the constructor you should create an instance first set any additional data on the object then call
-   * {@link #initialiseObject(Object)}.
+   * Create an object of instance <code>clazz</code>. It will then register the object with the registry so that any dependencies
+   * are injected and then the object will be initialised. Note that if the object needs to be configured with additional state
+   * that cannot be passed into the constructor you should create an instance first set any additional data on the object then
+   * call {@link #initialiseObject(Object)}.
    *
    * @param clazz the class to create an instance of.
    * @param args constructor parameters
@@ -412,9 +413,9 @@ public abstract class AbstractMuleContextTestCase extends AbstractMuleTestCase {
   }
 
   /**
-   * A convenience method that will register an object in the registry using its hashcode as the key. This will cause the object to have any
-   * objects injected and lifecycle methods called. Note that the object lifecycle will be called to the same current lifecycle as the
-   * MuleContext
+   * A convenience method that will register an object in the registry using its hashcode as the key. This will cause the object
+   * to have any objects injected and lifecycle methods called. Note that the object lifecycle will be called to the same current
+   * lifecycle as the MuleContext
    *
    * @param o the object to register and initialise it
    */

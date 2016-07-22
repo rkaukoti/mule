@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.endpoint;
 
@@ -36,6 +36,7 @@ import java.util.Map;
 import static org.mule.runtime.core.api.config.MuleProperties.MULE_SESSION_PROPERTY;
 
 public class DefaultOutboundEndpoint extends AbstractEndpoint implements OutboundEndpoint {
+
   private static final long serialVersionUID = 8860985949279708638L;
   private List<String> responseProperties;
   private MessagingExceptionHandler exceptionHandler;
@@ -46,9 +47,9 @@ public class DefaultOutboundEndpoint extends AbstractEndpoint implements Outboun
       RetryPolicyTemplate retryPolicyTemplate, AbstractRedeliveryPolicy redeliveryPolicy, String responsePropertiesList,
       EndpointMessageProcessorChainFactory messageProcessorsFactory, List<MessageProcessor> messageProcessors,
       List<MessageProcessor> responseMessageProcessors, boolean disableTransportTransformer, MediaType endpointMimeType) {
-    super(connector, endpointUri, name, properties, transactionConfig, deleteUnacceptedMessage, messageExchangePattern, responseTimeout,
-        initialState, endpointEncoding, endpointBuilderName, muleContext, retryPolicyTemplate, null, messageProcessorsFactory,
-        messageProcessors, responseMessageProcessors, disableTransportTransformer, endpointMimeType);
+    super(connector, endpointUri, name, properties, transactionConfig, deleteUnacceptedMessage, messageExchangePattern,
+        responseTimeout, initialState, endpointEncoding, endpointBuilderName, muleContext, retryPolicyTemplate, null,
+        messageProcessorsFactory, messageProcessors, responseMessageProcessors, disableTransportTransformer, endpointMimeType);
 
     if (redeliveryPolicy != null) {
       logger.warn("Ignoring redelivery policy set on outbound endpoint " + endpointUri);
@@ -87,8 +88,8 @@ public class DefaultOutboundEndpoint extends AbstractEndpoint implements Outboun
   @Override
   protected MessageProcessor createMessageProcessorChain(FlowConstruct flowContruct) throws MuleException {
     EndpointMessageProcessorChainFactory factory = getMessageProcessorsFactory();
-    MessageProcessor chain =
-        factory.createOutboundMessageProcessorChain(this, ((AbstractConnector) getConnector()).createDispatcherMessageProcessor(this));
+    MessageProcessor chain = factory.createOutboundMessageProcessorChain(this,
+        ((AbstractConnector) getConnector()).createDispatcherMessageProcessor(this));
 
     if (chain instanceof MuleContextAware) {
       ((MuleContextAware) chain).setMuleContext(getMuleContext());

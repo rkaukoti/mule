@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.jboss.transaction;
 
@@ -67,15 +67,17 @@ public class JBossArjunaTransactionManagerFactory implements TransactionManagerF
       // and com.arjuna.ats.arjuna.common.CoreEnvironmentBean, CoordinatorEnvironmentBean and ObjectStoreEnvironmentBean
       // Setting the timeout if any
       if (properties.containsKey(PROPERTY_DEFAULT_TIMEOUT)) {
-        arjPropertyManager.getCoordinatorEnvironmentBean().setDefaultTimeout(Integer.valueOf(properties.get(PROPERTY_DEFAULT_TIMEOUT)));
+        arjPropertyManager.getCoordinatorEnvironmentBean()
+            .setDefaultTimeout(Integer.valueOf(properties.get(PROPERTY_DEFAULT_TIMEOUT)));
       }
       // Setting the tx reaper timeout if any
       if (properties.containsKey(PROPERTY_TX_REAPER_TIMEOUT)) {
-        arjPropertyManager.getCoordinatorEnvironmentBean().setTxReaperTimeout(Long.valueOf(properties.get(PROPERTY_TX_REAPER_TIMEOUT)));
+        arjPropertyManager.getCoordinatorEnvironmentBean()
+            .setTxReaperTimeout(Long.valueOf(properties.get(PROPERTY_TX_REAPER_TIMEOUT)));
       }
       /*
-       * for (Map.Entry<String, String> entry : properties.entrySet()) { arjPropertyManager.propertyManager.setProperty(entry.getKey(),
-       * entry.getValue()); }
+       * for (Map.Entry<String, String> entry : properties.entrySet()) {
+       * arjPropertyManager.propertyManager.setProperty(entry.getKey(), entry.getValue()); }
        */
 
       tm = com.arjuna.ats.jta.TransactionManager.transactionManager();

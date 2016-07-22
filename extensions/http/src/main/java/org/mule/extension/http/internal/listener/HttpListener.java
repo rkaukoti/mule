@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.http.internal.listener;
 
@@ -103,9 +103,9 @@ public class HttpListener extends Source<Object, HttpRequestAttributes> implemen
   private String allowedMethods;
 
   /**
-   * Defines if the response should be sent using streaming or not. If this attribute is not present, the behavior will depend on the type
-   * of the payload (it will stream only for InputStream). If set to true, it will always stream. If set to false, it will never stream. As
-   * streaming is done the response will be sent user Transfer-Encoding: chunked.
+   * Defines if the response should be sent using streaming or not. If this attribute is not present, the behavior will depend on
+   * the type of the payload (it will stream only for InputStream). If set to true, it will always stream. If set to false, it
+   * will never stream. As streaming is done the response will be sent user Transfer-Encoding: chunked.
    */
   @Parameter
   @Optional(defaultValue = "AUTO")
@@ -113,9 +113,9 @@ public class HttpListener extends Source<Object, HttpRequestAttributes> implemen
   private HttpStreamingType responseStreamingMode;
 
   /**
-   * By default, the request will be parsed (for example, a multi part request will be mapped as a Mule message with null payload and
-   * inbound attachments with each part). If this property is set to false, no parsing will be done, and the payload will always contain the
-   * raw contents of the HTTP request.
+   * By default, the request will be parsed (for example, a multi part request will be mapped as a Mule message with null payload
+   * and inbound attachments with each part). If this property is set to false, no parsing will be done, and the payload will
+   * always contain the raw contents of the HTTP request.
    */
   @Parameter
   @Optional
@@ -169,7 +169,8 @@ public class HttpListener extends Source<Object, HttpRequestAttributes> implemen
     validatePath();
     parseRequest = config.resolveParseRequest(parseRequest);
     try {
-      requestHandlerManager = server.addRequestHandler(new ListenerRequestMatcher(methodRequestMatcher, path), getRequestHandler());
+      requestHandlerManager =
+          server.addRequestHandler(new ListenerRequestMatcher(methodRequestMatcher, path), getRequestHandler());
     } catch (Exception e) {
       throw new InitialisationException(e, this);
     }
@@ -194,6 +195,7 @@ public class HttpListener extends Source<Object, HttpRequestAttributes> implemen
 
   private RequestHandler getRequestHandler() {
     return new RequestHandler() {
+
       @Override
       public void handleRequest(HttpRequestContext requestContext, HttpResponseReadyCallback responseCallback) {
         // TODO: MULE-9698 Analyse adding security here to reject the HttpRequestContext and avoid creating a Message
@@ -202,12 +204,14 @@ public class HttpListener extends Source<Object, HttpRequestAttributes> implemen
           final boolean supportStreaming = supportsTransferEncoding(httpVersion);
           CompletionHandler<org.mule.runtime.api.message.MuleEvent, Exception, org.mule.runtime.api.message.MuleEvent> completionHandler =
               new CompletionHandler<org.mule.runtime.api.message.MuleEvent, Exception, org.mule.runtime.api.message.MuleEvent>() {
+
                 @Override
                 public void onCompletion(org.mule.runtime.api.message.MuleEvent result,
                     ExceptionCallback<org.mule.runtime.api.message.MuleEvent, Exception> exceptionCallback) {
                   // TODO: MULE-9699 Analyse adding static resource handler here
                   final HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
-                  final HttpResponse httpResponse = buildResponse((MuleEvent) result, responseBuilder, supportStreaming, exceptionCallback);
+                  final HttpResponse httpResponse =
+                      buildResponse((MuleEvent) result, responseBuilder, supportStreaming, exceptionCallback);
                   responseCallback.responseReady(httpResponse, getResponseFailureCallback(responseCallback));
                 }
 
@@ -218,19 +222,20 @@ public class HttpListener extends Source<Object, HttpRequestAttributes> implemen
                   String exceptionStatusCode =
                       ExceptionHelper.getTransportErrorMapping(HTTP.getScheme(), messagingException.getClass(), muleContext);
                   Integer statusCodeFromException = exceptionStatusCode != null ? Integer.valueOf(exceptionStatusCode) : 500;
-                  final HttpResponseBuilder failureResponseBuilder =
-                      new HttpResponseBuilder().setStatusCode(statusCodeFromException).setReasonPhrase(messagingException.getMessage());
+                  final HttpResponseBuilder failureResponseBuilder = new HttpResponseBuilder()
+                      .setStatusCode(statusCodeFromException).setReasonPhrase(messagingException.getMessage());
                   addThrottlingHeaders(failureResponseBuilder);
                   MuleEvent event = messagingException.getEvent();
-                  event.setMessage(
-                      org.mule.runtime.core.api.MuleMessage.builder(event.getMessage()).payload(messagingException.getMessage()).build());
+                  event.setMessage(org.mule.runtime.core.api.MuleMessage.builder(event.getMessage())
+                      .payload(messagingException.getMessage()).build());
 
                   HttpResponse response;
                   try {
-                    response = muleEventToHttpResponse.create(messagingException.getEvent(), failureResponseBuilder, errorResponseBuilder,
-                        supportStreaming);
+                    response = muleEventToHttpResponse.create(messagingException.getEvent(), failureResponseBuilder,
+                        errorResponseBuilder, supportStreaming);
                   } catch (MessagingException e) {
-                    response = new DefaultHttpResponse(new ResponseStatus(500, "Server error"), new MultiValueMap(), new EmptyHttpEntity());
+                    response = new DefaultHttpResponse(new ResponseStatus(500, "Server error"), new MultiValueMap(),
+                        new EmptyHttpEntity());
                   }
                   responseCallback.responseReady(response, getResponseFailureCallback(responseCallback));
                 }
@@ -247,10 +252,12 @@ public class HttpListener extends Source<Object, HttpRequestAttributes> implemen
         }
       }
 
-      private void sendErrorResponse(final HttpConstants.HttpStatus status, String message, HttpResponseReadyCallback responseCallback) {
+      private void sendErrorResponse(final HttpConstants.HttpStatus status, String message,
+          HttpResponseReadyCallback responseCallback) {
         responseCallback.responseReady(new HttpResponseBuilder().setStatusCode(status.getStatusCode())
             .setReasonPhrase(status.getReasonPhrase()).setEntity(new ByteArrayHttpEntity(message.getBytes())).build(),
             new ResponseStatusCallback() {
+
               @Override
               public void responseSendFailure(Throwable exception) {
                 logger.warn("Error while sending {} response {}", status.getStatusCode(), exception.getMessage());
@@ -314,6 +321,7 @@ public class HttpListener extends Source<Object, HttpRequestAttributes> implemen
 
   private ResponseStatusCallback getResponseFailureCallback(HttpResponseReadyCallback responseReadyCallback) {
     return new ResponseStatusCallback() {
+
       @Override
       public void responseSendFailure(Throwable throwable) {
         responseReadyCallback.responseReady(buildErrorResponse(), this);
@@ -321,7 +329,8 @@ public class HttpListener extends Source<Object, HttpRequestAttributes> implemen
 
       @Override
       public void responseSendSuccessfully() {
-        // TODO: MULE-9749 Figure out how to handle this. Maybe doing nothing is right since this will be executed later if everything goes
+        // TODO: MULE-9749 Figure out how to handle this. Maybe doing nothing is right since this will be executed later if
+        // everything goes
         // right.
         // responseCompletationCallback.responseSentSuccessfully();
       }
@@ -362,8 +371,8 @@ public class HttpListener extends Source<Object, HttpRequestAttributes> implemen
         String uriParamName = pathPart.substring(1, pathPart.length() - 1);
         if (uriParamNames.contains(uriParamName)) {
           // TODO: MULE-8946 This should throw a MuleException
-          throw new MuleRuntimeException(
-              CoreMessages.createStaticMessage(String.format("Http Listener with path %s contains duplicated uri param names", this.path)));
+          throw new MuleRuntimeException(CoreMessages
+              .createStaticMessage(String.format("Http Listener with path %s contains duplicated uri param names", this.path)));
         }
         uriParamNames.add(uriParamName);
       } else {

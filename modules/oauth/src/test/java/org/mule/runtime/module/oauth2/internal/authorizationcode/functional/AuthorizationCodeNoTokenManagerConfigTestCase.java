@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode.functional;
 
@@ -25,15 +25,15 @@ public class AuthorizationCodeNoTokenManagerConfigTestCase extends AbstractAutho
   public void hitRedirectUrlAndGetToken() throws Exception {
     configureWireMockToExpectTokenPathRequestForAuthorizationCodeGrantType();
 
-    Request.Get(redirectUrl.getValue() + "?" + OAuthConstants.CODE_PARAMETER + "=" + AUTHENTICATION_CODE).connectTimeout(REQUEST_TIMEOUT)
-        .socketTimeout(REQUEST_TIMEOUT).execute();
+    Request.Get(redirectUrl.getValue() + "?" + OAuthConstants.CODE_PARAMETER + "=" + AUTHENTICATION_CODE)
+        .connectTimeout(REQUEST_TIMEOUT).socketTimeout(REQUEST_TIMEOUT).execute();
 
     verifyRequestDoneToTokenUrlForAuthorizationCode();
 
     TokenManagerConfig tokenManagerConfig = muleContext.getRegistry().lookupObject(TokenManagerConfig.class);
 
-    final ResourceOwnerOAuthContext oauthContext =
-        tokenManagerConfig.getConfigOAuthContext().getContextForResourceOwner(ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID);
+    final ResourceOwnerOAuthContext oauthContext = tokenManagerConfig.getConfigOAuthContext()
+        .getContextForResourceOwner(ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID);
 
     assertThat(oauthContext.getAccessToken(), Is.is(ACCESS_TOKEN));
     assertThat(oauthContext.getRefreshToken(), Is.is(REFRESH_TOKEN));

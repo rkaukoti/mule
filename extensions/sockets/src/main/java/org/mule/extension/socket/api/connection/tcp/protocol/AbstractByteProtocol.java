@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.extension.socket.api.connection.tcp.protocol;
@@ -24,9 +24,9 @@ import java.net.SocketTimeoutException;
 import javax.inject.Inject;
 
 /**
- * This Abstract class has been introduced so as to have the byte protocols (i.e. the protocols that had only a single write method taking
- * just an array of bytes as a parameter) to inherit from since they will all behave the same, i.e. if the object is serializable, serialize
- * it into an array of bytes and write it.
+ * This Abstract class has been introduced so as to have the byte protocols (i.e. the protocols that had only a single write
+ * method taking just an array of bytes as a parameter) to inherit from since they will all behave the same, i.e. if the object is
+ * serializable, serialize it into an array of bytes and write it.
  *
  * @since 4.0
  */

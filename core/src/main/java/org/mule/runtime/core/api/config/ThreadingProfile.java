@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.config;
 
@@ -20,17 +20,18 @@ import java.util.concurrent.ThreadFactory;
 
 /**
  * <p>
- * Mule uses a few different pools i.e. for service threads and message dispatchers. This interface makes it easier to configure the pool.
- * Pools are created via {@link ImmutableThreadingProfile#createPool(String)} (which should really be a separate factory).
+ * Mule uses a few different pools i.e. for service threads and message dispatchers. This interface makes it easier to configure
+ * the pool. Pools are created via {@link ImmutableThreadingProfile#createPool(String)} (which should really be a separate
+ * factory).
  * </p>
  * <p>
- * {@link ImmutableThreadingProfile} is a simple read-only implementation that makes a local copy of any ThreadingProfile instance passed to
- * a constructor.
+ * {@link ImmutableThreadingProfile} is a simple read-only implementation that makes a local copy of any ThreadingProfile instance
+ * passed to a constructor.
  * </p>
  * <p>
- * {@link ChainedThreadingProfile} is a mutable implementation that can take default values from an existing ThreadingProfile. The default
- * values can be either dynamic (read whenever the value is queried) or static (a local copy of the default is made when the profile is
- * first constructed).
+ * {@link ChainedThreadingProfile} is a mutable implementation that can take default values from an existing ThreadingProfile. The
+ * default values can be either dynamic (read whenever the value is queried) or static (a local copy of the default is made when
+ * the profile is first constructed).
  * </p>
  */
 public interface ThreadingProfile extends MuleContextAware {
@@ -81,6 +82,7 @@ public interface ThreadingProfile extends MuleContextAware {
 
   // map pool exhaustion strings to their respective values
   Map<?, ?> POOL_EXHAUSTED_ACTIONS = new CaseInsensitiveMap() {
+
     private static final long serialVersionUID = 1L;
 
     // initializer
@@ -108,8 +110,8 @@ public interface ThreadingProfile extends MuleContextAware {
   };
 
   ThreadingProfile DEFAULT_THREADING_PROFILE =
-      new ImmutableThreadingProfile(DEFAULT_MAX_THREADS_ACTIVE, DEFAULT_MAX_THREADS_IDLE, DEFAULT_MAX_BUFFER_SIZE, DEFAULT_MAX_THREAD_TTL,
-          DEFAULT_THREAD_WAIT_TIMEOUT, DEFAULT_POOL_EXHAUST_ACTION, DEFAULT_DO_THREADING, null, null);
+      new ImmutableThreadingProfile(DEFAULT_MAX_THREADS_ACTIVE, DEFAULT_MAX_THREADS_IDLE, DEFAULT_MAX_BUFFER_SIZE,
+          DEFAULT_MAX_THREAD_TTL, DEFAULT_THREAD_WAIT_TIMEOUT, DEFAULT_POOL_EXHAUST_ACTION, DEFAULT_DO_THREADING, null, null);
 
   int getMaxThreadsActive();
 
@@ -164,6 +166,7 @@ public interface ThreadingProfile extends MuleContextAware {
   MuleContext getMuleContext();
 
   interface WorkManagerFactory {
+
     WorkManager createWorkManager(ThreadingProfile profile, String name, int shutdownTimeout);
   }
 }

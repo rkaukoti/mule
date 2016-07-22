@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.execution;
 
@@ -13,19 +13,20 @@ import org.mule.runtime.core.api.transaction.TransactionConfig;
 import org.mule.runtime.core.transaction.MuleTransactionConfig;
 
 /**
- * Creates an execution context that should be used when: - A flow execution starts because a message was received by a MessageReceiver -
- * Any other entry point of execution with no parent execution context
+ * Creates an execution context that should be used when: - A flow execution starts because a message was received by a
+ * MessageReceiver - Any other entry point of execution with no parent execution context
  *
- * Created a ExecutionTemplate that will: Resolve non xa transactions created before it if the TransactionConfig action requires it
- * suspend-resume xa transaction created before it if the TransactionConfig action requires it start a transaction if required by
- * TransactionConfig action resolve transaction if was started by this TransactionTemplate route any exception to exception strategy if it
- * was not already routed to it
+ * Created a ExecutionTemplate that will: Resolve non xa transactions created before it if the TransactionConfig action requires
+ * it suspend-resume xa transaction created before it if the TransactionConfig action requires it start a transaction if required
+ * by TransactionConfig action resolve transaction if was started by this TransactionTemplate route any exception to exception
+ * strategy if it was not already routed to it
  */
 public class TransactionalErrorHandlingExecutionTemplate implements ExecutionTemplate<MuleEvent> {
+
   private ExecutionInterceptor<MuleEvent> executionInterceptor;
 
-  private TransactionalErrorHandlingExecutionTemplate(MuleContext muleContext, MessagingExceptionHandler messagingExceptionHandler,
-      boolean resolveAnyTransaction) {
+  private TransactionalErrorHandlingExecutionTemplate(MuleContext muleContext,
+      MessagingExceptionHandler messagingExceptionHandler, boolean resolveAnyTransaction) {
     this(muleContext, new MuleTransactionConfig(), messagingExceptionHandler, resolveAnyTransaction);
   }
 
@@ -38,11 +39,12 @@ public class TransactionalErrorHandlingExecutionTemplate implements ExecutionTem
     tempExecutionInterceptor = new BeginAndResolveTransactionInterceptor<MuleEvent>(tempExecutionInterceptor, transactionConfig,
         muleContext, processTransactionOnException, resolveAnyTransaction);
     tempExecutionInterceptor = new ResolvePreviousTransactionInterceptor<MuleEvent>(tempExecutionInterceptor, transactionConfig);
-    tempExecutionInterceptor =
-        new SuspendXaTransactionInterceptor<MuleEvent>(tempExecutionInterceptor, transactionConfig, processTransactionOnException);
+    tempExecutionInterceptor = new SuspendXaTransactionInterceptor<MuleEvent>(tempExecutionInterceptor, transactionConfig,
+        processTransactionOnException);
     tempExecutionInterceptor = new ValidateTransactionalStateInterceptor<MuleEvent>(tempExecutionInterceptor, transactionConfig);
     tempExecutionInterceptor = new IsolateCurrentTransactionInterceptor(tempExecutionInterceptor, transactionConfig);
-    tempExecutionInterceptor = new ExternalTransactionInterceptor<MuleEvent>(tempExecutionInterceptor, transactionConfig, muleContext);
+    tempExecutionInterceptor =
+        new ExternalTransactionInterceptor<MuleEvent>(tempExecutionInterceptor, transactionConfig, muleContext);
     this.executionInterceptor = new RethrowExceptionInterceptor(tempExecutionInterceptor);
   }
 
@@ -76,8 +78,8 @@ public class TransactionalErrorHandlingExecutionTemplate implements ExecutionTem
   }
 
   /**
-   * Creates a TransactionalErrorHandlingExecutionTemplate to be used as first processing template in a flow using no particular exception
-   * listener. Exception listener configured in the flow within this ExecutionTemplate is executed will be used.
+   * Creates a TransactionalErrorHandlingExecutionTemplate to be used as first processing template in a flow using no particular
+   * exception listener. Exception listener configured in the flow within this ExecutionTemplate is executed will be used.
    *
    * @param muleContext MuleContext for this application
    * @param transactionConfig Transaction configuration

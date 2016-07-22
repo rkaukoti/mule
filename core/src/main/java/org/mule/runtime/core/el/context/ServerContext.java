@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.el.context;
 
@@ -22,8 +22,8 @@ import java.util.TimeZone;
  * <li><b>fileSeparator</b> <i>Character that separates components of a file path. This is "/" on UNIX and "\" on Windows.</i>
  * <li><b>host</b> <i>Fully qualified domain name for the server</i>
  * <li><b>ip</b> <i>The IP address of the server</i>
- * <li><b>locale</b> <i>The default locale (java.util.Locale) of the JRE. Can be used language (locale.language), country (locale.country)
- * and </i>
+ * <li><b>locale</b> <i>The default locale (java.util.Locale) of the JRE. Can be used language (locale.language), country
+ * (locale.country) and </i>
  * <li><b>javaVersion</b> <i>JRE version</i>
  * <li><b>javaVendor</b> <i>JRE vendor name</i>
  * <li><b>osName</b> <i>Operating System name</i>
@@ -45,10 +45,11 @@ import java.util.TimeZone;
  * <li><b>weekOfMonth, weekOfYear</b> <i>Integer value for week of month and year</i>
  * <li><b>month</b> <i>Integer value for month of year</i>
  * <li><b>zone</b> <i>String. The TimeZone display name.</i>
- * <li><b>withTimeZone('timeZoneString')</b> <i>Changes TimeZone to that specified using TimeZone string identifier. Returns DateTime for
- * method chaining. (Does not alter system timeZone or affect other uses of server.dateTime)</i>
- * <li><b>withLocale('localeString')</b> <i>Changes DateTime Locale to that specified using Locale string identifier. Returns DateTime for
- * method chaining.</i> Returns DateTime for method chaining. (Does not alter system locale or affect other uses of server.dateTime)</i>
+ * <li><b>withTimeZone('timeZoneString')</b> <i>Changes TimeZone to that specified using TimeZone string identifier. Returns
+ * DateTime for method chaining. (Does not alter system timeZone or affect other uses of server.dateTime)</i>
+ * <li><b>withLocale('localeString')</b> <i>Changes DateTime Locale to that specified using Locale string identifier. Returns
+ * DateTime for method chaining.</i> Returns DateTime for method chaining. (Does not alter system locale or affect other uses of
+ * server.dateTime)</i>
  * <li><b>isBefore(DateTimeContext date)</b> <i>Boolean. Returns true if the date parameter is before the current DateTime.</i>
  * <li><b>isAfter(DateTimeContext date)</b> <i>Boolean. Returns true if the date parameter is after the current DateTime.</i>
  * <li><b>addSeconds(int seconds)</b> <i>Add n seconds to the current DateTime. Returns DateTime for method chaining.</i>

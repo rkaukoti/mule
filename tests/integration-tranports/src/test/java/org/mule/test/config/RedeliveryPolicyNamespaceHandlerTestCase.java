@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.config;
 
@@ -25,6 +25,7 @@ import static org.junit.Assert.assertTrue;
  * Tests for all object stores that can be configured on an {@link org.mule.routing.IdempotentMessageFilter}.
  */
 public class RedeliveryPolicyNamespaceHandlerTestCase extends FunctionalTestCase {
+
   public RedeliveryPolicyNamespaceHandlerTestCase() {
     // we just test the wiring of the objects, no need to start the MuleContext
     setStartContext(false);
@@ -72,6 +73,7 @@ public class RedeliveryPolicyNamespaceHandlerTestCase extends FunctionalTestCase
   }
 
   public static class CustomObjectStore extends SimpleMemoryObjectStore<Serializable> {
+
     private String customProperty;
 
     public String getCustomProperty() {

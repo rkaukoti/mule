@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.config.spring.dsl.api;
@@ -11,6 +11,7 @@ import org.mule.runtime.config.spring.dsl.processor.TypeDefinitionVisitor;
  * Defines the actual {@code Class} for the domain object to be created.
  */
 public class TypeDefinition {
+
   private Class<?> type;
   private String attributeName;
   private MapEntryType mapType;
@@ -20,8 +21,8 @@ public class TypeDefinition {
   /**
    * Defines the object type that will be created for the component.
    *
-   * Only instantiable types are allowed with the exception of {@code Collection}, {@code List}, {@code Set} interfaces. In those cases the
-   * runtime will use a default implementation.
+   * Only instantiable types are allowed with the exception of {@code Collection}, {@code List}, {@code Set} interfaces. In those
+   * cases the runtime will use a default implementation.
    *
    * @param type {@code Class} of the domain model to be created.
    * @return {@code TypeDefinition} created from that type.
@@ -66,6 +67,7 @@ public class TypeDefinition {
    * @since 4.0
    */
   public static class MapEntryType<KeyType, ValueType> {
+
     private Class<KeyType> keyType;
     private Class<ValueType> valueType;
 

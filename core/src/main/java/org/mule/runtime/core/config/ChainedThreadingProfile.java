@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.config;
 
@@ -16,20 +16,21 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
 
 /**
- * This was written (perhaps too far in advance) with an eye to how we will manage default values in a dynamic environment. Since very
- * little has been decided in that direction the correct behaviour is unclear - changing the default value of "dynamic"
- * {@link org.mule.runtime.core.config.ChainedThreadingProfile#ChainedThreadingProfile(ThreadingProfile)} will switch behaviour between
- * dynamic and static chaining.
+ * This was written (perhaps too far in advance) with an eye to how we will manage default values in a dynamic environment. Since
+ * very little has been decided in that direction the correct behaviour is unclear - changing the default value of "dynamic"
+ * {@link org.mule.runtime.core.config.ChainedThreadingProfile#ChainedThreadingProfile(ThreadingProfile)} will switch behaviour
+ * between dynamic and static chaining.
  *
  * <p>
- * Note that within Spring, as far as I understand things, object creation is always ordered so that dependencies are correctly resolved. In
- * that case, in a static scenario (or in a dynamic one that rebuilds the instances) dynamic and static behaviour should be identical.
+ * Note that within Spring, as far as I understand things, object creation is always ordered so that dependencies are correctly
+ * resolved. In that case, in a static scenario (or in a dynamic one that rebuilds the instances) dynamic and static behaviour
+ * should be identical.
  * </p>
  *
  * <p>
  * Also, the "lazy" chaining is an optimisation - all hierarchies should be grounded in a final default which is
- * {@link ImmutableThreadingProfile} and, as such, return reliable values (lazy would be necessary if this is not the case, since we must
- * avoid evaluating incomplete delegates).
+ * {@link ImmutableThreadingProfile} and, as such, return reliable values (lazy would be necessary if this is not the case, since
+ * we must avoid evaluating incomplete delegates).
  * </p>
  */
 public class ChainedThreadingProfile implements ThreadingProfile {
@@ -67,8 +68,8 @@ public class ChainedThreadingProfile implements ThreadingProfile {
   }
 
   /**
-   * Generate a mutable threading profile. Default values are taken from the "delegate" argument. If dynamic is true then changes in the
-   * delegate instance are reflected in this instance.
+   * Generate a mutable threading profile. Default values are taken from the "delegate" argument. If dynamic is true then changes
+   * in the delegate instance are reflected in this instance.
    *
    * @param delegate Source of default values.
    * @param dynamic If true, changes in delegate are reflected in this instance
@@ -200,10 +201,11 @@ public class ChainedThreadingProfile implements ThreadingProfile {
   }
 
   public String toString() {
-    return "ThreadingProfile{" + "maxThreadsActive=" + maxThreadsActive + ", maxThreadsIdle=" + maxThreadsIdle + ", maxBufferSize="
-        + maxBufferSize + ", threadTTL=" + threadTTL + ", poolExhaustedAction=" + poolExhaustedAction + ", threadWaitTimeout="
-        + threadWaitTimeout + ", doThreading=" + doThreading + ", workManagerFactory=" + workManagerFactory + ", rejectedExecutionHandler="
-        + rejectedExecutionHandler + ", threadFactory=" + threadFactory + "}";
+    return "ThreadingProfile{" + "maxThreadsActive=" + maxThreadsActive + ", maxThreadsIdle=" + maxThreadsIdle
+        + ", maxBufferSize=" + maxBufferSize + ", threadTTL=" + threadTTL + ", poolExhaustedAction=" + poolExhaustedAction
+        + ", threadWaitTimeout=" + threadWaitTimeout + ", doThreading=" + doThreading + ", workManagerFactory="
+        + workManagerFactory + ", rejectedExecutionHandler=" + rejectedExecutionHandler + ", threadFactory=" + threadFactory
+        + "}";
   }
 
 }

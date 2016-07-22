@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -20,6 +20,7 @@ import java.util.Map;
  */
 // @ThreadSafe
 public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
+
   public static final String SET_PROPERTIES_METHOD = "setProperties";
 
   /**
@@ -44,8 +45,8 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
         // this should never happen since we explicitly check for the method
         // above
         if (logWarnings) {
-          logger.warn(
-              "Property: " + SET_PROPERTIES_METHOD + "=" + Map.class.getName() + " not found on object: " + object.getClass().getName());
+          logger.warn("Property: " + SET_PROPERTIES_METHOD + "=" + Map.class.getName() + " not found on object: "
+              + object.getClass().getName());
         }
       }
     } else {
@@ -56,7 +57,8 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
           BeanUtils.setProperty(object, entry.getKey().toString(), entry.getValue());
         } catch (Exception e) {
           if (logWarnings) {
-            logger.warn("Property: " + entry.getKey() + "=" + entry.getValue() + " not found on object: " + object.getClass().getName());
+            logger.warn(
+                "Property: " + entry.getKey() + "=" + entry.getValue() + " not found on object: " + object.getClass().getName());
           }
         }
       }
@@ -64,8 +66,8 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
   }
 
   /**
-   * This will overlay a map of properties on a bean. This method will validate that all properties are available on the bean before setting
-   * the properties
+   * This will overlay a map of properties on a bean. This method will validate that all properties are available on the bean
+   * before setting the properties
    *
    * @param bean the bean on which to set the properties
    * @param props a Map of properties to set on the bean
@@ -89,8 +91,8 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
   }
 
   /**
-   * The Apache BeanUtils version of this converts all values to String, which is pretty useless, it also includes stuff not defined by the
-   * user
+   * The Apache BeanUtils version of this converts all values to String, which is pretty useless, it also includes stuff not
+   * defined by the user
    *
    * @param object the object to Describe
    * @return a map of the properties on the object
@@ -110,8 +112,8 @@ public class BeanUtils extends org.apache.commons.beanutils.BeanUtils {
   }
 
   /**
-   * Similar to {@link #describe(Object)} except that it will only populate bean properties where there is a valid getter and setter method.
-   * Basically this method will describe a bean and honour its encapsulation.
+   * Similar to {@link #describe(Object)} except that it will only populate bean properties where there is a valid getter and
+   * setter method. Basically this method will describe a bean and honour its encapsulation.
    *
    * @param object the object to describe
    * @return a map of published properties

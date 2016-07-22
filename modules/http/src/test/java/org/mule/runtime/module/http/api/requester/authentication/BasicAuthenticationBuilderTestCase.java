@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.api.requester.authentication;
 
@@ -31,7 +31,8 @@ public class BasicAuthenticationBuilderTestCase extends AbstractMuleTestCase {
 
   @Test
   public void basicConfig() throws MuleException {
-    DefaultHttpAuthentication authentication = (DefaultHttpAuthentication) builder.setPassword(PASSWORD).setUsername(USERNAME).build();
+    DefaultHttpAuthentication authentication =
+        (DefaultHttpAuthentication) builder.setPassword(PASSWORD).setUsername(USERNAME).build();
     assertThat(authentication.getPassword(), is(PASSWORD));
     assertThat(authentication.getUsername(), is(USERNAME));
   }
@@ -50,7 +51,8 @@ public class BasicAuthenticationBuilderTestCase extends AbstractMuleTestCase {
 
   @Test
   public void resolvesExpressionsCorrectly() throws MuleException {
-    DefaultHttpAuthentication authentication = (DefaultHttpAuthentication) builder.setPassword(PASSWORD).setUsername(USERNAME).build();
+    DefaultHttpAuthentication authentication =
+        (DefaultHttpAuthentication) builder.setPassword(PASSWORD).setUsername(USERNAME).build();
     HttpRequestAuthentication requestAuthentication = authentication.resolveRequestAuthentication(mockMuleEvent);
     assertThat(requestAuthentication.getPassword(), is(PASSWORD));
     assertThat(requestAuthentication.getUsername(), is(USERNAME));

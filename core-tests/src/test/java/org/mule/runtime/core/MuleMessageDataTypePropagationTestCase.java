@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core;
@@ -60,7 +60,8 @@ public class MuleMessageDataTypePropagationTestCase extends AbstractMuleTestCase
   @Before
   public void setUp() throws Exception {
     when(muleContext.getConfiguration().getDefaultEncoding()).thenReturn(DEFAULT_ENCODING.name());
-    when(muleContext.getRegistry().lookupObject(OBJECT_DEFAULT_RETRY_POLICY_TEMPLATE)).thenReturn(mock(RetryPolicyTemplate.class));
+    when(muleContext.getRegistry().lookupObject(OBJECT_DEFAULT_RETRY_POLICY_TEMPLATE))
+        .thenReturn(mock(RetryPolicyTemplate.class));
     transformationService = new TransformationService(muleContext);
   }
 
@@ -104,16 +105,16 @@ public class MuleMessageDataTypePropagationTestCase extends AbstractMuleTestCase
   public void setsNullPayloadWithDataType() throws Exception {
     MuleMessage muleMessage = MuleMessage.builder().payload(TEST).build();
 
-    assertDataType(MuleMessage.builder(muleMessage).nullPayload().mediaType(APPLICATION_XML_CUSTOM).build(), Object.class, APPLICATION_XML,
-        CUSTOM_ENCODING);
+    assertDataType(MuleMessage.builder(muleMessage).nullPayload().mediaType(APPLICATION_XML_CUSTOM).build(), Object.class,
+        APPLICATION_XML, CUSTOM_ENCODING);
   }
 
   @Test
   public void setsPayloadWithDataType() throws Exception {
     MuleMessage muleMessage = MuleMessage.builder().payload(TEST).build();
 
-    assertDataType(MuleMessage.builder(muleMessage).payload(1).mediaType(APPLICATION_XML_CUSTOM).build(), Integer.class, APPLICATION_XML,
-        CUSTOM_ENCODING);
+    assertDataType(MuleMessage.builder(muleMessage).payload(1).mediaType(APPLICATION_XML_CUSTOM).build(), Integer.class,
+        APPLICATION_XML, CUSTOM_ENCODING);
   }
 
   @Test

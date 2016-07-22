@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.file;
 
@@ -19,11 +19,12 @@ import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_FILE_
 import static org.mule.compatibility.transport.file.FileConnector.PROPERTY_ORIGINAL_FILENAME;
 
 /**
- * <code>FileMuleMessageFactory</code> creates a new {@link MuleMessage} with a {@link File} or {@link InputStream} payload. Users can
- * obtain the filename and directory in the properties using <code>FileConnector.PROPERTY_FILENAME</code> and
+ * <code>FileMuleMessageFactory</code> creates a new {@link MuleMessage} with a {@link File} or {@link InputStream} payload. Users
+ * can obtain the filename and directory in the properties using <code>FileConnector.PROPERTY_FILENAME</code> and
  * <code>FileConnector.PROPERTY_DIRECTORY</code>.
  */
 public class FileMuleMessageFactory extends AbstractMuleMessageFactory {
+
   private final MimetypesFileTypeMap mimetypesFileTypeMap = new MimetypesFileTypeMap();
 
   @Override

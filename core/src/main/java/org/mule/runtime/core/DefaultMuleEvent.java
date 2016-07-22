@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core;
 
@@ -54,14 +54,15 @@ import static org.mule.runtime.core.util.ClassUtils.isConsumable;
 import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 /**
- * <code>DefaultMuleEvent</code> represents any data event occurring in the Mule environment. All data sent or received within the Mule
- * environment will be passed between components as an MuleEvent.
+ * <code>DefaultMuleEvent</code> represents any data event occurring in the Mule environment. All data sent or received within the
+ * Mule environment will be passed between components as an MuleEvent.
  * <p/>
  * The MuleEvent holds some data and provides helper methods for obtaining the data in a format that the receiving Mule component
  * understands. The event can also maintain any number of flowVariables that can be set and retrieved by Mule components.
  */
 
 public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialisable {
+
   private static final long serialVersionUID = 1L;
 
   private static Logger logger = LoggerFactory.getLogger(DefaultMuleEvent.class);
@@ -101,11 +102,13 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
   // Constructors
 
   /**
-   * Constructor used to create an event with no message source with minimal arguments and a {@link org.mule.runtime.core.api.MuleSession}
+   * Constructor used to create an event with no message source with minimal arguments and a
+   * {@link org.mule.runtime.core.api.MuleSession}
    */
-  public DefaultMuleEvent(MuleMessage message, MessageExchangePattern exchangePattern, FlowConstruct flowConstruct, MuleSession session) {
-    this(message, exchangePattern, flowConstruct, session, flowConstruct.getMuleContext().getConfiguration().getDefaultResponseTimeout(),
-        null, null);
+  public DefaultMuleEvent(MuleMessage message, MessageExchangePattern exchangePattern, FlowConstruct flowConstruct,
+      MuleSession session) {
+    this(message, exchangePattern, flowConstruct, session,
+        flowConstruct.getMuleContext().getConfiguration().getDefaultResponseTimeout(), null, null);
   }
 
   /**
@@ -129,25 +132,25 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
   /**
    * Constructor used to create an event with no message source with minimal arguments and OutputStream
    */
-  public DefaultMuleEvent(MuleMessage message, MessageExchangePattern exchangePattern, FlowConstruct flowConstruct, MuleSession session,
-      OutputStream outputStream) {
-    this(message, exchangePattern, flowConstruct, session, flowConstruct.getMuleContext().getConfiguration().getDefaultResponseTimeout(),
-        null, outputStream);
+  public DefaultMuleEvent(MuleMessage message, MessageExchangePattern exchangePattern, FlowConstruct flowConstruct,
+      MuleSession session, OutputStream outputStream) {
+    this(message, exchangePattern, flowConstruct, session,
+        flowConstruct.getMuleContext().getConfiguration().getDefaultResponseTimeout(), null, outputStream);
   }
 
   /**
    * Constructor used to create an event with no message source with all additional arguments
    */
-  public DefaultMuleEvent(MuleMessage message, MessageExchangePattern exchangePattern, FlowConstruct flowConstruct, MuleSession session,
-      int timeout, Credentials credentials, OutputStream outputStream) {
+  public DefaultMuleEvent(MuleMessage message, MessageExchangePattern exchangePattern, FlowConstruct flowConstruct,
+      MuleSession session, int timeout, Credentials credentials, OutputStream outputStream) {
     this(message, URI.create("none"), exchangePattern, flowConstruct, session, timeout, credentials, outputStream);
   }
 
   /**
    * Constructor used to create an event with a uri that idendifies the message source with minimal arguments
    */
-  public DefaultMuleEvent(MuleMessage message, URI messageSourceURI, MessageExchangePattern exchangePattern, FlowConstruct flowConstruct,
-      MuleSession session) {
+  public DefaultMuleEvent(MuleMessage message, URI messageSourceURI, MessageExchangePattern exchangePattern,
+      FlowConstruct flowConstruct, MuleSession session) {
     this(message, messageSourceURI, exchangePattern, flowConstruct, session,
         flowConstruct.getMuleContext().getConfiguration().getDefaultResponseTimeout(), null, null);
   }
@@ -155,8 +158,8 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
   /**
    * Constructor used to create an event with a uri that idendifies the message source with minimal arguments and OutputStream
    */
-  public DefaultMuleEvent(MuleMessage message, URI messageSourceURI, MessageExchangePattern exchangePattern, FlowConstruct flowConstruct,
-      MuleSession session, OutputStream outputStream) {
+  public DefaultMuleEvent(MuleMessage message, URI messageSourceURI, MessageExchangePattern exchangePattern,
+      FlowConstruct flowConstruct, MuleSession session, OutputStream outputStream) {
     this(message, messageSourceURI, exchangePattern, flowConstruct, session,
         flowConstruct.getMuleContext().getConfiguration().getDefaultResponseTimeout(), null, outputStream);
   }
@@ -164,8 +167,9 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
   /**
    * Constructor used to create an event with a identifiable message source with all additional arguments
    */
-  public DefaultMuleEvent(MuleMessage message, URI messageSourceURI, MessageExchangePattern exchangePattern, FlowConstruct flowConstruct,
-      MuleSession session, int timeout, Credentials credentials, OutputStream outputStream, ReplyToHandler replyToHandler) {
+  public DefaultMuleEvent(MuleMessage message, URI messageSourceURI, MessageExchangePattern exchangePattern,
+      FlowConstruct flowConstruct, MuleSession session, int timeout, Credentials credentials, OutputStream outputStream,
+      ReplyToHandler replyToHandler) {
     this.id = generateEventId(flowConstruct.getMuleContext());
     this.flowConstruct = flowConstruct;
     this.session = session;
@@ -189,8 +193,8 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
    * Constructor used to create an event with a identifiable message source with all additional arguments except a
    * {@link org.mule.runtime.core.api.connector.ReplyToHandler}
    */
-  public DefaultMuleEvent(MuleMessage message, URI messageSourceURI, MessageExchangePattern exchangePattern, FlowConstruct flowConstruct,
-      MuleSession session, int timeout, Credentials credentials, OutputStream outputStream) {
+  public DefaultMuleEvent(MuleMessage message, URI messageSourceURI, MessageExchangePattern exchangePattern,
+      FlowConstruct flowConstruct, MuleSession session, int timeout, Credentials credentials, OutputStream outputStream) {
     this(message, messageSourceURI, exchangePattern, flowConstruct, session, timeout, credentials, outputStream, null);
   }
 
@@ -249,15 +253,16 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
     this(rewriteEvent, rewriteEvent.getFlowConstruct(), replyToHandler, null);
   }
 
-  public DefaultMuleEvent(MuleEvent rewriteEvent, FlowConstruct flowConstruct, ReplyToHandler replyToHandler, Object replyToDestination) {
-    this(rewriteEvent.getMessage(), rewriteEvent, flowConstruct, rewriteEvent.getSession(), rewriteEvent.isSynchronous(), replyToHandler,
-        replyToDestination, true, rewriteEvent.getExchangePattern());
+  public DefaultMuleEvent(MuleEvent rewriteEvent, FlowConstruct flowConstruct, ReplyToHandler replyToHandler,
+      Object replyToDestination) {
+    this(rewriteEvent.getMessage(), rewriteEvent, flowConstruct, rewriteEvent.getSession(), rewriteEvent.isSynchronous(),
+        replyToHandler, replyToDestination, true, rewriteEvent.getExchangePattern());
   }
 
-  public DefaultMuleEvent(MuleEvent rewriteEvent, FlowConstruct flowConstruct, ReplyToHandler replyToHandler, Object replyToDestination,
-      boolean synchronous) {
-    this(rewriteEvent.getMessage(), rewriteEvent, flowConstruct, rewriteEvent.getSession(), synchronous, replyToHandler, replyToDestination,
-        true, rewriteEvent.getExchangePattern());
+  public DefaultMuleEvent(MuleEvent rewriteEvent, FlowConstruct flowConstruct, ReplyToHandler replyToHandler,
+      Object replyToDestination, boolean synchronous) {
+    this(rewriteEvent.getMessage(), rewriteEvent, flowConstruct, rewriteEvent.getSession(), synchronous, replyToHandler,
+        replyToDestination, true, rewriteEvent.getExchangePattern());
   }
 
   public DefaultMuleEvent(MuleMessage message, MuleEvent rewriteEvent, boolean synchronus) {
@@ -279,7 +284,8 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
   }
 
   /**
-   * Copy constructor to be used when synchronicity, {@link org.mule.MessageExchangePattern} and {@link ReplyToHandler} all need changing.
+   * Copy constructor to be used when synchronicity, {@link org.mule.MessageExchangePattern} and {@link ReplyToHandler} all need
+   * changing.
    */
   public DefaultMuleEvent(MuleMessage message, MuleEvent rewriteEvent, boolean synchronus, boolean shareFlowVars,
       MessageExchangePattern messageExchangePattern, ReplyToHandler replyToHandler) {
@@ -299,14 +305,14 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
 
   protected DefaultMuleEvent(MuleMessage message, MuleEvent rewriteEvent, FlowConstruct flowConstruct, MuleSession session,
       boolean synchronous) {
-    this(message, rewriteEvent, flowConstruct, session, synchronous, rewriteEvent.getReplyToHandler(), rewriteEvent.getReplyToDestination(),
-        true, rewriteEvent.getExchangePattern());
+    this(message, rewriteEvent, flowConstruct, session, synchronous, rewriteEvent.getReplyToHandler(),
+        rewriteEvent.getReplyToDestination(), true, rewriteEvent.getExchangePattern());
   }
 
   protected DefaultMuleEvent(MuleMessage message, MuleEvent rewriteEvent, FlowConstruct flowConstruct, MuleSession session,
       boolean synchronous, boolean shareFlowVars, MessageExchangePattern messageExchangePattern, ReplyToHandler replyToHandler) {
-    this(message, rewriteEvent, flowConstruct, session, synchronous, replyToHandler, rewriteEvent.getReplyToDestination(), shareFlowVars,
-        messageExchangePattern);
+    this(message, rewriteEvent, flowConstruct, session, synchronous, replyToHandler, rewriteEvent.getReplyToDestination(),
+        shareFlowVars, messageExchangePattern);
   }
 
   protected DefaultMuleEvent(MuleMessage message, MuleEvent rewriteEvent, FlowConstruct flowConstruct, MuleSession session,
@@ -339,15 +345,18 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
     this.notificationsEnabled = rewriteEvent.isNotificationsEnabled();
     this.synchronous = synchronous;
     this.nonBlocking = rewriteEvent.isAllowNonBlocking() || isFlowConstructNonBlockingProcessingStrategy();
-    this.flowCallStack = rewriteEvent.getFlowCallStack() == null ? new DefaultFlowCallStack() : rewriteEvent.getFlowCallStack().clone();
-    // We want parallel paths of the same flows (i.e.: async events) to contribute to this list and be available at the end, so we copy only
+    this.flowCallStack =
+        rewriteEvent.getFlowCallStack() == null ? new DefaultFlowCallStack() : rewriteEvent.getFlowCallStack().clone();
+    // We want parallel paths of the same flows (i.e.: async events) to contribute to this list and be available at the end, so we
+    // copy only
     // the reference.
     this.processorsTrace = rewriteEvent.getProcessorsTrace();
   }
 
-  public DefaultMuleEvent(MuleMessage message, URI messageSourceURI, String messageSourceName, MessageExchangePattern exchangePattern,
-      FlowConstruct flowConstruct, MuleSession session, int timeout, Credentials credentials, OutputStream outputStream, boolean transacted,
-      Object replyToDestination, ReplyToHandler replyToHandler) {
+  public DefaultMuleEvent(MuleMessage message, URI messageSourceURI, String messageSourceName,
+      MessageExchangePattern exchangePattern, FlowConstruct flowConstruct, MuleSession session, int timeout,
+      Credentials credentials, OutputStream outputStream, boolean transacted, Object replyToDestination,
+      ReplyToHandler replyToHandler) {
     this.id = generateEventId(flowConstruct.getMuleContext());
     this.flowConstruct = flowConstruct;
     this.session = session;
@@ -369,9 +378,10 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
 
   // Constructor with everything just in case
 
-  public DefaultMuleEvent(MuleMessage message, URI messageSourceURI, String messageSourceName, MessageExchangePattern exchangePattern,
-      FlowConstruct flowConstruct, MuleSession session, int timeout, Credentials credentials, OutputStream outputStream, boolean transacted,
-      boolean synchronous, Object replyToDestination, ReplyToHandler replyToHandler) {
+  public DefaultMuleEvent(MuleMessage message, URI messageSourceURI, String messageSourceName,
+      MessageExchangePattern exchangePattern, FlowConstruct flowConstruct, MuleSession session, int timeout,
+      Credentials credentials, OutputStream outputStream, boolean transacted, boolean synchronous, Object replyToDestination,
+      ReplyToHandler replyToHandler) {
     this.id = generateEventId(flowConstruct.getMuleContext());
     this.flowConstruct = flowConstruct;
     this.session = session;
@@ -394,8 +404,8 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
   /**
    * This method does a complete deep copy of the event.
    *
-   * This method should be used whenever the event is going to be executed in a different context and changes to that event must not effect
-   * the source event.
+   * This method should be used whenever the event is going to be executed in a different context and changes to that event must
+   * not effect the source event.
    *
    * @param event the event that must be copied
    * @return the copied event
@@ -407,7 +417,8 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
   }
 
   protected boolean resolveEventSynchronicity() {
-    return transacted || isFlowConstructSynchronous() || exchangePattern.hasResponse() && !isFlowConstructNonBlockingProcessingStrategy()
+    return transacted || isFlowConstructSynchronous()
+        || exchangePattern.hasResponse() && !isFlowConstructNonBlockingProcessingStrategy()
         || message.getInboundProperty(MULE_FORCE_SYNC_PROPERTY, Boolean.FALSE);
   }
 
@@ -421,8 +432,8 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
   }
 
   /**
-   * This method is used to determine if a property on the previous event should be ignored for the next event. This method is here because
-   * we don't have proper scoped handling of meta data yet The rules are
+   * This method is used to determine if a property on the previous event should be ignored for the next event. This method is
+   * here because we don't have proper scoped handling of meta data yet The rules are
    * <ol>
    * <li>If a property is already set on the current event don't overwrite with the previous event value
    * <li>If the property name appears in the ignoredPropertyOverrides list, then we always set it on the new event
@@ -489,8 +500,8 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
   }
 
   /**
-   * Returns the message transformed into it's recognised or expected format and then into a String. The transformer used is the one
-   * configured on the endpoint through which this event was received.
+   * Returns the message transformed into it's recognised or expected format and then into a String. The transformer used is the
+   * one configured on the endpoint through which this event was received.
    *
    * @return the message transformed into it's recognised or expected format as a Strings.
    * @throws org.mule.runtime.core.api.transformer.TransformerException if a failure occurs in the transformer
@@ -504,7 +515,8 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
 
   @Override
   public String getMessageAsString() throws MuleException {
-    return getMessageAsString(getMessage().getDataType().getMediaType().getCharset().orElse(getDefaultEncoding(getMuleContext())));
+    return getMessageAsString(
+        getMessage().getDataType().getMediaType().getCharset().orElse(getDefaultEncoding(getMuleContext())));
   }
 
   /**
@@ -517,8 +529,8 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
   @Override
   public String getMessageAsString(Charset encoding) throws MuleException {
     try {
-      MuleMessage transformedMessage =
-          getMuleContext().getTransformationService().transform(message, DataType.builder().type(String.class).charset(encoding).build());
+      MuleMessage transformedMessage = getMuleContext().getTransformationService().transform(message,
+          DataType.builder().type(String.class).charset(encoding).build());
       if (isConsumable(message.getDataType().getType())) {
         setMessage(transformedMessage);
       }
@@ -572,10 +584,10 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
   }
 
   /**
-   * Setting this parameter will stop the Mule framework from processing this event in the standard way. This allow for client code to
-   * override default behaviour. The common reasons for doing this are - 1. The service has more than one send endpoint configured; the
-   * service must dispatch to other prviders programmatically by using the service on the current event 2. The service doesn't send the
-   * current event out through a endpoint. i.e. the processing of the event stops in the uMO.
+   * Setting this parameter will stop the Mule framework from processing this event in the standard way. This allow for client
+   * code to override default behaviour. The common reasons for doing this are - 1. The service has more than one send endpoint
+   * configured; the service must dispatch to other prviders programmatically by using the service on the current event 2. The
+   * service doesn't send the current event out through a endpoint. i.e. the processing of the event stops in the uMO.
    *
    * @param stopFurtherProcessing The stopFurtherProcessing to set.
    */
@@ -637,8 +649,8 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
 
   /**
    * Invoked after deserialization. This is called when the marker interface
-   * {@link org.mule.runtime.core.util.store.DeserializationPostInitialisable} is used. This will get invoked after the object has been
-   * deserialized passing in the current MuleContext when using either
+   * {@link org.mule.runtime.core.util.store.DeserializationPostInitialisable} is used. This will get invoked after the object has
+   * been deserialized passing in the current MuleContext when using either
    * {@link org.mule.runtime.core.transformer.wire.SerializationWireFormat},
    * {@link org.mule.runtime.core.transformer.wire.SerializedMuleMessageWireFormat} or the
    * {@link org.mule.runtime.core.transformer.simple.ByteArrayToSerializable} transformer.
@@ -766,8 +778,8 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
   }
 
   /**
-   * Used to fetch the {@link #flowConstruct} after deserealization since its a transient value. This is not part of the public API and
-   * should only be used internally for serialization/deserialization
+   * Used to fetch the {@link #flowConstruct} after deserealization since its a transient value. This is not part of the public
+   * API and should only be used internally for serialization/deserialization
    *
    * @param serviceName the name of the service
    */
@@ -847,12 +859,12 @@ public class DefaultMuleEvent implements MuleEvent, DeserializationPostInitialis
    * @deprecated This should be used only by the compatibility module.
    */
   @Deprecated
-  public void setEndpointFields(Credentials credentials, Charset encoding, MessageExchangePattern exchangePattern, String name, URI uri,
-      int timeout, boolean transacted) {
+  public void setEndpointFields(Credentials credentials, Charset encoding, MessageExchangePattern exchangePattern, String name,
+      URI uri, int timeout, boolean transacted) {
     this.credentials = credentials;
     if (!message.getDataType().getMediaType().getCharset().isPresent() && encoding != null) {
-      this.message =
-          MuleMessage.builder(message).mediaType(DataType.builder(message.getDataType()).charset(encoding).build().getMediaType()).build();
+      this.message = MuleMessage.builder(message)
+          .mediaType(DataType.builder(message.getDataType()).charset(encoding).build().getMediaType()).build();
     }
     this.exchangePattern = exchangePattern;
     this.messageSourceName = name;

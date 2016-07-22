@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.requester;
 
@@ -61,7 +61,8 @@ public class HttpRequestStatusCodesTestCase extends AbstractHttpRequestTestCase 
   }
 
   private void assertFailure(int statusCode, String flowName) throws Exception {
-    MessagingException e = flowRunner(flowName).withPayload(TEST_MESSAGE).withFlowVariable("code", statusCode).runExpectingException();
+    MessagingException e =
+        flowRunner(flowName).withPayload(TEST_MESSAGE).withFlowVariable("code", statusCode).runExpectingException();
 
     MuleMessage response = e.getEvent().getMessage();
     assertThat(response.getExceptionPayload().getException().getCause(), instanceOf(ResponseValidatorException.class));

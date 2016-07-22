@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.execution;
 
@@ -145,8 +145,8 @@ public class TransactionalErrorHandlingExecutionTemplateTestCase extends Transac
 
   @Test
   public void testInnerTransactionCreatedAndNotResolved() throws Exception {
-    ExecutionTemplate transactionTemplate = TransactionalErrorHandlingExecutionTemplate.createScopeExecutionTemplate(mockMuleContext,
-        new MuleTransactionConfig(), mockMessagingExceptionHandler);
+    ExecutionTemplate transactionTemplate = TransactionalErrorHandlingExecutionTemplate
+        .createScopeExecutionTemplate(mockMuleContext, new MuleTransactionConfig(), mockMessagingExceptionHandler);
     configureCatchExceptionListenerCall();
     when(mockMessagingException.causedRollback()).thenReturn(false);
     try {
@@ -206,7 +206,8 @@ public class TransactionalErrorHandlingExecutionTemplateTestCase extends Transac
       exceptionStrategy.setMuleContext(mockMuleContext);
       when(mockMuleContext.getNotificationManager()).thenReturn(mock(ServerNotificationManager.class));
       when(mockMuleContext.getRegistry()).thenReturn(mock(MuleRegistry.class));
-      exceptionStrategy.handleException((Exception) invocationOnMock.getArguments()[0], (MuleEvent) invocationOnMock.getArguments()[1]);
+      exceptionStrategy.handleException((Exception) invocationOnMock.getArguments()[0],
+          (MuleEvent) invocationOnMock.getArguments()[1]);
       return mockResultEvent;
     });
     return mockResultEvent;

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.routing.outbound;
 
@@ -36,13 +36,15 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class FilteringOutboundRouterTestCase extends AbstractMuleContextEndpointTestCase {
+
   public FilteringOutboundRouterTestCase() {
     setStartContext(true);
   }
 
   @Test
   public void testFilteringOutboundRouterAsync() throws Exception {
-    OutboundEndpoint endpoint1 = getTestOutboundEndpoint("Test1Provider", "test://Test1Provider?exchangePattern=request-response");
+    OutboundEndpoint endpoint1 =
+        getTestOutboundEndpoint("Test1Provider", "test://Test1Provider?exchangePattern=request-response");
     assertNotNull(endpoint1);
     OutboundEndpoint mockEndpoint = RouterTestUtils.createMockEndpoint(endpoint1);
 
@@ -73,6 +75,7 @@ public class FilteringOutboundRouterTestCase extends AbstractMuleContextEndpoint
     assertTrue(!router.isMatch(getTestEvent(message)));
 
     router.setTransformers(Arrays.<Transformer>asList(new AbstractTransformer() {
+
       @Override
       public Object doTransform(Object src, Charset outputEncoding) throws TransformerException {
         return ((Exception) src).getMessage();
@@ -84,7 +87,8 @@ public class FilteringOutboundRouterTestCase extends AbstractMuleContextEndpoint
 
   @Test
   public void testFilteringOutboundRouterSync() throws Exception {
-    OutboundEndpoint endpoint1 = getTestOutboundEndpoint("Test1Provider", "test://Test1Provider?exchangePattern=request-response");
+    OutboundEndpoint endpoint1 =
+        getTestOutboundEndpoint("Test1Provider", "test://Test1Provider?exchangePattern=request-response");
     assertNotNull(endpoint1);
     OutboundEndpoint mockEndpoint = RouterTestUtils.createMockEndpoint(endpoint1);
 

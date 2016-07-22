@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.delegate;
 
@@ -21,12 +21,12 @@ import java.util.Iterator;
 import java.util.Set;
 
 /**
- * This allows a set of definition parsers to be used, one after another, to process the same element. This lets multiple beans be generated
- * from a single element.
+ * This allows a set of definition parsers to be used, one after another, to process the same element. This lets multiple beans be
+ * generated from a single element.
  *
  * <p>
- * Since each bean typically needs a spearate name, this class guarantees that the name and id attributes are reset before each call.
- * Delegates can then modify these on the element without worrying about interfering with other parsers.
+ * Since each bean typically needs a spearate name, this class guarantees that the name and id attributes are reset before each
+ * call. Delegates can then modify these on the element without worrying about interfering with other parsers.
  * </p>
  *
  * <p>
@@ -48,16 +48,16 @@ public abstract class AbstractSerialDelegatingDefinitionParser extends AbstractD
   }
 
   /**
-   * @param doReset Should the name be reset after called. This is typically true (it protects the parent from changes made by children)
-   *        unless this is itself nested.
+   * @param doReset Should the name be reset after called. This is typically true (it protects the parent from changes made by
+   *        children) unless this is itself nested.
    */
   public AbstractSerialDelegatingDefinitionParser(boolean doReset) {
     this.doReset = doReset;
   }
 
   /**
-   * A utility class for selecting certain attributes. If the attributes are enabled, the default is set to block others; if specific
-   * attributes are disabled the default is set to allow others.
+   * A utility class for selecting certain attributes. If the attributes are enabled, the default is set to block others; if
+   * specific attributes are disabled the default is set to allow others.
    */
   public static void enableAttributes(MuleDefinitionParser delegate, String[] attributes, boolean enable) {
     // if enabling specific attributes, block globally
@@ -136,12 +136,14 @@ public abstract class AbstractSerialDelegatingDefinitionParser extends AbstractD
     return handledExceptions.contains(e.getClass());
   }
 
-  protected AbstractBeanDefinition doSingleBean(int index, MuleDefinitionParser parser, Element element, ParserContext parserContext) {
+  protected AbstractBeanDefinition doSingleBean(int index, MuleDefinitionParser parser, Element element,
+      ParserContext parserContext) {
     return parser.muleParse(element, parserContext);
   }
 
   protected MuleDefinitionParserConfiguration addDelegate(MuleDefinitionParser delegate) {
     delegate.registerPreProcessor(new PreProcessor() {
+
       public void preProcess(PropertyConfiguration config, Element element) {
         if (first) {
           originalId = element.getAttribute(AbstractMuleBeanDefinitionParser.ATTRIBUTE_ID);

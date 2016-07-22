@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.issues;
 
@@ -17,9 +17,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 /**
- * This is a simplified version of {@link XmlTransformerFunctionalTestCase} The {@link #testObjectXmlOut()} method hangs intermittently.
+ * This is a simplified version of {@link XmlTransformerFunctionalTestCase} The {@link #testObjectXmlOut()} method hangs
+ * intermittently.
  */
 public class MulticastRouterMule2136TestCase extends AbstractXmlFunctionalTestCase {
+
   public static final int TEST_COUNT = 2000; // cut down from 10k messages, since
   // it seems a little much for the
   // continuous build
@@ -88,6 +90,7 @@ public class MulticastRouterMule2136TestCase extends AbstractXmlFunctionalTestCa
   }
 
   public static class Parent {
+
     private Child child;
 
     public Parent() {

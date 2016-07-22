@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.listener.grizzly;
 
@@ -93,12 +93,14 @@ public class GrizzlyServerManager implements HttpServerManager {
     // Set filterchain as a Transport Processor
     transport.setProcessor(serverFilterChainBuilder.build());
 
-    idleTimeoutExecutorService = Executors.newCachedThreadPool(new NamedThreadFactory(threadNamePrefix + IDLE_TIMEOUT_THREADS_PREFIX_NAME));
+    idleTimeoutExecutorService =
+        Executors.newCachedThreadPool(new NamedThreadFactory(threadNamePrefix + IDLE_TIMEOUT_THREADS_PREFIX_NAME));
     idleTimeoutDelayedExecutor = new DelayedExecutor(idleTimeoutExecutorService);
 
   }
 
-  private void configureServerSocketProperties(TCPNIOTransportBuilder transportBuilder, TcpServerSocketProperties serverSocketProperties) {
+  private void configureServerSocketProperties(TCPNIOTransportBuilder transportBuilder,
+      TcpServerSocketProperties serverSocketProperties) {
     if (serverSocketProperties.getKeepAlive() != null) {
       transportBuilder.setKeepAlive(serverSocketProperties.getKeepAlive());
     }
@@ -129,8 +131,8 @@ public class GrizzlyServerManager implements HttpServerManager {
   }
 
   /**
-   * Starts the transport and the {@code idleTimeoutExecutorService} if not started. This is because they should be started lazily when the
-   * first server is registered (otherwise there will be Grizzly threads even if there is no listener-config in the app).
+   * Starts the transport and the {@code idleTimeoutExecutorService} if not started. This is because they should be started lazily
+   * when the first server is registered (otherwise there will be Grizzly threads even if there is no listener-config in the app).
    */
   private void startTransportIfNotStarted() throws IOException {
     if (!transportStarted) {
@@ -160,27 +162,31 @@ public class GrizzlyServerManager implements HttpServerManager {
       logger.debug("Creating https server socket for ip {} and port {}", serverAddress.getIp(), serverAddress.getPort());
     }
     if (servers.containsKey(serverAddress)) {
-      throw new IllegalStateException(String.format("Could not create a server for %s since there's already one.", serverAddress));
+      throw new IllegalStateException(
+          String.format("Could not create a server for %s since there's already one.", serverAddress));
     }
     startTransportIfNotStarted();
     sslFilterDelegate.addFilterForAddress(serverAddress, createSslFilter(tlsContextFactory));
-    httpServerFilterDelegate.addFilterForAddress(serverAddress, createHttpServerFilter(usePersistentConnections, connectionIdleTimeout));
+    httpServerFilterDelegate.addFilterForAddress(serverAddress,
+        createHttpServerFilter(usePersistentConnections, connectionIdleTimeout));
     executorProvider.addExecutor(serverAddress, workManagerSource);
     final GrizzlyServer grizzlyServer = new GrizzlyServer(serverAddress, transport, httpListenerRegistry);
     servers.put(serverAddress, grizzlyServer);
     return grizzlyServer;
   }
 
-  public Server createServerFor(ServerAddress serverAddress, WorkManagerSource workManagerSource, boolean usePersistentConnections,
-      int connectionIdleTimeout) throws IOException {
+  public Server createServerFor(ServerAddress serverAddress, WorkManagerSource workManagerSource,
+      boolean usePersistentConnections, int connectionIdleTimeout) throws IOException {
     if (logger.isDebugEnabled()) {
       logger.debug("Creating http server socket for ip {} and port {}", serverAddress.getIp(), serverAddress.getPort());
     }
     if (servers.containsKey(serverAddress)) {
-      throw new IllegalStateException(String.format("Could not create a server for %s since there's already one.", serverAddress));
+      throw new IllegalStateException(
+          String.format("Could not create a server for %s since there's already one.", serverAddress));
     }
     startTransportIfNotStarted();
-    httpServerFilterDelegate.addFilterForAddress(serverAddress, createHttpServerFilter(usePersistentConnections, connectionIdleTimeout));
+    httpServerFilterDelegate.addFilterForAddress(serverAddress,
+        createHttpServerFilter(usePersistentConnections, connectionIdleTimeout));
     executorProvider.addExecutor(serverAddress, workManagerSource);
     final GrizzlyServer grizzlyServer = new GrizzlyServer(serverAddress, transport, httpListenerRegistry);
     servers.put(serverAddress, grizzlyServer);
@@ -200,7 +206,8 @@ public class GrizzlyServerManager implements HttpServerManager {
   private SSLFilter createSslFilter(final TlsContextFactory tlsContextFactory) {
     try {
       boolean clientAuth = tlsContextFactory.isTrustStoreConfigured();
-      final SSLEngineConfigurator serverConfig = new SSLEngineConfigurator(tlsContextFactory.createSslContext(), false, clientAuth, false);
+      final SSLEngineConfigurator serverConfig =
+          new SSLEngineConfigurator(tlsContextFactory.createSslContext(), false, clientAuth, false);
       final String[] enabledProtocols = tlsContextFactory.getEnabledProtocols();
       if (enabledProtocols != null) {
         serverConfig.setEnabledProtocols(enabledProtocols);
@@ -223,7 +230,8 @@ public class GrizzlyServerManager implements HttpServerManager {
       ka.setMaxRequestsCount(MAX_KEEP_ALIVE_REQUESTS);
       ka.setIdleTimeoutInSeconds(convertToSeconds(connectionIdleTimeout));
     }
-    HttpServerFilter httpServerFilter = new HttpServerFilter(true, retrieveMaximumHeaderSectionSize(), ka, idleTimeoutDelayedExecutor);
+    HttpServerFilter httpServerFilter =
+        new HttpServerFilter(true, retrieveMaximumHeaderSectionSize(), ka, idleTimeoutDelayedExecutor);
     httpServerFilter.getMonitoringConfig().addProbes(new HttpMessageLogger(LISTENER));
     httpServerFilter.setAllowPayloadForUndefinedHttpMethods(true);
     return httpServerFilter;

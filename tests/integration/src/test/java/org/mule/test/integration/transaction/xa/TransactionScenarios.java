@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.transaction.xa;
 
@@ -16,7 +16,8 @@ public class TransactionScenarios {
   private final OutboundMessagesCounter outboundMessagesVerifier;
   private int verificationTimeout = 1000;
 
-  public TransactionScenarios(InboundMessagesGenerator inboundMessagesGenerator, OutboundMessagesCounter outboundMessagesVerifier) {
+  public TransactionScenarios(InboundMessagesGenerator inboundMessagesGenerator,
+      OutboundMessagesCounter outboundMessagesVerifier) {
     this.inboundMessagesGenerator = inboundMessagesGenerator;
     this.outboundMessagesVerifier = outboundMessagesVerifier;
   }
@@ -58,6 +59,7 @@ public class TransactionScenarios {
         assertThat(outboundMessagesVerifier.numberOfMessagesThatArrived(), Is.is(0));
       } else {
         new PollingProber(10000, 100).check(new Probe() {
+
           @Override
           public boolean isSatisfied() {
             try {

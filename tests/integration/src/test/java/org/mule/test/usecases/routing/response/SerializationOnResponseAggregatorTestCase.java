@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.usecases.routing.response;
 
@@ -25,6 +25,7 @@ import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
 import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 public class SerializationOnResponseAggregatorTestCase extends FunctionalTestCase {
+
   @Rule
   public DynamicPort dynamicPort = new DynamicPort("port1");
 
@@ -35,15 +36,17 @@ public class SerializationOnResponseAggregatorTestCase extends FunctionalTestCas
 
   @Test
   public void testSyncResponse() throws Exception {
-    muleContext.getRegistry().registerObject(MuleProperties.OBJECT_STORE_DEFAULT_IN_MEMORY_NAME, new TestObjectStore(muleContext));
+    muleContext.getRegistry().registerObject(MuleProperties.OBJECT_STORE_DEFAULT_IN_MEMORY_NAME,
+        new TestObjectStore(muleContext));
     MuleClient client = muleContext.getClient();
-    MuleMessage message =
-        client.send("http://localhost:" + dynamicPort.getNumber(), getTestMuleMessage("request"), newOptions().method(POST.name()).build());
+    MuleMessage message = client.send("http://localhost:" + dynamicPort.getNumber(), getTestMuleMessage("request"),
+        newOptions().method(POST.name()).build());
     assertNotNull(message);
     assertThat(new String(getPayloadAsBytes(message)), is("request processed"));
   }
 
   private static class TestObjectStore extends SimpleMemoryObjectStore<Serializable> {
+
     private ObjectSerializer serializer;
 
     private TestObjectStore(MuleContext muleContext) {

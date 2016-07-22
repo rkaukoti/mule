@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.functional;
 
@@ -13,9 +13,9 @@ import org.mule.runtime.core.api.context.notification.ServerNotificationListener
  * {@link MuleContext#registerListener(ServerNotificationListener)} You can receive {@link FunctionalTestNotification}s from the
  * {@link FunctionalTestComponent}.
  *
- * This Notification contains the current MuleEventContext and reply message. The resource identifier for this event is the service name
- * that received the message. This means you can register to listen to Notifications from a selected {@link FunctionalTestComponent}. i.e.
- * <code>
+ * This Notification contains the current MuleEventContext and reply message. The resource identifier for this event is the
+ * service name that received the message. This means you can register to listen to Notifications from a selected
+ * {@link FunctionalTestComponent}. i.e. <code>
  * muleContext.registerListener(this, "*JmsTestCompoennt");
  * </code>
  *

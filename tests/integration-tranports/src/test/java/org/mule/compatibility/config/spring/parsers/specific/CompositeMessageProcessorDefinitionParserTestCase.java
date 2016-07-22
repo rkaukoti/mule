@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.config.spring.parsers.specific;
 
@@ -15,6 +15,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupEndpointBuilder;
 
 public class CompositeMessageProcessorDefinitionParserTestCase extends FunctionalTestCase {
+
   @Override
   protected String getConfigFile() {
     return "org/mule/config/spring/parsers/specific/composite-message-processor.xml";

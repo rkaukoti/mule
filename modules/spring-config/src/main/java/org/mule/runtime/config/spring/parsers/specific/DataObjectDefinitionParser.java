@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
@@ -16,10 +16,11 @@ import org.springframework.context.ApplicationContextAware;
 import org.w3c.dom.Element;
 
 /**
- * Represents a static config data object where the body of the element can be the data of a file attribute can be set. Data will be loaded
- * from file into an {@link java.io.InputStream}
+ * Represents a static config data object where the body of the element can be the data of a file attribute can be set. Data will
+ * be loaded from file into an {@link java.io.InputStream}
  */
 public class DataObjectDefinitionParser extends ChildDefinitionParser {
+
   /**
    * The class will be inferred from the class attribute
    *
@@ -59,6 +60,7 @@ public class DataObjectDefinitionParser extends ChildDefinitionParser {
   }
 
   public static class DataObjectFactoryBean implements FactoryBean, ApplicationContextAware {
+
     private String ref;
     private boolean binary;
     private String file;

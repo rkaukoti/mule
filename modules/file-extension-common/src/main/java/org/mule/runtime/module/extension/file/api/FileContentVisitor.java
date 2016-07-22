@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.file.api;
 
@@ -11,8 +11,8 @@ import java.io.InputStream;
 /**
  * Implementation of the visitor pattern meant to operate over the type of a file's content.
  * <p>
- * This interface includes default implementations of all the visit methods so that that implementors can implement only he methods that
- * result meaningful on each particular use case.
+ * This interface includes default implementations of all the visit methods so that that implementors can implement only he
+ * methods that result meaningful on each particular use case.
  *
  * @since 4.0
  */

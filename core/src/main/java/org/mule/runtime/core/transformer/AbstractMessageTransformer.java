@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer;
 
@@ -21,19 +21,21 @@ import org.mule.runtime.core.util.StringMessageUtils;
 import java.nio.charset.Charset;
 
 /**
- * <code>AbstractMessageTransformer</code> is a transformer that has a reference to the current message. This message can be used to obtain
- * properties associated with the current message which are useful to the transform. Note that when part of a transform chain, the
- * MuleMessage payload reflects the pre-transform message state, unless there is no current event for this thread, then the message will be
- * a new DefaultMuleMessage with the src as its payload. Transformers should always work on the src object not the message payload.
+ * <code>AbstractMessageTransformer</code> is a transformer that has a reference to the current message. This message can be used
+ * to obtain properties associated with the current message which are useful to the transform. Note that when part of a transform
+ * chain, the MuleMessage payload reflects the pre-transform message state, unless there is no current event for this thread, then
+ * the message will be a new DefaultMuleMessage with the src as its payload. Transformers should always work on the src object not
+ * the message payload.
  *
  * @see org.mule.runtime.core.api.MuleMessage
  */
 
 public abstract class AbstractMessageTransformer extends AbstractTransformer implements MessageTransformer {
+
   /**
    * @param dataType the type to check against
-   * @param exactMatch if set to true, this method will look for an exact match to the data type, if false it will look for a compatible
-   *        data type.
+   * @param exactMatch if set to true, this method will look for an exact match to the data type, if false it will look for a
+   *        compatible data type.
    * @return whether the data type is supported
    */
   @Override

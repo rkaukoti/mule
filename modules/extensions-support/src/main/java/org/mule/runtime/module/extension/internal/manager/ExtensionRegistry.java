@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.manager;
 
@@ -55,6 +55,7 @@ public final class ExtensionRegistry {
   private final MuleRegistry registry;
   private final LoadingCache<ExtensionModel, List<ConfigurationProvider>> providersByExtension =
       CacheBuilder.newBuilder().build(new CacheLoader<ExtensionModel, List<ConfigurationProvider>>() {
+
         @Override
         public List<ConfigurationProvider> load(ExtensionModel key) throws Exception {
           return registry.lookupObjects(ConfigurationProvider.class).stream()
@@ -86,7 +87,8 @@ public final class ExtensionRegistry {
         try {
           registry.registerTransformer(new StringToEnum(enumClass));
         } catch (MuleException e) {
-          throw new MuleRuntimeException(createStaticMessage("Could not register transformer for enum " + enumClass.getName()), e);
+          throw new MuleRuntimeException(createStaticMessage("Could not register transformer for enum " + enumClass.getName()),
+              e);
         }
       }
     });
@@ -100,7 +102,8 @@ public final class ExtensionRegistry {
   }
 
   /**
-   * @return an immutable view of the currently registered {@link ExtensionModel extensionModels} which name equals {@code extensionName}
+   * @return an immutable view of the currently registered {@link ExtensionModel extensionModels} which name equals
+   *         {@code extensionName}
    */
   Set<RuntimeExtensionModel> getExtensions(String extensionName) {
     return extensions.entrySet().stream().filter(entry -> entry.getKey().getName().equals(extensionName)).map(Map.Entry::getValue)
@@ -108,7 +111,8 @@ public final class ExtensionRegistry {
   }
 
   /**
-   * @return an {@link Optional} with the {@link ExtensionModel} which name and vendor equals {@code extensionName} and {@code vendor}
+   * @return an {@link Optional} with the {@link ExtensionModel} which name and vendor equals {@code extensionName} and
+   *         {@code vendor}
    */
   Optional<RuntimeExtensionModel> getExtension(String extensionName, String vendor) {
     return Optional.ofNullable(extensions.get(new ExtensionEntityKey(extensionName, vendor)));
@@ -124,8 +128,8 @@ public final class ExtensionRegistry {
   }
 
   /**
-   * Returns all the {@link ConfigurationProvider configuration providers} which serve {@link ConfigurationModel configuration models} owned
-   * by {@code extensionModel}
+   * Returns all the {@link ConfigurationProvider configuration providers} which serve {@link ConfigurationModel configuration
+   * models} owned by {@code extensionModel}
    *
    * @param extensionModel a registered {@link ExtensionModel}
    * @return an immutable {@link List}. Might be empty but will never be {@code null}
@@ -159,16 +163,16 @@ public final class ExtensionRegistry {
     try {
       registry.registerObject(configurationProvider.getName(), configurationProvider);
     } catch (RegistrationException e) {
-      throw new MuleRuntimeException(
-          createStaticMessage(format("Found exception while registering configuration provider '%s'", configurationProvider.getName())), e);
+      throw new MuleRuntimeException(createStaticMessage(
+          format("Found exception while registering configuration provider '%s'", configurationProvider.getName())), e);
     }
 
     providersByExtension.invalidate(configurationProvider.getModel().getExtensionModel());
   }
 
   /**
-   * Returns a {@link Multimap} which keys are registrations keys and the values are the {@link ConfigurationInstance} instances which are
-   * expired
+   * Returns a {@link Multimap} which keys are registrations keys and the values are the {@link ConfigurationInstance} instances
+   * which are expired
    *
    * @return an immutable {@link Multimap}
    */

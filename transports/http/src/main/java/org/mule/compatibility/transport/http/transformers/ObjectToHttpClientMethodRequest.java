@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.transformers;
 
@@ -64,9 +64,11 @@ import static org.mule.compatibility.transport.http.HttpConnector.HTTP_PARAMS_PR
 import static org.mule.compatibility.transport.http.HttpConstants.HEADER_CONTENT_TYPE;
 
 /**
- * <code>ObjectToHttpClientMethodRequest</code> transforms a MuleMessage into a HttpClient HttpMethod that represents an HttpRequest.
+ * <code>ObjectToHttpClientMethodRequest</code> transforms a MuleMessage into a HttpClient HttpMethod that represents an
+ * HttpRequest.
  */
 public class ObjectToHttpClientMethodRequest extends AbstractMessageTransformer implements EndpointAwareTransformer {
+
   /**
    * The endpoint that this transformer instance is configured on
    */
@@ -253,7 +255,8 @@ public class ObjectToHttpClientMethodRequest extends AbstractMessageTransformer 
   protected URI getURI(MuleMessage message) throws URISyntaxException, TransformerException {
     String endpointAddress = message.getOutboundProperty(MuleProperties.MULE_ENDPOINT_PROPERTY, null);
     if (endpointAddress == null) {
-      throw new TransformerException(HttpMessages.eventPropertyNotSetCannotProcessRequest(MuleProperties.MULE_ENDPOINT_PROPERTY), this);
+      throw new TransformerException(HttpMessages.eventPropertyNotSetCannotProcessRequest(MuleProperties.MULE_ENDPOINT_PROPERTY),
+          this);
     }
     return new URI(endpointAddress);
   }
@@ -338,8 +341,10 @@ public class ObjectToHttpClientMethodRequest extends AbstractMessageTransformer 
         httpMethod.addRequestHeader(headerName, headerValue);
       }
 
-      else if (!HttpConstants.RESPONSE_HEADER_NAMES.containsKey(headerName) && !HttpConstants.HEADER_CONTENT_TYPE.contains(headerName)
-          && !HttpConnector.HTTP_INBOUND_PROPERTIES.contains(headerName) && !HttpConnector.HTTP_COOKIES_PROPERTY.equals(headerName)) {
+      else if (!HttpConstants.RESPONSE_HEADER_NAMES.containsKey(headerName)
+          && !HttpConstants.HEADER_CONTENT_TYPE.contains(headerName)
+          && !HttpConnector.HTTP_INBOUND_PROPERTIES.contains(headerName)
+          && !HttpConnector.HTTP_COOKIES_PROPERTY.equals(headerName)) {
         httpMethod.addRequestHeader(headerName, headerValue);
       }
     }
@@ -383,9 +388,8 @@ public class ObjectToHttpClientMethodRequest extends AbstractMessageTransformer 
           }
         }
 
-        parts[i] = new FilePart(attachmentName,
-            new ByteArrayPartSource(StringUtils.defaultString(fileName, attachmentName), IOUtils.toByteArray(dh.getInputStream())),
-            dh.getContentType(), null);
+        parts[i] = new FilePart(attachmentName, new ByteArrayPartSource(StringUtils.defaultString(fileName, attachmentName),
+            IOUtils.toByteArray(dh.getInputStream())), dh.getContentType(), null);
       }
     }
 

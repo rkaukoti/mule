@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal;
 
@@ -124,7 +124,8 @@ public class FlatExtensionDeclarationTestCase extends BaseExtensionDeclarationTe
 
   @Test
   public void defaultConfiguration() throws Exception {
-    RuntimeConfigurationModel configurationModel = (RuntimeConfigurationModel) extensionModel.getConfigurationModel(CONFIG_NAME).get();
+    RuntimeConfigurationModel configurationModel =
+        (RuntimeConfigurationModel) extensionModel.getConfigurationModel(CONFIG_NAME).get();
     assertThat(configurationModel, is(notNullValue()));
     assertThat(configurationModel.getName(), equalTo(CONFIG_NAME));
     assertThat(configurationModel.getDescription(), equalTo(CONFIG_DESCRIPTION));
@@ -132,18 +133,21 @@ public class FlatExtensionDeclarationTestCase extends BaseExtensionDeclarationTe
 
     List<ParameterModel> parameterModels = configurationModel.getParameterModels();
     assertThat(parameterModels, hasSize(4));
-    assertParameter(parameterModels.get(0), ADDRESS, SERVICE_ADDRESS, SUPPORTED, true, toMetadataType(String.class), StringType.class,
-        null);
-    assertParameter(parameterModels.get(1), PORT, SERVICE_PORT, SUPPORTED, true, toMetadataType(String.class), StringType.class, null);
-    assertParameter(parameterModels.get(2), SERVICE, SERVICE_NAME, SUPPORTED, true, toMetadataType(String.class), StringType.class, null);
-    assertParameter(parameterModels.get(3), WSDL_LOCATION, URI_TO_FIND_THE_WSDL, NOT_SUPPORTED, true, toMetadataType(String.class),
+    assertParameter(parameterModels.get(0), ADDRESS, SERVICE_ADDRESS, SUPPORTED, true, toMetadataType(String.class),
         StringType.class, null);
+    assertParameter(parameterModels.get(1), PORT, SERVICE_PORT, SUPPORTED, true, toMetadataType(String.class), StringType.class,
+        null);
+    assertParameter(parameterModels.get(2), SERVICE, SERVICE_NAME, SUPPORTED, true, toMetadataType(String.class),
+        StringType.class, null);
+    assertParameter(parameterModels.get(3), WSDL_LOCATION, URI_TO_FIND_THE_WSDL, NOT_SUPPORTED, true,
+        toMetadataType(String.class), StringType.class, null);
   }
 
   @Test
   public void onlyOneConfig() throws Exception {
     assertThat(extensionModel.getConfigurationModels(), hasSize(1));
-    assertThat(extensionModel.getConfigurationModels().get(0), is(sameInstance(extensionModel.getConfigurationModel(CONFIG_NAME).get())));
+    assertThat(extensionModel.getConfigurationModels().get(0),
+        is(sameInstance(extensionModel.getConfigurationModel(CONFIG_NAME).get())));
   }
 
   public void noSuchConfiguration() throws Exception {
@@ -206,14 +210,15 @@ public class FlatExtensionDeclarationTestCase extends BaseExtensionDeclarationTe
 
   @Test(expected = IllegalParameterModelDefinitionException.class)
   public void operationWithParameterNamedName() {
-    extensionDeclarer.withOperation("invalidOperation").describedAs("").withRequiredParameter("name").ofType(toMetadataType(String.class));
+    extensionDeclarer.withOperation("invalidOperation").describedAs("").withRequiredParameter("name")
+        .ofType(toMetadataType(String.class));
     factory.createFrom(extensionDeclarer, createDescribingContext());
   }
 
   @Test(expected = IllegalParameterModelDefinitionException.class)
   public void fixedParameterWithExpressionDefault() {
-    extensionDeclarer.withOperation("invalidOperation").describedAs("").withOptionalParameter("fixed").ofType(toMetadataType(String.class))
-        .withExpressionSupport(NOT_SUPPORTED).defaultingTo("#['hello']");
+    extensionDeclarer.withOperation("invalidOperation").describedAs("").withOptionalParameter("fixed")
+        .ofType(toMetadataType(String.class)).withExpressionSupport(NOT_SUPPORTED).defaultingTo("#['hello']");
 
     factory.createFrom(extensionDeclarer, createDescribingContext());
   }
@@ -298,7 +303,8 @@ public class FlatExtensionDeclarationTestCase extends BaseExtensionDeclarationTe
   @Test
   public void connectionProviders() {
     assertThat(extensionModel.getConnectionProviders(), hasSize(1));
-    RuntimeConnectionProviderModel connectionProvider = (RuntimeConnectionProviderModel) extensionModel.getConnectionProviders().get(0);
+    RuntimeConnectionProviderModel connectionProvider =
+        (RuntimeConnectionProviderModel) extensionModel.getConnectionProviders().get(0);
     assertThat(connectionProvider, is(notNullValue()));
     assertThat(connectionProvider.getName(), is(CONNECTION_PROVIDER_NAME));
     assertThat(connectionProvider.getDescription(), is(CONNECTION_PROVIDER_DESCRIPTION));
@@ -306,10 +312,10 @@ public class FlatExtensionDeclarationTestCase extends BaseExtensionDeclarationTe
     assertThat(connectionProvider.getConnectionType(), is(sameInstance(CONNECTION_PROVIDER_CONNECTOR_TYPE)));
 
     List<ParameterModel> parameters = connectionProvider.getParameterModels();
-    assertParameter(parameters.get(0), USERNAME, USERNAME_DESCRIPTION, SUPPORTED, true, toMetadataType(String.class), StringType.class,
-        null);
-    assertParameter(parameters.get(1), PASSWORD, PASSWORD_DESCRIPTION, SUPPORTED, true, toMetadataType(String.class), StringType.class,
-        null);
+    assertParameter(parameters.get(0), USERNAME, USERNAME_DESCRIPTION, SUPPORTED, true, toMetadataType(String.class),
+        StringType.class, null);
+    assertParameter(parameters.get(1), PASSWORD, PASSWORD_DESCRIPTION, SUPPORTED, true, toMetadataType(String.class),
+        StringType.class, null);
   }
 
   @Test
@@ -324,7 +330,8 @@ public class FlatExtensionDeclarationTestCase extends BaseExtensionDeclarationTe
     assertThat(getType(sourceModel.getOutputAttributes().getType()), is(equalTo(Serializable.class)));
 
     List<ParameterModel> parameters = sourceModel.getParameterModels();
-    assertParameter(parameters.get(0), URL, URL_DESCRIPTION, SUPPORTED, true, toMetadataType(String.class), StringType.class, null);
+    assertParameter(parameters.get(0), URL, URL_DESCRIPTION, SUPPORTED, true, toMetadataType(String.class), StringType.class,
+        null);
     assertParameter(parameters.get(1), PORT, PORT_DESCRIPTION, SUPPORTED, false, toMetadataType(Integer.class), NumberType.class,
         DEFAULT_PORT);
   }
@@ -386,7 +393,8 @@ public class FlatExtensionDeclarationTestCase extends BaseExtensionDeclarationTe
 
   private ExtensionDeclarer getBaseDeclarer() {
     final ExtensionDeclarer extensionDeclarer = new ExtensionDeclarer();
-    extensionDeclarer.named("BaseExtension").onVersion("1.2.3").withConfig("default").createdWith(mock(ConfigurationFactory.class));
+    extensionDeclarer.named("BaseExtension").onVersion("1.2.3").withConfig("default")
+        .createdWith(mock(ConfigurationFactory.class));
     return extensionDeclarer;
   }
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.config;
@@ -50,7 +50,8 @@ public class DbNamespaceHandler extends NamespaceHandlerSupport {
     registerBeanDefinitionParser("execute-ddl", new ExecuteDdlProcessorBeanDefinitionParser());
     registerBeanDefinitionParser("stored-procedure", new StoredProcedureProcessorBeanDefinitionParser());
 
-    BulkExecuteProcessorBeanDefinitionParser bulkExecuteProcessorBeanDefinitionParser = new BulkExecuteProcessorBeanDefinitionParser();
+    BulkExecuteProcessorBeanDefinitionParser bulkExecuteProcessorBeanDefinitionParser =
+        new BulkExecuteProcessorBeanDefinitionParser();
     bulkExecuteProcessorBeanDefinitionParser.registerPreProcessor(new CheckExclusiveAttributeAndText("file"));
     registerBeanDefinitionParser("bulk-execute", bulkExecuteProcessorBeanDefinitionParser);
 
@@ -73,29 +74,28 @@ public class DbNamespaceHandler extends NamespaceHandlerSupport {
                 TRANSACTION_ISOLATION_ATTRIBUTE, USE_XA_TRANSACTIONS_ATTRIBUTE}, new String[] {DATA_SOURCE_REF_ATTRIBUTE}})));
 
     registerBeanDefinitionParser("derby-config",
-        new DbConfigDefinitionParser(DerbyConfigResolverFactoryBean.class,
-            new CheckExclusiveAttributes(new String[][] {
-                new String[] {URL_ATTRIBUTE, LOGIN_TIMEOUT_ATTRIBUTE, TRANSACTION_ISOLATION_ATTRIBUTE, USE_XA_TRANSACTIONS_ATTRIBUTE},
-                new String[] {DATA_SOURCE_REF_ATTRIBUTE}})));
+        new DbConfigDefinitionParser(DerbyConfigResolverFactoryBean.class, new CheckExclusiveAttributes(new String[][] {
+            new String[] {URL_ATTRIBUTE, LOGIN_TIMEOUT_ATTRIBUTE, TRANSACTION_ISOLATION_ATTRIBUTE, USE_XA_TRANSACTIONS_ATTRIBUTE},
+            new String[] {DATA_SOURCE_REF_ATTRIBUTE}})));
 
     DbConfigDefinitionParser oracleDbConfigFactoryBean = new DbConfigDefinitionParser(OracleConfigResolverFactoryBean.class,
         new CheckExclusiveAttributes(new String[][] {
             new String[] {URL_ATTRIBUTE, LOGIN_TIMEOUT_ATTRIBUTE, TRANSACTION_ISOLATION_ATTRIBUTE, USE_XA_TRANSACTIONS_ATTRIBUTE},
             new String[] {DATA_SOURCE_REF_ATTRIBUTE}}));
     oracleDbConfigFactoryBean.registerPreProcessor(new CheckRequiredAttributes(
-        new String[][] {{DATA_SOURCE_REF_ATTRIBUTE}, {DATA_SOURCE_REF_ATTRIBUTE, USER_ATTRIBUTE, PASSWORD_ATTRIBUTE}, {URL_ATTRIBUTE},
-            {USER_ATTRIBUTE, PASSWORD_ATTRIBUTE, URL_ATTRIBUTE}, {USER_ATTRIBUTE, PASSWORD_ATTRIBUTE, HOST_ATTRIBUTE, PORT_ATTRIBUTE}}));
+        new String[][] {{DATA_SOURCE_REF_ATTRIBUTE}, {DATA_SOURCE_REF_ATTRIBUTE, USER_ATTRIBUTE, PASSWORD_ATTRIBUTE},
+            {URL_ATTRIBUTE}, {USER_ATTRIBUTE, PASSWORD_ATTRIBUTE, URL_ATTRIBUTE},
+            {USER_ATTRIBUTE, PASSWORD_ATTRIBUTE, HOST_ATTRIBUTE, PORT_ATTRIBUTE}}));
 
     oracleDbConfigFactoryBean.addAlias("instance", "database");
     registerBeanDefinitionParser("oracle-config", oracleDbConfigFactoryBean);
 
     registerBeanDefinitionParser("mysql-config",
-        new DbConfigDefinitionParser(MySqlConfigResolverFactoryBean.class,
-            new CheckExclusiveAttributes(new String[][] {
-                new String[] {URL_ATTRIBUTE, LOGIN_TIMEOUT_ATTRIBUTE, TRANSACTION_ISOLATION_ATTRIBUTE, USE_XA_TRANSACTIONS_ATTRIBUTE},
-                new String[] {HOST_ATTRIBUTE, PORT_ATTRIBUTE, DATABASE_ATTRIBUTE, LOGIN_TIMEOUT_ATTRIBUTE, TRANSACTION_ISOLATION_ATTRIBUTE,
-                    USE_XA_TRANSACTIONS_ATTRIBUTE},
-                new String[] {DATA_SOURCE_REF_ATTRIBUTE}})));
+        new DbConfigDefinitionParser(MySqlConfigResolverFactoryBean.class, new CheckExclusiveAttributes(new String[][] {
+            new String[] {URL_ATTRIBUTE, LOGIN_TIMEOUT_ATTRIBUTE, TRANSACTION_ISOLATION_ATTRIBUTE, USE_XA_TRANSACTIONS_ATTRIBUTE},
+            new String[] {HOST_ATTRIBUTE, PORT_ATTRIBUTE, DATABASE_ATTRIBUTE, LOGIN_TIMEOUT_ATTRIBUTE,
+                TRANSACTION_ISOLATION_ATTRIBUTE, USE_XA_TRANSACTIONS_ATTRIBUTE},
+            new String[] {DATA_SOURCE_REF_ATTRIBUTE}})));
 
     registerIgnoredElement(DbConfigDefinitionParser.CONNECTION_PROPERTIES_ELEMENT_NAME);
     registerIgnoredElement(DbConfigDefinitionParser.PROPERTY_ELEMENT_NAME);

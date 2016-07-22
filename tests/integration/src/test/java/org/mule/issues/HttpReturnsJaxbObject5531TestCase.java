@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.issues;
 
@@ -22,6 +22,7 @@ import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.
 
 @Ignore("See MULE-9196")
 public class HttpReturnsJaxbObject5531TestCase extends FunctionalTestCase {
+
   private static final String ZIP_RESPONSE =
       "<?xml version='1.0' encoding='utf-8'?><soap:Envelope xmlns:soap='http://schemas.xmlsoap.org/soap/envelope/' "
           + "xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:xsd='http://www.w3.org/2001/XMLSchema'>"
@@ -51,6 +52,7 @@ public class HttpReturnsJaxbObject5531TestCase extends FunctionalTestCase {
   }
 
   public static class WeatherReport implements Callable {
+
     @Override
     public Object onCall(MuleEventContext eventContext) throws Exception {
       return ZIP_RESPONSE;

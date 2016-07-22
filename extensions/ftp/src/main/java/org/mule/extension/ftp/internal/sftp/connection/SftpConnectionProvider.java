@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.ftp.internal.sftp.connection;
 
@@ -26,7 +26,8 @@ import java.util.Set;
 import static org.mule.runtime.extension.api.annotation.param.display.Placement.CONNECTION;
 
 /**
- * An {@link AbstractFtpConnectionProvider} which provides instances of {@link SftpFileSystem} from instances of {@link FtpConnector}
+ * An {@link AbstractFtpConnectionProvider} which provides instances of {@link SftpFileSystem} from instances of
+ * {@link FtpConnector}
  *
  * @since 4.0
  */
@@ -58,8 +59,8 @@ public class SftpConnectionProvider extends AbstractFtpConnectionProvider<SftpFi
   private String password;
 
   /**
-   * The passphrase (password) for the identityFile if required. Notice that this parameter is ignored if {@link #identityFile} is not
-   * provided
+   * The passphrase (password) for the identityFile if required. Notice that this parameter is ignored if {@link #identityFile} is
+   * not provided
    */
   @Parameter
   @Optional
@@ -77,15 +78,16 @@ public class SftpConnectionProvider extends AbstractFtpConnectionProvider<SftpFi
   private String identityFile;
 
   /**
-   * Set of authentication methods used by the SFTP client. Valid values are: gssapi-with-mic, publickey, keyboard-interactive and password.
+   * Set of authentication methods used by the SFTP client. Valid values are: gssapi-with-mic, publickey, keyboard-interactive and
+   * password.
    */
   @Parameter
   @Optional
   private Set<SftpAuthenticationMethod> preferredAuthenticationMethods;
 
   /**
-   * If provided, the client will validate the server's key against the one in the referenced file. If the server key doesn't match the one
-   * in the file, the connection will be aborted.
+   * If provided, the client will validate the server's key against the one in the referenced file. If the server key doesn't
+   * match the one in the file, the connection will be aborted.
    */
   @Parameter
   @Optional

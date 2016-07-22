@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.weblogic;
 
@@ -19,6 +19,7 @@ import javax.jms.Topic;
  * Weblogic-specific JMS topic resolver. Will use reflection and a vendor API to detect topics.
  */
 public class WeblogicJmsTopicResolver extends DefaultJmsTopicResolver {
+
   /**
    * Cached empty class array, used in the no-args reflective method call.
    */
@@ -35,8 +36,8 @@ public class WeblogicJmsTopicResolver extends DefaultJmsTopicResolver {
 
 
   /**
-   * For Weblogic 8.x (JMS 1.0.2b) will use Weblogic-specific API call to test for topic. For Weblogic 9.x and later (JMS 1.1) this call is
-   * not required due to the unified messaging domains.
+   * For Weblogic 8.x (JMS 1.0.2b) will use Weblogic-specific API call to test for topic. For Weblogic 9.x and later (JMS 1.1)
+   * this call is not required due to the unified messaging domains.
    *
    * @param destination a jms destination to test
    * @return {@code true} if the destination is a topic

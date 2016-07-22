@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.artifact;
 
@@ -33,7 +33,8 @@ public class ArtifactMuleContextBuilderTestCase extends AbstractMuleTestCase {
 
   @Test
   public void emptyBuilder() throws Exception {
-    MuleContext muleContext = new ArtifactMuleContextBuilder().setExecutionClassloader(currentThread().getContextClassLoader()).build();
+    MuleContext muleContext =
+        new ArtifactMuleContextBuilder().setExecutionClassloader(currentThread().getContextClassLoader()).build();
     assertThat(muleContext, notNullValue());
     assertThat(muleContext.isInitialised(), is(true));
     muleContext.start();
@@ -61,8 +62,9 @@ public class ArtifactMuleContextBuilderTestCase extends AbstractMuleTestCase {
   @Test
   public void buildUsingDomainAndParentContext() throws Exception {
     expectedException.expectMessage(ONLY_APPLICATIONS_ARE_ALLOWED_TO_HAVE_A_PARENT_CONTEXT);
-    new ArtifactMuleContextBuilder().setArtifactType(DOMAIN).setExecutionClassloader(Thread.currentThread().getContextClassLoader())
-        .setParentContext(mock(MuleContext.class)).build();
+    new ArtifactMuleContextBuilder().setArtifactType(DOMAIN)
+        .setExecutionClassloader(Thread.currentThread().getContextClassLoader()).setParentContext(mock(MuleContext.class))
+        .build();
   }
 
 }

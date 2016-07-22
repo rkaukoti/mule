@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.functional;
 
@@ -36,7 +36,8 @@ public class HttpAttachmentsFunctionalTestCase extends FunctionalTestCase {
     FunctionalTestComponent ftc = getFunctionalTestComponent("testComponent");
     assertNotNull(ftc);
     ftc.setEventCallback((context, component) -> {
-      assertThat(context.getMessage().getDataType().getMediaType().toRfcString(), is("application/octet-stream; charset=ISO-8859-1"));
+      assertThat(context.getMessage().getDataType().getMediaType().toRfcString(),
+          is("application/octet-stream; charset=ISO-8859-1"));
       assertEquals("We should have an attachment", 1, context.getMessage().getInboundAttachmentNames().size());
       DataHandler dh = context.getMessage().getInboundAttachment("attach1");
       assertNotNull("DataHandler with name 'attach1' should not be null", dh);

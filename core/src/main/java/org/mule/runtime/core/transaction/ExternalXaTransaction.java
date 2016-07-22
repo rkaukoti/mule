@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transaction;
 
@@ -17,6 +17,7 @@ import javax.transaction.Synchronization;
  * <code>ExternalXaTransaction</code> represents an external XA transaction in Mule.
  */
 public class ExternalXaTransaction extends XaTransaction {
+
   public ExternalXaTransaction(MuleContext muleContext) {
     super(muleContext);
   }
@@ -41,6 +42,7 @@ public class ExternalXaTransaction extends XaTransaction {
    * This class is notified when an external transaction is complete and cleans up Mule-specific resources
    */
   class ExternalTransaction extends AbstractTransaction implements Synchronization {
+
     ExternalTransaction(MuleContext muleContext) {
       super(muleContext);
     }
@@ -63,7 +65,8 @@ public class ExternalXaTransaction extends XaTransaction {
           rollback();
         }
       } catch (TransactionException ex) {
-        logger.warn(MessageFormat.format("Exception while {0} an external transaction {1}", commit ? "committing" : "rolling back", this),
+        logger.warn(
+            MessageFormat.format("Exception while {0} an external transaction {1}", commit ? "committing" : "rolling back", this),
             ex);
       }
     }

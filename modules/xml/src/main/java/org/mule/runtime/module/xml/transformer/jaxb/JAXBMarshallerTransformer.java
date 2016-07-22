@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.transformer.jaxb;
 
@@ -25,13 +25,14 @@ import javax.xml.bind.Marshaller;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 /**
- * Allows marshaling of Java objects to XML using JAXB 2. A specific sourceClass can be set on this transformer, this is the expected source
- * object type. If no external {@link javax.xml.bind.JAXBContext} is set on the transformer, but the 'sourceClass' is set, a
- * {@link javax.xml.bind.JAXBContext} will be created using the sourceClass.
+ * Allows marshaling of Java objects to XML using JAXB 2. A specific sourceClass can be set on this transformer, this is the
+ * expected source object type. If no external {@link javax.xml.bind.JAXBContext} is set on the transformer, but the 'sourceClass'
+ * is set, a {@link javax.xml.bind.JAXBContext} will be created using the sourceClass.
  *
  * @since 3.0
  */
 public class JAXBMarshallerTransformer extends AbstractTransformer {
+
   protected JAXBContext jaxbContext;
 
   protected Class<?> sourceClass;

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.connector;
 
@@ -30,7 +30,8 @@ public abstract class PetStoreConnectionTestCase extends ExtensionFunctionalTest
 
   @Test
   public void getPets() throws Exception {
-    ConfigurationInstance<PetStoreConnector> config = muleContext.getExtensionManager().getConfiguration("petstore", getTestEvent(""));
+    ConfigurationInstance<PetStoreConnector> config =
+        muleContext.getExtensionManager().getConfiguration("petstore", getTestEvent(""));
     assertThat(config, is(notNullValue()));
 
     MuleEvent response = runFlow("getPets");

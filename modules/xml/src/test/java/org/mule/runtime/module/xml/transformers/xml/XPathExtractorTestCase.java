@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.transformers.xml;
 
@@ -35,19 +35,21 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 public class XPathExtractorTestCase extends AbstractMuleContextTestCase {
-  protected static final String TEST_XML_MULTI_RESULTS = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<root>" + "<node>value1</node>"
-      + "<node>value2</node>" + "<node>value3</node>" + "</root>";
 
-  protected static final String TEST_XML_MULTI_NESTED_RESULTS =
-      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<root>" + "<node>" + "<subnode1>val1</subnode1>" + "<subnode2>val2</subnode2>"
-          + "</node>" + "<node>" + "<subnode1>val3</subnode1>" + "<subnode2>val4</subnode2>" + "</node>" + "</root>";
+  protected static final String TEST_XML_MULTI_RESULTS = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<root>"
+      + "<node>value1</node>" + "<node>value2</node>" + "<node>value3</node>" + "</root>";
+
+  protected static final String TEST_XML_MULTI_NESTED_RESULTS = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<root>" + "<node>"
+      + "<subnode1>val1</subnode1>" + "<subnode2>val2</subnode2>" + "</node>" + "<node>" + "<subnode1>val3</subnode1>"
+      + "<subnode2>val4</subnode2>" + "</node>" + "</root>";
 
   protected static final String TEST_XML_SINGLE_RESULT =
       "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" + "<root>" + "<node>value1</node>" + "<node2>2</node2>" + "</root>";
 
   protected static final String TEST_XML_WITH_NAMESPACES =
       "<?xml version=\"1.0\" encoding=\"UTF-8\"?><root xmlns:f=\"http://www.w3schools.com/furniture\">" + "<f:table>"
-          + "<f:name>African Coffee Table</f:name>" + "<f:width>80</f:width>" + "<f:length>120</f:length>" + "</f:table>" + "</root>";
+          + "<f:name>African Coffee Table</f:name>" + "<f:width>80</f:width>" + "<f:length>120</f:length>" + "</f:table>"
+          + "</root>";
 
   @Test(expected = RegistrationException.class)
   public void expressionIsRequired() throws Exception {

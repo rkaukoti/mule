@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
@@ -18,8 +18,8 @@ import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils
 /**
  * Uses a {@link ImplicitConnectionProviderFactory} to create an implicit {@link ConnectionProvider}.
  * <p>
- * This is a static {@link ValueResolver}. The {@link ConnectionProvider} is created the first time the {@link #resolve(MuleEvent)} method
- * is invoked on {@code this} instance. Subsequent invokations will return the same instance.
+ * This is a static {@link ValueResolver}. The {@link ConnectionProvider} is created the first time the
+ * {@link #resolve(MuleEvent)} method is invoked on {@code this} instance. Subsequent invokations will return the same instance.
  * <p>
  * This class is thread-safe
  *

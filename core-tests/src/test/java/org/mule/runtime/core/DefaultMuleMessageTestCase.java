@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core;
 
@@ -119,8 +119,10 @@ public class DefaultMuleMessageTestCase extends AbstractMuleContextTestCase {
     message = MuleMessage.builder(message).removeOutboundAttachment("attachment").build();
     assertEquals(0, message.getOutboundAttachmentNames().size());
 
-    message = MuleMessage.builder(message).addOutboundAttachment("spi-props",
-        IOUtils.toDataHandler("spi-props", IOUtils.getResourceAsUrl("test-spi.properties", getClass()), MediaType.TEXT)).build();
+    message = MuleMessage.builder(message)
+        .addOutboundAttachment("spi-props",
+            IOUtils.toDataHandler("spi-props", IOUtils.getResourceAsUrl("test-spi.properties", getClass()), MediaType.TEXT))
+        .build();
 
 
     assertTrue(message.getOutboundAttachmentNames().contains("spi-props"));
@@ -130,7 +132,8 @@ public class DefaultMuleMessageTestCase extends AbstractMuleContextTestCase {
     assertEquals(1, message.getOutboundAttachmentNames().size());
 
     message = MuleMessage.builder(message)
-        .addOutboundAttachment("dummy", IOUtils.toDataHandler("dummy", IOUtils.getResourceAsUrl("dummy.xml", getClass()), null)).build();
+        .addOutboundAttachment("dummy", IOUtils.toDataHandler("dummy", IOUtils.getResourceAsUrl("dummy.xml", getClass()), null))
+        .build();
     handler = message.getOutboundAttachment("dummy");
     assertEquals(MediaType.APPLICATION_XML.getPrimaryType(), handler.getContentType().split("/")[0]);
     assertEquals(MediaType.APPLICATION_XML.getSubType(), handler.getContentType().split("/")[1]);
@@ -170,7 +173,8 @@ public class DefaultMuleMessageTestCase extends AbstractMuleContextTestCase {
     MuleMessage previous = createMuleMessage();
 
     DataHandler handler = new DataHandler("this is the attachment", "text/plain");
-    MuleMessage message = MuleMessage.builder(previous).payload(TEST_MESSAGE).addOutboundAttachment("attachment", handler).build();
+    MuleMessage message =
+        MuleMessage.builder(previous).payload(TEST_MESSAGE).addOutboundAttachment("attachment", handler).build();
 
     assertTrue(message.getOutboundAttachmentNames().contains("attachment"));
     assertEquals(handler, message.getOutboundAttachment("attachment"));
@@ -186,7 +190,8 @@ public class DefaultMuleMessageTestCase extends AbstractMuleContextTestCase {
   }
 
   private MuleMessage createMuleMessage() {
-    return MuleMessage.builder().payload(TEST_PAYLOAD).attributes(testAttributes).addOutboundProperty("MuleMessage", "MuleMessage").build();
+    return MuleMessage.builder().payload(TEST_PAYLOAD).attributes(testAttributes)
+        .addOutboundProperty("MuleMessage", "MuleMessage").build();
   }
 
   private void assertOutboundMessageProperty(String key, MuleMessage message) {

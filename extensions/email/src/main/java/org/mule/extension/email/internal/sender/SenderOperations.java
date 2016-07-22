@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.email.internal.sender;
 
@@ -37,11 +37,11 @@ public class SenderOperations {
   private final ReplyCommand replyOperation = new ReplyCommand();
 
   /**
-   * Sends an email message. The message will be sent to all recipient {@code toAddresses}, {@code ccAddresses}, {@code bccAddresses}
-   * specified in the message.
+   * Sends an email message. The message will be sent to all recipient {@code toAddresses}, {@code ccAddresses},
+   * {@code bccAddresses} specified in the message.
    * <p>
-   * The content of the message aims to be some type of text (text/plan, text/html) and its composed by the body and it's content type. If
-   * no content is specified then the incoming payload it's going to be converted into plain text if possible.
+   * The content of the message aims to be some type of text (text/plan, text/html) and its composed by the body and it's content
+   * type. If no content is specified then the incoming payload it's going to be converted into plain text if possible.
    *
    * @param connection Connection to use to send the message
    * @param configuration Configuration of the connector
@@ -67,8 +67,8 @@ public class SenderOperations {
   /**
    * Forwards an email message. The message will be sent to all recipient addresses.
    * <p>
-   * This operation expects an email in the incoming {@code muleMessage} to take the content in order forward, if no email message is found
-   * this operation will fail.
+   * This operation expects an email in the incoming {@code muleMessage} to take the content in order forward, if no email message
+   * is found this operation will fail.
    *
    * @param connection Connection to use to forward the message.
    * @param configuration Configuration of the connector.
@@ -81,19 +81,20 @@ public class SenderOperations {
    * @param headers Map of custom headers that are bounded with the email message
    */
   @Summary("Forwards an email message")
-  public void forward(@Connection SenderConnection connection, @UseConfig SMTPConfiguration configuration, MuleMessage muleMessage,
-      @Optional @DisplayName("Email Content") EmailContent content, @Optional String subject, List<String> toAddresses,
-      @Optional List<String> ccAddresses, @Optional List<String> bccAddresses,
+  public void forward(@Connection SenderConnection connection, @UseConfig SMTPConfiguration configuration,
+      MuleMessage muleMessage, @Optional @DisplayName("Email Content") EmailContent content, @Optional String subject,
+      List<String> toAddresses, @Optional List<String> ccAddresses, @Optional List<String> bccAddresses,
       @DisplayName("Additional Headers") @Optional Map<String, String> headers) {
     forwardCommand.forward(connection, muleMessage, content, subject, configuration.getFrom(), configuration.getDefaultCharset(),
         toAddresses, ccAddresses, bccAddresses, headers);
   }
 
   /**
-   * Replies an email message. The message will be sent to the addresses associated to the replyTo attribute in the {@link EmailAttributes}
-   * of the incoming {@code muleMessage}.
+   * Replies an email message. The message will be sent to the addresses associated to the replyTo attribute in the
+   * {@link EmailAttributes} of the incoming {@code muleMessage}.
    * <p>
-   * This operation expects an email in the incoming {@code muleMessage} to reply to, if no email message is found this operation will fail.
+   * This operation expects an email in the incoming {@code muleMessage} to reply to, if no email message is found this operation
+   * will fail.
    *
    * @param connection Connection to use to reply the message.
    * @param configuration Configuration of the connector.
@@ -106,8 +107,9 @@ public class SenderOperations {
   @Summary("Replies an email message")
   public void reply(@Connection SenderConnection connection, @UseConfig SMTPConfiguration configuration, MuleMessage muleMessage,
       @DisplayName("Email Content") EmailContent content, @Optional String subject,
-      @Optional @DisplayName("Additional Headers") Map<String, String> headers, @Optional(defaultValue = "false") Boolean replyToAll) {
-    replyOperation.reply(connection, muleMessage, content, subject, configuration.getFrom(), configuration.getDefaultCharset(), headers,
-        replyToAll);
+      @Optional @DisplayName("Additional Headers") Map<String, String> headers,
+      @Optional(defaultValue = "false") Boolean replyToAll) {
+    replyOperation.reply(connection, muleMessage, content, subject, configuration.getFrom(), configuration.getDefaultCharset(),
+        headers, replyToAll);
   }
 }

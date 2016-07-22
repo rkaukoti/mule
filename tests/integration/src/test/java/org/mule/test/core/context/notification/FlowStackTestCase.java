@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.core.context.notification;
 
@@ -25,6 +25,7 @@ import static org.mule.tck.util.FlowTraceUtils.assertStackElements;
 import static org.mule.tck.util.FlowTraceUtils.isFlowStackElement;
 
 public class FlowStackTestCase extends FunctionalTestCase {
+
   @Rule
   public SystemProperty flowTraceEnabled = new SystemProperty(MULE_FLOW_TRACE, "true");
 
@@ -35,7 +36,8 @@ public class FlowStackTestCase extends FunctionalTestCase {
 
   @Before
   public void before() {
-    muleContext.getNotificationManager().addInterfaceToType(MessageProcessorNotificationListener.class, MessageProcessorNotification.class);
+    muleContext.getNotificationManager().addInterfaceToType(MessageProcessorNotificationListener.class,
+        MessageProcessorNotification.class);
 
     FlowStackAsserter.stackToAssert = null;
     FlowStackAsyncAsserter.latch = new CountDownLatch(1);

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.functional;
 
@@ -30,6 +30,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class HttpPersistentQueueTestCase extends FunctionalTestCase {
+
   @Rule
   public DynamicPort dynamicPort = new DynamicPort("port1");
   private CountDownLatch messageDidArrive = new CountDownLatch(1);
@@ -74,6 +75,7 @@ public class HttpPersistentQueueTestCase extends FunctionalTestCase {
   }
 
   private static class Callback implements EventCallback {
+
     private CountDownLatch messageDidArrive;
 
     public Callback(CountDownLatch latch) {
@@ -87,7 +89,8 @@ public class HttpPersistentQueueTestCase extends FunctionalTestCase {
 
       Object httpMethod = message.getInboundProperty("http.method");
       if (HttpConstants.METHOD_GET.equals(httpMethod)) {
-        assertEquals("/services/Echo?foo=bar", muleContext.getTransformationService().transform(message, DataType.STRING).getPayload());
+        assertEquals("/services/Echo?foo=bar",
+            muleContext.getTransformationService().transform(message, DataType.STRING).getPayload());
       } else if (HttpConstants.METHOD_POST.equals(httpMethod)) {
         assertEquals("foo=bar", muleContext.getTransformationService().transform(message, DataType.STRING).getPayload());
       } else {

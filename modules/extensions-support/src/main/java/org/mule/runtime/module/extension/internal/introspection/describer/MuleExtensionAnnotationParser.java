@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection.describer;
 
@@ -68,21 +68,22 @@ import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils
  */
 public final class MuleExtensionAnnotationParser {
 
-  private static final Set<Class<?>> IMPLICIT_ARGUMENT_TYPES =
-      ImmutableSet.<Class<?>>builder().add(MuleEvent.class).add(MuleMessage.class).add(org.mule.runtime.core.api.MuleMessage.class).build();
+  private static final Set<Class<?>> IMPLICIT_ARGUMENT_TYPES = ImmutableSet.<Class<?>>builder().add(MuleEvent.class)
+      .add(MuleMessage.class).add(org.mule.runtime.core.api.MuleMessage.class).build();
 
   static String getAliasName(Field field) {
     return IntrospectionUtils.getAliasName(field.getName(), field.getAnnotation(Alias.class));
   }
 
   public static String getMemberName(BaseDeclaration<?> declaration, String defaultName) {
-    return declaration.getModelProperty(DeclaringMemberModelProperty.class).map(p -> p.getDeclaringField().getName()).orElse(defaultName);
+    return declaration.getModelProperty(DeclaringMemberModelProperty.class).map(p -> p.getDeclaringField().getName())
+        .orElse(defaultName);
   }
 
   public static Extension getExtension(Class<?> extensionType) {
     Extension extension = extensionType.getAnnotation(Extension.class);
-    checkState(extension != null,
-        String.format("%s is not a Mule extension since it's not annotated with %s", extensionType.getName(), Extension.class.getName()));
+    checkState(extension != null, String.format("%s is not a Mule extension since it's not annotated with %s",
+        extensionType.getName(), Extension.class.getName()));
     return extension;
   }
 
@@ -102,7 +103,8 @@ public final class MuleExtensionAnnotationParser {
       if (isParameterContainer(annotations.keySet(), parameterTypes[i])) {
         parseGroupParameters(parameterTypes[i], parsedParameters, typeLoader);
       } else {
-        ParsedParameter parsedParameter = doParseParameter(paramNames.get(i), parameterTypes[i], annotations, typeLoader.getClassLoader());
+        ParsedParameter parsedParameter =
+            doParseParameter(paramNames.get(i), parameterTypes[i], annotations, typeLoader.getClassLoader());
         parsedParameter.setImplementingParameter(method.getParameters()[i]);
         parsedParameters.add(parsedParameter);
       }
@@ -131,7 +133,8 @@ public final class MuleExtensionAnnotationParser {
     return annotationDeclarations;
   }
 
-  private static void parseGroupParameters(MetadataType parameterType, List<ParsedParameter> parsedParameters, ClassTypeLoader typeLoader) {
+  private static void parseGroupParameters(MetadataType parameterType, List<ParsedParameter> parsedParameters,
+      ClassTypeLoader typeLoader) {
     stream(getType(parameterType).getDeclaredFields()).filter(MuleExtensionAnnotationParser::isParameterOrParameterContainer)
         .forEach(field -> {
           final Map<Class<? extends Annotation>, Annotation> annotations = toMap(field.getAnnotations());
@@ -225,7 +228,8 @@ public final class MuleExtensionAnnotationParser {
     return parseLayoutAnnotations(annotatedElement, name, LayoutModelPropertyBuilder.create());
   }
 
-  static LayoutModelProperty parseLayoutAnnotations(AnnotatedElement annotatedElement, String name, LayoutModelPropertyBuilder builder) {
+  static LayoutModelProperty parseLayoutAnnotations(AnnotatedElement annotatedElement, String name,
+      LayoutModelPropertyBuilder builder) {
     if (isDisplayAnnotationPresent(annotatedElement)) {
       parseLayoutAnnotations(annotatedElement, builder);
       parsePlacementAnnotation(annotatedElement, builder);
@@ -240,8 +244,8 @@ public final class MuleExtensionAnnotationParser {
   }
 
   /**
-   * Enriches the {@link ParameterDeclarer} with a {@link MetadataKeyPartModelProperty} or a {@link MetadataContentModelProperty} if the
-   * parsedParameter is annotated either as {@link MetadataKeyId}, {@link MetadataKeyPart} or {@link Content} respectibly.
+   * Enriches the {@link ParameterDeclarer} with a {@link MetadataKeyPartModelProperty} or a {@link MetadataContentModelProperty}
+   * if the parsedParameter is annotated either as {@link MetadataKeyId}, {@link MetadataKeyPart} or {@link Content} respectibly.
    *
    * @param element the method annotated parameter parsed
    * @param elementWithModelProperties the {@link ParameterDeclarer} associated to the parsed parameter

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.domain;
 
@@ -25,8 +25,9 @@ import static org.mule.runtime.module.launcher.domain.Domain.DEFAULT_DOMAIN_NAME
 import static org.mule.runtime.module.reboot.MuleContainerBootstrapUtils.MULE_DOMAIN_FOLDER;
 
 public class DefaultDomainFactoryTestCase extends AbstractDomainTestCase {
-  private DomainFactory domainFactory =
-      new DefaultDomainFactory(new DomainClassLoaderFactory(getClass().getClassLoader()), new DefaultDomainManager(), containerClassLoader);
+
+  private DomainFactory domainFactory = new DefaultDomainFactory(new DomainClassLoaderFactory(getClass().getClassLoader()),
+      new DefaultDomainManager(), containerClassLoader);
 
   public DefaultDomainFactoryTestCase() throws IOException {}
 

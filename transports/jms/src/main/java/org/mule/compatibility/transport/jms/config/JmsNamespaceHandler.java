@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.config;
 
@@ -64,14 +64,18 @@ public class JmsNamespaceHandler extends AbstractMuleNamespaceHandler {
     registerBeanDefinitionParser("websphere-connector", new JmsConnectorDefinitionParser(WebsphereJmsConnector.class));
 
     registerBeanDefinitionParser("transaction", new TransactionDefinitionParser(JmsTransactionFactory.class));
-    registerBeanDefinitionParser("client-ack-transaction", new TransactionDefinitionParser(JmsClientAcknowledgeTransactionFactory.class));
+    registerBeanDefinitionParser("client-ack-transaction",
+        new TransactionDefinitionParser(JmsClientAcknowledgeTransactionFactory.class));
 
-    registerBeanDefinitionParser("jmsmessage-to-object-transformer", new MessageProcessorDefinitionParser(JMSMessageToObject.class));
+    registerBeanDefinitionParser("jmsmessage-to-object-transformer",
+        new MessageProcessorDefinitionParser(JMSMessageToObject.class));
 
-    registerBeanDefinitionParser("object-to-jmsmessage-transformer", new MessageProcessorDefinitionParser(ObjectToJMSMessage.class));
+    registerBeanDefinitionParser("object-to-jmsmessage-transformer",
+        new MessageProcessorDefinitionParser(ObjectToJMSMessage.class));
     registerBeanDefinitionParser("property-filter", new FilterDefinitionParser(JmsPropertyFilter.class));
     registerBeanDefinitionParser("selector", new FilterDefinitionParser(JmsSelectorFilter.class));
-    registerBeanDefinitionParser("default-jndi-name-resolver", new ChildDefinitionParser("jndiNameResolver", SimpleJndiNameResolver.class));
+    registerBeanDefinitionParser("default-jndi-name-resolver",
+        new ChildDefinitionParser("jndiNameResolver", SimpleJndiNameResolver.class));
     registerBeanDefinitionParser("custom-jndi-name-resolver", new ChildDefinitionParser("jndiNameResolver"));
     registerBeanDefinitionParser("caching-connection-factory",
         new MuleOrphanDefinitionParser(CachingConnectionFactoryFactoryBean.class, true));

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.api.connection.udp;
 
@@ -35,11 +35,11 @@ public class UdpRequesterConnection extends AbstractUdpConnection implements Req
   }
 
   /**
-   * Configures a {@link DatagramSocket} with the settings provided in the {@link UdpSocketProperties} and bounded to the connection
-   * settings presents on {@code localAddressSettings}.
+   * Configures a {@link DatagramSocket} with the settings provided in the {@link UdpSocketProperties} and bounded to the
+   * connection settings presents on {@code localAddressSettings}.
    * <p>
-   * It does not invoke {@link DatagramSocket#connect(SocketAddress)}, because that will only allow the socket to receive packages from the
-   * {@link SocketAddress} it has connected to.
+   * It does not invoke {@link DatagramSocket#connect(SocketAddress)}, because that will only allow the socket to receive packages
+   * from the {@link SocketAddress} it has connected to.
    *
    * @throws ConnectionException if the configuration of the {@link DatagramSocket} fails
    */

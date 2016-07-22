@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.filters;
 
@@ -99,8 +99,8 @@ public class JmsPropertyFilter implements Filter {
         logger.warn("Error filtering on property " + propertyName + ": " + e.toString());
       }
     } else {
-      logger.warn(
-          "Expected a payload of javax.jms.Message but instead received " + ClassUtils.getSimpleName(message.getDataType().getType()));
+      logger.warn("Expected a payload of javax.jms.Message but instead received "
+          + ClassUtils.getSimpleName(message.getDataType().getType()));
     }
 
     return false;
@@ -170,8 +170,8 @@ public class JmsPropertyFilter implements Filter {
       return false;
 
     final JmsPropertyFilter other = (JmsPropertyFilter) obj;
-    return equal(expression, other.expression) && equal(propertyClass, other.propertyClass) && equal(propertyName, other.propertyName)
-        && equal(pattern, other.pattern);
+    return equal(expression, other.expression) && equal(propertyClass, other.propertyClass)
+        && equal(propertyName, other.propertyName) && equal(pattern, other.pattern);
   }
 
   @Override

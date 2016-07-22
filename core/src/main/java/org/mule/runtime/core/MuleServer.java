@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core;
 
@@ -41,14 +41,16 @@ import static java.util.Collections.emptyMap;
 import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
 
 /**
- * <code>MuleServer</code> is a simple application that represents a local Mule Server daemon. It is initialised with a mule-config.xml
- * file.
+ * <code>MuleServer</code> is a simple application that represents a local Mule Server daemon. It is initialised with a
+ * mule-config.xml file.
  */
 public class MuleServer implements Runnable {
-  public static final String CLI_OPTIONS[][] = {{"builder", "true", "Configuration Builder Type"}, {"config", "true", "Configuration File"},
-      {"appconfig", "true", "Application configuration File"}, {"idle", "false", "Whether to run in idle (unconfigured) mode"},
-      {"main", "true", "Main Class"}, {"mode", "true", "Run Mode"}, {"props", "true", "Startup Properties"},
-      {"production", "false", "Production Mode"}, {"debug", "false", "Configure Mule for JPDA remote debugging."}};
+
+  public static final String CLI_OPTIONS[][] = {{"builder", "true", "Configuration Builder Type"},
+      {"config", "true", "Configuration File"}, {"appconfig", "true", "Application configuration File"},
+      {"idle", "false", "Whether to run in idle (unconfigured) mode"}, {"main", "true", "Main Class"},
+      {"mode", "true", "Run Mode"}, {"props", "true", "Startup Properties"}, {"production", "false", "Production Mode"},
+      {"debug", "false", "Configure Mule for JPDA remote debugging."}};
 
   /**
    * Don't use a class object so the core doesn't depend on mule-module-spring-config.
@@ -57,14 +59,14 @@ public class MuleServer implements Runnable {
   public static final String DEFAULT_CONFIGURATION = "mule-config.xml";
   public static final String DEFAULT_APP_CONFIGURATION = "mule-app.properties";
   /**
-   * This builder sets up the configuration for an idle Mule node - a node that doesn't do anything initially but is fed configuration
-   * during runtime
+   * This builder sets up the configuration for an idle Mule node - a node that doesn't do anything initially but is fed
+   * configuration during runtime
    */
   protected static final String CLASSNAME_DEFAULT_IDLE_CONFIG_BUILDER =
       "org.mule.runtime.core.config.builders.MuleIdleConfigurationBuilder";
   /**
-   * Required to support the '-config spring' shortcut. Don't use a class object so the core doesn't depend on mule-module-spring. for Mule
-   * 2.x
+   * Required to support the '-config spring' shortcut. Don't use a class object so the core doesn't depend on mule-module-spring.
+   * for Mule 2.x
    */
   protected static final String CLASSNAME_SPRING_CONFIG_BUILDER = "org.mule.runtime.config.spring.SpringXmlConfigurationBuilder";
   /**
@@ -76,8 +78,8 @@ public class MuleServer implements Runnable {
    */
   private static String configBuilderClassName = null;
   /**
-   * A properties file to be read at startup. This can be useful for setting properties which depend on the run-time environment (dev, test,
-   * production).
+   * A properties file to be read at startup. This can be useful for setting properties which depend on the run-time environment
+   * (dev, test, production).
    */
   private static String startupPropertiesFile = null;
   /**
@@ -85,8 +87,9 @@ public class MuleServer implements Runnable {
    */
   private static MuleShutdownHook muleShutdownHook;
   /**
-   * The MuleContext should contain anything which does not belong in the Registry. There is one MuleContext per Mule instance. Assuming it
-   * has been created, a handle to the local MuleContext can be obtained from anywhere by calling MuleServer.getMuleContext()
+   * The MuleContext should contain anything which does not belong in the Registry. There is one MuleContext per Mule instance.
+   * Assuming it has been created, a handle to the local MuleContext can be obtained from anywhere by calling
+   * MuleServer.getMuleContext()
    */
   protected MuleContext muleContext = null;
   /**
@@ -139,8 +142,8 @@ public class MuleServer implements Runnable {
   }
 
   /**
-   * Sets the configuration builder to use for this server. Note that if a builder is not set and the server's start method is called the
-   * default is an instance of <code>SpringXmlConfigurationBuilder</code>.
+   * Sets the configuration builder to use for this server. Note that if a builder is not set and the server's start method is
+   * called the default is an instance of <code>SpringXmlConfigurationBuilder</code>.
    *
    * @param builderClassName the configuration builder FQN to use
    * @throws ClassNotFoundException if the class with the given name can not be loaded
@@ -245,8 +248,8 @@ public class MuleServer implements Runnable {
    * Start the mule server
    *
    * @param ownThread determines if the server will run in its own daemon thread or the current calling thread
-   * @param registerShutdownHook whether to register the default Mule Server shutdown hock. this will shut down mule cleanly if the JVM is
-   *        shutdown. The only reason not to register this hook is to override it with a custom version
+   * @param registerShutdownHook whether to register the default Mule Server shutdown hock. this will shut down mule cleanly if
+   *        the JVM is shutdown. The only reason not to register this hook is to override it with a custom version
    */
   public void start(boolean ownThread, boolean registerShutdownHook) {
     if (registerShutdownHook) {
@@ -427,10 +430,11 @@ public class MuleServer implements Runnable {
   }
 
   /**
-   * This class is installed only for MuleServer running as commandline app. A clean Mule shutdown can be achieved by disposing the
-   * {@link org.mule.runtime.core.DefaultMuleContext}.
+   * This class is installed only for MuleServer running as commandline app. A clean Mule shutdown can be achieved by disposing
+   * the {@link org.mule.runtime.core.DefaultMuleContext}.
    */
   private class MuleShutdownHook extends Thread {
+
     public MuleShutdownHook() {
       super();
     }

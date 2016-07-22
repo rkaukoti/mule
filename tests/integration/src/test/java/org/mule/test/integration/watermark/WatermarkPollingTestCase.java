@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.test.integration.watermark;
@@ -71,7 +71,8 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
    * <p/>
    * Result:
    * <p>
-   * Executes the default value expression of watermark, registers it as a flow var, stores that value in the OS at the end of the flow.
+   * Executes the default value expression of watermark, registers it as a flow var, stores that value in the OS at the end of the
+   * flow.
    * </p>
    */
   @Test
@@ -79,6 +80,7 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
     executePollOf("nameNotDefinedWatermarkObjectStoreFlow");
 
     prober.check(new ObjectStoreProbe(getDefaultObjectStore()) {
+
       @Override
       boolean evaluate(ObjectStore<Serializable> os) throws ObjectStoreException {
         return os.contains(OS_KEY1) && DEFAULT_VALUE_WHEN_KEY_NOT_PRESENT.equals(os.retrieve(OS_KEY1));
@@ -94,12 +96,13 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
   /**
    * Scenario:
    * <p>
-   * No object store defined No update expression defined. No Object store Key present The user changes the watermark value in the flow.
+   * No object store defined No update expression defined. No Object store Key present The user changes the watermark value in the
+   * flow.
    * </p>
    * Result:
    * <p>
-   * Executes the default value expression of watermark, registers it as a flow var, stores that value in the OS at the end of the flow but
-   * The key is stored in the object store with the value that the user set in the flow variable
+   * Executes the default value expression of watermark, registers it as a flow var, stores that value in the OS at the end of the
+   * flow but The key is stored in the object store with the value that the user set in the flow variable
    * </p>
    */
   @Test
@@ -107,6 +110,7 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
     executePollOf("changeWatermarkWihtNotDefinedWatermarkObjectStoreFlow");
 
     prober.check(new ObjectStoreProbe(getDefaultObjectStore()) {
+
       @Override
       boolean evaluate(ObjectStore<Serializable> os) throws ObjectStoreException {
         return os.contains(OS_KEY2) && MODIFIED_KEY_VALUE.equals(os.retrieve(OS_KEY2));
@@ -122,13 +126,13 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
   /**
    * Scenario:
    * <p>
-   * No object store defined No update expression defined. The key is already present in the Object store The user changes the watermark
-   * value in the flow.
+   * No object store defined No update expression defined. The key is already present in the Object store The user changes the
+   * watermark value in the flow.
    * </p>
    * Result:
    * <p>
-   * Retrieves the key value from the Object store, registers it as a flow var, stores that value in the OS at the end of the flow but The
-   * key is stored in the object store with the value that the user set in the flow variable.
+   * Retrieves the key value from the Object store, registers it as a flow var, stores that value in the OS at the end of the flow
+   * but The key is stored in the object store with the value that the user set in the flow variable.
    * </p>
    * <p/>
    * Extra validation. The User uses the watermark value in the poll element.
@@ -139,6 +143,7 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
     executePollOf("usingWatermarkFlow");
 
     prober.check(new ObjectStoreProbe(getDefaultObjectStore()) {
+
       @Override
       boolean evaluate(ObjectStore<Serializable> os) throws ObjectStoreException {
         return os.contains(OS_KEY3) && MODIFIED_KEY_VALUE.equals(os.retrieve(OS_KEY3)) && foo.contains(PRE_EXISTENT_OS_VALUE);
@@ -154,13 +159,13 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
   /**
    * Scenario:
    * <p>
-   * No object store defined No update expression defined. The key is already present in the Object store The user changes the watermark
-   * value in the flow. The specified Watermark key is an expression
+   * No object store defined No update expression defined. The key is already present in the Object store The user changes the
+   * watermark value in the flow. The specified Watermark key is an expression
    * </p>
    * Result:
    * <p>
-   * Retrieves the key value from the Object store, registers it as a flow var, stores that value in the OS at the end of the flow. The key
-   * expression is evaluated twice, at the beginning of the message source and at the end of the flow
+   * Retrieves the key value from the Object store, registers it as a flow var, stores that value in the OS at the end of the
+   * flow. The key expression is evaluated twice, at the beginning of the message source and at the end of the flow
    * </p>
    */
   @Test
@@ -168,6 +173,7 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
     getDefaultObjectStore().store(OS_KEY4, PRE_EXISTENT_OS_VALUE);
     executePollOf("watermarkWithKeyAsAnExpression");
     prober.check(new ObjectStoreProbe(getDefaultObjectStore()) {
+
       @Override
       boolean evaluate(ObjectStore<Serializable> os) throws ObjectStoreException {
         return os.contains(OS_KEY4) && MODIFIED_KEY_VALUE.equals(os.retrieve(OS_KEY4));
@@ -187,8 +193,8 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
    * </p>
    * Result:
    * <p/>
-   * Retrieves the key value from the Object store, registers it as a flow var, stores that value in the OS at the end of the flow but The
-   * key is stored in the object store with the result of the update expression specified in watermark
+   * Retrieves the key value from the Object store, registers it as a flow var, stores that value in the OS at the end of the flow
+   * but The key is stored in the object store with the result of the update expression specified in watermark
    * <p/>
    */
   @Test
@@ -196,6 +202,7 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
     getDefaultObjectStore().store(OS_KEY5, PRE_EXISTENT_OS_VALUE);
     executePollOf("watermarkWithUpdateExpression");
     prober.check(new ObjectStoreProbe(getDefaultObjectStore()) {
+
       @Override
       boolean evaluate(ObjectStore<Serializable> os) throws ObjectStoreException {
         return os.contains(OS_KEY5) && RESULT_OF_UPDATE_EXPRESSION.equals(os.retrieve(OS_KEY5))
@@ -212,7 +219,8 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
   /**
    * Scenario:
    * <p>
-   * Object store defined The update expression is defined. The key is already present in the Object store The flow fails to execute
+   * Object store defined The update expression is defined. The key is already present in the Object store The flow fails to
+   * execute
    * </p>
    * Result:
    * <p/>
@@ -226,6 +234,7 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
     executePollOf("watermarkWithObjectStore");
 
     prober.check(new ObjectStoreProbe(os) {
+
       @Override
       boolean evaluate(ObjectStore<Serializable> os) throws ObjectStoreException {
         return os.contains(OS_KEY8) && RESULT_OF_UPDATE_EXPRESSION.equals(os.retrieve(OS_KEY8))
@@ -242,7 +251,8 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
   /**
    * Scenario:
    * <p>
-   * No object store defined The update expression is defined. The key is already present in the Object store The flow fails to execute
+   * No object store defined The update expression is defined. The key is already present in the Object store The flow fails to
+   * execute
    * </p>
    * Result:
    * <p/>
@@ -254,9 +264,11 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
     getDefaultObjectStore().store(OS_KEY6, PRE_EXISTENT_OS_VALUE);
     executePollOf("failingFlowWithWatermark");
     prober.check(new ObjectStoreProbe(getDefaultObjectStore()) {
+
       @Override
       boolean evaluate(ObjectStore<Serializable> os) throws ObjectStoreException {
-        return os.contains(OS_KEY6) && PRE_EXISTENT_OS_VALUE.equals(os.retrieve(OS_KEY6)) && !foo.contains(RESULT_OF_UPDATE_EXPRESSION);
+        return os.contains(OS_KEY6) && PRE_EXISTENT_OS_VALUE.equals(os.retrieve(OS_KEY6))
+            && !foo.contains(RESULT_OF_UPDATE_EXPRESSION);
       }
 
       @Override
@@ -269,8 +281,8 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
   /**
    * Scenario:
    * <p>
-   * No object store defined The update expression is defined. The key is already present in the Object store The flow fails to execute but
-   * it is catched in a catch-exception-strategy
+   * No object store defined The update expression is defined. The key is already present in the Object store The flow fails to
+   * execute but it is catched in a catch-exception-strategy
    * </p>
    * Result:
    * <p/>
@@ -282,9 +294,11 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
     getDefaultObjectStore().store(OS_KEY7, PRE_EXISTENT_OS_VALUE);
     executePollOf("failingFlowCachedExceptionWatermark");
     prober.check(new ObjectStoreProbe(getDefaultObjectStore()) {
+
       @Override
       boolean evaluate(ObjectStore<Serializable> os) throws ObjectStoreException {
-        return os.contains(OS_KEY7) && "catchedException".equals(os.retrieve(OS_KEY7)) && !foo.contains(RESULT_OF_UPDATE_EXPRESSION);
+        return os.contains(OS_KEY7) && "catchedException".equals(os.retrieve(OS_KEY7))
+            && !foo.contains(RESULT_OF_UPDATE_EXPRESSION);
       }
 
       @Override
@@ -309,6 +323,7 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
     executePollOf("watermarkWithAsyncProcessing");
 
     prober.check(new Probe() {
+
       @Override
       public boolean isSatisfied() {
         return foo.contains(RESULT_OF_UPDATE_EXPRESSION);
@@ -325,6 +340,7 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
   public void watermarkWithNullDefaultExpression() throws Exception {
     executePollOf("usingWatermarkFlowWithNullValue");
     prober.check(new Probe() {
+
       @Override
       public boolean isSatisfied() {
         return !foo.isEmpty();
@@ -341,6 +357,7 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
   public void usingWatermarkFlowWithNullUpdateValue() throws Exception {
     executePollOf("usingWatermarkFlowWithNullUpdateValue");
     prober.check(new ObjectStoreProbe(getDefaultObjectStore()) {
+
       @Override
       boolean evaluate(ObjectStore<Serializable> os) throws ObjectStoreException {
         return foo.contains("defaultValue") && !os.contains("testUpdateAsNull");
@@ -397,6 +414,7 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
       throws Exception {
     executePollOf(variableName);
     prober.check(new ObjectStoreProbe(getDefaultObjectStore()) {
+
       @Override
       boolean evaluate(ObjectStore<Serializable> os) throws ObjectStoreException {
         return os.contains(variableName) && expected.equals(os.retrieve(variableName));
@@ -415,7 +433,8 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
   }
 
   private void executePollOf(String flowName) throws Exception {
-    Collection<Scheduler> schedulers = muleContext.getRegistry().lookupScheduler(Schedulers.flowConstructPollingSchedulers(flowName));
+    Collection<Scheduler> schedulers =
+        muleContext.getRegistry().lookupScheduler(Schedulers.flowConstructPollingSchedulers(flowName));
     for (Scheduler scheduler : schedulers) {
       scheduler.schedule();
     }
@@ -433,9 +452,11 @@ public class WatermarkPollingTestCase extends FunctionalTestCase {
   }
 
   public static class PollStopper implements SchedulerFactoryPostProcessor {
+
     @Override
     public Scheduler process(Object job, final Scheduler scheduler) {
       return new Scheduler() {
+
         @Override
         public void schedule() throws Exception {
           scheduler.schedule();

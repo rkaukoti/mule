@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.component;
 
@@ -60,7 +60,8 @@ public class DefaultJavaWithBindingComponent extends AbstractJavaWithBindingsCom
           singletonComponentLifecycleAdapter = createLifecycleAdaptor();
         }
       } catch (Exception e) {
-        throw new InitialisationException(MessageFactory.createStaticMessage("Unable to create instance of POJO service"), e, this);
+        throw new InitialisationException(MessageFactory.createStaticMessage("Unable to create instance of POJO service"), e,
+            this);
 
       }
       // On all calls, start if not started.

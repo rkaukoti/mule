@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -12,6 +12,7 @@ import java.net.Socket;
  * This class implements a timeout feature on socket connections.
  */
 public final class TimedSocket {
+
   private static final int WATCHDOG_FREQUENCY = 100;
 
   private TimedSocket() {
@@ -52,6 +53,7 @@ public final class TimedSocket {
   }
 
   static class SocketConnector extends Thread {
+
     private volatile Socket connectedSocket;
     private String host;
     private int port;

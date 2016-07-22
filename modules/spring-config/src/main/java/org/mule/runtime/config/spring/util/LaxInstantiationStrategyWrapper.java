@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.util;
 
@@ -17,9 +17,9 @@ import java.lang.reflect.Method;
 import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 
 /**
- * A {@link InstantiationStrategy} which doesn't fail if a bean cannot be instantiated, as long as such bean has been marked as optional in
- * a {@link OptionalObjectsController}. In such case, the object is marked as discarded with the controller and a placeholder object is
- * returned.
+ * A {@link InstantiationStrategy} which doesn't fail if a bean cannot be instantiated, as long as such bean has been marked as
+ * optional in a {@link OptionalObjectsController}. In such case, the object is marked as discarded with the controller and a
+ * placeholder object is returned.
  * <p/>
  * This object delegates actual instantiation into a {@code delegate} which it wraps
  *

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.config;
 
@@ -43,9 +43,10 @@ public class SystemPropertyProcessingStrategyConfigTestCase extends FunctionalTe
 
   @Parameterized.Parameters(name = "{0}")
   public static Collection<Object[]> parameters() {
-    return Arrays.asList(new Object[][] {{"Container level system property", new String[] {}, SynchronousProcessingStrategy.class},
-        {"Configuration overrides system property", new String[] {"configuration-processing-strategy-config.xml"},
-            NonBlockingProcessingStrategy.class}});
+    return Arrays
+        .asList(new Object[][] {{"Container level system property", new String[] {}, SynchronousProcessingStrategy.class},
+            {"Configuration overrides system property", new String[] {"configuration-processing-strategy-config.xml"},
+                NonBlockingProcessingStrategy.class}});
   }
 
   @Override

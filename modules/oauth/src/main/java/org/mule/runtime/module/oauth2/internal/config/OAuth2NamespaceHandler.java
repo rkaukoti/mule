@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.oauth2.internal.config;
 
@@ -30,8 +30,9 @@ public class OAuth2NamespaceHandler extends MuleNamespaceHandler {
     registerMuleBeanDefinitionParser("authorization-code-grant-type", authorizationCodeGrantType);
     registerMuleBeanDefinitionParser("authorization-request",
         new ChildDefinitionParser("authorizationRequestHandler", AuthorizationRequestHandler.class));
-    final ParentContextDefinitionParser tokenRequestHandlerDefinitionParser = new ParentContextDefinitionParser(
-        "authorization-code-grant-type", new ChildDefinitionParser("tokenRequestHandler", AutoAuthorizationCodeTokenRequestHandler.class));
+    final ParentContextDefinitionParser tokenRequestHandlerDefinitionParser =
+        new ParentContextDefinitionParser("authorization-code-grant-type",
+            new ChildDefinitionParser("tokenRequestHandler", AutoAuthorizationCodeTokenRequestHandler.class));
     tokenRequestHandlerDefinitionParser
         .otherwise(new ChildDefinitionParser("tokenRequestHandler", ClientCredentialsTokenRequestHandler.class));
     registerMuleBeanDefinitionParser("token-request", tokenRequestHandlerDefinitionParser);

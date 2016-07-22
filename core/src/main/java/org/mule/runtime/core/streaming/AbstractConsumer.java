@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.streaming;
@@ -12,8 +12,8 @@ import org.slf4j.LoggerFactory;
 import java.util.NoSuchElementException;
 
 /**
- * Base implementation of {@link Consumer}. This template class takes care of the contract's subtleties like returning fast when closed and
- * throwing the correct types of exceptions
+ * Base implementation of {@link Consumer}. This template class takes care of the contract's subtleties like returning fast when
+ * closed and throwing the correct types of exceptions
  *
  * @param <T> the type that the consumer will return
  * @param <P> the type that the producer generates
@@ -31,16 +31,16 @@ public abstract class AbstractConsumer<T, P> implements Consumer<T> {
   }
 
   /**
-   * Implement this method to actually consume the producer without worrying about exception types or checking fo this consumer to be
-   * closed. If the producer is consumed then simply return <code>null</code>
+   * Implement this method to actually consume the producer without worrying about exception types or checking fo this consumer to
+   * be closed. If the producer is consumed then simply return <code>null</code>
    *
    * @return a new item or <code>null</code>
    */
   protected abstract T doConsume() throws NoSuchElementException;
 
   /**
-   * Implement this method to actualy check for the {@link Producer} being fully consumed without worrying about it being closed or throwing
-   * any exceptions
+   * Implement this method to actualy check for the {@link Producer} being fully consumed without worrying about it being closed
+   * or throwing any exceptions
    *
    * @return whether the {@link Producer} has been consumed or not
    */

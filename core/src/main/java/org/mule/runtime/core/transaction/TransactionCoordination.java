@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transaction;
 
@@ -13,14 +13,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public final class TransactionCoordination {
+
   protected static final Logger logger = LoggerFactory.getLogger(TransactionCoordination.class);
 
   private static final TransactionCoordination instance = new TransactionCoordination();
 
   /**
-   * This field could be static because it is a {@link ThreadLocal} and this class is a singleton but, as it is used as an instance field by
-   * methods {@link #getTransaction()}, {@link #unbindTransaction(Transaction)} and {@link #bindTransaction(Transaction)}, it may be more
-   * consistent to have it as an instance variable.
+   * This field could be static because it is a {@link ThreadLocal} and this class is a singleton but, as it is used as an
+   * instance field by methods {@link #getTransaction()}, {@link #unbindTransaction(Transaction)} and
+   * {@link #bindTransaction(Transaction)}, it may be more consistent to have it as an instance variable.
    */
   private final ThreadLocal<Transaction> transactions = new ThreadLocal<Transaction>();
   private final ThreadLocal<Transaction> suspendedTransaction = new ThreadLocal<Transaction>();

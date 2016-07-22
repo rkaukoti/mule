@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -33,6 +33,7 @@ import static java.lang.Thread.currentThread;
  * A base Worker used by Transport {@link org.mule.compatibility.core.api.transport.MessageReceiver} implementations.
  */
 public abstract class AbstractReceiverWorker implements Work {
+
   protected List<Object> messages;
   protected InboundEndpoint endpoint;
   protected AbstractMessageReceiver receiver;
@@ -69,9 +70,9 @@ public abstract class AbstractReceiverWorker implements Work {
   }
 
   /**
-   * The actual logic used to receive messages from the underlying transport. The default implementation will execute the processing of
-   * messages within a TransactionTemplate. This template will manage the transaction lifecycle for the list of messages associated with
-   * this receiver worker.
+   * The actual logic used to receive messages from the underlying transport. The default implementation will execute the
+   * processing of messages within a TransactionTemplate. This template will manage the transaction lifecycle for the list of
+   * messages associated with this receiver worker.
    */
   public void processMessages() throws Exception {
     // No need to do error handling. It will be done by inner TransactionTemplate per Message
@@ -160,8 +161,8 @@ public abstract class AbstractReceiverWorker implements Work {
   }
 
   /**
-   * This callback is called before a message is routed into Mule and can be used by the worker to set connection specific properties to
-   * message before it gets routed
+   * This callback is called before a message is routed into Mule and can be used by the worker to set connection specific
+   * properties to message before it gets routed
    *
    * @param message the next message to be processed
    */
@@ -171,7 +172,8 @@ public abstract class AbstractReceiverWorker implements Work {
   }
 
   /**
-   * Template method used to bind the resources of this receiver to the transaction. Only transactional transports need implment this method
+   * Template method used to bind the resources of this receiver to the transaction. Only transactional transports need implment
+   * this method
    *
    * @param tx the current transaction or null if there is no transaction
    */
@@ -188,8 +190,8 @@ public abstract class AbstractReceiverWorker implements Work {
   }
 
   /**
-   * Before a message is passed into Mule this callback is called and can be used by the worker to inspect the message before it gets sent
-   * to Mule
+   * Before a message is passed into Mule this callback is called and can be used by the worker to inspect the message before it
+   * gets sent to Mule
    *
    * @param message the next message to be processed
    * @return the message to be processed. If Null is returned the message will not get processed.
@@ -200,8 +202,8 @@ public abstract class AbstractReceiverWorker implements Work {
   }
 
   /**
-   * If a result is returned back this method will get called before the message is added to te list of results (these are later passed to
-   * {@link #handleResults(java.util.List)})
+   * If a result is returned back this method will get called before the message is added to te list of results (these are later
+   * passed to {@link #handleResults(java.util.List)})
    *
    * @param message the result message, this will never be null
    * @return the message to add to the list of results. If null is returned nothing is added to the list of results
@@ -213,8 +215,8 @@ public abstract class AbstractReceiverWorker implements Work {
 
 
   /**
-   * This method is called once this worker is no longer required. Any resources *only* associated with this worker should be cleaned up
-   * here.
+   * This method is called once this worker is no longer required. Any resources *only* associated with this worker should be
+   * cleaned up here.
    */
   @Override
   public void release() {

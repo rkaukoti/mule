@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf;
 
@@ -32,7 +32,8 @@ public class ProxyPortMatchingSoapVersionTest extends FunctionalTestCase {
   }
 
   /*
-   * Proxy service with soapVersion="1.1", no port, and a WSDL that has multiple ports (1.1 and 1.2). Service should bind to 1.1 port.
+   * Proxy service with soapVersion="1.1", no port, and a WSDL that has multiple ports (1.1 and 1.2). Service should bind to 1.1
+   * port.
    */
   @Test
   public void proxyServiceMultiplePortsSoapVersion11() throws Exception {
@@ -41,7 +42,8 @@ public class ProxyPortMatchingSoapVersionTest extends FunctionalTestCase {
   }
 
   /*
-   * Proxy service with soapVersion="1.2", no port, and a WSDL that has multiple ports (1.1 and 1.2). Service should bind to 1.2 port.
+   * Proxy service with soapVersion="1.2", no port, and a WSDL that has multiple ports (1.1 and 1.2). Service should bind to 1.2
+   * port.
    */
   @Test
   public void proxyServiceMultiplePortsSoapVersion12() throws Exception {
@@ -49,8 +51,8 @@ public class ProxyPortMatchingSoapVersionTest extends FunctionalTestCase {
   }
 
   /*
-   * Proxy service with soapVersion="1.2", no port, and a WSDL that has a single 1.1 port. Service should bind to the 1.1 port (to keep
-   * previous behaviour).
+   * Proxy service with soapVersion="1.2", no port, and a WSDL that has a single 1.1 port. Service should bind to the 1.1 port (to
+   * keep previous behaviour).
    */
   @Test
   public void proxyServiceSinglePortSoapVersion12() throws Exception {

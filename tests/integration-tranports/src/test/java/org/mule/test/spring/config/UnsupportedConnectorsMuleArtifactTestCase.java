@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.spring.config;
 
@@ -54,7 +54,8 @@ public class UnsupportedConnectorsMuleArtifactTestCase extends AbstractMuleTestC
   @Test
   public void unsupportedConnectorsHttp() throws SAXException, IOException, MuleArtifactFactoryException {
     // HTTP
-    checkUnsupportedConnector("<http:connector name=\"HttpConnector\" xmlns:http=\"http://www.mulesoft.org/schema/mule/transport/http\"/>");
+    checkUnsupportedConnector(
+        "<http:connector name=\"HttpConnector\" xmlns:http=\"http://www.mulesoft.org/schema/mule/transport/http\"/>");
   }
 
   @Test
@@ -83,7 +84,8 @@ public class UnsupportedConnectorsMuleArtifactTestCase extends AbstractMuleTestC
   @Test
   public void unsupportedConnectorsVm() throws SAXException, IOException, MuleArtifactFactoryException {
     // VM
-    checkUnsupportedConnector("<vm:connector name=\"memory\" " + "xmlns:vm=\"http://www.mulesoft.org/schema/mule/transport/vm\"/>");
+    checkUnsupportedConnector(
+        "<vm:connector name=\"memory\" " + "xmlns:vm=\"http://www.mulesoft.org/schema/mule/transport/vm\"/>");
   }
 
   private void checkUnsupportedConnector(String connectorConfig) throws IOException, SAXException, MuleArtifactFactoryException {
@@ -97,6 +99,7 @@ public class UnsupportedConnectorsMuleArtifactTestCase extends AbstractMuleTestC
 
   private XmlConfigurationCallback getXmlConfigurationCallbackForUnsupportedConnector() {
     return new XmlConfigurationCallback() {
+
       @Override
       public Element getGlobalElement(String s) {
         return null;

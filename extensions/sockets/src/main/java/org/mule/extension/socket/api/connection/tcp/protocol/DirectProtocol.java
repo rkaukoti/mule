@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.api.connection.tcp.protocol;
 
@@ -18,9 +18,9 @@ import java.io.OutputStream;
 import static org.mule.extension.socket.internal.SocketUtils.getByteArray;
 
 /**
- * This protocol is an application level {@link TcpProtocol} that does nothing. The socket reads until no more bytes are (momentarily)
- * available (previously the transfer buffer also had to be full on the previous read, which made stronger requirements on the underlying
- * network). On slow networks {@link EOFProtocol} and {@link LengthProtocol} may be more reliable.
+ * This protocol is an application level {@link TcpProtocol} that does nothing. The socket reads until no more bytes are
+ * (momentarily) available (previously the transfer buffer also had to be full on the previous read, which made stronger
+ * requirements on the underlying network). On slow networks {@link EOFProtocol} and {@link LengthProtocol} may be more reliable.
  * <p>
  * <p>
  * Writing simply writes the data into the socket.
@@ -92,8 +92,8 @@ public class DirectProtocol extends AbstractByteProtocol {
   }
 
   /**
-   * Decide whether to repeat transfer. This implementation does so if more data are available. Note that previously, while documented as
-   * such, there was also the additional requirement that the previous transfer completely used the transfer buffer.
+   * Decide whether to repeat transfer. This implementation does so if more data are available. Note that previously, while
+   * documented as such, there was also the additional requirement that the previous transfer completely used the transfer buffer.
    *
    * @param len Amount transferred last call (-1 on EOF or socket error)
    * @param available Amount available

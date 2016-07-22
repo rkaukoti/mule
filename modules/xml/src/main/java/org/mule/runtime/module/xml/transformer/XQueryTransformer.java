@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.transformer;
 
@@ -50,6 +50,7 @@ import javax.xml.xquery.XQResultSequence;
  * The XQuery Module gives users the ability to perform XQuery transformations on XML messages in Mule
  */
 public class XQueryTransformer extends AbstractXmlTransformer implements Disposable {
+
   public static final String SOURCE_DOCUMENT_NAMESPACE = "document";
 
   // keep at least 1 XSLT Transformer ready by default
@@ -209,7 +210,8 @@ public class XQueryTransformer extends AbstractXmlTransformer implements Disposa
         if (o instanceof String) {
           transformer.bindAtomicValue(paramKey, o.toString(), connection.createAtomicType(XQItemType.XQBASETYPE_STRING));
         } else if (o instanceof Boolean) {
-          transformer.bindBoolean(paramKey, ((Boolean) o).booleanValue(), connection.createAtomicType(XQItemType.XQBASETYPE_BOOLEAN));
+          transformer.bindBoolean(paramKey, ((Boolean) o).booleanValue(),
+              connection.createAtomicType(XQItemType.XQBASETYPE_BOOLEAN));
         } else if (o instanceof Byte) {
           transformer.bindByte(paramKey, ((Byte) o).byteValue(), connection.createAtomicType(XQItemType.XQBASETYPE_BYTE));
         } else if (o instanceof Short) {
@@ -227,7 +229,8 @@ public class XQueryTransformer extends AbstractXmlTransformer implements Disposa
         } else if (o instanceof Node) {
           transformer.bindDocument(paramKey, new DOMSource((Node) o), connection.createNodeType());
         } else {
-          logger.warn(String.format("Cannot bind value for key '%s' because type '%s' is not supported", key, o.getClass().getName()));
+          logger.warn(
+              String.format("Cannot bind value for key '%s' because type '%s' is not supported", key, o.getClass().getName()));
         }
       }
     }
@@ -256,10 +259,11 @@ public class XQueryTransformer extends AbstractXmlTransformer implements Disposa
       transformer.bindDocument(new QName(SOURCE_DOCUMENT_NAMESPACE), new StreamSource(new ByteArrayInputStream((byte[]) src)),
           connection.createDocumentType());
     } else if (src instanceof InputStream) {
-      transformer.bindDocument(new QName(SOURCE_DOCUMENT_NAMESPACE), new StreamSource((InputStream) src), connection.createDocumentType());
-    } else if (src instanceof String) {
-      transformer.bindDocument(new QName(SOURCE_DOCUMENT_NAMESPACE), new StreamSource(new ByteArrayInputStream(((String) src).getBytes())),
+      transformer.bindDocument(new QName(SOURCE_DOCUMENT_NAMESPACE), new StreamSource((InputStream) src),
           connection.createDocumentType());
+    } else if (src instanceof String) {
+      transformer.bindDocument(new QName(SOURCE_DOCUMENT_NAMESPACE),
+          new StreamSource(new ByteArrayInputStream(((String) src).getBytes())), connection.createDocumentType());
     } else if (src instanceof Document) {
       transformer.bindNode(new QName(SOURCE_DOCUMENT_NAMESPACE), (Document) src, connection.createDocumentType());
     } else if (src instanceof Element) {
@@ -359,13 +363,13 @@ public class XQueryTransformer extends AbstractXmlTransformer implements Disposa
 
   /**
    * <p>
-   * Returns the value to be set for the parameter. This method is called for each parameter before it is set on the transformer. The
-   * purpose of this method is to allow dynamic parameters related to the event (usually message properties) to be used. Any expression
-   * using the Mule expression syntax can be used.
+   * Returns the value to be set for the parameter. This method is called for each parameter before it is set on the transformer.
+   * The purpose of this method is to allow dynamic parameters related to the event (usually message properties) to be used. Any
+   * expression using the Mule expression syntax can be used.
    * </p>
    * <p>
-   * For example: If the current event's message has a property named "myproperty", to pass this in you would set the transform parameter's
-   * value to be "#[mule.message:header(myproperty)]".
+   * For example: If the current event's message has a property named "myproperty", to pass this in you would set the transform
+   * parameter's value to be "#[mule.message:header(myproperty)]".
    * <p/>
    * <p>
    * This method may be overloaded by a sub class to provide a different dynamic parameter implementation.
@@ -394,6 +398,7 @@ public class XQueryTransformer extends AbstractXmlTransformer implements Disposa
   }
 
   protected class PooledXQueryTransformerFactory extends BasePoolableObjectFactory {
+
     @Override
     public Object makeObject() throws Exception {
       return connection.prepareExpression(xquery);

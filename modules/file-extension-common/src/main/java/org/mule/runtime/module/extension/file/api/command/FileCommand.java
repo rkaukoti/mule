@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.file.api.command;
 
@@ -112,8 +112,8 @@ public abstract class FileCommand<F extends FileSystem> {
   protected abstract Path getBasePath(FileConnectorConfig config);
 
   /**
-   * Similar to {@link #resolvePath(FileConnectorConfig, String)} only that it throws a {@link IllegalArgumentException} if the given path
-   * doesn't exists.
+   * Similar to {@link #resolvePath(FileConnectorConfig, String)} only that it throws a {@link IllegalArgumentException} if the
+   * given path doesn't exists.
    * <p>
    * The existence of the obtained path is verified by delegating into {@link #exists(FileConnectorConfig, Path)}
    *
@@ -162,8 +162,8 @@ public abstract class FileCommand<F extends FileSystem> {
 
   /**
    * Returns an {@link IllegalArgumentException} explaining that a
-   * {@link FileSystem#read(FileConnectorConfig, MuleMessage, String, boolean)} operation was attempted on a {@code path} pointing to a
-   * directory
+   * {@link FileSystem#read(FileConnectorConfig, MuleMessage, String, boolean)} operation was attempted on a {@code path} pointing
+   * to a directory
    *
    * @param path the {@link Path} on which a read was attempted
    * @return {@link RuntimeException}
@@ -174,20 +174,21 @@ public abstract class FileCommand<F extends FileSystem> {
 
   /**
    * Returns a {@link IllegalArgumentException} explaining that a
-   * {@link FileSystem#list(FileConnectorConfig, String, boolean, MuleMessage, Predicate)} operation was attempted on a {@code path}
-   * pointing to a file.
+   * {@link FileSystem#list(FileConnectorConfig, String, boolean, MuleMessage, Predicate)} operation was attempted on a
+   * {@code path} pointing to a file.
    *
    * @param path the {@link Path} on which a list was attempted
    * @return {@link RuntimeException}
    */
   protected RuntimeException cannotListFileException(Path path) {
-    return new IllegalArgumentException(format("Cannot list path '%s' because it's a file. Only directories can be listed", path));
+    return new IllegalArgumentException(
+        format("Cannot list path '%s' because it's a file. Only directories can be listed", path));
   }
 
   /**
    * Returns a {@link IllegalArgumentException} explaining that a
-   * {@link FileSystem#list(FileConnectorConfig, String, boolean, MuleMessage, Predicate)} operation was attempted on a {@code path}
-   * pointing to a file.
+   * {@link FileSystem#list(FileConnectorConfig, String, boolean, MuleMessage, Predicate)} operation was attempted on a
+   * {@code path} pointing to a file.
    *
    * @param path the {@link Path} on which a list was attempted
    * @return {@link RuntimeException}
@@ -197,8 +198,8 @@ public abstract class FileCommand<F extends FileSystem> {
   }
 
   /**
-   * Returns a {@link IllegalArgumentException} explaining that an operation is trying to write to the given {@code path} but it already
-   * exists and no overwrite instruction was provided.
+   * Returns a {@link IllegalArgumentException} explaining that an operation is trying to write to the given {@code path} but it
+   * already exists and no overwrite instruction was provided.
    *
    * @param path the {@link Path} that the operation tried to modify
    * @return {@link RuntimeException}

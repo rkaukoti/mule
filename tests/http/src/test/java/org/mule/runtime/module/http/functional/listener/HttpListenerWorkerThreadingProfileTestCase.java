@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.listener;
 
@@ -108,8 +108,8 @@ public class HttpListenerWorkerThreadingProfileTestCase extends FunctionalTestCa
     sendRequestUntilNoMoreWorkers("maxActiveThreadsConfigFlow", url, CUSTOM_MAX_THREADS_ACTIVE);
     try {
       url = String.format("http://localhost:%s", listenPort3.getNumber());
-      final Response response =
-          httpClientExecutor.execute(Request.Post(url).bodyByteArray(TEST_MESSAGE.getBytes()).connectTimeout(100).socketTimeout(100));
+      final Response response = httpClientExecutor
+          .execute(Request.Post(url).bodyByteArray(TEST_MESSAGE.getBytes()).connectTimeout(100).socketTimeout(100));
       final HttpResponse httpResponse = response.returnResponse();
       assertThat(httpResponse.getStatusLine().getStatusCode(), is(OK.getStatusCode()));
       assertThat(IOUtils.toString(httpResponse.getEntity().getContent()), is(TEST_MESSAGE));
@@ -132,6 +132,7 @@ public class HttpListenerWorkerThreadingProfileTestCase extends FunctionalTestCa
 
   private void executeRequestInAnotherThread(final String url) {
     new Thread() {
+
       @Override
       public void run() {
         try {
@@ -148,6 +149,7 @@ public class HttpListenerWorkerThreadingProfileTestCase extends FunctionalTestCa
    */
   private void configureTestComponent(String flowName, final int maxThreadsActive) throws Exception {
     getFunctionalTestComponent(flowName).setEventCallback(new EventCallback() {
+
       @Override
       public void eventReceived(MuleEventContext context, Object component) throws Exception {
         try {

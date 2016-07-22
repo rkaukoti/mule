@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.resources;
 
@@ -20,8 +20,8 @@ import static javax.tools.StandardLocation.SOURCE_OUTPUT;
 import static org.apache.commons.lang.StringUtils.EMPTY;
 
 /**
- * Implementation of {@link ResourcesGenerator} that writes files using a {@link javax.annotation.processing.Filer} obtained through a
- * annotation {@link javax.annotation.processing.Processor} context
+ * Implementation of {@link ResourcesGenerator} that writes files using a {@link javax.annotation.processing.Filer} obtained
+ * through a annotation {@link javax.annotation.processing.Processor} context
  *
  * @since 3.7.0
  */
@@ -35,7 +35,8 @@ public final class AnnotationProcessorResourceGenerator extends AbstractResource
    * @param resourceFactories the {@link GeneratedResourceFactory} instances used to generated resources
    * @param processingEnv the current {@link ProcessingEnvironment}
    */
-  public AnnotationProcessorResourceGenerator(List<GeneratedResourceFactory> resourceFactories, ProcessingEnvironment processingEnv) {
+  public AnnotationProcessorResourceGenerator(List<GeneratedResourceFactory> resourceFactories,
+      ProcessingEnvironment processingEnv) {
     super(resourceFactories);
     this.processingEnv = processingEnv;
   }

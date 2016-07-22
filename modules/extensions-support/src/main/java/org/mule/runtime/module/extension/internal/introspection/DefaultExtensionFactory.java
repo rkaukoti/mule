@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection;
 
@@ -81,12 +81,12 @@ import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils
  * Default implementation of {@link ExtensionFactory}.
  * <p>
  * It transforms {@link ExtensionDeclarer} instances into fully fledged instances of {@link ImmutableExtensionModel}. Because the
- * {@link ExtensionDeclarer} is a raw, unvalidated object model, this instance uses a fixed list of {@link ModelValidator} to assure that
- * the produced model is legal.
+ * {@link ExtensionDeclarer} is a raw, unvalidated object model, this instance uses a fixed list of {@link ModelValidator} to
+ * assure that the produced model is legal.
  * <p>
  * It uses a {@link ServiceRegistry} to locate instances of {@link ModelEnricher}. The discovery happens when the
- * {@link #DefaultExtensionFactory(ServiceRegistry, ClassLoader)} constructor is invoked and the list of discovered instances will be used
- * during the whole duration of this instance.
+ * {@link #DefaultExtensionFactory(ServiceRegistry, ClassLoader)} constructor is invoked and the list of discovered instances will
+ * be used during the whole duration of this instance.
  *
  * @since 3.7.0
  */
@@ -125,8 +125,8 @@ public final class DefaultExtensionFactory implements ExtensionFactory {
     try {
       new MuleVersion(extensionDeclaration.getVersion());
     } catch (IllegalArgumentException e) {
-      throw new IllegalArgumentException(
-          String.format("Invalid version '%s' for extension '%s'", extensionDeclaration.getVersion(), extensionDeclaration.getName()));
+      throw new IllegalArgumentException(String.format("Invalid version '%s' for extension '%s'",
+          extensionDeclaration.getVersion(), extensionDeclaration.getName()));
     }
   }
 
@@ -149,7 +149,8 @@ public final class DefaultExtensionFactory implements ExtensionFactory {
           extensionDeclaration.getDescription(), extensionDeclaration.getVersion(), extensionDeclaration.getVendor(),
           extensionDeclaration.getCategory(), extensionDeclaration.getMinMuleVersion(),
           sortConfigurations(toConfigurations(extensionDeclaration.getConfigurations(), extensionModelValueHolder)),
-          toOperations(extensionDeclaration.getOperations()), toConnectionProviders(extensionDeclaration.getConnectionProviders()),
+          toOperations(extensionDeclaration.getOperations()),
+          toConnectionProviders(extensionDeclaration.getConnectionProviders()),
           toMessageSources(extensionDeclaration.getMessageSources()), extensionDeclaration.getModelProperties(),
           extensionDeclaration.getExceptionEnricherFactory());
 
@@ -180,7 +181,8 @@ public final class DefaultExtensionFactory implements ExtensionFactory {
       return declarations.stream().map(declaration -> toConfiguration(declaration, extensionModelValueHolder)).collect(toList());
     }
 
-    private <T extends ParameterizedModel> T fromCache(ParameterizedDeclaration declaration, Supplier<ParameterizedModel> supplier) {
+    private <T extends ParameterizedModel> T fromCache(ParameterizedDeclaration declaration,
+        Supplier<ParameterizedModel> supplier) {
       try {
         return (T) modelCache.get(declaration, supplier::get);
       } catch (UncheckedExecutionException e) {
@@ -193,12 +195,14 @@ public final class DefaultExtensionFactory implements ExtensionFactory {
       }
     }
 
-    private ConfigurationModel toConfiguration(ConfigurationDeclaration declaration, ValueHolder<RuntimeExtensionModel> extensionModel) {
+    private ConfigurationModel toConfiguration(ConfigurationDeclaration declaration,
+        ValueHolder<RuntimeExtensionModel> extensionModel) {
       return fromCache(declaration,
           () -> new ImmutableRuntimeConfigurationModel(declaration.getName(), declaration.getDescription(), extensionModel::get,
-              declaration.getConfigurationFactory(), toParameters(declaration.getParameters()), toOperations(declaration.getOperations()),
-              toConnectionProviders(declaration.getConnectionProviders()), toMessageSources(declaration.getMessageSources()),
-              declaration.getModelProperties(), declaration.getInterceptorFactories()));
+              declaration.getConfigurationFactory(), toParameters(declaration.getParameters()),
+              toOperations(declaration.getOperations()), toConnectionProviders(declaration.getConnectionProviders()),
+              toMessageSources(declaration.getMessageSources()), declaration.getModelProperties(),
+              declaration.getInterceptorFactories()));
     }
 
     private List<SourceModel> toMessageSources(List<SourceDeclaration> declarations) {
@@ -210,7 +214,8 @@ public final class DefaultExtensionFactory implements ExtensionFactory {
           () -> new ImmutableRuntimeSourceModel(declaration.getName(), declaration.getDescription(),
               toParameters(declaration.getParameters()), toOutputModel(declaration.getOutput()),
               toOutputModel(declaration.getOutputAttributes()), declaration.getSourceFactory(), declaration.getModelProperties(),
-              declaration.getInterceptorFactories(), declaration.getExceptionEnricherFactory(), declaration.getMetadataResolverFactory()));
+              declaration.getInterceptorFactories(), declaration.getExceptionEnricherFactory(),
+              declaration.getMetadataResolverFactory()));
     }
 
     private List<OperationModel> toOperations(List<OperationDeclaration> declarations) {
@@ -222,11 +227,13 @@ public final class DefaultExtensionFactory implements ExtensionFactory {
         List<ParameterModel> parameterModels = toOperationParameters(declaration.getParameters());
 
         List<Interceptor> interceptors = createInterceptors(declaration.getInterceptorFactories());
-        OperationExecutorFactory executorFactory = new OperationExecutorFactoryWrapper(declaration.getExecutorFactory(), interceptors);
+        OperationExecutorFactory executorFactory =
+            new OperationExecutorFactoryWrapper(declaration.getExecutorFactory(), interceptors);
 
-        return new ImmutableRuntimeOperationModel(declaration.getName(), declaration.getDescription(), executorFactory, parameterModels,
-            toOutputModel(declaration.getOutput()), toOutputModel(declaration.getOutputAttributes()), declaration.getModelProperties(),
-            declaration.getInterceptorFactories(), declaration.getExceptionEnricherFactory(), declaration.getMetadataResolverFactory());
+        return new ImmutableRuntimeOperationModel(declaration.getName(), declaration.getDescription(), executorFactory,
+            parameterModels, toOutputModel(declaration.getOutput()), toOutputModel(declaration.getOutputAttributes()),
+            declaration.getModelProperties(), declaration.getInterceptorFactories(), declaration.getExceptionEnricherFactory(),
+            declaration.getMetadataResolverFactory());
       });
     }
 
@@ -235,8 +242,9 @@ public final class DefaultExtensionFactory implements ExtensionFactory {
     }
 
     private OutputModel toOutputModel(OutputDeclaration declaration) {
-      return declaration != null ? new ImmutableOutputModel(declaration.getDescription(), declaration.getType(),
-          declaration.hasDynamicType(), declaration.getModelProperties())
+      return declaration != null
+          ? new ImmutableOutputModel(declaration.getDescription(), declaration.getType(), declaration.hasDynamicType(),
+              declaration.getModelProperties())
           : new ImmutableOutputModel(EMPTY, create(JAVA).nullType().build(), false, emptySet());
     }
 
@@ -267,12 +275,14 @@ public final class DefaultExtensionFactory implements ExtensionFactory {
               "Parameter '%s' is marked as not supporting expressions yet it contains one as a default value. Please fix this",
               parameter.getName()));
         } else if (parameter.getExpressionSupport() == REQUIRED && !isExpression((String) defaultValue)) {
-          throw new IllegalParameterModelDefinitionException(String.format(
-              "Parameter '%s' requires expressions yet it contains a constant as a default value. Please fix this", parameter.getName()));
+          throw new IllegalParameterModelDefinitionException(
+              String.format("Parameter '%s' requires expressions yet it contains a constant as a default value. Please fix this",
+                  parameter.getName()));
         }
       }
-      return new ImmutableParameterModel(parameter.getName(), parameter.getDescription(), parameter.getType(), parameter.hasDynamicType(),
-          parameter.isRequired(), parameter.getExpressionSupport(), parameter.getDefaultValue(), parameter.getModelProperties());
+      return new ImmutableParameterModel(parameter.getName(), parameter.getDescription(), parameter.getType(),
+          parameter.hasDynamicType(), parameter.isRequired(), parameter.getExpressionSupport(), parameter.getDefaultValue(),
+          parameter.getModelProperties());
 
     }
   }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.functional;
 
@@ -26,10 +26,11 @@ import static org.junit.Assert.fail;
 import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 /**
- * See MULE-4491 "Http outbound endpoint does not use responseTimeout attribute" See MULE-4743 "MuleClient.send() timeout is not respected
- * with http transport"
+ * See MULE-4491 "Http outbound endpoint does not use responseTimeout attribute" See MULE-4743 "MuleClient.send() timeout is not
+ * respected with http transport"
  */
 public class HttpResponseTimeoutTestCase extends FunctionalTestCase {
+
   protected static String PAYLOAD = "Eugene";
   protected static int DEFAULT_RESPONSE_TIMEOUT = 2000;
   @Rule

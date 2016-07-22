@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.dsl.spring;
 
@@ -27,8 +27,9 @@ import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.TRANSFOR
  *     </queue-profile>
  * </pre>
  * <p/>
- * This construct is deprecated and will only be used for backward compatibility. No new constructs in the language must use this mechanism.
- * The preferred mechanism is to use an attribute to define the reference or define the object inline as a child element. i.e.:
+ * This construct is deprecated and will only be used for backward compatibility. No new constructs in the language must use this
+ * mechanism. The preferred mechanism is to use an attribute to define the reference or define the object inline as a child
+ * element. i.e.:
  * 
  * <pre>
  *     <http:request tlsContext="aTlsContext"/>
@@ -39,8 +40,8 @@ import static org.mule.runtime.config.spring.dsl.model.ApplicationModel.TRANSFOR
 public class ReferenceBeanDefinitionCreator extends BeanDefinitionCreator {
 
   private ImmutableMap<ComponentIdentifier, Consumer<ComponentModel>> referenceConsumers =
-      new ImmutableMap.Builder().put(QUEUE_STORE_IDENTIFIER, getQueueStoreConsumer()).put(PROCESSOR_IDENTIFIER, getProcessorConsumer())
-          .put(TRANSFORMER_IDENTIFIER, getProcessorConsumer()).build();
+      new ImmutableMap.Builder().put(QUEUE_STORE_IDENTIFIER, getQueueStoreConsumer())
+          .put(PROCESSOR_IDENTIFIER, getProcessorConsumer()).put(TRANSFORMER_IDENTIFIER, getProcessorConsumer()).build();
 
   private Consumer<ComponentModel> getProcessorConsumer() {
     return getConsumer(MessageProcessor.class);

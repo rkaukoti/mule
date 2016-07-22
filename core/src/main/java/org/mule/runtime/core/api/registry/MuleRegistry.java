@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.registry;
 
@@ -22,22 +22,22 @@ import java.util.List;
 public interface MuleRegistry extends LifecycleRegistry {
 
   /**
-   * Pass this flag as metadata of the {@link Registry#registerObject(String, Object, Object)} method to have lifecycle method calls on the
-   * registered objects omitted. Unless extending Mule, one will probably never have a use for this.
+   * Pass this flag as metadata of the {@link Registry#registerObject(String, Object, Object)} method to have lifecycle method
+   * calls on the registered objects omitted. Unless extending Mule, one will probably never have a use for this.
    *
    * @see Registry#registerObject(String, Object, Object)
    */
   int LIFECYCLE_BYPASS_FLAG = 0x01;
 
   /**
-   * Determines whether Inject processors should get executed on an object added to the registry Inject processors are responsible for
-   * processing inject interfaces such as {@link org.mule.runtime.core.api.context.MuleContextAware}
+   * Determines whether Inject processors should get executed on an object added to the registry Inject processors are responsible
+   * for processing inject interfaces such as {@link org.mule.runtime.core.api.context.MuleContextAware}
    */
   int INJECT_PROCESSORS_BYPASS_FLAG = 0x02;
 
   /**
-   * Determines whether pre-init processors should get executed on an object added to the registry. Pre init processors are basically object
-   * processors that do not inject members into objects. These processors happen after the inject processors
+   * Determines whether pre-init processors should get executed on an object added to the registry. Pre init processors are
+   * basically object processors that do not inject members into objects. These processors happen after the inject processors
    */
   int PRE_INIT_PROCESSORS_BYPASS_FLAG = 0x04;
 
@@ -50,8 +50,8 @@ public interface MuleRegistry extends LifecycleRegistry {
   FlowConstruct lookupFlowConstruct(String name);
 
   /**
-   * This method will return a list of {@link org.mule.runtime.core.api.transformer.Transformer} objects that accept the given input and
-   * return the given output type of object
+   * This method will return a list of {@link org.mule.runtime.core.api.transformer.Transformer} objects that accept the given
+   * input and return the given output type of object
    *
    * @param source The desired input type for the transformer
    * @param result the desired output type for the transformer
@@ -96,23 +96,24 @@ public interface MuleRegistry extends LifecycleRegistry {
   Collection<Scheduler> lookupScheduler(Predicate<String> schedulerNamePredicate);
 
   /**
-   * Will execute any processors on an object and fire any lifecycle methods according to the current lifecycle without actually registering
-   * the object in the registry. This is useful for prototype objects that are created per request and would clutter the registry with
-   * single use objects. Not that this will only be applied to Mule registies. Thrid party registries such as Guice support wiring, but you
-   * need to get a reference to the container/context to call the method. This is so that wiring mechanisms dont trip over each other.
+   * Will execute any processors on an object and fire any lifecycle methods according to the current lifecycle without actually
+   * registering the object in the registry. This is useful for prototype objects that are created per request and would clutter
+   * the registry with single use objects. Not that this will only be applied to Mule registies. Thrid party registries such as
+   * Guice support wiring, but you need to get a reference to the container/context to call the method. This is so that wiring
+   * mechanisms dont trip over each other.
    *
    * @param object the object to process
    * @return the same object with any processors and lifecycle methods called
-   * @throws org.mule.runtime.core.api.MuleException if the registry fails to perform the lifecycle change or process object processors for
-   *         the object.
+   * @throws org.mule.runtime.core.api.MuleException if the registry fails to perform the lifecycle change or process object
+   *         processors for the object.
    */
   Object applyProcessorsAndLifecycle(Object object) throws MuleException;
 
   /**
-   * Will execute any processors on an object without actually registering the object in the registry. This is useful for prototype objects
-   * that are created per request and would clutter the registry with single use objects. Not that this will only be applied to Mule
-   * registries. Third party registries such as Guice support wiring, but you need to get a reference to the container/context to call the
-   * method. This is so that wiring mechanisms dont trip over each other.
+   * Will execute any processors on an object without actually registering the object in the registry. This is useful for
+   * prototype objects that are created per request and would clutter the registry with single use objects. Not that this will
+   * only be applied to Mule registries. Third party registries such as Guice support wiring, but you need to get a reference to
+   * the container/context to call the method. This is so that wiring mechanisms dont trip over each other.
    *
    * @param object the object to process
    * @return the same object with any processors called

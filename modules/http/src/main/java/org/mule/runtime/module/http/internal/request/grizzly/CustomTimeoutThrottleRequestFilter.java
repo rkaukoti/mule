@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.request.grizzly;
 
@@ -21,11 +21,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 /**
- * A {@link com.ning.http.client.filter.RequestFilter} that throttles requests and blocks when the number of permits is reached, waiting for
- * the response to arrive before executing the next request.
+ * A {@link com.ning.http.client.filter.RequestFilter} that throttles requests and blocks when the number of permits is reached,
+ * waiting for the response to arrive before executing the next request.
  *
- * This is based on {@code com.ning.http.client.extra.ThrottleRequestFilter} from Async Http Client, but uses the request timeout from each
- * request.
+ * This is based on {@code com.ning.http.client.extra.ThrottleRequestFilter} from Async Http Client, but uses the request timeout
+ * from each request.
  */
 public class CustomTimeoutThrottleRequestFilter implements RequestFilter {
 
@@ -43,11 +43,12 @@ public class CustomTimeoutThrottleRequestFilter implements RequestFilter {
         logger.debug("Current Throttling Status {}", available.availablePermits());
       }
       if (!available.tryAcquire(ctx.getRequest().getRequestTimeout(), MILLISECONDS)) {
-        throw new FilterException(
-            String.format("No slot available for processing Request %s with AsyncHandler %s", ctx.getRequest(), ctx.getAsyncHandler()));
+        throw new FilterException(String.format("No slot available for processing Request %s with AsyncHandler %s",
+            ctx.getRequest(), ctx.getAsyncHandler()));
       }
     } catch (InterruptedException e) {
-      throw new FilterException(String.format("Interrupted Request %s with AsyncHandler %s", ctx.getRequest(), ctx.getAsyncHandler()));
+      throw new FilterException(
+          String.format("Interrupted Request %s with AsyncHandler %s", ctx.getRequest(), ctx.getAsyncHandler()));
     }
 
     return new FilterContext.FilterContextBuilder(ctx).asyncHandler(new AsyncHandlerWrapper(ctx.getAsyncHandler())).build();

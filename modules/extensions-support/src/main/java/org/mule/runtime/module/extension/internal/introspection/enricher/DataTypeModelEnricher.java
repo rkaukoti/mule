@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection.enricher;
 
@@ -25,8 +25,8 @@ import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils
 
 /**
  * Enriches operations which were defined in methods annotated with {@link DataTypeParameters} so that parameters
- * {@link ExtensionProperties#MIME_TYPE_PARAMETER_NAME} and {@link ExtensionProperties#ENCODING_PARAMETER_NAME}. are added Both attributes
- * are optional, have no default value and accept expressions.
+ * {@link ExtensionProperties#MIME_TYPE_PARAMETER_NAME} and {@link ExtensionProperties#ENCODING_PARAMETER_NAME}. are added Both
+ * attributes are optional, have no default value and accept expressions.
  *
  * @since 4.0
  */
@@ -38,6 +38,7 @@ public final class DataTypeModelEnricher extends AbstractAnnotatedModelEnricher 
   public void enrich(DescribingContext describingContext) {
     final ExtensionDeclaration declaration = describingContext.getExtensionDeclarer().getDeclaration();
     new IdempotentDeclarationWalker() {
+
       @Override
       protected void onOperation(OperationDeclaration declaration) {
         Method method = getImplementingMethod(declaration);
@@ -50,8 +51,10 @@ public final class DataTypeModelEnricher extends AbstractAnnotatedModelEnricher 
                       + " Mutating the content metadata requires an operation with a return type.",
                   declaration.getName(), declaration.getName()));
             }
-            declaration.addParameter(newParameter(MIME_TYPE_PARAMETER_NAME, "The mime type of the payload that this operation outputs."));
-            declaration.addParameter(newParameter(ENCODING_PARAMETER_NAME, "The encoding of the payload that this operation outputs."));
+            declaration.addParameter(
+                newParameter(MIME_TYPE_PARAMETER_NAME, "The mime type of the payload that this operation outputs."));
+            declaration
+                .addParameter(newParameter(ENCODING_PARAMETER_NAME, "The encoding of the payload that this operation outputs."));
           }
         }
       }

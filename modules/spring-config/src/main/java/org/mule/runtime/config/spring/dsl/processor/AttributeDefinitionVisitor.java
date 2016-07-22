@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.config.spring.dsl.processor;
@@ -14,8 +14,8 @@ import java.util.Optional;
  * An {code AttributeDefinitionVisitor} is in charge of handling an attribute configuration when building an object from a
  * {@link org.mule.runtime.config.spring.dsl.model.ComponentModel}.
  * <p>
- * Depending on the {@link org.mule.runtime.config.spring.dsl.api.AttributeDefinition} configuration a method and only one method of this
- * contract will be invoked.
+ * Depending on the {@link org.mule.runtime.config.spring.dsl.api.AttributeDefinition} configuration a method and only one method
+ * of this contract will be invoked.
  *
  * @since 4.0
  */
@@ -48,7 +48,8 @@ public interface AttributeDefinitionVisitor {
    *
    * @param parameterName configuration parameter name.
    * @param defaultValue default value for the configuration parameter if it has not value.
-   * @param typeConverter a value converter to convert from the value provided by the config to the value required of the attribute.
+   * @param typeConverter a value converter to convert from the value provided by the config to the value required of the
+   *        attribute.
    */
   void onConfigurationParameter(String parameterName, Object defaultValue, Optional<TypeConverter> typeConverter);
 
@@ -93,9 +94,9 @@ public interface AttributeDefinitionVisitor {
   void onValueFromTextContent();
 
   /**
-   * Called when a multiple configuration parameters or children components objects need to be set in single object attribute or constructor
-   * parameter. The value to be set is a @{code Map} with the {@code KeyAttributeDefinitionPair#getKey()} as key and the value is the
-   * resolved parameter value or component object.
+   * Called when a multiple configuration parameters or children components objects need to be set in single object attribute or
+   * constructor parameter. The value to be set is a @{code Map} with the {@code KeyAttributeDefinitionPair#getKey()} as key and
+   * the value is the resolved parameter value or component object.
    *
    * @param definitions the set of {@code AttributeDefinition} to be used to create
    */

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -37,6 +37,7 @@ import javax.jms.Session;
 import javax.jms.Topic;
 
 public class TransactedSingleResourceJmsMessageReceiver extends AbstractMessageReceiver implements MessageListener {
+
   private final boolean topic;
   protected JmsConnector connector;
   protected RedeliveryHandler redeliveryHandler;
@@ -107,7 +108,8 @@ public class TransactedSingleResourceJmsMessageReceiver extends AbstractMessageR
       String durableName = (String) endpoint.getProperties().get(JmsConstants.DURABLE_NAME_PROPERTY);
       if (durableName == null && durable && dest instanceof Topic) {
         durableName = "mule." + connector.getName() + "." + endpoint.getEndpointURI().getAddress();
-        logger.debug("Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: " + durableName);
+        logger.debug(
+            "Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: " + durableName);
       }
 
       // Create consumer
@@ -201,8 +203,8 @@ public class TransactedSingleResourceJmsMessageReceiver extends AbstractMessageR
           if (logger.isDebugEnabled()) {
             logger.debug("Message received it is of type: " + ClassUtils.getSimpleName(message.getClass()));
             if (message.getJMSDestination() != null) {
-              logger.debug(
-                  "Message received on " + message.getJMSDestination() + " (" + message.getJMSDestination().getClass().getName() + ")");
+              logger.debug("Message received on " + message.getJMSDestination() + " ("
+                  + message.getJMSDestination().getClass().getName() + ")");
             } else {
               logger.debug("Message received on unknown destination");
             }
@@ -212,8 +214,8 @@ public class TransactedSingleResourceJmsMessageReceiver extends AbstractMessageR
 
           if (message.getJMSRedelivered()) {
             if (logger.isDebugEnabled()) {
-              logger.debug(
-                  "Message with correlationId: " + message.getJMSCorrelationID() + " is redelivered. handing off to Exception Handler");
+              logger.debug("Message with correlationId: " + message.getJMSCorrelationID()
+                  + " is redelivered. handing off to Exception Handler");
             }
             redeliveryHandler.handleRedelivery(message, receiver.getEndpoint(), receiver.getFlowConstruct());
           }

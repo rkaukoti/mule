@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.functional;
 
@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class TwoEndpointsSinglePortTestCase extends FunctionalTestCase {
+
   @Rule
   public DynamicPort port1 = new DynamicPort("port1");
 
@@ -59,7 +60,8 @@ public class TwoEndpointsSinglePortTestCase extends FunctionalTestCase {
     List<Object> results = new ArrayList<Object>();
     for (int i = 0; i < noOfMessages; i++) {
       results.add(getPayloadAsBytes(client.send(
-          ((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject(flowName)).getMessageSource()).getAddress(), message, null)));
+          ((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject(flowName)).getMessageSource()).getAddress(), message,
+          null)));
     }
 
     assertEquals(noOfMessages, results.size());

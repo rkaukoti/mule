@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.dsl.spring;
 
@@ -33,14 +33,15 @@ import static org.mule.runtime.config.spring.dsl.spring.CommonBeanDefinitionCrea
 import static org.mule.runtime.config.spring.util.ProcessingStrategyUtils.parseProcessingStrategy;
 
 /**
- * Based on the object building definition provided by {@link org.mule.runtime.config.spring.dsl.api.ComponentBuildingDefinition} and the
- * user configuration defined in {@link org.mule.runtime.config.spring.dsl.model.ComponentModel} it populates all the spring
- * {@link org.springframework.beans.factory.config.BeanDefinition} attributes using the helper class
+ * Based on the object building definition provided by {@link org.mule.runtime.config.spring.dsl.api.ComponentBuildingDefinition}
+ * and the user configuration defined in {@link org.mule.runtime.config.spring.dsl.model.ComponentModel} it populates all the
+ * spring {@link org.springframework.beans.factory.config.BeanDefinition} attributes using the helper class
  * {@link org.mule.runtime.config.spring.dsl.spring.BeanDefinitionBuilderHelper}.
  *
  * @since 4.0
  */
 class ComponentConfigurationBuilder {
+
   private static final Logger logger = LoggerFactory.getLogger(ComponentConfigurationBuilder.class);
 
   private final BeanDefinitionBuilderHelper beanDefinitionBuilderHelper;
@@ -74,8 +75,8 @@ class ComponentConfigurationBuilder {
 
   private List<ComponentValue> collectComplexParametersWithTypes(ComponentModel componentModel) {
     /*
-     * TODO: MULE-9638 This ugly code is required since we need to get the object type from the bean definition. This code will go away one
-     * we remove the old parsing method.
+     * TODO: MULE-9638 This ugly code is required since we need to get the object type from the bean definition. This code will go
+     * away one we remove the old parsing method.
      */
     return componentModel.getInnerComponents().stream().map(cdm -> {
       // When it comes from old model it does not have the type set
@@ -124,7 +125,8 @@ class ComponentConfigurationBuilder {
   }
 
   private boolean isPropertySetWithUserConfigValue(String propertyName, Optional<Object> defaultValue, Object value) {
-    return defaultValue.isPresent() && defaultValue.get().equals(value) && beanDefinitionBuilderHelper.hasValueForProperty(propertyName);
+    return defaultValue.isPresent() && defaultValue.get().equals(value)
+        && beanDefinitionBuilderHelper.hasValueForProperty(propertyName);
   }
 
   private ManagedList constructManagedList(List<Object> beans) {
@@ -140,8 +142,8 @@ class ComponentConfigurationBuilder {
   }
 
   /**
-   * Process a single {@link AttributeDefinition} from a {@link ComponentBuildingDefinition} and uses an invokes a {@code Consumer} when the
-   * value is a bean definition or a different {@code Consumer} if the value is a bean reference.
+   * Process a single {@link AttributeDefinition} from a {@link ComponentBuildingDefinition} and uses an invokes a
+   * {@code Consumer} when the value is a bean definition or a different {@code Consumer} if the value is a bean reference.
    */
   private class ConfigurableAttributeDefinitionVisitor implements AttributeDefinitionVisitor {
 
@@ -258,6 +260,7 @@ class ComponentConfigurationBuilder {
    * {code AttributeDefinitionVisitor} that extracts the value from the {@code ComponentModel}
    */
   private class ValueExtractorAttributeDefinitionVisitor implements AttributeDefinitionVisitor {
+
     private Object value;
 
     private String getStringValue() {
@@ -317,7 +320,8 @@ class ComponentConfigurationBuilder {
     @Override
     public void onComplexChildCollection(Class<?> type, Optional<String> wrapperIdentifier) {
       Predicate<ComponentValue> matchesTypeAndIdentifierPredicate = getTypeAndIdentifierPredicate(type, wrapperIdentifier);
-      List<ComponentValue> matchingComponentValues = complexParameters.stream().filter(matchesTypeAndIdentifierPredicate).collect(toList());
+      List<ComponentValue> matchingComponentValues =
+          complexParameters.stream().filter(matchesTypeAndIdentifierPredicate).collect(toList());
 
       matchingComponentValues.stream().forEach(complexParameters::remove);
       if (wrapperIdentifier.isPresent() && !matchingComponentValues.isEmpty()) {
@@ -331,8 +335,8 @@ class ComponentConfigurationBuilder {
 
     @Override
     public void onComplexChildMap(Class<?> keyType, Class<?> valueType, String wrapperIdentifier) {
-      Optional<ComponentValue> componentValueOptional =
-          complexParameters.stream().filter(getTypeAndIdentifierPredicate(MapFactoryBean.class, of(wrapperIdentifier))).findFirst();
+      Optional<ComponentValue> componentValueOptional = complexParameters.stream()
+          .filter(getTypeAndIdentifierPredicate(MapFactoryBean.class, of(wrapperIdentifier))).findFirst();
       componentValueOptional.ifPresent(componentValue -> {
         complexParameters.remove(componentValue);
         value = componentValue.getBean();

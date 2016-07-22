@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.context.notification;
 
@@ -14,8 +14,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * <code>ServerNotification</code> is an event triggered by something happening in the Server itself such as the server starting or a
- * service being registered.
+ * <code>ServerNotification</code> is an event triggered by something happening in the Server itself such as the server starting
+ * or a service being registered.
  */
 public abstract class ServerNotification extends EventObject implements MuleContextAware {
 
@@ -56,9 +56,9 @@ public abstract class ServerNotification extends EventObject implements MuleCont
   protected long timestamp;
   protected int action = NULL_ACTION;
   /**
-   * The resourceIdentifier is used when firing inbound server notifications such as Admin notifications or other action notifications
-   * triggered by an external source Used to associate the event with a particular resource. For example, if the event was a
-   * ServiceNotification the resourceIdentifier could be the name of a particular service
+   * The resourceIdentifier is used when firing inbound server notifications such as Admin notifications or other action
+   * notifications triggered by an external source Used to associate the event with a particular resource. For example, if the
+   * event was a ServiceNotification the resourceIdentifier could be the name of a particular service
    */
   protected String resourceIdentifier = null;
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.multipart;
 // ========================================================================
@@ -43,7 +43,9 @@ import javax.servlet.ServletException;
  * Handle a MultiPart Mime input stream, breaking it up on the boundary into files and strings.
  */
 public class MultiPartInputStream {
-  public static final MultipartConfiguration __DEFAULT_MULTIPART_CONFIG = new MultipartConfiguration(System.getProperty("java.io.tmpdir"));
+
+  public static final MultipartConfiguration __DEFAULT_MULTIPART_CONFIG =
+      new MultipartConfiguration(System.getProperty("java.io.tmpdir"));
   public static int CR = '\015';
   public static int LF = '\012';
   protected InputStream _in;
@@ -337,6 +339,7 @@ public class MultiPartInputStream {
   }
 
   public class MultiPart implements Part {
+
     protected String _name;
     protected String _filename;
     protected File _file;
@@ -368,7 +371,8 @@ public class MultiPartInputStream {
     }
 
     protected void write(int b) throws IOException {
-      if (MultiPartInputStream.this._config.getMaxFileSize() > 0 && _size + 1 > MultiPartInputStream.this._config.getMaxFileSize())
+      if (MultiPartInputStream.this._config.getMaxFileSize() > 0
+          && _size + 1 > MultiPartInputStream.this._config.getMaxFileSize())
         throw new IOException("Multipart Mime part " + _name + " exceeds max filesize");
 
       if (MultiPartInputStream.this._config.getFileSizeThreshold() > 0
@@ -379,7 +383,8 @@ public class MultiPartInputStream {
     }
 
     protected void write(byte[] bytes, int offset, int length) throws IOException {
-      if (MultiPartInputStream.this._config.getMaxFileSize() > 0 && _size + length > MultiPartInputStream.this._config.getMaxFileSize())
+      if (MultiPartInputStream.this._config.getMaxFileSize() > 0
+          && _size + length > MultiPartInputStream.this._config.getMaxFileSize())
         throw new IOException("Multipart Mime part " + _name + " exceeds max filesize");
 
       if (MultiPartInputStream.this._config.getFileSizeThreshold() > 0

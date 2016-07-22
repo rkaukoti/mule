@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.validation;
 
@@ -180,7 +180,8 @@ public class ValidationElTestCase extends AbstractMuleContextTestCase {
     assertInvalid(expression, getNumberValidationEvent(lowerBoundaryViolation, numberType, minValue, maxValue));
   }
 
-  private MuleEvent getNumberValidationEvent(Object value, NumberType numberType, Object minValue, Object maxValue) throws Exception {
+  private MuleEvent getNumberValidationEvent(Object value, NumberType numberType, Object minValue, Object maxValue)
+      throws Exception {
     MuleEvent event = getTestEvent(value);
     event.setFlowVariable("numberType", numberType);
     event.setFlowVariable("minValue", minValue);

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.listener;
 
@@ -63,7 +63,8 @@ public abstract class HttpListenerPersistentConnectionsTestCase extends Abstract
     socket.close();
   }
 
-  protected void assertConnectionClosesAfterTimeout(DynamicPort port, HttpVersion httpVersion) throws IOException, InterruptedException {
+  protected void assertConnectionClosesAfterTimeout(DynamicPort port, HttpVersion httpVersion)
+      throws IOException, InterruptedException {
     Socket socket = new Socket("localhost", port.getNumber());
     sendRequest(socket, httpVersion);
     assertResponse(getResponse(socket), true);
@@ -108,7 +109,8 @@ public abstract class HttpListenerPersistentConnectionsTestCase extends Abstract
     return connectionHeader != null ? connectionHeader.getValue() : null;
   }
 
-  private HttpResponse doPerformRequest(int port, HttpVersion httpVersion, boolean keepAlive) throws IOException, ClientProtocolException {
+  private HttpResponse doPerformRequest(int port, HttpVersion httpVersion, boolean keepAlive)
+      throws IOException, ClientProtocolException {
     String url = String.format("http://localhost:%s/", port);
     Request request = Request.Get(url).version(httpVersion).connectTimeout(GET_TIMEOUT);
     if (keepAlive) {

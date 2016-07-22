@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.config.i18n;
 
@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.List;
 
 public class CoreMessages extends MessageFactory {
+
   private static final CoreMessages factory = new CoreMessages();
 
   private static final String BUNDLE_PATH = getBundlePath("core");
@@ -187,7 +188,8 @@ public class CoreMessages extends MessageFactory {
   }
 
   public static Message cannotSetPropertyOnObjectWithParamType(String property, Class<?> class1, Class<?> class2) {
-    return factory.createMessage(BUNDLE_PATH, 61, property, StringMessageUtils.toString(class1), StringMessageUtils.toString(class2));
+    return factory.createMessage(BUNDLE_PATH, 61, property, StringMessageUtils.toString(class1),
+        StringMessageUtils.toString(class2));
   }
 
   public static Message noComponentForEndpoint() {
@@ -323,7 +325,8 @@ public class CoreMessages extends MessageFactory {
   }
 
   public static Message methodWithParamsNotFoundOnObject(String method, Object class1, Class<?> class2) {
-    return factory.createMessage(BUNDLE_PATH, 109, method, StringMessageUtils.toString(class1), StringMessageUtils.toString(class2));
+    return factory.createMessage(BUNDLE_PATH, 109, method, StringMessageUtils.toString(class1),
+        StringMessageUtils.toString(class2));
   }
 
   public static Message transformFailed(String from, String to) {
@@ -427,11 +430,13 @@ public class CoreMessages extends MessageFactory {
   }
 
   public static Message propertyIsNotSupportedType(String property, Class<?> expected, Class<?> actual) {
-    return factory.createMessage(BUNDLE_PATH, 157, property, StringMessageUtils.toString(expected), StringMessageUtils.toString(actual));
+    return factory.createMessage(BUNDLE_PATH, 157, property, StringMessageUtils.toString(expected),
+        StringMessageUtils.toString(actual));
   }
 
   public static Message propertyIsNotSupportedType(String property, Class<?>[] expected, Class<?> actual) {
-    return factory.createMessage(BUNDLE_PATH, 157, property, StringMessageUtils.toString(expected), StringMessageUtils.toString(actual));
+    return factory.createMessage(BUNDLE_PATH, 157, property, StringMessageUtils.toString(expected),
+        StringMessageUtils.toString(actual));
   }
 
   public static Message containerAlreadyRegistered(String name) {
@@ -503,11 +508,13 @@ public class CoreMessages extends MessageFactory {
   }
 
   public static Message objectNotOfCorrectType(Class<?> actualClass, Class<?>[] expectedClass) {
-    return factory.createMessage(BUNDLE_PATH, 185, StringMessageUtils.toString(actualClass), StringMessageUtils.toString(expectedClass));
+    return factory.createMessage(BUNDLE_PATH, 185, StringMessageUtils.toString(actualClass),
+        StringMessageUtils.toString(expectedClass));
   }
 
   public static Message objectNotOfCorrectType(Class<?> actualClass, Class<?> expectedClass) {
-    return factory.createMessage(BUNDLE_PATH, 185, StringMessageUtils.toString(actualClass), StringMessageUtils.toString(expectedClass));
+    return factory.createMessage(BUNDLE_PATH, 185, StringMessageUtils.toString(actualClass),
+        StringMessageUtils.toString(expectedClass));
   }
 
   public static Message failedToConvertStringUsingEncoding(String encoding) {
@@ -606,8 +613,9 @@ public class CoreMessages extends MessageFactory {
   public static Message productInformation() {
     String notset = CoreMessages.notSet().getMessage();
     return factory.createMessage(BUNDLE_PATH, 236, StringUtils.defaultString(MuleManifest.getProductDescription(), notset),
-        StringUtils.defaultString(MuleManifest.getProductVersion(), notset), StringUtils.defaultString(MuleManifest.getVendorName(), notset)
-            + " " + StringUtils.defaultString(MuleManifest.getVendorUrl(), notset));
+        StringUtils.defaultString(MuleManifest.getProductVersion(), notset),
+        StringUtils.defaultString(MuleManifest.getVendorName(), notset) + " "
+            + StringUtils.defaultString(MuleManifest.getVendorUrl(), notset));
   }
 
   public static Message noTransformerFoundForMessage(DataType input, DataType output) {
@@ -631,7 +639,8 @@ public class CoreMessages extends MessageFactory {
   }
 
   public static Message tooManyAcceptableMethodsOnObjectUsingResolverForTypes(Object object, Object types, String methods) {
-    return factory.createMessage(BUNDLE_PATH, 242, StringMessageUtils.toString(object), StringMessageUtils.toString(types), methods);
+    return factory.createMessage(BUNDLE_PATH, 242, StringMessageUtils.toString(object), StringMessageUtils.toString(types),
+        methods);
   }
 
   public static Message tooManyMatchingMethodsOnObjectUsingResolverWhichReturn(Object object, Object returnType) {
@@ -671,7 +680,8 @@ public class CoreMessages extends MessageFactory {
   }
 
   public static Message objectAlreadyRegistered(String name, Object origObject, Object newObject) {
-    return factory.createMessage(BUNDLE_PATH, 254, name, origObject + "." + origObject.getClass(), newObject + "." + newObject.getClass());
+    return factory.createMessage(BUNDLE_PATH, 254, name, origObject + "." + origObject.getClass(),
+        newObject + "." + newObject.getClass());
   }
 
   public static Message transformerNotImplementDiscoverable(Transformer transformer) {
@@ -799,7 +809,8 @@ public class CoreMessages extends MessageFactory {
     return factory.createMessage(BUNDLE_PATH, 310, processor);
   }
 
-  public static Message errorInvokingMessageProcessorWithinTransaction(MessageProcessor processor, TransactionConfig transactionConfig) {
+  public static Message errorInvokingMessageProcessorWithinTransaction(MessageProcessor processor,
+      TransactionConfig transactionConfig) {
     return factory.createMessage(BUNDLE_PATH, 311, processor, transactionConfig);
   }
 

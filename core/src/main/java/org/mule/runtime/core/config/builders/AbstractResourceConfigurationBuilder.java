@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.config.builders;
 
@@ -15,10 +15,10 @@ import java.io.IOException;
 import java.util.Map;
 
 /**
- * Abstract {@link ConfigurationBuilder} implementation used for ConfigurationBuider's that use one of more configuration resources of the
- * same type that are defined using strings or {@link ConfigResource} objects. It is recommended that
- * {@link org.mule.runtime.core.config.ConfigResource} objects are used over strings since they can be more descriptive, but Strings will be
- * supported for quite some time.
+ * Abstract {@link ConfigurationBuilder} implementation used for ConfigurationBuider's that use one of more configuration
+ * resources of the same type that are defined using strings or {@link ConfigResource} objects. It is recommended that
+ * {@link org.mule.runtime.core.config.ConfigResource} objects are used over strings since they can be more descriptive, but
+ * Strings will be supported for quite some time.
  */
 public abstract class AbstractResourceConfigurationBuilder extends AbstractConfigurationBuilder {
 
@@ -26,10 +26,10 @@ public abstract class AbstractResourceConfigurationBuilder extends AbstractConfi
   protected ConfigResource[] artifactConfigResources;
 
   /**
-   * @param artifactConfigResources a comma separated list of configuration files to load, this should be accessible on the classpath or
-   *        filesystem
-   * @param artifactProperties map of properties that can be referenced from the {@code artifactConfigResources} as external configuration
-   *        values
+   * @param artifactConfigResources a comma separated list of configuration files to load, this should be accessible on the
+   *        classpath or filesystem
+   * @param artifactProperties map of properties that can be referenced from the {@code artifactConfigResources} as external
+   *        configuration values
    * @throws org.mule.runtime.core.api.config.ConfigurationException usually if the config resources cannot be loaded
    */
   public AbstractResourceConfigurationBuilder(String artifactConfigResources, Map<String, String> artifactProperties)
@@ -39,9 +39,10 @@ public abstract class AbstractResourceConfigurationBuilder extends AbstractConfi
   }
 
   /**
-   * @param artifactConfigResources an array of configuration files to load, this should be accessible on the classpath or filesystem
-   * @param artifactProperties map of properties that can be referenced from the {@code artifactConfigResources} as external configuration
-   *        values
+   * @param artifactConfigResources an array of configuration files to load, this should be accessible on the classpath or
+   *        filesystem
+   * @param artifactProperties map of properties that can be referenced from the {@code artifactConfigResources} as external
+   *        configuration values
    * @throws org.mule.runtime.core.api.config.ConfigurationException usually if the config resources cannot be loaded
    */
   public AbstractResourceConfigurationBuilder(String[] artifactConfigResources, Map<String, String> artifactProperties)
@@ -52,8 +53,8 @@ public abstract class AbstractResourceConfigurationBuilder extends AbstractConfi
 
   /**
    * @param artifactConfigResources an array Reader oject that provides acces to a configuration either locally or remotely
-   * @param artifactProperties map of properties that can be referenced from the {@code artifactConfigResources} as external configuration
-   *        values
+   * @param artifactProperties map of properties that can be referenced from the {@code artifactConfigResources} as external
+   *        configuration values
    */
   public AbstractResourceConfigurationBuilder(ConfigResource[] artifactConfigResources, Map<String, String> artifactProperties) {
     this.artifactConfigResources = artifactConfigResources;

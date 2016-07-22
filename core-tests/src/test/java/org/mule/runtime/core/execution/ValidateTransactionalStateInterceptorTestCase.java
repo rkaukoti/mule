@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.execution;
 
@@ -43,8 +43,10 @@ public class ValidateTransactionalStateInterceptorTestCase extends AbstractMuleT
       new MuleTransactionConfig(TransactionConfig.ACTION_INDIFFERENT);
   public static final MuleTransactionConfig MULE_TRANSACTION_CONFIG_JOIN_IF_POSSIBLE =
       new MuleTransactionConfig(TransactionConfig.ACTION_JOIN_IF_POSSIBLE);
-  public static final MuleTransactionConfig MULE_TRANSACTION_CONFIG_NEVER = new MuleTransactionConfig(TransactionConfig.ACTION_NEVER);
-  public static final MuleTransactionConfig MULE_TRANSACTION_CONFIG_NONE = new MuleTransactionConfig(TransactionConfig.ACTION_NONE);
+  public static final MuleTransactionConfig MULE_TRANSACTION_CONFIG_NEVER =
+      new MuleTransactionConfig(TransactionConfig.ACTION_NEVER);
+  public static final MuleTransactionConfig MULE_TRANSACTION_CONFIG_NONE =
+      new MuleTransactionConfig(TransactionConfig.ACTION_NONE);
 
   private static final Map<Boolean, Map<MuleTransactionConfig, Boolean>> resultMap =
       new HashMap<Boolean, Map<MuleTransactionConfig, Boolean>>();
@@ -83,12 +85,14 @@ public class ValidateTransactionalStateInterceptorTestCase extends AbstractMuleT
 
   @Parameterized.Parameters
   public static Collection<Object[]> parameters() {
-    return Arrays.asList(new Object[][] {{false, MULE_TRANSACTION_CONFIG_ALWAYS_BEGIN}, {false, MULE_TRANSACTION_CONFIG_ALWAYS_JOIN},
-        {false, MULE_TRANSACTION_CONFIG_BEGIN_OR_JOIN}, {false, MULE_TRANSACTION_CONFIG_INDIFFERENT},
-        {false, MULE_TRANSACTION_CONFIG_JOIN_IF_POSSIBLE}, {false, MULE_TRANSACTION_CONFIG_NEVER}, {false, MULE_TRANSACTION_CONFIG_NONE},
-        {true, MULE_TRANSACTION_CONFIG_ALWAYS_BEGIN}, {true, MULE_TRANSACTION_CONFIG_ALWAYS_JOIN},
-        {true, MULE_TRANSACTION_CONFIG_BEGIN_OR_JOIN}, {true, MULE_TRANSACTION_CONFIG_INDIFFERENT},
-        {true, MULE_TRANSACTION_CONFIG_JOIN_IF_POSSIBLE}, {true, MULE_TRANSACTION_CONFIG_NEVER}, {true, MULE_TRANSACTION_CONFIG_NONE}});
+    return Arrays
+        .asList(new Object[][] {{false, MULE_TRANSACTION_CONFIG_ALWAYS_BEGIN}, {false, MULE_TRANSACTION_CONFIG_ALWAYS_JOIN},
+            {false, MULE_TRANSACTION_CONFIG_BEGIN_OR_JOIN}, {false, MULE_TRANSACTION_CONFIG_INDIFFERENT},
+            {false, MULE_TRANSACTION_CONFIG_JOIN_IF_POSSIBLE}, {false, MULE_TRANSACTION_CONFIG_NEVER},
+            {false, MULE_TRANSACTION_CONFIG_NONE}, {true, MULE_TRANSACTION_CONFIG_ALWAYS_BEGIN},
+            {true, MULE_TRANSACTION_CONFIG_ALWAYS_JOIN}, {true, MULE_TRANSACTION_CONFIG_BEGIN_OR_JOIN},
+            {true, MULE_TRANSACTION_CONFIG_INDIFFERENT}, {true, MULE_TRANSACTION_CONFIG_JOIN_IF_POSSIBLE},
+            {true, MULE_TRANSACTION_CONFIG_NEVER}, {true, MULE_TRANSACTION_CONFIG_NONE}});
   }
 
   @Before
@@ -108,6 +112,7 @@ public class ValidateTransactionalStateInterceptorTestCase extends AbstractMuleT
         new ValidateTransactionalStateInterceptor<MuleEvent>(new ExecuteCallbackInterceptor<MuleEvent>(), transactionConfig);
     try {
       result = interceptor.execute(new ExecutionCallback<MuleEvent>() {
+
         @Override
         public MuleEvent process() throws Exception {
           return mockMuleEvent;

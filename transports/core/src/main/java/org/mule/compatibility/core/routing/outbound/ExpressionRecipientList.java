@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.routing.outbound;
 
@@ -19,6 +19,7 @@ import java.util.List;
  */
 @Deprecated
 public class ExpressionRecipientList extends AbstractRecipientList {
+
   public static final String DEFAULT_SELECTOR_PROPERTY = "recipients";
   public static final String DEFAULT_SELECTOR_EXPRESSION = DEFAULT_SELECTOR_PROPERTY;
 
@@ -41,9 +42,8 @@ public class ExpressionRecipientList extends AbstractRecipientList {
       return new ArrayList<Object>((List<?>) msgRecipients);
     } else {
       logger.error("Recipients on message are neither String nor List but: " + msgRecipients.getClass());
-      throw new CouldNotRouteOutboundMessageException(
-          CoreMessages.propertyIsNotSupportedType(getFullExpression(), new Class[] {String.class, List.class}, msgRecipients.getClass()),
-          event, null);
+      throw new CouldNotRouteOutboundMessageException(CoreMessages.propertyIsNotSupportedType(getFullExpression(),
+          new Class[] {String.class, List.class}, msgRecipients.getClass()), event, null);
     }
   }
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.metadata;
 
@@ -58,9 +58,12 @@ public class MetadataKeyIdObjectResolverTestCase {
 
   @Before
   public void setUp() {
-    when(continentParam.getModelProperty(MetadataKeyPartModelProperty.class)).thenReturn(Optional.of(new MetadataKeyPartModelProperty(1)));
-    when(countryParam.getModelProperty(MetadataKeyPartModelProperty.class)).thenReturn(Optional.of(new MetadataKeyPartModelProperty(2)));
-    when(cityParam.getModelProperty(MetadataKeyPartModelProperty.class)).thenReturn(Optional.of(new MetadataKeyPartModelProperty(3)));
+    when(continentParam.getModelProperty(MetadataKeyPartModelProperty.class))
+        .thenReturn(Optional.of(new MetadataKeyPartModelProperty(1)));
+    when(countryParam.getModelProperty(MetadataKeyPartModelProperty.class))
+        .thenReturn(Optional.of(new MetadataKeyPartModelProperty(2)));
+    when(cityParam.getModelProperty(MetadataKeyPartModelProperty.class))
+        .thenReturn(Optional.of(new MetadataKeyPartModelProperty(3)));
     when(componentModel.getName()).thenReturn(OPERATION_NAME);
   }
 
@@ -128,8 +131,8 @@ public class MetadataKeyIdObjectResolverTestCase {
     exception.expectMessage(
         is("MetadataKey used for Metadata resolution must only have one child per level. Key 'USA' has [SFO, NY] as children."));
 
-    final MetadataKey invalidMetadataKey =
-        newKey(AMERICA, CONTINENT).withChild(newKey(USA, COUNTRY).withChild(newKey(SFO, CITY)).withChild(newKey(NY, CITY))).build();
+    final MetadataKey invalidMetadataKey = newKey(AMERICA, CONTINENT)
+        .withChild(newKey(USA, COUNTRY).withChild(newKey(SFO, CITY)).withChild(newKey(NY, CITY))).build();
     setParameters(continentParam, countryParam, cityParam);
     setMetadataKeyIdModelProperty(LocationKey.class);
 
@@ -139,8 +142,8 @@ public class MetadataKeyIdObjectResolverTestCase {
   @Test
   public void failToResolveWithInvalidKeyIdParam() throws MetadataResolvingException {
     exception.expect(MetadataResolvingException.class);
-    exception.expectMessage(
-        is("'Boolean' type is invalid for MetadataKeyId parameters, use String type instead. Affecting component: 'SomeOperation'"));
+    exception.expectMessage(is(
+        "'Boolean' type is invalid for MetadataKeyId parameters, use String type instead. Affecting component: 'SomeOperation'"));
 
     setParameters(continentParam);
     setMetadataKeyIdModelProperty(Boolean.class);

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.vm;
 
@@ -29,7 +29,8 @@ import java.util.List;
 import java.util.concurrent.RejectedExecutionException;
 
 /**
- * <code>VMMessageReceiver</code> is a listener for events from a Mule service which then simply passes the events on to the target service.
+ * <code>VMMessageReceiver</code> is a listener for events from a Mule service which then simply passes the events on to the
+ * target service.
  */
 public class VMMessageReceiver extends TransactedPollingMessageReceiver {
 
@@ -42,8 +43,8 @@ public class VMMessageReceiver extends TransactedPollingMessageReceiver {
   }
 
   /*
-   * We only need to start scheduling this receiver if event queueing is enabled on the connector; otherwise events are delivered via
-   * onEvent/onCall.
+   * We only need to start scheduling this receiver if event queueing is enabled on the connector; otherwise events are delivered
+   * via onEvent/onCall.
    */
   @Override
   protected void schedule() throws RejectedExecutionException, NullPointerException, IllegalArgumentException {
@@ -88,6 +89,7 @@ public class VMMessageReceiver extends TransactedPollingMessageReceiver {
       Thread.currentThread().setContextClassLoader(endpoint.getMuleContext().getExecutionClassLoader());
       ExecutionTemplate<MuleEvent> executionTemplate = createExecutionTemplate();
       MuleEvent resultEvent = executionTemplate.execute(new ExecutionCallback<MuleEvent>() {
+
         @Override
         public MuleEvent process() throws Exception {
           MuleEvent event = routeMessage(message);

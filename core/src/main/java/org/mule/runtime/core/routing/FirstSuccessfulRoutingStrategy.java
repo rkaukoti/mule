@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -18,10 +18,11 @@ import java.util.List;
 /**
  * Routing strategy that routes the message through a list of {@link MessageProcessor} until one is successfully executed.
  *
- * The message will be route to the first route, if the route execution is successful then execution ends, if not the message will be route
- * to the next route. This continues until a successful route is found.
+ * The message will be route to the first route, if the route execution is successful then execution ends, if not the message will
+ * be route to the next route. This continues until a successful route is found.
  */
 public class FirstSuccessfulRoutingStrategy extends AbstractRoutingStrategy {
+
   protected ExpressionFilter failureExpressionFilter;
   private RouteProcessor processor;
 
@@ -83,6 +84,7 @@ public class FirstSuccessfulRoutingStrategy extends AbstractRoutingStrategy {
   }
 
   interface RouteProcessor {
+
     MuleEvent processRoute(MessageProcessor route, MuleEvent event) throws MessagingException, MuleException;
   }
 }

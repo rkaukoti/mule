@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.classloading.isolation.maven.dependencies;
 
@@ -46,7 +46,8 @@ public class DependencyResolverTestCase extends AbstractMuleTestCase {
   @Test
   public void excludeRootSelectProvidedDependenciesOnlyTestTransitiveDependencies() {
     builder = new DependencyResolver(new Configuration().setMavenDependencyGraph(buildDefaultDependencies())
-        .selectDependencies(new DependenciesFilter().match(dependency -> dependency.isProvidedScope()).onlyCollectTransitiveDependencies())
+        .selectDependencies(
+            new DependenciesFilter().match(dependency -> dependency.isProvidedScope()).onlyCollectTransitiveDependencies())
         .collectTransitiveDependencies(new TransitiveDependenciesFilter().match(dependency -> dependency.isTestScope())
             .evaluateTransitiveDependenciesWhenPredicateFails()));
 
@@ -59,9 +60,10 @@ public class DependencyResolverTestCase extends AbstractMuleTestCase {
 
     builder = new DependencyResolver(new Configuration().setMavenDependencyGraph(buildDefaultDependencies())
         .includeRootArtifact(artifact -> artifact.getArtifactId().equals(selectedRootArtifactHolder.get().getArtifactId()))
-        .selectDependencies(
-            new DependenciesFilter().match(dependency -> dependency.getArtifactId().equals(selectedRootArtifactHolder.get().getArtifactId())
-                || (rootArtifact.getArtifactId().equals(selectedRootArtifactHolder.get().getArtifactId()) && dependency.isProvidedScope())))
+        .selectDependencies(new DependenciesFilter()
+            .match(dependency -> dependency.getArtifactId().equals(selectedRootArtifactHolder.get().getArtifactId())
+                || (rootArtifact.getArtifactId().equals(selectedRootArtifactHolder.get().getArtifactId())
+                    && dependency.isProvidedScope())))
         .collectTransitiveDependencies(
             new TransitiveDependenciesFilter().match(transitiveDependency -> transitiveDependency.isProvidedScope())));
 
@@ -180,12 +182,13 @@ public class DependencyResolverTestCase extends AbstractMuleTestCase {
   }
 
   private List<MavenArtifact> sortArtifacts(Set<MavenArtifact> mavenArtifacts) {
-    return mavenArtifacts.stream().sorted((a1, a2) -> a1.getArtifactId().compareTo(a2.getArtifactId())).collect(Collectors.toList());
+    return mavenArtifacts.stream().sorted((a1, a2) -> a1.getArtifactId().compareTo(a2.getArtifactId()))
+        .collect(Collectors.toList());
   }
 
   private MavenArtifact buildMavenArtifact(String groupId, String artifactId, String type, String version, String scope) {
-    return MavenArtifact.builder().withGroupId(groupId).withArtifactId(artifactId).withType(type).withVersion(version).withScope(scope)
-        .build();
+    return MavenArtifact.builder().withGroupId(groupId).withArtifactId(artifactId).withType(type).withVersion(version)
+        .withScope(scope).build();
   }
 
   private void buildDefaultArtifacts() {

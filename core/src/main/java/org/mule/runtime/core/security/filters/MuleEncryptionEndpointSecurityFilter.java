@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.security.filters;
 
@@ -27,6 +27,7 @@ import org.mule.runtime.core.security.MuleHeaderCredentialsAccessor;
  * <code>MuleEncryptionEndpointSecurityFilter</code> provides password-based encryption
  */
 public class MuleEncryptionEndpointSecurityFilter extends AbstractOperationSecurityFilter {
+
   private EncryptionStrategy strategy;
 
   public MuleEncryptionEndpointSecurityFilter() {
@@ -34,8 +35,8 @@ public class MuleEncryptionEndpointSecurityFilter extends AbstractOperationSecur
   }
 
   @Override
-  protected void authenticateInbound(MuleEvent event) throws SecurityException, SecurityProviderNotFoundException, CryptoFailureException,
-      EncryptionStrategyNotFoundException, UnknownAuthenticationTypeException {
+  protected void authenticateInbound(MuleEvent event) throws SecurityException, SecurityProviderNotFoundException,
+      CryptoFailureException, EncryptionStrategyNotFoundException, UnknownAuthenticationTypeException {
     String userHeader = (String) getCredentialsAccessor().getCredentials(event);
     if (userHeader == null) {
       throw new CredentialsNotSetException(event, event.getSession().getSecurityContext(), this);

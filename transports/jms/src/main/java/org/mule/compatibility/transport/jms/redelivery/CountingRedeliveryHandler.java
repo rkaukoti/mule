@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.redelivery;
 
@@ -20,10 +20,11 @@ import javax.jms.JMSException;
 import javax.jms.Message;
 
 /**
- * This redelivery handler will keep counting the redelivery attempts for each message redelivered. Used for providers not implementing the
- * {@code JMSXDeliveryCount} property support.
+ * This redelivery handler will keep counting the redelivery attempts for each message redelivered. Used for providers not
+ * implementing the {@code JMSXDeliveryCount} property support.
  */
 public class CountingRedeliveryHandler extends AbstractRedeliveryHandler {
+
   /**
    * logger used by this class
    */
@@ -38,9 +39,9 @@ public class CountingRedeliveryHandler extends AbstractRedeliveryHandler {
   }
 
   /**
-   * process the redelivered message. If the Jms receiver should process the message, it should be returned. Otherwise the connector should
-   * throw a <code>EndpointMessageRedeliveredException</code> to indicate that the message should be handled by the connector Exception
-   * Handler.
+   * process the redelivered message. If the Jms receiver should process the message, it should be returned. Otherwise the
+   * connector should throw a <code>EndpointMessageRedeliveredException</code> to indicate that the message should be handled by
+   * the connector Exception Handler.
    */
   @Override
   public void handleRedelivery(Message message, InboundEndpoint endpoint, FlowConstruct flow) throws JMSException, MuleException {

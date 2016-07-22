@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -31,11 +31,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
- * Test for SSL handshake timeouts. Unfortunately, there is no easy way to blackbox-test this as it would require a SSLSocket implementation
- * that could actually add arbitrary delays to the SSL handshake.
+ * Test for SSL handshake timeouts. Unfortunately, there is no easy way to blackbox-test this as it would require a SSLSocket
+ * implementation that could actually add arbitrary delays to the SSL handshake.
  * <p/>
- * The approach chosen here is based on reflection and massive subclassing/stubbing to make things work. Yes, this is hacky and fragile but
- * this seems to be the only reasonable alternative for now.
+ * The approach chosen here is based on reflection and massive subclassing/stubbing to make things work. Yes, this is hacky and
+ * fragile but this seems to be the only reasonable alternative for now.
  */
 public class HttpsHandshakeTimingTestCase extends AbstractMuleContextEndpointTestCase {
 
@@ -44,8 +44,9 @@ public class HttpsHandshakeTimingTestCase extends AbstractMuleContextEndpointTes
     MockHttpsMessageReceiver messageReceiver = setupMockHttpsMessageReceiver();
 
     MockSslSocket socket = new MockSslSocket();
-    HttpMessageProcessTemplate messageProcessTemplate = messageReceiver.createMessageProcessTemplate(
-        new HttpServerConnection(socket, messageReceiver.getEndpoint().getEncoding(), (HttpConnector) messageReceiver.getConnector()));
+    HttpMessageProcessTemplate messageProcessTemplate =
+        messageReceiver.createMessageProcessTemplate(new HttpServerConnection(socket, messageReceiver.getEndpoint().getEncoding(),
+            (HttpConnector) messageReceiver.getConnector()));
 
     MuleMessage message = MuleMessage.builder().payload(TEST_MESSAGE).build();
     messageProcessTemplate.beforeRouteEvent(getTestEvent(message));
@@ -57,7 +58,8 @@ public class HttpsHandshakeTimingTestCase extends AbstractMuleContextEndpointTes
 
     MockSslSocket socket = new MockSslSocket();
     socket.setInputStream(new ByteArrayInputStream("GET /path/to/file/index.html HTTP/1.0\n\n\n".getBytes()));
-    HttpServerConnection serverConnection = new HttpServerConnection(socket, UTF_8, (HttpConnector) messageReceiver.getConnector());
+    HttpServerConnection serverConnection =
+        new HttpServerConnection(socket, UTF_8, (HttpConnector) messageReceiver.getConnector());
     HttpMessageProcessTemplate messageContext = messageReceiver.createMessageProcessTemplate(serverConnection);
 
     invokeHandshakeCompleted(serverConnection, socket);
@@ -90,7 +92,8 @@ public class HttpsHandshakeTimingTestCase extends AbstractMuleContextEndpointTes
 
   private static class MockHttpsMessageReceiver extends HttpsMessageReceiver {
 
-    public MockHttpsMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint) throws CreateException {
+    public MockHttpsMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint)
+        throws CreateException {
       super(connector, flowConstruct, endpoint);
     }
   }

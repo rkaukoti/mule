@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.config.bootstrap;
@@ -24,15 +24,15 @@ public class TransformerBootstrapProperty extends AbstractBootstrapProperty {
    *
    * @param service service that provides the property. Not null.
    * @param artifactType defines what is the artifact this bootstrap object applies to
-   * @param optional indicates whether or not the bootstrapped transformer is optional. When a bootstrap object is optional, any error
-   *        creating it will be ignored.
+   * @param optional indicates whether or not the bootstrapped transformer is optional. When a bootstrap object is optional, any
+   *        error creating it will be ignored.
    * @param name name assigned to the transformer. Can be null.
    * @param className className of the bootstrapped transformer. Not empty.
    * @param returnClassName name of the transformer return class. Can be null.
    * @param mimeType transformer returned mimeType. Can be null
    */
-  public TransformerBootstrapProperty(BootstrapService service, ArtifactType artifactType, boolean optional, String name, String className,
-      String returnClassName, String mimeType) {
+  public TransformerBootstrapProperty(BootstrapService service, ArtifactType artifactType, boolean optional, String name,
+      String className, String returnClassName, String mimeType) {
     super(service, artifactType, optional);
     checkArgument(!StringUtils.isEmpty(className), "className cannot be empty");
 

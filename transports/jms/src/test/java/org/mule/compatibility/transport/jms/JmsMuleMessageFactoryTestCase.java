@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -17,6 +17,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class JmsMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTestCase {
+
   private static final String MESSAGE_TEXT = "Test JMS Message";
 
   @Override
@@ -38,7 +39,8 @@ public class JmsMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTes
     when(textMessage.getJMSReplyTo()).thenReturn(null);
     when(textMessage.getJMSTimestamp()).thenReturn(Long.valueOf(0));
     when(textMessage.getJMSType()).thenReturn(null);
-    when(textMessage.getPropertyNames()).thenReturn(IteratorUtils.asEnumeration(IteratorUtils.arrayIterator(new Object[] {"foo"})));
+    when(textMessage.getPropertyNames())
+        .thenReturn(IteratorUtils.asEnumeration(IteratorUtils.arrayIterator(new Object[] {"foo"})));
     when(textMessage.getObjectProperty("foo")).thenReturn("bar");
     return textMessage;
   }

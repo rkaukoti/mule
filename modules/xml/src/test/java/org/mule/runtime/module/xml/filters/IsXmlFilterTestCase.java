@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.filters;
 
@@ -19,6 +19,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class IsXmlFilterTestCase extends AbstractMuleTestCase {
+
   private IsXmlFilter filter;
 
   @Before
@@ -33,7 +34,8 @@ public class IsXmlFilterTestCase extends AbstractMuleTestCase {
 
   @Test
   public void testFilterFalse2() throws Exception {
-    assertFalse(filter.accept(MuleMessage.builder().payload("<line>This is almost XML</line><line>This is almost XML</line>").build()));
+    assertFalse(
+        filter.accept(MuleMessage.builder().payload("<line>This is almost XML</line><line>This is almost XML</line>").build()));
   }
 
   @Test

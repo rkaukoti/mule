@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.transformer;
 
@@ -38,15 +38,15 @@ import javax.xml.transform.stream.StreamSource;
 /**
  * <code>XsltTransformer</code> performs an XSLT transform on a DOM (or other XML-ish) object.
  * <p/>
- * This transformer maintains a pool of {@link javax.xml.transform.Transformer} objects to speed up processing of concurrent requests. The
- * pool can be configured using {@link #setMaxIdleTransformers(int)}.
+ * This transformer maintains a pool of {@link javax.xml.transform.Transformer} objects to speed up processing of concurrent
+ * requests. The pool can be configured using {@link #setMaxIdleTransformers(int)}.
  * <p/>
- * Parameter can also be set as part of the transformation context and these can be mapped to content in the current message using property
- * extractors or can be fixed values.
+ * Parameter can also be set as part of the transformation context and these can be mapped to content in the current message using
+ * property extractors or can be fixed values.
  * <p/>
  * <p/>
- * For example, the current event's message has a property named "myproperty", also you want to generate a uuid as a parameter. To do this
- * you can define context properties that can provide an expression to be evaluated on the current message.
+ * For example, the current event's message has a property named "myproperty", also you want to generate a uuid as a parameter. To
+ * do this you can define context properties that can provide an expression to be evaluated on the current message.
  * </p>
  * <p>
  * Example Configuration:
@@ -61,8 +61,8 @@ import javax.xml.transform.stream.StreamSource;
  * </pre>
  * <p/>
  * <p>
- * The 'header' expression pulls a header from the current message and 'function' can execute a set of arbitrary functions. You can also
- * pass in static values by ommitting the expression prefix '#['.
+ * The 'header' expression pulls a header from the current message and 'function' can execute a set of arbitrary functions. You
+ * can also pass in static values by ommitting the expression prefix '#['.
  * </p>
  * <p/>
  * In addition to being able to pass in an XSLT file you can also define templates inline. For example -
@@ -86,6 +86,7 @@ import javax.xml.transform.stream.StreamSource;
  */
 
 public class XsltTransformer extends AbstractXmlTransformer {
+
   // Saxon shipped with Mule
   public static final String PREFERRED_TRANSFORMER_FACTORY = "net.sf.saxon.TransformerFactoryImpl";
   // keep at least 1 XSLT Transformer ready by default
@@ -172,6 +173,7 @@ public class XsltTransformer extends AbstractXmlTransformer {
 
   protected Object getDelayedResult(final MuleEvent event, final Charset outputEncoding, final Source sourceDoc) {
     return new DelayedResult() {
+
       private String systemId;
 
       @Override
@@ -335,12 +337,12 @@ public class XsltTransformer extends AbstractXmlTransformer {
   }
 
   /**
-   * Returns the value to be set for the parameter. This method is called for each parameter before it is set on the transformer. The
-   * purpose of this method is to allow dynamic parameters related to the event (usually message properties) to be used. Any attribute of
-   * the current MuleEvent can be accessed using Property Extractors such as JXpath, bean path or header retrieval.
+   * Returns the value to be set for the parameter. This method is called for each parameter before it is set on the transformer.
+   * The purpose of this method is to allow dynamic parameters related to the event (usually message properties) to be used. Any
+   * attribute of the current MuleEvent can be accessed using Property Extractors such as JXpath, bean path or header retrieval.
    *
-   * @param key the name of the parameter. The name isn't used for this implementation but is exposed as a param for classes that may need
-   *        it.
+   * @param key the name of the parameter. The name isn't used for this implementation but is exposed as a param for classes that
+   *        may need it.
    * @param value the value of the paramter
    * @return the object to be set as the parameter value
    */
@@ -356,6 +358,7 @@ public class XsltTransformer extends AbstractXmlTransformer {
   }
 
   protected class PooledXsltTransformerFactory extends BasePoolableObjectFactory {
+
     @Override
     public Object makeObject() throws Exception {
       StreamSource source = XsltTransformer.this.getStreamSource();
@@ -363,8 +366,8 @@ public class XsltTransformer extends AbstractXmlTransformer {
       TransformerFactory factory;
 
       if (PREFERRED_TRANSFORMER_FACTORY.equals(factoryClassName) && !ClassUtils.isClassOnPath(factoryClassName, getClass())) {
-        logger.warn(
-            "Preferred Transfomer Factory " + PREFERRED_TRANSFORMER_FACTORY + " not on classpath and no default is set, defaulting to JDK");
+        logger.warn("Preferred Transfomer Factory " + PREFERRED_TRANSFORMER_FACTORY
+            + " not on classpath and no default is set, defaulting to JDK");
         factoryClassName = null;
       }
 
@@ -401,6 +404,7 @@ public class XsltTransformer extends AbstractXmlTransformer {
   }
 
   protected class DefaultErrorListener implements ErrorListener {
+
     private final Transformer trans;
     private TransformerException e = null;
 

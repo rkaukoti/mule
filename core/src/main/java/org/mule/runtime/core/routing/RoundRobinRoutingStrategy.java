@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -18,18 +18,19 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Routing strategy that divides the messages it receives among its target routes in round-robin fashion. The set of routes is obtained
- * dynamically using a {@link org.mule.runtime.core.routing.DynamicRouteResolver}.
+ * Routing strategy that divides the messages it receives among its target routes in round-robin fashion. The set of routes is
+ * obtained dynamically using a {@link org.mule.runtime.core.routing.DynamicRouteResolver}.
  * <p/>
- * This includes messages received on all threads, so there is no guarantee that messages received from a splitter are sent to consecutively
- * numbered targets.
+ * This includes messages received on all threads, so there is no guarantee that messages received from a splitter are sent to
+ * consecutively numbered targets.
  */
 public class RoundRobinRoutingStrategy extends AbstractRoutingStrategy {
 
   private final IdentifiableDynamicRouteResolver identifiableDynamicRouteResolver;
   private Map<String, Short> roundRobinState = new HashMap<>();
 
-  public RoundRobinRoutingStrategy(final MuleContext muleContext, final IdentifiableDynamicRouteResolver identifiableDynamicRouteResolver) {
+  public RoundRobinRoutingStrategy(final MuleContext muleContext,
+      final IdentifiableDynamicRouteResolver identifiableDynamicRouteResolver) {
     super(muleContext);
     this.identifiableDynamicRouteResolver = identifiableDynamicRouteResolver;
   }

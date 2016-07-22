@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.extension.socket.api.client;
@@ -22,9 +22,9 @@ public interface SocketClient {
 
   /**
    * @param data to be written into the socket
-   * @param outputEncoding to be used when writing contents of type {@link String}. If not specified, it defaults to the encoding specified
-   *        in the config {@link AbstractSocketConfig}. If no default is specified {@link AbstractSocketConfig} either, mule's default
-   *        encoding is used.
+   * @param outputEncoding to be used when writing contents of type {@link String}. If not specified, it defaults to the encoding
+   *        specified in the config {@link AbstractSocketConfig}. If no default is specified {@link AbstractSocketConfig} either,
+   *        mule's default encoding is used.
    */
   void write(Object data, String outputEncoding) throws IOException;
 

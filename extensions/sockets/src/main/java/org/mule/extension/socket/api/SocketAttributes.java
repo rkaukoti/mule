@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.extension.socket.api;
@@ -40,9 +40,9 @@ public interface SocketAttributes extends Attributes {
   Certificate[] getLocalCertificates();
 
   /**
-   * @return the identity of the peer which was established as part of defining the session. Note: This method can be used only when using
-   *         certificate-based cipher suites; using it with non-certificate-based cipher suites, such as Kerberos, will be return
-   *         {@code null}
+   * @return the identity of the peer which was established as part of defining the session. Note: This method can be used only
+   *         when using certificate-based cipher suites; using it with non-certificate-based cipher suites, such as Kerberos, will
+   *         be return {@code null}
    */
   Certificate[] getPeerCertificates();
 }

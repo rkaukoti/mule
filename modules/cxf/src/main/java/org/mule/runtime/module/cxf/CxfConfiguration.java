@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf;
 
@@ -34,6 +34,7 @@ import java.util.Map;
  * Provides global CXF configuration defaults.
  */
 public class CxfConfiguration implements Initialisable, Disposable, MuleContextAware {
+
   public static final String CXF = "cxf";
   public static final String CONFIGURATION_LOCATION = "configurationLocation";
   public static final String DEFAULT_MULE_NAMESPACE_URI = "http://www.muleumo.org";
@@ -62,7 +63,8 @@ public class CxfConfiguration implements Initialisable, Disposable, MuleContextA
   @Override
   public void initialise() throws InitialisationException {
     BusFactory.setDefaultBus(null);
-    ApplicationContext context = (ApplicationContext) muleContext.getRegistry().lookupObject(SpringRegistry.SPRING_APPLICATION_CONTEXT);
+    ApplicationContext context =
+        (ApplicationContext) muleContext.getRegistry().lookupObject(SpringRegistry.SPRING_APPLICATION_CONTEXT);
 
     if (configurationLocation != null) {
       bus = new SpringBusFactory(context).createBus(configurationLocation, true);

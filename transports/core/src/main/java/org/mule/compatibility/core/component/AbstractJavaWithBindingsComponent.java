@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.component;
 
@@ -21,6 +21,7 @@ import java.util.List;
  */
 @Deprecated
 public abstract class AbstractJavaWithBindingsComponent extends AbstractJavaComponent implements JavaWithBindingsComponent {
+
   protected List<InterfaceBinding> bindings = new ArrayList<InterfaceBinding>();
 
   /**
@@ -53,8 +54,8 @@ public abstract class AbstractJavaWithBindingsComponent extends AbstractJavaComp
   }
 
   /**
-   * Creates and initialises a new LifecycleAdaptor instance wrapped the component object instance obtained from the configured object
-   * factory.
+   * Creates and initialises a new LifecycleAdaptor instance wrapped the component object instance obtained from the configured
+   * object factory.
    */
   @Override
   protected LifecycleAdapter createLifecycleAdaptor() throws Exception {
@@ -71,8 +72,8 @@ public abstract class AbstractJavaWithBindingsComponent extends AbstractJavaComp
       // is not propagated
       lifecycleAdapter = new NullLifecycleAdapterWithBindings(object, this, flowConstruct, entryPointResolverSet, muleContext);
     } else {
-      lifecycleAdapter =
-          new DefaultComponentLifecycleAdapterWithBindingsFactory().create(object, this, flowConstruct, entryPointResolverSet, muleContext);
+      lifecycleAdapter = new DefaultComponentLifecycleAdapterWithBindingsFactory().create(object, this, flowConstruct,
+          entryPointResolverSet, muleContext);
     }
     lifecycleAdapter.initialise();
     return lifecycleAdapter;

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.ws.functional;
 
@@ -14,9 +14,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 /**
- * This test verifies that WS consumer doesn't fail if the message contains an invocation property called "operation". This variable is used
- * by CXF proxy client to allow the user to explicitly set the operation, and as WS consumer uses CXF proxy client if the variable is
- * defined it may change its behavior and make it fail.
+ * This test verifies that WS consumer doesn't fail if the message contains an invocation property called "operation". This
+ * variable is used by CXF proxy client to allow the user to explicitly set the operation, and as WS consumer uses CXF proxy
+ * client if the variable is defined it may change its behavior and make it fail.
  */
 public class OperationInvocationPropertyFunctionalTestCase extends AbstractWSConsumerFunctionalTestCase {
 
@@ -29,7 +29,8 @@ public class OperationInvocationPropertyFunctionalTestCase extends AbstractWSCon
 
   @Test
   public void consumerWorksWithOperationInvocationPropertyDefined() throws Exception {
-    MuleEvent event = flowRunner("echo").withPayload(ECHO_REQUEST).withFlowVariable(CxfConstants.OPERATION, OPERATION_VALUE).run();
+    MuleEvent event =
+        flowRunner("echo").withPayload(ECHO_REQUEST).withFlowVariable(CxfConstants.OPERATION, OPERATION_VALUE).run();
 
     assertXMLEqual(EXPECTED_ECHO_RESPONSE, getPayloadAsString(event.getMessage()));
     assertThat(event.getFlowVariable(CxfConstants.OPERATION), is(OPERATION_VALUE));

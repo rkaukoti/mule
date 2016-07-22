@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.routing;
 
@@ -63,12 +63,13 @@ public class UntilSuccessfulExceptionStrategyTestCase extends FunctionalTestCase
   }
 
   public static class LockProcessor implements MessageProcessor {
+
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException {
       try {
         if (!latch.await(TIMEOUT, TimeUnit.SECONDS)) {
-          event.setMessage(
-              MuleMessage.builder(event.getMessage()).exceptionPayload(new DefaultExceptionPayload(new RuntimeException())).build());
+          event.setMessage(MuleMessage.builder(event.getMessage())
+              .exceptionPayload(new DefaultExceptionPayload(new RuntimeException())).build());
         }
       } catch (InterruptedException e) {
         // do nothing
@@ -78,6 +79,7 @@ public class UntilSuccessfulExceptionStrategyTestCase extends FunctionalTestCase
   }
 
   public static class UnlockProcessor implements MessageProcessor {
+
     AtomicInteger count;
 
     @Override
@@ -91,6 +93,7 @@ public class UntilSuccessfulExceptionStrategyTestCase extends FunctionalTestCase
   }
 
   public static class WaitTwiceBeforeUnlockProcessor extends UnlockProcessor {
+
     public WaitTwiceBeforeUnlockProcessor() {
       count = new AtomicInteger(2);
     }
@@ -98,6 +101,7 @@ public class UntilSuccessfulExceptionStrategyTestCase extends FunctionalTestCase
   }
 
   public static class WaitOnceBeforeUnlockProcessor extends UnlockProcessor {
+
     public WaitOnceBeforeUnlockProcessor() {
       count = new AtomicInteger(1);
     }

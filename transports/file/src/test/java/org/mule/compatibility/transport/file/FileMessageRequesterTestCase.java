@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.file;
 
@@ -69,7 +69,7 @@ public class FileMessageRequesterTestCase extends AbstractMuleContextEndpointTes
       properties.put(key, value);
     }
 
-    return new DefaultInboundEndpoint(connector, null, null, properties, null, false, MessageExchangePattern.ONE_WAY, 42, null, null, null,
-        muleContext, null, null, null, null, null, false, null);
+    return new DefaultInboundEndpoint(connector, null, null, properties, null, false, MessageExchangePattern.ONE_WAY, 42, null,
+        null, null, muleContext, null, null, null, null, null, false, null);
   }
 }

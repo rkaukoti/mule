@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.transformer.datatype;
 
@@ -56,9 +56,10 @@ public class CollectionDataTypeXStreamConverter implements Converter {
   }
 
 
-  protected CollectionDataType createDataType(Class<? extends Collection> type, String mimeType, Class<?> itemType, String itemMediaType) {
-    return (CollectionDataType) DataType.builder().collectionType(type).itemType(itemType).itemMediaType(itemMediaType).mediaType(mimeType)
-        .build();
+  protected CollectionDataType createDataType(Class<? extends Collection> type, String mimeType, Class<?> itemType,
+      String itemMediaType) {
+    return (CollectionDataType) DataType.builder().collectionType(type).itemType(itemType).itemMediaType(itemMediaType)
+        .mediaType(mimeType).build();
   }
 
 }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.validation.internal;
 
@@ -25,6 +25,7 @@ import static org.mule.extension.validation.internal.ImmutableValidationResult.e
  * @since 3.7.0
  */
 abstract class ValidationSupport {
+
   protected final Logger logger = LoggerFactory.getLogger(getClass());
 
   protected void validateWith(Validator validator, ValidationContext validationContext, MuleEvent event) throws Exception {
@@ -45,8 +46,8 @@ abstract class ValidationSupport {
   private ValidationResult evaluateCustomMessage(ValidationResult result, ValidationContext validationContext) {
     String customMessage = validationContext.getOptions().getMessage();
     if (!StringUtils.isBlank(customMessage)) {
-      result = error(
-          validationContext.getMuleEvent().getMuleContext().getExpressionManager().parse(customMessage, validationContext.getMuleEvent()));
+      result = error(validationContext.getMuleEvent().getMuleContext().getExpressionManager().parse(customMessage,
+          validationContext.getMuleEvent()));
     }
 
     return result;

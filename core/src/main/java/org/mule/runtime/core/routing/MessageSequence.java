@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -13,6 +13,7 @@ import java.util.Iterator;
  * @author flbulgarelli
  */
 public interface MessageSequence<T> extends Iterator<T> {
+
   Integer UNKNOWN_SIZE = null;
 
   /**
@@ -38,8 +39,8 @@ public interface MessageSequence<T> extends Iterator<T> {
   public boolean hasNext();
 
   /**
-   * The next element of the sequence. At any moment, if {@link #size()} is not equal to {@link #UNKNOWN_SIZE}, this means that this method
-   * may be invoked approximately up to {@link #size()} times.
+   * The next element of the sequence. At any moment, if {@link #size()} is not equal to {@link #UNKNOWN_SIZE}, this means that
+   * this method may be invoked approximately up to {@link #size()} times.
    */
   @Override
   public T next();

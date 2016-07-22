@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.util;
 
@@ -63,22 +63,25 @@ public final class MetadataTypeUtils {
   }
 
   /**
-   * Provides a unique way to generate an {@link UnionType} from the SubTypes Mapping declaration for a given {@link MetadataType baseType}.
+   * Provides a unique way to generate an {@link UnionType} from the SubTypes Mapping declaration for a given {@link MetadataType
+   * baseType}.
    * <p>
-   * If no subType mapping exists for the given {@link MetadataType baseType}, then the {@code baseType} is returned, without wrapping it in
-   * a new {@link UnionType}.
+   * If no subType mapping exists for the given {@link MetadataType baseType}, then the {@code baseType} is returned, without
+   * wrapping it in a new {@link UnionType}.
    * <p>
-   * When there is a single subtype mapped, then instead of returning an {@link UnionType} of a single {@link MetadataType}, the subtype is
-   * returned.
+   * When there is a single subtype mapped, then instead of returning an {@link UnionType} of a single {@link MetadataType}, the
+   * subtype is returned.
    * <p>
-   * In all cases, if the {@link MetadataType baseType} is a concrete implementation, it is also added as a part of the {@link UnionType}.
+   * In all cases, if the {@link MetadataType baseType} is a concrete implementation, it is also added as a part of the
+   * {@link UnionType}.
    *
    * @param baseType the base {@link MetadataType} for which subtypes could be mapped
    * @param subtypesContainer the {@link SubTypesMappingContainer} used to look for mapped subtypes for the given {@code baseType}
-   * @return The {@code baseType} if no subtypes were present, its subtype if only one mapping is defined, or the {@link UnionType union} of
-   *         all the mapped subtypes for the given {@code baseType}
+   * @return The {@code baseType} if no subtypes were present, its subtype if only one mapping is defined, or the {@link UnionType
+   *         union} of all the mapped subtypes for the given {@code baseType}
    */
-  public static MetadataType subTypesUnion(MetadataType baseType, SubTypesMappingContainer subtypesContainer, ClassLoader classLoader) {
+  public static MetadataType subTypesUnion(MetadataType baseType, SubTypesMappingContainer subtypesContainer,
+      ClassLoader classLoader) {
     List<MetadataType> subTypes = subtypesContainer.getSubTypes(baseType);
     if (subTypes.isEmpty()) {
       return baseType;
@@ -102,8 +105,8 @@ public final class MetadataTypeUtils {
 
   public static boolean isInstantiable(MetadataType metadataType) {
     return org.mule.metadata.utils.MetadataTypeUtils.getSingleAnnotation(metadataType, ClassInformationAnnotation.class)
-        .map(ClassInformationAnnotation::isInstantiable)
-        .orElse(metadataType.getMetadataFormat().equals(MetadataFormat.JAVA) && IntrospectionUtils.isInstantiable(getType(metadataType)));
+        .map(ClassInformationAnnotation::isInstantiable).orElse(metadataType.getMetadataFormat().equals(MetadataFormat.JAVA)
+            && IntrospectionUtils.isInstantiable(getType(metadataType)));
   }
 
   public static boolean hasExposedFields(MetadataType metadataType) {
@@ -112,8 +115,8 @@ public final class MetadataTypeUtils {
 
   public static boolean isFinal(MetadataType metadataType) {
     return org.mule.metadata.utils.MetadataTypeUtils.getSingleAnnotation(metadataType, ClassInformationAnnotation.class)
-        .map(ClassInformationAnnotation::isFinal)
-        .orElse(metadataType.getMetadataFormat().equals(MetadataFormat.JAVA) && Modifier.isFinal(getType(metadataType).getModifiers()));
+        .map(ClassInformationAnnotation::isFinal).orElse(metadataType.getMetadataFormat().equals(MetadataFormat.JAVA)
+            && Modifier.isFinal(getType(metadataType).getModifiers()));
   }
 
   public static String getId(MetadataType metadataType) {
@@ -122,6 +125,7 @@ public final class MetadataTypeUtils {
   }
 
   public static boolean isExtensible(MetadataType metadataType) {
-    return org.mule.metadata.utils.MetadataTypeUtils.getSingleAnnotation(metadataType, ExtensibleTypeAnnotation.class).isPresent();
+    return org.mule.metadata.utils.MetadataTypeUtils.getSingleAnnotation(metadataType, ExtensibleTypeAnnotation.class)
+        .isPresent();
   }
 }

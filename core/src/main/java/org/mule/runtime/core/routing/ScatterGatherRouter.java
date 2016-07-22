@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.routing;
@@ -46,26 +46,26 @@ import javax.resource.spi.work.WorkException;
 
 /**
  * <p>
- * The <code>Scatter-Gather</code> router will broadcast copies of the current message to every endpoint registered with the router in
- * parallel.
+ * The <code>Scatter-Gather</code> router will broadcast copies of the current message to every endpoint registered with the
+ * router in parallel.
  * </p>
- * It is very similar to the <code>&lt;all&gt;</code> implemented in the {@link MulticastingRouter} class, except that this router processes
- * in parallel instead of sequentially.
+ * It is very similar to the <code>&lt;all&gt;</code> implemented in the {@link MulticastingRouter} class, except that this router
+ * processes in parallel instead of sequentially.
  * <p>
  * Differences with {@link MulticastingRouter} router:
  * </p>
  * <ul>
  * <li>When using {@link MulticastingRouter} changes to the payload performed in route n are visible in route (n+1). When using
  * {@link ScatterGatherRouter}, each route has different shallow copies of the original event</li>
- * <li>{@link MulticastingRouter} throws {@link CouldNotRouteOutboundMessageException} upon route failure and stops processing. When
- * catching the exception, you'll have no information about the result of any prior routes. {@link ScatterGatherRouter} will process all
- * routes no matter what. It will also aggregate the results of all routes into a {@link MuleMessageCollection} in which each entry has the
- * {@link ExceptionPayload} set accordingly and then will throw a {@link CompositeRoutingException} which will give you visibility over the
- * output of other routes.</li>
+ * <li>{@link MulticastingRouter} throws {@link CouldNotRouteOutboundMessageException} upon route failure and stops processing.
+ * When catching the exception, you'll have no information about the result of any prior routes. {@link ScatterGatherRouter} will
+ * process all routes no matter what. It will also aggregate the results of all routes into a {@link MuleMessageCollection} in
+ * which each entry has the {@link ExceptionPayload} set accordingly and then will throw a {@link CompositeRoutingException} which
+ * will give you visibility over the output of other routes.</li>
  * </ul>
  * <p>
- * For advanced use cases, a custom {@link AggregationStrategy} can be applied to customize the logic used to aggregate the route responses
- * back into one single element or to throw exception
+ * For advanced use cases, a custom {@link AggregationStrategy} can be applied to customize the logic used to aggregate the route
+ * responses back into one single element or to throw exception
  * <p>
  * <b>EIP Reference:</b> <a href="http://www.eaipatterns.com/BroadcastAggregate.html"<a/>
  * </p>
@@ -173,7 +173,8 @@ public class ScatterGatherRouter extends AbstractMessageProcessorOwner implement
         }
 
         if (response.getMessage().getExceptionPayload() == null) {
-          event.setMessage(MuleMessage.builder(event.getMessage()).exceptionPayload(new DefaultExceptionPayload(exception)).build());
+          event.setMessage(
+              MuleMessage.builder(event.getMessage()).exceptionPayload(new DefaultExceptionPayload(exception)).build());
         }
       } else {
         if (logger.isDebugEnabled()) {
@@ -188,8 +189,8 @@ public class ScatterGatherRouter extends AbstractMessageProcessorOwner implement
   }
 
   private Exception wrapInDispatchException(MuleEvent event, int routeIndex, MessageProcessor route, Exception e) {
-    return new DispatchException(MessageFactory.createStaticMessage(String.format("route number %d failed to be executed", routeIndex)),
-        event, route, e);
+    return new DispatchException(
+        MessageFactory.createStaticMessage(String.format("route number %d failed to be executed", routeIndex)), event, route, e);
   }
 
   private List<ProcessingMuleEventWork> executeWork(MuleEvent event) throws MuleException {
@@ -290,7 +291,8 @@ public class ScatterGatherRouter extends AbstractMessageProcessorOwner implement
   }
 
   private void checkNotInitialised() {
-    Preconditions.checkState(initialised == false, "<scatter-gather> router is not dynamic. Cannot modify routes after initialisation");
+    Preconditions.checkState(initialised == false,
+        "<scatter-gather> router is not dynamic. Cannot modify routes after initialisation");
   }
 
   @Override

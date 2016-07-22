@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.lifecycle;
 
@@ -15,8 +15,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * A {@link LifecycleInterceptor} which tracks the completion of the {@link Initialisable} phase so that if it fails to complete, the
- * {@link Disposable} phase is only applied on the target objects on which it could be successfully applied.
+ * A {@link LifecycleInterceptor} which tracks the completion of the {@link Initialisable} phase so that if it fails to complete,
+ * the {@link Disposable} phase is only applied on the target objects on which it could be successfully applied.
  *
  * @since 3.8
  */
@@ -51,9 +51,8 @@ public class InitDisposeLifecycleInterceptor implements LifecycleInterceptor {
     if (isDispose(phase) && (object instanceof Initialisable)) {
       if (!initialisedObjects.contains(getLifecycleTrackingKey(object))) {
         if (LOGGER.isDebugEnabled()) {
-          LOGGER.debug(String.format(
-              "Skipping %s lifecycle phase on object because %s phase failed before it could be applied " + "on it. Object is: %s",
-              Disposable.PHASE_NAME, Initialisable.PHASE_NAME, object));
+          LOGGER.debug(String.format("Skipping %s lifecycle phase on object because %s phase failed before it could be applied "
+              + "on it. Object is: %s", Disposable.PHASE_NAME, Initialisable.PHASE_NAME, object));
         }
         return false;
       }
@@ -76,8 +75,8 @@ public class InitDisposeLifecycleInterceptor implements LifecycleInterceptor {
   }
 
   /**
-   * If the {@code phase} name is {@link Initialisable#PHASE_NAME} then it marks the {@link Initialisable} phase as completed and clears all
-   * other tracking state so that memory can be reclaimed.
+   * If the {@code phase} name is {@link Initialisable#PHASE_NAME} then it marks the {@link Initialisable} phase as completed and
+   * clears all other tracking state so that memory can be reclaimed.
    *
    * @param phase the phase that was applied
    */

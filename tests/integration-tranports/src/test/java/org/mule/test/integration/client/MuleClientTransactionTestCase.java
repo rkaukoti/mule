@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.client;
 
@@ -34,6 +34,7 @@ import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_SYNC_P
 import static org.mule.runtime.core.api.transaction.TransactionConfig.ACTION_ALWAYS_BEGIN;
 
 public class MuleClientTransactionTestCase extends FunctionalTestCase {
+
   @Override
   protected String getConfigFile() {
     return "org/mule/test/integration/client/test-client-jms-mule-config.xml";
@@ -63,8 +64,10 @@ public class MuleClientTransactionTestCase extends FunctionalTestCase {
     ImmutableEndpoint inboundEndpoint = getEndpointFactory().getOutboundEndpoint(endpointBuilder);
     registerEndpoint(client.getMuleContext().getRegistry(), inboundEndpoint);
 
-    ExecutionTemplate<Void> executionTemplate = TransactionalExecutionTemplate.createTransactionalExecutionTemplate(muleContext, tc);
+    ExecutionTemplate<Void> executionTemplate =
+        TransactionalExecutionTemplate.createTransactionalExecutionTemplate(muleContext, tc);
     executionTemplate.execute(new ExecutionCallback<Void>() {
+
       @Override
       public Void process() throws Exception {
         for (int i = 0; i < 100; i++) {
@@ -105,9 +108,11 @@ public class MuleClientTransactionTestCase extends FunctionalTestCase {
     ImmutableEndpoint inboundEndpoint = getEndpointFactory().getOutboundEndpoint(endpointBuilder);
     registerEndpoint(client.getMuleContext().getRegistry(), inboundEndpoint);
 
-    ExecutionTemplate<Void> executionTemplate = TransactionalExecutionTemplate.createTransactionalExecutionTemplate(muleContext, tc);
+    ExecutionTemplate<Void> executionTemplate =
+        TransactionalExecutionTemplate.createTransactionalExecutionTemplate(muleContext, tc);
     try {
       executionTemplate.execute(new ExecutionCallback<Void>() {
+
         @Override
         public Void process() throws Exception {
           for (int i = 0; i < 100; i++) {
@@ -150,8 +155,10 @@ public class MuleClientTransactionTestCase extends FunctionalTestCase {
     ImmutableEndpoint inboundEndpoint = getEndpointFactory().getOutboundEndpoint(endpointBuilder);
     registerEndpoint(client.getMuleContext().getRegistry(), inboundEndpoint);
 
-    ExecutionTemplate<Void> executionTemplate = TransactionalExecutionTemplate.createTransactionalExecutionTemplate(muleContext, tc);
+    ExecutionTemplate<Void> executionTemplate =
+        TransactionalExecutionTemplate.createTransactionalExecutionTemplate(muleContext, tc);
     executionTemplate.execute(new ExecutionCallback<Void>() {
+
       @Override
       public Void process() throws Exception {
         for (int i = 0; i < 100; i++) {
@@ -173,8 +180,10 @@ public class MuleClientTransactionTestCase extends FunctionalTestCase {
     final MuleClient client = new MuleClient(muleContext);
     MuleTransactionConfig tc = new MuleTransactionConfig(ACTION_ALWAYS_BEGIN);
     tc.setFactory(new JmsTransactionFactory());
-    ExecutionTemplate<Void> executionTemplate = TransactionalExecutionTemplate.createTransactionalExecutionTemplate(muleContext, tc);
+    ExecutionTemplate<Void> executionTemplate =
+        TransactionalExecutionTemplate.createTransactionalExecutionTemplate(muleContext, tc);
     executionTemplate.execute(new ExecutionCallback<Void>() {
+
       @Override
       public Void process() throws Exception {
         while (client.request("jms://replyTo.queue", 2000) != null) {

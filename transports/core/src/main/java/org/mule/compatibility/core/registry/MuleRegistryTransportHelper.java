@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.registry;
 
@@ -28,6 +28,7 @@ import java.util.Properties;
  */
 @Deprecated
 public class MuleRegistryTransportHelper {
+
   protected static Logger logger = LoggerFactory.getLogger(MuleRegistryTransportHelper.class);
 
   public static Connector lookupConnector(MuleRegistry registry, String name) {
@@ -35,8 +36,9 @@ public class MuleRegistryTransportHelper {
   }
 
   /**
-   * Looks-up endpoint builders which can be used to repeatably create endpoints with the same configuration. These endpoint builder are
-   * either global endpoints or they are builders used to create named endpoints configured on routers and exception strategies.
+   * Looks-up endpoint builders which can be used to repeatably create endpoints with the same configuration. These endpoint
+   * builder are either global endpoints or they are builders used to create named endpoints configured on routers and exception
+   * strategies.
    *
    * @param name the name of the endpointBuilder to find
    * @return An endpointBuilder with the name specified or null if there is no endpoint builder with that name
@@ -72,8 +74,8 @@ public class MuleRegistryTransportHelper {
   /**
    * Looks up the service descriptor from a singleton cache and creates a new one if not found.
    */
-  public static ServiceDescriptor lookupServiceDescriptor(MuleRegistry registry, ServiceType type, String name, Properties overrides)
-      throws ServiceException {
+  public static ServiceDescriptor lookupServiceDescriptor(MuleRegistry registry, ServiceType type, String name,
+      Properties overrides) throws ServiceException {
     String key = new AbstractServiceDescriptor.Key(name, overrides).getKey();
     // TODO If we want these descriptors loaded form Spring we need to change the key mechanism
     // and the scope, and then deal with circular reference issues.
@@ -92,8 +94,8 @@ public class MuleRegistryTransportHelper {
     }
   }
 
-  protected static ServiceDescriptor createServiceDescriptor(MuleRegistry registry, ServiceType type, String name, Properties overrides)
-      throws ServiceException {
+  protected static ServiceDescriptor createServiceDescriptor(MuleRegistry registry, ServiceType type, String name,
+      Properties overrides) throws ServiceException {
     // Stripe off and use the meta-scheme if present
     String scheme = name;
     if (name.contains(":")) {

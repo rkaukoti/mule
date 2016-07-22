@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.file.internal;
 
@@ -19,9 +19,9 @@ import java.nio.file.Path;
  * <p>
  * This stream will automatically close itself once fully consumed but will not fail if {@link #close()} is invoked after that.
  * <p>
- * This class also contains a {@link PathLock} which will be released when the stream is closed. However, this class will never invoke the
- * {@link PathLock#tryLock()} method on it, it's the responsibility of whomever is creating this instance to determine if that lock is to be
- * acquired.
+ * This class also contains a {@link PathLock} which will be released when the stream is closed. However, this class will never
+ * invoke the {@link PathLock#tryLock()} method on it, it's the responsibility of whomever is creating this instance to determine
+ * if that lock is to be acquired.
  *
  * @since 4.0
  */

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.routing;
 
@@ -43,8 +43,8 @@ import static org.mule.runtime.core.api.LocatedMuleException.INFO_LOCATION_KEY;
 public class ForeachTestCase extends FunctionalTestCase {
 
   static String sampleXml = "<PurchaseOrder>" + "<Address><Name>Ellen Adams</Name></Address>" + "<Items>"
-      + "<Item PartNumber=\"872-AA\"><Price>140</Price></Item>" + "<Item PartNumber=\"926-AA\"><Price>35</Price></Item>" + "</Items>"
-      + "</PurchaseOrder>";
+      + "<Item PartNumber=\"872-AA\"><Price>140</Price></Item>" + "<Item PartNumber=\"926-AA\"><Price>35</Price></Item>"
+      + "</Items>" + "</PurchaseOrder>";
   @Rule
   public SystemProperty systemProperty = new SystemProperty("batch.size", "3");
   private MuleClient client;
@@ -108,8 +108,8 @@ public class ForeachTestCase extends FunctionalTestCase {
     names.add("visitante");
 
     MuleMessage message = MuleMessage.builder().payload("message payload").addOutboundProperty("names", names).build();
-    MuleMessage result =
-        flowRunner("minimal-config-expression").withPayload("message payload").withInboundProperty("names", names).run().getMessage();
+    MuleMessage result = flowRunner("minimal-config-expression").withPayload("message payload")
+        .withInboundProperty("names", names).run().getMessage();
 
     assertThat(result.getPayload(), instanceOf(String.class));
     assertThat((message.getOutboundProperty("names")), hasSize(names.size()));

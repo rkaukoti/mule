@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing.filters;
 
@@ -83,7 +83,8 @@ public class RegExFilter implements Filter, ObjectFilter, MuleContextAware, Init
       if (value != null && value.getRawValue() != null) {
         return accept(value.resolveValue(event));
       } else {
-        final MuleMessage transformedMessage = muleContext.getTransformationService().transform(event.getMessage(), DataType.STRING);
+        final MuleMessage transformedMessage =
+            muleContext.getTransformationService().transform(event.getMessage(), DataType.STRING);
         // If the payload is a stream and we've consumed it, then we should set the payload on the
         // message. This is the only time this method will alter the payload on the message
         if (isConsumable(event.getMessage().getDataType().getType())) {

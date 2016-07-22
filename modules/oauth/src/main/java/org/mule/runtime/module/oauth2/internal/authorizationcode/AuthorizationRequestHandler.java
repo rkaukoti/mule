@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode;
 
@@ -30,8 +30,8 @@ import java.util.Map;
 import static org.mule.runtime.module.http.api.HttpHeaders.Names.LOCATION;
 
 /**
- * Handles the call to the localAuthorizationUrl and redirects the user to the oauth authentication server authorization url so the user can
- * grant access to the resources to the mule application.
+ * Handles the call to the localAuthorizationUrl and redirects the user to the oauth authentication server authorization url so
+ * the user can grant access to the resources to the mule application.
  */
 public class AuthorizationRequestHandler implements MuleContextAware {
 
@@ -94,11 +94,13 @@ public class AuthorizationRequestHandler implements MuleContextAware {
 
   private List<MessageProcessor> createLocalAuthorizationUrlListener() {
     final MessageProcessor listenerMessageProcessor = new MessageProcessor() {
+
       @Override
       public MuleEvent process(MuleEvent muleEvent) throws MuleException {
         final String onCompleteRedirectToValue =
             ((Map<String, String>) muleEvent.getMessage().getInboundProperty("http.query.params")).get("onCompleteRedirectTo");
-        final String resourceOwnerId = getOauthConfig().getLocalAuthorizationUrlResourceOwnerIdEvaluator().resolveStringValue(muleEvent);
+        final String resourceOwnerId =
+            getOauthConfig().getLocalAuthorizationUrlResourceOwnerIdEvaluator().resolveStringValue(muleEvent);
         muleEvent.setFlowVariable(OAUTH_STATE_ID_FLOW_VAR_NAME, resourceOwnerId);
         final String stateValue = stateEvaluator.resolveStringValue(muleEvent);
         final StateEncoder stateEncoder = new StateEncoder(stateValue);
@@ -109,10 +111,12 @@ public class AuthorizationRequestHandler implements MuleContextAware {
           stateEncoder.encodeOnCompleteRedirectToInState(onCompleteRedirectToValue);
         }
         final String authorizationUrlWithParams = new AuthorizationRequestUrlBuilder().setAuthorizationUrl(authorizationUrl)
-            .setClientId(oauthConfig.getClientId()).setClientSecret(oauthConfig.getClientSecret()).setCustomParameters(customParameters)
-            .setRedirectUrl(oauthConfig.getRedirectionUrl()).setState(stateEncoder.getEncodedState()).setScope(scopes).buildUrl();
+            .setClientId(oauthConfig.getClientId()).setClientSecret(oauthConfig.getClientSecret())
+            .setCustomParameters(customParameters).setRedirectUrl(oauthConfig.getRedirectionUrl())
+            .setState(stateEncoder.getEncodedState()).setScope(scopes).buildUrl();
 
-        muleEvent.setMessage(MuleMessage.builder(muleEvent.getMessage()).addOutboundProperty(LOCATION, authorizationUrlWithParams).build());
+        muleEvent.setMessage(
+            MuleMessage.builder(muleEvent.getMessage()).addOutboundProperty(LOCATION, authorizationUrlWithParams).build());
         return muleEvent;
       }
     };

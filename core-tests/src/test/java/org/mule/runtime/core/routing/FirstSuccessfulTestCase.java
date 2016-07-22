@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -27,6 +27,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class FirstSuccessfulTestCase extends AbstractMuleContextTestCase {
+
   private static final String EXCEPTION_SEEN = "EXCEPTION WAS SEEN";
 
   public FirstSuccessfulTestCase() {
@@ -37,7 +38,8 @@ public class FirstSuccessfulTestCase extends AbstractMuleContextTestCase {
   public void testFirstSuccessful() throws Exception {
     MuleSession session = getTestSession(null, muleContext);
 
-    FirstSuccessful fs = createFirstSuccessfulRouter(new TestProcessor("abc"), new TestProcessor("def"), new TestProcessor("ghi"));
+    FirstSuccessful fs =
+        createFirstSuccessfulRouter(new TestProcessor("abc"), new TestProcessor("def"), new TestProcessor("ghi"));
     fs.initialise();
 
     assertEquals("No abc", getPayload(fs, session, ""));
@@ -127,6 +129,7 @@ public class FirstSuccessfulTestCase extends AbstractMuleContextTestCase {
   }
 
   private static class TestProcessor implements MessageProcessor {
+
     private String rejectIfMatches;
 
     TestProcessor(String rejectIfMatches) {

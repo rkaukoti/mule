@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer.simple;
 
@@ -18,6 +18,7 @@ import java.io.Serializable;
 import java.nio.charset.Charset;
 
 public class CopyPropertiesTransformer extends AbstractMessageTransformer {
+
   private AttributeEvaluator propertyNameEvaluator;
   private WildcardAttributeEvaluator wildcardPropertyNameEvaluator;
 
@@ -37,8 +38,9 @@ public class CopyPropertiesTransformer extends AbstractMessageTransformer {
     MuleMessage message = event.getMessage();
     if (wildcardPropertyNameEvaluator.hasWildcards()) {
       final Builder builder = MuleMessage.builder(message);
-      wildcardPropertyNameEvaluator.processValues(message.getInboundPropertyNames(), matchedValue -> builder
-          .addOutboundProperty(matchedValue, message.getInboundProperty(matchedValue), message.getInboundPropertyDataType(matchedValue)));
+      wildcardPropertyNameEvaluator.processValues(message.getInboundPropertyNames(),
+          matchedValue -> builder.addOutboundProperty(matchedValue, message.getInboundProperty(matchedValue),
+              message.getInboundPropertyDataType(matchedValue)));
       event.setMessage(builder.build());
     } else {
       Object keyValue = propertyNameEvaluator.resolveValue(event);

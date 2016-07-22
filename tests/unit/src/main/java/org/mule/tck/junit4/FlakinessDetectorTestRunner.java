@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.tck.junit4;
 
@@ -12,12 +12,13 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Provides a tool to detect the cause of flaky tests by running then multiple times. It looks for classes or methods annotated with
- * {@link FlakyTest} and generate the required test methods for them. Annotation on test classes take precedence on annotated test methods.
+ * Provides a tool to detect the cause of flaky tests by running then multiple times. It looks for classes or methods annotated
+ * with {@link FlakyTest} and generate the required test methods for them. Annotation on test classes take precedence on annotated
+ * test methods.
  *
  * <p>
- * NOTE: This is a tool intended to be used by developers but not to commit any test using this test runner. That would be only valid when a
- * flaky test fails on the continuous integration server but not locally.
+ * NOTE: This is a tool intended to be used by developers but not to commit any test using this test runner. That would be only
+ * valid when a flaky test fails on the continuous integration server but not locally.
  * </p>
  * <p>
  * To use this tool annotate the test class with

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -41,11 +41,12 @@ import javax.jms.MessageListener;
 import javax.jms.Session;
 
 /**
- * In Mule an endpoint corresponds to a single receiver. It's up to the receiver to do multithreaded consumption and resource allocation, if
- * needed. This class honors the <code>numberOfConcurrentTransactedReceivers</code> strictly and will create exactly this number of
- * consumers.
+ * In Mule an endpoint corresponds to a single receiver. It's up to the receiver to do multithreaded consumption and resource
+ * allocation, if needed. This class honors the <code>numberOfConcurrentTransactedReceivers</code> strictly and will create
+ * exactly this number of consumers.
  */
 public class MultiConsumerJmsMessageReceiver extends AbstractMessageReceiver {
+
   protected final List<SubReceiver> consumers;
 
   protected final int receiversCount;
@@ -121,6 +122,7 @@ public class MultiConsumerJmsMessageReceiver extends AbstractMessageReceiver {
 
     reconnectWorkManager.startIfNotStarted();
     retryTemplate.execute(new RetryCallback() {
+
       @Override
       public void doWork(RetryContext context) throws Exception {
         try {
@@ -198,6 +200,7 @@ public class MultiConsumerJmsMessageReceiver extends AbstractMessageReceiver {
   }
 
   protected class SubReceiver implements MessageListener {
+
     private final Logger subLogger = LoggerFactory.getLogger(getClass());
     protected volatile boolean connected;
     protected volatile boolean started;
@@ -326,7 +329,8 @@ public class MultiConsumerJmsMessageReceiver extends AbstractMessageReceiver {
         String durableName = (String) endpoint.getProperties().get(JmsConstants.DURABLE_NAME_PROPERTY);
         if (durableName == null && durable && topic) {
           durableName = "mule." + jmsConnector.getName() + "." + endpoint.getEndpointURI().getAddress();
-          logger.debug("Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: " + durableName);
+          logger.debug(
+              "Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: " + durableName);
         }
 
         // Create consumer
@@ -348,12 +352,14 @@ public class MultiConsumerJmsMessageReceiver extends AbstractMessageReceiver {
     public void onMessage(final Message message) {
       try {
         isProcessingMessage = true;
-        // Note: Despite the name "Worker", there is no new thread created here in order to maintain synchronicity for exception handling.
+        // Note: Despite the name "Worker", there is no new thread created here in order to maintain synchronicity for exception
+        // handling.
         JmsWorker worker = new JmsWorker(message, MultiConsumerJmsMessageReceiver.this, this);
         worker.processMessages();
       } catch (Exception e) {
         // Use this rollback method in case a transaction has not been configured on the endpoint.
         RollbackSourceCallback rollbackMethod = new RollbackSourceCallback() {
+
           @Override
           public void rollback() {
             recoverSession();
@@ -375,6 +381,7 @@ public class MultiConsumerJmsMessageReceiver extends AbstractMessageReceiver {
   }
 
   protected class JmsWorker extends AbstractReceiverWorker {
+
     private final SubReceiver subReceiver;
 
     public JmsWorker(Message message, AbstractMessageReceiver receiver, SubReceiver subReceiver) {
@@ -403,8 +410,8 @@ public class MultiConsumerJmsMessageReceiver extends AbstractMessageReceiver {
         RedeliveryHandler redeliveryHandler = jmsConnector.getRedeliveryHandlerFactory().create();
         redeliveryHandler.setConnector(jmsConnector);
         if (logger.isDebugEnabled()) {
-          logger.debug(
-              "Message with correlationId: " + m.getJMSCorrelationID() + " has redelivered flag set, handing off to Redelivery Handler");
+          logger.debug("Message with correlationId: " + m.getJMSCorrelationID()
+              + " has redelivered flag set, handing off to Redelivery Handler");
         }
         redeliveryHandler.handleRedelivery(m, receiver.getEndpoint(), receiver.getFlowConstruct());
       }

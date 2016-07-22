@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.integration;
 
@@ -26,6 +26,7 @@ import static org.junit.Assert.fail;
  * Tests a transactional exception strategy.
  */
 public class JmsDeadLetterQueueTestCase extends AbstractJmsFunctionalTestCase {
+
   public static final String DEADLETTER_QUEUE_NAME = "dlq";
   Scenario scenarioDeadLetter = new ScenarioDeadLetter();
   Scenario scenarioDeadLetterRollback = new ScenarioDeadLetterRollback();
@@ -57,6 +58,7 @@ public class JmsDeadLetterQueueTestCase extends AbstractJmsFunctionalTestCase {
   }
 
   class ScenarioDeadLetter extends ScenarioCommit {
+
     // @Override
     @Override
     public String getOutputDestinationName() {
@@ -113,6 +115,7 @@ public class JmsDeadLetterQueueTestCase extends AbstractJmsFunctionalTestCase {
   }
 
   class ScenarioDeadLetterRollback extends ScenarioDeadLetter {
+
     // @Override
     @Override
     protected void applyTransaction(Session session) throws JMSException {
@@ -121,6 +124,7 @@ public class JmsDeadLetterQueueTestCase extends AbstractJmsFunctionalTestCase {
   }
 
   class ScenarioDeadLetterNotReceive extends ScenarioDeadLetter {
+
     // @Override
     @Override
     public Message receive(Session session, MessageConsumer consumer) throws JMSException {

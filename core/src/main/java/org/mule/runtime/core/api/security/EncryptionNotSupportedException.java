@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.security;
 
@@ -9,11 +9,12 @@ import org.mule.runtime.core.api.processor.MessageProcessor;
 import org.mule.runtime.core.config.i18n.Message;
 
 /**
- * <code>EncryptionNotSupportedException</code> is thrown if an algorithm is set in the MULE_USER header but it doesn't match the algorithm
- * set on the security filter
+ * <code>EncryptionNotSupportedException</code> is thrown if an algorithm is set in the MULE_USER header but it doesn't match the
+ * algorithm set on the security filter
  */
 
 public class EncryptionNotSupportedException extends SecurityException {
+
   /**
    * Serial version
    */
@@ -23,7 +24,8 @@ public class EncryptionNotSupportedException extends SecurityException {
     super(message, event);
   }
 
-  public EncryptionNotSupportedException(Message message, MuleEvent event, Throwable cause, MessageProcessor failingMessageProcessor) {
+  public EncryptionNotSupportedException(Message message, MuleEvent event, Throwable cause,
+      MessageProcessor failingMessageProcessor) {
     super(message, event, cause, failingMessageProcessor);
   }
 }

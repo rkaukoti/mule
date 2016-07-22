@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher;
 
@@ -90,11 +90,13 @@ public class ApplicationDescriptorFactory implements ArtifactDescriptorFactory<A
   }
 
   private List<ArtifactPluginDescriptor> getAllApplicationPlugins(Set<ArtifactPluginDescriptor> plugins) {
-    final List<ArtifactPluginDescriptor> result = new LinkedList<>(applicationPluginRepository.getContainerArtifactPluginDescriptors());
+    final List<ArtifactPluginDescriptor> result =
+        new LinkedList<>(applicationPluginRepository.getContainerArtifactPluginDescriptors());
     result.addAll(plugins);
 
     // Sorts plugins by name to ensure consistent deployment
     result.sort(new Comparator<ArtifactPluginDescriptor>() {
+
       @Override
       public int compare(ArtifactPluginDescriptor descriptor1, ArtifactPluginDescriptor descriptor2) {
         return descriptor1.getName().compareTo(descriptor2.getName());
@@ -125,7 +127,8 @@ public class ApplicationDescriptorFactory implements ArtifactDescriptorFactory<A
     // TODO(pablo.kraan): MULE-9649 - de add validation when a decision is made about how to, in a plugin,
   }
 
-  private Set<ArtifactPluginDescriptor> parsePluginDescriptors(File appDir, ApplicationDescriptor appDescriptor) throws IOException {
+  private Set<ArtifactPluginDescriptor> parsePluginDescriptors(File appDir, ApplicationDescriptor appDescriptor)
+      throws IOException {
     final File pluginsDir = new File(appDir, PLUGINS_FOLDER);
     String[] pluginZips = pluginsDir.list(new SuffixFileFilter(".zip"));
     if (pluginZips == null || pluginZips.length == 0) {

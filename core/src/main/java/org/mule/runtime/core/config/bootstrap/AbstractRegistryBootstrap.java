@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.config.bootstrap;
 
@@ -28,9 +28,10 @@ import static org.mule.runtime.core.config.bootstrap.ArtifactType.ALL;
 import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
 
 /**
- * Base class for an object will load objects defined in a file called <code>registry-bootstrap.properties</code> into the local registry.
- * This allows modules and transports to make certain objects available by default. The most common use case is for a module or transport to
- * load stateless transformers into the registry. For this file to be located it must be present in the modules META-INF directory under
+ * Base class for an object will load objects defined in a file called <code>registry-bootstrap.properties</code> into the local
+ * registry. This allows modules and transports to make certain objects available by default. The most common use case is for a
+ * module or transport to load stateless transformers into the registry. For this file to be located it must be present in the
+ * modules META-INF directory under
  * 
  * <pre>
  * META-INF/services/org/mule/config/
@@ -42,8 +43,8 @@ import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
  * myobject = org.foo.MyObject
  * </pre>
  * 
- * Will register an instance of MyObject with a key of 'myobject'. If you don't care about the object name and want to ensure that the
- * ojbect gets a unique name you can use -
+ * Will register an instance of MyObject with a key of 'myobject'. If you don't care about the object name and want to ensure that
+ * the ojbect gets a unique name you can use -
  * 
  * <pre>
  * object.1=org.foo.MyObject
@@ -67,8 +68,8 @@ import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
  * myFoo=org.foo.MyObject;applyToArtifactType=app/domain will be applied to any mule application and any mule domain
  * </pre>
  * 
- * Loading transformers has a slightly different notation since you can define the 'returnClass' with optional mime type, and 'name'of the
- * transformer as parameters i.e.
+ * Loading transformers has a slightly different notation since you can define the 'returnClass' with optional mime type, and
+ * 'name'of the transformer as parameters i.e.
  * 
  * <pre>
  * transformer.1=org.mule.compatibility.core.transport.jms.transformers.JMSMessageToObject,returnClass=byte[]
@@ -78,8 +79,8 @@ import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
  * </pre>
  * 
  * Note that the key used for transformers must be 'transformer.x' where 'x' is a sequential number. The transformer name will be
- * automatically generated as JMSMessageToXXX where XXX is the return class name i.e. JMSMessageToString unless a 'name' parameter is
- * specified. If no 'returnClass' is specified the default in the transformer will be used.
+ * automatically generated as JMSMessageToXXX where XXX is the return class name i.e. JMSMessageToString unless a 'name' parameter
+ * is specified. If no 'returnClass' is specified the default in the transformer will be used.
  * <p/>
  * Note that all objects defined have to have a default constructor. They can implement injection interfaces such as
  * {@link org.mule.runtime.core.api.context.MuleContextAware} and lifecycle interfaces such as
@@ -101,8 +102,8 @@ public abstract class AbstractRegistryBootstrap implements Initialisable {
   protected MuleContext muleContext;
 
   /**
-   * @param artifactType type of artifact. Bootstrap entries may be associated to an specific type of artifact. If it's not associated to
-   *        the related artifact it will be ignored.
+   * @param artifactType type of artifact. Bootstrap entries may be associated to an specific type of artifact. If it's not
+   *        associated to the related artifact it will be ignored.
    * @param muleContext the {@code MuleContext} of the artifact.
    */
   public AbstractRegistryBootstrap(ArtifactType artifactType, MuleContext muleContext) {
@@ -145,8 +146,8 @@ public abstract class AbstractRegistryBootstrap implements Initialisable {
           transformers.add(createTransformerBootstrapProperty(bootstrapService, propertyValue));
         } else if (propertyKey.contains(SINGLE_TX)) {
           if (!propertyKey.contains(TRANSACTION_RESOURCE_SUFFIX)) {
-            singleTransactionFactories
-                .add(createTransactionFactoryBootstrapProperty(bootstrapService, bootstrapProperties, propertyKey, propertyValue));
+            singleTransactionFactories.add(
+                createTransactionFactoryBootstrapProperty(bootstrapService, bootstrapProperties, propertyKey, propertyValue));
           }
         } else {
           namedObjects.add(createObjectBootstrapProperty(bootstrapService, propertyKey, propertyValue));
@@ -165,7 +166,8 @@ public abstract class AbstractRegistryBootstrap implements Initialisable {
     }
   }
 
-  private TransformerBootstrapProperty createTransformerBootstrapProperty(BootstrapService bootstrapService, String propertyValue) {
+  private TransformerBootstrapProperty createTransformerBootstrapProperty(BootstrapService bootstrapService,
+      String propertyValue) {
     String transString;
     String name = null;
     String returnClassName;
@@ -203,8 +205,8 @@ public abstract class AbstractRegistryBootstrap implements Initialisable {
     String transactionResourceKey = propertyKey.replace(".transaction.factory", TRANSACTION_RESOURCE_SUFFIX);
     String transactionResource = bootstrapProperties.getProperty(transactionResourceKey);
     if (transactionResource == null) {
-      throw new InitialisationException(CoreMessages
-          .createStaticMessage(String.format("There is no transaction resource specified for transaction factory %s", propertyKey)), this);
+      throw new InitialisationException(CoreMessages.createStaticMessage(
+          String.format("There is no transaction resource specified for transaction factory %s", propertyKey)), this);
     }
 
     String transactionResourceClassNameProperties = transactionResource;
@@ -231,7 +233,8 @@ public abstract class AbstractRegistryBootstrap implements Initialisable {
     if (index > -1) {
       Properties p = PropertiesUtils.getPropertiesFromString(value.substring(index + 1), ',');
       if (p.containsKey(ArtifactType.APPLY_TO_ARTIFACT_TYPE_PARAMETER_KEY)) {
-        artifactTypeParameterValue = ArtifactType.createFromString((String) p.get(ArtifactType.APPLY_TO_ARTIFACT_TYPE_PARAMETER_KEY));
+        artifactTypeParameterValue =
+            ArtifactType.createFromString((String) p.get(ArtifactType.APPLY_TO_ARTIFACT_TYPE_PARAMETER_KEY));
       }
       optional = p.containsKey(OPTIONAL_ATTRIBUTE);
       className = value.substring(0, index);
@@ -263,19 +266,21 @@ public abstract class AbstractRegistryBootstrap implements Initialisable {
       doRegisterObject(bootstrapProperty);
     } catch (InvocationTargetException e) {
       Throwable cause = ExceptionUtils.getCause(e);
-      throwExceptionIfNotOptional(cause instanceof NoClassDefFoundError && bootstrapProperty.getOptional(), cause, bootstrapProperty);
+      throwExceptionIfNotOptional(cause instanceof NoClassDefFoundError && bootstrapProperty.getOptional(), cause,
+          bootstrapProperty);
     } catch (NoClassDefFoundError | ClassNotFoundException | NoSuchMethodException e) {
       throwExceptionIfNotOptional(bootstrapProperty.getOptional(), e, bootstrapProperty);
     }
   }
 
-  private void registerTransactionFactories(List<TransactionFactoryBootstrapProperty> singleTransactionFactories, MuleContext context)
-      throws Exception {
+  private void registerTransactionFactories(List<TransactionFactoryBootstrapProperty> singleTransactionFactories,
+      MuleContext context) throws Exception {
     for (TransactionFactoryBootstrapProperty bootstrapProperty : singleTransactionFactories) {
       try {
-        final Class<?> supportedType = bootstrapProperty.getService().forName(bootstrapProperty.getTransactionResourceClassName());
-        context.getTransactionFactoryManager().registerTransactionFactory(supportedType,
-            (TransactionFactory) bootstrapProperty.getService().instantiateClass(bootstrapProperty.getTransactionFactoryClassName()));
+        final Class<?> supportedType =
+            bootstrapProperty.getService().forName(bootstrapProperty.getTransactionResourceClassName());
+        context.getTransactionFactoryManager().registerTransactionFactory(supportedType, (TransactionFactory) bootstrapProperty
+            .getService().instantiateClass(bootstrapProperty.getTransactionFactoryClassName()));
       } catch (NoClassDefFoundError | ClassNotFoundException ncdfe) {
         throwExceptionIfNotOptional(bootstrapProperty.getOptional(), ncdfe, bootstrapProperty);
       }
@@ -299,7 +304,8 @@ public abstract class AbstractRegistryBootstrap implements Initialisable {
         doRegisterTransformer(bootstrapProperty, returnClass, transformerClass);
       } catch (InvocationTargetException e) {
         Throwable cause = ExceptionUtils.getCause(e);
-        throwExceptionIfNotOptional(cause instanceof NoClassDefFoundError && bootstrapProperty.getOptional(), cause, bootstrapProperty);
+        throwExceptionIfNotOptional(cause instanceof NoClassDefFoundError && bootstrapProperty.getOptional(), cause,
+            bootstrapProperty);
       } catch (NoClassDefFoundError | ClassNotFoundException e) {
         throwExceptionIfNotOptional(bootstrapProperty.getOptional(), e, bootstrapProperty);
       }
@@ -317,7 +323,8 @@ public abstract class AbstractRegistryBootstrap implements Initialisable {
 
   protected abstract void doRegisterObject(ObjectBootstrapProperty bootstrapProperty) throws Exception;
 
-  private void throwExceptionIfNotOptional(boolean optional, Throwable t, AbstractBootstrapProperty bootstrapProperty) throws Exception {
+  private void throwExceptionIfNotOptional(boolean optional, Throwable t, AbstractBootstrapProperty bootstrapProperty)
+      throws Exception {
     if (optional) {
       if (logger.isDebugEnabled()) {
         logger.debug("Ignoring optional " + bootstrapProperty);

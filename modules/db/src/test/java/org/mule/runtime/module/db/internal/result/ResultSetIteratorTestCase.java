@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.result;
@@ -29,7 +29,8 @@ public class ResultSetIteratorTestCase extends AbstractMuleTestCase {
   private final RowHandler rowHandler = mock(RowHandler.class);
   private final StreamingResultSetCloser streamingResultSetCloser = mock(StreamingResultSetCloser.class);
   private final DbConnection connection = mock(DbConnection.class);
-  private final ResultSetIterator resultSetIterator = new ResultSetIterator(connection, resultSet, rowHandler, streamingResultSetCloser);
+  private final ResultSetIterator resultSetIterator =
+      new ResultSetIterator(connection, resultSet, rowHandler, streamingResultSetCloser);
 
   @Test
   public void detectsNoMoreRecordsWhenRecordCached() throws Exception {

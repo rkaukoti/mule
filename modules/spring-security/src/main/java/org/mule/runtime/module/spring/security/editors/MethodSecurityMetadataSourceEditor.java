@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.spring.security.editors;
 
@@ -22,9 +22,10 @@ import java.util.Properties;
  * Property editor to assist with the setup of a {@link org.springframework.security.access.method.MethodSecurityMetadataSource}.
  */
 public class MethodSecurityMetadataSourceEditor extends PropertyEditorSupport {
+
   /**
-   * Create a MapBasedMethodSecurityMetadataSource from configured text The syntax expected is a set of Java properties, eachof the form
-   * fully-qualified-method-name=comma-separated-list-of-ConfigAttributes
+   * Create a MapBasedMethodSecurityMetadataSource from configured text The syntax expected is a set of Java properties, eachof
+   * the form fully-qualified-method-name=comma-separated-list-of-ConfigAttributes
    */
   public void setAsText(String text) throws IllegalArgumentException {
     try {

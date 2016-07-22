@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -38,12 +38,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class HttpMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTestCase {
+
   private static final Header[] HEADERS = new Header[] {new Header("foo-header", "foo-value")};
   private static final String[] COOKIES = new String[] {"COOKIE1=HEY", "cookie2=ho", "COOKIE3=LETS", "cookie4=go"};
   private static final String REQUEST_LINE = "GET /services/Echo HTTP/1.1";
   private static final String MULTIPART_BOUNDARY = "------------------------------2eab2c5d5c7e";
-  private static final String MULTIPART_MESSAGE =
-      MULTIPART_BOUNDARY + "\n" + "Content-Disposition: form-data; name=\"payload\"\n" + TEST_MESSAGE + "\n" + MULTIPART_BOUNDARY + "--";
+  private static final String MULTIPART_MESSAGE = MULTIPART_BOUNDARY + "\n" + "Content-Disposition: form-data; name=\"payload\"\n"
+      + TEST_MESSAGE + "\n" + MULTIPART_BOUNDARY + "--";
   private static final String URI = "http://localhost/services/Echo";
   private static final String REQUEST = "/services/Echo?name=John&lastname=Galt";
 
@@ -120,7 +121,8 @@ public class HttpMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTe
     String line = REQUEST_LINE.replace(HttpConstants.METHOD_GET, HttpConstants.METHOD_POST);
     RequestLine requestLine = RequestLine.parseLine(line);
     InputStream stream = new ByteArrayInputStream(MULTIPART_MESSAGE.getBytes());
-    Header[] headers = new Header[] {new Header("Content-Type", "multipart/form-data; boundary=" + MULTIPART_BOUNDARY.substring(2))};
+    Header[] headers =
+        new Header[] {new Header("Content-Type", "multipart/form-data; boundary=" + MULTIPART_BOUNDARY.substring(2))};
     return new HttpRequest(requestLine, headers, stream, encoding);
   }
 
@@ -250,7 +252,8 @@ public class HttpMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTe
     HttpMuleMessageFactory messageFactory = new HttpMuleMessageFactory();
 
     String queryParams = "key1=value1&key2=value2&key1=value4&key3=value3&key1=value5";
-    Map<String, Serializable> processedParams = messageFactory.processQueryParams("http://localhost:8080/resources?" + queryParams, UTF_8);
+    Map<String, Serializable> processedParams =
+        messageFactory.processQueryParams("http://localhost:8080/resources?" + queryParams, UTF_8);
 
     Object value1 = processedParams.get("key1");
     assertNotNull(value1);
@@ -274,7 +277,8 @@ public class HttpMuleMessageFactoryTestCase extends AbstractMuleMessageFactoryTe
     HttpMuleMessageFactory messageFactory = new HttpMuleMessageFactory();
 
     String queryParams = "key1=value%201&key2=value2&key%203=value3&key%203=value4";
-    Map<String, Serializable> processedParams = messageFactory.processQueryParams("http://localhost:8080/resources?" + queryParams, UTF_8);
+    Map<String, Serializable> processedParams =
+        messageFactory.processQueryParams("http://localhost:8080/resources?" + queryParams, UTF_8);
 
     Object value1 = processedParams.get("key1");
     assertNotNull(value1);

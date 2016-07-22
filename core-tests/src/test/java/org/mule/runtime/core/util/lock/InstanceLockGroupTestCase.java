@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.lock;
 
@@ -27,6 +27,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class InstanceLockGroupTestCase extends AbstractMuleTestCase {
+
   public static final int THREAD_COUNT = 100;
   public static final int ITERATIONS_PER_THREAD = 100;
   private Latch threadStartLatch = new Latch();
@@ -86,6 +87,7 @@ public class InstanceLockGroupTestCase extends AbstractMuleTestCase {
   }
 
   public static class InMemoryObjectStore implements ObjectStore<Integer> {
+
     private Map<Serializable, Integer> store = new ConcurrentHashMap<Serializable, Integer>();
 
     @Override
@@ -123,6 +125,7 @@ public class InstanceLockGroupTestCase extends AbstractMuleTestCase {
   }
 
   public class IncrementKeyValueThread extends Thread {
+
     private String key;
     private boolean useTryLock;
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing.correlation;
 
@@ -65,16 +65,16 @@ public class EventCorrelator implements Startable, Stoppable, Disposable {
   private EventCorrelatorCallback callback;
   private MessageProcessor timeoutMessageProcessor;
   /**
-   * A map of EventGroup objects in a partition. These represent one or more messages to be agregated, keyed by message id. There will be
-   * one response message for every EventGroup.
+   * A map of EventGroup objects in a partition. These represent one or more messages to be agregated, keyed by message id. There
+   * will be one response message for every EventGroup.
    */
   private PartitionableObjectStore correlatorStore = null;
   private String storePrefix;
   private EventCorrelator.ExpiringGroupMonitoringThread expiringGroupMonitoringThread;
 
-  public EventCorrelator(EventCorrelatorCallback callback, MessageProcessor timeoutMessageProcessor, MessageInfoMapping messageInfoMapping,
-      MuleContext muleContext, FlowConstruct flowConstruct, PartitionableObjectStore correlatorStore, String storePrefix,
-      ObjectStore<Long> processedGroups) {
+  public EventCorrelator(EventCorrelatorCallback callback, MessageProcessor timeoutMessageProcessor,
+      MessageInfoMapping messageInfoMapping, MuleContext muleContext, FlowConstruct flowConstruct,
+      PartitionableObjectStore correlatorStore, String storePrefix, ObjectStore<Long> processedGroups) {
     if (callback == null) {
       throw new IllegalArgumentException(CoreMessages.objectIsNull("EventCorrelatorCallback").getMessage());
     }
@@ -278,13 +278,13 @@ public class EventCorrelator implements Startable, Stoppable, Disposable {
 
     if (isFailOnTimeout()) {
       MuleEvent messageCollectionEvent = group.getMessageCollectionEvent();
-      muleContext
-          .fireNotification(new RoutingNotification(messageCollectionEvent.getMessage(), null, RoutingNotification.CORRELATION_TIMEOUT));
+      muleContext.fireNotification(
+          new RoutingNotification(messageCollectionEvent.getMessage(), null, RoutingNotification.CORRELATION_TIMEOUT));
       try {
         group.clear();
       } catch (ObjectStoreException e) {
-        logger.warn(
-            "Failed to clear group with id " + group.getGroupId() + " since underlying ObjectStore threw Exception:" + e.getMessage());
+        logger.warn("Failed to clear group with id " + group.getGroupId() + " since underlying ObjectStore threw Exception:"
+            + e.getMessage());
       }
       throw new CorrelationTimeoutException(CoreMessages.correlationTimedOut(group.getGroupId()), messageCollectionEvent);
     } else {
@@ -306,8 +306,9 @@ public class EventCorrelator implements Startable, Stoppable, Disposable {
             if (timeoutMessageProcessor != null) {
               timeoutMessageProcessor.process(newEvent);
             } else {
-              throw new MessagingException(CoreMessages.createStaticMessage(
-                  MessageFormat.format("Group {0} timed out, but no timeout message processor was " + "configured.", group.getGroupId())),
+              throw new MessagingException(
+                  CoreMessages.createStaticMessage(MessageFormat
+                      .format("Group {0} timed out, but no timeout message processor was " + "configured.", group.getGroupId())),
                   newEvent);
             }
             correlatorStore.store((Serializable) group.getGroupId(), group.getCreated(), getExpiredAndDispatchedPartitionKey());
@@ -412,8 +413,8 @@ public class EventCorrelator implements Startable, Stoppable, Disposable {
         logger.warn("expiry failed dues to ObjectStoreException " + e);
       }
       for (final EventGroup group : expired) {
-        ExecutionTemplate<MuleEvent> executionTemplate =
-            ErrorHandlingExecutionTemplate.createErrorHandlingExecutionTemplate(muleContext, flowConstruct.getExceptionListener());
+        ExecutionTemplate<MuleEvent> executionTemplate = ErrorHandlingExecutionTemplate
+            .createErrorHandlingExecutionTemplate(muleContext, flowConstruct.getExceptionListener());
         try {
           executionTemplate.execute(() -> {
             handleGroupExpiry(group);

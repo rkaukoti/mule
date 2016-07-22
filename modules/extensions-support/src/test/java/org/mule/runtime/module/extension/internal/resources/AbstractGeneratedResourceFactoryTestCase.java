@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.resources;
 
@@ -17,11 +17,11 @@ import static org.junit.Assert.assertThat;
 /**
  * Base class for testing implementations of {@link GeneratedResourceFactory}.
  * <p>
- * This class is needed because it's not enough to ensure that the resource factory works fine itself, it's also needed to make sure that it
- * is SPI discoverable, otherwise its product will not be available.
+ * This class is needed because it's not enough to ensure that the resource factory works fine itself, it's also needed to make
+ * sure that it is SPI discoverable, otherwise its product will not be available.
  * <p>
- * Implementations of this class are to implement the {@link #getResourceFactoryTypes()} and return the types that are to be tested, and the
- * {@link #spiDiscovery()} test will verify that all of them can be found through a {@link ServiceLoader}
+ * Implementations of this class are to implement the {@link #getResourceFactoryTypes()} and return the types that are to be
+ * tested, and the {@link #spiDiscovery()} test will verify that all of them can be found through a {@link ServiceLoader}
  *
  * @since 4.0
  */

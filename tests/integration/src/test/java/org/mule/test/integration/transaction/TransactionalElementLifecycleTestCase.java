@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.transaction;
 
@@ -43,6 +43,7 @@ public class TransactionalElementLifecycleTestCase extends FunctionalTestCase {
   @Test
   public void testInitializeIsCalledInInnerExceptionStrategy() throws Exception {
     muleContext.getNotificationManager().addListener(new TransactionNotificationListener<TransactionNotification>() {
+
       @Override
       public void onNotification(TransactionNotification notification) {
         notifications.add(notification);
@@ -52,6 +53,7 @@ public class TransactionalElementLifecycleTestCase extends FunctionalTestCase {
     final Latch endDlqFlowLatch = new Latch();
     FunctionalTestComponent functionalTestComponent = getFunctionalTestComponent("dlq-out");
     functionalTestComponent.setEventCallback(new EventCallback() {
+
       @Override
       public void eventReceived(MuleEventContext context, Object component) throws Exception {
         endDlqFlowLatch.release();
@@ -75,6 +77,7 @@ public class TransactionalElementLifecycleTestCase extends FunctionalTestCase {
   private void assertNotificationsArrived() {
     PollingProber pollingProber = new PollingProber(RECEIVE_TIMEOUT, POLL_DELAY_MILLIS);
     pollingProber.check(new JUnitProbe() {
+
       @Override
       protected boolean test() throws Exception {
         assertThat(notifications.size(), greaterThanOrEqualTo(2));

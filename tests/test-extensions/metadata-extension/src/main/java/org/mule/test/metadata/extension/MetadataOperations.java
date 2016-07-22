@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.metadata.extension;
 
@@ -28,11 +28,12 @@ import org.mule.test.metadata.extension.resolver.TestResolverWithCache;
 import org.mule.test.metadata.extension.resolver.TestThreadContextClassLoaderResolver;
 
 @MetadataScope(keysResolver = TestContentAndOutputResolverWithKeyResolver.class,
-    contentResolver = TestContentAndOutputResolverWithKeyResolver.class, outputResolver = TestContentAndOutputResolverWithKeyResolver.class)
+    contentResolver = TestContentAndOutputResolverWithKeyResolver.class,
+    outputResolver = TestContentAndOutputResolverWithKeyResolver.class)
 public class MetadataOperations extends MetadataOperationsParent {
 
-  @MetadataScope(keysResolver = TestContentResolverWithKeyResolver.class, contentResolver = TestContentResolverWithKeyResolver.class,
-      outputResolver = TestOutputNullTypeResolver.class)
+  @MetadataScope(keysResolver = TestContentResolverWithKeyResolver.class,
+      contentResolver = TestContentResolverWithKeyResolver.class, outputResolver = TestOutputNullTypeResolver.class)
   public Object contentMetadataWithKeyId(@Connection MetadataConnection connection, @MetadataKeyId String type,
       @Optional @Content Object content) {
     return null;
@@ -78,7 +79,8 @@ public class MetadataOperations extends MetadataOperationsParent {
 
   @MetadataScope(contentResolver = TestContentAndOutputResolverWithoutKeyResolverAndKeyIdParam.class,
       outputResolver = TestContentAndOutputResolverWithoutKeyResolverAndKeyIdParam.class)
-  public Object contentAndOutputMetadataWithoutKeyId(@Connection MetadataConnection connection, @Optional @Content Object content) {
+  public Object contentAndOutputMetadataWithoutKeyId(@Connection MetadataConnection connection,
+      @Optional @Content Object content) {
     return null;
   }
 
@@ -114,8 +116,8 @@ public class MetadataOperations extends MetadataOperationsParent {
   }
 
   @MetadataScope(keysResolver = TestMultiLevelKeyResolver.class, contentResolver = TestMultiLevelKeyResolver.class)
-  public LocationKey simpleMultiLevelKeyResolver(@Connection MetadataConnection connection, @MetadataKeyId LocationKey locationKey,
-      @Optional @Content Object content) {
+  public LocationKey simpleMultiLevelKeyResolver(@Connection MetadataConnection connection,
+      @MetadataKeyId LocationKey locationKey, @Optional @Content Object content) {
     return locationKey;
   }
 

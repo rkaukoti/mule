@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.component;
 
@@ -91,8 +91,8 @@ public class BindingInvocationHandler implements InvocationHandler {
   }
 
   /**
-   * Return the causing exception instead of the general "container" exception (typically UndeclaredThrowableException) if the cause is
-   * known and the type matches one of the exceptions declared in the given method's "throws" clause.
+   * Return the causing exception instead of the general "container" exception (typically UndeclaredThrowableException) if the
+   * cause is known and the type matches one of the exceptions declared in the given method's "throws" clause.
    */
   private Throwable findDeclaredMethodException(Method method, Throwable throwable) throws Throwable {
     Throwable cause = throwable.getCause();

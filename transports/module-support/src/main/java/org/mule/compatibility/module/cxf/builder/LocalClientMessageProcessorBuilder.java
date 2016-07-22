@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.module.cxf.builder;
 
@@ -18,9 +18,9 @@ import org.mule.runtime.module.cxf.CxfOutboundMessageProcessor;
 import org.mule.runtime.module.cxf.builder.AbstractOutboundMessageProcessorBuilder;
 
 /**
- * This builder uses a service that is already configured to build a CXF client and it's corresponding MessageProcessor. Given the specified
- * <code>address</code> property, it will lookup the corresponding inbound MessageProcessor. It will then use this processor's service model
- * to configure a CXF client.
+ * This builder uses a service that is already configured to build a CXF client and it's corresponding MessageProcessor. Given the
+ * specified <code>address</code> property, it will lookup the corresponding inbound MessageProcessor. It will then use this
+ * processor's service model to configure a CXF client.
  * <p>
  * This can be used via CXF meta endpoints. For instance, with MuleClient you can do: <code>
  * MuleClient client = ...
@@ -30,6 +30,7 @@ import org.mule.runtime.module.cxf.builder.AbstractOutboundMessageProcessorBuild
  * This only works if the server and client are in the same Mule instance.
  */
 public class LocalClientMessageProcessorBuilder extends AbstractOutboundMessageProcessorBuilder {
+
   @Override
   protected void configureMessageProcessor(CxfOutboundMessageProcessor processor) {}
 

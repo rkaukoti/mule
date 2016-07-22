@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.functional.classloading.isolation.maven.dependencies;
@@ -34,8 +34,8 @@ public final class Configuration {
   }
 
   /**
-   * It sets the strategy to also include the root artifact in the result of the dependencies resolved. By default it is not included due to
-   * the most common usage is to get dependencies instead of the whole set of root artifact plus dependencies.
+   * It sets the strategy to also include the root artifact in the result of the dependencies resolved. By default it is not
+   * included due to the most common usage is to get dependencies instead of the whole set of root artifact plus dependencies.
    *
    * @return this
    */
@@ -45,8 +45,8 @@ public final class Configuration {
   }
 
   /**
-   * A conditional way to define if the root artifact should be included or not in results. A {@link Predicate} can be passed that will be
-   * evaluated with the root artifact during the resolution of the dependencies.
+   * A conditional way to define if the root artifact should be included or not in results. A {@link Predicate} can be passed that
+   * will be evaluated with the root artifact during the resolution of the dependencies.
    *
    * @return this
    */
@@ -56,8 +56,8 @@ public final class Configuration {
   }
 
   /**
-   * Sets a {@link DependenciesFilter} that defines the strategy for selecting the dependencies. If this is not defined, by default, the
-   * resolver will take all the dependencies of the root artifact without their transitive dependencies.
+   * Sets a {@link DependenciesFilter} that defines the strategy for selecting the dependencies. If this is not defined, by
+   * default, the resolver will take all the dependencies of the root artifact without their transitive dependencies.
    *
    * @return this
    */
@@ -67,9 +67,9 @@ public final class Configuration {
   }
 
   /**
-   * Sets a {@link TransitiveDependenciesFilter} that defines the strategy for selecting the transitive dependencies for the dependencies of
-   * the root artifact that matched the criteria defined. By default (if this is not set) no transitive dependencies will be collected
-   * during the dependencies resolution.
+   * Sets a {@link TransitiveDependenciesFilter} that defines the strategy for selecting the transitive dependencies for the
+   * dependencies of the root artifact that matched the criteria defined. By default (if this is not set) no transitive
+   * dependencies will be collected during the dependencies resolution.
    *
    * @return this
    */

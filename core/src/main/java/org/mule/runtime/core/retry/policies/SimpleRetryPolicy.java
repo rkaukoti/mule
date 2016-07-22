@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.retry.policies;
 
@@ -15,6 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Allows to configure how many times a retry should be attempted and how long to wait between retries.
  */
 public class SimpleRetryPolicy implements RetryPolicy {
+
   protected static final Logger logger = LoggerFactory.getLogger(SimpleRetryPolicy.class);
 
   protected RetryCounter retryCounter;
@@ -34,8 +35,8 @@ public class SimpleRetryPolicy implements RetryPolicy {
       return PolicyStatus.policyExhausted(cause);
     } else {
       if (logger.isInfoEnabled()) {
-        logger.info("Waiting for " + frequency + "ms before reconnecting. Failed attempt " + (retryCounter.current().get() + 1) + " of "
-            + (count != SimpleRetryPolicyTemplate.RETRY_COUNT_FOREVER ? String.valueOf(count) : "unlimited"));
+        logger.info("Waiting for " + frequency + "ms before reconnecting. Failed attempt " + (retryCounter.current().get() + 1)
+            + " of " + (count != SimpleRetryPolicyTemplate.RETRY_COUNT_FOREVER ? String.valueOf(count) : "unlimited"));
       }
 
       try {
@@ -50,8 +51,8 @@ public class SimpleRetryPolicy implements RetryPolicy {
   }
 
   /**
-   * Indicates if the policy is applicable for the cause that caused the policy invocation. Subclasses can override this method in order to
-   * filter the type of exceptions that does not deserve a retry.
+   * Indicates if the policy is applicable for the cause that caused the policy invocation. Subclasses can override this method in
+   * order to filter the type of exceptions that does not deserve a retry.
    *
    * @return true if the policy is applicable, false otherwise.
    */
@@ -67,6 +68,7 @@ public class SimpleRetryPolicy implements RetryPolicy {
   }
 
   protected static class RetryCounter extends ThreadLocal<AtomicInteger> {
+
     public int countRetry() {
       return get().incrementAndGet();
     }

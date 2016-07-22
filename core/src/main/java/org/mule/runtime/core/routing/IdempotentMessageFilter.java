@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -28,25 +28,27 @@ import org.slf4j.LoggerFactory;
 import java.text.MessageFormat;
 
 /**
- * <code>IdempotentMessageFilter</code> ensures that only unique messages are passed on. It does this by checking the unique ID of the
- * incoming message. Note that the underlying endpoint must support unique message IDs for this to work, otherwise a
+ * <code>IdempotentMessageFilter</code> ensures that only unique messages are passed on. It does this by checking the unique ID of
+ * the incoming message. Note that the underlying endpoint must support unique message IDs for this to work, otherwise a
  * <code>UniqueIdNotSupportedException</code> is thrown.<br>
  * <p>
  * <b>EIP Reference:</b> <a href="http://www.eaipatterns.com/IdempotentReceiver.html">
  * http://www.eaipatterns.com/IdempotentReceiver.html</a>
  */
-public class IdempotentMessageFilter extends AbstractFilteringMessageProcessor implements FlowConstructAware, Initialisable, Disposable {
+public class IdempotentMessageFilter extends AbstractFilteringMessageProcessor
+    implements FlowConstructAware, Initialisable, Disposable {
+
   private static final Logger LOGGER = LoggerFactory.getLogger(IdempotentMessageFilter.class);
 
   protected volatile ObjectStore<String> store;
   protected FlowConstruct flowConstruct;
   protected String storePrefix;
 
-  protected String idExpression =
-      MessageFormat.format("{0}message:id{1}", ExpressionManager.DEFAULT_EXPRESSION_PREFIX, ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
+  protected String idExpression = MessageFormat.format("{0}message:id{1}", ExpressionManager.DEFAULT_EXPRESSION_PREFIX,
+      ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
 
-  protected String valueExpression =
-      MessageFormat.format("{0}message:id{1}", ExpressionManager.DEFAULT_EXPRESSION_PREFIX, ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
+  protected String valueExpression = MessageFormat.format("{0}message:id{1}", ExpressionManager.DEFAULT_EXPRESSION_PREFIX,
+      ExpressionManager.DEFAULT_EXPRESSION_POSTFIX);
 
   public IdempotentMessageFilter() {
     super();
@@ -135,9 +137,9 @@ public class IdempotentMessageFilter extends AbstractFilteringMessageProcessor i
     if (flowConstruct.getName().equals(event.getFlowConstruct().getName())) {
       return true;
     } else {
-      logger.error("This IdempotentMessageFilter was configured on the service: " + storePrefix + " but has received an event for service: "
-          + flowConstruct.getName() + ". Please check your config to make sure each service"
-          + "has its own instance of IdempotentMessageFilter.");
+      logger.error("This IdempotentMessageFilter was configured on the service: " + storePrefix
+          + " but has received an event for service: " + flowConstruct.getName()
+          + ". Please check your config to make sure each service" + "has its own instance of IdempotentMessageFilter.");
       return false;
     }
   }

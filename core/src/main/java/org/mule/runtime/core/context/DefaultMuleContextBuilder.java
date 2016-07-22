@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.context;
 
@@ -65,9 +65,9 @@ import org.slf4j.LoggerFactory;
 import javax.resource.spi.work.WorkListener;
 
 /**
- * Implementation of {@link MuleContextBuilder} that uses {@link DefaultMuleContext} as the default {@link MuleContext} implementation and
- * builds it with defaults values for {@link MuleConfiguration}, {@link LifecycleManager}, {@link WorkManager}, {@link WorkListener} and
- * {@link ServerNotificationManager}.
+ * Implementation of {@link MuleContextBuilder} that uses {@link DefaultMuleContext} as the default {@link MuleContext}
+ * implementation and builds it with defaults values for {@link MuleConfiguration}, {@link LifecycleManager}, {@link WorkManager},
+ * {@link WorkListener} and {@link ServerNotificationManager}.
  */
 public class DefaultMuleContextBuilder implements MuleContextBuilder {
 
@@ -132,7 +132,8 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder {
     muleContext.setLocalMuleClient(new DefaultLocalMuleClient(muleContext));
     muleContext.setExceptionListener(createExceptionListener(muleContext));
     muleContext.setExecutionClassLoader(getExecutionClassLoader());
-    muleContext.setBootstrapServiceDiscoverer(injectMuleContextIfRequired(getBootstrapPropertiesServiceDiscoverer(), muleContext));
+    muleContext
+        .setBootstrapServiceDiscoverer(injectMuleContextIfRequired(getBootstrapPropertiesServiceDiscoverer(), muleContext));
 
     JavaObjectSerializer defaultObjectSerializer = new JavaObjectSerializer();
     defaultObjectSerializer.setMuleContext(muleContext);
@@ -293,11 +294,11 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder {
 
   protected ImmutableThreadingProfile createMuleWorkManager() {
     return new ImmutableThreadingProfile(
-        Integer.valueOf(
-            System.getProperty(MULE_CONTEXT_WORKMANAGER_MAXTHREADSACTIVE, String.valueOf(ThreadingProfile.DEFAULT_MAX_THREADS_ACTIVE))),
-        ThreadingProfile.DEFAULT_MAX_THREADS_IDLE, ThreadingProfile.DEFAULT_MAX_BUFFER_SIZE, ThreadingProfile.DEFAULT_MAX_THREAD_TTL,
-        ThreadingProfile.DEFAULT_THREAD_WAIT_TIMEOUT, ThreadingProfile.DEFAULT_POOL_EXHAUST_ACTION, ThreadingProfile.DEFAULT_DO_THREADING,
-        null, null);
+        Integer.valueOf(System.getProperty(MULE_CONTEXT_WORKMANAGER_MAXTHREADSACTIVE,
+            String.valueOf(ThreadingProfile.DEFAULT_MAX_THREADS_ACTIVE))),
+        ThreadingProfile.DEFAULT_MAX_THREADS_IDLE, ThreadingProfile.DEFAULT_MAX_BUFFER_SIZE,
+        ThreadingProfile.DEFAULT_MAX_THREAD_TTL, ThreadingProfile.DEFAULT_THREAD_WAIT_TIMEOUT,
+        ThreadingProfile.DEFAULT_POOL_EXHAUST_ACTION, ThreadingProfile.DEFAULT_DO_THREADING, null, null);
   }
 
   protected DefaultWorkListener createWorkListener() {
@@ -311,6 +312,7 @@ public class DefaultMuleContextBuilder implements MuleContextBuilder {
   @Override
   public String toString() {
     return ClassUtils.getClassName(getClass()) + "{muleConfiguration=" + config + ", lifecycleManager=" + lifecycleManager
-        + ", workManager=" + workManager + ", workListener=" + workListener + ", notificationManager=" + notificationManager + "}";
+        + ", workManager=" + workManager + ", workListener=" + workListener + ", notificationManager=" + notificationManager
+        + "}";
   }
 }

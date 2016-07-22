@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional;
 
@@ -46,8 +46,8 @@ public abstract class AbstractScriptConfigBuilderTestCase extends FunctionalTest
   }
 
   /*
-   * Since MULE-1933, Service no longer has properties and most properties are set on endpoint. So lets continue to test properties, but on
-   * targets instead.
+   * Since MULE-1933, Service no longer has properties and most properties are set on endpoint. So lets continue to test
+   * properties, but on targets instead.
    */
   @Test
   public void testEndpointPropertiesConfig() throws Exception {

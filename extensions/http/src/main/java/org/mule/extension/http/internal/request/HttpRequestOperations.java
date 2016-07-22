@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.http.internal.request;
 
@@ -53,15 +53,17 @@ public class HttpRequestOperations {
    * @param method The HTTP method for the request.
    * @param host Host where the requests will be sent.
    * @param port Port where the requests will be sent.
-   * @param source The expression used to obtain the body that will be sent in the request. Default is empty, so the payload will be used as
-   *        the body.
+   * @param source The expression used to obtain the body that will be sent in the request. Default is empty, so the payload will
+   *        be used as the body.
    * @param followRedirects Specifies whether to follow redirects or not.
    * @param parseResponse Defines if the HTTP response should be parsed or it's raw contents should be propagated instead.
    * @param requestStreamingMode Defines if the request should be sent using streaming or not.
    * @param sendBodyMode Defines if the request should contain a body or not.
-   * @param responseTimeout Maximum time that the request element will block the execution of the flow waiting for the HTTP response.
+   * @param responseTimeout Maximum time that the request element will block the execution of the flow waiting for the HTTP
+   *        response.
    * @param responseValidator Configures error handling of the response.
-   * @param config the {@link HttpConnector} configuration for this operation. All parameters not configured will be taken from it.
+   * @param config the {@link HttpConnector} configuration for this operation. All parameters not configured will be taken from
+   *        it.
    * @param muleEvent the current {@link MuleEvent}
    * @return an {@link OperationResult} with {@link HttpResponseAttributes}
    */
@@ -88,18 +90,22 @@ public class HttpRequestOperations {
 
     String resolvedUri = resolveUri(uriParameters.getScheme(), resolvedHost, resolvedPort, resolvedPath);
     Boolean resolvedFollowRedirects = resolveIfNecessary(followRedirects, config.getFollowRedirects(), muleEvent);
-    HttpStreamingType resolvedStreamingMode = resolveIfNecessary(requestStreamingMode, config.getRequestStreamingMode(), muleEvent);
+    HttpStreamingType resolvedStreamingMode =
+        resolveIfNecessary(requestStreamingMode, config.getRequestStreamingMode(), muleEvent);
     HttpSendBodyMode resolvedSendBody = resolveIfNecessary(sendBodyMode, config.getSendBodyMode(), muleEvent);
     Boolean resolvedParseResponse = resolveIfNecessary(parseResponse, config.getParseResponse(), muleEvent);
     Integer resolvedTimeout = resolveResponseTimeout(muleEvent, config, responseTimeout);
-    ResponseValidator resolvedValidator = responseValidator != null ? responseValidator : new SuccessStatusCodeValidator("0..399");
+    ResponseValidator resolvedValidator =
+        responseValidator != null ? responseValidator : new SuccessStatusCodeValidator("0..399");
 
-    HttpRequester requester = new HttpRequester.Builder().setUri(resolvedUri).setMethod(method).setFollowRedirects(resolvedFollowRedirects)
-        .setRequestStreamingMode(resolvedStreamingMode).setSendBodyMode(resolvedSendBody).setSource(source)
-        .setAuthentication(config.getAuthentication()).setParseResponse(resolvedParseResponse).setResponseTimeout(resolvedTimeout)
-        .setResponseValidator(resolvedValidator).setConfig(config).build();
+    HttpRequester requester =
+        new HttpRequester.Builder().setUri(resolvedUri).setMethod(method).setFollowRedirects(resolvedFollowRedirects)
+            .setRequestStreamingMode(resolvedStreamingMode).setSendBodyMode(resolvedSendBody).setSource(source)
+            .setAuthentication(config.getAuthentication()).setParseResponse(resolvedParseResponse)
+            .setResponseTimeout(resolvedTimeout).setResponseValidator(resolvedValidator).setConfig(config).build();
 
-    return OperationResult.<Object, HttpResponseAttributes>builder(requester.doRequest(muleEvent, client, resolvedBuilder, true)).build();
+    return OperationResult.<Object, HttpResponseAttributes>builder(requester.doRequest(muleEvent, client, resolvedBuilder, true))
+        .build();
   }
 
   private <T> T resolveIfNecessary(T value, Function<MuleEvent, T> function, MuleEvent event) {

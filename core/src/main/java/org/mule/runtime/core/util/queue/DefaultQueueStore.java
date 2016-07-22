@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.queue;
 
@@ -13,6 +13,7 @@ import java.io.Serializable;
  * Internal queue implementation that will execute operations directly to the queue storage. Stores information about a Queue
  */
 public class DefaultQueueStore implements RecoverableQueueStore {
+
   private QueueConfiguration config;
   private String name;
   private QueueStoreDelegate delegate;
@@ -37,8 +38,8 @@ public class DefaultQueueStore implements RecoverableQueueStore {
       this.config = new DefaultQueueConfiguration();
     }
     if (this.config.isPersistent()) {
-      delegate = new DualRandomAccessFileQueueStoreDelegate(this.name, muleContext.getConfiguration().getWorkingDirectory(), muleContext,
-          this.config.getCapacity());
+      delegate = new DualRandomAccessFileQueueStoreDelegate(this.name, muleContext.getConfiguration().getWorkingDirectory(),
+          muleContext, this.config.getCapacity());
     } else {
       delegate = new DefaultQueueStoreDelegate(this.config.getCapacity());
     }
@@ -98,7 +99,8 @@ public class DefaultQueueStore implements RecoverableQueueStore {
     if (this.delegate instanceof TransactionalQueueStoreDelegate) {
       ((TransactionalQueueStoreDelegate) delegate).remove(value);
     } else {
-      throw new NotImplementedException(String.format("Queue of type %s does not support remove", delegate.getClass().getCanonicalName()));
+      throw new NotImplementedException(
+          String.format("Queue of type %s does not support remove", delegate.getClass().getCanonicalName()));
     }
   }
 
@@ -115,7 +117,8 @@ public class DefaultQueueStore implements RecoverableQueueStore {
     if (this.delegate instanceof TransactionalQueueStoreDelegate) {
       ((TransactionalQueueStoreDelegate) delegate).close();
     } else {
-      throw new NotImplementedException(String.format("Queue of type %s does not support close", delegate.getClass().getCanonicalName()));
+      throw new NotImplementedException(
+          String.format("Queue of type %s does not support close", delegate.getClass().getCanonicalName()));
     }
   }
 

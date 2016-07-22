@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.file;
 
@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
  * Test the syntax of the SimpleFilename parser
  */
 public class ExpressionFilenameParserTestCase extends AbstractMuleContextEndpointTestCase {
+
   private ExpressionFilenameParser parser;
   private MuleMessage message;
   private MuleEvent event;
@@ -39,13 +40,15 @@ public class ExpressionFilenameParserTestCase extends AbstractMuleContextEndpoin
     Map<String, Serializable> inboundProperties = new HashMap<>();
     inboundProperties.put(FileConnector.PROPERTY_ORIGINAL_FILENAME, "originalName");
     inboundProperties.put(FileConnector.PROPERTY_FILENAME, "newName");
-    message = MuleMessage.builder().payload("hello").inboundProperties(inboundProperties).addOutboundProperty("foo", "bar").build();
+    message =
+        MuleMessage.builder().payload("hello").inboundProperties(inboundProperties).addOutboundProperty("foo", "bar").build();
     event = new DefaultMuleEvent(message, getTestFlow());
   }
 
   @Test
   public void testWigglyMuleStyleParsing() {
-    String result = parser.getFilename(event, "Test1_#[org.mule.compatibility.transport.file.ExpressionFilenameParser.count()].txt");
+    String result =
+        parser.getFilename(event, "Test1_#[org.mule.compatibility.transport.file.ExpressionFilenameParser.count()].txt");
     assertEquals("Test1_0.txt", result);
 
     result = parser.getFilename(event, "Test2_#[org.mule.runtime.core.util.DateUtils.getTimeStamp('yyMMdd')].txt");
@@ -75,7 +78,8 @@ public class ExpressionFilenameParserTestCase extends AbstractMuleContextEndpoin
 
   @Test
   public void testSquareStyleParsing() {
-    String result = parser.getFilename(event, "Test1_[org.mule.compatibility.transport.file.ExpressionFilenameParser.count()].txt");
+    String result =
+        parser.getFilename(event, "Test1_[org.mule.compatibility.transport.file.ExpressionFilenameParser.count()].txt");
     assertEquals("Test1_0.txt", result);
 
     result = parser.getFilename(event, "Test2_[org.mule.runtime.core.util.DateUtils.getTimeStamp('yyMMdd')].txt");

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode.functional;
 
@@ -40,8 +40,8 @@ public class AuthorizationCodeMultitenantTestCase extends AbstractOAuthAuthoriza
   public static final String NO_STATE = null;
 
   @Rule
-  public SystemProperty localAuthorizationUrl =
-      new SystemProperty("local.authorization.url", String.format("http://localhost:%d/authorization", localHostPort.getNumber()));
+  public SystemProperty localAuthorizationUrl = new SystemProperty("local.authorization.url",
+      String.format("http://localhost:%d/authorization", localHostPort.getNumber()));
   @Rule
   public SystemProperty authorizationUrl =
       new SystemProperty("authorization.url", String.format("http://localhost:%d" + AUTHORIZE_PATH, oauthServerPort.getNumber()));
@@ -104,19 +104,22 @@ public class AuthorizationCodeMultitenantTestCase extends AbstractOAuthAuthoriza
       localAuthorizationUrlParametersBuilder.put("state", state);
     }
 
-    Request.Get(localAuthorizationUrl.getValue() + "?" + HttpParser.encodeQueryString(localAuthorizationUrlParametersBuilder.build()))
+    Request
+        .Get(
+            localAuthorizationUrl.getValue() + "?" + HttpParser.encodeQueryString(localAuthorizationUrlParametersBuilder.build()))
         .connectTimeout(REQUEST_TIMEOUT).socketTimeout(REQUEST_TIMEOUT).execute();
 
-    AuthorizationRequestAsserter.create((findAll(getRequestedFor(urlMatching(AUTHORIZE_PATH + ".*"))).get(0))).assertStateIs(expectedState);
+    AuthorizationRequestAsserter.create((findAll(getRequestedFor(urlMatching(AUTHORIZE_PATH + ".*"))).get(0)))
+        .assertStateIs(expectedState);
 
-    wireMockRule.stubFor(post(urlEqualTo(TOKEN_PATH)).willReturn(aResponse().withBody(
-        "{" + "\"" + OAuthConstants.ACCESS_TOKEN_PARAMETER + "\":\"" + accessToken + "\"," + "\"" + OAuthConstants.EXPIRES_IN_PARAMETER
-            + "\":" + EXPIRES_IN + "," + "\"" + OAuthConstants.REFRESH_TOKEN_PARAMETER + "\":\"" + REFRESH_TOKEN + "\"}")));
+    wireMockRule.stubFor(post(urlEqualTo(TOKEN_PATH)).willReturn(aResponse().withBody("{" + "\""
+        + OAuthConstants.ACCESS_TOKEN_PARAMETER + "\":\"" + accessToken + "\"," + "\"" + OAuthConstants.EXPIRES_IN_PARAMETER
+        + "\":" + EXPIRES_IN + "," + "\"" + OAuthConstants.REFRESH_TOKEN_PARAMETER + "\":\"" + REFRESH_TOKEN + "\"}")));
 
     final String redirectUrlQueryParams = HttpParser.encodeQueryString(new ImmutableMap.Builder()
         .put(OAuthConstants.CODE_PARAMETER, AUTHENTICATION_CODE).put(OAuthConstants.STATE_PARAMETER, expectedState).build());
-    Request.Get(redirectUrl.getValue() + "?" + redirectUrlQueryParams).connectTimeout(REQUEST_TIMEOUT).socketTimeout(REQUEST_TIMEOUT)
-        .execute();
+    Request.Get(redirectUrl.getValue() + "?" + redirectUrlQueryParams).connectTimeout(REQUEST_TIMEOUT)
+        .socketTimeout(REQUEST_TIMEOUT).execute();
   }
 
 }

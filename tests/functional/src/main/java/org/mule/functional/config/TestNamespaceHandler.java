@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.config;
 
@@ -23,11 +23,15 @@ public class TestNamespaceHandler extends AbstractMuleNamespaceHandler {
     // This is handled by the TestComponentDefinitionParser
     registerIgnoredElement("return-data");
     registerIgnoredElement("callback");
-    registerBeanDefinitionParser("no-action-transformer", new TransformerMessageProcessorDefinitionParser(NoActionTransformer.class));
+    registerBeanDefinitionParser("no-action-transformer",
+        new TransformerMessageProcessorDefinitionParser(NoActionTransformer.class));
     registerMuleBeanDefinitionParser("assert", new MessageProcessorDefinitionParser(AssertionMessageProcessor.class));
-    registerMuleBeanDefinitionParser("invocation-counter", new MessageProcessorDefinitionParser(InvocationCountMessageProcessor.class));
-    registerMuleBeanDefinitionParser("non-blocking-processor", new MessageProcessorDefinitionParser(TestNonBlockingProcessor.class));
-    registerMuleBeanDefinitionParser("assert-intercepting", new MessageProcessorDefinitionParser(ResponseAssertionMessageProcessor.class));
+    registerMuleBeanDefinitionParser("invocation-counter",
+        new MessageProcessorDefinitionParser(InvocationCountMessageProcessor.class));
+    registerMuleBeanDefinitionParser("non-blocking-processor",
+        new MessageProcessorDefinitionParser(TestNonBlockingProcessor.class));
+    registerMuleBeanDefinitionParser("assert-intercepting",
+        new MessageProcessorDefinitionParser(ResponseAssertionMessageProcessor.class));
     registerBeanDefinitionParser("queue", new QueueWriterMessageProcessorBeanDefinitionParser());
   }
 }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.generic;
 
@@ -31,8 +31,9 @@ import org.w3c.dom.Element;
  * </pre>
  * <p>
  * What is happening here? First, the custom-security-provider is being handled by this class. Since this class extends
- * ParentDefinitionParser, the provider value is set on the parent (the security manager). But we want the name attribute to be set on the
- * provider (the referenced bean). So the "name" is set on the provider, not on the manager. Then the provider is set on the manager.
+ * ParentDefinitionParser, the provider value is set on the parent (the security manager). But we want the name attribute to be
+ * set on the provider (the referenced bean). So the "name" is set on the provider, not on the manager. Then the provider is set
+ * on the manager.
  * </p>
  */
 public class NameTransferDefinitionParser extends ParentDefinitionParser {
@@ -42,8 +43,8 @@ public class NameTransferDefinitionParser extends ParentDefinitionParser {
   private String componentAttributeName;
 
   /**
-   * @param componentAttributeName The attribute name (after processing, which will strip "-ref", add plurals, etc) that identifies the
-   *        service which will receive the "name".
+   * @param componentAttributeName The attribute name (after processing, which will strip "-ref", add plurals, etc) that
+   *        identifies the service which will receive the "name".
    */
   public NameTransferDefinitionParser(String componentAttributeName) {
     this.componentAttributeName = componentAttributeName;
@@ -107,8 +108,8 @@ public class NameTransferDefinitionParser extends ParentDefinitionParser {
 
   private class LocalBeanAssemblerFactory implements BeanAssemblerFactory {
 
-    public BeanAssembler newBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean, PropertyConfiguration targetConfig,
-        BeanDefinition target) {
+    public BeanAssembler newBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
+        PropertyConfiguration targetConfig, BeanDefinition target) {
       return new LocalBeanAssembler(beanConfig, bean, targetConfig, target);
     }
 

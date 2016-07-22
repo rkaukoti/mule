@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.streaming;
@@ -13,8 +13,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Implementation of {@link Producer} to expose streams from several producers as a single data feed. Producers are consumed in order until
- * they're all consumed. All producers need to share the same generic type T
+ * Implementation of {@link Producer} to expose streams from several producers as a single data feed. Producers are consumed in
+ * order until they're all consumed. All producers need to share the same generic type T
  *
  * @since 3.5.0
  */
@@ -45,9 +45,9 @@ public class CompositeProducer<T> implements Producer<T> {
   }
 
   /**
-   * {@inheritDoc} This method calls the produce method on the current producer. When that producer is exhausted, then it switches to the
-   * next one. When the last producer is also exhausted, then it returns <code>null<c/code>. This method does not close any producer when it
-   * is exhausted. Use the close method for that
+   * {@inheritDoc} This method calls the produce method on the current producer. When that producer is exhausted, then it switches
+   * to the next one. When the last producer is also exhausted, then it returns <code>null<c/code>. This method does not close any
+   * producer when it is exhausted. Use the close method for that
    */
   @Override
   public T produce() {
@@ -71,8 +71,8 @@ public class CompositeProducer<T> implements Producer<T> {
   }
 
   /**
-   * Accumulates the total available count of all the producers. If one of them does not have a value available (returns -1) then it is not
-   * factored in
+   * Accumulates the total available count of all the producers. If one of them does not have a value available (returns -1) then
+   * it is not factored in
    */
   @Override
   public int size() {

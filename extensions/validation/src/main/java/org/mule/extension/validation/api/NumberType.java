@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.validation.api;
 
@@ -19,6 +19,7 @@ import java.util.Locale;
  */
 public enum NumberType {
   INTEGER {
+
     @Override
     public Number toNumber(String value, String pattern, Locale locale) {
       return pattern != null ? IntegerValidator.getInstance().validate(value, pattern, locale)
@@ -26,6 +27,7 @@ public enum NumberType {
     }
   },
   LONG {
+
     @Override
     public Number toNumber(String value, String pattern, Locale locale) {
       return pattern != null ? LongValidator.getInstance().validate(value, pattern, locale)
@@ -33,6 +35,7 @@ public enum NumberType {
     }
   },
   SHORT {
+
     @Override
     public Number toNumber(String value, String pattern, Locale locale) {
       return pattern != null ? ShortValidator.getInstance().validate(value, pattern, locale)
@@ -40,6 +43,7 @@ public enum NumberType {
     }
   },
   DOUBLE {
+
     @Override
     public Number toNumber(String value, String pattern, Locale locale) {
       return pattern != null ? DoubleValidator.getInstance().validate(value, pattern, locale)
@@ -47,6 +51,7 @@ public enum NumberType {
     }
   },
   FLOAT {
+
     @Override
     public Number toNumber(String value, String pattern, Locale locale) {
       return pattern != null ? FloatValidator.getInstance().validate(value, pattern, locale)

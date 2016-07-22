@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.launcher.application;
@@ -97,8 +97,9 @@ public class DefaultApplicationFactoryTestCase extends AbstractMuleTestCase {
     when(applicationClassLoaderBuilderMock.setArtifactDescriptor(any())).thenReturn(applicationClassLoaderBuilderMock);
     when(applicationClassLoaderBuilderMock.setArtifactId(any())).thenReturn(applicationClassLoaderBuilderMock);
     when(applicationClassLoaderBuilderMock.setPluginsSharedLibFolder(any())).thenReturn(applicationClassLoaderBuilderMock);
-    when(applicationClassLoaderBuilderMock.addArtifactPluginDescriptors(descriptor.getPlugins().toArray(new ArtifactPluginDescriptor[0])))
-        .thenReturn(applicationClassLoaderBuilderMock);
+    when(applicationClassLoaderBuilderMock
+        .addArtifactPluginDescriptors(descriptor.getPlugins().toArray(new ArtifactPluginDescriptor[0])))
+            .thenReturn(applicationClassLoaderBuilderMock);
     when(applicationClassLoaderBuilderMock.build()).thenReturn(applicationArtifactClassLoader);
     when(applicationClassLoaderBuilderFactory.createArtifactClassLoaderBuilder()).thenReturn(applicationClassLoaderBuilderMock);
 

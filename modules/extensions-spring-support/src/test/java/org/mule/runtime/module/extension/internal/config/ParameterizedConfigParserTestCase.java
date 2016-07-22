@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.config;
 
@@ -77,8 +77,8 @@ public class ParameterizedConfigParserTestCase extends AbstractConfigParserTestC
 
   @Parameters(name = "{0}")
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {{HEISENBERG_BYNAME}, {HEISENBERG_PLACEHOLDERS}, {HEISENBERG_BYREF}, {HEISENBERG_EXPRESSION},
-        {HEISENBERG_EXPRESSION_BYREF}});
+    return Arrays.asList(new Object[][] {{HEISENBERG_BYNAME}, {HEISENBERG_PLACEHOLDERS}, {HEISENBERG_BYREF},
+        {HEISENBERG_EXPRESSION}, {HEISENBERG_EXPRESSION_BYREF}});
   }
 
   public static Calendar getDateOfBirth() {
@@ -245,8 +245,10 @@ public class ParameterizedConfigParserTestCase extends AbstractConfigParserTestC
     assertThat(dayOfBirth.get(YEAR), equalTo(getDateOfBirth().get(YEAR)));
     assertThat(heisenberg.getPersonalInfo().getLifetimeInfo().getDateOfDeath().get(YEAR), equalTo(getDateOfDeath().get(YEAR)));
 
-    assertThat(heisenberg.getPersonalInfo().getLifetimeInfo().getDateOfConception().getYear(), is(getDateOfConception().getYear()));
-    assertThat(heisenberg.getPersonalInfo().getLifetimeInfo().getDateOfConception().getMonth(), is(getDateOfConception().getMonth()));
+    assertThat(heisenberg.getPersonalInfo().getLifetimeInfo().getDateOfConception().getYear(),
+        is(getDateOfConception().getYear()));
+    assertThat(heisenberg.getPersonalInfo().getLifetimeInfo().getDateOfConception().getMonth(),
+        is(getDateOfConception().getMonth()));
 
     assertThat(heisenberg.getMoney(), equalTo(new BigDecimal(MONEY)));
   }

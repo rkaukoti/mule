@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.transport;
 
@@ -57,8 +57,8 @@ import static org.apache.cxf.message.Message.DECOUPLED_CHANNEL_MESSAGE;
 import static org.mule.runtime.api.metadata.MediaType.XML;
 
 /**
- * A Conduit is primarily responsible for sending messages from CXF to somewhere else. This conduit takes messages which are being written
- * and sends them to the Mule bus.
+ * A Conduit is primarily responsible for sending messages from CXF to somewhere else. This conduit takes messages which are being
+ * written and sends them to the Mule bus.
  */
 public class MuleUniversalConduit extends AbstractConduit {
 
@@ -73,7 +73,8 @@ public class MuleUniversalConduit extends AbstractConduit {
    * @param ei The Endpoint being invoked by this destination.
    * @param t The EPR associated with this Conduit - i.e. the reply destination.
    */
-  public MuleUniversalConduit(MuleUniversalTransport transport, CxfConfiguration configuration, EndpointInfo ei, EndpointReferenceType t) {
+  public MuleUniversalConduit(MuleUniversalTransport transport, CxfConfiguration configuration, EndpointInfo ei,
+      EndpointReferenceType t) {
     super(getTargetReference(ei, t));
     this.transport = transport;
     this.endpoint = ei;
@@ -169,6 +170,7 @@ public class MuleUniversalConduit extends AbstractConduit {
 
     final MuleEvent finalEvent = event;
     AbstractPhaseInterceptor<Message> i = new AbstractPhaseInterceptor<Message>(Phase.PRE_STREAM) {
+
       @Override
       public void handleMessage(Message m) throws Fault {
         try {
@@ -213,6 +215,7 @@ public class MuleUniversalConduit extends AbstractConduit {
         final ReplyToHandler originalReplyToHandler = reqEvent.getReplyToHandler();
 
         reqEvent = new DefaultMuleEvent(reqEvent, new NonBlockingReplyToHandler() {
+
           @Override
           public void processReplyTo(MuleEvent event, MuleMessage returnMessage, Object replyTo) throws MuleException {
             try {
@@ -314,7 +317,8 @@ public class MuleUniversalConduit extends AbstractConduit {
   }
 
   protected MuleEvent processNext(MuleEvent event, Exchange exchange) throws MuleException {
-    CxfOutboundMessageProcessor processor = (CxfOutboundMessageProcessor) exchange.get(CxfConstants.CXF_OUTBOUND_MESSAGE_PROCESSOR);
+    CxfOutboundMessageProcessor processor =
+        (CxfOutboundMessageProcessor) exchange.get(CxfConstants.CXF_OUTBOUND_MESSAGE_PROCESSOR);
     MuleEvent response;
     response = processor.processNext(event);
 
@@ -344,10 +348,11 @@ public class MuleUniversalConduit extends AbstractConduit {
   }
 
   /**
-   * Used to set appropriate message properties, exchange etc. as required for an incoming decoupled response (as opposed what's normally
-   * set by the Destination for an incoming request).
+   * Used to set appropriate message properties, exchange etc. as required for an incoming decoupled response (as opposed what's
+   * normally set by the Destination for an incoming request).
    */
   protected class InterposedMessageObserver implements MessageObserver {
+
     /**
      * Called for an incoming message.
      */

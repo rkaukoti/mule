@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.tck.junit4.rule;
 
@@ -10,8 +10,8 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Defines a {@link Statement} to execute a test with a given timeout. Differently from JUnit's
- * {@link org.junit.internal.runners.statements.FailOnTimeout} this statement just prints a warning in the log, so the test will pass in
- * case of timeout.
+ * {@link org.junit.internal.runners.statements.FailOnTimeout} this statement just prints a warning in the log, so the test will
+ * pass in case of timeout.
  */
 public class WarnOnTimeout extends Statement {
 
@@ -29,6 +29,7 @@ public class WarnOnTimeout extends Statement {
   @Override
   public void evaluate() throws Throwable {
     Thread thread = new Thread() {
+
       @Override
       public void run() {
         try {

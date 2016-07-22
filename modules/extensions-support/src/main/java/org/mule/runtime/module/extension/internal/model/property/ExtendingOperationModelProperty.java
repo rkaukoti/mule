@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.model.property;
 
@@ -11,11 +11,11 @@ import org.mule.runtime.extension.api.introspection.ModelProperty;
 import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
- * A custom model property which marks that an operation is augmenting the functionality of an {@link Extension} which is defined in a type
- * annotated with {@link Extensible}.
+ * A custom model property which marks that an operation is augmenting the functionality of an {@link Extension} which is defined
+ * in a type annotated with {@link Extensible}.
  * <p>
- * The runtime consequences of this property depend on the runtime. This class constructor throws {@link IllegalArgumentException} if
- * {@link #type} is not annotated with {@link Extensible}
+ * The runtime consequences of this property depend on the runtime. This class constructor throws {@link IllegalArgumentException}
+ * if {@link #type} is not annotated with {@link Extensible}
  *
  * @since 4.0
  */

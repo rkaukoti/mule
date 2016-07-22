@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.listener;
 
@@ -65,7 +65,8 @@ public class HttpListenerTestCase extends AbstractMuleTestCase {
 
   private MuleContext mockMuleContext = mock(MuleContext.class, Answers.RETURNS_DEEP_STUBS.get());
   private FlowConstruct mockFlowConstruct = mock(FlowConstruct.class, Answers.RETURNS_DEEP_STUBS.get());
-  private DefaultHttpListenerConfig mockHttpListenerConfig = mock(DefaultHttpListenerConfig.class, Answers.RETURNS_DEEP_STUBS.get());
+  private DefaultHttpListenerConfig mockHttpListenerConfig =
+      mock(DefaultHttpListenerConfig.class, Answers.RETURNS_DEEP_STUBS.get());
   private HttpListenerConnectionManager mockHttpListenerConnectionManager =
       mock(HttpListenerConnectionManager.class, Answers.RETURNS_DEEP_STUBS.get());
 
@@ -85,6 +86,7 @@ public class HttpListenerTestCase extends AbstractMuleTestCase {
     final AtomicReference<RequestHandler> requestHandlerRef = new AtomicReference<>();
     when(mockHttpListenerConfig.addRequestHandler(any(ListenerRequestMatcher.class), any(RequestHandler.class)))
         .then(new Answer<RequestHandlerManager>() {
+
           @Override
           public RequestHandlerManager answer(InvocationOnMock invocation) throws Throwable {
             requestHandlerRef.set((RequestHandler) invocation.getArguments()[1]);
@@ -97,6 +99,7 @@ public class HttpListenerTestCase extends AbstractMuleTestCase {
 
     HttpResponseReadyCallback responseCallback = mock(HttpResponseReadyCallback.class);
     doAnswer(new Answer<Void>() {
+
       @Override
       public Void answer(InvocationOnMock invocation) throws Throwable {
         assertThat(RequestContext.getEvent(), not(nullValue()));
@@ -118,6 +121,7 @@ public class HttpListenerTestCase extends AbstractMuleTestCase {
     final AtomicReference<RequestHandler> requestHandlerRef = new AtomicReference<>();
     when(mockHttpListenerConfig.addRequestHandler(any(ListenerRequestMatcher.class), any(RequestHandler.class)))
         .then(new Answer<RequestHandlerManager>() {
+
           @Override
           public RequestHandlerManager answer(InvocationOnMock invocation) throws Throwable {
             requestHandlerRef.set((RequestHandler) invocation.getArguments()[1]);
@@ -140,6 +144,7 @@ public class HttpListenerTestCase extends AbstractMuleTestCase {
     final AtomicReference<RequestHandler> requestHandlerRef = new AtomicReference<>();
     when(mockHttpListenerConfig.addRequestHandler(any(ListenerRequestMatcher.class), any(RequestHandler.class)))
         .then(new Answer<RequestHandlerManager>() {
+
           @Override
           public RequestHandlerManager answer(InvocationOnMock invocation) throws Throwable {
             requestHandlerRef.set((RequestHandler) invocation.getArguments()[1]);
@@ -161,6 +166,7 @@ public class HttpListenerTestCase extends AbstractMuleTestCase {
     final AtomicReference<RequestHandler> requestHandlerRef = new AtomicReference<>();
     when(mockHttpListenerConfig.addRequestHandler(any(ListenerRequestMatcher.class), any(RequestHandler.class)))
         .then(new Answer<RequestHandlerManager>() {
+
           @Override
           public RequestHandlerManager answer(InvocationOnMock invocation) throws Throwable {
             requestHandlerRef.set((RequestHandler) invocation.getArguments()[1]);
@@ -239,6 +245,7 @@ public class HttpListenerTestCase extends AbstractMuleTestCase {
 
     MessageProcessingManager messageProcessingManager = mock(MessageProcessingManager.class);
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         HttpMessageProcessorTemplate template = (HttpMessageProcessorTemplate) invocation.getArguments()[0];

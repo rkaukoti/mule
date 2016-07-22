@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.request;
 
@@ -10,6 +10,7 @@ import org.mule.runtime.module.http.api.requester.proxy.ProxyConfig;
 
 
 public class HttpClientConfiguration {
+
   private final TlsContextFactory tlsContextFactory;
   private final ProxyConfig proxyConfig;
   private final TcpClientSocketProperties clientSocketProperties;
@@ -20,8 +21,8 @@ public class HttpClientConfiguration {
   private final String ownerName;
 
   private HttpClientConfiguration(TlsContextFactory tlsContextFactory, ProxyConfig proxyConfig,
-      TcpClientSocketProperties clientSocketProperties, int maxConnections, boolean usePersistentConnections, int connectionIdleTimeout,
-      String threadNamePrefix, String ownerName) {
+      TcpClientSocketProperties clientSocketProperties, int maxConnections, boolean usePersistentConnections,
+      int connectionIdleTimeout, String threadNamePrefix, String ownerName) {
     this.tlsContextFactory = tlsContextFactory;
     this.proxyConfig = proxyConfig;
     this.clientSocketProperties = clientSocketProperties;
@@ -65,6 +66,7 @@ public class HttpClientConfiguration {
   }
 
   public static class Builder {
+
     private TlsContextFactory tlsContextFactory;
     private ProxyConfig proxyConfig;
     private TcpClientSocketProperties clientSocketProperties;
@@ -115,8 +117,8 @@ public class HttpClientConfiguration {
     }
 
     public HttpClientConfiguration build() {
-      return new HttpClientConfiguration(tlsContextFactory, proxyConfig, clientSocketProperties, maxConnections, usePersistentConnections,
-          connectionIdleTimeout, threadNamePrefix, ownerName);
+      return new HttpClientConfiguration(tlsContextFactory, proxyConfig, clientSocketProperties, maxConnections,
+          usePersistentConnections, connectionIdleTimeout, threadNamePrefix, ownerName);
     }
   }
 }

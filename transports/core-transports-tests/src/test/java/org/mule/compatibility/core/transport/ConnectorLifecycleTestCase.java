@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -31,8 +31,8 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
- * Tests that lifecycle methods on a connector are not processed more than once. (@see MULE-3062) Also test lifecycle of a connector
- * dispatchers, receivers, workManagers and scheduler.
+ * Tests that lifecycle methods on a connector are not processed more than once. (@see MULE-3062) Also test lifecycle of a
+ * connector dispatchers, receivers, workManagers and scheduler.
  */
 public class ConnectorLifecycleTestCase extends AbstractMuleContextEndpointTestCase {
 
@@ -350,7 +350,8 @@ public class ConnectorLifecycleTestCase extends AbstractMuleContextEndpointTestC
     muleContext.start();
 
     // using sync endpoint so that any calls to 'process()' will be blocking and avoid timing issues
-    OutboundEndpoint out = getTestOutboundEndpoint("out", "test://out?exchangePattern=request-response", null, null, null, connector);
+    OutboundEndpoint out =
+        getTestOutboundEndpoint("out", "test://out?exchangePattern=request-response", null, null, null, connector);
 
     // attempts to send/dispatch/request are made on a stopped/stopping connector
     // This should fail because the connector is not started!
@@ -370,7 +371,8 @@ public class ConnectorLifecycleTestCase extends AbstractMuleContextEndpointTestC
     // This causes the first instance out dispatcher to be created
     assertDispatcherStartedConnected(out, true, true);
 
-    OutboundEndpoint out2 = getTestOutboundEndpoint("out2", "test://out2?exchangePattern=request-response", null, null, null, connector);
+    OutboundEndpoint out2 =
+        getTestOutboundEndpoint("out2", "test://out2?exchangePattern=request-response", null, null, null, connector);
     // This causes the first instance out2 dispatcher to be created
     out2.process(getTestEvent("data"));
 
@@ -561,6 +563,7 @@ public class ConnectorLifecycleTestCase extends AbstractMuleContextEndpointTestC
 
   protected Work createSomeWork() {
     return new Work() {
+
       @Override
       public void run() {
         System.out.println("I'm doing some work");

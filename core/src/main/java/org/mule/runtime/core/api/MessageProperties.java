@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api;
 
@@ -23,9 +23,9 @@ public interface MessageProperties {
   <T extends Serializable> T getOutboundProperty(String name);
 
   /**
-   * Gets an outbound property from the message and provides a default value if the property is not present on the message in the scope
-   * specified. The method will also type check against the default value to ensure that the value is of the correct type. If null is used
-   * for the default value no type checking is done.
+   * Gets an outbound property from the message and provides a default value if the property is not present on the message in the
+   * scope specified. The method will also type check against the default value to ensure that the value is of the correct type.
+   * If null is used for the default value no type checking is done.
    *
    * @param <T> the defaultValue type ,this is used to validate the property value type
    * @param name the name or key of the property. This must be non-null.
@@ -59,9 +59,9 @@ public interface MessageProperties {
   <T extends Serializable> T getInboundProperty(String name);
 
   /**
-   * Gets an inbound property from the message and provides a default value if the property is not present on the message in the scope
-   * specified. The method will also type check against the default value to ensure that the value is of the correct type. If null is used
-   * for the default value no type checking is done.
+   * Gets an inbound property from the message and provides a default value if the property is not present on the message in the
+   * scope specified. The method will also type check against the default value to ensure that the value is of the correct type.
+   * If null is used for the default value no type checking is done.
    *
    * @param <T> the defaultValue type ,this is used to validate the property value type
    * @param name the name or key of the property. This must be non-null.

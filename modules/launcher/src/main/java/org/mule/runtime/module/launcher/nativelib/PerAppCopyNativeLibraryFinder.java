@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.launcher.nativelib;
@@ -13,7 +13,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * * Finds native libraries in an application's lib folder and creates a copy of each found library inside a temporal application folder.
+ * * Finds native libraries in an application's lib folder and creates a copy of each found library inside a temporal application
+ * folder.
  */
 public class PerAppCopyNativeLibraryFinder extends PerAppNativeLibraryFinder {
 
@@ -29,7 +30,8 @@ public class PerAppCopyNativeLibraryFinder extends PerAppNativeLibraryFinder {
       cleanNativeLibs();
     } else {
       if (!this.perAppNativeLibs.mkdirs()) {
-        throw new IllegalStateException(String.format("Unable to create application '%s' folder", this.perAppNativeLibs.getAbsolutePath()));
+        throw new IllegalStateException(
+            String.format("Unable to create application '%s' folder", this.perAppNativeLibs.getAbsolutePath()));
       }
     }
   }
@@ -78,7 +80,8 @@ public class PerAppCopyNativeLibraryFinder extends PerAppNativeLibraryFinder {
       return tempLibrary;
     } catch (IOException e) {
       throw new IllegalStateException(
-          String.format("Unable to generate copy for native library '%s' at '%s'", nativeLibName, tempLibrary.getAbsolutePath()), e);
+          String.format("Unable to generate copy for native library '%s' at '%s'", nativeLibName, tempLibrary.getAbsolutePath()),
+          e);
     }
   }
 }

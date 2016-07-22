@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.tcp.integration;
 
@@ -52,6 +52,7 @@ public class StreamingTestCase extends FunctionalTestCase {
     final AtomicInteger loopCount = new AtomicInteger(0);
 
     EventCallback callback = new EventCallback() {
+
       @Override
       public synchronized void eventReceived(MuleEventContext context, Object component) {
         try {
@@ -78,7 +79,8 @@ public class StreamingTestCase extends FunctionalTestCase {
 
     ((FunctionalStreamingTestComponent) ftc).setEventCallback(callback, TEST_MESSAGE.length());
 
-    client.dispatch(((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("testComponent")).getMessageSource()).getAddress(),
+    client.dispatch(
+        ((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("testComponent")).getMessageSource()).getAddress(),
         TEST_MESSAGE, new HashMap());
 
     latch.await(10, TimeUnit.SECONDS);

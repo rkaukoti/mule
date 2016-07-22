@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.model;
@@ -27,7 +27,8 @@ public abstract class AbstractTestDatabase {
   public static final Region[] REGION_TEST_VALUES = {Region.NORTHWEST, Region.SOUTHWEST};
   public static final RegionManager[] REGION_MANAGER_TEST_VALUES = {SOUTHWEST_MANAGER, NORTHWEST_MANAGER};
   public static final String NO_SQLXML_SUPPORT_ERROR = "Database does not support SQLXML type";
-  public static final String NO_RESULSET_FROM_FUNCTION_SUPPORT_ERROR = "Database does not support returning a resultset from a function";
+  public static final String NO_RESULSET_FROM_FUNCTION_SUPPORT_ERROR =
+      "Database does not support returning a resultset from a function";
   public static final String NO_UDT_SUPPORT_ERROR = "Database does not support User Defined Data Types";
   private static final Logger logger = LoggerFactory.getLogger(AbstractTestDatabase.class);
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -32,6 +32,7 @@ import static org.mule.runtime.core.util.ClassUtils.isConsumable;
  */
 
 public class AbstractMatchingRouter extends AbstractAnnotatedObject implements MatchingRouter {
+
   /**
    * logger used by this class
    */
@@ -66,7 +67,8 @@ public class AbstractMatchingRouter extends AbstractAnnotatedObject implements M
 
       if (copyEvent) {
         if (isConsumable(message.getDataType().getType())) {
-          throw new MessagingException(CoreMessages.cannotCopyStreamPayload(message.getDataType().getType().getName()), event, this);
+          throw new MessagingException(CoreMessages.cannotCopyStreamPayload(message.getDataType().getType().getName()), event,
+              this);
         }
         eventToRoute = OptimizedRequestContext.criticalSetEvent(event);
       } else {
@@ -84,7 +86,8 @@ public class AbstractMatchingRouter extends AbstractAnnotatedObject implements M
 
     if (!matchfound && defaultRoute != null) {
       if (logger.isDebugEnabled()) {
-        logger.debug("Message did not match any routers on: " + event.getFlowConstruct().getName() + " invoking catch all strategy");
+        logger.debug(
+            "Message did not match any routers on: " + event.getFlowConstruct().getName() + " invoking catch all strategy");
       }
       return processDefaultRoute(event);
     } else if (!matchfound) {

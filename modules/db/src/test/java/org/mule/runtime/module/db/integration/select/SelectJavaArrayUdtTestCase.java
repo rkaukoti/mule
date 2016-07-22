@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.select;
@@ -26,6 +26,7 @@ import static org.mule.runtime.module.db.integration.model.Region.NORTHWEST;
 import static org.mule.runtime.module.db.integration.model.Region.SOUTHWEST;
 
 public class SelectJavaArrayUdtTestCase extends AbstractDbIntegrationTestCase {
+
   public SelectJavaArrayUdtTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase) {
     super(dataSourceConfigResource, testDatabase);
   }
@@ -51,7 +52,8 @@ public class SelectJavaArrayUdtTestCase extends AbstractDbIntegrationTestCase {
     final MuleEvent responseEvent = flowRunner("returnsDefaultArray").withPayload(TEST_MESSAGE).run();
     final MuleMessage response = responseEvent.getMessage();
 
-    assertRecords(response.getPayload(), new Record(new Field("REGION_NAME", NORTHWEST.getName()), new Field("ZIPS", NORTHWEST.getZips())),
+    assertRecords(response.getPayload(),
+        new Record(new Field("REGION_NAME", NORTHWEST.getName()), new Field("ZIPS", NORTHWEST.getZips())),
         new Record(new Field("REGION_NAME", SOUTHWEST.getName()), new Field("ZIPS", SOUTHWEST.getZips())));
   }
 

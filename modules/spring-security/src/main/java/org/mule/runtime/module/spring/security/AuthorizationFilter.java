@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.spring.security;
 
@@ -30,6 +30,7 @@ import java.util.HashSet;
  * Authorizes user access based on the required authorities for a user.
  */
 public class AuthorizationFilter extends AbstractSecurityFilter {
+
   protected final Logger logger = LoggerFactory.getLogger(getClass());
   private Collection<String> requiredAuthorities = new HashSet<String>();
 
@@ -65,8 +66,9 @@ public class AuthorizationFilter extends AbstractSecurityFilter {
     }
 
     if (!authorized) {
-      logger.info(MessageFormat.format("Could not find required authorities for {0}. Required authorities: {1}. Authorities found: {2}.",
-          principalName, Arrays.toString(requiredAuthorities.toArray()), Arrays.toString(authorities)));
+      logger.info(
+          MessageFormat.format("Could not find required authorities for {0}. Required authorities: {1}. Authorities found: {2}.",
+              principalName, Arrays.toString(requiredAuthorities.toArray()), Arrays.toString(authorities)));
       throw new NotPermittedException(SpringSecurityMessages.noGrantedAuthority(principalName));
     }
   }

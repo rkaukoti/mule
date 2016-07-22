@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.listener;
 
@@ -108,6 +108,7 @@ public class HttpListenerRegistry implements RequestHandlerProvider {
     private Set<String> paths = new HashSet<>();
     private LoadingCache<String, Stack<PathMap>> pathMapSearchCache =
         CacheBuilder.newBuilder().maximumSize(1000).build(new CacheLoader<String, Stack<PathMap>>() {
+
           public Stack<PathMap> load(String path) {
             return findPossibleRequestHandlers(path);
           }
@@ -187,10 +188,11 @@ public class HttpListenerRegistry implements RequestHandlerProvider {
                   || (isCatchAllPath(possibleCollisionLastPathPart) && isCatchAllPath(newListenerRequestMatcherLastPathPart))
                   || (isCatchAllPath(possibleCollisionLastPathPart) && isUriParameter(newListenerRequestMatcherLastPathPart))
                   || (isUriParameter(possibleCollisionLastPathPart) && isCatchAllPath(newListenerRequestMatcherLastPathPart)
-                      || (isUriParameter(possibleCollisionLastPathPart) && isUriParameter(newListenerRequestMatcherLastPathPart)))) {
-                throw new MuleRuntimeException(CoreMessages.createStaticMessage(
-                    String.format("Already exists a listener matching that path and methods. Listener matching %s new listener %s",
-                        requestMatcher, newListenerRequestMatcher)));
+                      || (isUriParameter(possibleCollisionLastPathPart)
+                          && isUriParameter(newListenerRequestMatcherLastPathPart)))) {
+                throw new MuleRuntimeException(CoreMessages.createStaticMessage(String.format(
+                    "Already exists a listener matching that path and methods. Listener matching %s new listener %s",
+                    requestMatcher, newListenerRequestMatcher)));
               }
             }
           }
@@ -362,7 +364,8 @@ public class HttpListenerRegistry implements RequestHandlerProvider {
       if (this.catchAllPathMap != null && this.catchAllPathMap.removeRequestHandlerMatcherPair(requestHandlerMatcherPair)) {
         return true;
       }
-      if (this.catchAllCurrentPathMap != null && this.catchAllCurrentPathMap.removeRequestHandlerMatcherPair(requestHandlerMatcherPair)) {
+      if (this.catchAllCurrentPathMap != null
+          && this.catchAllCurrentPathMap.removeRequestHandlerMatcherPair(requestHandlerMatcherPair)) {
         return true;
       }
       return false;

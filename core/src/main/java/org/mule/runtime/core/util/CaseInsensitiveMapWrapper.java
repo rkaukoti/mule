@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -15,15 +15,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
- * Represents a Map from String to {@link T} where the key's case is not taken into account when looking for it, but remembered when the key
- * set is retrieved from the map. The backing map used will be an instance of the given class passed to the constructor. This allows to make
- * case insensitive different kinds of Map implementations, particularly a ConcurrentHashMap, used to achieve high concurrence.
+ * Represents a Map from String to {@link T} where the key's case is not taken into account when looking for it, but remembered
+ * when the key set is retrieved from the map. The backing map used will be an instance of the given class passed to the
+ * constructor. This allows to make case insensitive different kinds of Map implementations, particularly a ConcurrentHashMap,
+ * used to achieve high concurrence.
  * <p/>
- * When a key/value pair is put in the map the key case is remembered so when the key set or the entry set is retrieved the correct case is
- * returned. This is useful to store, for example, camel case keys. However, two keys that only differ in their case will be assumed to be
- * the same key and only one value (the last) will be kept. Note: as this map uses a provided class to create the backing map, key rewrite
- * is not ensured. It is possible that when redefining a value associated to a key, the key case won't be overwritten and the already
- * existing key case will remains in the key set and entry set.
+ * When a key/value pair is put in the map the key case is remembered so when the key set or the entry set is retrieved the
+ * correct case is returned. This is useful to store, for example, camel case keys. However, two keys that only differ in their
+ * case will be assumed to be the same key and only one value (the last) will be kept. Note: as this map uses a provided class to
+ * create the backing map, key rewrite is not ensured. It is possible that when redefining a value associated to a key, the key
+ * case won't be overwritten and the already existing key case will remains in the key set and entry set.
  *
  * @param <T> The class of the values referenced in the map.
  * @since 3.6.0

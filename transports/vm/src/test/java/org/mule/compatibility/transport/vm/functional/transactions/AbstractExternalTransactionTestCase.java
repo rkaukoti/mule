@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.vm.functional.transactions;
 
@@ -81,6 +81,7 @@ public abstract class AbstractExternalTransactionTestCase extends FunctionalTest
    * An XA resource that allows setting, committing, and rolling back the value of one resource
    */
   public static class TestResource implements XAResource {
+
     protected int _timeout = 0;
     private Map<Transaction, Integer> transientValue = new HashMap<Transaction, Integer>();
     private int persistentValue;

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.queue;
 
@@ -17,8 +17,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Delegates every call to the real QueueManager.
  *
- * If there's a system property with mule.queue.objectstoremode=true then the old version of the QueueManager will be used. This is to
- * maintain backward compatibility in case a customer is relaying on ObjectStore for queue store customization.
+ * If there's a system property with mule.queue.objectstoremode=true then the old version of the QueueManager will be used. This
+ * is to maintain backward compatibility in case a customer is relaying on ObjectStore for queue store customization.
  */
 public class DelegateQueueManager implements QueueManager, Lifecycle, MuleContextAware {
 

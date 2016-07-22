@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.scripting.component;
 
@@ -40,8 +40,8 @@ import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessa
 import static org.mule.runtime.core.util.IOUtils.getResourceAsStream;
 
 /**
- * A JSR 223 Script service. Allows any JSR 223 compliant script engines such as JavaScript, Groovy or Rhino to be embedded as Mule
- * components.
+ * A JSR 223 Script service. Allows any JSR 223 compliant script engines such as JavaScript, Groovy or Rhino to be embedded as
+ * Mule components.
  */
 public class Scriptable implements Initialisable, MuleContextAware {
 
@@ -109,7 +109,8 @@ public class Scriptable implements Initialisable, MuleContextAware {
       scriptEngine = createScriptEngineByName(scriptEngineName);
       if (scriptEngine == null) {
         throw new InitialisationException(
-            createStaticMessage("Scripting engine '" + scriptEngineName + "' not found.  Available engines are: " + listAvailableEngines()),
+            createStaticMessage(
+                "Scripting engine '" + scriptEngineName + "' not found.  Available engines are: " + listAvailableEngines()),
             this);
       }
     }
@@ -121,9 +122,8 @@ public class Scriptable implements Initialisable, MuleContextAware {
         String extension = scriptFile.substring(i + 1);
         scriptEngine = createScriptEngineByExtension(extension);
         if (scriptEngine == null) {
-          throw new InitialisationException(createStaticMessage(
-              "File extension '" + extension + "' does not map to a scripting engine.  Available engines are: " + listAvailableEngines()),
-              this);
+          throw new InitialisationException(createStaticMessage("File extension '" + extension
+              + "' does not map to a scripting engine.  Available engines are: " + listAvailableEngines()), this);
         } else {
           setScriptEngineName(extension);
         }

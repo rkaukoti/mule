@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.config;
 
@@ -44,7 +44,8 @@ import javax.xml.parsers.SAXParserFactory;
 public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextAware {
 
   public static final String[] DEFAULT_STACKTRACE_FILTER =
-      ("org.mule.runtime.core.processor.AbstractInterceptingMessageProcessor," + "org.mule.runtime.core.processor.chain").split(",");
+      ("org.mule.runtime.core.processor.AbstractInterceptingMessageProcessor," + "org.mule.runtime.core.processor.chain")
+          .split(",");
 
   /**
    * When false (default), some internal Mule entries are removed from exception stacktraces for readability.
@@ -54,14 +55,14 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
   public static boolean fullStackTraces = false;
 
   /**
-   * When false (default), only a summary of the root exception and trail is provided. If this flag is false, full exception information is
-   * reported. Switching on DEBUG level logging with automatically set this flag to true.
+   * When false (default), only a summary of the root exception and trail is provided. If this flag is false, full exception
+   * information is reported. Switching on DEBUG level logging with automatically set this flag to true.
    */
   public static boolean verboseExceptions = false;
 
   /**
-   * When true, each event will keep trace information of the flows and components it traverses to be shown as part of an exception message
-   * if an exception occurs. Switching on DEBUG level logging with automatically set this flag to true.
+   * When true, each event will keep trace information of the flows and components it traverses to be shown as part of an
+   * exception message if an exception occurs. Switching on DEBUG level logging with automatically set this flag to true.
    */
   public static boolean flowTrace = false;
 
@@ -81,8 +82,8 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
   private String systemModelType = "seda";
   private String encoding = "UTF-8";
   /**
-   * When running sychronously, return events can be received over transports that support ack or replyTo This property determines how long
-   * to wait for a receive
+   * When running sychronously, return events can be received over transports that support ack or replyTo This property determines
+   * how long to wait for a receive
    */
   private int responseTimeout = 10000;
   /**
@@ -98,8 +99,8 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
    */
   private int shutdownTimeout = 5000;
   /**
-   * Where Mule stores any runtime files to disk. Note that in container mode each app will have its working dir set one level under this
-   * dir (with app's name) in the {@link #setMuleContext} callback.
+   * Where Mule stores any runtime files to disk. Note that in container mode each app will have its working dir set one level
+   * under this dir (with app's name) in the {@link #setMuleContext} callback.
    */
   private String workingDirectory = "./.mule";
   /**
@@ -131,10 +132,10 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
   private boolean containerMode;
 
   /**
-   * By default the Mule Expression parser will perform basic syntax checking on expressions in order to provide early feedback if an
-   * expression is malformed. Part of the check is checking that all open braces are closed at some point. For some expressions such as
-   * groovy, there could be a scenario where a brace is deliberately used without being closed; this would cause the validation to fail.
-   * Users can turn off validation using this flag.
+   * By default the Mule Expression parser will perform basic syntax checking on expressions in order to provide early feedback if
+   * an expression is malformed. Part of the check is checking that all open braces are closed at some point. For some expressions
+   * such as groovy, there could be a scenario where a brace is deliberately used without being closed; this would cause the
+   * validation to fail. Users can turn off validation using this flag.
    */
   private boolean validateExpressions = true;
 
@@ -168,8 +169,8 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
   private ProcessingStrategy defaultProcessingStrategy;
 
   /**
-   * Maximum size (approximately) of the transaction log files. This applies to each set of files for local transactions and xa transactions
-   * when using queues.
+   * Maximum size (approximately) of the transaction log files. This applies to each set of files for local transactions and xa
+   * transactions when using queues.
    *
    * @since 3.9.0
    */
@@ -211,7 +212,8 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
   }
 
   /**
-   * @return {@code true} if the log is set to debug or if the system property {@code mule.flowTrace} is set to {@code true}. {@code
+   * @return {@code true} if the log is set to debug or if the system property {@code mule.flowTrace} is set to {@code true}.
+   *         {@code
    * false} otherwise.
    */
   public static boolean isFlowTrace() {
@@ -330,8 +332,8 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
   }
 
   /**
-   * Mule needs a proper JAXP implementation and will complain when run with a plain JDK 1.4. Use the supplied launcher or specify a proper
-   * JAXP implementation via <code>-Djava.endorsed.dirs</code>. See the following URLs for more information:
+   * Mule needs a proper JAXP implementation and will complain when run with a plain JDK 1.4. Use the supplied launcher or specify
+   * a proper JAXP implementation via <code>-Djava.endorsed.dirs</code>. See the following URLs for more information:
    * <ul>
    * <li><a href="http://xerces.apache.org/xerces2-j/faq-general.html#faq-4">Xerces</a>
    * <li><a href="http://xml.apache.org/xalan-j/faq.html#faq-N100D6">Xalan</a>
@@ -341,7 +343,8 @@ public class DefaultMuleConfiguration implements MuleConfiguration, MuleContextA
   protected void validateXML() throws FatalException {
     SAXParserFactory f = SAXParserFactory.newInstance();
     if (f == null || f.getClass().getName().indexOf("crimson") != -1) {
-      throw new FatalException(CoreMessages.valueIsInvalidFor(f.getClass().getName(), "javax.xml.parsers.SAXParserFactory"), this);
+      throw new FatalException(CoreMessages.valueIsInvalidFor(f.getClass().getName(), "javax.xml.parsers.SAXParserFactory"),
+          this);
     }
   }
 

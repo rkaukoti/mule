@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal;
 
@@ -207,8 +207,8 @@ public class OperationExecutionTestCase extends ExtensionFunctionalTestCase {
 
   @Test
   public void operationWithInlineListParameter() throws Exception {
-    List<String> response = (List<String>) flowRunner("knockManyWithInlineList").withPayload("").withFlowVariable("victim", "Saul").run()
-        .getMessage().getPayload();
+    List<String> response = (List<String>) flowRunner("knockManyWithInlineList").withPayload("")
+        .withFlowVariable("victim", "Saul").run().getMessage().getPayload();
     assertThat(response, Matchers.contains(knock("Inline Skyler"), knock("Saul")));
   }
 
@@ -216,8 +216,8 @@ public class OperationExecutionTestCase extends ExtensionFunctionalTestCase {
   public void operationWithExpressionListParameter() throws Exception {
     List<KnockeableDoor> doors = Arrays.asList(new KnockeableDoor("Skyler"), new KnockeableDoor("Saul"));
 
-    List<String> response =
-        (List<String>) flowRunner("knockManyByExpression").withPayload("").withFlowVariable("doors", doors).run().getMessage().getPayload();
+    List<String> response = (List<String>) flowRunner("knockManyByExpression").withPayload("").withFlowVariable("doors", doors)
+        .run().getMessage().getPayload();
     assertThat(response, Matchers.contains(knock("Skyler"), knock("Saul")));
   }
 
@@ -281,8 +281,8 @@ public class OperationExecutionTestCase extends ExtensionFunctionalTestCase {
     Ricin ricinWeapon2 = new Ricin();
     ricinWeapon2.setMicrogramsPerKilo(22L);
 
-    List<Ricin> ricins = (List<Ricin>) flowRunner("killWithRicinDefaultPayload").withPayload(Arrays.asList(ricinWeapon1, ricinWeapon2))
-        .run().getMessage().getPayload();
+    List<Ricin> ricins = (List<Ricin>) flowRunner("killWithRicinDefaultPayload")
+        .withPayload(Arrays.asList(ricinWeapon1, ricinWeapon2)).run().getMessage().getPayload();
 
     assertThat(ricins, hasSize(2));
     assertThat(ricins.get(0), instanceOf(Ricin.class));
@@ -297,7 +297,8 @@ public class OperationExecutionTestCase extends ExtensionFunctionalTestCase {
 
   @Test
   public void operationWithListPojoAsChildElementsOverridesDefault() throws Exception {
-    List<Ricin> ricins = (List<Ricin>) flowRunner("killWithRicinAsChildElement").withPayload(EMPTY).run().getMessage().getPayload();
+    List<Ricin> ricins =
+        (List<Ricin>) flowRunner("killWithRicinAsChildElement").withPayload(EMPTY).run().getMessage().getPayload();
 
     assertThat(ricins, hasSize(2));
     assertThat(ricins.get(0), instanceOf(Ricin.class));
@@ -326,8 +327,8 @@ public class OperationExecutionTestCase extends ExtensionFunctionalTestCase {
   }
 
   private void assertDynamicVictim(String flowName, String victim) throws Exception {
-    assertKnockedDoor(getPayloadAsString(flowRunner(flowName).withPayload("").withFlowVariable("victim", victim).run().getMessage()),
-        victim);
+    assertKnockedDoor(
+        getPayloadAsString(flowRunner(flowName).withPayload("").withFlowVariable("victim", victim).run().getMessage()), victim);
   }
 
   private void assertKnockedDoor(String actual, String expected) {

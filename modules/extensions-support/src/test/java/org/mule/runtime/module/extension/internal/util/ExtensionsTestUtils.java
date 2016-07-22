@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.util;
 
@@ -62,7 +62,8 @@ public abstract class ExtensionsTestUtils {
     return arrayTypeBuilder.build();
   }
 
-  public static DictionaryType dictionaryOf(Class<? extends Map> clazz, TypeBuilder<?> keyTypeBuilder, TypeBuilder<?> valueTypeBuilder) {
+  public static DictionaryType dictionaryOf(Class<? extends Map> clazz, TypeBuilder<?> keyTypeBuilder,
+      TypeBuilder<?> valueTypeBuilder) {
     return TYPE_BUILDER.dictionaryType().id(clazz.getName()).ofKey(keyTypeBuilder).ofValue(valueTypeBuilder).build();
   }
 
@@ -78,7 +79,8 @@ public abstract class ExtensionsTestUtils {
     return getResolver(value, null, true);
   }
 
-  public static ValueResolver getResolver(Object value, MuleEvent event, boolean dynamic, Class<?>... extraInterfaces) throws Exception {
+  public static ValueResolver getResolver(Object value, MuleEvent event, boolean dynamic, Class<?>... extraInterfaces)
+      throws Exception {
     ValueResolver resolver;
     if (ArrayUtils.isEmpty(extraInterfaces)) {
       resolver = mock(ValueResolver.class);

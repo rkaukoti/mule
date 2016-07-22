@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf;
 
@@ -136,7 +136,8 @@ public class CxfOutboundMessageProcessor extends AbstractInterceptingMessageProc
       }
       return new DispatchException(MessageFactory.createStaticMessage(fault.getMessage()), event, this, fault);
     }
-    return new DispatchException(MessageFactory.createStaticMessage(ExceptionHelper.getRootException(ex).getMessage()), event, this, ex);
+    return new DispatchException(MessageFactory.createStaticMessage(ExceptionHelper.getRootException(ex).getMessage()), event,
+        this, ex);
   }
 
   private MessagingException wrapException(MuleEvent event, Throwable ex) {
@@ -217,6 +218,7 @@ public class CxfOutboundMessageProcessor extends AbstractInterceptingMessageProc
 
     if (event.isAllowNonBlocking() && event.getReplyToHandler() != null) {
       client.invoke(new ClientCallback() {
+
         @Override
         public void handleResponse(Map<String, Object> ctx, Object[] res) {
           try {
@@ -283,8 +285,8 @@ public class CxfOutboundMessageProcessor extends AbstractInterceptingMessageProc
    * webservices (method names start with a capital letter).
    * </p>
    * <p>
-   * CXF generates method names compliant with Java naming so if the WSDL operation names starts with uppercase letter, matching with method
-   * name does not work - thus the work around.
+   * CXF generates method names compliant with Java naming so if the WSDL operation names starts with uppercase letter, matching
+   * with method name does not work - thus the work around.
    * </p>
    */
   protected BindingOperationInfo tryToGetTheOperationInDotNetNamingConvention(Endpoint ep, final String opName) {

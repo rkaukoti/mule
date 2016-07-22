@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -16,6 +16,7 @@ import org.mule.runtime.core.lifecycle.SimpleLifecycleManager;
  * TODO
  */
 public class ConnectableLifecycleManager<O> extends SimpleLifecycleManager<O> {
+
   public ConnectableLifecycleManager(String id, O object) {
     super(id, object);
   }
@@ -24,7 +25,8 @@ public class ConnectableLifecycleManager<O> extends SimpleLifecycleManager<O> {
   public void fireInitialisePhase(LifecycleCallback<O> callback) throws MuleException {
     checkPhase(Initialisable.PHASE_NAME);
     if (logger.isInfoEnabled()) {
-      logger.info(String.format("Initialising: '%s'. Object is: %s", lifecycleManagerId, getLifecycleObject().getClass().getSimpleName()));
+      logger.info(String.format("Initialising: '%s'. Object is: %s", lifecycleManagerId,
+          getLifecycleObject().getClass().getSimpleName()));
     }
     invokePhase(Initialisable.PHASE_NAME, getLifecycleObject(), callback);
   }
@@ -33,7 +35,8 @@ public class ConnectableLifecycleManager<O> extends SimpleLifecycleManager<O> {
   public void fireStartPhase(LifecycleCallback<O> callback) throws MuleException {
     checkPhase(Startable.PHASE_NAME);
     if (logger.isInfoEnabled()) {
-      logger.info(String.format("Starting: '%s'. Object is: %s", lifecycleManagerId, getLifecycleObject().getClass().getSimpleName()));
+      logger.info(
+          String.format("Starting: '%s'. Object is: %s", lifecycleManagerId, getLifecycleObject().getClass().getSimpleName()));
     }
     invokePhase(Startable.PHASE_NAME, getLifecycleObject(), callback);
   }
@@ -46,7 +49,8 @@ public class ConnectableLifecycleManager<O> extends SimpleLifecycleManager<O> {
     }
     checkPhase(Stoppable.PHASE_NAME);
     if (logger.isInfoEnabled()) {
-      logger.info(String.format("Stopping: '%s'. Object is: %s", lifecycleManagerId, getLifecycleObject().getClass().getSimpleName()));
+      logger.info(
+          String.format("Stopping: '%s'. Object is: %s", lifecycleManagerId, getLifecycleObject().getClass().getSimpleName()));
     }
     invokePhase(Stoppable.PHASE_NAME, getLifecycleObject(), callback);
   }
@@ -55,7 +59,8 @@ public class ConnectableLifecycleManager<O> extends SimpleLifecycleManager<O> {
   public void fireDisposePhase(LifecycleCallback<O> callback) throws MuleException {
     checkPhase(Disposable.PHASE_NAME);
     if (logger.isInfoEnabled()) {
-      logger.info(String.format("Disposing: '%s'. Object is: %s", lifecycleManagerId, getLifecycleObject().getClass().getSimpleName()));
+      logger.info(
+          String.format("Disposing: '%s'. Object is: %s", lifecycleManagerId, getLifecycleObject().getClass().getSimpleName()));
     }
     invokePhase(Disposable.PHASE_NAME, getLifecycleObject(), callback);
   }

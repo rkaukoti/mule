@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.generic;
 
@@ -10,8 +10,8 @@ import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 
 /**
- * Behaves as {@link org.mule.runtime.config.spring.parsers.generic.ParentDefinitionParser}, but allows any named bean to be the parent,
- * rather than using the enclosing element in the DOM tree.
+ * Behaves as {@link org.mule.runtime.config.spring.parsers.generic.ParentDefinitionParser}, but allows any named bean to be the
+ * parent, rather than using the enclosing element in the DOM tree.
  */
 public class NamedDefinitionParser extends ParentDefinitionParser {
 

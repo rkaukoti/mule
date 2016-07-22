@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration;
 
@@ -26,6 +26,7 @@ import javax.jms.JMSException;
  */
 
 public class ServerTools {
+
   public static final String ACTIVEMQ_HOME = "org.activemq.home";
 
   private static KillableWatchdog activemq;
@@ -42,7 +43,8 @@ public class ServerTools {
   public static void killEmbeddedActiveMq() {
     if (embeddedFactory != null) {
       /*
-       * try { embeddedFactory.stop(); } catch (JMSException e) { throw new RuntimeException("Could not stop embedded ActiveMQ!", e); }
+       * try { embeddedFactory.stop(); } catch (JMSException e) { throw new RuntimeException("Could not stop embedded ActiveMQ!",
+       * e); }
        */
       embeddedFactory = null;
     }
@@ -85,6 +87,7 @@ public class ServerTools {
     java.addSysproperty(createVar("derby.system.home", FileUtils.newFile(activeMqHome, "\\var").getAbsolutePath()));
     java.createWatchdog();
     new Thread() {
+
       @Override
       public void run() {
         java.execute();
@@ -111,6 +114,7 @@ public class ServerTools {
   }
 
   static class JavaTask extends Java {
+
     public KillableWatchdog watchDog;
     private Long timeout = new Long(Long.MAX_VALUE);
 
@@ -131,6 +135,7 @@ public class ServerTools {
   }
 
   static class KillableWatchdog extends ExecuteWatchdog {
+
     public KillableWatchdog(long timeout) {
       super(timeout);
     }

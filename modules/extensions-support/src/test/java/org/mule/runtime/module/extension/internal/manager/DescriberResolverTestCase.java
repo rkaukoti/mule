@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.manager;
 
@@ -36,7 +36,8 @@ import static org.mule.test.heisenberg.extension.HeisenbergExtension.HEISENBERG;
 public class DescriberResolverTestCase extends AbstractMuleTestCase {
 
   private final DescriberResolver resolver = new DescriberResolver();
-  private final ExtensionFactory extensionFactory = new DefaultExtensionFactory(new SpiServiceRegistry(), getClass().getClassLoader());
+  private final ExtensionFactory extensionFactory =
+      new DefaultExtensionFactory(new SpiServiceRegistry(), getClass().getClassLoader());
   @Mock(answer = RETURNS_DEEP_STUBS)
   private ExtensionManifest manifest;
 

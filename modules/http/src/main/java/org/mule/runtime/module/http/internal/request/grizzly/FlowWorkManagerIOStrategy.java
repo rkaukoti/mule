@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.request.grizzly;
 
@@ -47,7 +47,8 @@ public class FlowWorkManagerIOStrategy extends AbstractIOStrategy {
   }
 
   @Override
-  public boolean executeIoEvent(final Connection connection, final IOEvent ioEvent, final boolean isIoEventEnabled) throws IOException
+  public boolean executeIoEvent(final Connection connection, final IOEvent ioEvent, final boolean isIoEventEnabled)
+      throws IOException
 
   {
     final boolean isReadOrWriteEvent = isReadWrite(ioEvent);
@@ -85,7 +86,8 @@ public class FlowWorkManagerIOStrategy extends AbstractIOStrategy {
         // ignore exception, log warning and fallback to using WorkerIOStrategy
       }
       if (logger.isLoggable(Level.FINE)) {
-        logger.fine("Unable to obtain Mule WorkManager instance for worker thread IO. Grizzly " + "WorkerIOStrategy will be used instead.");
+        logger.fine("Unable to obtain Mule WorkManager instance for worker thread IO. Grizzly "
+            + "WorkerIOStrategy will be used instead.");
       }
       return connection.getTransport().getWorkerThreadPool();
     } else {
@@ -111,7 +113,8 @@ public class FlowWorkManagerIOStrategy extends AbstractIOStrategy {
     final IOEvent ioEvent;
     final IOEventLifeCycleListener lifeCycleListener;
 
-    private WorkerThreadRunnable(final Connection connection, final IOEvent ioEvent, final IOEventLifeCycleListener lifeCycleListener) {
+    private WorkerThreadRunnable(final Connection connection, final IOEvent ioEvent,
+        final IOEventLifeCycleListener lifeCycleListener) {
       this.connection = connection;
       this.ioEvent = ioEvent;
       this.lifeCycleListener = lifeCycleListener;

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.ftp.internal;
 
@@ -22,8 +22,8 @@ import java.util.function.Supplier;
 import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
- * An {@link AbstractFileInputStream} implementation which obtains a {@link FtpFileSystem} through a {@link ConnectionManager} and uses it
- * to obtain the contents of a file on a FTP server.
+ * An {@link AbstractFileInputStream} implementation which obtains a {@link FtpFileSystem} through a {@link ConnectionManager} and
+ * uses it to obtain the contents of a file on a FTP server.
  * <p>
  * When the stream is closed or fully consumed, the {@link ClassicFtpFileSystem} is released back to the {@link ConnectionManager}
  *
@@ -34,8 +34,8 @@ public abstract class FtpInputStream extends AbstractFileInputStream {
   private final ConnectionHandler<FtpFileSystem> connectionHandler;
   private final FtpFileSystem ftpFileSystem;
 
-  protected FtpInputStream(Supplier<InputStream> streamSupplier, ConnectionHandler<FtpFileSystem> connectionHandler, PathLock lock)
-      throws ConnectionException {
+  protected FtpInputStream(Supplier<InputStream> streamSupplier, ConnectionHandler<FtpFileSystem> connectionHandler,
+      PathLock lock) throws ConnectionException {
     super(new LazyStreamSupplier(streamSupplier), lock);
     this.connectionHandler = connectionHandler;
     this.ftpFileSystem = connectionHandler.getConnection();
@@ -51,7 +51,8 @@ public abstract class FtpInputStream extends AbstractFileInputStream {
       try {
         return connectionHandler.getConnection().retrieveFileContent(attributes);
       } catch (ConnectionException e) {
-        throw new MuleRuntimeException(createStaticMessage("Could not obtain connection to fetch file " + attributes.getPath()), e);
+        throw new MuleRuntimeException(createStaticMessage("Could not obtain connection to fetch file " + attributes.getPath()),
+            e);
       }
     };
 

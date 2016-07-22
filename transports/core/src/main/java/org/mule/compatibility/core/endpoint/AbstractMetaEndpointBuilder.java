@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.endpoint;
 
@@ -16,9 +16,11 @@ import java.io.Serializable;
 import java.util.Map;
 
 /**
- * A base class used for Meta endpoint builders such as RSS or ATOM. This class overrides the {@link #setProperties(java.util.Map)} method
+ * A base class used for Meta endpoint builders such as RSS or ATOM. This class overrides the
+ * {@link #setProperties(java.util.Map)} method
  */
 public abstract class AbstractMetaEndpointBuilder extends EndpointURIEndpointBuilder {
+
   protected AbstractMetaEndpointBuilder() {}
 
   protected AbstractMetaEndpointBuilder(EndpointURIEndpointBuilder global) throws EndpointException {

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.http.internal.request.validator;
 
@@ -70,9 +70,9 @@ public class HttpRequesterConfig implements Initialisable, Stoppable {
   private Function<MuleEvent, Boolean> followRedirects;
 
   /**
-   * By default, the response will be parsed (for example, a multipart response will be mapped as a Mule message with null payload and
-   * inbound attachments with each part). If this property is set to false, no parsing will be done, and the payload will always contain the
-   * raw contents of the HTTP response.
+   * By default, the response will be parsed (for example, a multipart response will be mapped as a Mule message with null payload
+   * and inbound attachments with each part). If this property is set to false, no parsing will be done, and the payload will
+   * always contain the raw contents of the HTTP response.
    */
   @Parameter
   @Optional(defaultValue = "true")
@@ -81,9 +81,9 @@ public class HttpRequesterConfig implements Initialisable, Stoppable {
   private Function<MuleEvent, Boolean> parseResponse;
 
   /**
-   * Defines if the request should be sent using streaming or not. If this attribute is not present, the behavior will depend on the type of
-   * the payload (it will stream only for InputStream). If set to true, it will always stream. If set to false, it will never stream. As
-   * streaming is done the request will be sent user Transfer-Encoding: chunked.
+   * Defines if the request should be sent using streaming or not. If this attribute is not present, the behavior will depend on
+   * the type of the payload (it will stream only for InputStream). If set to true, it will always stream. If set to false, it
+   * will never stream. As streaming is done the request will be sent user Transfer-Encoding: chunked.
    */
   @Parameter
   @Optional(defaultValue = "AUTO")
@@ -93,8 +93,8 @@ public class HttpRequesterConfig implements Initialisable, Stoppable {
   private Function<MuleEvent, HttpStreamingType> requestStreamingMode;
 
   /**
-   * Defines if the request should contain a body or not. If AUTO, it will depend on the method (GET, HEAD and OPTIONS will not send a
-   * body).
+   * Defines if the request should contain a body or not. If AUTO, it will depend on the method (GET, HEAD and OPTIONS will not
+   * send a body).
    */
   @Parameter
   @Optional(defaultValue = "AUTO")
@@ -102,8 +102,8 @@ public class HttpRequesterConfig implements Initialisable, Stoppable {
   private Function<MuleEvent, HttpSendBodyMode> sendBodyMode;
 
   /**
-   * Maximum time that the request element will block the execution of the flow waiting for the HTTP response. If this value is not present,
-   * the default response timeout from the Mule configuration will be used.
+   * Maximum time that the request element will block the execution of the flow waiting for the HTTP response. If this value is
+   * not present, the default response timeout from the Mule configuration will be used.
    */
   @Parameter
   @Optional

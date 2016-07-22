@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.xpath;
 
@@ -19,12 +19,12 @@ import javax.xml.XMLConstants;
 import javax.xml.namespace.NamespaceContext;
 
 /**
- * Implementation of {@link NamespaceContext} which can be parametrized through a {@link Map} in which the keys are Strings with the custom
- * namespace prefixes and the values are those namespaces' URIs as Strings.
+ * Implementation of {@link NamespaceContext} which can be parametrized through a {@link Map} in which the keys are Strings with
+ * the custom namespace prefixes and the values are those namespaces' URIs as Strings.
  * <p/>
- * Besides the namespaces parametrized, this implementation also recognizes. the default XML namespaces (xml, xs, and xsi) and their default
- * URIs. Notice that if the parametrization map contains custom URIs for any of those prefixes, then the parametrized ones will take
- * precedence over the default ones
+ * Besides the namespaces parametrized, this implementation also recognizes. the default XML namespaces (xml, xs, and xsi) and
+ * their default URIs. Notice that if the parametrization map contains custom URIs for any of those prefixes, then the
+ * parametrized ones will take precedence over the default ones
  *
  * @since 3.6.0
  */

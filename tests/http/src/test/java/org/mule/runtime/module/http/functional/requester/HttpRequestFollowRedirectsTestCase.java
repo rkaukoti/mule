@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.requester;
 
@@ -22,6 +22,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 public class HttpRequestFollowRedirectsTestCase extends AbstractHttpRequestTestCase {
+
   private static final String REDIRECTED = "Redirected.";
   private static final String MOVED = "Moved.";
   private static final String FLOW_VAR_KEY = "redirect";
@@ -121,7 +122,8 @@ public class HttpRequestFollowRedirectsTestCase extends AbstractHttpRequestTestC
     testRedirect("followRedirectsHttps", REDIRECTED, REDIRECT_WITH_PARAMS_URI);
   }
 
-  private void testRedirectExpression(String flowName, String expectedPayload, String expectedPath, Object flowVar) throws Exception {
+  private void testRedirectExpression(String flowName, String expectedPayload, String expectedPath, Object flowVar)
+      throws Exception {
     FlowRunner runner = flowRunner(flowName).withPayload(TEST_MESSAGE).withFlowVariable(FLOW_VAR_KEY, flowVar);
     doTest(expectedPayload, expectedPath, runner);
   }

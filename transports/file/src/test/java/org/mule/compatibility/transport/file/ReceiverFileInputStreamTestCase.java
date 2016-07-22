@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.file;
 
@@ -36,6 +36,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 @SmallTest
 public class ReceiverFileInputStreamTestCase extends AbstractMuleTestCase {
+
   @Rule
   public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
@@ -108,8 +109,8 @@ public class ReceiverFileInputStreamTestCase extends AbstractMuleTestCase {
     return temporaryFolder.newFile(UUID.getUUID());
   }
 
-  private ReceiverFileInputStream createReceiver(File input, File output, boolean deleteOnClose, InputStreamCloseListener listener,
-      boolean streamingError) throws IOException {
+  private ReceiverFileInputStream createReceiver(File input, File output, boolean deleteOnClose,
+      InputStreamCloseListener listener, boolean streamingError) throws IOException {
     ReceiverFileInputStream receiverStream = new ReceiverFileInputStream(input, true, output, listener);
     receiverStream.setStreamProcessingError(streamingError);
     return receiverStream;
@@ -121,6 +122,7 @@ public class ReceiverFileInputStreamTestCase extends AbstractMuleTestCase {
     ExecutorService pool = Executors.newFixedThreadPool(numberThreads);
 
     Callable<Void> receiverCloseRunnable = new Callable<Void>() {
+
       @Override
       public Void call() throws Exception {
         latch.countDown();

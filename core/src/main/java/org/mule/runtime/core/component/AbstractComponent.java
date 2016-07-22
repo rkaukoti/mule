@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.component;
 
@@ -139,7 +139,8 @@ public abstract class AbstractComponent extends AbstractAnnotatedObject
     } else {
       final TransformerTemplate template = new TransformerTemplate(new TransformerTemplate.OverwitePayloadCallback(result));
       template.setReturnDataType(DataType.builder(DataType.OBJECT).charset(getDefaultEncoding(muleContext)).build());
-      event.setMessage(muleContext.getTransformationService().applyTransformers(event.getMessage(), event, singletonList(template)));
+      event.setMessage(
+          muleContext.getTransformationService().applyTransformers(event.getMessage(), event, singletonList(template)));
       return event;
     }
   }
@@ -231,7 +232,8 @@ public abstract class AbstractComponent extends AbstractAnnotatedObject
   @Override
   public void start() throws MuleException {
     lifecycleManager.fireStartPhase((phaseName, object) -> {
-      notificationHandler = new OptimisedNotificationHandler(muleContext.getNotificationManager(), ComponentMessageNotification.class);
+      notificationHandler =
+          new OptimisedNotificationHandler(muleContext.getNotificationManager(), ComponentMessageNotification.class);
       doStart();
     });
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer.graph;
 
@@ -55,7 +55,8 @@ public class PriorityWeightingConverterFilterTestCase extends AbstractMuleTestCa
   public void filtersSameWeight() throws ResolverException {
     Converter xmlToInputStream =
         new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(1).build();
-    Converter xmlToString = new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
+    Converter xmlToString =
+        new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
 
     List<Converter> availableConverters = new ArrayList<Converter>();
     availableConverters.add(xmlToInputStream);
@@ -72,7 +73,8 @@ public class PriorityWeightingConverterFilterTestCase extends AbstractMuleTestCa
   public void filtersSameLengthDifferentWeightsAddingBetterTransformerFirst() throws ResolverException {
     Converter xmlToInputStream =
         new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(2).build();
-    Converter xmlToString = new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
+    Converter xmlToString =
+        new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
 
     List<Converter> availableConverters = new ArrayList<Converter>();
     availableConverters.add(xmlToInputStream);
@@ -88,7 +90,8 @@ public class PriorityWeightingConverterFilterTestCase extends AbstractMuleTestCa
   public void filtersSameLengthDifferentWeightsAddingBetterTransformerLast() throws ResolverException {
     Converter xmlToInputStream =
         new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(2).build();
-    Converter xmlToString = new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
+    Converter xmlToString =
+        new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
 
     List<Converter> availableConverters = new ArrayList<Converter>();
     availableConverters.add(xmlToString);

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -45,16 +45,17 @@ public interface ConfigurableKeyedObjectPool extends KeyedObjectPool {
   void setMaxActive(int maxActive);
 
   /**
-   * Returns the maximum amount of time (in milliseconds) the {@link #borrowObject} method should block before throwing an exception when
-   * the pool is exhausted and the {@link #setWhenExhaustedAction "when exhausted" action} is {@link #WHEN_EXHAUSTED_BLOCK}.
+   * Returns the maximum amount of time (in milliseconds) the {@link #borrowObject} method should block before throwing an
+   * exception when the pool is exhausted and the {@link #setWhenExhaustedAction "when exhausted" action} is
+   * {@link #WHEN_EXHAUSTED_BLOCK}.
    * <p/>
    * When less than or equal to 0, the {@link #borrowObject} method may block indefinitely.
    */
   long getMaxWait();
 
   /**
-   * Sets the maximum amount of time (in milliseconds) the {@link #borrowObject} method should block before throwing an exception when the
-   * pool is exhausted and the {@link #setWhenExhaustedAction "when exhausted" action} is {@link #WHEN_EXHAUSTED_BLOCK}.
+   * Sets the maximum amount of time (in milliseconds) the {@link #borrowObject} method should block before throwing an exception
+   * when the pool is exhausted and the {@link #setWhenExhaustedAction "when exhausted" action} is {@link #WHEN_EXHAUSTED_BLOCK}.
    * <p/>
    * When less than or equal to 0, the {@link #borrowObject} method may block indefinitely.
    *
@@ -70,7 +71,8 @@ public interface ConfigurableKeyedObjectPool extends KeyedObjectPool {
   /**
    * Sets the cap on the number of "idle" instances in the pool.
    *
-   * @param maxIdle the maximum number of "idle" instances that can be held in a given keyed pool. Use a negative value for no limit.
+   * @param maxIdle the maximum number of "idle" instances that can be held in a given keyed pool. Use a negative value for no
+   *        limit.
    */
   void setMaxIdle(int maxIdle);
 
@@ -84,8 +86,8 @@ public interface ConfigurableKeyedObjectPool extends KeyedObjectPool {
   /**
    * Sets the action to take when the {@link #borrowObject} method is invoked when the pool is exhausted.
    *
-   * @param whenExhaustedAction the action code, which must be one of {@link #WHEN_EXHAUSTED_BLOCK}, {@link #WHEN_EXHAUSTED_FAIL}, or
-   *        {@link #WHEN_EXHAUSTED_GROW}
+   * @param whenExhaustedAction the action code, which must be one of {@link #WHEN_EXHAUSTED_BLOCK}, {@link #WHEN_EXHAUSTED_FAIL},
+   *        or {@link #WHEN_EXHAUSTED_GROW}
    */
   void setWhenExhaustedAction(byte whenExhaustedAction);
 }

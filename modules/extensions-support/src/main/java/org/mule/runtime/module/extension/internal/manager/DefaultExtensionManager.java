@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.extension.internal.manager;
@@ -56,12 +56,13 @@ import static org.mule.runtime.module.extension.internal.manager.DefaultConfigur
  * Default implementation of {@link ExtensionManagerAdapter}. This implementation uses standard Java SPI as a discovery mechanism.
  * <p/>
  * Although it allows registering {@link ConfigurationProvider} instances through the
- * {@link #registerConfigurationProvider(ConfigurationProvider)} method (and that's still the correct way of registering them), this
- * implementation automatically acknowledges any {@link ConfigurationProvider} already present on the {@link MuleRegistry}
+ * {@link #registerConfigurationProvider(ConfigurationProvider)} method (and that's still the correct way of registering them),
+ * this implementation automatically acknowledges any {@link ConfigurationProvider} already present on the {@link MuleRegistry}
  *
  * @since 3.7.0
  */
-public final class DefaultExtensionManager implements ExtensionManagerAdapter, MuleContextAware, Initialisable, Startable, Stoppable {
+public final class DefaultExtensionManager
+    implements ExtensionManagerAdapter, MuleContextAware, Initialisable, Startable, Stoppable {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(DefaultExtensionManager.class);
 
@@ -115,8 +116,8 @@ public final class DefaultExtensionManager implements ExtensionManagerAdapter, M
 
     if (extensionRegistry.containsExtension(extensionName, extensionVendor)) {
       if (LOGGER.isDebugEnabled()) {
-        LOGGER.debug("A extension of name '{}' (version: {} vendor {}) is already registered. Skipping...", extensionName, extensionVersion,
-            extensionVendor);
+        LOGGER.debug("A extension of name '{}' (version: {} vendor {}) is already registered. Skipping...", extensionName,
+            extensionVersion, extensionVendor);
       }
     } else {
       extensionRegistry.registerExtension(extensionName, extensionVendor, extensionModel);
@@ -179,9 +180,9 @@ public final class DefaultExtensionManager implements ExtensionManagerAdapter, M
     if (matches == 1) {
       return Optional.of(providers.get(0));
     } else if (matches > 1) {
-      throw new IllegalStateException(
-          String.format("No config-ref was specified for operation of extension '%s', but %d are registered. Please specify which to use",
-              extensionModel.getName(), matches));
+      throw new IllegalStateException(String.format(
+          "No config-ref was specified for operation of extension '%s', but %d are registered. Please specify which to use",
+          extensionModel.getName(), matches));
     }
 
     return Optional.empty();
@@ -196,7 +197,8 @@ public final class DefaultExtensionManager implements ExtensionManagerAdapter, M
     synchronized (extensionModel) {
       // check that another thread didn't beat us to create the instance
       if (extensionRegistry.getConfigurationProviders(extensionModel).isEmpty()) {
-        registerConfigurationProvider(implicitConfigurationProviderFactory.createImplicitConfigurationProvider(extensionModel, muleEvent));
+        registerConfigurationProvider(
+            implicitConfigurationProviderFactory.createImplicitConfigurationProvider(extensionModel, muleEvent));
       }
     }
   }
@@ -239,7 +241,8 @@ public final class DefaultExtensionManager implements ExtensionManagerAdapter, M
     try (InputStream manifestStream = manifestUrl.openStream()) {
       return new ExtensionManifestXmlSerializer().deserialize(IOUtils.toString(manifestStream));
     } catch (IOException e) {
-      throw new MuleRuntimeException(createStaticMessage("Could not read extension manifest on plugin " + manifestUrl.toString()), e);
+      throw new MuleRuntimeException(createStaticMessage("Could not read extension manifest on plugin " + manifestUrl.toString()),
+          e);
     }
   }
 
@@ -248,8 +251,8 @@ public final class DefaultExtensionManager implements ExtensionManagerAdapter, M
       stopIfNeeded(configuration);
       disposeIfNeeded(configuration, LOGGER);
     } catch (Exception e) {
-      LOGGER.error(
-          String.format("Could not dispose expired dynamic config of key '%s' and type %s", key, configuration.getClass().getName()), e);
+      LOGGER.error(String.format("Could not dispose expired dynamic config of key '%s' and type %s", key,
+          configuration.getClass().getName()), e);
     }
   }
 

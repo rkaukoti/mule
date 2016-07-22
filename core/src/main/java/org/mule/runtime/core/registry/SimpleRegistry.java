@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.registry;
 
@@ -21,12 +21,12 @@ import static org.reflections.ReflectionUtils.getAllFields;
 import static org.reflections.ReflectionUtils.withAnnotation;
 
 /**
- * A very simple implementation of {@link LifecycleRegistry}. Useful for starting really lightweight contexts which don't depend on heavier
- * object containers such as Spring or Guice (testing being the best example).
+ * A very simple implementation of {@link LifecycleRegistry}. Useful for starting really lightweight contexts which don't depend
+ * on heavier object containers such as Spring or Guice (testing being the best example).
  * <p/>
- * The {@link #inject(Object)} operation will only consider fields annotated with {@link Inject} and will perform the injection using
- * simple, not-cached reflection. Also, initialisation lifecycle will be performed in pseudo-random order, no analysis will be done to
- * ensure that dependencies of a given object get their lifecycle before it.
+ * The {@link #inject(Object)} operation will only consider fields annotated with {@link Inject} and will perform the injection
+ * using simple, not-cached reflection. Also, initialisation lifecycle will be performed in pseudo-random order, no analysis will
+ * be done to ensure that dependencies of a given object get their lifecycle before it.
  *
  * @since 3.7.0
  */

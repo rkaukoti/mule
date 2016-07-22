@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.security;
 
@@ -21,6 +21,7 @@ import java.util.StringTokenizer;
  */
 
 public class MuleCredentials implements Credentials, Serializable {
+
   public static final String TOKEN_DELIM = "::";
 
   private final String username;
@@ -42,7 +43,8 @@ public class MuleCredentials implements Credentials, Serializable {
 
     int i = header.indexOf(' ');
     if (i == -1) {
-      throw new IllegalArgumentException(CoreMessages.headerMalformedValueIs(MuleProperties.MULE_USER_PROPERTY, header).toString());
+      throw new IllegalArgumentException(
+          CoreMessages.headerMalformedValueIs(MuleProperties.MULE_USER_PROPERTY, header).toString());
     }
 
     String scheme = header.substring(0, i);

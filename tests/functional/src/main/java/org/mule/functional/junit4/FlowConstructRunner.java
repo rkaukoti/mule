@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.junit4;
 
@@ -76,7 +76,8 @@ public abstract class FlowConstructRunner<R extends FlowConstructRunner> {
   }
 
   /**
-   * Prepares a property with the given key and value to be sent as an inbound property of the {@link MuleMessage} to the configured flow.
+   * Prepares a property with the given key and value to be sent as an inbound property of the {@link MuleMessage} to the
+   * configured flow.
    *
    * @param key the key of the inbound property to add
    * @param value the value of the inbound property to add
@@ -101,7 +102,8 @@ public abstract class FlowConstructRunner<R extends FlowConstructRunner> {
   }
 
   /**
-   * Prepares a property with the given key and value to be sent as an outbound property of the {@link MuleMessage} to the configured flow.
+   * Prepares a property with the given key and value to be sent as an outbound property of the {@link MuleMessage} to the
+   * configured flow.
    *
    * @param key the key of the outbound property to add
    * @param value the value of the outbound property to add
@@ -155,7 +157,8 @@ public abstract class FlowConstructRunner<R extends FlowConstructRunner> {
   }
 
   /**
-   * Prepares a property with the given key and value to be sent as a session property of the {@link MuleMessage} to the configured flow.
+   * Prepares a property with the given key and value to be sent as a session property of the {@link MuleMessage} to the
+   * configured flow.
    *
    * @param key the key of the session property to add
    * @param value the value of the session property to add
@@ -192,8 +195,8 @@ public abstract class FlowConstructRunner<R extends FlowConstructRunner> {
   }
 
   /**
-   * Configures this runner to run this flow as using the provided {@link MessageExchangePattern}. This is useful if the exchange pattern
-   * needs to be paramatized, otherwise {@link #asynchronously()} can be used.
+   * Configures this runner to run this flow as using the provided {@link MessageExchangePattern}. This is useful if the exchange
+   * pattern needs to be paramatized, otherwise {@link #asynchronously()} can be used.
    *
    * @return this {@link FlowRunner}
    */

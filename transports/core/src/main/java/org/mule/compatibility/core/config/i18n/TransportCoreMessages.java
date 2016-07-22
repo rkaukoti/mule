@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.config.i18n;
 
@@ -23,6 +23,7 @@ import java.util.List;
  */
 @Deprecated
 public class TransportCoreMessages extends MessageFactory {
+
   private static final TransportCoreMessages factory = new TransportCoreMessages();
 
   private static final String BUNDLE_PATH = getBundlePath("transport-core");
@@ -156,7 +157,8 @@ public class TransportCoreMessages extends MessageFactory {
     return factory.createMessage(BUNDLE_PATH, 233, endpoint, router);
   }
 
-  public static Message exceptionListenerMustUseOutboundEndpoint(AbstractExceptionListener exceptionListener, ImmutableEndpoint endpoint) {
+  public static Message exceptionListenerMustUseOutboundEndpoint(AbstractExceptionListener exceptionListener,
+      ImmutableEndpoint endpoint) {
     return factory.createMessage(BUNDLE_PATH, 235, endpoint, exceptionListener);
   }
 
@@ -184,7 +186,8 @@ public class TransportCoreMessages extends MessageFactory {
     return factory.createMessage(BUNDLE_PATH, 313, getEndpointDescription(endpoint));
   }
 
-  public static Message exchangePatternForEndpointNotSupported(MessageExchangePattern mep, String direction, EndpointURI endpointURI) {
+  public static Message exchangePatternForEndpointNotSupported(MessageExchangePattern mep, String direction,
+      EndpointURI endpointURI) {
     return factory.createMessage(BUNDLE_PATH, 323, mep.name(), direction, endpointURI);
   }
 

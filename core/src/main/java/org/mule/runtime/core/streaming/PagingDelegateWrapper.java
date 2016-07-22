@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.streaming;
 
@@ -12,8 +12,9 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 
 /**
- * This implementation of {@link PagingDelegate} takes care of enforcing some basic behaviour of the delegate contract so that users don't
- * have to. Concerns such as logging, auto closing the delegate if the consumer has been fully consumed, etc are addressed here
+ * This implementation of {@link PagingDelegate} takes care of enforcing some basic behaviour of the delegate contract so that
+ * users don't have to. Concerns such as logging, auto closing the delegate if the consumer has been fully consumed, etc are
+ * addressed here
  *
  * @since 3.5.0
  */
@@ -29,8 +30,8 @@ public class PagingDelegateWrapper<T> extends PagingDelegate<T> {
   }
 
   /**
-   * {@inheritDoc} This implementation already takes care of returning <code>null</code> if the delegate is closed or if the obtained page
-   * is <code>null</code> or empty. It delegates into the wrapped instance to actually obtain the page.
+   * {@inheritDoc} This implementation already takes care of returning <code>null</code> if the delegate is closed or if the
+   * obtained page is <code>null</code> or empty. It delegates into the wrapped instance to actually obtain the page.
    */
   public List<T> getPage() {
     if (this.closed) {

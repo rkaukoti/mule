@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.execution;
 
@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 class ResolvePreviousTransactionInterceptor<T> implements ExecutionInterceptor<T> {
+
   private static final Logger logger = LoggerFactory.getLogger(ResolvePreviousTransactionInterceptor.class);
   final private ExecutionInterceptor<T> next;
   private TransactionConfig transactionConfig;
@@ -26,7 +27,8 @@ class ResolvePreviousTransactionInterceptor<T> implements ExecutionInterceptor<T
   public T execute(ExecutionCallback<T> callback, ExecutionContext executionContext) throws Exception {
     byte action = transactionConfig.getAction();
     Transaction transactionBeforeTemplate = TransactionCoordination.getInstance().getTransaction();
-    if ((action == TransactionConfig.ACTION_NONE || action == TransactionConfig.ACTION_ALWAYS_BEGIN) && transactionBeforeTemplate != null) {
+    if ((action == TransactionConfig.ACTION_NONE || action == TransactionConfig.ACTION_ALWAYS_BEGIN)
+        && transactionBeforeTemplate != null) {
       if (logger.isDebugEnabled()) {
         logger.debug(action + ", " + "current TX: " + transactionBeforeTemplate);
       }

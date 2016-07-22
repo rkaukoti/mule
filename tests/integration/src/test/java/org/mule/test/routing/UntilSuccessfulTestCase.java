@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.routing;
 
@@ -39,6 +39,7 @@ import static org.mule.functional.functional.InvocationCountMessageProcessor.get
 
 @RunWith(Parameterized.class)
 public class UntilSuccessfulTestCase extends FunctionalTestCase {
+
   private final String configFile;
 
   private FunctionalTestComponent targetMessageProcessor;
@@ -98,7 +99,8 @@ public class UntilSuccessfulTestCase extends FunctionalTestCase {
         "until-successful retries exhausted. Last exception message was: Failure expression positive when processing event"));
 
     assertThat(dlqExceptionPayload.getException().getCause(), instanceOf(MuleRuntimeException.class));
-    assertThat(dlqExceptionPayload.getException().getMessage(), containsString("Failure expression positive when processing event"));
+    assertThat(dlqExceptionPayload.getException().getMessage(),
+        containsString("Failure expression positive when processing event"));
   }
 
   @Test
@@ -144,6 +146,7 @@ public class UntilSuccessfulTestCase extends FunctionalTestCase {
     final int expectedCounterInExceptionStrategyExecutions = 1;
     flowRunner("asynchronous-using-threading-profile").withPayload(payload).run();
     new PollingProber(10000, 100).check(new Probe() {
+
       private int executionOfCountInUntilSuccessful;
       private int executionOfCountInExceptionStrategy;
 
@@ -175,7 +178,8 @@ public class UntilSuccessfulTestCase extends FunctionalTestCase {
 
   }
 
-  private List<Object> ponderUntilMessageCountReceivedByTargetMessageProcessor(final int expectedCount) throws InterruptedException {
+  private List<Object> ponderUntilMessageCountReceivedByTargetMessageProcessor(final int expectedCount)
+      throws InterruptedException {
     return ponderUntilMessageCountReceived(expectedCount, targetMessageProcessor);
   }
 
@@ -202,6 +206,7 @@ public class UntilSuccessfulTestCase extends FunctionalTestCase {
   }
 
   static class CustomMP implements MessageProcessor {
+
     private static List<MuleMessage> processedMessages = new ArrayList<>();
 
     public static void clearCount() {

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.component;
 
@@ -27,6 +27,7 @@ import java.lang.reflect.Proxy;
  */
 @Deprecated
 public class DefaultInterfaceBinding implements InterfaceBinding, MessagingExceptionHandlerAware, Initialisable {
+
   protected static final Logger logger = LoggerFactory.getLogger(DefaultInterfaceBinding.class);
   // The router used to actually dispatch the message
   protected OutboundEndpoint endpoint;
@@ -63,8 +64,8 @@ public class DefaultInterfaceBinding implements InterfaceBinding, MessagingExcep
   @Override
   public Object createProxy(Object target) {
     try {
-      Object proxy =
-          Proxy.newProxyInstance(getInterface().getClassLoader(), new Class[] {getInterface()}, new BindingInvocationHandler(this));
+      Object proxy = Proxy.newProxyInstance(getInterface().getClassLoader(), new Class[] {getInterface()},
+          new BindingInvocationHandler(this));
       if (logger.isDebugEnabled()) {
         logger.debug("Have proxy?: " + (null != proxy));
       }

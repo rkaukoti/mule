@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration;
 
@@ -42,6 +42,7 @@ public class EventMetaDataPropagationTestCase extends FunctionalTestCase {
   }
 
   public static class DummyComponent implements Callable {
+
     @Override
     public Object onCall(MuleEventContext context) throws Exception {
       if ("component1".equals(context.getFlowConstruct().getName())) {
@@ -55,6 +56,7 @@ public class EventMetaDataPropagationTestCase extends FunctionalTestCase {
 
         return MuleMessage.builder().payload(context.getMessageAsString()).outboundProperties(props)
             .addOutboundAttachment("test1", new DataHandler(new DataSource() {
+
               @Override
               public InputStream getInputStream() throws IOException {
                 return null;
@@ -91,8 +93,8 @@ public class EventMetaDataPropagationTestCase extends FunctionalTestCase {
   }
 
   /**
-   * Extend AbstractMessageAwareTransformer, even though it's deprecated, to ensure that it keeps working for compatibility with older
-   * user-written transformers.
+   * Extend AbstractMessageAwareTransformer, even though it's deprecated, to ensure that it keeps working for compatibility with
+   * older user-written transformers.
    */
   public static class DummyTransformer extends AbstractMessageTransformer {
 

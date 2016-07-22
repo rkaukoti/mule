@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -24,15 +24,16 @@ import java.util.List;
 /**
  * The <code>WireTap</code> MessageProcessor allows inspection of messages in a flow.
  * <p>
- * The incoming message is is sent to both the primary and wiretap outputs. The flow of the primary output will be unmodified and a copy of
- * the message used for the wiretap output.
+ * The incoming message is is sent to both the primary and wiretap outputs. The flow of the primary output will be unmodified and
+ * a copy of the message used for the wiretap output.
  * <p>
- * An optional filter can be used to filter which message are sent to the wiretap output, this filter does not affect the flow to the
- * primary output. If there is an error sending to the wiretap output no exception will be thrown but rather an error logged.
+ * An optional filter can be used to filter which message are sent to the wiretap output, this filter does not affect the flow to
+ * the primary output. If there is an error sending to the wiretap output no exception will be thrown but rather an error logged.
  * <p>
  * <b>EIP Reference:</b> <a href="http://www.eaipatterns.com/WireTap.html">http://www.eaipatterns.com/WireTap.html<a/>
  */
 public class WireTap extends AbstractMessageProcessorOwner implements MessageProcessor, NonBlockingSupported {
+
   protected final transient Logger logger = LoggerFactory.getLogger(getClass());
   protected volatile MessageProcessor tap;
   protected volatile Filter filter;
@@ -91,6 +92,7 @@ public class WireTap extends AbstractMessageProcessorOwner implements MessagePro
   }
 
   private class WireTapFilter extends AbstractFilteringMessageProcessor {
+
     @Override
     protected boolean accept(MuleEvent event) {
       if (filter == null) {

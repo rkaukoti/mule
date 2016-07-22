@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.el.datetime;
 
@@ -23,12 +23,14 @@ public class DateTimeFunctionalTestCase extends AbstractELTestCase {
 
   @Test
   public void iso9601DateRoundTrip() {
-    assertTrue((Boolean) evaluate("time = server.dateTime.withTimeZone('UTC').date; time == " + "dateTime(time.toString()).date"));
+    assertTrue(
+        (Boolean) evaluate("time = server.dateTime.withTimeZone('UTC').date; time == " + "dateTime(time.toString()).date"));
   }
 
   @Test
   public void iso9601TimeRoundTrip() {
-    assertTrue((Boolean) evaluate("time = server.dateTime.withTimeZone('UTC').time; time == " + "dateTime(time.toString()).time;"));
+    assertTrue(
+        (Boolean) evaluate("time = server.dateTime.withTimeZone('UTC').time; time == " + "dateTime(time.toString()).time;"));
   }
 
   @Test
@@ -45,8 +47,8 @@ public class DateTimeFunctionalTestCase extends AbstractELTestCase {
 
   @Test
   public void customFormatTimeRoundTrip() {
-    assertTrue((Boolean) evaluate(
-        "time = server.dateTime.withTimeZone('UTC').time; time == " + "dateTime(time.format('HHmmss.SSS-ZZ'),'HHmmss.SSS-ZZ').time"));
+    assertTrue((Boolean) evaluate("time = server.dateTime.withTimeZone('UTC').time; time == "
+        + "dateTime(time.format('HHmmss.SSS-ZZ'),'HHmmss.SSS-ZZ').time"));
   }
 
   @Test
@@ -66,8 +68,8 @@ public class DateTimeFunctionalTestCase extends AbstractELTestCase {
 
   @Test
   public void chainedManipulation() {
-    assertTrue((Boolean) evaluate(
-        "time = server.dateTime; time == time.plusDays(365).plusYears(-1).plusHours(24)." + "plusDays(-2).plusMinutes(60).plusHours(-1)"));
+    assertTrue((Boolean) evaluate("time = server.dateTime; time == time.plusDays(365).plusYears(-1).plusHours(24)."
+        + "plusDays(-2).plusMinutes(60).plusHours(-1)"));
   }
 
   @Test
@@ -117,7 +119,8 @@ public class DateTimeFunctionalTestCase extends AbstractELTestCase {
 
   @Test
   public void changeIso8601TimeZone() {
-    assertEquals("1900-01-01T01:00:00-08:00", evaluate("dateTime('1900-01-01T09:00:00Z').changeTimeZone('GMT-08:00').toString()"));
+    assertEquals("1900-01-01T01:00:00-08:00",
+        evaluate("dateTime('1900-01-01T09:00:00Z').changeTimeZone('GMT-08:00').toString()"));
   }
 
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.transaction.xa;
 
@@ -19,7 +19,8 @@ import java.util.Collection;
 @RunWith(Parameterized.class)
 public class EndpointToEndpointXaTransactionTestCase extends FunctionalTestCase {
 
-  public static String transactionManagerConfigFile = "org/mule/test/integration/transaction/xa/jboss-transaction-manager-config.xml";
+  public static String transactionManagerConfigFile =
+      "org/mule/test/integration/transaction/xa/jboss-transaction-manager-config.xml";
   @ClassRule
   public static DynamicPort port1 = new DynamicPort("port1");
   @ClassRule
@@ -43,7 +44,8 @@ public class EndpointToEndpointXaTransactionTestCase extends FunctionalTestCase 
   public static Collection<Object[]> parameters() {
     JmsBrokerSetUp createFirstJmsBroker = new JmsBrokerSetUp(port1.getNumber());
     JmsBrokerSetUp createSecondJmsBroker = new JmsBrokerSetUp(port2.getNumber());
-    CompositeTransactionalTestSetUp createTowJmsBrokers = new CompositeTransactionalTestSetUp(createFirstJmsBroker, createSecondJmsBroker);
+    CompositeTransactionalTestSetUp createTowJmsBrokers =
+        new CompositeTransactionalTestSetUp(createFirstJmsBroker, createSecondJmsBroker);
 
     return Arrays.asList(new Object[][] {{
         new String[] {"org/mule/test/integration/transaction/xa/xa-transaction-config.xml",
@@ -51,14 +53,16 @@ public class EndpointToEndpointXaTransactionTestCase extends FunctionalTestCase 
         null, new QueueInboundMessageGenerator(), new QueueOutboundMessagesCounter()},
         {
             new String[] {"org/mule/test/integration/transaction/xa/xa-transaction-config.xml",
-                "org/mule/test/integration/transaction/xa/vm-different-connectors-xa-transaction-config.xml", transactionManagerConfigFile},
+                "org/mule/test/integration/transaction/xa/vm-different-connectors-xa-transaction-config.xml",
+                transactionManagerConfigFile},
             null, new QueueInboundMessageGenerator(), new QueueOutboundMessagesCounter()},
         {new String[] {"org/mule/test/integration/transaction/xa/xa-transaction-config.xml",
-            "org/mule/test/integration/transaction/xa/jms-xa-transaction-config.xml", transactionManagerConfigFile}, createFirstJmsBroker,
-            new QueueInboundMessageGenerator(), JmsOutboundMessagesCounter.createVerifierForBroker(port1.getNumber())},
+            "org/mule/test/integration/transaction/xa/jms-xa-transaction-config.xml", transactionManagerConfigFile},
+            createFirstJmsBroker, new QueueInboundMessageGenerator(),
+            JmsOutboundMessagesCounter.createVerifierForBroker(port1.getNumber())},
         {new String[] {"org/mule/test/integration/transaction/xa/xa-transaction-config.xml",
-            "org/mule/test/integration/transaction/xa/jms-different-connectors-xa-transaction-config.xml", transactionManagerConfigFile},
-            createTowJmsBrokers, new QueueInboundMessageGenerator(),
+            "org/mule/test/integration/transaction/xa/jms-different-connectors-xa-transaction-config.xml",
+            transactionManagerConfigFile}, createTowJmsBrokers, new QueueInboundMessageGenerator(),
             JmsOutboundMessagesCounter.createVerifierForBroker(port2.getNumber())},});
   }
 

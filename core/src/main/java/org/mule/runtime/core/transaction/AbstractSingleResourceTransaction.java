@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transaction;
 
@@ -18,8 +18,8 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import javax.transaction.Status;
 
 /**
- * This abstract class can be used as a base class for transactions that can enlist only one resource (such as a JMS session or JDBC
- * connection).
+ * This abstract class can be used as a base class for transactions that can enlist only one resource (such as a JMS session or
+ * JDBC connection).
  */
 public abstract class AbstractSingleResourceTransaction extends AbstractTransaction {
 
@@ -132,23 +132,24 @@ public abstract class AbstractSingleResourceTransaction extends AbstractTransact
       statusName = "*undefined*";
     }
 
-    return new StringBuilder().append(getClass().getName()).append('@').append(id).append("[status=").append(statusName).append(", key=")
-        .append(key).append(", resource=").append(resource).append("]").toString();
+    return new StringBuilder().append(getClass().getName()).append('@').append(id).append("[status=").append(statusName)
+        .append(", key=").append(key).append(", resource=").append(resource).append("]").toString();
   }
 
   @Override
   public boolean supports(Object key, Object resource) {
-    return (this.key == null && (getKeyType().isAssignableFrom(key.getClass()) && getResourceType().isAssignableFrom(resource.getClass())))
+    return (this.key == null
+        && (getKeyType().isAssignableFrom(key.getClass()) && getResourceType().isAssignableFrom(resource.getClass())))
         || (this.key != null && (this.key == key && this.resource == resource));
   }
 
   protected Class getResourceType() {
-    throw new MuleRuntimeException(
-        CoreMessages.createStaticMessage("Transaction type: " + this.getClass().getName() + " doesn't support supports(..) method"));
+    throw new MuleRuntimeException(CoreMessages
+        .createStaticMessage("Transaction type: " + this.getClass().getName() + " doesn't support supports(..) method"));
   }
 
   protected Class getKeyType() {
-    throw new MuleRuntimeException(
-        CoreMessages.createStaticMessage("Transaction type: " + this.getClass().getName() + " doesn't support supports(..) method"));
+    throw new MuleRuntimeException(CoreMessages
+        .createStaticMessage("Transaction type: " + this.getClass().getName() + " doesn't support supports(..) method"));
   }
 }

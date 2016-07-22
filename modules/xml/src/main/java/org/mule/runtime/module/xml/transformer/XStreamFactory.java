@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.transformer;
 
@@ -23,6 +23,7 @@ import java.util.Set;
  */
 // @Immutable
 public class XStreamFactory {
+
   public static final String XSTREAM_DOM_DRIVER = "com.thoughtworks.xstream.io.xml.DomDriver";
   public static final String XSTREAM_DOM4J_DRIVER = "com.thoughtworks.xstream.io.xml.Dom4JDriver";
   public static final String XSTREAM_JDOM_DRIVER = "com.thoughtworks.xstream.io.xml.JDomDriver";
@@ -59,7 +60,8 @@ public class XStreamFactory {
     }
   }
 
-  private void registerConverters(Set<Class<? extends Converter>> converters) throws InstantiationException, IllegalAccessException {
+  private void registerConverters(Set<Class<? extends Converter>> converters)
+      throws InstantiationException, IllegalAccessException {
     if (converters != null) {
       for (Class<?> converter : converters) {
         Object converterInstance = converter.newInstance();
@@ -79,6 +81,7 @@ public class XStreamFactory {
   }
 
   private class ConcurrentHashMapConverter extends MapConverter {
+
     public ConcurrentHashMapConverter(Mapper mapper) throws ClassNotFoundException {
       super(mapper);
     }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.operation;
 
@@ -40,14 +40,14 @@ import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils
 /**
  * A {@link MessageProcessor} capable of executing extension operations.
  * <p>
- * It obtains a configuration instance, evaluate all the operation parameters and executes a {@link RuntimeOperationModel} by using a
- * {@link #operationExecutor}. This message processor is capable of serving the execution of any {@link OperationModel} of any
- * {@link RuntimeExtensionModel}.
+ * It obtains a configuration instance, evaluate all the operation parameters and executes a {@link RuntimeOperationModel} by
+ * using a {@link #operationExecutor}. This message processor is capable of serving the execution of any {@link OperationModel} of
+ * any {@link RuntimeExtensionModel}.
  * <p>
- * A {@link #operationExecutor} is obtained by invoking {@link RuntimeOperationModel#getExecutor()}. That instance will be use to serve all
- * invokations of {@link #process(MuleEvent)} on {@code this} instance but will not be shared with other instances of
- * {@link OperationMessageProcessor}. All the {@link Lifecycle} events that {@code this} instance receives will be propagated to the
- * {@link #operationExecutor}.
+ * A {@link #operationExecutor} is obtained by invoking {@link RuntimeOperationModel#getExecutor()}. That instance will be use to
+ * serve all invokations of {@link #process(MuleEvent)} on {@code this} instance but will not be shared with other instances of
+ * {@link OperationMessageProcessor}. All the {@link Lifecycle} events that {@code this} instance receives will be propagated to
+ * the {@link #operationExecutor}.
  * <p>
  * The {@link #operationExecutor} is executed directly but by the means of a {@link DefaultExecutionMediator}
  *

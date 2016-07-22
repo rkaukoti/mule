@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.json.transformers;
 
@@ -16,11 +16,12 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class JsonSchemaJsonValidationTestCase extends AbstractMuleContextTestCase {
-  private static final String EXPECTED_JSON =
-      "{\n" + "  \"homeTeam\": \"BAR\",\n" + "  \"awayTeam\": \"RMA\",\n" + "  \"homeTeamScore\": 3,\n" + "  \"awayTeamScore\": 0\n" + "}";
 
-  private static final String BAD_JSON = "{\n" + "  \"homeTeam\": \"BARCA\",\n" + "  \"awayTeam\": \"RMA\",\n" + "  \"homeTeamScore\": 3,\n"
-      + "  \"awayTeamScore\": 0\n" + "}";
+  private static final String EXPECTED_JSON = "{\n" + "  \"homeTeam\": \"BAR\",\n" + "  \"awayTeam\": \"RMA\",\n"
+      + "  \"homeTeamScore\": 3,\n" + "  \"awayTeamScore\": 0\n" + "}";
+
+  private static final String BAD_JSON = "{\n" + "  \"homeTeam\": \"BARCA\",\n" + "  \"awayTeam\": \"RMA\",\n"
+      + "  \"homeTeamScore\": 3,\n" + "  \"awayTeamScore\": 0\n" + "}";
 
   private JsonSchemaValidationFilter filter;
 

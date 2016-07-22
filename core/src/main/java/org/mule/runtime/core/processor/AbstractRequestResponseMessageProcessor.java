@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor;
 
@@ -16,21 +16,22 @@ import org.mule.runtime.core.api.connector.NonBlockingReplyToHandler;
 import org.mule.runtime.core.api.connector.ReplyToHandler;
 
 /**
- * Base implementation of a {@link org.mule.runtime.core.api.processor.MessageProcessor} that may performs processing during both the
- * request and response processing phases while supporting non-blocking execution.
+ * Base implementation of a {@link org.mule.runtime.core.api.processor.MessageProcessor} that may performs processing during both
+ * the request and response processing phases while supporting non-blocking execution.
  * <p/>
  *
  * In order to define the process during the request phase you should override the
- * {@link #processRequest(org.mule.runtime.core.api.MuleEvent)} method. Symmetrically, if you need to define a process to be executed during
- * the response phase, then you should override the {@link #processResponse(MuleEvent, MuleEvent)} method.
+ * {@link #processRequest(org.mule.runtime.core.api.MuleEvent)} method. Symmetrically, if you need to define a process to be
+ * executed during the response phase, then you should override the {@link #processResponse(MuleEvent, MuleEvent)} method.
  * <p/>
  *
- * In some cases you'll have some code that should be always executed, even if an error occurs, for those cases you should override the
- * {@link #processFinally(org.mule.runtime.core.api.MuleEvent, org.mule.runtime.core.api.MessagingException)} method.
+ * In some cases you'll have some code that should be always executed, even if an error occurs, for those cases you should
+ * override the {@link #processFinally(org.mule.runtime.core.api.MuleEvent, org.mule.runtime.core.api.MessagingException)} method.
  *
  * @since 3.7.0
  */
-public abstract class AbstractRequestResponseMessageProcessor extends AbstractInterceptingMessageProcessor implements NonBlockingSupported {
+public abstract class AbstractRequestResponseMessageProcessor extends AbstractInterceptingMessageProcessor
+    implements NonBlockingSupported {
 
   @Override
   public final MuleEvent process(MuleEvent event) throws MuleException {
@@ -77,6 +78,7 @@ public abstract class AbstractRequestResponseMessageProcessor extends AbstractIn
   protected ReplyToHandler createReplyToHandler(final MuleEvent request) {
     final ReplyToHandler originalReplyToHandler = request.getReplyToHandler();
     return new NonBlockingReplyToHandler() {
+
       @Override
       public void processReplyTo(MuleEvent event, MuleMessage returnMessage, Object replyTo) throws MuleException {
         try {
@@ -142,8 +144,8 @@ public abstract class AbstractRequestResponseMessageProcessor extends AbstractIn
   }
 
   /**
-   * Processes the response phase after the next message processor and it's response phase have been invoked. This method is deprecated, use
-   * {@link #processResponse(MuleEvent, MuleEvent)} instead.
+   * Processes the response phase after the next message processor and it's response phase have been invoked. This method is
+   * deprecated, use {@link #processResponse(MuleEvent, MuleEvent)} instead.
    *
    * @param response response event to be processed.
    * @return result of response processing.
@@ -155,11 +157,12 @@ public abstract class AbstractRequestResponseMessageProcessor extends AbstractIn
   }
 
   /**
-   * Used to perform post processing after both request and response phases have been completed. This method will be invoked both when
-   * processing is successful as well as if an exception is thrown. successful result and in the case of an exception being thrown.
+   * Used to perform post processing after both request and response phases have been completed. This method will be invoked both
+   * when processing is successful as well as if an exception is thrown. successful result and in the case of an exception being
+   * thrown.
    *
-   * @param event the result of request and response processing. Note that this includes the request and response processing of the rest of
-   *        the Flow following this message processor too.
+   * @param event the result of request and response processing. Note that this includes the request and response processing of
+   *        the rest of the Flow following this message processor too.
    * @param exception the exception thrown during processing if any. If not exception was thrown then this parameter is null
    */
   protected void processFinally(MuleEvent event, MessagingException exception) {

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.validation.internal;
 
@@ -28,7 +28,8 @@ import java.util.Map;
 
 
 /**
- * Defines the operations of {@link ValidationExtension} which executes the {@link Validator}s that the extension provides out of the box
+ * Defines the operations of {@link ValidationExtension} which executes the {@link Validator}s that the extension provides out of
+ * the box
  *
  * @see ValidationExtension
  * @since 3.7.0
@@ -44,8 +45,8 @@ public final class CommonValidationOperations extends ValidationSupport {
    * @param config the current {@link ValidationExtension} that serves as config
    * @throws Exception if the value is not {@code true}
    */
-  public void isTrue(boolean expression, @ParameterGroup ValidationOptions options, MuleEvent event, @UseConfig ValidationExtension config)
-      throws Exception {
+  public void isTrue(boolean expression, @ParameterGroup ValidationOptions options, MuleEvent event,
+      @UseConfig ValidationExtension config) throws Exception {
     ValidationContext context = createContext(options, event, config);
     validateWith(new BooleanValidator(expression, true, context), context, event);
   }
@@ -59,8 +60,8 @@ public final class CommonValidationOperations extends ValidationSupport {
    * @param config the current {@link ValidationExtension} that serves as config
    * @throws Exception if the value is not {@code true}
    */
-  public void isFalse(boolean expression, @ParameterGroup ValidationOptions options, MuleEvent event, @UseConfig ValidationExtension config)
-      throws Exception {
+  public void isFalse(boolean expression, @ParameterGroup ValidationOptions options, MuleEvent event,
+      @UseConfig ValidationExtension config) throws Exception {
     ValidationContext context = createContext(options, event, config);
     validateWith(new BooleanValidator(expression, false, context), context, event);
   }
@@ -73,8 +74,8 @@ public final class CommonValidationOperations extends ValidationSupport {
    * @param event the current {@link MuleEvent
    * @param config the current {@link ValidationExtension} that serves as config
    */
-  public void isEmail(String email, @ParameterGroup ValidationOptions options, MuleEvent event, @UseConfig ValidationExtension config)
-      throws Exception {
+  public void isEmail(String email, @ParameterGroup ValidationOptions options, MuleEvent event,
+      @UseConfig ValidationExtension config) throws Exception {
     ValidationContext context = createContext(options, event, config);
     validateWith(new EmailValidator(email, context), context, event);
   }
@@ -94,8 +95,8 @@ public final class CommonValidationOperations extends ValidationSupport {
   }
 
   /**
-   * Validates that {@code value} has a size between certain inclusive boundaries. This validator is capable of handling instances of
-   * {@link String}, {@link Collection}, {@link Map} and arrays
+   * Validates that {@code value} has a size between certain inclusive boundaries. This validator is capable of handling instances
+   * of {@link String}, {@link Collection}, {@link Map} and arrays
    *
    * @param value the value to validate
    * @param min the minimum expected length (inclusive, defaults to zero)
@@ -111,9 +112,9 @@ public final class CommonValidationOperations extends ValidationSupport {
   }
 
   /**
-   * Validates that {@code value} is not empty. The definition of empty depends on the type of {@code value}. If it's a {@link String} it
-   * will check that it is not blank. If it's a {@link Collection}, array or {@link Map} it will check that it's not empty. No other types
-   * are supported, an {@link IllegalArgumentException} will be thrown if any other type is supplied
+   * Validates that {@code value} is not empty. The definition of empty depends on the type of {@code value}. If it's a
+   * {@link String} it will check that it is not blank. If it's a {@link Collection}, array or {@link Map} it will check that it's
+   * not empty. No other types are supported, an {@link IllegalArgumentException} will be thrown if any other type is supplied
    *
    * @param value the value to check
    * @param options the {@link ValidationOptions}
@@ -121,16 +122,16 @@ public final class CommonValidationOperations extends ValidationSupport {
    * @param config the current {@link ValidationExtension} that serves as config
    * @throws IllegalArgumentException if {@code value} is something other than a {@link String},{@link Collection} or {@link Map}
    */
-  public void isNotEmpty(Object value, @ParameterGroup ValidationOptions options, MuleEvent event, @UseConfig ValidationExtension config)
-      throws Exception {
+  public void isNotEmpty(Object value, @ParameterGroup ValidationOptions options, MuleEvent event,
+      @UseConfig ValidationExtension config) throws Exception {
     ValidationContext context = createContext(options, event, config);
     validateWith(new NotEmptyValidator(value, context), context, event);
   }
 
   /**
-   * Validates that {@code value} is empty. The definition of empty depends on the type of {@code value}. If it's a {@link String} it will
-   * check that it is not blank. If it's a {@link Collection}, array or {@link Map} it will check that it's not empty. No other types are
-   * supported, an {@link IllegalArgumentException} will be thrown if any other type is supplied
+   * Validates that {@code value} is empty. The definition of empty depends on the type of {@code value}. If it's a {@link String}
+   * it will check that it is not blank. If it's a {@link Collection}, array or {@link Map} it will check that it's not empty. No
+   * other types are supported, an {@link IllegalArgumentException} will be thrown if any other type is supplied
    *
    * @param value the value to check
    * @param options the {@link ValidationOptions}
@@ -138,8 +139,8 @@ public final class CommonValidationOperations extends ValidationSupport {
    * @param config the current {@link ValidationExtension} that serves as config
    * @throws IllegalArgumentException if {@code value} is something other than a {@link String},{@link Collection} or {@link Map}
    */
-  public void isEmpty(Object value, @ParameterGroup ValidationOptions options, MuleEvent event, @UseConfig ValidationExtension config)
-      throws Exception {
+  public void isEmpty(Object value, @ParameterGroup ValidationOptions options, MuleEvent event,
+      @UseConfig ValidationExtension config) throws Exception {
     ValidationContext context = createContext(options, event, config);
     validateWith(new EmptyValidator(value, context), context, event);
   }
@@ -152,8 +153,8 @@ public final class CommonValidationOperations extends ValidationSupport {
    * @param event the current {@link MuleEvent}
    * @param config the current {@link ValidationExtension} that serves as config
    */
-  public void isNotNull(Object value, @ParameterGroup ValidationOptions options, MuleEvent event, @UseConfig ValidationExtension config)
-      throws Exception {
+  public void isNotNull(Object value, @ParameterGroup ValidationOptions options, MuleEvent event,
+      @UseConfig ValidationExtension config) throws Exception {
     ValidationContext context = createContext(options, event, config);
     validateWith(new NotNullValidator(value, context), context, event);
   }
@@ -166,15 +167,15 @@ public final class CommonValidationOperations extends ValidationSupport {
    * @param event the current {@link MuleEvent}
    * @param config the current {@link ValidationExtension} that serves as config
    */
-  public void isNull(Object value, @ParameterGroup ValidationOptions options, MuleEvent event, @UseConfig ValidationExtension config)
-      throws Exception {
+  public void isNull(Object value, @ParameterGroup ValidationOptions options, MuleEvent event,
+      @UseConfig ValidationExtension config) throws Exception {
     ValidationContext context = createContext(options, event, config);
     validateWith(new NullValidator(value, context), context, event);
   }
 
   /**
-   * Validates that a {@code time} in {@link String} format is valid for the given {@code pattern} and {@code locale}. If no pattern is
-   * provided, then the {@code locale}'s default will be used
+   * Validates that a {@code time} in {@link String} format is valid for the given {@code pattern} and {@code locale}. If no
+   * pattern is provided, then the {@code locale}'s default will be used
    *
    * @param time A date in String format
    * @param locale the locale of the String

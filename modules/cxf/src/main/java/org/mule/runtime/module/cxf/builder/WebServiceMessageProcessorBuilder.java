@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.builder;
 
@@ -23,12 +23,14 @@ import org.slf4j.LoggerFactory;
 import javax.xml.namespace.QName;
 
 /**
- * Builds a CXF web service MessageProcessor using either the JAX-WS or simple frontends. It must be configured in the following way:
+ * Builds a CXF web service MessageProcessor using either the JAX-WS or simple frontends. It must be configured in the following
+ * way:
  * <ul>
  * <li>If it is part of a {@link org.mule.runtime.core.construct.Flow}, then the serviceClass attribute must be supplied.</li>
  * <li>The builder will use the JAX-WS frontend by default.</li>
  */
 public class WebServiceMessageProcessorBuilder extends AbstractInboundMessageProcessorBuilder implements FlowConstructAware {
+
   protected transient Logger logger = LoggerFactory.getLogger(getClass());
   protected FlowConstruct flowConstruct;
   private DataBinding databinding;

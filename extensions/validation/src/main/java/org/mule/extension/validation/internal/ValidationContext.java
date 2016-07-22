@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.validation.internal;
 
@@ -28,7 +28,8 @@ public final class ValidationContext {
     this(config.getMessageFactory(), options, muleEvent, config);
   }
 
-  public ValidationContext(ValidationMessages messages, ValidationOptions options, MuleEvent muleEvent, ValidationExtension config) {
+  public ValidationContext(ValidationMessages messages, ValidationOptions options, MuleEvent muleEvent,
+      ValidationExtension config) {
     this.messages = messages;
     this.options = options;
     this.muleEvent = muleEvent;

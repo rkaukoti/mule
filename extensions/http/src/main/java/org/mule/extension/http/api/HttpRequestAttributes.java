@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.http.api;
 
@@ -17,6 +17,7 @@ import javax.activation.DataHandler;
  * @since 4.0
  */
 public class HttpRequestAttributes extends HttpAttributes {
+
   /**
    * Full path where the request was received. Former 'http.listener.path'.
    */
@@ -67,8 +68,8 @@ public class HttpRequestAttributes extends HttpAttributes {
   private final Certificate clientCertificate;
 
   public HttpRequestAttributes(ParameterMap headers, Map<String, DataHandler> parts, String listenerPath, String relativePath,
-      String version, String scheme, String method, String requestPath, String requestUri, String queryString, ParameterMap queryParams,
-      ParameterMap uriParams, String remoteAddress, Certificate clientCertificate) {
+      String version, String scheme, String method, String requestPath, String requestUri, String queryString,
+      ParameterMap queryParams, ParameterMap uriParams, String remoteAddress, Certificate clientCertificate) {
     super(headers, parts);
     this.listenerPath = listenerPath;
     this.relativePath = relativePath;

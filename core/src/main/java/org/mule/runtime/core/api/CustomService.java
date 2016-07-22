@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api;
 
@@ -15,6 +15,7 @@ import static java.util.Optional.of;
  * A service can be specified by an implementation or a class that can be used to instantiate the implementation.
  */
 public class CustomService {
+
   private Optional<Class> serviceClass;
   private Optional<Object> serviceImpl;
 

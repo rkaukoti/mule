@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.processor;
 
@@ -112,7 +112,8 @@ public class AsyncInterceptingMessageProcessorTestCase extends AbstractMuleConte
     assertNull(exceptionThrown);
   }
 
-  protected AsyncInterceptingMessageProcessor createAsyncInterceptingMessageProcessor(MessageProcessor listener) throws Exception {
+  protected AsyncInterceptingMessageProcessor createAsyncInterceptingMessageProcessor(MessageProcessor listener)
+      throws Exception {
     AsyncInterceptingMessageProcessor mp = new AsyncInterceptingMessageProcessor(new TestWorkManagerSource());
     mp.setMuleContext(muleContext);
     mp.setListener(listener);
@@ -139,6 +140,7 @@ public class AsyncInterceptingMessageProcessorTestCase extends AbstractMuleConte
   }
 
   class TestWorkManagerSource implements WorkManagerSource {
+
     @Override
     public WorkManager getWorkManager() throws MuleException {
       return muleContext.getWorkManager();

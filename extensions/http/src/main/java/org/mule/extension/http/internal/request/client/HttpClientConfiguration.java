@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.http.internal.request.client;
 
@@ -16,6 +16,7 @@ import org.mule.runtime.api.tls.TlsContextFactory;
  * @since 4.0
  */
 public class HttpClientConfiguration {
+
   private final UriParameters uriParameters;
   private final TlsContextFactory tlsContextFactory;
   private final ProxyConfig proxyConfig;
@@ -27,8 +28,8 @@ public class HttpClientConfiguration {
   private final String ownerName;
 
   private HttpClientConfiguration(UriParameters uriParameters, TlsContextFactory tlsContextFactory, ProxyConfig proxyConfig,
-      TcpClientSocketProperties clientSocketProperties, int maxConnections, boolean usePersistentConnections, int connectionIdleTimeout,
-      String threadNamePrefix, String ownerName) {
+      TcpClientSocketProperties clientSocketProperties, int maxConnections, boolean usePersistentConnections,
+      int connectionIdleTimeout, String threadNamePrefix, String ownerName) {
     this.uriParameters = uriParameters;
     this.tlsContextFactory = tlsContextFactory;
     this.proxyConfig = proxyConfig;
@@ -77,6 +78,7 @@ public class HttpClientConfiguration {
   }
 
   public static class Builder {
+
     private UriParameters uriParameters;
     private TlsContextFactory tlsContextFactory;
     private ProxyConfig proxyConfig;

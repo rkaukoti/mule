@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.oauth2.internal;
 
@@ -27,20 +27,20 @@ public class TokenResponseProcessor {
   private String expiresIn;
   private Map<String, Object> customResponseParameters;
 
-  private TokenResponseProcessor(final TokenResponseConfiguration tokenResponseConfiguration, final ExpressionManager expressionManager,
-      boolean retrieveRefreshToken) {
+  private TokenResponseProcessor(final TokenResponseConfiguration tokenResponseConfiguration,
+      final ExpressionManager expressionManager, boolean retrieveRefreshToken) {
     this.tokenResponseConfiguration = tokenResponseConfiguration;
     this.expressionManager = expressionManager;
     this.retrieveRefreshToken = retrieveRefreshToken;
   }
 
-  public static TokenResponseProcessor createAuthorizationCodeProcessor(final TokenResponseConfiguration tokenResponseConfiguration,
-      final ExpressionManager expressionManager) {
+  public static TokenResponseProcessor createAuthorizationCodeProcessor(
+      final TokenResponseConfiguration tokenResponseConfiguration, final ExpressionManager expressionManager) {
     return new TokenResponseProcessor(tokenResponseConfiguration, expressionManager, true);
   }
 
-  public static TokenResponseProcessor createClientCredentialsProcessor(final TokenResponseConfiguration tokenResponseConfiguration,
-      final ExpressionManager expressionManager) {
+  public static TokenResponseProcessor createClientCredentialsProcessor(
+      final TokenResponseConfiguration tokenResponseConfiguration, final ExpressionManager expressionManager) {
     return new TokenResponseProcessor(tokenResponseConfiguration, expressionManager, false);
   }
 
@@ -58,7 +58,8 @@ public class TokenResponseProcessor {
     expiresIn = expressionManager.parse(tokenResponseConfiguration.getExpiresIn(), muleEvent);
     customResponseParameters = new HashMap<>();
     for (ParameterExtractor parameterExtractor : tokenResponseConfiguration.getParameterExtractors()) {
-      customResponseParameters.put(parameterExtractor.getParamName(), expressionManager.evaluate(parameterExtractor.getValue(), muleEvent));
+      customResponseParameters.put(parameterExtractor.getParamName(),
+          expressionManager.evaluate(parameterExtractor.getValue(), muleEvent));
     }
   }
 

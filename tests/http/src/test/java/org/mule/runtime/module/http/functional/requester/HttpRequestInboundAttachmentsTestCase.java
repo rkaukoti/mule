@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.requester;
 
@@ -43,8 +43,8 @@ public class HttpRequestInboundAttachmentsTestCase extends AbstractHttpRequestTe
     assertAttachment(parts, "partName2", "Test part 2", "text/html");
   }
 
-  private void assertAttachment(Map<String, DataHandler> parts, String attachmentName, String attachmentContents, String contentType)
-      throws IOException {
+  private void assertAttachment(Map<String, DataHandler> parts, String attachmentName, String attachmentContents,
+      String contentType) throws IOException {
     assertTrue(parts.keySet().contains(attachmentName));
 
     DataHandler handler = parts.get(attachmentName);

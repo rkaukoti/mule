@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.json.validation;
 
@@ -48,8 +48,8 @@ public class ValidateSchemaFunctionalTestCase extends AbstractValidateSchemaFunc
 
   @Parameterized.Parameters(name = "{0}")
   public static Iterable<Object[]> data() throws Exception {
-    return Arrays
-        .asList(new Object[][] {{"SimpleV4Schema as String", SCHEMA_FSTAB_JSON, CANONICAL, getGoodFstab(), getBadFstab(), getBadFstab2()},
+    return Arrays.asList(
+        new Object[][] {{"SimpleV4Schema as String", SCHEMA_FSTAB_JSON, CANONICAL, getGoodFstab(), getBadFstab(), getBadFstab2()},
             {"SimpleV4Schema as bytes", SCHEMA_FSTAB_JSON, CANONICAL, getGoodFstab().getBytes(), getBadFstab().getBytes(),
                 getBadFstab2().getBytes()},
             {"SimpleV4Schema as JsonNode", SCHEMA_FSTAB_JSON, CANONICAL, fromString(getGoodFstab()), fromString(getBadFstab()),
@@ -62,8 +62,8 @@ public class ValidateSchemaFunctionalTestCase extends AbstractValidateSchemaFunc
             {"Inline schema as String", SCHEMA_FSTAB_INLINE, INLINE, getGoodFstabInline(), getBadFstab(), getBadFstab2()},
             {"Inline schema as bytes", SCHEMA_FSTAB_INLINE, INLINE, getGoodFstabInline().getBytes(), getBadFstab().getBytes(),
                 getBadFstab2().getBytes()},
-            {"Inline schema as JsonNode", SCHEMA_FSTAB_INLINE, INLINE, fromString(getGoodFstabInline()), fromString(getBadFstab()),
-                fromString(getBadFstab2())},
+            {"Inline schema as JsonNode", SCHEMA_FSTAB_INLINE, INLINE, fromString(getGoodFstabInline()),
+                fromString(getBadFstab()), fromString(getBadFstab2())},
             {"Inline schema as JsonData", SCHEMA_FSTAB_INLINE, INLINE, getGoodFstabInlineAsJsonData(), getBadFstabAsJsonData(),
                 getBadFstab2AsJsonData()},
             {"Inline schema as Stream", SCHEMA_FSTAB_INLINE, INLINE, toStream(getGoodFstabInline()), toStream(getBadFstab()),
@@ -82,10 +82,10 @@ public class ValidateSchemaFunctionalTestCase extends AbstractValidateSchemaFunc
             {"ReferringV4Schema as String", SCHEMA_FSTAB_REFERRING, CANONICAL, getGoodFstab(), getBadFstab(), getBadFstab2()},
             {"ReferringV4Schema as bytes", SCHEMA_FSTAB_REFERRING, CANONICAL, getGoodFstab().getBytes(), getBadFstab().getBytes(),
                 getBadFstab2().getBytes()},
-            {"ReferringV4Schema as JsonNode", SCHEMA_FSTAB_REFERRING, CANONICAL, fromString(getGoodFstab()), fromString(getBadFstab()),
-                fromString(getBadFstab2())},
-            {"ReferringV4Schema as JsonData", SCHEMA_FSTAB_REFERRING, CANONICAL, getGoodFstabAsJsonData(), getBadFstabAsJsonData(),
-                getBadFstabAsJsonData()},
+            {"ReferringV4Schema as JsonNode", SCHEMA_FSTAB_REFERRING, CANONICAL, fromString(getGoodFstab()),
+                fromString(getBadFstab()), fromString(getBadFstab2())},
+            {"ReferringV4Schema as JsonData", SCHEMA_FSTAB_REFERRING, CANONICAL, getGoodFstabAsJsonData(),
+                getBadFstabAsJsonData(), getBadFstabAsJsonData()},
             {"ReferringV4Schema as Stream", SCHEMA_FSTAB_REFERRING, CANONICAL, toStream(getGoodFstab()), toStream(getBadFstab()),
                 toStream(getBadFstab2())},});
   }

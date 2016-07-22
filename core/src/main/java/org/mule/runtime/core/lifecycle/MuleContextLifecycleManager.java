@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.lifecycle;
 
@@ -16,8 +16,8 @@ import org.mule.runtime.core.api.lifecycle.Stoppable;
 import org.mule.runtime.core.lifecycle.phases.NotInLifecyclePhase;
 
 /**
- * This is a specialized class that extends {@link RegistryLifecycleManager} and will invoke lifecycle on the registry instance for the
- * MuleContext. This class must only be used by the MuleContext.
+ * This is a specialized class that extends {@link RegistryLifecycleManager} and will invoke lifecycle on the registry instance
+ * for the MuleContext. This class must only be used by the MuleContext.
  */
 public class MuleContextLifecycleManager extends AbstractLifecycleManager<MuleContext> implements MuleContextAware {
 
@@ -70,6 +70,7 @@ public class MuleContextLifecycleManager extends AbstractLifecycleManager<MuleCo
   }
 
   class MuleContextLifecycleCallback implements LifecycleCallback<MuleContext> {
+
     public void onTransition(String phaseName, MuleContext muleContext) throws MuleException {
       muleContext.getRegistry().fireLifecycle(phaseName);
     }

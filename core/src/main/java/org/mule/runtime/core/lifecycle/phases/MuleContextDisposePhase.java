@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.lifecycle.phases;
 
@@ -33,15 +33,17 @@ import java.util.Set;
 import javax.annotation.PreDestroy;
 
 /**
- * Objects are disposed of via the Registry since the Registry manages the creation/initialisation of the objects it must also take care of
- * disposing them. However, a user may want to initiate a dispose via the {@link org.mule.runtime.core.DefaultMuleContext} so the dispose
- * Lifecycle phase for the {@link org.mule.runtime.core.DefaultMuleContext} needs to call dispose on the Registry.
+ * Objects are disposed of via the Registry since the Registry manages the creation/initialisation of the objects it must also
+ * take care of disposing them. However, a user may want to initiate a dispose via the
+ * {@link org.mule.runtime.core.DefaultMuleContext} so the dispose Lifecycle phase for the
+ * {@link org.mule.runtime.core.DefaultMuleContext} needs to call dispose on the Registry.
  *
- * The MuleContextDisposePhase defines the lifecycle behaviour when the Mule context is disposed. The MuleContext is associated with one or
- * more registries that inherit the lifecycle of the MuleContext.
+ * The MuleContextDisposePhase defines the lifecycle behaviour when the Mule context is disposed. The MuleContext is associated
+ * with one or more registries that inherit the lifecycle of the MuleContext.
  *
- * This phase is responsible for disposing objects. Any object that implements {@link org.mule.runtime.core.api.lifecycle.Disposable} will
- * have its {@link org.mule.runtime.core.api.lifecycle.Disposable#dispose()} method called. Objects are initialised in the order based on
+ * This phase is responsible for disposing objects. Any object that implements
+ * {@link org.mule.runtime.core.api.lifecycle.Disposable} will have its
+ * {@link org.mule.runtime.core.api.lifecycle.Disposable#dispose()} method called. Objects are initialised in the order based on
  * type: {@link org.mule.runtime.core.api.construct.FlowConstruct}, {@link org.mule.runtime.core.api.agent.Agent},
  * {@link org.mule.runtime.core.api.transport.Connector} followed by any other object that implements
  * {@link org.mule.runtime.core.api.lifecycle.Disposable}.
@@ -52,6 +54,7 @@ import javax.annotation.PreDestroy;
  * @since 3.0
  */
 public class MuleContextDisposePhase extends DefaultLifecyclePhase {
+
   public MuleContextDisposePhase() {
     super(Disposable.PHASE_NAME, Disposable.class, Initialisable.PHASE_NAME);
 
@@ -69,15 +72,15 @@ public class MuleContextDisposePhase extends DefaultLifecyclePhase {
     registerSupportedPhase(LifecyclePhase.ALL_PHASES);
     setOrderedLifecycleObjects(orderedObjects);
     /*
-     * Ignored objects - -Component is ignored because the FlowConstruct will manage the components lifecycle -MessageSource disposal is
-     * managed by the connector it is associated with -RouterCollection is ignored because the FlowConstruct will manage the lifecycle
-     * -Router is ignored since its lifecycle is managed by the associated router collection -Transformer is ignored since the Dispose
-     * lifecycle is managed by the base {@link AbstractTransformer} by receiving a CONTEXT_DISPOSING event and calling dispose on the
-     * transformer. This is necessary since transformers are prototype objects and not managed by DI containers such as Spring after the
-     * creation of the object
+     * Ignored objects - -Component is ignored because the FlowConstruct will manage the components lifecycle -MessageSource
+     * disposal is managed by the connector it is associated with -RouterCollection is ignored because the FlowConstruct will
+     * manage the lifecycle -Router is ignored since its lifecycle is managed by the associated router collection -Transformer is
+     * ignored since the Dispose lifecycle is managed by the base {@link AbstractTransformer} by receiving a CONTEXT_DISPOSING
+     * event and calling dispose on the transformer. This is necessary since transformers are prototype objects and not managed by
+     * DI containers such as Spring after the creation of the object
      */
-    setIgnoredObjectTypes(new Class[] {Component.class, MessageSource.class, InterceptingMessageProcessor.class, OutboundRouter.class,
-        Transformer.class, MuleContext.class});
+    setIgnoredObjectTypes(new Class[] {Component.class, MessageSource.class, InterceptingMessageProcessor.class,
+        OutboundRouter.class, Transformer.class, MuleContext.class});
   }
 
   @Override
@@ -107,7 +110,8 @@ public class MuleContextDisposePhase extends DefaultLifecyclePhase {
     try {
       ((Method) anno.getMember()).invoke(o);
     } catch (Exception e) {
-      throw new LifecycleException(CoreMessages.failedToInvokeLifecycle((anno == null ? "null" : anno.getMember().getName()), o), e, this);
+      throw new LifecycleException(CoreMessages.failedToInvokeLifecycle((anno == null ? "null" : anno.getMember().getName()), o),
+          e, this);
     }
   }
 }

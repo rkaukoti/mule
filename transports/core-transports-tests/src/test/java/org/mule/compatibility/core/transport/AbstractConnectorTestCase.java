@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -28,10 +28,11 @@ import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.r
 import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 /**
- * <code>AbstractConnectorTestCase</code> tests common behaviour of all endpoints and provides 'reminder' methods for implementation
- * specific interface methods
+ * <code>AbstractConnectorTestCase</code> tests common behaviour of all endpoints and provides 'reminder' methods for
+ * implementation specific interface methods
  */
 public abstract class AbstractConnectorTestCase extends AbstractMuleContextEndpointTestCase {
+
   protected String connectorName;
   protected Charset encoding;
 
@@ -195,8 +196,8 @@ public abstract class AbstractConnectorTestCase extends AbstractMuleContextEndpo
   }
 
   /**
-   * This test only asserts that the transport descriptor mechanism works for creating the MuleMessageFactory. For exhaustive tests of
-   * MuleMessageFactory implementations see {@link AbstractMuleMessageFactoryTestCase} and subclasses.
+   * This test only asserts that the transport descriptor mechanism works for creating the MuleMessageFactory. For exhaustive
+   * tests of MuleMessageFactory implementations see {@link AbstractMuleMessageFactoryTestCase} and subclasses.
    */
   @Test
   public void testConnectorMuleMessageFactory() throws Exception {

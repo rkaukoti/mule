@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.logging;
 
@@ -67,7 +67,8 @@ public class TestAppender extends AbstractAppender {
 
   @Override
   public void append(LogEvent event) {
-    expectations.add(new Expectation(event.getLevel().toString(), event.getLoggerName(), event.getMessage().getFormattedMessage()));
+    expectations
+        .add(new Expectation(event.getLevel().toString(), event.getLoggerName(), event.getMessage().getFormattedMessage()));
   }
 
   public static class Expectation {

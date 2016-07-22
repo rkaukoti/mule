@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.file;
 
@@ -27,6 +27,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class FileConnectorTestCase extends AbstractConnectorTestCase {
+
   private static final long POLLING_FREQUENCY = 1234;
   private static final long POLLING_FREQUENCY_OVERRIDE = 4321;
   private static final String VALID_MESSAGE = "validMessage";
@@ -85,7 +86,8 @@ public class FileConnectorTestCase extends AbstractConnectorTestCase {
     InboundEndpoint endpoint = getTestInboundEndpoint("simple");
     Flow flow = getTestFlow();
     MessageReceiver receiver = connector.createReceiver(flow, endpoint);
-    assertEquals("Connector's polling frequency must not be ignored.", POLLING_FREQUENCY, ((FileMessageReceiver) receiver).getFrequency());
+    assertEquals("Connector's polling frequency must not be ignored.", POLLING_FREQUENCY,
+        ((FileMessageReceiver) receiver).getFrequency());
   }
 
   /**
@@ -140,8 +142,8 @@ public class FileConnectorTestCase extends AbstractConnectorTestCase {
   }
 
   /**
-   * If the connector is configured not to do streaming it converts to byte[] so the original input payload is not the same as the payload
-   * in the MuleMessage
+   * If the connector is configured not to do streaming it converts to byte[] so the original input payload is not the same as the
+   * payload in the MuleMessage
    */
   @Test
   public void testConnectorMessageFactoryNonStreaming() throws Exception {

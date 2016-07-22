@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.validation.api;
 
@@ -25,11 +25,11 @@ import static org.mule.runtime.core.util.Preconditions.checkArgument;
  * When the {@link #type} attribute is used to reference a type, then a new instance is returned each time that
  * {@link #getObject(MuleContext)} is invoked. That type is also expected to have a public default {@link Constructor}.
  * <p/>
- * When a {@link #ref} is provided, then that value is searched by using the {@link MuleRegistry#get(String)}. Notice however that the
- * reference will be re fetched each time that {@link #getObject(MuleContext)} is invoked
+ * When a {@link #ref} is provided, then that value is searched by using the {@link MuleRegistry#get(String)}. Notice however that
+ * the reference will be re fetched each time that {@link #getObject(MuleContext)} is invoked
  * <p/>
- * The {@link #type} and {@link #ref} attributes are mutually exclusive. A {@link IllegalArgumentException} is thrown if both are set by the
- * time {@link #getObject(MuleContext)} is invoked. The same exception is also thrown if none of them are.
+ * The {@link #type} and {@link #ref} attributes are mutually exclusive. A {@link IllegalArgumentException} is thrown if both are
+ * set by the time {@link #getObject(MuleContext)} is invoked. The same exception is also thrown if none of them are.
  * <p/>
  * Instances of this class are to be considered thread-safe and reusable.
  *

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.lifecycle.phases;
 
@@ -29,13 +29,14 @@ import java.util.Set;
  * The Start phase for the MuleContext. Calling {@link MuleContext#start()} will initiate this phase via the
  * {@link org.mule.runtime.core.api.lifecycle.LifecycleManager}.
  * <p/>
- * The MuleContextStartPhase defines the lifecycle behaviour when the Mule context is started. The MuleContext is associated with one or
- * more registries that inherit the lifecycle of the MuleContext.
+ * The MuleContextStartPhase defines the lifecycle behaviour when the Mule context is started. The MuleContext is associated with
+ * one or more registries that inherit the lifecycle of the MuleContext.
  * <p/>
- * This phase is responsible for starting objects. Any object that implements {@link org.mule.runtime.core.api.lifecycle.Startable} will
- * have its {@link org.mule.runtime.core.api.lifecycle.Startable#start()} method called. Objects are initialised in the order based on type:
- * {@link org.mule.runtime.core.api.agent.Agent}, {@link org.mule.runtime.core.api.construct.FlowConstruct}, followed by any other object
- * that implements {@link org.mule.runtime.core.api.lifecycle.Startable}.
+ * This phase is responsible for starting objects. Any object that implements
+ * {@link org.mule.runtime.core.api.lifecycle.Startable} will have its
+ * {@link org.mule.runtime.core.api.lifecycle.Startable#start()} method called. Objects are initialised in the order based on
+ * type: {@link org.mule.runtime.core.api.agent.Agent}, {@link org.mule.runtime.core.api.construct.FlowConstruct}, followed by any
+ * other object that implements {@link org.mule.runtime.core.api.lifecycle.Startable}.
  *
  * @see org.mule.runtime.core.api.MuleContext
  * @see org.mule.runtime.core.api.lifecycle.LifecycleManager

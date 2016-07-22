@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.store;
 
@@ -34,6 +34,7 @@ import static org.mule.runtime.core.api.store.ObjectStoreManager.UNBOUNDED;
  */
 public class MonitoredObjectStoreWrapper<T extends Serializable>
     implements ListableObjectStore<T>, Runnable, MuleContextAware, Initialisable, Disposable {
+
   private static Logger logger = LoggerFactory.getLogger(MonitoredObjectStoreWrapper.class);
 
   protected MuleContext context;
@@ -43,14 +44,14 @@ public class MonitoredObjectStoreWrapper<T extends Serializable>
    */
   protected int maxEntries = 4000;
   /**
-   * The time-to-live for each message ID, specified in milliseconds, or <em>-1</em> for entries that should never expire. <b>DO NOT</b>
-   * combine this with an unbounded store!
+   * The time-to-live for each message ID, specified in milliseconds, or <em>-1</em> for entries that should never expire. <b>DO
+   * NOT</b> combine this with an unbounded store!
    */
   protected int entryTTL = -1;
   /**
-   * The interval for periodic bounded size enforcement and entry expiration, specified in milliseconds. Arbitrary positive values between 1
-   * millisecond and several hours or days are possible, but should be chosen carefully according to the expected message rate to prevent
-   * out of memory conditions.
+   * The interval for periodic bounded size enforcement and entry expiration, specified in milliseconds. Arbitrary positive values
+   * between 1 millisecond and several hours or days are possible, but should be chosen carefully according to the expected
+   * message rate to prevent out of memory conditions.
    */
   protected int expirationInterval = 1000;
   /**
@@ -63,7 +64,8 @@ public class MonitoredObjectStoreWrapper<T extends Serializable>
     this.baseStore = baseStore;
   }
 
-  public MonitoredObjectStoreWrapper(ListableObjectStore<StoredObject<T>> baseStore, int maxEntries, int entryTTL, int expirationInterval) {
+  public MonitoredObjectStoreWrapper(ListableObjectStore<StoredObject<T>> baseStore, int maxEntries, int entryTTL,
+      int expirationInterval) {
     this.baseStore = baseStore;
     this.maxEntries = maxEntries;
     this.entryTTL = entryTTL;
@@ -209,6 +211,7 @@ public class MonitoredObjectStoreWrapper<T extends Serializable>
   }
 
   protected static class StoredObject<T> implements Serializable, DeserializationPostInitialisable {
+
     private static final long serialVersionUID = 8656763235928199259L;
     final private T item;
     final private Long timestamp;
@@ -235,8 +238,8 @@ public class MonitoredObjectStoreWrapper<T extends Serializable>
 
     /**
      * Invoked after deserialization. This is called when the marker interface
-     * {@link org.mule.runtime.core.util.store.DeserializationPostInitialisable} is used. This will get invoked after the object has been
-     * deserialized passing in the current MuleContext when using either
+     * {@link org.mule.runtime.core.util.store.DeserializationPostInitialisable} is used. This will get invoked after the object
+     * has been deserialized passing in the current MuleContext when using either
      * {@link org.mule.runtime.core.transformer.wire.SerializationWireFormat},
      * {@link org.mule.runtime.core.transformer.wire.SerializedMuleMessageWireFormat} or the
      * {@link org.mule.runtime.core.transformer.simple.ByteArrayToSerializable} transformer.

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -42,9 +42,9 @@ import static org.mule.runtime.core.routing.UntilSuccessful.PROCESS_ATTEMPT_COUN
  * <p/>
  * It will return successfully to the flow executing the router once it was able to store the message in the object store.
  * <p/>
- * After that it will asynchronously try to process the message through the internal route. If route was not successfully executed after the
- * configured retry count then the message will be routed to the defined dead letter queue route or in case there is no dead letter queue
- * route then it will be handled by the flow exception strategy.
+ * After that it will asynchronously try to process the message through the internal route. If route was not successfully executed
+ * after the configured retry count then the message will be routed to the defined dead letter queue route or in case there is no
+ * dead letter queue route then it will be handled by the flow exception strategy.
  */
 public class AsynchronousUntilSuccessfulProcessingStrategy extends AbstractUntilSuccessfulProcessingStrategy
     implements Initialisable, Startable, Stoppable, MessagingExceptionHandlerAware {
@@ -63,8 +63,8 @@ public class AsynchronousUntilSuccessfulProcessingStrategy extends AbstractUntil
     // it also adds a random trailer to support events which have been
     // split and thus have the same id. Random number was chosen over
     // UUID for performance reasons
-    String key = String.format("%s-%s-%s-%d", muleEvent.getFlowConstruct(), muleEvent.getMuleContext().getClusterId(), muleEvent.getId(),
-        random.nextInt());
+    String key = String.format("%s-%s-%s-%d", muleEvent.getFlowConstruct(), muleEvent.getMuleContext().getClusterId(),
+        muleEvent.getId(), random.nextInt());
 
     return new QueueKey(QueuePersistenceObjectStore.DEFAULT_QUEUE_STORE, key);
   }
@@ -72,15 +72,16 @@ public class AsynchronousUntilSuccessfulProcessingStrategy extends AbstractUntil
   @Override
   public void initialise() throws InitialisationException {
     if (getUntilSuccessfulConfiguration().getObjectStore() == null) {
-      throw new InitialisationException(MessageFactory.createStaticMessage("A ListableObjectStore must be configured on UntilSuccessful."),
-          this);
+      throw new InitialisationException(
+          MessageFactory.createStaticMessage("A ListableObjectStore must be configured on UntilSuccessful."), this);
     }
   }
 
   @Override
   public void start() {
-    final String threadPrefix = String.format("%s%s.%s", ThreadNameHelper.getPrefix(getUntilSuccessfulConfiguration().getMuleContext()),
-        getUntilSuccessfulConfiguration().getFlowConstruct().getName(), "until-successful");
+    final String threadPrefix =
+        String.format("%s%s.%s", ThreadNameHelper.getPrefix(getUntilSuccessfulConfiguration().getMuleContext()),
+            getUntilSuccessfulConfiguration().getFlowConstruct().getName(), "until-successful");
     pool = getUntilSuccessfulConfiguration().getThreadingProfile().createPool(threadPrefix);
     scheduledRetriesPool = getUntilSuccessfulConfiguration().createScheduledRetriesPool(threadPrefix);
 
@@ -116,9 +117,8 @@ public class AsynchronousUntilSuccessfulProcessingStrategy extends AbstractUntil
         try {
           scheduleForProcessing(eventStoreKey, true);
         } catch (final Exception e) {
-          logger.error(
-              MessageFactory.createStaticMessage("Failed to schedule for processing event stored with key: " + eventStoreKey).toString(),
-              e);
+          logger.error(MessageFactory
+              .createStaticMessage("Failed to schedule for processing event stored with key: " + eventStoreKey).toString(), e);
         }
       }
     } catch (Exception e) {
@@ -150,14 +150,16 @@ public class AsynchronousUntilSuccessfulProcessingStrategy extends AbstractUntil
     });
   }
 
-  private void incrementProcessAttemptCountAndRescheduleOrRemoveFromStore(final Serializable eventStoreKey, Exception lastException) {
+  private void incrementProcessAttemptCountAndRescheduleOrRemoveFromStore(final Serializable eventStoreKey,
+      Exception lastException) {
     try {
       final MuleEvent event = getUntilSuccessfulConfiguration().getObjectStore().remove(eventStoreKey);
       final MuleEvent mutableEvent = threadSafeCopy(event);
 
       final MuleMessage message = mutableEvent.getMessage();
       final Integer configuredAttempts = mutableEvent.getFlowVariable(PROCESS_ATTEMPT_COUNT_PROPERTY_NAME);
-      final Integer deliveryAttemptCount = configuredAttempts != null ? configuredAttempts : DEFAULT_PROCESS_ATTEMPT_COUNT_PROPERTY_VALUE;
+      final Integer deliveryAttemptCount =
+          configuredAttempts != null ? configuredAttempts : DEFAULT_PROCESS_ATTEMPT_COUNT_PROPERTY_VALUE;
 
       if (deliveryAttemptCount <= getUntilSuccessfulConfiguration().getMaxRetries()) {
         // we store the incremented version unless the max attempt count has
@@ -175,7 +177,8 @@ public class AsynchronousUntilSuccessfulProcessingStrategy extends AbstractUntil
 
   private Serializable storeEvent(final MuleEvent event) throws ObjectStoreException {
     final Integer configuredAttempts = event.getFlowVariable(PROCESS_ATTEMPT_COUNT_PROPERTY_NAME);
-    final Integer deliveryAttemptCount = configuredAttempts != null ? configuredAttempts : DEFAULT_PROCESS_ATTEMPT_COUNT_PROPERTY_VALUE;
+    final Integer deliveryAttemptCount =
+        configuredAttempts != null ? configuredAttempts : DEFAULT_PROCESS_ATTEMPT_COUNT_PROPERTY_VALUE;
     return storeEvent(event, deliveryAttemptCount);
   }
 
@@ -212,9 +215,11 @@ public class AsynchronousUntilSuccessfulProcessingStrategy extends AbstractUntil
     MuleException muleException = ExceptionHelper.getRootMuleException(e);
 
     if (muleException == null) {
-      return new RetryPolicyExhaustedException(CoreMessages.createStaticMessage(UNTIL_SUCCESSFUL_MSG_PREFIX, e.getMessage()), e, this);
+      return new RetryPolicyExhaustedException(CoreMessages.createStaticMessage(UNTIL_SUCCESSFUL_MSG_PREFIX, e.getMessage()), e,
+          this);
     } else {
-      // the logger processes only the inner-most MuleException, which should be a MessagingException. In order to not lose information, we
+      // the logger processes only the inner-most MuleException, which should be a MessagingException. In order to not lose
+      // information, we
       // have to re-wrap its cause with this new exception.
       if (muleException.getCause() != null) {
         RetryPolicyExhaustedException retryPolicyExhaustedException = new RetryPolicyExhaustedException(

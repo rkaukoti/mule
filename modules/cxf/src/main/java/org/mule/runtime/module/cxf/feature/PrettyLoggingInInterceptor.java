@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.feature;
 
@@ -9,10 +9,11 @@ import org.apache.cxf.interceptor.LoggingInInterceptor;
 import java.io.PrintWriter;
 
 /**
- * Takes the log output from the standard CXF LoggingInterceptor, disassembles it, pretty-prints the XML payload, then puts it all back
- * together again.
+ * Takes the log output from the standard CXF LoggingInterceptor, disassembles it, pretty-prints the XML payload, then puts it all
+ * back together again.
  */
 public class PrettyLoggingInInterceptor extends LoggingInInterceptor {
+
   public PrettyLoggingInInterceptor() {
     super();
   }

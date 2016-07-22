@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.endpoint.outbound;
 
@@ -65,9 +65,10 @@ import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
 import static org.mule.runtime.core.api.config.MuleProperties.MULE_EVENT_TIMEOUT_PROPERTY;
 
 /**
- * Tests flow of messages from {@link org.mule.compatibility.core.endpoint.DynamicOutboundEndpoint#process(org.mule.api.MuleEvent)} down to
- * {@link org.mule.compatibility.core.transport.AbstractMessageDispatcher} and the chain of MessageProcessor's that implement the outbound
- * endpoint processing.
+ * Tests flow of messages from
+ * {@link org.mule.compatibility.core.endpoint.DynamicOutboundEndpoint#process(org.mule.api.MuleEvent)} down to
+ * {@link org.mule.compatibility.core.transport.AbstractMessageDispatcher} and the chain of MessageProcessor's that implement the
+ * outbound endpoint processing.
  */
 public class DynamicOutboundEndpointTestCase extends AbstractMessageProcessorTestCase {
 
@@ -143,7 +144,8 @@ public class DynamicOutboundEndpointTestCase extends AbstractMessageProcessorTes
     assertNull(MyMessageDispatcherFactory.dispatcher);
 
     assertTrue(securityNotificationListener.latch.await(RECEIVE_TIMEOUT, TimeUnit.MILLISECONDS));
-    assertEquals(SecurityNotification.SECURITY_AUTHENTICATION_FAILED, securityNotificationListener.securityNotification.getAction());
+    assertEquals(SecurityNotification.SECURITY_AUTHENTICATION_FAILED,
+        securityNotificationListener.securityNotification.getAction());
     assertEquals(securityNotificationListener.securityNotification.getResourceIdentifier(),
         TestSecurityFilter.StaticMessageUnauthorisedException.class.getName());
   }
@@ -166,7 +168,8 @@ public class DynamicOutboundEndpointTestCase extends AbstractMessageProcessorTes
       assertThat(listener.messageNotificationList, hasSize(1));
       assertThat(listener.messageNotificationList.get(0).getAction(), is(MESSAGE_SEND_BEGIN));
       assertThat(listener.messageNotificationList.get(0).getSource(), instanceOf(MuleMessage.class));
-      assertThat(listener.messageNotificationList.get(0).getSource().getPayload(), is((Object) outboundEvent.getMessage().getPayload()));
+      assertThat(listener.messageNotificationList.get(0).getSource().getPayload(),
+          is((Object) outboundEvent.getMessage().getPayload()));
     };
 
     endpoint.process(outboundEvent);
@@ -178,7 +181,8 @@ public class DynamicOutboundEndpointTestCase extends AbstractMessageProcessorTes
     assertThat(listener.messageNotificationList.get(1).getAction(), is(MESSAGE_SEND_END));
     assertThat(listener.messageNotificationList.get(0).getSource(), instanceOf(MuleMessage.class));
     assertThat(listener.messageNotificationList.get(1).getSource(), instanceOf(MuleMessage.class));
-    assertThat(listener.messageNotificationList.get(0).getSource().getPayload(), is((Object) outboundEvent.getMessage().getPayload()));
+    assertThat(listener.messageNotificationList.get(0).getSource().getPayload(),
+        is((Object) outboundEvent.getMessage().getPayload()));
     assertThat(listener.messageNotificationList.get(1).getSource().getPayload(), is((Object) RESPONSE_MESSAGE));
   }
 
@@ -199,7 +203,8 @@ public class DynamicOutboundEndpointTestCase extends AbstractMessageProcessorTes
       assertThat(listener.messageNotificationList, hasSize(1));
       assertThat(listener.messageNotificationList.get(0).getAction(), is(MESSAGE_DISPATCH_BEGIN));
       assertThat(listener.messageNotificationList.get(0).getSource(), instanceOf(MuleMessage.class));
-      assertThat(listener.messageNotificationList.get(0).getSource().getPayload(), is((Object) outboundEvent.getMessage().getPayload()));
+      assertThat(listener.messageNotificationList.get(0).getSource().getPayload(),
+          is((Object) outboundEvent.getMessage().getPayload()));
     };
 
     endpoint.process(outboundEvent);
@@ -211,14 +216,16 @@ public class DynamicOutboundEndpointTestCase extends AbstractMessageProcessorTes
     assertThat(listener.messageNotificationList.get(1).getAction(), is(MESSAGE_DISPATCH_END));
     assertThat(listener.messageNotificationList.get(0).getSource(), instanceOf(MuleMessage.class));
     assertThat(listener.messageNotificationList.get(1).getSource(), instanceOf(MuleMessage.class));
-    assertThat(listener.messageNotificationList.get(0).getSource().getPayload(), is((Object) outboundEvent.getMessage().getPayload()));
-    assertThat(listener.messageNotificationList.get(1).getSource().getPayload(), is((Object) outboundEvent.getMessage().getPayload()));
+    assertThat(listener.messageNotificationList.get(0).getSource().getPayload(),
+        is((Object) outboundEvent.getMessage().getPayload()));
+    assertThat(listener.messageNotificationList.get(1).getSource().getPayload(),
+        is((Object) outboundEvent.getMessage().getPayload()));
   }
 
   @Test
   public void testTransformers() throws Exception {
-    OutboundEndpoint endpoint = createOutboundEndpoint(null, null, new OutboundAppendTransformer(), new ResponseAppendTransformer(),
-        MessageExchangePattern.REQUEST_RESPONSE, null);
+    OutboundEndpoint endpoint = createOutboundEndpoint(null, null, new OutboundAppendTransformer(),
+        new ResponseAppendTransformer(), MessageExchangePattern.REQUEST_RESPONSE, null);
 
     testOutboundEvent = createTestOutboundEvent();
 
@@ -244,8 +251,8 @@ public class DynamicOutboundEndpointTestCase extends AbstractMessageProcessorTes
     OutboundEndpoint endpoint = createOutboundEndpoint(null, null, null, null, REQUEST_RESPONSE, null);
 
     testOutboundEvent = createTestOutboundEvent();
-    testOutboundEvent.setMessage(
-        MuleMessage.builder(testOutboundEvent.getMessage()).addOutboundProperty(MULE_EVENT_TIMEOUT_PROPERTY, testTimeout).build());
+    testOutboundEvent.setMessage(MuleMessage.builder(testOutboundEvent.getMessage())
+        .addOutboundProperty(MULE_EVENT_TIMEOUT_PROPERTY, testTimeout).build());
 
     MuleEvent response = endpoint.process(testOutboundEvent);
 
@@ -289,6 +296,7 @@ public class DynamicOutboundEndpointTestCase extends AbstractMessageProcessorTes
   private void assertEventDispatched() {
     Prober prober = new PollingProber();
     prober.check(new Probe() {
+
       @Override
       public boolean isSatisfied() {
         return MyMessageDispatcherFactory.dispatcher != null && MyMessageDispatcherFactory.dispatcher.dispatchedEvent;
@@ -308,6 +316,7 @@ public class DynamicOutboundEndpointTestCase extends AbstractMessageProcessorTes
   private void assertEventSent() {
     Prober prober = new PollingProber();
     prober.check(new Probe() {
+
       @Override
       public boolean isSatisfied() {
         return MyMessageDispatcherFactory.dispatcher != null && MyMessageDispatcherFactory.dispatcher.sentEvent;
@@ -328,14 +337,15 @@ public class DynamicOutboundEndpointTestCase extends AbstractMessageProcessorTes
     Properties props = new Properties();
     props.put(MuleProperties.CONNECTOR_DISPATCHER_FACTORY, MyMessageDispatcherFactory.class.getName());
     DefaultTransportServiceDescriptor serviceDescriptor =
-        (DefaultTransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(), LegacyServiceType.TRANSPORT, "test", null);
+        (DefaultTransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(), LegacyServiceType.TRANSPORT,
+            "test", null);
     props.put(MuleProperties.CONNECTOR_INBOUND_EXCHANGE_PATTERNS, "ONE_WAY, REQUEST_RESPONSE");
     props.put(MuleProperties.CONNECTOR_OUTBOUND_EXCHANGE_PATTERNS, "ONE_WAY, REQUEST_RESPONSE");
     serviceDescriptor.setOverrides(props);
   }
 
-  protected OutboundEndpoint createOutboundEndpoint(Filter filter, SecurityFilter securityFilter, Transformer in, Transformer response,
-      MessageExchangePattern exchangePattern, TransactionConfig txConfig) throws Exception {
+  protected OutboundEndpoint createOutboundEndpoint(Filter filter, SecurityFilter securityFilter, Transformer in,
+      Transformer response, MessageExchangePattern exchangePattern, TransactionConfig txConfig) throws Exception {
 
     return createTestOutboundEndpoint("test://localhost:#[message.outboundProperties.port]", filter, securityFilter, in, response,
         exchangePattern, txConfig);

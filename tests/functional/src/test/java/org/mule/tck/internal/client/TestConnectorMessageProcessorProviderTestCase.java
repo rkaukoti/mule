@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.tck.internal.client;
@@ -46,7 +46,8 @@ public class TestConnectorMessageProcessorProviderTestCase extends AbstractMuleT
         messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), REQUEST_RESPONSE);
 
     assertThat(messageProcessor, is(not(nullValue())));
-    assertThat(messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), REQUEST_RESPONSE), is(messageProcessor));
+    assertThat(messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), REQUEST_RESPONSE),
+        is(messageProcessor));
   }
 
   @Test
@@ -61,15 +62,18 @@ public class TestConnectorMessageProcessorProviderTestCase extends AbstractMuleT
 
   @Test
   public void differentPathReturnsDifferentOperations() throws Exception {
-    final MessageProcessor messageProcessor1 = messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), ONE_WAY);
-    final MessageProcessor messageProcessor2 = messageProcessorProvider.getMessageProcessor(ANOTHER_PATH, newOptions().build(), ONE_WAY);
+    final MessageProcessor messageProcessor1 =
+        messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), ONE_WAY);
+    final MessageProcessor messageProcessor2 =
+        messageProcessorProvider.getMessageProcessor(ANOTHER_PATH, newOptions().build(), ONE_WAY);
 
     assertThat(messageProcessor2, not(is(messageProcessor1)));
   }
 
   @Test
   public void differentExchangePatternsReturnsDifferentOperations() throws Exception {
-    final MessageProcessor messageProcessor1 = messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), ONE_WAY);
+    final MessageProcessor messageProcessor1 =
+        messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), ONE_WAY);
     final MessageProcessor messageProcessor2 =
         messageProcessorProvider.getMessageProcessor(PATH_URL, newOptions().build(), REQUEST_RESPONSE);
 

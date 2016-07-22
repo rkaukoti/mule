@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.activemq;
 
@@ -23,6 +23,7 @@ import javax.jms.JMSException;
  * ActiveMQ 4.x-specific JMS connector.
  */
 public class ActiveMQJmsConnector extends JmsConnector {
+
   public static final String ACTIVEMQ_CONNECTION_FACTORY_CLASS = "org.apache.activemq.ActiveMQConnectionFactory";
   public static final String DEFAULT_BROKER_URL = "vm://localhost?broker.persistent=false&broker.useJmx=false";
 
@@ -52,7 +53,8 @@ public class ActiveMQJmsConnector extends JmsConnector {
       Method setMaximumRedeliveriesMethod = redeliveryPolicy.getClass().getMethod("setMaximumRedeliveries", Integer.TYPE);
       int maxRedelivery = getMaxRedelivery();
       if (maxRedelivery != REDELIVERY_IGNORE) {
-        // redelivery = deliveryCount - 1, but AMQ is considering the first delivery attempt as a redelivery (wrong!). adjust for it
+        // redelivery = deliveryCount - 1, but AMQ is considering the first delivery attempt as a redelivery (wrong!). adjust for
+        // it
         maxRedelivery++;
       }
       setMaximumRedeliveriesMethod.invoke(redeliveryPolicy, maxRedelivery);
@@ -93,8 +95,9 @@ public class ActiveMQJmsConnector extends JmsConnector {
           cleanupMethod = realConnectionClass.getMethod("cleanup", (Class[]) null);
         } else {
           if (logger.isDebugEnabled()) {
-            logger.debug(String.format("InvocationHandler of the JMS connection proxy is of type %s, not doing " + "any extra cleanup",
-                invocationHandler.getClass().getName()));
+            logger.debug(
+                String.format("InvocationHandler of the JMS connection proxy is of type %s, not doing " + "any extra cleanup",
+                    invocationHandler.getClass().getName()));
           }
         }
       } else {

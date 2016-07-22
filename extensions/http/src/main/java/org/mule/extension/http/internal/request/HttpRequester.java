@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.http.internal.request;
 
@@ -41,6 +41,7 @@ import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
  * @since 4.0
  */
 public class HttpRequester {
+
   private static final Logger logger = LoggerFactory.getLogger(HttpRequester.class);
   private static final String REMOTELY_CLOSED = "Remotely closed";
 
@@ -67,13 +68,14 @@ public class HttpRequester {
         new NotificationHelper(config.getMuleContext().getNotificationManager(), ConnectorMessageNotification.class, false);
   }
 
-  public MuleMessage doRequest(MuleEvent muleEvent, HttpClient client, HttpRequesterRequestBuilder requestBuilder, boolean checkRetry)
-      throws MuleException {
+  public MuleMessage doRequest(MuleEvent muleEvent, HttpClient client, HttpRequesterRequestBuilder requestBuilder,
+      boolean checkRetry) throws MuleException {
     HttpRequest httpRequest = eventToHttpRequest.create(muleEvent, requestBuilder, authentication);
 
     HttpResponse response;
     try {
-      notificationHelper.fireNotification(this, muleEvent, httpRequest.getUri(), muleEvent.getFlowConstruct(), MESSAGE_REQUEST_BEGIN);
+      notificationHelper.fireNotification(this, muleEvent, httpRequest.getUri(), muleEvent.getFlowConstruct(),
+          MESSAGE_REQUEST_BEGIN);
       response = client.send(httpRequest, responseTimeout, followRedirects, resolveAuthentication(authentication));
     } catch (Exception e) {
       checkIfRemotelyClosed(e, client.getDefaultUriParameters());
@@ -84,8 +86,8 @@ public class HttpRequester {
     MuleMessage responseMessage = httpResponseToMuleMessage.convert(muleEvent, response, httpRequest.getUri());
 
     // Create a new muleEvent based on the old and the response so that the auth can use it
-    MuleEvent responseEvent =
-        new DefaultMuleEvent(org.mule.runtime.core.api.MuleMessage.builder(responseMessage).build(), muleEvent, muleEvent.isSynchronous());
+    MuleEvent responseEvent = new DefaultMuleEvent(org.mule.runtime.core.api.MuleMessage.builder(responseMessage).build(),
+        muleEvent, muleEvent.isSynchronous());
     if (resendRequest(responseEvent, checkRetry, authentication)) {
       consumePayload(responseEvent);
       responseMessage = doRequest(responseEvent, client, requestBuilder, false);
@@ -118,13 +120,15 @@ public class HttpRequester {
   }
 
   private void checkIfRemotelyClosed(Exception exception, UriParameters uriParameters) {
-    if (HTTPS.getScheme().equals(uriParameters.getScheme()) && StringUtils.containsIgnoreCase(exception.getMessage(), REMOTELY_CLOSED)) {
+    if (HTTPS.getScheme().equals(uriParameters.getScheme())
+        && StringUtils.containsIgnoreCase(exception.getMessage(), REMOTELY_CLOSED)) {
       logger.error(
           "Remote host closed connection. Possible SSL/TLS handshake issue. Check protocols, cipher suites and certificate set up. Use -Djavax.net.debug=handshake for further debugging.");
     }
   }
 
   public static class Builder {
+
     private String uri;
     private String method;
     private boolean followRedirects;
@@ -197,8 +201,8 @@ public class HttpRequester {
     public HttpRequester build() {
       MuleEventToHttpRequest eventToHttpRequest =
           new MuleEventToHttpRequest(config, uri, method, requestStreamingMode, sendBodyMode, source);
-      return new HttpRequester(eventToHttpRequest, followRedirects, authentication, parseResponse, responseTimeout, responseValidator,
-          config);
+      return new HttpRequester(eventToHttpRequest, followRedirects, authentication, parseResponse, responseTimeout,
+          responseValidator, config);
     }
   }
 }

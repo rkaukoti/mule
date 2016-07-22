@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.email.api;
 
@@ -71,11 +71,12 @@ public final class EmailAttributesBuilder {
     try {
       Flags flags = msg.getFlags();
 
-      EmailAttributesBuilder builder = EmailAttributesBuilder.newAttributes().withId(msg.getMessageNumber()).withSubject(msg.getSubject())
-          .fromAddresses(msg.getFrom()).toAddresses(msg.getRecipients(TO)).ccAddresses(msg.getRecipients(CC))
-          .bccAddresses(msg.getRecipients(BCC)).seen(flags.contains(SEEN)).replyToAddress(msg.getReplyTo()).recent(flags.contains(RECENT))
-          .sentDate(msg.getSentDate()).receivedDate(msg.getReceivedDate()).draft(flags.contains(DRAFT)).answered(flags.contains(ANSWERED))
-          .deleted(flags.contains(DELETED));
+      EmailAttributesBuilder builder =
+          EmailAttributesBuilder.newAttributes().withId(msg.getMessageNumber()).withSubject(msg.getSubject())
+              .fromAddresses(msg.getFrom()).toAddresses(msg.getRecipients(TO)).ccAddresses(msg.getRecipients(CC))
+              .bccAddresses(msg.getRecipients(BCC)).seen(flags.contains(SEEN)).replyToAddress(msg.getReplyTo())
+              .recent(flags.contains(RECENT)).sentDate(msg.getSentDate()).receivedDate(msg.getReceivedDate())
+              .draft(flags.contains(DRAFT)).answered(flags.contains(ANSWERED)).deleted(flags.contains(DELETED));
 
       return withAttachments ? builder.withAttachments(process(msg).getAttachments()).build() : builder.build();
     } catch (MessagingException mse) {
@@ -84,7 +85,8 @@ public final class EmailAttributesBuilder {
   }
 
   /**
-   * builds the new {@link EmailAttributes} instance from a given {@link Message} extracting all its attributes including the attachments.
+   * builds the new {@link EmailAttributes} instance from a given {@link Message} extracting all its attributes including the
+   * attachments.
    *
    * @param msg the {@link Message} to extract attributes from.
    * @return a new {@link EmailAttributes} instance.

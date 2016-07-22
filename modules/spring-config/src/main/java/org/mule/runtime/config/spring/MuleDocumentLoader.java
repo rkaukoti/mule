@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring;
 
@@ -34,8 +34,8 @@ import javax.xml.parsers.SAXParserFactory;
 import static org.mule.runtime.config.spring.parsers.XmlMetadataAnnotations.METADATA_ANNOTATIONS_KEY;
 
 /**
- * Alternative to Spring's default document loader that uses <b>SAX</b> to add metadata to the <b>DOM</b> elements that are the result of
- * the default parser.
+ * Alternative to Spring's default document loader that uses <b>SAX</b> to add metadata to the <b>DOM</b> elements that are the
+ * result of the default parser.
  *
  * @since 3.8.0
  */
@@ -44,6 +44,7 @@ final class MuleDocumentLoader implements DocumentLoader {
   private static final String DEFER_NODE_EXPANSION_FEATURE_KEY = "http://apache.org/xml/features/dom/defer-node-expansion";
 
   private static final UserDataHandler COPY_METADATA_ANNOTATIONS_DATA_HANDLER = new UserDataHandler() {
+
     @Override
     public void handle(short operation, String key, Object data, Node src, Node dst) {
       if (operation == NODE_IMPORTED || operation == NODE_CLONED) {
@@ -67,8 +68,8 @@ final class MuleDocumentLoader implements DocumentLoader {
    * Load the {@link Document} at the supplied {@link InputSource} using the standard JAXP-configured XML parser.
    */
   @Override
-  public Document loadDocument(InputSource inputSource, EntityResolver entityResolver, ErrorHandler errorHandler, int validationMode,
-      boolean namespaceAware) throws Exception {
+  public Document loadDocument(InputSource inputSource, EntityResolver entityResolver, ErrorHandler errorHandler,
+      int validationMode, boolean namespaceAware) throws Exception {
     ByteArrayOutputStream output = new ByteArrayOutputStream();
     IOUtils.copy(inputSource.getByteStream(), output);
 
@@ -94,6 +95,7 @@ final class MuleDocumentLoader implements DocumentLoader {
    * SAX filter that builds the metadata that will annotate the built nodes.
    */
   public final static class XmlMetadataAnnotator extends DefaultHandler {
+
     private Locator locator;
     private DomWalkerElement walker;
     private XmlMetadataAnnotationsFactory metadataFactory;
@@ -147,6 +149,7 @@ final class MuleDocumentLoader implements DocumentLoader {
    * Allows for sequential navigation of a DOM tree.
    */
   private final static class DomWalkerElement {
+
     private final DomWalkerElement parent;
     private final Node node;
 
@@ -184,6 +187,7 @@ final class MuleDocumentLoader implements DocumentLoader {
   }
 
   private final class DefaultXmlMetadataFactory implements XmlMetadataAnnotationsFactory {
+
     @Override
     public XmlMetadataAnnotations create(Locator locator) {
       DefaultXmlMetadataAnnotations annotations = new DefaultXmlMetadataAnnotations();

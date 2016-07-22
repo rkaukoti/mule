@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.support;
 
@@ -53,10 +53,12 @@ import static org.mule.runtime.api.metadata.MediaType.XML;
 
 
 /**
- * WSDLQueryHandler class preserved from cxf 2.3. CXF 2.5 removed the class and now relies on the WSDLGetInterceptor to perform the same
- * logic, but the interceptor in its finally clause removes the content of the message from the exchange and it can be retrieved.
+ * WSDLQueryHandler class preserved from cxf 2.3. CXF 2.5 removed the class and now relies on the WSDLGetInterceptor to perform
+ * the same logic, but the interceptor in its finally clause removes the content of the message from the exchange and it can be
+ * retrieved.
  */
 public class WSDLQueryHandler implements StemMatchingQueryHandler {
+
   private static final Logger LOG = LogUtils.getL7dLogger(WSDLQueryHandler.class);
   protected Bus bus;
 
@@ -93,7 +95,8 @@ public class WSDLQueryHandler implements StemMatchingQueryHandler {
 
   @Override
   public boolean isRecognizedQuery(String baseUri, String ctx, EndpointInfo endpointInfo, boolean contextMatchExact) {
-    if (baseUri != null && (baseUri.contains("?") && (baseUri.toLowerCase().contains("wsdl") || baseUri.toLowerCase().contains("xsd=")))) {
+    if (baseUri != null
+        && (baseUri.contains("?") && (baseUri.toLowerCase().contains("wsdl") || baseUri.toLowerCase().contains("xsd=")))) {
 
       int idx = baseUri.indexOf("?");
       Map<String, String> map = UrlUtils.parseQueryString(baseUri.substring(idx + 1));
@@ -231,7 +234,8 @@ public class WSDLQueryHandler implements StemMatchingQueryHandler {
     return new ServiceWSDLBuilder(bus, endpointInfo.getService()).build();
   }
 
-  protected void updateDoc(Document doc, String base, Map<String, Definition> mp, Map<String, SchemaReference> smp, EndpointInfo ei) {
+  protected void updateDoc(Document doc, String base, Map<String, Definition> mp, Map<String, SchemaReference> smp,
+      EndpointInfo ei) {
     List<Element> elementList = null;
 
 
@@ -306,8 +310,8 @@ public class WSDLQueryHandler implements StemMatchingQueryHandler {
     }
   }
 
-  protected void updateDefinition(Definition def, Map<String, Definition> done, Map<String, SchemaReference> doneSchemas, String base,
-      EndpointInfo ei) {
+  protected void updateDefinition(Definition def, Map<String, Definition> done, Map<String, SchemaReference> doneSchemas,
+      String base, EndpointInfo ei) {
     OASISCatalogManager catalogs = OASISCatalogManager.getCatalogManager(bus);
 
     Collection<List<?>> imports = CastUtils.cast((Collection<?>) def.getImports().values());
@@ -347,8 +351,8 @@ public class WSDLQueryHandler implements StemMatchingQueryHandler {
 
 
     /*
-     * This doesn't actually work. Setting setSchemaLocationURI on the import for some reason doesn't actually result in the new URI being
-     * written
+     * This doesn't actually work. Setting setSchemaLocationURI on the import for some reason doesn't actually result in the new
+     * URI being written
      */
     Types types = def.getTypes();
     if (types != null) {

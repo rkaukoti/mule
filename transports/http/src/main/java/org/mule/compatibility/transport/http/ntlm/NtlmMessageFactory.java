@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.ntlm;
 
@@ -72,7 +72,8 @@ public class NtlmMessageFactory {
    * Creates a {@link Type3Message} for NTLM authentication.
    *
    * @param ntCredentials the credentials used for the authentication
-   * @param type2Message the {@link Type2Message} received from the server in response to a {@link Type1Message} message previously sent.
+   * @param type2Message the {@link Type2Message} received from the server in response to a {@link Type1Message} message
+   *        previously sent.
    * @return a {@link Type3Message} to continue the authentication process.
    */
   public Type3Message createType3Message(NTCredentials ntCredentials, Type2Message type2Message) {

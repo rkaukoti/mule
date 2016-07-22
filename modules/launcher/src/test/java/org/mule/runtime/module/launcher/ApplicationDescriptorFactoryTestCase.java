@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher;
 
@@ -71,8 +71,8 @@ public class ApplicationDescriptorFactoryTestCase extends AbstractMuleTestCase {
 
     final ArtifactPluginDescriptorFactory pluginDescriptorFactory = mock(ArtifactPluginDescriptorFactory.class);
 
-    final ApplicationDescriptorFactory applicationDescriptorFactory =
-        new ApplicationDescriptorFactory(new ArtifactPluginDescriptorLoader(pluginDescriptorFactory), applicationPluginRepository);
+    final ApplicationDescriptorFactory applicationDescriptorFactory = new ApplicationDescriptorFactory(
+        new ArtifactPluginDescriptorLoader(pluginDescriptorFactory), applicationPluginRepository);
     final ArtifactPluginDescriptor expectedPluginDescriptor1 = mock(ArtifactPluginDescriptor.class);
     when(expectedPluginDescriptor1.getName()).thenReturn("plugin1");
     when(expectedPluginDescriptor1.getClassLoaderFilter()).thenReturn(ArtifactClassLoaderFilter.NULL_CLASSLOADER_FILTER);
@@ -131,20 +131,22 @@ public class ApplicationDescriptorFactoryTestCase extends AbstractMuleTestCase {
     exportedPackages.add("org.foo");
     exportedPackages.add("org.bar");
     plugin2Descriptor.setClassLoaderFilter(new ArtifactClassLoaderFilter(exportedPackages, Collections.emptySet()));
-    when(applicationPluginRepository.getContainerArtifactPluginDescriptors()).thenReturn(Collections.singletonList(plugin2Descriptor));
+    when(applicationPluginRepository.getContainerArtifactPluginDescriptors())
+        .thenReturn(Collections.singletonList(plugin2Descriptor));
 
     doPackageValidationTest(applicationPluginRepository);
   }
 
   private File createApplicationPluginFile() throws Exception {
-    return new ArtifactPluginFileBuilder("plugin").configuredWith(EXPORTED_CLASS_PACKAGES_PROPERTY, "org.foo, org.bar").getArtifactFile();
+    return new ArtifactPluginFileBuilder("plugin").configuredWith(EXPORTED_CLASS_PACKAGES_PROPERTY, "org.foo, org.bar")
+        .getArtifactFile();
   }
 
   private void doPackageValidationTest(ArtifactPluginRepository applicationPluginRepository) {
     final ArtifactPluginDescriptorFactory pluginDescriptorFactory =
         new ArtifactPluginDescriptorFactory(new DefaultArtifactClassLoaderFilterFactory());
-    final ApplicationDescriptorFactory applicationDescriptorFactory =
-        new ApplicationDescriptorFactory(new ArtifactPluginDescriptorLoader(pluginDescriptorFactory), applicationPluginRepository);
+    final ApplicationDescriptorFactory applicationDescriptorFactory = new ApplicationDescriptorFactory(
+        new ArtifactPluginDescriptorLoader(pluginDescriptorFactory), applicationPluginRepository);
 
     try {
       applicationDescriptorFactory.create(getAppFolder(APP_NAME));

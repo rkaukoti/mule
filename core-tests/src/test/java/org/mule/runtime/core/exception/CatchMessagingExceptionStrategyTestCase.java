@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.exception;
 
@@ -96,6 +96,7 @@ public class CatchMessagingExceptionStrategyTestCase extends AbstractMuleContext
     final MuleEvent result = catchMessagingExceptionStrategy.handleException(mockException, mockMuleEvent);
 
     verify(mockMuleEvent, times(1)).setMessage(argThat(new ArgumentMatcher<MuleMessage>() {
+
       @Override
       public boolean matches(Object argument) {
         return ((MuleMessage) argument).getPayload().equals("A");
@@ -118,7 +119,8 @@ public class CatchMessagingExceptionStrategyTestCase extends AbstractMuleContext
   }
 
   /**
-   * On fatal error, the exception strategies are not supposed to use MuleMessage.toString() as it could potentially log sensible data.
+   * On fatal error, the exception strategies are not supposed to use MuleMessage.toString() as it could potentially log sensible
+   * data.
    */
   @Test
   public void testMessageToStringNotCalledOnFailure() throws Exception {
@@ -140,8 +142,8 @@ public class CatchMessagingExceptionStrategyTestCase extends AbstractMuleContext
   private MuleEvent createNonBlockingTestEvent() throws Exception {
     Flow flow = MuleTestUtils.getTestFlow(muleContext);
     flow.setProcessingStrategy(new NonBlockingProcessingStrategy());
-    return new DefaultMuleEvent(MuleMessage.builder().payload(TEST_MESSAGE).build(), REQUEST_RESPONSE, new SensingNullReplyToHandler(),
-        flow);
+    return new DefaultMuleEvent(MuleMessage.builder().payload(TEST_MESSAGE).build(), REQUEST_RESPONSE,
+        new SensingNullReplyToHandler(), flow);
   }
 
   private MessageProcessor createChagingEventMessageProcessor(final MuleEvent lastEventCreated) {

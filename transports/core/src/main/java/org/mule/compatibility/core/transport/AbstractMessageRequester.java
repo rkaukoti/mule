@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -21,10 +21,12 @@ import static org.mule.runtime.core.context.notification.ConnectorMessageNotific
 import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_REQUEST_END;
 
 /**
- * The Message Requester is used to explicitly request messages from a message channel or resource rather than subscribing to inbound events
- * or polling for messages. This is often used programatically but will not be used for inbound endpoints configured on services.
+ * The Message Requester is used to explicitly request messages from a message channel or resource rather than subscribing to
+ * inbound events or polling for messages. This is often used programatically but will not be used for inbound endpoints
+ * configured on services.
  */
 public abstract class AbstractMessageRequester extends AbstractTransportMessageHandler implements MessageRequester {
+
   private List<Transformer> defaultInboundTransformers;
 
   public AbstractMessageRequester(InboundEndpoint endpoint) {
@@ -37,10 +39,10 @@ public abstract class AbstractMessageRequester extends AbstractTransportMessageH
   }
 
   /**
-   * Method used to perform any initialisation work. If a fatal error occurs during initialisation an <code>InitialisationException</code>
-   * should be thrown, causing the Mule instance to shutdown. If the error is recoverable, say by retrying to connect, a
-   * <code>RecoverableException</code> should be thrown. There is no guarantee that by throwing a Recoverable exception that the Mule
-   * instance will not shut down.
+   * Method used to perform any initialisation work. If a fatal error occurs during initialisation an
+   * <code>InitialisationException</code> should be thrown, causing the Mule instance to shutdown. If the error is recoverable,
+   * say by retrying to connect, a <code>RecoverableException</code> should be thrown. There is no guarantee that by throwing a
+   * Recoverable exception that the Mule instance will not shut down.
    *
    * @throws org.mule.api.lifecycle.InitialisationException if a fatal error occurs causing the Mule instance to shutdown
    * @throws org.mule.api.lifecycle.RecoverableException if an error occurs that can be recovered from
@@ -58,8 +60,8 @@ public abstract class AbstractMessageRequester extends AbstractTransportMessageH
   /**
    * Make a specific request to the underlying transport
    *
-   * @param timeout the maximum time the operation should block before returning. The call should return immediately if there is data
-   *        available. If no data becomes available before the timeout elapses, null will be returned
+   * @param timeout the maximum time the operation should block before returning. The call should return immediately if there is
+   *        data available. If no data becomes available before the timeout elapses, null will be returned
    * @return the result of the request wrapped in a MuleMessage object. Null will be returned if no data was available
    * @throws Exception if the call to the underlying protocol causes an exception
    */
@@ -130,8 +132,8 @@ public abstract class AbstractMessageRequester extends AbstractTransportMessageH
   /**
    * Make a specific request to the underlying transport
    *
-   * @param timeout the maximum time the operation should block before returning. The call should return immediately if there is data
-   *        available. If no data becomes available before the timeout elapses, null will be returned
+   * @param timeout the maximum time the operation should block before returning. The call should return immediately if there is
+   *        data available. If no data becomes available before the timeout elapses, null will be returned
    * @return the result of the request wrapped in a MuleMessage object. Null will be returned if no data was avaialable
    * @throws Exception if the call to the underlying protocal cuases an exception
    */

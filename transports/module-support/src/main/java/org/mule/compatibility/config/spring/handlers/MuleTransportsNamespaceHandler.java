@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.config.spring.handlers;
 
@@ -49,7 +49,8 @@ public class MuleTransportsNamespaceHandler extends AbstractMuleNamespaceHandler
   @Override
   public void init() {
     // Core
-    registerBeanDefinitionParser("until-successful", new ChildDefinitionParser("messageProcessor", EndpointDlqUntilSuccessful.class));
+    registerBeanDefinitionParser("until-successful",
+        new ChildDefinitionParser("messageProcessor", EndpointDlqUntilSuccessful.class));
     registerBeanDefinitionParser("request-reply",
         new ChildDefinitionParser("messageProcessor", SimpleAsyncEndpointRequestReplyRequester.class));
     registerBeanDefinitionParser("default-exception-strategy",
@@ -63,10 +64,10 @@ public class MuleTransportsNamespaceHandler extends AbstractMuleNamespaceHandler
     registerBeanDefinitionParser("response", new ResponseDefinitionParser());
 
     // Connector elements
-    registerBeanDefinitionParser("dispatcher-threading-profile", new ThreadingProfileDefinitionParser("dispatcherThreadingProfile",
-        MuleProperties.OBJECT_DEFAULT_MESSAGE_DISPATCHER_THREADING_PROFILE));
-    registerBeanDefinitionParser("receiver-threading-profile",
-        new ThreadingProfileDefinitionParser("receiverThreadingProfile", MuleProperties.OBJECT_DEFAULT_MESSAGE_RECEIVER_THREADING_PROFILE));
+    registerBeanDefinitionParser("dispatcher-threading-profile", new ThreadingProfileDefinitionParser(
+        "dispatcherThreadingProfile", MuleProperties.OBJECT_DEFAULT_MESSAGE_DISPATCHER_THREADING_PROFILE));
+    registerBeanDefinitionParser("receiver-threading-profile", new ThreadingProfileDefinitionParser("receiverThreadingProfile",
+        MuleProperties.OBJECT_DEFAULT_MESSAGE_RECEIVER_THREADING_PROFILE));
     registerBeanDefinitionParser("service-overrides", new ServiceOverridesDefinitionParser());
     registerBeanDefinitionParser("custom-connector", new MuleOrphanDefinitionParser(true));
 
@@ -75,11 +76,13 @@ public class MuleTransportsNamespaceHandler extends AbstractMuleNamespaceHandler
 
     // Scripting
     registerBeanDefinitionParser("component", new ComponentDelegatingDefinitionParser(DefaultJavaWithBindingComponent.class));
-    registerBeanDefinitionParser("pooled-component", new ComponentDelegatingDefinitionParser(PooledJavaWithBindingsComponent.class));
+    registerBeanDefinitionParser("pooled-component",
+        new ComponentDelegatingDefinitionParser(PooledJavaWithBindingsComponent.class));
     registerMuleBeanDefinitionParser("binding", new BindingDefinitionParser("interfaceBinding", DefaultInterfaceBinding.class));
 
     // Security
-    SecurityFilterDefinitionParser securityFilterDefinitionParser = new SecurityFilterDefinitionParser(HttpBasicAuthenticationFilter.class);
+    SecurityFilterDefinitionParser securityFilterDefinitionParser =
+        new SecurityFilterDefinitionParser(HttpBasicAuthenticationFilter.class);
     securityFilterDefinitionParser.addAlias("securityManager-ref", "securityManager");
     registerBeanDefinitionParser("http-security-filter", securityFilterDefinitionParser);
 
@@ -97,14 +100,18 @@ public class MuleTransportsNamespaceHandler extends AbstractMuleNamespaceHandler
     ssParser.registerPreProcessor(new AddAttribute("frontend", CxfConstants.SIMPLE_FRONTEND));
     registerBeanDefinitionParser("simple-service", ssParser);
 
-    registerBeanDefinitionParser("simple-client", new MessageProcessorDefinitionParser(SimpleClientWithDecoupledEndpointFactoryBean.class));
-    registerBeanDefinitionParser("jaxws-client", new MessageProcessorDefinitionParser(JaxWsClientWithDecoupledEndpointFactoryBean.class));
-    registerBeanDefinitionParser("proxy-client", new MessageProcessorDefinitionParser(ProxyClientWithDecoupledEndpointFactoryBean.class));
+    registerBeanDefinitionParser("simple-client",
+        new MessageProcessorDefinitionParser(SimpleClientWithDecoupledEndpointFactoryBean.class));
+    registerBeanDefinitionParser("jaxws-client",
+        new MessageProcessorDefinitionParser(JaxWsClientWithDecoupledEndpointFactoryBean.class));
+    registerBeanDefinitionParser("proxy-client",
+        new MessageProcessorDefinitionParser(ProxyClientWithDecoupledEndpointFactoryBean.class));
 
     registerBeanDefinitionParser("wrapper-component", new ComponentDefinitionParser(WebServiceWrapperComponent.class));
 
     // Management
-    registerBeanDefinitionParser("publish-notifications", new DefaultNameMuleOrphanDefinitionParser(EndpointNotificationLoggerAgent.class));
+    registerBeanDefinitionParser("publish-notifications",
+        new DefaultNameMuleOrphanDefinitionParser(EndpointNotificationLoggerAgent.class));
     MuleDefinitionParserConfiguration defaultJmxParser = registerMuleBeanDefinitionParser("jmx-default-config",
         new DefaultNameMuleOrphanDefinitionParser(DefaultTransportJmxSupportAgent.class));
     defaultJmxParser.addAlias("registerMx4jAdapter", "loadMx4jAgent");

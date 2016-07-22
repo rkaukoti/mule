@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.construct;
 
@@ -46,12 +46,13 @@ import org.mule.runtime.core.work.SerialWorkManager;
  * <li>Rejects inbound events when Flow is not started</li>
  * <li>Gathers statistics and processing time data</li>
  * <li>Implements MessagePorcessor allowing direct invocation of the pipeline</li>
- * <li>Supports the optional configuration of a {@link ProcessingStrategy} that determines how message processors are processed. The default
- * {@link ProcessingStrategy} is {@link AsynchronousProcessingStrategy}. With this strategy when messages are received from a one-way
- * message source and there is no current transactions message processing in another thread asynchronously.</li>
+ * <li>Supports the optional configuration of a {@link ProcessingStrategy} that determines how message processors are processed.
+ * The default {@link ProcessingStrategy} is {@link AsynchronousProcessingStrategy}. With this strategy when messages are received
+ * from a one-way message source and there is no current transactions message processing in another thread asynchronously.</li>
  * </ul>
  */
 public class Flow extends AbstractPipeline implements MessageProcessor, StageNameSourceProvider, DynamicPipeline {
+
   private final StageNameSource sequentialStageNameSource;
   private int stageCount = 0;
   private DynamicPipelineMessageProcessor dynamicPipelineMessageProcessor;
@@ -130,6 +131,7 @@ public class Flow extends AbstractPipeline implements MessageProcessor, StageNam
 
   private ReplyToHandler createNonBlockingReplyToHandler(final MuleEvent event, final ReplyToHandler replyToHandler) {
     return new ExceptionHandlingReplyToHandlerDecorator(new NonBlockingReplyToHandler() {
+
       @Override
       public void processReplyTo(MuleEvent result, MuleMessage returnMessage, Object replyTo) throws MuleException {
         replyToHandler.processReplyTo(createReturnEventForParentFlowConstruct(result, event), null, null);
@@ -146,8 +148,8 @@ public class Flow extends AbstractPipeline implements MessageProcessor, StageNam
   private MuleEvent createReturnEventForParentFlowConstruct(MuleEvent result, MuleEvent original) {
     if (result != null && !(result instanceof VoidMuleEvent)) {
       // Create new event with original FlowConstruct, ReplyToHandler and synchronous
-      result = new DefaultMuleEvent(result, original.getFlowConstruct(), original.getReplyToHandler(), original.getReplyToDestination(),
-          original.isSynchronous());
+      result = new DefaultMuleEvent(result, original.getFlowConstruct(), original.getReplyToHandler(),
+          original.getReplyToDestination(), original.isSynchronous());
     }
     resetRequestContextEvent(result);
     return result;
@@ -194,8 +196,8 @@ public class Flow extends AbstractPipeline implements MessageProcessor, StageNam
   protected void configureStatistics() {
     if (processingStrategy instanceof AsynchronousProcessingStrategy
         && ((AsynchronousProcessingStrategy) processingStrategy).getMaxThreads() != null) {
-      statistics =
-          new FlowConstructStatistics(getConstructType(), name, ((AsynchronousProcessingStrategy) processingStrategy).getMaxThreads());
+      statistics = new FlowConstructStatistics(getConstructType(), name,
+          ((AsynchronousProcessingStrategy) processingStrategy).getMaxThreads());
     } else {
       statistics = new FlowConstructStatistics(getConstructType(), name);
     }
@@ -206,6 +208,7 @@ public class Flow extends AbstractPipeline implements MessageProcessor, StageNam
   @Override
   protected void configureMessageProcessors(MessageProcessorChainBuilder builder) throws MuleException {
     getProcessingStrategy().configureProcessors(getMessageProcessors(), new StageNameSource() {
+
       @Override
       public String getName() {
         return String.format("%s.stage%s", Flow.this.getName(), ++stageCount);

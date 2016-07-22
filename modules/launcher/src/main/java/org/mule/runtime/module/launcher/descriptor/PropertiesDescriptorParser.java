@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.descriptor;
 
@@ -16,6 +16,7 @@ import java.util.Properties;
 import static org.mule.runtime.module.reboot.MuleContainerBootstrapUtils.getMuleAppDir;
 
 public class PropertiesDescriptorParser implements DescriptorParser<ApplicationDescriptor> {
+
   public static final String PROPERTY_REDEPLOYMENT_ENABLED = "redeployment.enabled";
   public static final String PROPERTY_DOMAIN = "domain";
   protected static final String PROPERTY_ENCODING = "encoding";

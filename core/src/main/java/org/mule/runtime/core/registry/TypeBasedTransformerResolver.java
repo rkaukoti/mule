@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.registry;
 
@@ -35,10 +35,12 @@ import java.util.concurrent.ConcurrentHashMap;
 import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
 
 /**
- * Will discover transformers based on type information only. It looks for transformers that support the source and result types passed into
- * the method. This resolver only resolves on the first source type, which is the way transformer resolution working in Mule 2.x.
+ * Will discover transformers based on type information only. It looks for transformers that support the source and result types
+ * passed into the method. This resolver only resolves on the first source type, which is the way transformer resolution working
+ * in Mule 2.x.
  */
 public class TypeBasedTransformerResolver implements TransformerResolver, MuleContextAware, Disposable, Initialisable {
+
   /**
    * logger used by this class
    */
@@ -123,8 +125,8 @@ public class TypeBasedTransformerResolver implements TransformerResolver, MuleCo
   protected Transformer getNearestTransformerMatch(List<Transformer> trans, Class input, Class output) throws ResolverException {
     if (trans.size() > 1) {
       if (logger.isDebugEnabled()) {
-        logger.debug(
-            "Comparing transformers for best match: source = " + input + " target = " + output + " Possible transformers = " + trans);
+        logger.debug("Comparing transformers for best match: source = " + input + " target = " + output
+            + " Possible transformers = " + trans);
       }
 
       List<TransformerWeighting> weightings = calculateTransformerWeightings(trans, input, output);

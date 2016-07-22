@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode.functional;
 
@@ -27,8 +27,8 @@ public class AuthorizationCodeRefreshTokenConfigTestCase extends AbstractAuthori
   }
 
   /**
-   * Refresh token is optional therefore this test will validate an scenario where the access_token is invalid and refresh_token provided in
-   * previous token access has been revoked so a {@link ResponseValidatorException} should be thrown.
+   * Refresh token is optional therefore this test will validate an scenario where the access_token is invalid and refresh_token
+   * provided in previous token access has been revoked so a {@link ResponseValidatorException} should be thrown.
    */
   @Test
   public void afterFailureWithRefreshTokenNotIssuedThrowAuthenticationException() throws Exception {

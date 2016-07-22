@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.components;
 
@@ -28,15 +28,15 @@ public class EntryPointResolverCacheTestCase extends FunctionalTestCase {
   public void testCache() throws Exception {
     MuleMessage response = null;
 
-    response =
-        flowRunner("refServiceOne").withPayload("a request").withInboundProperty("method", "retrieveReferenceData").run().getMessage();
+    response = flowRunner("refServiceOne").withPayload("a request").withInboundProperty("method", "retrieveReferenceData").run()
+        .getMessage();
     Object payload = response.getPayload();
 
     assertThat(payload, instanceOf(String.class));
     assertThat(payload, is("ServiceOne"));
 
-    response = flowRunner("refServiceTwo").withPayload("another request").withInboundProperty("method", "retrieveReferenceData").run()
-        .getMessage();
+    response = flowRunner("refServiceTwo").withPayload("another request").withInboundProperty("method", "retrieveReferenceData")
+        .run().getMessage();
     payload = response.getPayload();
     if ((payload == null) || (response.getExceptionPayload() != null)) {
       DefaultExceptionPayload exPld = (DefaultExceptionPayload) response.getExceptionPayload();
@@ -52,10 +52,12 @@ public class EntryPointResolverCacheTestCase extends FunctionalTestCase {
   }
 
   public interface ReferenceDataService {
+
     String retrieveReferenceData(String refKey);
   }
 
   public static class RefDataServiceOne implements ReferenceDataService {
+
     @Override
     public String retrieveReferenceData(String refKey) {
       return "ServiceOne";
@@ -63,6 +65,7 @@ public class EntryPointResolverCacheTestCase extends FunctionalTestCase {
   }
 
   public static class RefDataServiceTwo implements ReferenceDataService {
+
     @Override
     public String retrieveReferenceData(String refKey) {
       return "ServiceTwo";

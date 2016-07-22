@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.endpoint;
 
@@ -43,8 +43,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * <code>ImmutableMuleEndpoint</code> describes a Provider in the Mule Server. A endpoint is a grouping of an endpoint, an endpointUri and a
- * transformer.
+ * <code>ImmutableMuleEndpoint</code> describes a Provider in the Mule Server. A endpoint is a grouping of an endpoint, an
+ * endpointUri and a transformer.
  */
 public abstract class AbstractEndpoint extends AbstractAnnotatedObject implements ImmutableEndpoint, Disposable {
 
@@ -78,14 +78,14 @@ public abstract class AbstractEndpoint extends AbstractAnnotatedObject implement
    */
   private final TransactionConfig transactionConfig;
   /**
-   * determines whether unaccepted filtered events should be removed from the source. If they are not removed its up to the Message receiver
-   * to handle recieving the same message again
+   * determines whether unaccepted filtered events should be removed from the source. If they are not removed its up to the
+   * Message receiver to handle recieving the same message again
    */
   private final boolean deleteUnacceptedMessages;
   private final MessageExchangePattern messageExchangePattern;
   /**
-   * How long to block when performing a remote synchronisation to a remote host. This property is optional and will be set to the default
-   * Synchonous MuleEvent time out value if not set
+   * How long to block when performing a remote synchronisation to a remote host. This property is optional and will be set to the
+   * default Synchonous MuleEvent time out value if not set
    */
   private final int responseTimeout;
   /**
@@ -107,12 +107,12 @@ public abstract class AbstractEndpoint extends AbstractAnnotatedObject implement
 
   private boolean disableTransportTransformer = false;
 
-  public AbstractEndpoint(Connector connector, EndpointURI endpointUri, String name, Map properties, TransactionConfig transactionConfig,
-      boolean deleteUnacceptedMessages, MessageExchangePattern messageExchangePattern, int responseTimeout, String initialState,
-      Charset endpointEncoding, String endpointBuilderName, MuleContext muleContext, RetryPolicyTemplate retryPolicyTemplate,
-      AbstractRedeliveryPolicy redeliveryPolicy, EndpointMessageProcessorChainFactory messageProcessorsFactory,
-      List<MessageProcessor> messageProcessors, List<MessageProcessor> responseMessageProcessors, boolean disableTransportTransformer,
-      MediaType endpointMimeType) {
+  public AbstractEndpoint(Connector connector, EndpointURI endpointUri, String name, Map properties,
+      TransactionConfig transactionConfig, boolean deleteUnacceptedMessages, MessageExchangePattern messageExchangePattern,
+      int responseTimeout, String initialState, Charset endpointEncoding, String endpointBuilderName, MuleContext muleContext,
+      RetryPolicyTemplate retryPolicyTemplate, AbstractRedeliveryPolicy redeliveryPolicy,
+      EndpointMessageProcessorChainFactory messageProcessorsFactory, List<MessageProcessor> messageProcessors,
+      List<MessageProcessor> responseMessageProcessors, boolean disableTransportTransformer, MediaType endpointMimeType) {
     this.connector = connector;
     this.endpointUri = endpointUri;
     this.name = name;
@@ -236,8 +236,8 @@ public abstract class AbstractEndpoint extends AbstractAnnotatedObject implement
       Pattern sanitizerPattern = Pattern.compile("(.*):.*");
       Matcher sanitizerMatcher = sanitizerPattern.matcher(uri.getRawUserInfo());
       if (sanitizerMatcher.matches()) {
-        sanitizedEndPointUri = new StringBuilder(uri.getScheme()).append("://").append(sanitizerMatcher.group(1)).append(":<password>")
-            .append("@").append(uri.getHost()).append(uri.getRawPath()).toString();
+        sanitizedEndPointUri = new StringBuilder(uri.getScheme()).append("://").append(sanitizerMatcher.group(1))
+            .append(":<password>").append("@").append(uri.getHost()).append(uri.getRawPath()).toString();
       }
       if (uri.getRawQuery() != null) {
         sanitizedEndPointUri = sanitizedEndPointUri + "?" + uri.getRawQuery();
@@ -245,10 +245,11 @@ public abstract class AbstractEndpoint extends AbstractAnnotatedObject implement
 
     }
 
-    return ClassUtils.getClassName(getClass()) + "{endpointUri=" + sanitizedEndPointUri + ", connector=" + connector + ",  name='" + name
-        + "', mep=" + messageExchangePattern + ", properties=" + properties + ", transactionConfig=" + transactionConfig
+    return ClassUtils.getClassName(getClass()) + "{endpointUri=" + sanitizedEndPointUri + ", connector=" + connector + ",  name='"
+        + name + "', mep=" + messageExchangePattern + ", properties=" + properties + ", transactionConfig=" + transactionConfig
         + ", deleteUnacceptedMessages=" + deleteUnacceptedMessages + ", initialState=" + initialState + ", responseTimeout="
-        + responseTimeout + ", endpointEncoding=" + endpointEncoding + ", disableTransportTransformer=" + disableTransportTransformer + "}";
+        + responseTimeout + ", endpointEncoding=" + endpointEncoding + ", disableTransportTransformer="
+        + disableTransportTransformer + "}";
   }
 
   @Override
@@ -276,10 +277,10 @@ public abstract class AbstractEndpoint extends AbstractAnnotatedObject implement
         && equal(endpointUri, other.endpointUri) && equal(initialState, other.initialState)
         // don't include lifecycle state as lifecycle code includes hashing
         // && equal(initialised, other.initialised)
-        && equal(messageExchangePattern, other.messageExchangePattern) && equal(name, other.name) && equal(properties, other.properties)
-        && responseTimeout == other.responseTimeout && equal(messageProcessors, other.messageProcessors)
-        && equal(responseMessageProcessors, other.responseMessageProcessors) && equal(transactionConfig, other.transactionConfig)
-        && disableTransportTransformer == other.disableTransportTransformer;
+        && equal(messageExchangePattern, other.messageExchangePattern) && equal(name, other.name)
+        && equal(properties, other.properties) && responseTimeout == other.responseTimeout
+        && equal(messageProcessors, other.messageProcessors) && equal(responseMessageProcessors, other.responseMessageProcessors)
+        && equal(transactionConfig, other.transactionConfig) && disableTransportTransformer == other.disableTransportTransformer;
   }
 
   @Override
@@ -309,8 +310,8 @@ public abstract class AbstractEndpoint extends AbstractAnnotatedObject implement
   }
 
   /**
-   * Returns an EndpointSecurityFilter for this endpoint. If one is not set, there will be no authentication on events sent via this
-   * endpoint
+   * Returns an EndpointSecurityFilter for this endpoint. If one is not set, there will be no authentication on events sent via
+   * this endpoint
    *
    * @return EndpointSecurityFilter responsible for authenticating message flow via this endpoint.
    * @see org.mule.compatibility.core.api.security.EndpointSecurityFilter

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -101,8 +101,9 @@ public abstract class AbstractTransportMessageProcessTemplate<MessageReceiverTyp
     final Object remoteSyncProperty = message.getInboundProperty(MULE_REMOTE_SYNC_PROPERTY);
     messageBuilder.removeInboundProperty(MULE_REMOTE_SYNC_PROPERTY);
     if (ObjectUtils.getBoolean(remoteSyncProperty, false) && !messageReceiver.getEndpoint().getExchangePattern().hasResponse()) {
-      logger.warn("MuleClient.send() was used but inbound endpoint " + messageReceiver.getEndpoint().getEndpointURI().getUri().toString()
-          + " is not 'request-response'.  No response will be returned.");
+      logger.warn(
+          "MuleClient.send() was used but inbound endpoint " + messageReceiver.getEndpoint().getEndpointURI().getUri().toString()
+              + " is not 'request-response'.  No response will be returned.");
     }
     return messageBuilder.build();
   }

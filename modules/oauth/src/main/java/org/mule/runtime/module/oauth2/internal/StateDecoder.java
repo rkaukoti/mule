@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.oauth2.internal;
 
@@ -59,8 +59,8 @@ public class StateDecoder {
     String parameterValue = null;
     if (state != null && state.contains(StateEncoder.ON_COMPLETE_REDIRECT_TO_PARAM_NAME_ASSIGN)) {
       final int onCompleteRedirectToSuffixIndex = state.indexOf(StateEncoder.ON_COMPLETE_REDIRECT_TO_PARAM_NAME_ASSIGN);
-      parameterValue = state.substring(onCompleteRedirectToSuffixIndex + StateEncoder.ON_COMPLETE_REDIRECT_TO_PARAM_NAME_ASSIGN.length(),
-          state.length());
+      parameterValue = state.substring(
+          onCompleteRedirectToSuffixIndex + StateEncoder.ON_COMPLETE_REDIRECT_TO_PARAM_NAME_ASSIGN.length(), state.length());
     }
     return parameterValue;
   }
@@ -69,8 +69,10 @@ public class StateDecoder {
     String parameterValue = null;
     if (state != null && state.contains(parameterNameAssignation)) {
       final int resourceOwnerIdSuffixIndex = state.indexOf(parameterNameAssignation);
-      final String stateCustomParameters = state.substring(resourceOwnerIdSuffixIndex + parameterNameAssignation.length(), state.length());
-      final int onCompleteRedirectToParamIndex = stateCustomParameters.indexOf(StateEncoder.ON_COMPLETE_REDIRECT_TO_PARAM_NAME_ASSIGN);
+      final String stateCustomParameters =
+          state.substring(resourceOwnerIdSuffixIndex + parameterNameAssignation.length(), state.length());
+      final int onCompleteRedirectToParamIndex =
+          stateCustomParameters.indexOf(StateEncoder.ON_COMPLETE_REDIRECT_TO_PARAM_NAME_ASSIGN);
       int endIndex = onCompleteRedirectToParamIndex != -1 ? onCompleteRedirectToParamIndex : stateCustomParameters.length();
       parameterValue = stateCustomParameters.substring(0, endIndex);
     }

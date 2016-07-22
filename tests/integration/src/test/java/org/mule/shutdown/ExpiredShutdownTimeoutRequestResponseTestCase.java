@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.shutdown;
 
@@ -19,6 +19,7 @@ import static org.mule.runtime.module.http.api.HttpConstants.Methods.POST;
 
 @Ignore("See MULE-9200")
 public class ExpiredShutdownTimeoutRequestResponseTestCase extends AbstractShutdownTimeoutRequestResponseTestCase {
+
   @Rule
   public SystemProperty contextShutdownTimeout = new SystemProperty("contextShutdownTimeout", "100");
 
@@ -47,6 +48,7 @@ public class ExpiredShutdownTimeoutRequestResponseTestCase extends AbstractShutd
     final boolean[] results = new boolean[] {false};
 
     Thread t = new Thread() {
+
       @Override
       public void run() {
         try {

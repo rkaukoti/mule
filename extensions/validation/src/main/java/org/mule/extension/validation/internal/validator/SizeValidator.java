@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.validation.internal.validator;
 
@@ -17,8 +17,8 @@ import static org.mule.extension.validation.internal.ImmutableValidationResult.o
 import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
- * An {@link AbstractValidator} which verifies that {@link #value} has a size between certain inclusive boundaries. This validator is
- * capable of handling instances of {@link String}, {@link Collection}, {@link Map} and arrays
+ * An {@link AbstractValidator} which verifies that {@link #value} has a size between certain inclusive boundaries. This validator
+ * is capable of handling instances of {@link String}, {@link Collection}, {@link Map} and arrays
  *
  * @since 3.7.0
  */
@@ -64,9 +64,9 @@ public class SizeValidator extends AbstractValidator {
     } else if (value.getClass().isArray()) {
       return ArrayUtils.getLength(value);
     } else {
-      throw new IllegalArgumentException(
-          String.format("Only instances of Map, Collection, Array and String can be checked for size. Instance of %s was found instead",
-              value.getClass().getName()));
+      throw new IllegalArgumentException(String.format(
+          "Only instances of Map, Collection, Array and String can be checked for size. Instance of %s was found instead",
+          value.getClass().getName()));
     }
   }
 

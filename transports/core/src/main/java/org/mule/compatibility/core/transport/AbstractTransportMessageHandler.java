@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -39,6 +39,7 @@ import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
  * Provide a default dispatch (client) support for handling threads lifecycle and validation.
  */
 public abstract class AbstractTransportMessageHandler<O> implements Connectable, LifecycleStateEnabled {
+
   protected final AbstractConnector connector;
   // TODO This state info. needs to be incorporated into the ConnectableLifecycleManager
   protected final AtomicBoolean connected = new AtomicBoolean(false);
@@ -108,7 +109,8 @@ public abstract class AbstractTransportMessageHandler<O> implements Connectable,
   }
 
   /**
-   * Subclasses can override this method to create a custom {@link MuleMessageFactory} instead of re-using the instance from the connector.
+   * Subclasses can override this method to create a custom {@link MuleMessageFactory} instead of re-using the instance from the
+   * connector.
    */
   protected void initializeMessageFactory() throws InitialisationException {
     try {
@@ -208,8 +210,8 @@ public abstract class AbstractTransportMessageHandler<O> implements Connectable,
     if (logger.isDebugEnabled()) {
       logger.debug("Disconnected: " + this);
     }
-    connector
-        .fireNotification(new ConnectionNotification(this, getConnectEventId(endpoint), ConnectionNotification.CONNECTION_DISCONNECTED));
+    connector.fireNotification(
+        new ConnectionNotification(this, getConnectEventId(endpoint), ConnectionNotification.CONNECTION_DISCONNECTED));
   }
 
   protected String getConnectEventId(ImmutableEndpoint endpoint) {
@@ -238,8 +240,8 @@ public abstract class AbstractTransportMessageHandler<O> implements Connectable,
    * <p/>
    * This method is synchronous or not depending on how the {@link #retryTemplate} behaves.
    * <p/>
-   * This method ensures that {@link #doStart()} will be called at most one time and will return without error if the component is already
-   * started.
+   * This method ensures that {@link #doStart()} will be called at most one time and will return without error if the component is
+   * already started.
    */
   @Override
   public final void start() throws MuleException {
@@ -332,18 +334,20 @@ public abstract class AbstractTransportMessageHandler<O> implements Connectable,
   }
 
   /**
-   * This method uses the connector's <code>createMuleMessageFactory</code> method to create a new {@link MuleMessageFactory}. Subclasses
-   * may need to override this method in order to perform additional initialization on the message factory before it's actually used.
+   * This method uses the connector's <code>createMuleMessageFactory</code> method to create a new {@link MuleMessageFactory}.
+   * Subclasses may need to override this method in order to perform additional initialization on the message factory before it's
+   * actually used.
    */
   protected MuleMessageFactory createMuleMessageFactory() throws CreateException {
     return connector.createMuleMessageFactory();
   }
 
   /**
-   * Uses this object's {@link MuleMessageFactory} to create a new {@link MuleMessage} instance. The payload of the new message will be
-   * taken from <code>transportMessage</code>, all message properties will be copied from <code>previousMessage</code>.
+   * Uses this object's {@link MuleMessageFactory} to create a new {@link MuleMessage} instance. The payload of the new message
+   * will be taken from <code>transportMessage</code>, all message properties will be copied from <code>previousMessage</code>.
    */
-  public MuleMessage createMuleMessage(Object transportMessage, MuleMessage previousMessage, Charset encoding) throws MuleException {
+  public MuleMessage createMuleMessage(Object transportMessage, MuleMessage previousMessage, Charset encoding)
+      throws MuleException {
     try {
       return muleMessageFactory.create(transportMessage, previousMessage, encoding);
     } catch (Exception e) {
@@ -352,8 +356,8 @@ public abstract class AbstractTransportMessageHandler<O> implements Connectable,
   }
 
   /**
-   * Uses this object's {@link MuleMessageFactory} to create a new {@link MuleMessage} instance. This is the designated way to build
-   * {@link MuleMessage}s from the transport specific message.
+   * Uses this object's {@link MuleMessageFactory} to create a new {@link MuleMessage} instance. This is the designated way to
+   * build {@link MuleMessage}s from the transport specific message.
    */
   public MuleMessage createMuleMessage(Object transportMessage, Charset encoding) throws MuleException {
     try {

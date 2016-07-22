@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.dsl.processor;
 
@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Represents the application configuration files that describe the integrations. It does not include resource files or application
- * descriptors.
+ * Represents the application configuration files that describe the integrations. It does not include resource files or
+ * application descriptors.
  *
- * An application configuration is defined by an application name and a set of configuration files containing the integration required
- * components.
+ * An application configuration is defined by an application name and a set of configuration files containing the integration
+ * required components.
  *
  * @since 4.0
  */
@@ -45,6 +45,7 @@ public class ArtifactConfig {
    * Builder for {@link ArtifactConfig} instances.
    */
   public static class Builder {
+
     private ArtifactConfig applicationConfig = new ArtifactConfig();
 
     /**

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.file.internal.command;
 
@@ -50,11 +50,11 @@ public final class LocalListCommand extends LocalFileCommand implements ListComm
     return treeNodeBuilder.build();
   }
 
-  private void doList(FileConnectorConfig config, File parent, TreeNode.Builder treeNodeBuilder, boolean recursive, MuleMessage message,
-      Predicate<FileAttributes> matcher) {
+  private void doList(FileConnectorConfig config, File parent, TreeNode.Builder treeNodeBuilder, boolean recursive,
+      MuleMessage message, Predicate<FileAttributes> matcher) {
     if (!parent.canRead()) {
-      throw exception(
-          format("Could not list files from directory '%s' because access was denied by the operating system", parent.getAbsolutePath()));
+      throw exception(format("Could not list files from directory '%s' because access was denied by the operating system",
+          parent.getAbsolutePath()));
     }
 
     for (File child : parent.listFiles()) {

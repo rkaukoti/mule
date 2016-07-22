@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.transformers;
 
@@ -30,11 +30,13 @@ import javax.jms.Message;
 import javax.jms.Session;
 
 /**
- * <code>AbstractJmsTransformer</code> is an abstract class that should be used for all transformers where a JMS message will be the
- * transformed or transformee object. It provides services for compressing and uncompressing messages.
+ * <code>AbstractJmsTransformer</code> is an abstract class that should be used for all transformers where a JMS message will be
+ * the transformed or transformee object. It provides services for compressing and uncompressing messages.
  */
 
-public abstract class AbstractJmsTransformer extends AbstractMessageTransformer implements DiscoverableTransformer, EndpointAware {
+public abstract class AbstractJmsTransformer extends AbstractMessageTransformer
+    implements DiscoverableTransformer, EndpointAware {
+
   /**
    * The endpoint that this transformer instance is configured on
    */
@@ -72,12 +74,13 @@ public abstract class AbstractJmsTransformer extends AbstractMessageTransformer 
       throw new TransformerException(this, e);
     } finally {
       /*
-       * session.getTransacted() would be easier in most cases, but e.g. in Weblogic 8.x Java EE apps there could be some quirks, see
-       * http://forums.bea.com/thread.jspa?threadID=200007643 to get a picture.
+       * session.getTransacted() would be easier in most cases, but e.g. in Weblogic 8.x Java EE apps there could be some quirks,
+       * see http://forums.bea.com/thread.jspa?threadID=200007643 to get a picture.
        * 
-       * Though JmsTransaction has this session.getTransacted() validation already, we're taking extra precautions to cover XA cases and
-       * potentially to make up for a configuration error. E.g. omitting transaction configuration from an outbound endpoint or router.
-       * Note, XA support in Mule will deliberately fail with fanfares to signal this case, which is really a user error.
+       * Though JmsTransaction has this session.getTransacted() validation already, we're taking extra precautions to cover XA
+       * cases and potentially to make up for a configuration error. E.g. omitting transaction configuration from an outbound
+       * endpoint or router. Note, XA support in Mule will deliberately fail with fanfares to signal this case, which is really a
+       * user error.
        */
 
       if (session != null && endpoint != null) // endpoint can be null in some programmatic tests only in fact
@@ -148,7 +151,8 @@ public abstract class AbstractJmsTransformer extends AbstractMessageTransformer 
       // can be set as an object property on the message; therefore
       // we have to take a hit n' hope approach
       if (logger.isDebugEnabled()) {
-        logger.debug("Unable to set property '" + key + "' of type " + ClassUtils.getSimpleName(value.getClass()) + "': " + e.getMessage());
+        logger.debug("Unable to set property '" + key + "' of type " + ClassUtils.getSimpleName(value.getClass()) + "': "
+            + e.getMessage());
       }
     }
   }

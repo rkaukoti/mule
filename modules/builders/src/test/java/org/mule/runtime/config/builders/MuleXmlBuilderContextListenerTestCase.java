@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.builders;
 
@@ -22,6 +22,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class MuleXmlBuilderContextListenerTestCase extends AbstractMuleTestCase {
+
   private MuleXmlBuilderContextListener listener;
   private ServletContext context;
 
@@ -40,7 +41,8 @@ public class MuleXmlBuilderContextListenerTestCase extends AbstractMuleTestCase 
   public void noMuleAppProperties() {
     when(context.getInitParameter(MuleXmlBuilderContextListener.INIT_PARAMETER_MULE_CONFIG)).thenReturn("mule-config.xml");
     when(context.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE)).thenReturn(null);
-    when(context.getAttribute(MuleXmlBuilderContextListener.ATTR_JAVAX_SERVLET_CONTEXT_TEMPDIR)).thenReturn(new File(".mule/testWeb"));
+    when(context.getAttribute(MuleXmlBuilderContextListener.ATTR_JAVAX_SERVLET_CONTEXT_TEMPDIR))
+        .thenReturn(new File(".mule/testWeb"));
 
     listener.initialize(context);
 
@@ -55,7 +57,8 @@ public class MuleXmlBuilderContextListenerTestCase extends AbstractMuleTestCase 
     when(context.getInitParameter(MuleXmlBuilderContextListener.INIT_PARAMETER_MULE_CONFIG))
         .thenReturn("org/mule/config/builders/mule-config.xml");
     when(context.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE)).thenReturn(null);
-    when(context.getAttribute(MuleXmlBuilderContextListener.ATTR_JAVAX_SERVLET_CONTEXT_TEMPDIR)).thenReturn(new File(".mule/testWeb"));
+    when(context.getAttribute(MuleXmlBuilderContextListener.ATTR_JAVAX_SERVLET_CONTEXT_TEMPDIR))
+        .thenReturn(new File(".mule/testWeb"));
 
     listener.initialize(context);
 
@@ -74,7 +77,8 @@ public class MuleXmlBuilderContextListenerTestCase extends AbstractMuleTestCase 
     when(context.getInitParameter(MuleXmlBuilderContextListener.INIT_PARAMETER_MULE_APP_CONFIG))
         .thenReturn("org/mule/config/builders/mule-app-ppp.properties");
     when(context.getAttribute(WebApplicationContext.ROOT_WEB_APPLICATION_CONTEXT_ATTRIBUTE)).thenReturn(null);
-    when(context.getAttribute(MuleXmlBuilderContextListener.ATTR_JAVAX_SERVLET_CONTEXT_TEMPDIR)).thenReturn(new File(".mule/testWeb"));
+    when(context.getAttribute(MuleXmlBuilderContextListener.ATTR_JAVAX_SERVLET_CONTEXT_TEMPDIR))
+        .thenReturn(new File(".mule/testWeb"));
 
     listener.initialize(context);
 

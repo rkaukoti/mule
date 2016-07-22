@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.oauth2.internal.clientcredentials;
 
@@ -83,13 +83,14 @@ public class ClientCredentialsTokenRequestHandler extends AbstractTokenRequestHa
       setMapPayloadWithTokenRequestParameters(accessTokenEvent);
       final MuleEvent response;
       response = invokeTokenUrl(accessTokenEvent);
-      final TokenResponseProcessor tokenResponseProcessor =
-          TokenResponseProcessor.createClientCredentialsProcessor(tokenResponseConfiguration, getMuleContext().getExpressionManager());
+      final TokenResponseProcessor tokenResponseProcessor = TokenResponseProcessor
+          .createClientCredentialsProcessor(tokenResponseConfiguration, getMuleContext().getExpressionManager());
       tokenResponseProcessor.process(response);
 
       if (logger.isDebugEnabled()) {
         logger.debug("Retrieved access token, refresh token and expires from token url are: %s, %s, %s",
-            tokenResponseProcessor.getAccessToken(), tokenResponseProcessor.getRefreshToken(), tokenResponseProcessor.getExpiresIn());
+            tokenResponseProcessor.getAccessToken(), tokenResponseProcessor.getRefreshToken(),
+            tokenResponseProcessor.getExpiresIn());
       }
 
       if (!tokenResponseContentIsValid(tokenResponseProcessor)) {
@@ -106,8 +107,9 @@ public class ClientCredentialsTokenRequestHandler extends AbstractTokenRequestHa
       }
       tokenManager.getConfigOAuthContext().updateResourceOwnerOAuthContext(defaultUserState);
     } catch (TokenNotFoundException e) {
-      logger.error(String.format("Could not extract access token or refresh token from token URL. Access token is %s, Refresh token is %s",
-          e.getTokenResponseProcessor().getAccessToken(), e.getTokenResponseProcessor().getRefreshToken()));
+      logger.error(
+          String.format("Could not extract access token or refresh token from token URL. Access token is %s, Refresh token is %s",
+              e.getTokenResponseProcessor().getAccessToken(), e.getTokenResponseProcessor().getRefreshToken()));
       muleEventLogger.logContent(e.getTokenUrlResponse());
       throw new DefaultMuleException(e);
     } catch (TokenUrlResponseException e) {

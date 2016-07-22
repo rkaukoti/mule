@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.listener;
 
@@ -33,6 +33,7 @@ public class ExceptionListener {
   public ExceptionListener(MuleContext muleContext) {
     try {
       muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>() {
+
         @Override
         public void onNotification(ExceptionNotification notification) {
           exceptionNotifications.add(notification);
@@ -77,7 +78,8 @@ public class ExceptionListener {
         return this;
       }
     }
-    throw new AssertionError(format("Exception exception caused by type %s was not thrown", expectedExceptionCauseType.getName()));
+    throw new AssertionError(
+        format("Exception exception caused by type %s was not thrown", expectedExceptionCauseType.getName()));
   }
 
   /**

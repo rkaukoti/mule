@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.assembly.configuration;
 
@@ -20,6 +20,7 @@ import java.util.Set;
  * A direct implementation of {@link PropertyConfiguration}
  */
 public class SimplePropertyConfiguration implements PropertyConfiguration {
+
   private List<String> references = new ArrayList<String>();
   private Properties nameMappings = new Properties();
   private Map<String, NamedValueMap> valueMappings = new HashMap<String, NamedValueMap>();
@@ -108,13 +109,15 @@ public class SimplePropertyConfiguration implements PropertyConfiguration {
   }
 
   /**
-   * A property can be explicitly registered as a bean reference via registerBeanReference() or it can simply use the "-ref" suffix.
+   * A property can be explicitly registered as a bean reference via registerBeanReference() or it can simply use the "-ref"
+   * suffix.
    *
    * @param attributeName true if the name appears to correspond to a reference
    */
   @Override
   public boolean isReference(String attributeName) {
-    return (references.contains(dropRef(attributeName)) || attributeName.endsWith(AbstractMuleBeanDefinitionParser.ATTRIBUTE_REF_SUFFIX)
+    return (references.contains(dropRef(attributeName))
+        || attributeName.endsWith(AbstractMuleBeanDefinitionParser.ATTRIBUTE_REF_SUFFIX)
         || attributeName.endsWith(AbstractMuleBeanDefinitionParser.ATTRIBUTE_REFS_SUFFIX)
         || attributeName.equals(AbstractMuleBeanDefinitionParser.ATTRIBUTE_REF));
   }
@@ -127,12 +130,12 @@ public class SimplePropertyConfiguration implements PropertyConfiguration {
   /**
    * Extract a JavaBean property name from the supplied attribute name.
    * <p>
-   * The default implementation uses the {@link org.springframework.core.Conventions#attributeNameToPropertyName(String)} method to perform
-   * the extraction.
+   * The default implementation uses the {@link org.springframework.core.Conventions#attributeNameToPropertyName(String)} method
+   * to perform the extraction.
    * <p>
    * The name returned must obey the standard JavaBean property name conventions. For example for a class with a setter method
-   * '<code>setBingoHallFavourite(String)</code>', the name returned had better be '<code>bingoHallFavourite</code>' (with that exact
-   * casing).
+   * '<code>setBingoHallFavourite(String)</code>', the name returned had better be '<code>bingoHallFavourite</code>' (with that
+   * exact casing).
    *
    * @param oldName the attribute name taken straight from the XML element being parsed; will never be <code>null</code>
    * @return the extracted JavaBean property name; must never be <code>null</code>
@@ -169,6 +172,7 @@ public class SimplePropertyConfiguration implements PropertyConfiguration {
 
 
   public static class NamedValueMap {
+
     private String propertyName;
     private ValueMap valueMap;
 
@@ -197,6 +201,7 @@ public class SimplePropertyConfiguration implements PropertyConfiguration {
   }
 
   public static class MapValueMap implements ValueMap {
+
     protected Map<String, Object> map;
 
     public MapValueMap(Map<String, Object> map) {
@@ -231,6 +236,7 @@ public class SimplePropertyConfiguration implements PropertyConfiguration {
   }
 
   public static class IndentityMapValueMap extends MapValueMap {
+
     public IndentityMapValueMap(Map<String, Object> map) {
       super(map);
     }

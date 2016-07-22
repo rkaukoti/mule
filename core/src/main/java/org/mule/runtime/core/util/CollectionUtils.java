@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -17,13 +17,13 @@ import java.util.List;
 public class CollectionUtils extends org.apache.commons.collections.CollectionUtils {
 
   /**
-   * Creates an array of the given Collection's elements, but with the given <code>Class</code> as element type. Useful for arrays of
-   * objects that implement multiple interfaces and a "typed view" onto these objects is required.
+   * Creates an array of the given Collection's elements, but with the given <code>Class</code> as element type. Useful for arrays
+   * of objects that implement multiple interfaces and a "typed view" onto these objects is required.
    *
    * @param objects a Collection of objects
    * @param clazz the desired service type of the new array
-   * @return <code>null</code> when objects is <code>null</code>, or a new array containing the elements of the source array which is typed
-   *         to the given <code>clazz</code> parameter.
+   * @return <code>null</code> when objects is <code>null</code>, or a new array containing the elements of the source array which
+   *         is typed to the given <code>clazz</code> parameter.
    * @throws IllegalArgumentException if the <code>clazz</code> argument is <code>null</code>.
    * @throws ArrayStoreException if the elements in <code>objects</code> cannot be cast to <code>clazz</code>.
    */
@@ -52,8 +52,8 @@ public class CollectionUtils extends org.apache.commons.collections.CollectionUt
   }
 
   /**
-   * Creates a String representation of the given Collection, with optional newlines between elements. Class objects are represented by
-   * their full names.
+   * Creates a String representation of the given Collection, with optional newlines between elements. Class objects are
+   * represented by their full names.
    *
    * @param c the Collection to format
    * @param newline indicates whether elements are to be split across lines
@@ -75,8 +75,9 @@ public class CollectionUtils extends org.apache.commons.collections.CollectionUt
   }
 
   /**
-   * Creates a String representation of the given Collection, with optional newlines between elements. Class objects are represented by
-   * their full names. Considers at most <code>maxElements</code> values; overflow is indicated by an appended "[..]" ellipsis.
+   * Creates a String representation of the given Collection, with optional newlines between elements. Class objects are
+   * represented by their full names. Considers at most <code>maxElements</code> values; overflow is indicated by an appended
+   * "[..]" ellipsis.
    *
    * @param c the Collection to format
    * @param maxElements the maximum number of elements to take into account

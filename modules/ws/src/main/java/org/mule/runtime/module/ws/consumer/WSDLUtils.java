@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.ws.consumer;
 
@@ -89,8 +89,8 @@ public class WSDLUtils {
   }
 
   /**
-   * Fixes schemaLocation attributes in a parsed schema, allowing references that do not contain a base path (for example, references to
-   * local schemas in the classpath) but not modifying external references.
+   * Fixes schemaLocation attributes in a parsed schema, allowing references that do not contain a base path (for example,
+   * references to local schemas in the classpath) but not modifying external references.
    */
   private static void fixSchemaLocations(Schema schema) {
     String basePath = getBasePath(schema.getDocumentBaseURI());
@@ -128,7 +128,8 @@ public class WSDLUtils {
   private static void fixSchemaReferencesLocations(String basePath, Collection<SchemaReference> schemaReferences) {
     for (SchemaReference schemaReference : schemaReferences) {
       String schemaLocationURI = schemaReference.getSchemaLocationURI();
-      if (schemaLocationURI != null && !schemaLocationURI.startsWith(basePath) && !schemaLocationURI.startsWith(HTTP.getScheme())) {
+      if (schemaLocationURI != null && !schemaLocationURI.startsWith(basePath)
+          && !schemaLocationURI.startsWith(HTTP.getScheme())) {
         schemaReference.setSchemaLocationURI(basePath + schemaLocationURI);
       }
     }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.http.internal.request;
 
@@ -55,6 +55,7 @@ import static org.mule.runtime.module.http.internal.request.DefaultHttpRequester
  * @since 4.0
  */
 public class MuleEventToHttpRequest {
+
   public static final List<String> DEFAULT_EMPTY_BODY_METHODS = Lists.newArrayList("GET", "HEAD", "OPTIONS");
   private static final Logger logger = LoggerFactory.getLogger(MuleEventToHttpRequest.class);
   private final String uri;
@@ -79,8 +80,8 @@ public class MuleEventToHttpRequest {
    * Creates an {@HttpRequest}.
    *
    * @param event The {@link MuleEvent} that should be used to set the {@link HttpRequest} content.
-   * @param requestBuilder The generic {@link HttpRequesterRequestBuilder} from the request component that should be used to create the
-   *        {@link HttpRequest}.
+   * @param requestBuilder The generic {@link HttpRequesterRequestBuilder} from the request component that should be used to
+   *        create the {@link HttpRequest}.
    * @param authentication The {@link HttpAuthentication} that should be used to create the {@link HttpRequest}.
    * @return an {@HttpRequest} configured based on the parameters.
    * @throws MuleException if the request creation fails.
@@ -103,7 +104,8 @@ public class MuleEventToHttpRequest {
 
     if (config.isEnableCookies()) {
       try {
-        Map<String, List<String>> headers = config.getCookieManager().get(URI.create(uri), Collections.<String, List<String>>emptyMap());
+        Map<String, List<String>> headers =
+            config.getCookieManager().get(URI.create(uri), Collections.<String, List<String>>emptyMap());
         List<String> cookies = headers.get(COOKIE);
         if (cookies != null) {
           for (String cookie : cookies) {
@@ -175,8 +177,8 @@ public class MuleEventToHttpRequest {
     return emptyBody;
   }
 
-  private HttpEntity createRequestEntityFromPayload(HttpRequestBuilder requestBuilder, MuleEvent muleEvent, Map<String, DataHandler> parts)
-      throws MessagingException {
+  private HttpEntity createRequestEntityFromPayload(HttpRequestBuilder requestBuilder, MuleEvent muleEvent,
+      Map<String, DataHandler> parts) throws MessagingException {
     Object payload = muleEvent.getMessage().getPayload();
 
     if (!parts.isEmpty()) {
@@ -204,9 +206,8 @@ public class MuleEventToHttpRequest {
 
       if (contentType == null || contentType.equals(APPLICATION_X_WWW_FORM_URLENCODED.toRfcString())) {
         if (muleEvent.getMessage().getPayload() instanceof Map) {
-          String body = HttpParser.encodeString(
-              muleEvent.getMessage().getDataType().getMediaType().getCharset().orElse(getDefaultEncoding(muleEvent.getMuleContext())),
-              (Map) payload);
+          String body = HttpParser.encodeString(muleEvent.getMessage().getDataType().getMediaType().getCharset()
+              .orElse(getDefaultEncoding(muleEvent.getMuleContext())), (Map) payload);
           requestBuilder.addHeader(CONTENT_TYPE, APPLICATION_X_WWW_FORM_URLENCODED.toRfcString());
           return new ByteArrayHttpEntity(body.getBytes());
         }

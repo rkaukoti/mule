@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor;
 
@@ -41,12 +41,14 @@ import java.util.Map.Entry;
 import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 /**
- * <code>InvokerMessageProcessor</code> invokes a specified method of an object. An array of argument expressions can be provided to map the
- * message to the method arguments. The method used is determined by the method name along with the number of argument expressions provided.
- * The results of the expression evaluations will automatically be transformed where possible to the method argument type. Multiple methods
- * with the same name and same number of arguments are not supported currently.
+ * <code>InvokerMessageProcessor</code> invokes a specified method of an object. An array of argument expressions can be provided
+ * to map the message to the method arguments. The method used is determined by the method name along with the number of argument
+ * expressions provided. The results of the expression evaluations will automatically be transformed where possible to the method
+ * argument type. Multiple methods with the same name and same number of arguments are not supported currently.
  */
-public class InvokerMessageProcessor extends AbstractAnnotatedObject implements MessageProcessor, Initialisable, MuleContextAware {
+public class InvokerMessageProcessor extends AbstractAnnotatedObject
+    implements MessageProcessor, Initialisable, MuleContextAware {
+
   protected final transient Logger logger = LoggerFactory.getLogger(getClass());
 
   protected Object object;
@@ -76,8 +78,8 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject implements 
     if (argumentTypes != null) {
       method = ClassUtils.getMethod(object.getClass(), methodName, argumentTypes);
       if (method == null) {
-        throw new InitialisationException(CoreMessages.methodWithParamsNotFoundOnObject(methodName, argumentTypes, object.getClass()),
-            this);
+        throw new InitialisationException(
+            CoreMessages.methodWithParamsNotFoundOnObject(methodName, argumentTypes, object.getClass()), this);
       }
     } else {
       List<Method> matchingMethods = new ArrayList<>();
@@ -90,7 +92,8 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject implements 
         method = matchingMethods.get(0);
         argumentTypes = method.getParameterTypes();
       } else {
-        throw new InitialisationException(CoreMessages.methodWithNumParamsNotFoundOnObject(methodName, arguments.size(), object), this);
+        throw new InitialisationException(CoreMessages.methodWithNumParamsNotFoundOnObject(methodName, arguments.size(), object),
+            this);
       }
     }
 
@@ -101,15 +104,16 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject implements 
 
   protected void lookupObjectInstance() throws InitialisationException {
     if (logger.isDebugEnabled()) {
-      logger.debug(String.format("No object instance speciedied.  Looking up single instance of type %s in mule registry", objectType));
+      logger.debug(
+          String.format("No object instance speciedied.  Looking up single instance of type %s in mule registry", objectType));
     }
 
     try {
       object = muleContext.getRegistry().lookupObject(objectType);
     } catch (RegistrationException e) {
       throw new InitialisationException(
-          CoreMessages.initialisationFailure(String
-              .format("Muliple instances of '%s' were found in the registry so you need to configure a specific instance", objectType)),
+          CoreMessages.initialisationFailure(String.format(
+              "Muliple instances of '%s' were found in the registry so you need to configure a specific instance", objectType)),
           this);
     }
     if (object == null) {
@@ -205,7 +209,8 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject implements 
   private Object transformArgument(Object arg, Class<?> type) throws TransformerException {
     if (!(type.isAssignableFrom(arg.getClass()))) {
       // Throws TransformerException if no suitable transformer is found
-      arg = muleContext.getRegistry().lookupTransformer(DataType.fromType(arg.getClass()), DataType.fromType(type)).transform(arg);
+      arg =
+          muleContext.getRegistry().lookupTransformer(DataType.fromType(arg.getClass()), DataType.fromType(type)).transform(arg);
     }
     return arg;
   }
@@ -254,8 +259,8 @@ public class InvokerMessageProcessor extends AbstractAnnotatedObject implements 
 
   @Override
   public String toString() {
-    return String.format("InvokerMessageProcessor [name=%s, object=%s, methodName=%s, argExpressions=%s, argTypes=%s]", name, object,
-        methodName, arguments, argumentTypes);
+    return String.format("InvokerMessageProcessor [name=%s, object=%s, methodName=%s, argExpressions=%s, argTypes=%s]", name,
+        object, methodName, arguments, argumentTypes);
   }
 
   @Override

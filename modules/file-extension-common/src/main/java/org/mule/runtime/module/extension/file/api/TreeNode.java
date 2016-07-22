@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.file.api;
 
@@ -24,7 +24,8 @@ import java.util.Spliterator;
  * <p>
  * Because {@code this} node itself can point to a directory, it also contains a {@link List} of {@link #getChilds() childs).
  * <p>
- * The node can also optionally have a {@link #getContent() content}, which will return {@code null} if the node points to a directory.
+ * The node can also optionally have a {@link #getContent() content}, which will return {@code null} if the node points to a
+ * directory.
  * <p>
  * This class also implements the {@link Iterable} interface making it suitable for use with componets such as {@code foreach} or
  * {@code batch}. The methods in such interface are implemented by delegating into the {@link #getChilds()} list.
@@ -118,8 +119,8 @@ public class TreeNode implements Serializable, Iterable {
     /**
      * Obtains a new {@link Builder} instance to be used to create a {@link TreeNode} which references a file
      *
-     * @param message a {@link MuleMessage} which payload is an {@link InputStream} with the file content and a {@link FileAttributes}
-     *        instance as attributes
+     * @param message a {@link MuleMessage} which payload is an {@link InputStream} with the file content and a
+     *        {@link FileAttributes} instance as attributes
      * @return a new {@link Builder}
      */
     public static Builder forFile(OperationResult<InputStream, FileAttributes> message) {
@@ -141,7 +142,8 @@ public class TreeNode implements Serializable, Iterable {
     }
 
     /**
-     * Returns the created {@link TreeNode}. If invoked several times over the same instance, the same value will always be returned
+     * Returns the created {@link TreeNode}. If invoked several times over the same instance, the same value will always be
+     * returned
      *
      * @return the build {@link TreeNode}
      */

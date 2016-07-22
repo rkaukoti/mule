@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -17,8 +17,8 @@ import java.util.Map;
 /**
  * Manager {@link HttpRequestDispatcher} connections and disconnections to {@link EndpointURI}.
  * <p/>
- * Starts listening for HTTP request when at least one endpoint is associated to a given port are connected and stops listening for HTTP
- * request when all endpoints associated to a given port are disconnected.
+ * Starts listening for HTTP request when at least one endpoint is associated to a given port are connected and stops listening
+ * for HTTP request when all endpoints associated to a given port are disconnected.
  */
 class HttpConnectionManager {
 

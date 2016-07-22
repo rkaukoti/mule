@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.util;
 
@@ -14,11 +14,12 @@ import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 
 /**
- * Spring 2.x is picky about open/closed input streams, as it requires a closed stream (fully read resource) to enable automatic validation
- * detection (DTD or XSD). Otherwise, a caller has to specify the mode explicitly.
+ * Spring 2.x is picky about open/closed input streams, as it requires a closed stream (fully read resource) to enable automatic
+ * validation detection (DTD or XSD). Otherwise, a caller has to specify the mode explicitly.
  * <p/>
- * Code relying on Spring 1.2.x behavior may now break with {@link org.springframework.beans.factory.BeanDefinitionStoreException}. This
- * class is called in to remedy this and should be used instead of, e.g. {@link org.springframework.core.io.InputStreamResource}.
+ * Code relying on Spring 1.2.x behavior may now break with
+ * {@link org.springframework.beans.factory.BeanDefinitionStoreException}. This class is called in to remedy this and should be
+ * used instead of, e.g. {@link org.springframework.core.io.InputStreamResource}.
  * <p/>
  * The resource is fully stored in memory.
  */

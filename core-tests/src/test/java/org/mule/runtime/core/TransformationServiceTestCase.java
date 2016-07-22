@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core;
 
@@ -143,7 +143,8 @@ public class TransformationServiceTestCase extends AbstractMuleTestCase {
 
   @Test
   public void skipBothConvertersButPayloadMatchesExpectedOutputType() throws MuleException {
-    // Converter(B -> C) Converter(C->D), payload D: skips converter(B-C), skips converter(C->D), but D is the expected output type -> OK
+    // Converter(B -> C) Converter(C->D), payload D: skips converter(B-C), skips converter(C->D), but D is the expected output
+    // type -> OK
     Transformer converter1 = new MockConverterBuilder().from(dataTypeB).to(dataTypeC).build();
     Transformer converter2 = new MockConverterBuilder().from(dataTypeC).to(dataTypeD).build();
 
@@ -173,7 +174,8 @@ public class TransformationServiceTestCase extends AbstractMuleTestCase {
 
   @Test
   public void appliesTransformerSkipsConverter() throws MuleException {
-    // Transformer(B -> D) Converter(C->D), payload B: converts B->D, skips converter C->D, resulting output is of the expected type -> OK
+    // Transformer(B -> D) Converter(C->D), payload B: converts B->D, skips converter C->D, resulting output is of the expected
+    // type -> OK
     Transformer transformer1 = new MockTransformerBuilder().from(dataTypeB).to(dataTypeD).returning(new D()).build();
     Transformer converter2 = new MockConverterBuilder().from(dataTypeC).to(dataTypeD).build();
 
@@ -408,7 +410,8 @@ public class TransformationServiceTestCase extends AbstractMuleTestCase {
   @Test
   public void appliesImplicitConversionWhenAvailable() throws MuleException {
     Transformer transformer = new MockTransformerBuilder().from(DataType.BYTE_ARRAY).to(DataType.STRING).returning("bar").build();
-    Transformer converter = new MockConverterBuilder().from(DataType.STRING).to(DataType.BYTE_ARRAY).returning("bar".getBytes()).build();
+    Transformer converter =
+        new MockConverterBuilder().from(DataType.STRING).to(DataType.BYTE_ARRAY).returning("bar".getBytes()).build();
 
     when(conversionResolver.resolve(Mockito.any(DataType.class), Mockito.anyList())).thenReturn(converter);
 

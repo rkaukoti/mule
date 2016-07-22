@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring;
 
@@ -46,10 +46,10 @@ import static java.util.Optional.ofNullable;
 /**
  * Notification helper object for creating notification manager configuration.
  *
- * For now we create specific types {@code Notification.EnabledNotification} and {@code Notification.DisabledNotification} for elements that
- * have children of the same type but that must be injected in different collections of the parent object. Ideally this should not be needed
- * or we don't have to support such use case anymore but for previous elements coming from previous mule version we have to keep the XML
- * syntax as it is.
+ * For now we create specific types {@code Notification.EnabledNotification} and {@code Notification.DisabledNotification} for
+ * elements that have children of the same type but that must be injected in different collections of the parent object. Ideally
+ * this should not be needed or we don't have to support such use case anymore but for previous elements coming from previous mule
+ * version we have to keep the XML syntax as it is.
  *
  * @since 4.0
  */

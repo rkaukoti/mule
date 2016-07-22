@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -60,11 +60,11 @@ import javax.naming.CommunicationException;
 import javax.naming.NamingException;
 
 /**
- * <code>JmsConnector</code> is a JMS 1.0.2b compliant connector that can be used by a Mule endpoint. The connector supports all JMS
- * functionality including topics and queues, durable subscribers, acknowledgement modes and local transactions.
+ * <code>JmsConnector</code> is a JMS 1.0.2b compliant connector that can be used by a Mule endpoint. The connector supports all
+ * JMS functionality including topics and queues, durable subscribers, acknowledgement modes and local transactions.
  *
- * From 3.6, JMS Sessions and Producers are reused by default when an {@link javax.jms.XAConnectionFactory} isn't being used and when the
- * (default) JMS 1.1 spec is being used.
+ * From 3.6, JMS Sessions and Producers are reused by default when an {@link javax.jms.XAConnectionFactory} isn't being used and
+ * when the (default) JMS 1.1 spec is being used.
  */
 public class JmsConnector extends AbstractConnector implements ExceptionListener {
 
@@ -137,8 +137,8 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
    */
   private boolean disableTemporaryReplyToDestinations = false;
   /**
-   * If disableTemporaryReplyToDestinations = "true", this flag causes the original JMS Message to be returned as a synchronous response
-   * with any properties set on it by the JMS Provider (e.g., JMSMessageID).
+   * If disableTemporaryReplyToDestinations = "true", this flag causes the original JMS Message to be returned as a synchronous
+   * response with any properties set on it by the JMS Provider (e.g., JMSMessageID).
    *
    * @see EE-1688/MULE-3059
    */
@@ -148,12 +148,13 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
    */
   private boolean embeddedMode;
   /**
-   * Overrides XaResource.isSameRM() result. Needed for IBM WMQ XA implementation (set to 'false'). Default value is null (don't override).
+   * Overrides XaResource.isSameRM() result. Needed for IBM WMQ XA implementation (set to 'false'). Default value is null (don't
+   * override).
    */
   private Boolean sameRMOverrideValue;
   /**
-   * Used to ignore handling of ExceptionListener#onException when in the process of disconnecting. This is required because the Connector
-   * {@link org.mule.api.lifecycle.LifecycleManager} does not include connection/disconnection state.
+   * Used to ignore handling of ExceptionListener#onException when in the process of disconnecting. This is required because the
+   * Connector {@link org.mule.api.lifecycle.LifecycleManager} does not include connection/disconnection state.
    */
   private volatile boolean disconnecting;
 
@@ -189,6 +190,7 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
 
     try {
       muleContext.registerListener(new ConnectionNotificationListener<ConnectionNotification>() {
+
         @Override
         public void onNotification(ConnectionNotification notification) {
           if (notification.getAction() == ConnectionNotification.CONNECTION_DISCONNECTED
@@ -373,6 +375,7 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
       super.connect();
     } else {
       muleContext.registerListener(new ClusterNodeNotificationListener<ClusterNodeNotification>() {
+
         @Override
         public void onNotification(ClusterNodeNotification notification) {
           // Notification thread is bound to the MuleContainerSystemClassLoader, save it
@@ -408,12 +411,13 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
         }
       }
 
-      int expectedReceiverCount = isMultiConsumerReceiver ? 1 : (getReceivers().size() * getNumberOfConcurrentTransactedReceivers());
+      int expectedReceiverCount =
+          isMultiConsumerReceiver ? 1 : (getReceivers().size() * getNumberOfConcurrentTransactedReceivers());
 
       if (logger.isDebugEnabled()) {
         logger.debug("About to recycle myself due to remote JMS connection shutdown but need "
-            + "to wait for all active receivers to report connection loss. Receiver count: " + (receiverReportedExceptionCount.get() + 1)
-            + '/' + expectedReceiverCount);
+            + "to wait for all active receivers to report connection loss. Receiver count: "
+            + (receiverReportedExceptionCount.get() + 1) + '/' + expectedReceiverCount);
       }
 
       if (receiverReportedExceptionCount.incrementAndGet() >= expectedReceiverCount) {
@@ -505,9 +509,9 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
     session = createSession(transacted, topic);
 
     if (logger.isDebugEnabled()) {
-      logger.debug(
-          MessageFormat.format("Retrieved new jms session from connection: " + "topic={0}, transacted={1}, ack mode={2}, nolocal={3}: {4}",
-              topic, transacted, acknowledgementMode, noLocal, session));
+      logger.debug(MessageFormat.format(
+          "Retrieved new jms session from connection: " + "topic={0}, transacted={1}, ack mode={2}, nolocal={3}: {4}", topic,
+          transacted, acknowledgementMode, noLocal, session));
     }
 
     if (tx != null) {
@@ -546,8 +550,8 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
 
 
   /**
-   * Closes a session if there is no active transaction in the current thread, otherwise the session will continue active until there is a
-   * direct call to close it.
+   * Closes a session if there is no active transaction in the current thread, otherwise the session will continue active until
+   * there is a direct call to close it.
    *
    * @param session the session that ill be closed if there is an active transaction.
    */
@@ -895,8 +899,8 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
   }
 
   /**
-   * A value of {@code true} will create a consumer on connect, in contrast to lazy instantiation in the poll loop. This setting very much
-   * depends on the JMS vendor. Affects transactional receivers, typical symptoms are:
+   * A value of {@code true} will create a consumer on connect, in contrast to lazy instantiation in the poll loop. This setting
+   * very much depends on the JMS vendor. Affects transactional receivers, typical symptoms are:
    * <ul>
    * <li>consumer thread hanging forever, though a message is available
    * <li>failure to consume the first message (the rest are fine)
@@ -952,11 +956,12 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
   }
 
   /**
-   * Sets the <code>honorQosHeaders</code> property, which determines whether {@link JmsMessageDispatcher} should honor incoming message's
-   * QoS headers (JMSPriority, JMSDeliveryMode).
+   * Sets the <code>honorQosHeaders</code> property, which determines whether {@link JmsMessageDispatcher} should honor incoming
+   * message's QoS headers (JMSPriority, JMSDeliveryMode).
    *
-   * @param honorQosHeaders <code>true</code> if {@link JmsMessageDispatcher} should honor incoming message's QoS headers; otherwise
-   *        <code>false</code> Default is <code>false</code>, meaning that connector settings will override message headers.
+   * @param honorQosHeaders <code>true</code> if {@link JmsMessageDispatcher} should honor incoming message's QoS headers;
+   *        otherwise <code>false</code> Default is <code>false</code>, meaning that connector settings will override message
+   *        headers.
    */
   public void setHonorQosHeaders(boolean honorQosHeaders) {
     this.honorQosHeaders = honorQosHeaders;
@@ -1082,7 +1087,8 @@ public class JmsConnector extends AbstractConnector implements ExceptionListener
   }
 
   /**
-   * A synonym for {@link #numberOfConcurrentTransactedReceivers}. Note that it affects both transactional and non-transactional scenarios.
+   * A synonym for {@link #numberOfConcurrentTransactedReceivers}. Note that it affects both transactional and non-transactional
+   * scenarios.
    *
    * @param count number of consumers
    */

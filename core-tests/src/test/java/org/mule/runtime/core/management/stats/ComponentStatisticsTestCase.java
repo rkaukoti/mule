@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.management.stats;
 
@@ -20,7 +20,8 @@ public class ComponentStatisticsTestCase extends AbstractMuleTestCase {
   @Rule
   public SystemProperty statIntervalTime = new SystemProperty("statIntervalTime", null);
 
-  private static void assertValues(ComponentStatistics stats, long numEvents, long totalTime, long avgTime, long maxTime, long minTime) {
+  private static void assertValues(ComponentStatistics stats, long numEvents, long totalTime, long avgTime, long maxTime,
+      long minTime) {
     assertThat("getExecutedEvents", stats.getExecutedEvents(), equalTo(numEvents));
     assertThat("getTotalExecutionTime", stats.getTotalExecutionTime(), equalTo(totalTime));
     assertThat("getAverageExecutionTime", stats.getAverageExecutionTime(), equalTo(avgTime));
@@ -62,11 +63,11 @@ public class ComponentStatisticsTestCase extends AbstractMuleTestCase {
   }
 
   /**
-   * New behavior under the fix to MULE-6417 - no longer throws a divide-by-zero error. Instead, the remainder of the fragmented event is
-   * ignored until a new event is started.
+   * New behavior under the fix to MULE-6417 - no longer throws a divide-by-zero error. Instead, the remainder of the fragmented
+   * event is ignored until a new event is started.
    * <p/>
-   * Note that this is a partial solution - if multiple components are active at the same time, collection can be 're-enabled' for an
-   * already-started event. The established API does not allow for a solution, so for now this quirk must be accepted.
+   * Note that this is a partial solution - if multiple components are active at the same time, collection can be 're-enabled' for
+   * an already-started event. The established API does not allow for a solution, so for now this quirk must be accepted.
    */
   @Test
   public void clearDuringBranch() {

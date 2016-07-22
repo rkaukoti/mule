@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.exceptions;
 
@@ -60,7 +60,8 @@ public class DefaultServiceExceptionStrategyTestCase extends FunctionalTestCase 
     assertNotNull(flowConstruct);
     assertNotNull(flowConstruct.getExceptionListener());
     assertTrue(flowConstruct.getExceptionListener() instanceof DefaultMessagingExceptionStrategy);
-    DefaultMessagingExceptionStrategy exceptionListener = (DefaultMessagingExceptionStrategy) flowConstruct.getExceptionListener();
+    DefaultMessagingExceptionStrategy exceptionListener =
+        (DefaultMessagingExceptionStrategy) flowConstruct.getExceptionListener();
     MessageProcessor mp = exceptionListener.getMessageProcessors().iterator().next();
     assertTrue(mp.getClass().getName(), mp instanceof MulticastingRouter);
     assertEquals(2, ((MulticastingRouter) mp).getRoutes().size());
@@ -117,6 +118,7 @@ public class DefaultServiceExceptionStrategyTestCase extends FunctionalTestCase 
 
     Prober prober = new PollingProber(5000, 100);
     prober.check(new Probe() {
+
       @Override
       public boolean isSatisfied() {
         return !flowConstruct.getLifecycleState().isStarted();

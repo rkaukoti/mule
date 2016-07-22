@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.connector;
 
@@ -11,13 +11,13 @@ import org.mule.runtime.api.connection.ConnectionProvider;
 /**
  * Manages all the connections opened between the boundaries of an application.
  * <p>
- * It works under the model of one owner (from now on the 'config'), has a one-to-one relationship with a {@link ConnectionProvider}. That
- * relationship is declared through the {@link #bind(Object, ConnectionProvider)} method. That relationship can be broken through the
- * {@link #unbind(Object)} method.
+ * It works under the model of one owner (from now on the 'config'), has a one-to-one relationship with a
+ * {@link ConnectionProvider}. That relationship is declared through the {@link #bind(Object, ConnectionProvider)} method. That
+ * relationship can be broken through the {@link #unbind(Object)} method.
  * <p>
- * Once the config-provider pair has been bound, connections can be obtained through the {@link #getConnection(Object)} method. That method
- * will yield a {@link ConnectionHandler} which will hide the details of how the connection is actually being managed while also avoiding
- * the need to pass around config, provider or even this manager.
+ * Once the config-provider pair has been bound, connections can be obtained through the {@link #getConnection(Object)} method.
+ * That method will yield a {@link ConnectionHandler} which will hide the details of how the connection is actually being managed
+ * while also avoiding the need to pass around config, provider or even this manager.
  * <p>
  * All implementations are required to be thread-safe
  *
@@ -26,11 +26,11 @@ import org.mule.runtime.api.connection.ConnectionProvider;
 public interface ConnectionManager {
 
   /**
-   * Binds the given {@code config} and {@code connectionProvider} so that the latter is used each time that the {@code config} is supplied
-   * as an argument of the {@link #getConnection(Object)} method.
+   * Binds the given {@code config} and {@code connectionProvider} so that the latter is used each time that the {@code config} is
+   * supplied as an argument of the {@link #getConnection(Object)} method.
    * <p>
-   * If a binding already exists for the {@code config} then this one replaces the previous one. All connections produced by the previous
-   * binding are closed.
+   * If a binding already exists for the {@code config} then this one replaces the previous one. All connections produced by the
+   * previous binding are closed.
    *
    * @param config the config that acts as the binding key
    * @param connectionProvider the {@link ConnectionProvider} that produces the connections
@@ -46,11 +46,12 @@ public interface ConnectionManager {
   boolean hasBinding(Object config);
 
   /**
-   * Breaks the binding that was previously produced by invoking {@link #bind(Object, ConnectionProvider)} with the given {@code config} on
-   * {@code this} instance.
+   * Breaks the binding that was previously produced by invoking {@link #bind(Object, ConnectionProvider)} with the given
+   * {@code config} on {@code this} instance.
    * <p>
-   * All connections produced as a result of the broken binding are closed once they're released. Once all connections created with the
-   * previous {@link ConnectionProvider} are closed, the stop and dispose lifecycle phases are applied over the provider if necessary.
+   * All connections produced as a result of the broken binding are closed once they're released. Once all connections created
+   * with the previous {@link ConnectionProvider} are closed, the stop and dispose lifecycle phases are applied over the provider
+   * if necessary.
    * <p>
    * If no such binding exists no action is taken.
    *

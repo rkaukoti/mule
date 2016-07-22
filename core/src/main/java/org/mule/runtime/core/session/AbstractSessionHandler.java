@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.session;
 
@@ -15,7 +15,8 @@ import org.mule.runtime.core.util.store.DeserializationPostInitialisable;
 import javax.inject.Inject;
 
 /**
- * Base class for implementations of {@link SessionHandler} which adds common functionality, specially around the concept of serialization
+ * Base class for implementations of {@link SessionHandler} which adds common functionality, specially around the concept of
+ * serialization
  *
  * @since 3.7.0
  */
@@ -24,7 +25,8 @@ public abstract class AbstractSessionHandler implements SessionHandler {
   private ObjectSerializerLocator objectSerializerLocator = new FromMessageObjectSerializerLocator();
 
   protected <T> T deserialize(MuleMessage message, byte[] bytes, MuleContext muleContext) {
-    T object = objectSerializerLocator.getObjectSerializer(message, muleContext).deserialize(bytes, muleContext.getExecutionClassLoader());
+    T object = objectSerializerLocator.getObjectSerializer(message, muleContext).deserialize(bytes,
+        muleContext.getExecutionClassLoader());
     if (object instanceof DeserializationPostInitialisable) {
       try {
         DeserializationPostInitialisable.Implementation.init(object, muleContext);

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.util.store;
@@ -30,6 +30,7 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class MuleObjectStoreManager implements ObjectStoreManager, MuleContextAware, Initialisable, Disposable {
+
   private static Logger logger = LoggerFactory.getLogger(MuleObjectStoreManager.class);
   private final ConcurrentMap<String, ScheduledFuture<?>> monitors = new ConcurrentHashMap<>();
   protected ScheduledThreadPoolExecutor scheduler;
@@ -51,8 +52,8 @@ public class MuleObjectStoreManager implements ObjectStoreManager, MuleContextAw
   }
 
   @Override
-  public <T extends ObjectStore<? extends Serializable>> T getObjectStore(String name, boolean isPersistent, int maxEntries, int entryTTL,
-      int expirationInterval) {
+  public <T extends ObjectStore<? extends Serializable>> T getObjectStore(String name, boolean isPersistent, int maxEntries,
+      int entryTTL, int expirationInterval) {
     return internalCreateStore(getBaseStore(isPersistent), name, maxEntries, entryTTL, expirationInterval);
   }
 
@@ -142,8 +143,8 @@ public class MuleObjectStoreManager implements ObjectStoreManager, MuleContextAw
   }
 
   @SuppressWarnings({"rawtypes", "unchecked"})
-  private <T extends ObjectStore<? extends Serializable>> T getMonitorablePartition(String name, ListableObjectStore baseStore, T store,
-      int entryTTL, int maxEntries, int expirationInterval) {
+  private <T extends ObjectStore<? extends Serializable>> T getMonitorablePartition(String name, ListableObjectStore baseStore,
+      T store, int entryTTL, int maxEntries, int expirationInterval) {
     if (baseStore instanceof PartitionableExpirableObjectStore) {
       T previous = (T) stores.putIfAbsent(name, store);
       if (previous == null) {
@@ -252,12 +253,14 @@ public class MuleObjectStoreManager implements ObjectStoreManager, MuleContextAw
   }
 
   class Monitor implements Runnable {
+
     private final String partitionName;
     private final PartitionableExpirableObjectStore<? extends Serializable> store;
     private final int entryTTL;
     private final int maxEntries;
 
-    public Monitor(String partitionName, PartitionableExpirableObjectStore<? extends Serializable> store, int entryTTL, int maxEntries) {
+    public Monitor(String partitionName, PartitionableExpirableObjectStore<? extends Serializable> store, int entryTTL,
+        int maxEntries) {
       this.partitionName = partitionName;
       this.store = store;
       this.entryTTL = entryTTL;

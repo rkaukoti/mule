@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.endpoint;
 
@@ -37,6 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 public class DefaultInboundEndpoint extends AbstractEndpoint implements InboundEndpoint {
+
   private static final long serialVersionUID = -4752772777414636142L;
   private MessageProcessor listener;
   private FlowConstruct flowConstruct;
@@ -48,9 +49,9 @@ public class DefaultInboundEndpoint extends AbstractEndpoint implements InboundE
       RetryPolicyTemplate retryPolicyTemplate, AbstractRedeliveryPolicy redeliveryPolicy,
       EndpointMessageProcessorChainFactory messageProcessorsFactory, List<MessageProcessor> messageProcessors,
       List<MessageProcessor> responseMessageProcessors, boolean disableTransportTransformer, MediaType mimeType) {
-    super(connector, endpointUri, name, properties, transactionConfig, deleteUnacceptedMessage, messageExchangePattern, responseTimeout,
-        initialState, endpointEncoding, endpointBuilderName, muleContext, retryPolicyTemplate, redeliveryPolicy, messageProcessorsFactory,
-        messageProcessors, responseMessageProcessors, disableTransportTransformer, mimeType);
+    super(connector, endpointUri, name, properties, transactionConfig, deleteUnacceptedMessage, messageExchangePattern,
+        responseTimeout, initialState, endpointEncoding, endpointBuilderName, muleContext, retryPolicyTemplate, redeliveryPolicy,
+        messageProcessorsFactory, messageProcessors, responseMessageProcessors, disableTransportTransformer, mimeType);
   }
 
   @Override
@@ -140,8 +141,8 @@ public class DefaultInboundEndpoint extends AbstractEndpoint implements InboundE
   @Override
   public AbstractRedeliveryPolicy getRedeliveryPolicy() {
     /*
-     * TODO Next commit will fix this horrible thing: inbound endpoint should only be aware of a redelivery policy configured on it
-     * flowConstruct should be responsible of redelivery policy use
+     * TODO Next commit will fix this horrible thing: inbound endpoint should only be aware of a redelivery policy configured on
+     * it flowConstruct should be responsible of redelivery policy use
      */
     AbstractRedeliveryPolicy redeliveryPolicy = super.getRedeliveryPolicy();
     RollbackMessagingExceptionStrategy rollbackMessagingExceptionStrategy = null;

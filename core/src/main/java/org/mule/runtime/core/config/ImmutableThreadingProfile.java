@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.config;
 
@@ -33,8 +33,9 @@ public class ImmutableThreadingProfile implements ThreadingProfile {
   private ThreadFactory threadFactory;
   private MuleContext muleContext;
 
-  public ImmutableThreadingProfile(int maxThreadsActive, int maxThreadsIdle, int maxBufferSize, long threadTTL, long threadWaitTimeout,
-      int poolExhaustedAction, boolean doThreading, RejectedExecutionHandler rejectedExecutionHandler, ThreadFactory threadFactory) {
+  public ImmutableThreadingProfile(int maxThreadsActive, int maxThreadsIdle, int maxBufferSize, long threadTTL,
+      long threadWaitTimeout, int poolExhaustedAction, boolean doThreading, RejectedExecutionHandler rejectedExecutionHandler,
+      ThreadFactory threadFactory) {
     this.maxThreadsActive = maxThreadsActive;
     this.maxThreadsIdle = maxThreadsIdle;
     this.maxBufferSize = maxBufferSize;
@@ -168,10 +169,11 @@ public class ImmutableThreadingProfile implements ThreadingProfile {
   }
 
   public String toString() {
-    return "ThreadingProfile{" + "maxThreadsActive=" + maxThreadsActive + ", maxThreadsIdle=" + maxThreadsIdle + ", maxBufferSize="
-        + maxBufferSize + ", threadTTL=" + threadTTL + ", poolExhaustedAction=" + poolExhaustedAction + ", threadWaitTimeout="
-        + threadWaitTimeout + ", doThreading=" + doThreading + ", workManagerFactory=" + workManagerFactory + ", rejectedExecutionHandler="
-        + rejectedExecutionHandler + ", threadFactory=" + threadFactory + "}";
+    return "ThreadingProfile{" + "maxThreadsActive=" + maxThreadsActive + ", maxThreadsIdle=" + maxThreadsIdle
+        + ", maxBufferSize=" + maxBufferSize + ", threadTTL=" + threadTTL + ", poolExhaustedAction=" + poolExhaustedAction
+        + ", threadWaitTimeout=" + threadWaitTimeout + ", doThreading=" + doThreading + ", workManagerFactory="
+        + workManagerFactory + ", rejectedExecutionHandler=" + rejectedExecutionHandler + ", threadFactory=" + threadFactory
+        + "}";
   }
 
   public static class DefaultWorkManagerFactory implements WorkManagerFactory, MuleContextAware {

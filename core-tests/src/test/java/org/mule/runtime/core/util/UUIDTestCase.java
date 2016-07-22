@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -35,6 +35,7 @@ public class UUIDTestCase extends AbstractMuleTestCase {
       }
     }
     final Comparator<Object[]> comparatorById = new Comparator<Object[]>() {
+
       public int compare(Object[] o1, Object[] o2) {
         return ((String) o1[0]).compareTo((String) o2[0]);
       }

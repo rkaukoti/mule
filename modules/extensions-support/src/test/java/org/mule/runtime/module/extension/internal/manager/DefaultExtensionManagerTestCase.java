@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.manager;
 
@@ -180,7 +180,8 @@ public class DefaultExtensionManagerTestCase extends AbstractMuleTestCase {
   @Test
   public void getExtensionByNameAndVendor() {
     assertThat(extensionsManager.getExtension(EXTENSION2_NAME, MULESOFT).get(), is(sameInstance(extensionModel2)));
-    assertThat(extensionsManager.getExtension(EXTENSION2_NAME, OTHER_VENDOR).get(), is(sameInstance(extensionModel3WithRepeatedName)));
+    assertThat(extensionsManager.getExtension(EXTENSION2_NAME, OTHER_VENDOR).get(),
+        is(sameInstance(extensionModel3WithRepeatedName)));
     assertThat(extensionsManager.getExtension(EXTENSION1_NAME, OTHER_VENDOR).isPresent(), is(false));
   }
 
@@ -212,7 +213,8 @@ public class DefaultExtensionManagerTestCase extends AbstractMuleTestCase {
   public void getConfigurationByName() throws Exception {
     registerConfigurationProvider();
 
-    ConfigurationInstance<Object> configurationInstance = extensionsManager.getConfiguration(EXTENSION1_CONFIG_INSTANCE_NAME, event);
+    ConfigurationInstance<Object> configurationInstance =
+        extensionsManager.getConfiguration(EXTENSION1_CONFIG_INSTANCE_NAME, event);
     assertThat(configurationInstance.getValue(), is(sameInstance(configInstance)));
   }
 
@@ -268,8 +270,10 @@ public class DefaultExtensionManagerTestCase extends AbstractMuleTestCase {
   public void registerTwoExtensionsWithTheSameNameButDifferentVendor() {
     registerExtensions(extensionModel2, extensionModel3WithRepeatedName);
     List<RuntimeExtensionModel> extensionModels = new ArrayList<>(extensionsManager.getExtensions());
-    List<String> extensionNameList = extensionModels.stream().map(ExtensionModel::getName).distinct().collect(Collectors.toList());
-    List<String> extensionVendorList = extensionModels.stream().map(ExtensionModel::getVendor).distinct().collect(Collectors.toList());
+    List<String> extensionNameList =
+        extensionModels.stream().map(ExtensionModel::getName).distinct().collect(Collectors.toList());
+    List<String> extensionVendorList =
+        extensionModels.stream().map(ExtensionModel::getVendor).distinct().collect(Collectors.toList());
 
     assertThat(extensionModels.size(), is(3));
     assertThat(extensionNameList.size(), is(2));
@@ -327,8 +331,8 @@ public class DefaultExtensionManagerTestCase extends AbstractMuleTestCase {
   }
 
   private List<RuntimeExtensionModel> getTestExtensions() {
-    return ImmutableList.<RuntimeExtensionModel>builder().add(extensionModel1).add(extensionModel2).add(extensionModel3WithRepeatedName)
-        .build();
+    return ImmutableList.<RuntimeExtensionModel>builder().add(extensionModel1).add(extensionModel2)
+        .add(extensionModel3WithRepeatedName).build();
   }
 
   private void testEquals(Collection<RuntimeExtensionModel> expected, Collection<RuntimeExtensionModel> obtained) {
@@ -350,7 +354,8 @@ public class DefaultExtensionManagerTestCase extends AbstractMuleTestCase {
   private void registerConfigurationProvider() throws RegistrationException {
     extensionsManager.registerConfigurationProvider(extension1ConfigurationProvider);
     verify(muleContext.getRegistry()).registerObject(extension1ConfigurationProvider.getName(), extension1ConfigurationProvider);
-    when(muleContext.getRegistry().lookupObjects(ConfigurationProvider.class)).thenReturn(asList(extension1ConfigurationProvider));
+    when(muleContext.getRegistry().lookupObjects(ConfigurationProvider.class))
+        .thenReturn(asList(extension1ConfigurationProvider));
     when(muleContext.getRegistry().get(extension1ConfigurationProvider.getName())).thenReturn(extension1ConfigurationProvider);
   }
 }

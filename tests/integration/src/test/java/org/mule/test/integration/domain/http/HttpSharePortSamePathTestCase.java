@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.domain.http;
 
@@ -44,12 +44,13 @@ public class HttpSharePortSamePathTestCase extends AbstractMuleTestCase {
   @Test
   public void samePathDefinedInTwoAppsWithinSameDomain() throws Exception {
     domainContext = new DomainContextBuilder().setDomainConfig("domain/http/http-shared-listener-config.xml").build();
-    firstAppContext = new ApplicationContextBuilder().setApplicationResources(new String[] {"domain/http/http-hello-mule-app.xml"})
-        .setDomainContext(domainContext).build();
+    firstAppContext = new ApplicationContextBuilder()
+        .setApplicationResources(new String[] {"domain/http/http-hello-mule-app.xml"}).setDomainContext(domainContext).build();
     ApplicationContextBuilder secondApp = new ApplicationContextBuilder();
 
     expected.expect(instanceOf(InitialisationException.class));
-    secondApp.setApplicationResources(new String[] {"domain/http/http-hello-mule-app.xml"}).setDomainContext(domainContext).build();
+    secondApp.setApplicationResources(new String[] {"domain/http/http-hello-mule-app.xml"}).setDomainContext(domainContext)
+        .build();
   }
 
   public SystemProperty getEndpointSchemeSystemProperty() {

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.log4j2;
 
@@ -31,20 +31,23 @@ import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessa
  * A cache which relates {@link ClassLoader} instances with {@link LoggerContext}s
  *
  *
- * Because the {@link LoggerContext} might contain asynchronous loggers, this cache distinguises between {@link #activeContexts} and
- * {@link #disposedContexts}.
+ * Because the {@link LoggerContext} might contain asynchronous loggers, this cache distinguises between {@link #activeContexts}
+ * and {@link #disposedContexts}.
  *
- * When a {@link LoggerContext} is removed (either through {@link #remove(ClassLoader)} or {@link #remove(LoggerContext)}), it is not
- * stopped right away. It is moved to the {@link #disposedContexts} list where it sits during a lapse of {@link #disposeDelayInMillis}
- * before it is actually stopped. This is to give asynchronous loggers some time to flush the pending messages. Notice that there's no
- * guarantee that the waiting time is enough (although it should for most cases). {@link #disposeDelayInMillis} defaults to 15 seconds but
- * it can be customized by setting the {@link MuleProperties#MULE_LOG_CONTEXT_DISPOSE_DELAY_MILLIS} system property
+ * When a {@link LoggerContext} is removed (either through {@link #remove(ClassLoader)} or {@link #remove(LoggerContext)}), it is
+ * not stopped right away. It is moved to the {@link #disposedContexts} list where it sits during a lapse of
+ * {@link #disposeDelayInMillis} before it is actually stopped. This is to give asynchronous loggers some time to flush the
+ * pending messages. Notice that there's no guarantee that the waiting time is enough (although it should for most cases).
+ * {@link #disposeDelayInMillis} defaults to 15 seconds but it can be customized by setting the
+ * {@link MuleProperties#MULE_LOG_CONTEXT_DISPOSE_DELAY_MILLIS} system property
  *
- * This class also implements the {@link Disposable} interface. When {@link #dispose()} is invoked all the contexts are stopped right away
+ * This class also implements the {@link Disposable} interface. When {@link #dispose()} is invoked all the contexts are stopped
+ * right away
  *
  * @since 3.7.0
  */
 final class LoggerContextCache implements Disposable {
+
   private static final long DEFAULT_DISPOSE_DELAY_IN_MILLIS = 15000;
 
   private final ArtifactAwareContextSelector artifactAwareContextSelector;
@@ -63,6 +66,7 @@ final class LoggerContextCache implements Disposable {
 
     disposedContexts = CacheBuilder.newBuilder().expireAfterWrite(disposeDelayInMillis, TimeUnit.MILLISECONDS)
         .removalListener(new RemovalListener<Integer, LoggerContext>() {
+
           @Override
           public void onRemoval(RemovalNotification<Integer, LoggerContext> notification) {
             stop(notification.getValue());
@@ -124,12 +128,13 @@ final class LoggerContextCache implements Disposable {
    *
    * Guava cache will use its logging framework to log something, and that logger will end up calling here.
    * <p>
-   * With the check in the {@link Callable} passed to the guava cache, we avoid building an extra context. We cannot just use a map, because
-   * it may result in an eternal recurrent call, guava does a good job at handling that situation. It is just the logging that guava tries
-   * to do that may disrupt thing when initializing the logging infrastructure.
+   * With the check in the {@link Callable} passed to the guava cache, we avoid building an extra context. We cannot just use a
+   * map, because it may result in an eternal recurrent call, guava does a good job at handling that situation. It is just the
+   * logging that guava tries to do that may disrupt thing when initializing the logging infrastructure.
    */
   protected LoggerContext doGetLoggerContext(final ClassLoader classLoader, final Integer key) throws ExecutionException {
     return activeContexts.get(key, new Callable<LoggerContext>() {
+
       @Override
       public LoggerContext call() throws Exception {
         if (builtContexts.containsKey(key)) {
@@ -173,6 +178,7 @@ final class LoggerContextCache implements Disposable {
     synchronized (executorService) {
       if (!executorService.isShutdown()) {
         executorService.schedule(new Runnable() {
+
           @Override
           public void run() {
             disposedContexts.cleanUp();

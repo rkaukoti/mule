@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode;
 
@@ -45,8 +45,8 @@ import static org.mule.runtime.module.oauth2.internal.authorizationcode.state.Re
 import static org.springframework.util.StringUtils.isEmpty;
 
 /**
- * Represents the Token request and response handling behaviour of the OAuth 2.0 dance. It provides support for standard OAuth server
- * implementations of the token acquisition part plus a couple of configuration attributes to customize behaviour.
+ * Represents the Token request and response handling behaviour of the OAuth 2.0 dance. It provides support for standard OAuth
+ * server implementations of the token acquisition part plus a couple of configuration attributes to customize behaviour.
  */
 public class AutoAuthorizationCodeTokenRequestHandler extends AbstractAuthorizationCodeTokenRequestHandler {
 
@@ -63,8 +63,9 @@ public class AutoAuthorizationCodeTokenRequestHandler extends AbstractAuthorizat
   }
 
   /**
-   * Starts the http listener for the redirect url callback. This will create a flow with an endpoint on the provided OAuth redirect uri
-   * parameter. The OAuth Server will call this url to provide the authentication code required to get the access token.
+   * Starts the http listener for the redirect url callback. This will create a flow with an endpoint on the provided OAuth
+   * redirect uri parameter. The OAuth Server will call this url to provide the authentication code required to get the access
+   * token.
    *
    * @throws MuleException if the listener couldn't be created.
    */
@@ -110,8 +111,8 @@ public class AutoAuthorizationCodeTokenRequestHandler extends AbstractAuthorizat
         muleEventLogger.logContent(event);
         authorizationStatus = NO_AUTHORIZATION_CODE_STATUS;
         statusCodeToReturn = BAD_REQUEST.getStatusCode();
-        responseMessage =
-            "Failure retrieving access token.\n OAuth Server uri from callback: " + event.getMessage().getInboundProperty(HTTP_REQUEST_URI);
+        responseMessage = "Failure retrieving access token.\n OAuth Server uri from callback: "
+            + event.getMessage().getInboundProperty(HTTP_REQUEST_URI);
       } catch (TokenUrlResponseException e2) {
         logger.error((String.format("HTTP response from token URL %s returned a failure status code", getTokenUrl())));
         muleEventLogger.logContent(e2.getTokenUrlResponse());
@@ -140,8 +141,8 @@ public class AutoAuthorizationCodeTokenRequestHandler extends AbstractAuthorizat
       String onCompleteRedirectToValue = stateDecoder.decodeOnCompleteRedirectTo();
       if (!isEmpty(onCompleteRedirectToValue)) {
         builder.addOutboundProperty(HTTP_STATUS_PROPERTY, MOVED_TEMPORARILY.getStatusCode());
-        builder.addOutboundProperty(LOCATION, HttpParser.appendQueryParam(onCompleteRedirectToValue, AUTHORIZATION_STATUS_QUERY_PARAM_KEY,
-            String.valueOf(finalAuthorizationStatus)));
+        builder.addOutboundProperty(LOCATION, HttpParser.appendQueryParam(onCompleteRedirectToValue,
+            AUTHORIZATION_STATUS_QUERY_PARAM_KEY, String.valueOf(finalAuthorizationStatus)));
       }
 
       event.setMessage(builder.build());
@@ -195,14 +196,16 @@ public class AutoAuthorizationCodeTokenRequestHandler extends AbstractAuthorizat
     }
   }
 
-  private TokenResponseProcessor processTokenUrlResponse(MuleEvent tokenUrlResponse) throws TokenNotFoundException, TransformerException {
-    final TokenResponseProcessor tokenResponseProcessor =
-        TokenResponseProcessor.createAuthorizationCodeProcessor(tokenResponseConfiguration, getMuleContext().getExpressionManager());
+  private TokenResponseProcessor processTokenUrlResponse(MuleEvent tokenUrlResponse)
+      throws TokenNotFoundException, TransformerException {
+    final TokenResponseProcessor tokenResponseProcessor = TokenResponseProcessor
+        .createAuthorizationCodeProcessor(tokenResponseConfiguration, getMuleContext().getExpressionManager());
     tokenResponseProcessor.process(tokenUrlResponse);
 
     if (logger.isDebugEnabled()) {
       logger.debug("Retrieved access token, refresh token and expires from token url are: %s, %s, %s",
-          tokenResponseProcessor.getAccessToken(), tokenResponseProcessor.getRefreshToken(), tokenResponseProcessor.getExpiresIn());
+          tokenResponseProcessor.getAccessToken(), tokenResponseProcessor.getRefreshToken(),
+          tokenResponseProcessor.getExpiresIn());
     }
 
     if (!tokenResponseContentIsValid(tokenResponseProcessor)) {
@@ -235,14 +238,15 @@ public class AutoAuthorizationCodeTokenRequestHandler extends AbstractAuthorizat
     if (logger.isDebugEnabled()) {
       logger.debug("New OAuth State for resourceOwnerId %s is: accessToken(%s), refreshToken(%s), expiresIn(%s), state(%s)",
           resourceOwnerOAuthContext.getResourceOwnerId(), resourceOwnerOAuthContext.getAccessToken(),
-          StringUtils.isBlank(resourceOwnerOAuthContext.getRefreshToken()) ? "Not issued" : resourceOwnerOAuthContext.getRefreshToken(),
+          StringUtils.isBlank(resourceOwnerOAuthContext.getRefreshToken()) ? "Not issued"
+              : resourceOwnerOAuthContext.getRefreshToken(),
           resourceOwnerOAuthContext.getExpiresIn(), resourceOwnerOAuthContext.getState());
     }
   }
 
   /**
-   * Executes a refresh token for a particular user. It will call the OAuth Server token url and provide the refresh token to get a new
-   * access token.
+   * Executes a refresh token for a particular user. It will call the OAuth Server token url and provide the refresh token to get
+   * a new access token.
    *
    * @param currentEvent the event being processed when the refresh token was required.
    * @param resourceOwnerOAuthContext oauth context for who we need to update the access token.
@@ -265,7 +269,8 @@ public class AutoAuthorizationCodeTokenRequestHandler extends AbstractAuthorizat
       TokenResponseProcessor tokenResponseProcessor = processTokenUrlResponse(refreshTokenResponse);
       updateResourceOwnerState(resourceOwnerOAuthContext, null, tokenResponseProcessor);
     } catch (TokenNotFoundException e) {
-      throw new MuleRuntimeException(CoreMessages.createStaticMessage("Access token was not found from the refresh token oauth call"), e);
+      throw new MuleRuntimeException(
+          CoreMessages.createStaticMessage("Access token was not found from the refresh token oauth call"), e);
     } catch (Exception e) {
       throw new MuleRuntimeException(e);
     }

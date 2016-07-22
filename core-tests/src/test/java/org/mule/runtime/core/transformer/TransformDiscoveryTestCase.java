@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer;
 
@@ -21,6 +21,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
 public class TransformDiscoveryTestCase extends AbstractMuleContextTestCase {
+
   @Override
   protected void doSetUp() throws Exception {
     muleContext.getRegistry().registerTransformer(new StringToApple());
@@ -54,6 +55,7 @@ public class TransformDiscoveryTestCase extends AbstractMuleContextTestCase {
   }
 
   protected class StringToApple extends org.mule.runtime.core.transformer.AbstractDiscoverableTransformer {
+
     public StringToApple() {
       setReturnDataType(DataType.fromType(Apple.class));
     }
@@ -65,6 +67,7 @@ public class TransformDiscoveryTestCase extends AbstractMuleContextTestCase {
   }
 
   protected class StringToRedApple extends org.mule.runtime.core.transformer.AbstractDiscoverableTransformer {
+
     public StringToRedApple() {
       setReturnDataType(DataType.fromType(RedApple.class));
       setPriorityWeighting(MAX_PRIORITY_WEIGHTING);
@@ -77,6 +80,7 @@ public class TransformDiscoveryTestCase extends AbstractMuleContextTestCase {
   }
 
   protected class StringToOrange extends org.mule.runtime.core.transformer.AbstractDiscoverableTransformer {
+
     public StringToOrange() {
       setReturnDataType(DataType.fromType(Orange.class));
     }

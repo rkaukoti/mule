@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.el.mvel;
@@ -26,13 +26,14 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 
 /**
- * This MVEL executor uses MVEL {@link ReflectiveAccessorOptimizer} implementation rather than the default {@link DynamicOptimizer} (which
- * generates byte-code accessors using ASM) because we found that, at least with JDK7, the {@link ReflectiveAccessorOptimizer} was fastest
- * in typical Mule use cases.
+ * This MVEL executor uses MVEL {@link ReflectiveAccessorOptimizer} implementation rather than the default
+ * {@link DynamicOptimizer} (which generates byte-code accessors using ASM) because we found that, at least with JDK7, the
+ * {@link ReflectiveAccessorOptimizer} was fastest in typical Mule use cases.
  */
 public class MVELExpressionExecutor implements ExpressionExecutor<MVELExpressionLanguageContext> {
 
-  protected static final String DISABLE_MEL_EXPRESSION_CACHE = MuleProperties.SYSTEM_PROPERTY_PREFIX + "disableMelExpressionCache";
+  protected static final String DISABLE_MEL_EXPRESSION_CACHE =
+      MuleProperties.SYSTEM_PROPERTY_PREFIX + "disableMelExpressionCache";
   protected static final int COMPILED_EXPRESSION_MAX_CACHE_SIZE = 1000;
   private static Logger log = LoggerFactory.getLogger(MVELExpressionExecutor.class);
   protected ParserConfiguration parserConfiguration;
@@ -47,6 +48,7 @@ public class MVELExpressionExecutor implements ExpressionExecutor<MVELExpression
 
     compiledExpressionsCache =
         CacheBuilder.newBuilder().maximumSize(getCompiledExpressionMaxCacheSize()).build(new CacheLoader<String, Serializable>() {
+
           @Override
           public Serializable load(String key) throws Exception {
             return MVEL.compileExpression(key, new ParserContext(parserConfiguration));

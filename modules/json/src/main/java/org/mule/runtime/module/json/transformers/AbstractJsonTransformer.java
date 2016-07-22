@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.json.transformers;
 
@@ -16,6 +16,7 @@ import java.util.Map;
  * TODO
  */
 public abstract class AbstractJsonTransformer extends AbstractMessageTransformer implements DiscoverableTransformer {
+
   protected int weighting = DiscoverableTransformer.MAX_PRIORITY_WEIGHTING;
 
   private ObjectMapper mapper;

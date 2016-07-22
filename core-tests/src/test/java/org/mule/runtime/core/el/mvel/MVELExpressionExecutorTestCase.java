@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.el.mvel;
 
@@ -138,19 +138,22 @@ public class MVELExpressionExecutorTestCase extends AbstractELTestCase {
 
   @Test
   public void doesNotCachesCompiledExpressions() throws Exception {
-    MuleTestUtils.testWithSystemProperty(MVELExpressionExecutor.DISABLE_MEL_EXPRESSION_CACHE, "", new MuleTestUtils.TestCallback() {
-      @Override
-      public void run() throws Exception {
-        setupMVEL();
+    MuleTestUtils.testWithSystemProperty(MVELExpressionExecutor.DISABLE_MEL_EXPRESSION_CACHE, "",
+        new MuleTestUtils.TestCallback() {
 
-        final Serializable compiledExpression1 = mvel.getCompiledExpression(SIMPLE_EXPRESSION);
-        final Serializable compiledExpression2 = mvel.getCompiledExpression(SIMPLE_EXPRESSION);
-        assertThat(compiledExpression1, is(not(compiledExpression2)));
-      }
-    });
+          @Override
+          public void run() throws Exception {
+            setupMVEL();
+
+            final Serializable compiledExpression1 = mvel.getCompiledExpression(SIMPLE_EXPRESSION);
+            final Serializable compiledExpression2 = mvel.getCompiledExpression(SIMPLE_EXPRESSION);
+            assertThat(compiledExpression1, is(not(compiledExpression2)));
+          }
+        });
   }
 
   static class MyClassClassLoader extends ClassLoader {
+
     @Override
     protected Class<?> findClass(String className) throws ClassNotFoundException {
       if (className.equals("org.MyClass")) {

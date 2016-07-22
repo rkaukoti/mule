@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.exception;
 
@@ -19,12 +19,14 @@ import org.mule.runtime.core.management.stats.FlowConstructStatistics;
 import org.mule.runtime.core.message.DefaultExceptionPayload;
 
 /**
- * Fire a notification, log exception, increment statistics, route the problematic message to a destination if one is configured (DLQ
- * pattern), commit or rollback transaction if one exists, close any open streams.
+ * Fire a notification, log exception, increment statistics, route the problematic message to a destination if one is configured
+ * (DLQ pattern), commit or rollback transaction if one exists, close any open streams.
  */
 public abstract class AbstractMessagingExceptionStrategy extends AbstractExceptionListener implements MessagingExceptionHandler {
+
   /**
-   * Stop the flow/service when an exception occurs. You will need to restart the flow/service manually after this (e.g, using JMX).
+   * Stop the flow/service when an exception occurs. You will need to restart the flow/service manually after this (e.g, using
+   * JMX).
    */
   private boolean stopMessageProcessing;
 

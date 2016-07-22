@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.el.context;
 
@@ -21,21 +21,22 @@ import javax.activation.DataHandler;
  * Exposes information about the current Mule message:
  *
  * <li><b>id</b> <i>The unique message id</i>
- * <li><b>rootId</b> <i>The root message id. The id of the message before being split into parts. If was is not split then this value is the
- * same as the id.</i>
+ * <li><b>rootId</b> <i>The root message id. The id of the message before being split into parts. If was is not split then this
+ * value is the same as the id.</i>
  * <li><b>correlationId</b> <i>The message correlationId.</i>
  * <li><b>correlationSequence</b> <i>The message correlation sequence number.</i>
  * <li><b>correlationGroupSize</b> <i>The message correlation group size.</i>
  * <li><b>dataType</b> <i>The message data type (org.mule.runtime.core.api.transformer.DataType).</i>
  * <li><b>replyTo</b> <i>The message reply to destination. (mutable)</i>
- * <li><b>payload</b> <i>The message payload (mutable). You can also use message.payloadAs(Class clazz). Note: If the message payload is
- * NullPayload, this method will return null (from 3.4)</i>
+ * <li><b>payload</b> <i>The message payload (mutable). You can also use message.payloadAs(Class clazz). Note: If the message
+ * payload is NullPayload, this method will return null (from 3.4)</i>
  * <li><b>inboundProperties</b> <i>Map of inbound message properties (immutable).</i>
  * <li><b>outboundProperties</b> <i>Map of outbound message properties.</i>
  * <li><b>inboundAttachements</b> <i>Map of inbound message attachments (immutable).</i>
  * <li><b>outboundAttachements</b> <i>Map of outbound message attachments.</i>
  */
 public class MessageContext {
+
   private MuleEvent event;
   private MuleContext muleContext;
 

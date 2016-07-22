@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.management.stats;
 
@@ -13,8 +13,8 @@ import org.slf4j.LoggerFactory;
 import java.io.PrintWriter;
 
 /**
- * ComponentStatistics is a basic metrics aggregation class that is accessible via the JMX api. This class is not thread-safe - occasional
- * errors in reported statistics should be expected, especially when the {@link #clear()} method is used.
+ * ComponentStatistics is a basic metrics aggregation class that is accessible via the JMX api. This class is not thread-safe -
+ * occasional errors in reported statistics should be expected, especially when the {@link #clear()} method is used.
  */
 public class ComponentStatistics implements Statistics {
 
@@ -36,11 +36,11 @@ public class ComponentStatistics implements Statistics {
   private boolean statIntervalTimeEnabled = false;
 
   /**
-   * The constructor added to initialize the interval time in ms that stats are measured for from the property statIntervalTime. If the
-   * property is not set or cannot be parsed, disable interval time and just compute stats from start of mule.
+   * The constructor added to initialize the interval time in ms that stats are measured for from the property statIntervalTime.
+   * If the property is not set or cannot be parsed, disable interval time and just compute stats from start of mule.
    * <p/>
-   * TODO: The code to create and use an interval time for measuring average execution time could be removed once a complete solution is
-   * available in MuleHQ to monitor this
+   * TODO: The code to create and use an interval time for measuring average execution time could be removed once a complete
+   * solution is available in MuleHQ to monitor this
    */
   public ComponentStatistics() {
     String intervalTimeString = System.getProperty("statIntervalTime");
@@ -74,8 +74,8 @@ public class ComponentStatistics implements Statistics {
   /**
    * Returns true if this stats collector is enabled.
    * <p/>
-   * This value does not affect statistics tabulation directly - it is up to the component to enable/disable collection based on the value
-   * of this method.
+   * This value does not affect statistics tabulation directly - it is up to the component to enable/disable collection based on
+   * the value of this method.
    *
    * @return {@code true} if stats collection is enabled, otherwise false.
    */
@@ -122,8 +122,8 @@ public class ComponentStatistics implements Statistics {
   }
 
   /**
-   * The total cumulative execution time since statistics were last cleared. Includes the sum of all branch times plus any directly recorded
-   * execution times.
+   * The total cumulative execution time since statistics were last cleared. Includes the sum of all branch times plus any
+   * directly recorded execution times.
    *
    * @return The total cumulative execution time, in milliseconds.
    */

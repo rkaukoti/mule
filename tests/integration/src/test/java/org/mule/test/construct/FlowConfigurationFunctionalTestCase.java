@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.construct;
 
@@ -238,7 +238,8 @@ public class FlowConfigurationFunctionalTestCase extends FunctionalTestCase {
     final FruitBowl fruitBowl = new FruitBowl();
     fruitBowl.addFruit(apple);
 
-    final MuleMessage result = flowRunner("split-aggregate-response-singleton-list").withPayload(fruitBowl.getFruit()).run().getMessage();
+    final MuleMessage result =
+        flowRunner("split-aggregate-response-singleton-list").withPayload(fruitBowl.getFruit()).run().getMessage();
 
     assertNotNull(result);
     assertTrue(result.getPayload() instanceof List);
@@ -373,8 +374,8 @@ public class FlowConfigurationFunctionalTestCase extends FunctionalTestCase {
 
   @Test
   public void testAsyncTransactionalEndpoint() throws Exception {
-    Exception e = flowRunner("async-tx").withPayload("0").transactionally(ACTION_NONE, new TestTransactionFactory()).asynchronously()
-        .runExpectingException();
+    Exception e = flowRunner("async-tx").withPayload("0").transactionally(ACTION_NONE, new TestTransactionFactory())
+        .asynchronously().runExpectingException();
 
     assertThat(e, instanceOf(MessagingException.class));
     assertThat(e.getMessage(), containsString("The <async> element cannot be used with transactions"));
@@ -430,7 +431,8 @@ public class FlowConfigurationFunctionalTestCase extends FunctionalTestCase {
 
   @Test
   public void testInvoke2() throws Exception {
-    final MuleMessage response = flowRunner("invoke2").withPayload("0").withInboundProperty("one", "header1val").run().getMessage();
+    final MuleMessage response =
+        flowRunner("invoke2").withPayload("0").withInboundProperty("one", "header1val").run().getMessage();
     assertEquals("header1valrecieved", getPayloadAsString(response));
   }
 
@@ -489,7 +491,8 @@ public class FlowConfigurationFunctionalTestCase extends FunctionalTestCase {
   @Test
   public void testCustomMessageRouter() throws Exception {
     MuleMessage result = flowRunner("customRouter").withPayload("").run().getMessage();
-    assertEquals("abc", ((List<MuleMessage>) result.getPayload()).stream().map(msg -> (String) msg.getPayload()).collect(joining()));
+    assertEquals("abc",
+        ((List<MuleMessage>) result.getPayload()).stream().map(msg -> (String) msg.getPayload()).collect(joining()));
   }
 
   @Test

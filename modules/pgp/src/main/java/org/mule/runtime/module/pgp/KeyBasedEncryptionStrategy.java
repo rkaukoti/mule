@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.pgp;
 
@@ -22,6 +22,7 @@ import java.security.Provider;
 import java.util.Calendar;
 
 public class KeyBasedEncryptionStrategy extends AbstractNamedEncryptionStrategy {
+
   /**
    * logger used by this class
    */
@@ -54,8 +55,8 @@ public class KeyBasedEncryptionStrategy extends AbstractNamedEncryptionStrategy 
     try {
       PGPCryptInfo pgpCryptInfo = this.safeGetCryptInfo(cryptInfo);
       PGPPublicKey publicKey = pgpCryptInfo.getPublicKey();
-      StreamTransformer transformer =
-          new DecryptStreamTransformer(data, publicKey, this.keyManager.getSecretKey(), this.keyManager.getSecretPassphrase(), provider);
+      StreamTransformer transformer = new DecryptStreamTransformer(data, publicKey, this.keyManager.getSecretKey(),
+          this.keyManager.getSecretPassphrase(), provider);
       return new LazyTransformedInputStream(new TransformContinuouslyPolicy(), transformer);
     } catch (Exception e) {
       throw new CryptoFailureException(this, e);

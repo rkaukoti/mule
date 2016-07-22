@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.routing.outbound;
 
@@ -11,14 +11,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A Split message contains one or more message parts with an endpoint associated with each part. This class is used by the Message Splitter
- * routers ({@link org.mule.compatibility.core.routing.outbound.AbstractRoundRobinMessageSplitter}) to define a mapping between message
- * parts and the endpoint to dispatch on.
+ * A Split message contains one or more message parts with an endpoint associated with each part. This class is used by the
+ * Message Splitter routers ({@link org.mule.compatibility.core.routing.outbound.AbstractRoundRobinMessageSplitter}) to define a
+ * mapping between message parts and the endpoint to dispatch on.
  *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
 public class SplitMessage {
+
   private List<MessagePart> parts = new ArrayList<MessagePart>();
 
   public void addPart(Object part, OutboundEndpoint endpoint) {
@@ -34,6 +35,7 @@ public class SplitMessage {
   }
 
   public class MessagePart {
+
     private Object part;
     private OutboundEndpoint endpoint;
 

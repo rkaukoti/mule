@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.http.internal.listener;
 
@@ -76,8 +76,8 @@ public class HttpListenerProvider implements ConnectionProvider<Server>, Initial
   private String host;
 
   /**
-   * Port where the requests will be received. If the protocol attribute is HTTP (default) then the default value is 80, if the protocol
-   * attribute is HTTPS then the default value is 443.
+   * Port where the requests will be received. If the protocol attribute is HTTP (default) then the default value is 80, if the
+   * protocol attribute is HTTPS then the default value is 443.
    */
   @Parameter
   @Expression(NOT_SUPPORTED)
@@ -85,9 +85,9 @@ public class HttpListenerProvider implements ConnectionProvider<Server>, Initial
   private Integer port;
 
   /**
-   * Protocol to use for communication. Valid values are HTTP and HTTPS. Default value is HTTP. When using HTTPS the HTTP communication is
-   * going to be secured using TLS / SSL. If HTTPS was configured as protocol then the user needs to configure at least the keystore in the
-   * tls:context child element of this listener-config.
+   * Protocol to use for communication. Valid values are HTTP and HTTPS. Default value is HTTP. When using HTTPS the HTTP
+   * communication is going to be secured using TLS / SSL. If HTTPS was configured as protocol then the user needs to configure at
+   * least the keystore in the tls:context child element of this listener-config.
    */
   @Parameter
   @Optional(defaultValue = "HTTP")
@@ -106,8 +106,8 @@ public class HttpListenerProvider implements ConnectionProvider<Server>, Initial
   private TlsContextFactory tlsContext;
 
   /**
-   * The number of milliseconds that a connection can remain idle before it is closed. The value of this attribute is only used when
-   * persistent connections are enabled.
+   * The number of milliseconds that a connection can remain idle before it is closed. The value of this attribute is only used
+   * when persistent connections are enabled.
    */
   @Parameter
   @Optional(defaultValue = "30000")
@@ -148,7 +148,8 @@ public class HttpListenerProvider implements ConnectionProvider<Server>, Initial
           + "If you defined a tls:context element in your listener-config then you must set protocol=\"HTTPS\""), this);
     }
     if (protocol.equals(HTTPS) && tlsContext == null) {
-      throw new InitialisationException(createStaticMessage("Configured protocol is HTTPS but there's no TlsContext configured"), this);
+      throw new InitialisationException(createStaticMessage("Configured protocol is HTTPS but there's no TlsContext configured"),
+          this);
     }
     if (tlsContext != null && !tlsContext.isKeyStoreConfigured()) {
       throw new InitialisationException(createStaticMessage("KeyStore must be configured for server side SSL"), this);
@@ -220,7 +221,8 @@ public class HttpListenerProvider implements ConnectionProvider<Server>, Initial
   }
 
   @Override
-  public ConnectionHandlingStrategy<Server> getHandlingStrategy(ConnectionHandlingStrategyFactory<Server> handlingStrategyFactory) {
+  public ConnectionHandlingStrategy<Server> getHandlingStrategy(
+      ConnectionHandlingStrategyFactory<Server> handlingStrategyFactory) {
     return handlingStrategyFactory.cached();
   }
 
@@ -231,8 +233,8 @@ public class HttpListenerProvider implements ConnectionProvider<Server>, Initial
   }
 
   private WorkManager createWorkManager(String name) {
-    final WorkManager workManager = workerThreadingProfile.createWorkManager(format("%s%s.%s", getPrefix(muleContext), name, "worker"),
-        muleContext.getConfiguration().getShutdownTimeout());
+    final WorkManager workManager = workerThreadingProfile.createWorkManager(
+        format("%s%s.%s", getPrefix(muleContext), name, "worker"), muleContext.getConfiguration().getShutdownTimeout());
     if (workManager instanceof MuleContextAware) {
       ((MuleContextAware) workManager).setMuleContext(muleContext);
     }

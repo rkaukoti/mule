@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.queue;
 
@@ -44,8 +44,8 @@ public class DualRandomAccessFileQueueStoreDelegateTestCase extends AbstractMule
 
   @Test
   public void nameWithInvalidCharacters() throws IOException {
-    String[] testNames = new String[] {"test-test", "test:/test", "test?test", "test:\\test", "test:/test", "test&test", "test|test",
-        "seda.queue(post:\\Customer:ApiTest-config.1)",
+    String[] testNames = new String[] {"test-test", "test:/test", "test?test", "test:\\test", "test:/test", "test&test",
+        "test|test", "seda.queue(post:\\Customer:ApiTest-config.1)",
         "this$is%a#really/big\\name@that?has<a>lot*of+invalid^characters!this$is%a#really/big\\name@that?has<a>lot*of+invalid^chars!"};
 
     for (String testName : testNames) {
@@ -57,6 +57,7 @@ public class DualRandomAccessFileQueueStoreDelegateTestCase extends AbstractMule
   public void readQueueFileMessagesInOrder() throws Exception {
     MuleTestUtils.testWithSystemProperty(DualRandomAccessFileQueueStoreDelegate.MAX_LENGTH_PER_FILE_PROPERTY_KEY,
         String.valueOf(MAXIMUM_NUMBER_OF_BYTES), new MuleTestUtils.TestCallback() {
+
           @Override
           public void run() throws Exception {
             int lastInsertedMessageIndex = writeDataUntilSecondFileContainsNextMessages();
@@ -69,6 +70,7 @@ public class DualRandomAccessFileQueueStoreDelegateTestCase extends AbstractMule
   public void readQueueFileMessagesInOrderWhenControlFileIsCorrupted() throws Exception {
     MuleTestUtils.testWithSystemProperty(DualRandomAccessFileQueueStoreDelegate.MAX_LENGTH_PER_FILE_PROPERTY_KEY,
         String.valueOf(MAXIMUM_NUMBER_OF_BYTES), new MuleTestUtils.TestCallback() {
+
           @Override
           public void run() throws Exception {
             int lastInsertedMessageIndex = writeDataUntilSecondFileContainsNextMessages();
@@ -122,15 +124,18 @@ public class DualRandomAccessFileQueueStoreDelegateTestCase extends AbstractMule
     do {
       queueStore.add(createTestDataForIndex(numberOfMessagesCreated));
       numberOfMessagesCreated++;
-    } while (queueStore.getQueueControlDataFile().getCurrentWriteFile().getAbsolutePath().equals(initialReadFile.getAbsolutePath()));
+    } while (queueStore.getQueueControlDataFile().getCurrentWriteFile().getAbsolutePath()
+        .equals(initialReadFile.getAbsolutePath()));
     int lastInsertedMessageIndex = numberOfMessagesCreated - 1;
     for (int i = 0; i < lastInsertedMessageIndex; i++) {
       queueStore.removeFirst();
     }
     // this call updates the read file.
     queueStore.peek();
-    assertThat(queueStore.getQueueControlDataFile().getCurrentReadFile().getAbsolutePath(), not(initialReadFile.getAbsolutePath()));
-    assertThat(queueStore.getQueueControlDataFile().getCurrentWriteFile().getAbsolutePath(), not(initialReadFile.getAbsolutePath()));
+    assertThat(queueStore.getQueueControlDataFile().getCurrentReadFile().getAbsolutePath(),
+        not(initialReadFile.getAbsolutePath()));
+    assertThat(queueStore.getQueueControlDataFile().getCurrentWriteFile().getAbsolutePath(),
+        not(initialReadFile.getAbsolutePath()));
     queueStore.close();
     return lastInsertedMessageIndex;
   }
@@ -146,7 +151,8 @@ public class DualRandomAccessFileQueueStoreDelegateTestCase extends AbstractMule
   }
 
   private DualRandomAccessFileQueueStoreDelegate createTestQueueStore() {
-    return new DualRandomAccessFileQueueStoreDelegate(TEST_QUEUE_NAME, workingDirectory.getRoot().getAbsolutePath(), mockMuleContext, 0);
+    return new DualRandomAccessFileQueueStoreDelegate(TEST_QUEUE_NAME, workingDirectory.getRoot().getAbsolutePath(),
+        mockMuleContext, 0);
   }
 
 }

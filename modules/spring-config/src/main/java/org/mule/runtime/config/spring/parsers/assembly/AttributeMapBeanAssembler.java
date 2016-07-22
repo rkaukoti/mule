@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.assembly;
 
@@ -9,13 +9,13 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 
 /**
- * This can be used inside a {@link org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser} - it takes named properties and,
- * instead of inserting them individually on the target, it packages them as a Map and inserts that.
+ * This can be used inside a {@link org.mule.runtime.config.spring.parsers.generic.ChildDefinitionParser} - it takes named
+ * properties and, instead of inserting them individually on the target, it packages them as a Map and inserts that.
  */
 public class AttributeMapBeanAssembler extends AbstractMapBeanAssembler {
 
-  public AttributeMapBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean, PropertyConfiguration targetConfig,
-      BeanDefinition target) {
+  public AttributeMapBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
+      PropertyConfiguration targetConfig, BeanDefinition target) {
     super(beanConfig, bean, targetConfig, target);
   }
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode.functional;
 
@@ -31,8 +31,8 @@ public class AbstractAuthorizationCodeRefreshTokenConfigTestCase extends Abstrac
   public static final String REFRESHED_ACCESS_TOKEN = "rbBQLgJXBEYo83K4Fqs4guasdfsdfa";
   private static final String RESOURCE_PATH = "/resource";
   @Rule
-  public SystemProperty localAuthorizationUrl =
-      new SystemProperty("local.authorization.url", String.format("http://localhost:%d/authorization", localHostPort.getNumber()));
+  public SystemProperty localAuthorizationUrl = new SystemProperty("local.authorization.url",
+      String.format("http://localhost:%d/authorization", localHostPort.getNumber()));
   @Rule
   public SystemProperty authorizationUrl =
       new SystemProperty("authorization.url", String.format("http://localhost:%d" + AUTHORIZE_PATH, oauthServerPort.getNumber()));
@@ -54,29 +54,31 @@ public class AbstractAuthorizationCodeRefreshTokenConfigTestCase extends Abstrac
     return "authorization-code/authorization-code-refresh-token-config.xml";
   }
 
-  protected void executeRefreshToken(String flowName, String oauthConfigName, String userId, int failureStatusCode) throws Exception {
+  protected void executeRefreshToken(String flowName, String oauthConfigName, String userId, int failureStatusCode)
+      throws Exception {
     configureResourceResponsesForRefreshToken(oauthConfigName, userId, failureStatusCode);
 
     final MuleEvent result = flowRunner(flowName).withPayload("message").withFlowVariable("userId", userId).run();
     assertThat(getPayloadAsString(result.getMessage()), is(RESOURCE_RESULT));
 
     wireMockRule.verify(postRequestedFor(urlEqualTo(TOKEN_PATH))
-        .withRequestBody(
-            containing(OAuthConstants.CLIENT_ID_PARAMETER + "=" + URLEncoder.encode(clientId.getValue(), StandardCharsets.UTF_8.name())))
-        .withRequestBody(
-            containing(OAuthConstants.REFRESH_TOKEN_PARAMETER + "=" + URLEncoder.encode(REFRESH_TOKEN, StandardCharsets.UTF_8.name())))
         .withRequestBody(containing(
-            OAuthConstants.CLIENT_SECRET_PARAMETER + "=" + URLEncoder.encode(clientSecret.getValue(), StandardCharsets.UTF_8.name())))
+            OAuthConstants.CLIENT_ID_PARAMETER + "=" + URLEncoder.encode(clientId.getValue(), StandardCharsets.UTF_8.name())))
+        .withRequestBody(containing(
+            OAuthConstants.REFRESH_TOKEN_PARAMETER + "=" + URLEncoder.encode(REFRESH_TOKEN, StandardCharsets.UTF_8.name())))
+        .withRequestBody(containing(OAuthConstants.CLIENT_SECRET_PARAMETER + "="
+            + URLEncoder.encode(clientSecret.getValue(), StandardCharsets.UTF_8.name())))
         .withRequestBody(containing(OAuthConstants.GRANT_TYPE_PARAMETER + "="
             + URLEncoder.encode(OAuthConstants.GRANT_TYPE_REFRESH_TOKEN, StandardCharsets.UTF_8.name()))));
   }
 
-  protected void executeRefreshTokenUsingOldRefreshTokenOnTokenCallAndRevokedByUsers(String flowName, String oauthConfigName, String userId,
-      int resourceFailureStatusCode, int tokenFailureStatusCode) throws Exception {
+  protected void executeRefreshTokenUsingOldRefreshTokenOnTokenCallAndRevokedByUsers(String flowName, String oauthConfigName,
+      String userId, int resourceFailureStatusCode, int tokenFailureStatusCode) throws Exception {
     configureResourceResponsesForRefreshToken(oauthConfigName, userId, resourceFailureStatusCode);
 
-    wireMockRule.stubFor(post(urlEqualTo(RESOURCE_PATH)).withHeader(HttpHeaders.Names.AUTHORIZATION, containing(REFRESHED_ACCESS_TOKEN))
-        .willReturn(aResponse().withStatus(tokenFailureStatusCode).withBody("")));
+    wireMockRule
+        .stubFor(post(urlEqualTo(RESOURCE_PATH)).withHeader(HttpHeaders.Names.AUTHORIZATION, containing(REFRESHED_ACCESS_TOKEN))
+            .willReturn(aResponse().withStatus(tokenFailureStatusCode).withBody("")));
     runFlow(flowName, userId);
   }
 
@@ -88,8 +90,9 @@ public class AbstractAuthorizationCodeRefreshTokenConfigTestCase extends Abstrac
   private void configureResourceResponsesForRefreshToken(String oauthConfigName, String userId, int failureStatusCode) {
     configureWireMockToExpectTokenPathRequestForAuthorizationCodeGrantType(REFRESHED_ACCESS_TOKEN);
 
-    wireMockRule.stubFor(post(urlEqualTo(RESOURCE_PATH)).withHeader(HttpHeaders.Names.AUTHORIZATION, containing(REFRESHED_ACCESS_TOKEN))
-        .willReturn(aResponse().withStatus(200).withBody(RESOURCE_RESULT)));
+    wireMockRule
+        .stubFor(post(urlEqualTo(RESOURCE_PATH)).withHeader(HttpHeaders.Names.AUTHORIZATION, containing(REFRESHED_ACCESS_TOKEN))
+            .willReturn(aResponse().withStatus(200).withBody(RESOURCE_RESULT)));
     wireMockRule.stubFor(post(urlEqualTo(RESOURCE_PATH)).withHeader(HttpHeaders.Names.AUTHORIZATION, containing(ACCESS_TOKEN))
         .willReturn(aResponse().withStatus(failureStatusCode).withBody("")));
 

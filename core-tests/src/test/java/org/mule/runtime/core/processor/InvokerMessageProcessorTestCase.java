@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor;
 
@@ -203,8 +203,8 @@ public class InvokerMessageProcessorTestCase extends AbstractMuleContextTestCase
 
   private class TestInvokeObject {
 
-    public void testMethod(Integer arg1, int arg2, Long arg3, long arg4, Double arg5, double arg6, Float arg7, float arg8, Boolean arg9,
-        boolean arg10, String arg11) {}
+    public void testMethod(Integer arg1, int arg2, Long arg3, long arg4, Double arg5, double arg6, Float arg7, float arg8,
+        Boolean arg9, boolean arg10, String arg11) {}
 
     public void testNoArgs() {}
 

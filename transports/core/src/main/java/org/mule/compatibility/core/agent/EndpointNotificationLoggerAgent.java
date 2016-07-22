@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.agent;
 
@@ -94,7 +94,8 @@ public class EndpointNotificationLoggerAgent extends AbstractNotificationLoggerA
         logger.warn("Endpoint not started: " + endpoint.getEndpointURI() + ". Cannot dispatch notification: " + e);
         return;
       }
-      if ((e.getAction() == ConnectionNotification.CONNECTION_FAILED || e.getAction() == ConnectionNotification.CONNECTION_DISCONNECTED)
+      if ((e.getAction() == ConnectionNotification.CONNECTION_FAILED
+          || e.getAction() == ConnectionNotification.CONNECTION_DISCONNECTED)
           && (e.getSource()).equals(endpoint.getConnector())) {
         // If this is a CONNECTION_FAILED or
         // CONNECTION_DISCONNECTED notification for the same connector that
@@ -116,7 +117,8 @@ public class EndpointNotificationLoggerAgent extends AbstractNotificationLoggerA
         endpoint.process(event);
       } catch (Exception e1) {
         // TODO MULE-863: If this is an error, do something better than this
-        logger.error("Failed to dispatch event: " + e.toString() + " over endpoint: " + endpoint + ". Error is: " + e1.getMessage(), e1);
+        logger.error(
+            "Failed to dispatch event: " + e.toString() + " over endpoint: " + endpoint + ". Error is: " + e1.getMessage(), e1);
       }
     }
   }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor;
 
@@ -38,9 +38,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static org.mule.runtime.core.util.ClassUtils.isConsumable;
 
 /**
- * Processes {@link MuleEvent}'s asynchronously using a {@link MuleWorkManager} to schedule asynchronous processing of MessageProcessor
- * delegate configured the next {@link MessageProcessor}. The next {@link MessageProcessor} is therefore be executed in a different thread
- * regardless of the exchange-pattern configured on the inbound endpoint. If a transaction is present then an exception is thrown.
+ * Processes {@link MuleEvent}'s asynchronously using a {@link MuleWorkManager} to schedule asynchronous processing of
+ * MessageProcessor delegate configured the next {@link MessageProcessor}. The next {@link MessageProcessor} is therefore be
+ * executed in a different thread regardless of the exchange-pattern configured on the inbound endpoint. If a transaction is
+ * present then an exception is thrown.
  */
 public class AsyncDelegateMessageProcessor extends AbstractMessageProcessorOwner
     implements MessageProcessor, Initialisable, Startable, Stoppable, NonBlockingSupported {

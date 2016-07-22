@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.store;
 
@@ -16,14 +16,14 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Adapts the object store interface to a map interface so the client doesn't have to deal with all the ObjectStoreExceptions thrown by
- * ObjectStore.
+ * Adapts the object store interface to a map interface so the client doesn't have to deal with all the ObjectStoreExceptions
+ * thrown by ObjectStore.
  *
- * This class provides limited functionality from the Map interface. It does not support some methods (see methods javadoc) that can have a
- * big impact in performance due the underlying object store being used.
+ * This class provides limited functionality from the Map interface. It does not support some methods (see methods javadoc) that
+ * can have a big impact in performance due the underlying object store being used.
  *
- * The object store provided will be access for completing the map operations but the whole lifecycle of the provided object store must be
- * handled by the user.
+ * The object store provided will be access for completing the map operations but the whole lifecycle of the provided object store
+ * must be handled by the user.
  *
  * Operations of this map are not thread safe so the user must synchronize access to this map properly.
  *

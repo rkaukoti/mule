@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.listener.grizzly;
 
@@ -19,10 +19,10 @@ import java.net.InetSocketAddress;
 /**
  * Grizzly filter to delegate to the right {link @BaseFilter} based on the Connection.
  *
- * Mule allows to define several listener config, each one associated with a ServerSocket that may have particular configurations. In order
- * to reuse the same grizzly transport we can only have one filter for every listener config. So this filter keeps record of all the
- * ServerSockets configured and their particular configurations. So once a request arrive it delegates to the right filter based on the
- * connection being processed.
+ * Mule allows to define several listener config, each one associated with a ServerSocket that may have particular configurations.
+ * In order to reuse the same grizzly transport we can only have one filter for every listener config. So this filter keeps record
+ * of all the ServerSockets configured and their particular configurations. So once a request arrive it delegates to the right
+ * filter based on the connection being processed.
  */
 public class GrizzlyAddressDelegateFilter<F extends BaseFilter> extends BaseFilter {
 

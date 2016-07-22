@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.component;
 
@@ -40,12 +40,13 @@ public class BindingUtils {
           // Now lets set the proxy on the Service object
           Method setterMethod;
 
-          List methods = ClassUtils.getSatisfiableMethods(componentObject.getClass(), new Class[] {interfaceBinding.getInterface()}, true,
-              false, null);
+          List methods = ClassUtils.getSatisfiableMethods(componentObject.getClass(),
+              new Class[] {interfaceBinding.getInterface()}, true, false, null);
           if (methods.size() == 1) {
             setterMethod = (Method) methods.get(0);
           } else if (methods.size() > 1) {
-            throw new TooManySatisfiableMethodsException(componentObject.getClass(), new Class[] {interfaceBinding.getInterface()});
+            throw new TooManySatisfiableMethodsException(componentObject.getClass(),
+                new Class[] {interfaceBinding.getInterface()});
           } else {
             throw new NoSatisfiableMethodsException(componentObject.getClass(), new Class[] {interfaceBinding.getInterface()});
           }
@@ -53,8 +54,8 @@ public class BindingUtils {
           try {
             setterMethod.invoke(componentObject, proxy);
           } catch (Exception e) {
-            throw new InitialisationException(TransportCoreMessages.failedToSetProxyOnService(interfaceBinding, componentObject.getClass()),
-                e, null);
+            throw new InitialisationException(
+                TransportCoreMessages.failedToSetProxyOnService(interfaceBinding, componentObject.getClass()), e, null);
           }
         } else {
           BindingInvocationHandler handler = (BindingInvocationHandler) Proxy.getInvocationHandler(proxy);

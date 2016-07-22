@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.ftp;
 
@@ -14,7 +14,9 @@ import java.time.LocalDateTime;
 
 import static org.mockito.Mockito.when;
 
-public class FtpFilePredicateBuilderTestCase extends FilePredicateBuilderContractTestCase<FtpFilePredicateBuilder, FtpFileAttributes> {
+public class FtpFilePredicateBuilderTestCase
+    extends FilePredicateBuilderContractTestCase<FtpFilePredicateBuilder, FtpFileAttributes> {
+
   private static final LocalDateTime TIMESTAMP = LocalDateTime.of(1983, 4, 20, 21, 15);
 
   @Override
@@ -37,8 +39,8 @@ public class FtpFilePredicateBuilderTestCase extends FilePredicateBuilderContrac
   @Test
   public void matchesAll() {
     builder.setFilenamePattern("glob:*.{java, js}").setPathPattern("glob:**.{java, js}")
-        .setTimestampSince(LocalDateTime.of(1980, 1, 1, 0, 0)).setTimestampUntil(LocalDateTime.of(1990, 1, 1, 0, 0)).setRegularFile(true)
-        .setDirectory(false).setSymbolicLink(false).setMinSize(1L).setMaxSize(1024L);
+        .setTimestampSince(LocalDateTime.of(1980, 1, 1, 0, 0)).setTimestampUntil(LocalDateTime.of(1990, 1, 1, 0, 0))
+        .setRegularFile(true).setDirectory(false).setSymbolicLink(false).setMinSize(1L).setMaxSize(1024L);
 
     assertMatch();
   }

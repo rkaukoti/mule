@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.config.domain.query;
@@ -70,7 +70,8 @@ public class QueryTemplateBeanDefinitionParser extends AbstractMuleBeanDefinitio
   }
 
   private void parseDynamicQuery(Element element, BeanDefinitionBuilder builder, Element sqlElem) {
-    BeanDefinitionBuilder queryTemplateFactory = BeanDefinitionBuilder.genericBeanDefinition(DynamicQueryTemplateFactoryBean.class);
+    BeanDefinitionBuilder queryTemplateFactory =
+        BeanDefinitionBuilder.genericBeanDefinition(DynamicQueryTemplateFactoryBean.class);
     queryTemplateFactory.addConstructorArgValue(sqlElem.getTextContent());
 
     builder.addConstructorArgValue(queryTemplateFactory.getBeanDefinition());
@@ -100,7 +101,8 @@ public class QueryTemplateBeanDefinitionParser extends AbstractMuleBeanDefinitio
           String.format("Element %s cannot contain attribute file and text content simultaneously", element.getTagName()));
     }
 
-    BeanDefinitionBuilder queryTemplateFactory = BeanDefinitionBuilder.genericBeanDefinition(ParameterizedQueryTemplateFactoryBean.class);
+    BeanDefinitionBuilder queryTemplateFactory =
+        BeanDefinitionBuilder.genericBeanDefinition(ParameterizedQueryTemplateFactoryBean.class);
 
     if (hasFileAttribute) {
       String fileName = sqlElem.getAttribute(FILE_ATTRIBUTE);

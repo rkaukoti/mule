@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer.simple;
 
@@ -15,8 +15,8 @@ import java.io.PushbackInputStream;
 import java.nio.charset.Charset;
 
 /**
- * <code>ByteArrayToObject</code> works in the same way as <code>ByteArrayToSerializable</code> but checks if the byte array is a serialised
- * object and if not will return a String created from the bytes as the returnType on the transformer.
+ * <code>ByteArrayToObject</code> works in the same way as <code>ByteArrayToSerializable</code> but checks if the byte array is a
+ * serialised object and if not will return a String created from the bytes as the returnType on the transformer.
  */
 public class ByteArrayToObject extends ByteArrayToSerializable {
 

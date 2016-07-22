@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.compatibility.core.endpoint;
@@ -44,8 +44,8 @@ public class DynamicURIBuilder {
     String resolvedUri = resolveAddress(event);
 
     if (logger.isDebugEnabled()) {
-      logger.debug(
-          String.format("Resolved URI from template '%s' to '%s'", templateUriBuilder.getEncodedConstructor(), resolvedUri.toString()));
+      logger.debug(String.format("Resolved URI from template '%s' to '%s'", templateUriBuilder.getEncodedConstructor(),
+          resolvedUri.toString()));
     }
 
     return resolvedUri;
@@ -54,6 +54,7 @@ public class DynamicURIBuilder {
   private String resolveAddress(final MuleEvent event) throws URISyntaxException, UnsupportedEncodingException {
     final MuleContext muleContext = templateUriBuilder.getMuleContext();
     String resolvedAddress = templateUriBuilder.getTransformedConstructor(new Transformer() {
+
       @Override
       public Object transform(Object input) {
         String token = (String) input;

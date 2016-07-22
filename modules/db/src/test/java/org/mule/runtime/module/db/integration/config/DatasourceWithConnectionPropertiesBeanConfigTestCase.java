@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.db.integration.config;
 
@@ -15,8 +15,8 @@ public class DatasourceWithConnectionPropertiesBeanConfigTestCase extends Abstra
   @Test(expected = InitialisationException.class)
   public void expectFailure() throws Exception {
     // TODO MULE-10061 - Review once the MuleContext lifecycle is clearly defined
-    new DefaultMuleContextFactory()
-        .createMuleContext(new SpringXmlConfigurationBuilder("integration/config/bean-datasource-with-connection-properties-config.xml"));
+    new DefaultMuleContextFactory().createMuleContext(
+        new SpringXmlConfigurationBuilder("integration/config/bean-datasource-with-connection-properties-config.xml"));
   }
 
 }

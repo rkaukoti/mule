@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -19,7 +19,8 @@ public class JdkVersionUtils {
    * pattern with groups for major, minor, micro, update and milestone (if exists).
    * major_version.minor_version.micro_version[_update_version][-milestone]
    */
-  public static final Pattern JDK_VERSION = Pattern.compile("^([0-9]+)(?:\\.([0-9]+))?(?:\\.([0-9]+))?(?:_([0-9]+))?(?:-?(.+))?$");
+  public static final Pattern JDK_VERSION =
+      Pattern.compile("^([0-9]+)(?:\\.([0-9]+))?(?:\\.([0-9]+))?(?:_([0-9]+))?(?:-?(.+))?$");
   private static final Logger logger = LoggerFactory.getLogger(JdkVersionUtils.class);
 
   public static List<JdkVersionRange> createJdkVersionRanges(String versionsString) {
@@ -109,6 +110,7 @@ public class JdkVersionUtils {
   }
 
   public static class JdkVersion implements Comparable<JdkVersion> {
+
     private Integer major;
     private Integer minor;
     private Integer micro;
@@ -260,7 +262,8 @@ public class JdkVersionUtils {
     }
 
     public boolean isUnder(JdkVersion jdkVersion) {
-      return (upper != null) && (jdkVersion.compareTo(upper) > 0 || (jdkVersion.compareTo(upper) == 0 && !isUpperBoundInclusive()));
+      return (upper != null)
+          && (jdkVersion.compareTo(upper) > 0 || (jdkVersion.compareTo(upper) == 0 && !isUpperBoundInclusive()));
     }
   }
 }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.file;
 
@@ -180,6 +180,7 @@ public class FileMessageReceiverMessageProcessingTestCase extends AbstractMuleTe
   private FileMessageReceiver createFileMessageReceiver() throws CreateException, InitialisationException {
     FileMessageReceiver fileMessageReceiver =
         new FileMessageReceiver(mockFileConnector, mockFlowConstruct, mockInboundEndpoint, IMPUT_FILES_DIR, null, null, 100) {
+
           @Override
           protected boolean attemptFileLock(File sourceFile) throws MuleException {
             return true;
@@ -209,14 +210,16 @@ public class FileMessageReceiverMessageProcessingTestCase extends AbstractMuleTe
     when(mockMuleEvent.getFlowConstruct().getExceptionListener()).thenReturn(mockMessagingExceptionHandler);
     when(mockHandledMessagingException.causedRollback()).thenReturn(false);
     when(mockUnhandledMessagingException.causedRollback()).thenReturn(true);
-    when(mockMessagingExceptionHandler.handleException(any(Exception.class), any(MuleEvent.class))).thenAnswer(invocationOnMock -> {
-      if (invocationOnMock.getArguments()[0] == mockHandledMessagingException) {
-        return mockMuleEvent;
-      } else {
-        throw (Throwable) invocationOnMock.getArguments()[0];
-      }
-    });
-    when(mockInboundEndpoint.getMuleContext().getRegistry().get(OBJECT_DEFAULT_MESSAGE_PROCESSING_MANAGER)).thenReturn(mockMessageManager);
+    when(mockMessagingExceptionHandler.handleException(any(Exception.class), any(MuleEvent.class)))
+        .thenAnswer(invocationOnMock -> {
+          if (invocationOnMock.getArguments()[0] == mockHandledMessagingException) {
+            return mockMuleEvent;
+          } else {
+            throw (Throwable) invocationOnMock.getArguments()[0];
+          }
+        });
+    when(mockInboundEndpoint.getMuleContext().getRegistry().get(OBJECT_DEFAULT_MESSAGE_PROCESSING_MANAGER))
+        .thenReturn(mockMessageManager);
     when(mockInboundEndpoint.getMuleContext().getRegistry().get(OBJECT_STORE_MANAGER)).thenReturn(mockObjectStoreManager);
   }
 

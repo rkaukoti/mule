@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.util;
 
@@ -14,8 +14,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 /**
- * This is an implementation of the ObjectFactory interface which simply delegates to the Spring ApplicationContext. Since the delegation
- * happens each time a call to getOrCreate() is made, this will correctly handle Spring beans which are non-singletons (factory beans, etc.)
+ * This is an implementation of the ObjectFactory interface which simply delegates to the Spring ApplicationContext. Since the
+ * delegation happens each time a call to getOrCreate() is made, this will correctly handle Spring beans which are non-singletons
+ * (factory beans, etc.)
  *
  * Singleton usage:
  *
@@ -30,6 +31,7 @@ import org.springframework.context.ApplicationContextAware;
  * <spring:bean id="myFactoryBean" class="com.foo.BarFactory" factory-method="getNewBar"/>
  */
 public class SpringBeanLookup extends AbstractObjectFactory implements ApplicationContextAware {
+
   private ApplicationContext applicationContext;
   private String bean;
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -43,6 +43,7 @@ public class MuleHostConfigurationTestCase extends AbstractMuleTestCase {
   @Test
   public void testSetHostViaUriWithDifferentProtocol() throws Exception {
     new DifferentProtocolTemplate() {
+
       protected void doTest() throws Exception {
         HostConfiguration hostConfig = createHostConfiguration();
 
@@ -82,6 +83,7 @@ public class MuleHostConfigurationTestCase extends AbstractMuleTestCase {
   @Test
   public void testSetHostViaHostAndPortAndProtocolNameWithDifferentProtocol() throws Exception {
     new DifferentProtocolTemplate() {
+
       protected void doTest() throws Exception {
         HostConfiguration hostConfig = createHostConfiguration();
 
@@ -112,6 +114,7 @@ public class MuleHostConfigurationTestCase extends AbstractMuleTestCase {
   @Test
   public void testSetHostViaHostAndVirtualHostAndPortAndProtocolWithDifferentProtocol() throws Exception {
     new DifferentProtocolTemplate() {
+
       protected void doTest() throws Exception {
         HostConfiguration hostConfig = createHostConfiguration();
 
@@ -175,6 +178,7 @@ public class MuleHostConfigurationTestCase extends AbstractMuleTestCase {
   }
 
   private static abstract class DifferentProtocolTemplate {
+
     public DifferentProtocolTemplate() {
       super();
     }
@@ -195,6 +199,7 @@ public class MuleHostConfigurationTestCase extends AbstractMuleTestCase {
   }
 
   private static class MockSecureProtocolFactory implements SecureProtocolSocketFactory {
+
     public MockSecureProtocolFactory() {
       super();
     }
@@ -207,7 +212,8 @@ public class MuleHostConfigurationTestCase extends AbstractMuleTestCase {
       throw new UnsupportedOperationException();
     }
 
-    public Socket createSocket(String host, int port, InetAddress localAddress, int localPort) throws IOException, UnknownHostException {
+    public Socket createSocket(String host, int port, InetAddress localAddress, int localPort)
+        throws IOException, UnknownHostException {
       throw new UnsupportedOperationException();
     }
 

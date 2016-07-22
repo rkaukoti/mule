@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher;
 
@@ -137,12 +137,14 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
           .containingResource("pluginResourceSource.properties", "pluginResource.properties");
 
   // Application file builders
-  private final ApplicationFileBuilder emptyAppFileBuilder = new ApplicationFileBuilder("empty-app").definedBy("empty-config.xml");
+  private final ApplicationFileBuilder emptyAppFileBuilder =
+      new ApplicationFileBuilder("empty-app").definedBy("empty-config.xml");
   private final ApplicationFileBuilder springPropertyAppFileBuilder =
       new ApplicationFileBuilder("property-app").definedBy("app-properties-config.xml");
   private final ApplicationFileBuilder dummyAppDescriptorFileBuilder = new ApplicationFileBuilder("dummy-app")
       .definedBy("dummy-app-config.xml").configuredWith("myCustomProp", "someValue").containingClass("org/foo/EchoTest.clazz");
-  private final ApplicationFileBuilder waitAppFileBuilder = new ApplicationFileBuilder("wait-app").definedBy("wait-app-config.xml");
+  private final ApplicationFileBuilder waitAppFileBuilder =
+      new ApplicationFileBuilder("wait-app").definedBy("wait-app-config.xml");
   private final ApplicationFileBuilder brokenAppFileBuilder = new ApplicationFileBuilder("broken-app").corrupted();
   private final ApplicationFileBuilder incompleteAppFileBuilder =
       new ApplicationFileBuilder("incomplete-app").definedBy("incomplete-app-config.xml");
@@ -163,8 +165,8 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
       new ApplicationFileBuilder("dummy-domain-app1").definedBy("empty-config.xml").deployedWith(PROPERTY_DOMAIN, "dummy-domain");
   private final ApplicationFileBuilder dummyDomainApp2FileBuilder =
       new ApplicationFileBuilder("dummy-domain-app2").definedBy("empty-config.xml").deployedWith(PROPERTY_DOMAIN, "dummy-domain");
-  private final ApplicationFileBuilder dummyDomainApp3FileBuilder =
-      new ApplicationFileBuilder("dummy-domain-app3").definedBy("bad-app-config.xml").deployedWith(PROPERTY_DOMAIN, "dummy-domain");
+  private final ApplicationFileBuilder dummyDomainApp3FileBuilder = new ApplicationFileBuilder("dummy-domain-app3")
+      .definedBy("bad-app-config.xml").deployedWith(PROPERTY_DOMAIN, "dummy-domain");
   private final ApplicationFileBuilder httpAAppFileBuilder = new ApplicationFileBuilder("shared-http-app-a")
       .definedBy("shared-http-a-app-config.xml").deployedWith(PROPERTY_DOMAIN, "shared-http-domain");
   private final ApplicationFileBuilder httpBAppFileBuilder = new ApplicationFileBuilder("shared-http-app-b")
@@ -172,17 +174,20 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
 
   // Domain file builders
   private final DomainFileBuilder brokenDomainFileBuilder = new DomainFileBuilder("brokenDomain").corrupted();
-  private final DomainFileBuilder emptyDomainFileBuilder = new DomainFileBuilder("empty-domain").definedBy("empty-domain-config.xml");
-  private final DomainFileBuilder waitDomainFileBuilder = new DomainFileBuilder("wait-domain").definedBy("wait-domain-config.xml");
+  private final DomainFileBuilder emptyDomainFileBuilder =
+      new DomainFileBuilder("empty-domain").definedBy("empty-domain-config.xml");
+  private final DomainFileBuilder waitDomainFileBuilder =
+      new DomainFileBuilder("wait-domain").definedBy("wait-domain-config.xml");
   private final DomainFileBuilder incompleteDomainFileBuilder =
       new DomainFileBuilder("incompleteDomain").definedBy("incomplete-domain-config.xml");
   private final DomainFileBuilder invalidDomainBundleFileBuilder =
       new DomainFileBuilder("invalid-domain-bundle").definedBy("incomplete-domain-config.xml").containing(emptyAppFileBuilder);
   private final DomainFileBuilder dummyDomainBundleFileBuilder = new DomainFileBuilder("dummy-domain-bundle")
       .containing(new ApplicationFileBuilder(dummyAppDescriptorFileBuilder).deployedWith(PROPERTY_DOMAIN, "dummy-domain-bundle"));
-  private final DomainFileBuilder dummyDomainFileBuilder = new DomainFileBuilder("dummy-domain").definedBy("empty-domain-config.xml");
-  private final DomainFileBuilder dummyUndeployableDomainFileBuilder =
-      new DomainFileBuilder("dummy-undeployable-domain").definedBy("empty-domain-config.xml").deployedWith("redeployment.enabled", "false");
+  private final DomainFileBuilder dummyDomainFileBuilder =
+      new DomainFileBuilder("dummy-domain").definedBy("empty-domain-config.xml");
+  private final DomainFileBuilder dummyUndeployableDomainFileBuilder = new DomainFileBuilder("dummy-undeployable-domain")
+      .definedBy("empty-domain-config.xml").deployedWith("redeployment.enabled", "false");
   private final DomainFileBuilder sharedHttpDomainFileBuilder =
       new DomainFileBuilder("shared-http-domain").definedBy("shared-http-domain-config.xml");
   private final DomainFileBuilder sharedHttpBundleDomainFileBuilder = new DomainFileBuilder("shared-http-domain")
@@ -190,7 +195,8 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
   private final ArtifactClassLoader containerClassLoader =
       new ContainerClassLoaderFactory().createContainerClassLoader(getClass().getClassLoader());
   @Rule
-  public SystemProperty changeChangeInterval = new SystemProperty(DeploymentDirectoryWatcher.CHANGE_CHECK_INTERVAL_PROPERTY, "10");
+  public SystemProperty changeChangeInterval =
+      new SystemProperty(DeploymentDirectoryWatcher.CHANGE_CHECK_INTERVAL_PROPERTY, "10");
   @Rule
   public DynamicPort httpPort = new DynamicPort("httpPort");
   protected File muleHome;
@@ -333,13 +339,14 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     final Map<URL, Long> zombieMap = deploymentService.getZombieApplications();
     assertEquals("Wrong number of zombie apps registered.", 1, zombieMap.size());
     final Map.Entry<URL, Long> zombie = zombieMap.entrySet().iterator().next();
-    assertEquals("Wrong URL tagged as zombie.", brokenAppFileBuilder.getDeployedPath(), new File(zombie.getKey().getFile()).getName());
+    assertEquals("Wrong URL tagged as zombie.", brokenAppFileBuilder.getDeployedPath(),
+        new File(zombie.getKey().getFile()).getName());
     assertTrue("Invalid lastModified value for file URL.", zombie.getValue() != -1);
   }
 
   /**
-   * This tests deploys a broken app which name has a weird character. It verifies that after failing deploying that app, it doesn't try to
-   * do it again, which is a behavior than can be seen in some file systems due to path handling issues
+   * This tests deploys a broken app which name has a weird character. It verifies that after failing deploying that app, it
+   * doesn't try to do it again, which is a behavior than can be seen in some file systems due to path handling issues
    */
   @Test
   public void doesNotRetriesBrokenAppWithFunkyName() throws Exception {
@@ -753,7 +760,8 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     addExplodedDomainFromBuilder(sharedHttpBundleDomainFileBuilder);
 
     // change shared http config name to use a wrong name
-    File domainConfigFile = new File(domainsDir + "/" + sharedHttpBundleDomainFileBuilder.getDeployedPath(), DOMAIN_CONFIG_FILE_LOCATION);
+    File domainConfigFile =
+        new File(domainsDir + "/" + sharedHttpBundleDomainFileBuilder.getDeployedPath(), DOMAIN_CONFIG_FILE_LOCATION);
     String correctDomainConfigContent = IOUtils.toString(new FileInputStream(domainConfigFile));
     String wrongDomainFileContext = correctDomainConfigContent.replace("http-listener-config", "http-listener-config-wrong");
     FileUtils.copyInputStreamToFile(new ByteArrayInputStream(wrongDomainFileContext.getBytes()), domainConfigFile);
@@ -1021,8 +1029,8 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     final DefaultDomainManager domainManager = new DefaultDomainManager();
     domainManager.addDomain(createDefaultDomain());
 
-    TestApplicationFactory appFactory =
-        createTestApplicationFactory(new MuleApplicationClassLoaderFactory(new DefaultNativeLibraryFinderFactory()), domainManager);
+    TestApplicationFactory appFactory = createTestApplicationFactory(
+        new MuleApplicationClassLoaderFactory(new DefaultNativeLibraryFinderFactory()), domainManager);
     appFactory.setFailOnStopApplication(true);
 
     deploymentService.setAppFactory(appFactory);
@@ -1046,8 +1054,8 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     final DefaultDomainManager domainManager = new DefaultDomainManager();
     domainManager.addDomain(createDefaultDomain());
 
-    TestApplicationFactory appFactory =
-        createTestApplicationFactory(new MuleApplicationClassLoaderFactory(new DefaultNativeLibraryFinderFactory()), domainManager);
+    TestApplicationFactory appFactory = createTestApplicationFactory(
+        new MuleApplicationClassLoaderFactory(new DefaultNativeLibraryFinderFactory()), domainManager);
     appFactory.setFailOnDisposeApplication(true);
     deploymentService.setAppFactory(appFactory);
     deploymentService.start();
@@ -1139,7 +1147,8 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     addPackedAppFromBuilder(emptyAppFileBuilder, incompleteAppFileBuilder.getZipPath());
     assertApplicationDeploymentSuccess(applicationDeploymentListener, incompleteAppFileBuilder.getId());
 
-    assertEquals("Failed app still appears as zombie after a successful redeploy", 0, deploymentService.getZombieApplications().size());
+    assertEquals("Failed app still appears as zombie after a successful redeploy", 0,
+        deploymentService.getZombieApplications().size());
   }
 
   @Test
@@ -1158,7 +1167,8 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     addPackedAppFromBuilder(emptyAppFileBuilder, incompleteAppFileBuilder.getZipPath());
     assertApplicationDeploymentSuccess(applicationDeploymentListener, incompleteAppFileBuilder.getId());
 
-    assertEquals("Failed app still appears as zombie after a successful redeploy", 0, deploymentService.getZombieApplications().size());
+    assertEquals("Failed app still appears as zombie after a successful redeploy", 0,
+        deploymentService.getZombieApplications().size());
   }
 
   @Test
@@ -1174,7 +1184,8 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     assertDeploymentFailure(applicationDeploymentListener, emptyAppFileBuilder.getId());
 
     final Map.Entry<URL, Long> zombie = deploymentService.getZombieApplications().entrySet().iterator().next();
-    assertEquals("Wrong URL tagged as zombie.", emptyAppFileBuilder.getId(), new File(zombie.getKey().getFile()).getParentFile().getName());
+    assertEquals("Wrong URL tagged as zombie.", emptyAppFileBuilder.getId(),
+        new File(zombie.getKey().getFile()).getParentFile().getName());
   }
 
   @Test
@@ -1188,7 +1199,8 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     assertDeploymentFailure(applicationDeploymentListener, emptyAppFileBuilder.getId());
 
     final Map.Entry<URL, Long> zombie = deploymentService.getZombieApplications().entrySet().iterator().next();
-    assertEquals("Wrong URL tagged as zombie.", emptyAppFileBuilder.getId(), new File(zombie.getKey().getFile()).getParentFile().getName());
+    assertEquals("Wrong URL tagged as zombie.", emptyAppFileBuilder.getId(),
+        new File(zombie.getKey().getFile()).getParentFile().getName());
   }
 
   @Test
@@ -1244,7 +1256,8 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     addExplodedAppFromBuilder(emptyAppFileBuilder, incompleteAppFileBuilder.getId());
 
     assertApplicationDeploymentSuccess(applicationDeploymentListener, incompleteAppFileBuilder.getId());
-    assertEquals("Failed app still appears as zombie after a successful redeploy", 0, deploymentService.getZombieApplications().size());
+    assertEquals("Failed app still appears as zombie after a successful redeploy", 0,
+        deploymentService.getZombieApplications().size());
   }
 
   @Test
@@ -1333,8 +1346,9 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     final ArtifactPluginFileBuilder echoPlugin1WithLib2 =
         new ArtifactPluginFileBuilder("echoPlugin1").configuredWith(EXPORTED_CLASS_PACKAGES_PROPERTY, "org.foo")
             .containingClass("org/foo/Plugin1Echo.clazz").usingLibrary("lib/bar-2.0.jar");
-    final ApplicationFileBuilder sharedLibPluginAppPrecedenceFileBuilder = new ApplicationFileBuilder("shared-plugin-lib-precedence-app")
-        .definedBy("app-shared-lib-precedence-config.xml").containingPlugin(echoPlugin1WithLib2).sharingLibrary("lib/bar-1.0.jar");
+    final ApplicationFileBuilder sharedLibPluginAppPrecedenceFileBuilder =
+        new ApplicationFileBuilder("shared-plugin-lib-precedence-app").definedBy("app-shared-lib-precedence-config.xml")
+            .containingPlugin(echoPlugin1WithLib2).sharingLibrary("lib/bar-1.0.jar");
 
     addPackedAppFromBuilder(sharedLibPluginAppPrecedenceFileBuilder);
 
@@ -1353,8 +1367,9 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
 
   @Test
   public void deploysAppZipWithExtensionPlugin() throws Exception {
-    ArtifactPluginFileBuilder extensionPlugin = new ArtifactPluginFileBuilder("extensionPlugin")
-        .usingLibrary("lib/mule-module-hello-4.0-SNAPSHOT.jar").configuredWith(EXPORTED_RESOURCE_PACKAGES_PROPERTY, "/, META-INF");
+    ArtifactPluginFileBuilder extensionPlugin =
+        new ArtifactPluginFileBuilder("extensionPlugin").usingLibrary("lib/mule-module-hello-4.0-SNAPSHOT.jar")
+            .configuredWith(EXPORTED_RESOURCE_PACKAGES_PROPERTY, "/, META-INF");
     ApplicationFileBuilder applicationFileBuilder = new ApplicationFileBuilder("appWithExtensionPlugin")
         .definedBy("app-with-extension-plugin-config.xml").containingPlugin(extensionPlugin);
     addPackedAppFromBuilder(applicationFileBuilder);
@@ -1367,9 +1382,9 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
   @Test
   public void deploysDomainWithSharedLibPrecedenceOverApplicationSharedLib() throws Exception {
     final String domainId = "shared-lib";
-    final ApplicationFileBuilder applicationFileBuilder =
-        new ApplicationFileBuilder("shared-lib-precedence-app").definedBy("app-shared-lib-precedence-config.xml")
-            .sharingLibrary("lib/bar-2.0.jar").containingClass("org/foo/Plugin1Echo.clazz").deployedWith(PROPERTY_DOMAIN, domainId);
+    final ApplicationFileBuilder applicationFileBuilder = new ApplicationFileBuilder("shared-lib-precedence-app")
+        .definedBy("app-shared-lib-precedence-config.xml").sharingLibrary("lib/bar-2.0.jar")
+        .containingClass("org/foo/Plugin1Echo.clazz").deployedWith(PROPERTY_DOMAIN, domainId);
     final DomainFileBuilder domainFileBuilder =
         new DomainFileBuilder(domainId).usingLibrary("lib/bar-1.0.jar").containing(applicationFileBuilder);
 
@@ -1414,8 +1429,9 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     final ArtifactPluginFileBuilder pluginFileBuilder =
         new ArtifactPluginFileBuilder("echoPlugin1").configuredWith(EXPORTED_CLASS_PACKAGES_PROPERTY, "org.foo")
             .containingClass("org/foo/Plugin1Echo.clazz").usingLibrary("lib/bar-2.0.jar");
-    final ApplicationFileBuilder applicationFileBuilder = new ApplicationFileBuilder("shared-lib-precedence-app")
-        .definedBy("app-shared-lib-precedence-config.xml").containingPlugin(pluginFileBuilder).deployedWith(PROPERTY_DOMAIN, domainId);
+    final ApplicationFileBuilder applicationFileBuilder =
+        new ApplicationFileBuilder("shared-lib-precedence-app").definedBy("app-shared-lib-precedence-config.xml")
+            .containingPlugin(pluginFileBuilder).deployedWith(PROPERTY_DOMAIN, domainId);
     final DomainFileBuilder domainFileBuilder =
         new DomainFileBuilder(domainId).usingLibrary("lib/bar-1.0.jar").containing(applicationFileBuilder);
 
@@ -1665,7 +1681,8 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     final Map<URL, Long> zombieMap = deploymentService.getZombieDomains();
     assertEquals("Wrong number of zombie domains registered.", 1, zombieMap.size());
     final Map.Entry<URL, Long> zombie = zombieMap.entrySet().iterator().next();
-    assertEquals("Wrong URL tagged as domain", brokenDomainFileBuilder.getDeployedPath(), new File(zombie.getKey().getFile()).getName());
+    assertEquals("Wrong URL tagged as domain", brokenDomainFileBuilder.getDeployedPath(),
+        new File(zombie.getKey().getFile()).getName());
     assertTrue("Invalid lastModified value for file URL.", zombie.getValue() != -1);
   }
 
@@ -1684,7 +1701,8 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     final Map<URL, Long> zombieMap = deploymentService.getZombieDomains();
     assertEquals("Wrong number of zombie domains registered.", 1, zombieMap.size());
     final Map.Entry<URL, Long> zombie = zombieMap.entrySet().iterator().next();
-    assertEquals("Wrong URL tagged as domain.", brokenDomainFileBuilder.getDeployedPath(), new File(zombie.getKey().getFile()).getName());
+    assertEquals("Wrong URL tagged as domain.", brokenDomainFileBuilder.getDeployedPath(),
+        new File(zombie.getKey().getFile()).getName());
     assertTrue("Invalid lastModified value for file URL.", zombie.getValue() != -1);
   }
 
@@ -2115,7 +2133,8 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     addPackedDomainFromBuilder(emptyDomainFileBuilder, incompleteDomainFileBuilder.getZipPath());
     assertDeploymentSuccess(domainDeploymentListener, incompleteDomainFileBuilder.getId());
 
-    assertEquals("Failed domain still appears as zombie after a successful redeploy", 0, deploymentService.getZombieDomains().size());
+    assertEquals("Failed domain still appears as zombie after a successful redeploy", 0,
+        deploymentService.getZombieDomains().size());
   }
 
   @Test
@@ -2135,7 +2154,8 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     addPackedDomainFromBuilder(emptyDomainFileBuilder, incompleteDomainFileBuilder.getZipPath());
     assertDeploymentSuccess(domainDeploymentListener, incompleteDomainFileBuilder.getId());
 
-    assertEquals("Failed domain still appears as zombie after a successful redeploy", 0, deploymentService.getZombieDomains().size());
+    assertEquals("Failed domain still appears as zombie after a successful redeploy", 0,
+        deploymentService.getZombieDomains().size());
   }
 
   @Ignore("MULE-6926: flaky test")
@@ -2275,12 +2295,13 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     addExplodedDomainFromBuilder(emptyDomainFileBuilder, incompleteDomainFileBuilder.getId());
 
     assertDeploymentSuccess(domainDeploymentListener, incompleteDomainFileBuilder.getId());
-    assertEquals("Failed domain still appears as zombie after a successful redeploy", 0, deploymentService.getZombieDomains().size());
+    assertEquals("Failed domain still appears as zombie after a successful redeploy", 0,
+        deploymentService.getZombieDomains().size());
   }
 
   /**
-   * Copies the artifact file (zip) of the applicationPluginFileBuilder to the container application plugins directory so the given plugin
-   * would be treated as container application plugin.
+   * Copies the artifact file (zip) of the applicationPluginFileBuilder to the container application plugins directory so the
+   * given plugin would be treated as container application plugin.
    */
   private void installContainerPlugin(ArtifactPluginFileBuilder artifactPluginFileBuilder) throws Exception {
     copyFileToContainerPluginFolder(artifactPluginFileBuilder.getArtifactFile(), artifactPluginFileBuilder.getId() + ".zip");
@@ -2500,7 +2521,8 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     doRedeployDomainByChangingConfigFile("/bad-domain-config.xml", dummyDomainFileBuilder);
   }
 
-  private void doRedeployDomainByChangingConfigFile(String configFile, DomainFileBuilder domain) throws URISyntaxException, IOException {
+  private void doRedeployDomainByChangingConfigFile(String configFile, DomainFileBuilder domain)
+      throws URISyntaxException, IOException {
     File originalConfigFile = new File(new File(domainsDir, domain.getDeployedPath()), domain.getConfigFile());
     assertThat("Cannot find domain config file: " + originalConfigFile, originalConfigFile.exists(), is(true));
     URL url = getClass().getResource(configFile);
@@ -2545,7 +2567,8 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     final Map<URL, Long> zombieMap = deploymentService.getZombieApplications();
     assertEquals("Wrong number of zombie apps registered.", 1, zombieMap.size());
     final Map.Entry<URL, Long> zombie = zombieMap.entrySet().iterator().next();
-    assertEquals("Wrong URL tagged as zombie.", brokenAppFileBuilder.getDeployedPath(), new File(zombie.getKey().getFile()).getName());
+    assertEquals("Wrong URL tagged as zombie.", brokenAppFileBuilder.getDeployedPath(),
+        new File(zombie.getKey().getFile()).getName());
     assertTrue("Invalid lastModified value for file URL.", zombie.getValue() != -1);
 
     // Checks that the invalid zip was not deployed again
@@ -2599,6 +2622,7 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
   private void assertDeploymentSuccess(final DeploymentListener listener, final String artifactName) {
     Prober prober = new PollingProber(DEPLOYMENT_TIMEOUT, 100);
     prober.check(new JUnitProbe() {
+
       @Override
       protected boolean test() throws Exception {
         verify(listener, times(1)).onDeploymentSuccess(artifactName);
@@ -2615,6 +2639,7 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
   private void assertMuleContextCreated(final DeploymentListener listener, final String appName) {
     Prober prober = new PollingProber(DEPLOYMENT_TIMEOUT, 100);
     prober.check(new JUnitProbe() {
+
       @Override
       public boolean test() {
         verify(listener, times(1)).onMuleContextCreated(eq(appName), any(MuleContext.class));
@@ -2623,8 +2648,8 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
 
       @Override
       public String describeFailure() {
-        return String.format("Did not received notification '%s' for app '%s'", "onMuleContextCreated", appName) + System.lineSeparator()
-            + super.describeFailure();
+        return String.format("Did not received notification '%s' for app '%s'", "onMuleContextCreated", appName)
+            + System.lineSeparator() + super.describeFailure();
       }
     });
   }
@@ -2632,6 +2657,7 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
   private void assertMuleContextInitialized(final DeploymentListener listener, final String appName) {
     Prober prober = new PollingProber(DEPLOYMENT_TIMEOUT, 100);
     prober.check(new JUnitProbe() {
+
       @Override
       public boolean test() {
         verify(listener, times(1)).onMuleContextInitialised(eq(appName), any(MuleContext.class));
@@ -2649,6 +2675,7 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
   private void assertMuleContextConfigured(final DeploymentListener listener, final String appName) {
     Prober prober = new PollingProber(DEPLOYMENT_TIMEOUT, 100);
     prober.check(new JUnitProbe() {
+
       @Override
       public boolean test() {
         verify(listener, times(1)).onMuleContextConfigured(eq(appName), any(MuleContext.class));
@@ -2657,8 +2684,8 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
 
       @Override
       public String describeFailure() {
-        return String.format("Did not received notification '%s' for app '%s'", "onMuleContextConfigured", appName) + System.lineSeparator()
-            + super.describeFailure();
+        return String.format("Did not received notification '%s' for app '%s'", "onMuleContextConfigured", appName)
+            + System.lineSeparator() + super.describeFailure();
       }
     });
   }
@@ -2666,6 +2693,7 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
   private void assertUndeploymentSuccess(final DeploymentListener listener, final String appName) {
     Prober prober = new PollingProber(DEPLOYMENT_TIMEOUT, 100);
     prober.check(new JUnitProbe() {
+
       @Override
       public boolean test() {
         verify(listener, times(1)).onUndeploymentSuccess(appName);
@@ -2700,6 +2728,7 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
   private void assertStatus(final Application application, final ApplicationStatus status) {
     Prober prober = new PollingProber(DEPLOYMENT_TIMEOUT, 100);
     prober.check(new JUnitProbe() {
+
       @Override
       protected boolean test() throws Exception {
         assertThat(application.getStatus(), is(status));
@@ -2715,9 +2744,11 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
 
   }
 
-  private void assertDeploymentFailure(final DeploymentListener listener, final String artifactName, final VerificationMode mode) {
+  private void assertDeploymentFailure(final DeploymentListener listener, final String artifactName,
+      final VerificationMode mode) {
     Prober prober = new PollingProber(DEPLOYMENT_TIMEOUT, 100);
     prober.check(new Probe() {
+
       @Override
       public boolean isSatisfied() {
         try {
@@ -2741,6 +2772,7 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     Prober prober = new PollingProber(DeploymentDirectoryWatcher.DEFAULT_CHANGES_CHECK_INTERVAL_MS * 2, 100);
     try {
       prober.check(new Probe() {
+
         @Override
         public boolean isSatisfied() {
           try {
@@ -2816,7 +2848,8 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
    */
   private void assertContainerAppPluginExplodedDir(String[] expectedPlugins) {
     final String[] actualArtifactPlugins = containerAppPluginsDir.list(DIRECTORY);
-    assertTrue("Invalid Mule core application plugins exploded", isEqualCollection(asList(expectedPlugins), asList(actualArtifactPlugins)));
+    assertTrue("Invalid Mule core application plugins exploded",
+        isEqualCollection(asList(expectedPlugins), asList(actualArtifactPlugins)));
   }
 
   private void assertDomainDir(String[] expectedZips, String[] expectedDomains, boolean performValidation) {
@@ -2888,9 +2921,10 @@ public class DeploymentServiceTestCase extends AbstractMuleTestCase {
     addExplodedArtifactFromBuilder(artifactFileBuilder, appName, MULE_DOMAIN_CONFIG_XML_FILE, domainsDir);
   }
 
-  private void addExplodedArtifactFromBuilder(TestArtifactDescriptor artifactFileBuilder, String artifactName, String configFileName,
-      File destinationDir) throws Exception {
-    addExplodedArtifactFromUrl(artifactFileBuilder.getArtifactFile().toURI().toURL(), artifactName, configFileName, destinationDir);
+  private void addExplodedArtifactFromBuilder(TestArtifactDescriptor artifactFileBuilder, String artifactName,
+      String configFileName, File destinationDir) throws Exception {
+    addExplodedArtifactFromUrl(artifactFileBuilder.getArtifactFile().toURI().toURL(), artifactName, configFileName,
+        destinationDir);
   }
 
   private void addExplodedArtifactFromUrl(URL resource, String artifactName, String configFileName, File destinationDir)

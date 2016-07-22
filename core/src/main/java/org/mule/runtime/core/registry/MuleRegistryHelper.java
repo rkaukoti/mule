@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.registry;
 
@@ -59,7 +59,8 @@ public class MuleRegistryHelper implements MuleRegistry, RegistryProvider {
   /**
    * We cache transformer searches so that we only search once
    */
-  protected ConcurrentHashMap/* <String, Transformer> */ exactTransformerCache = new ConcurrentHashMap/* <String, Transformer> */(8);
+  protected ConcurrentHashMap/* <String, Transformer> */ exactTransformerCache =
+      new ConcurrentHashMap/* <String, Transformer> */(8);
   protected ConcurrentHashMap/* Map<String, List<Transformer>> */ transformerListCache =
       new ConcurrentHashMap/* <String, List<Transformer>> */(8);
   /**
@@ -202,7 +203,8 @@ public class MuleRegistryHelper implements MuleRegistry, RegistryProvider {
       readLock.unlock();
     }
 
-    List<Transformer> concurrentlyAddedTransformers = (List<Transformer>) transformerListCache.putIfAbsent(dataTypePairHash, results);
+    List<Transformer> concurrentlyAddedTransformers =
+        (List<Transformer>) transformerListCache.putIfAbsent(dataTypePairHash, results);
     if (concurrentlyAddedTransformers != null) {
       return concurrentlyAddedTransformers;
     } else {
@@ -517,8 +519,8 @@ public class MuleRegistryHelper implements MuleRegistry, RegistryProvider {
   }
 
   /**
-   * Returns the name for the object passed in. If the object implements {@link NameableObject}, then {@link NameableObject#getName()} will
-   * be returned, otherwise a name is generated using the class name and a generated UUID.
+   * Returns the name for the object passed in. If the object implements {@link NameableObject}, then
+   * {@link NameableObject#getName()} will be returned, otherwise a name is generated using the class name and a generated UUID.
    *
    * @param obj the object to inspect
    * @return the name for this object

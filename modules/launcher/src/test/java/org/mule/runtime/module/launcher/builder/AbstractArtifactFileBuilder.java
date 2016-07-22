@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.launcher.builder;
@@ -27,8 +27,8 @@ import static org.mule.tck.ZipUtils.compress;
 /**
  * Defines a builder to create files for mule artifacts.
  * <p/>
- * Instances can be configured using the methods that follow the builder pattern until the artifact file is accessed. After that point,
- * builder methods will fail to update the builder state.
+ * Instances can be configured using the methods that follow the builder pattern until the artifact file is accessed. After that
+ * point, builder methods will fail to update the builder state.
  *
  * @param <T> class of the implementation builder
  */

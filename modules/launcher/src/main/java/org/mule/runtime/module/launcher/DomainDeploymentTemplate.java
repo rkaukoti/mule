@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher;
 
@@ -15,6 +15,7 @@ import java.util.Collections;
  * Utility to hook callbacks just before and after a domain zip is redeployed in Mule.
  */
 public final class DomainDeploymentTemplate implements ArtifactDeploymentTemplate {
+
   private final DefaultArchiveDeployer<Application> applicationDeployer;
   private final DeploymentService deploymentservice;
   private Collection<Application> domainApplications = Collections.emptyList();

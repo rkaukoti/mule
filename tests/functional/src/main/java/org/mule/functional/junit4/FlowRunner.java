@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.junit4;
 
@@ -105,9 +105,11 @@ public class FlowRunner extends FlowConstructRunner<FlowRunner> {
   }
 
   /**
-   * Runs the specified flow with the provided event and configuration, and performs a {@link FlowAssert#verify(String))} afterwards.
+   * Runs the specified flow with the provided event and configuration, and performs a {@link FlowAssert#verify(String))}
+   * afterwards.
    *
-   * If this is called multiple times, the <b>same</b> event will be sent. To force the creation of a new event, use {@link #reset()}.
+   * If this is called multiple times, the <b>same</b> event will be sent. To force the creation of a new event, use
+   * {@link #reset()}.
    *
    * @return the resulting <code>MuleEvent</code>
    */
@@ -118,7 +120,8 @@ public class FlowRunner extends FlowConstructRunner<FlowRunner> {
   /**
    * Runs the specified flow with the provided event and configuration.
    *
-   * If this is called multiple times, the <b>same</b> event will be sent. To force the creation of a new event, use {@link #reset()}.
+   * If this is called multiple times, the <b>same</b> event will be sent. To force the creation of a new event, use
+   * {@link #reset()}.
    *
    * @return the resulting <code>MuleEvent</code>
    */
@@ -130,7 +133,8 @@ public class FlowRunner extends FlowConstructRunner<FlowRunner> {
    * Runs the specified flow with the provided event and configuration, and performs a {@link FlowAssert#verify(String))} for each
    * {@code flowNamesToVerify} afterwards.
    *
-   * If this is called multiple times, the <b>same</b> event will be sent. To force the creation of a new event, use {@link #reset()}.
+   * If this is called multiple times, the <b>same</b> event will be sent. To force the creation of a new event, use
+   * {@link #reset()}.
    *
    * @param flowNamesToVerify the names of the flows to {@link FlowAssert#verify(String))} afterwards.
    * @return the resulting <code>MuleEvent</code>
@@ -146,8 +150,8 @@ public class FlowRunner extends FlowConstructRunner<FlowRunner> {
   }
 
   /**
-   * Runs the specified flow with the provided event and configuration expecting a failure. Will fail if there's no failure running the
-   * flow.
+   * Runs the specified flow with the provided event and configuration expecting a failure. Will fail if there's no failure
+   * running the flow.
    *
    * @return the message exception return by the flow
    */

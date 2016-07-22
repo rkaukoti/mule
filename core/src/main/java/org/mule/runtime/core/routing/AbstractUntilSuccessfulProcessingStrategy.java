@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -31,8 +31,8 @@ public abstract class AbstractUntilSuccessfulProcessingStrategy implements Until
    * Process the event through the configured route in the until-successful configuration.
    *
    * @param event the event to process through the until successful inner route.
-   * @return the response from the route if there's no ack expression. If there's ack expression then a message with the response event but
-   *         with a payload defined by the ack expression.
+   * @return the response from the route if there's no ack expression. If there's ack expression then a message with the response
+   *         event but with a payload defined by the ack expression.
    */
   protected MuleEvent processEvent(final MuleEvent event) {
     MuleEvent returnEvent;
@@ -48,13 +48,14 @@ public abstract class AbstractUntilSuccessfulProcessingStrategy implements Until
 
     final MuleMessage msg = returnEvent.getMessage();
     if (msg == null) {
-      throw new MuleRuntimeException(MessageFactory
-          .createStaticMessage("No message found in response to processing, which is therefore considered failed for event: " + event));
+      throw new MuleRuntimeException(MessageFactory.createStaticMessage(
+          "No message found in response to processing, which is therefore considered failed for event: " + event));
     }
 
     final boolean errorDetected = untilSuccessfulConfiguration.getFailureExpressionFilter().accept(returnEvent);
     if (errorDetected) {
-      throw new MuleRuntimeException(MessageFactory.createStaticMessage("Failure expression positive when processing event: " + event));
+      throw new MuleRuntimeException(
+          MessageFactory.createStaticMessage("Failure expression positive when processing event: " + event));
     }
     return returnEvent;
   }
@@ -73,7 +74,8 @@ public abstract class AbstractUntilSuccessfulProcessingStrategy implements Until
     }
 
     event.setMessage(MuleMessage.builder(event.getMessage())
-        .payload(getUntilSuccessfulConfiguration().getMuleContext().getExpressionManager().evaluate(ackExpression, event)).build());
+        .payload(getUntilSuccessfulConfiguration().getMuleContext().getExpressionManager().evaluate(ackExpression, event))
+        .build());
     return event;
   }
 

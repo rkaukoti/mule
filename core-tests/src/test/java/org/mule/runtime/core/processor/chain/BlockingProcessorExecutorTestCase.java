@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor.chain;
 
@@ -69,8 +69,8 @@ public class BlockingProcessorExecutorTestCase extends AbstractMuleContextTestCa
     when(event.getId()).thenReturn(RandomStringUtils.randomNumeric(3));
     when(event.getMessage()).thenReturn(message);
     when(event.getMuleContext()).thenReturn(muleContext);
-    when(executionTemplate.execute(any(MessageProcessor.class), any(MuleEvent.class)))
-        .thenAnswer(invocation -> ((MessageProcessor) invocation.getArguments()[0]).process((MuleEvent) invocation.getArguments()[1]));
+    when(executionTemplate.execute(any(MessageProcessor.class), any(MuleEvent.class))).thenAnswer(
+        invocation -> ((MessageProcessor) invocation.getArguments()[0]).process((MuleEvent) invocation.getArguments()[1]));
     muleContext.setTransformationService(new TransformationService(muleContext));
   }
 

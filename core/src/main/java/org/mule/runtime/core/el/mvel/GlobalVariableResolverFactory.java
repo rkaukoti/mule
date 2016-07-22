@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.el.mvel;
 
@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class GlobalVariableResolverFactory extends MVELExpressionLanguageContext {
+
   private static final long serialVersionUID = -6819292692339684915L;
 
   // Minor optimization to avoid HashMap contains if it can be avoided.
@@ -23,8 +24,8 @@ public class GlobalVariableResolverFactory extends MVELExpressionLanguageContext
   public GlobalVariableResolverFactory(Map<String, String> aliases, Map<String, Function> functions,
       ParserConfiguration parserConfiguration, MuleContext muleContext) {
     super(parserConfiguration, muleContext);
-    List<ExpressionLanguageExtension> extensions =
-        (List<ExpressionLanguageExtension>) muleContext.getRegistry().lookupObjectsForLifecycle(ExpressionLanguageExtension.class);
+    List<ExpressionLanguageExtension> extensions = (List<ExpressionLanguageExtension>) muleContext.getRegistry()
+        .lookupObjectsForLifecycle(ExpressionLanguageExtension.class);
 
     hasTarget = !(aliases.isEmpty() && functions.isEmpty() && extensions.isEmpty());
 

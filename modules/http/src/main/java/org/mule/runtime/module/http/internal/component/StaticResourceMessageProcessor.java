@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.component;
 
@@ -35,11 +35,12 @@ import static org.mule.runtime.module.http.api.HttpHeaders.Names.CONTENT_LENGTH;
 import static org.mule.runtime.module.http.api.HttpHeaders.Names.LOCATION;
 
 /**
- * A MessageProcessor that can be used by HTTP endpoints to serve static files from a directory on the filesystem. This processor allows the
- * user to specify a resourceBase which refers to the local directory from where files will be served from. Additionally, a default file can
- * be specificed for URLs where no file is set
+ * A MessageProcessor that can be used by HTTP endpoints to serve static files from a directory on the filesystem. This processor
+ * allows the user to specify a resourceBase which refers to the local directory from where files will be served from.
+ * Additionally, a default file can be specificed for URLs where no file is set
  */
 public class StaticResourceMessageProcessor implements MessageProcessor, Initialisable {
+
   public static final String DEFAULT_MIME_TYPE = "application/octet-stream";
   public static final String ANY_PATH = "/*";
   public static final String ROOT_PATH = "/";
@@ -58,7 +59,8 @@ public class StaticResourceMessageProcessor implements MessageProcessor, Initial
   @Override
   public MuleEvent process(MuleEvent event) throws MuleException {
     if (StringUtils.isEmpty(resourceBase)) {
-      throw new ConfigurationException(createStaticMessage("No ResourceBase Defined as part of the static resource message processor."));
+      throw new ConfigurationException(
+          createStaticMessage("No ResourceBase Defined as part of the static resource message processor."));
     }
 
     String path = event.getMessage().getInboundProperty(HTTP_REQUEST_PATH_PROPERTY);
@@ -84,10 +86,10 @@ public class StaticResourceMessageProcessor implements MessageProcessor, Initial
       file = new File(resourceBase + path + defaultFile);
     } else if (file.isDirectory()) {
       // Return a 302 with the new location
-      MuleMessage message =
-          MuleMessage.builder().nullPayload().addOutboundProperty(HTTP_STATUS_PROPERTY, String.valueOf(MOVED_TEMPORARILY.getStatusCode()))
-              .addOutboundProperty(CONTENT_LENGTH, 0)
-              .addOutboundProperty(LOCATION, event.getMessage().getInboundProperty(HTTP_REQUEST_PATH_PROPERTY) + "/").build();
+      MuleMessage message = MuleMessage.builder().nullPayload()
+          .addOutboundProperty(HTTP_STATUS_PROPERTY, String.valueOf(MOVED_TEMPORARILY.getStatusCode()))
+          .addOutboundProperty(CONTENT_LENGTH, 0)
+          .addOutboundProperty(LOCATION, event.getMessage().getInboundProperty(HTTP_REQUEST_PATH_PROPERTY) + "/").build();
       resultEvent = new DefaultMuleEvent(message, event);
     }
 
@@ -106,11 +108,12 @@ public class StaticResourceMessageProcessor implements MessageProcessor, Initial
       }
 
       MuleMessage message = MuleMessage.builder().nullPayload().mediaType(MediaType.parse(mimetype))
-          .addOutboundProperty(HTTP_STATUS_PROPERTY, String.valueOf(OK.getStatusCode())).addOutboundProperty(CONTENT_LENGTH, buffer.length)
-          .build();
+          .addOutboundProperty(HTTP_STATUS_PROPERTY, String.valueOf(OK.getStatusCode()))
+          .addOutboundProperty(CONTENT_LENGTH, buffer.length).build();
       resultEvent = new DefaultMuleEvent(message, event);
     } catch (IOException e) {
-      throw new ResourceNotFoundException(createStaticMessage(format("The file: %s was not found.", resourceBase + path)), event, this);
+      throw new ResourceNotFoundException(createStaticMessage(format("The file: %s was not found.", resourceBase + path)), event,
+          this);
     } finally {
       IOUtils.closeQuietly(in);
     }

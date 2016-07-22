@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.resources;
 
@@ -41,11 +41,11 @@ import static org.mule.runtime.module.extension.internal.capability.xml.schema.A
 
 
 /**
- * Annotation processor that picks up all the extensions annotated with {@link ExtensionModel} and use a {@link ResourcesGenerator} to
- * generated the required resources.
+ * Annotation processor that picks up all the extensions annotated with {@link ExtensionModel} and use a
+ * {@link ResourcesGenerator} to generated the required resources.
  * <p>
- * This annotation processor will automatically generate and package into the output jar the XSD schema, spring bundles and extension
- * registration files necessary for mule to work with this extension.
+ * This annotation processor will automatically generate and package into the output jar the XSD schema, spring bundles and
+ * extension registration files necessary for mule to work with this extension.
  * <p>
  * Depending on the model properties declared by each extension, some of those resources might or might not be generated
  *
@@ -101,7 +101,8 @@ public class ExtensionResourcesGeneratorAnnotationProcessor extends AbstractProc
 
       String message = format(
           "Only one extension is allowed per plugin, however several classes annotated with @%s were found. Offending classes are [%s]",
-          Extension.class.getSimpleName(), Joiner.on(", ").join(elements.stream().map(TypeElement::getQualifiedName).collect(toList())));
+          Extension.class.getSimpleName(),
+          Joiner.on(", ").join(elements.stream().map(TypeElement::getQualifiedName).collect(toList())));
 
       throw new RuntimeException(message);
     }

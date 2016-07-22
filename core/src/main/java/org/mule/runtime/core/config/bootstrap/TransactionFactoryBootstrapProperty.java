@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.config.bootstrap;
@@ -22,8 +22,8 @@ public class TransactionFactoryBootstrapProperty extends AbstractBootstrapProper
    *
    * @param service service that provides the property. Not null.
    * @param artifactType defines what is the artifact this bootstrap object applies to
-   * @param optional indicates whether or not the bootstrap object is optional. When a bootstrap object is optional, any error creating it
-   *        will be ignored.
+   * @param optional indicates whether or not the bootstrap object is optional. When a bootstrap object is optional, any error
+   *        creating it will be ignored.
    * @param transactionFactoryClassName key used to register the object. Not empty.
    * @param transactionResourceClassName className of the bootstrapped object. Not empty.
    */

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.component;
 
@@ -27,10 +27,11 @@ import org.mule.runtime.core.transformer.TransformerTemplate;
 import java.util.Collections;
 
 /**
- * Simple {@link JavaComponent} implementation to be used when {@link LifecycleAdapter} is not required because i) the object instance
- * implements {@link Callable} and so entry-point resolution is required and ii) component bindings are not used.<br/>
- * An {@link ObjectFactory} can be set but must return object instances that implement {@link Callable}. If one of the constructors that
- * takes just a Class or the instance itself is used then the {@link SingletonObjectFactory} is used by default. <br/>
+ * Simple {@link JavaComponent} implementation to be used when {@link LifecycleAdapter} is not required because i) the object
+ * instance implements {@link Callable} and so entry-point resolution is required and ii) component bindings are not used.<br/>
+ * An {@link ObjectFactory} can be set but must return object instances that implement {@link Callable}. If one of the
+ * constructors that takes just a Class or the instance itself is used then the {@link SingletonObjectFactory} is used by default.
+ * <br/>
  * This implementation replaces and improves on <code>OptimizedComponent</code>/<code>OptimizedMuleProxy</code>
  */
 public class SimpleCallableJavaComponent extends AbstractJavaComponent {
@@ -133,8 +134,8 @@ public class SimpleCallableJavaComponent extends AbstractJavaComponent {
       if (result instanceof MuleMessage) {
         return result;
       } else {
-        return muleContext.getTransformationService().applyTransformers(event.getMessage(), event,
-            Collections.<Transformer>singletonList(new TransformerTemplate(new TransformerTemplate.OverwitePayloadCallback(result))));
+        return muleContext.getTransformationService().applyTransformers(event.getMessage(), event, Collections
+            .<Transformer>singletonList(new TransformerTemplate(new TransformerTemplate.OverwitePayloadCallback(result))));
       }
     } else {
       return null;

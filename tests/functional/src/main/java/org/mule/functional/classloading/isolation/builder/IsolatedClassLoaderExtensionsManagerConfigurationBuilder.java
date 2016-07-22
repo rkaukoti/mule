@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.functional.classloading.isolation.builder;
@@ -24,9 +24,9 @@ import java.util.List;
 import static org.mule.runtime.module.extension.internal.ExtensionProperties.EXTENSION_MANIFEST_FILE_NAME;
 
 /**
- * A {@link org.mule.runtime.core.api.config.ConfigurationBuilder} that creates an {@link org.mule.runtime.extension.api.ExtensionManager}.
- * It reads the extension manifest file using the extension class loader that loads the extension annotated class and register the extension
- * to the manager.
+ * A {@link org.mule.runtime.core.api.config.ConfigurationBuilder} that creates an
+ * {@link org.mule.runtime.extension.api.ExtensionManager}. It reads the extension manifest file using the extension class loader
+ * that loads the extension annotated class and register the extension to the manager.
  *
  * @since 4.0
  */
@@ -38,12 +38,13 @@ public class IsolatedClassLoaderExtensionsManagerConfigurationBuilder extends Ab
   private final List<ArtifactClassLoader> pluginsClassLoaders;
 
   /**
-   * Creates an instance of the builder with the list of plugin class loaders. If an {@link ArtifactClassLoader} has a extension descriptor
-   * it will be registered as an extension if not it is assumed that it is not an extension plugin. The extension will be loaded and
-   * registered with its corresponding class loader in order to get access to the isolated {@link ClassLoader} defined for the extension.
+   * Creates an instance of the builder with the list of plugin class loaders. If an {@link ArtifactClassLoader} has a extension
+   * descriptor it will be registered as an extension if not it is assumed that it is not an extension plugin. The extension will
+   * be loaded and registered with its corresponding class loader in order to get access to the isolated {@link ClassLoader}
+   * defined for the extension.
    *
-   * @param pluginsClassLoaders the list of {@link ArtifactClassLoader} created for each plugin found in the dependencies (either plugin or
-   *        extension plugin).
+   * @param pluginsClassLoaders the list of {@link ArtifactClassLoader} created for each plugin found in the dependencies (either
+   *        plugin or extension plugin).
    */
   public IsolatedClassLoaderExtensionsManagerConfigurationBuilder(final List<ArtifactClassLoader> pluginsClassLoaders) {
     this.extensionManagerAdapterFactory = new DefaultExtensionManagerAdapterFactory();
@@ -51,12 +52,12 @@ public class IsolatedClassLoaderExtensionsManagerConfigurationBuilder extends Ab
   }
 
   /**
-   * Goes through the list of plugins {@link ArtifactClassLoader}s to check if they have an extension descriptor and if they do it will
-   * parse it and register the extension into the {@link org.mule.runtime.extension.api.ExtensionManager}
+   * Goes through the list of plugins {@link ArtifactClassLoader}s to check if they have an extension descriptor and if they do it
+   * will parse it and register the extension into the {@link org.mule.runtime.extension.api.ExtensionManager}
    * <p/>
    * It has to use reflection to access these classes due to the current execution of this method would be with the applciation
-   * {@link ArtifactClassLoader} and the list of plugin {@link ArtifactClassLoader} was instantiated with the Launcher {@link ClassLoader}
-   * so casting won't work here.
+   * {@link ArtifactClassLoader} and the list of plugin {@link ArtifactClassLoader} was instantiated with the Launcher
+   * {@link ClassLoader} so casting won't work here.
    *
    * @param muleContext The current {@link org.mule.runtime.core.api.MuleContext}
    * @throws Exception if an error occurs while registering an extension of calling methods using reflection.
@@ -76,7 +77,8 @@ public class IsolatedClassLoaderExtensionsManagerConfigurationBuilder extends Ab
         ExtensionManifest extensionManifest = extensionManager.parseExtensionManifestXml(manifestUrl);
         extensionManager.registerExtension(extensionManifest, classLoader);
       } else {
-        LOGGER.debug("Discarding plugin artifact class loader with artifactName '{}' due to it doesn't have an extension descriptor",
+        LOGGER.debug(
+            "Discarding plugin artifact class loader with artifactName '{}' due to it doesn't have an extension descriptor",
             artifactName);
       }
     }

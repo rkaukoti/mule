@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal;
 
@@ -35,7 +35,8 @@ public class DynamicConfigExpirationTestCase extends ExtensionFunctionalTestCase
     final MuleEvent event = runner.buildEvent();
     String returnedName = getPayloadAsString(runner.run().getMessage());
 
-    HeisenbergExtension config = (HeisenbergExtension) muleContext.getExtensionManager().getConfiguration("heisenberg", event).getValue();
+    HeisenbergExtension config =
+        (HeisenbergExtension) muleContext.getExtensionManager().getConfiguration("heisenberg", event).getValue();
 
     // validate we actually hit the correct dynamic config
     assertThat(returnedName, is(myName));
@@ -43,6 +44,7 @@ public class DynamicConfigExpirationTestCase extends ExtensionFunctionalTestCase
 
     PollingProber prober = new PollingProber(5000, 1000);
     prober.check(new JUnitProbe() {
+
       @Override
       protected boolean test() throws Exception {
         assertThat(config.getStop(), is(1));

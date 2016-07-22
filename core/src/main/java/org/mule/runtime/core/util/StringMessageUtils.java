@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -26,6 +26,7 @@ import java.util.function.Function;
  */
 // @ThreadSafe
 public final class StringMessageUtils {
+
   // The maximum number of Collection and Array elements used for messages
   public static final int MAX_ELEMENTS = 50;
   public static final int DEFAULT_MESSAGE_WIDTH = 80;

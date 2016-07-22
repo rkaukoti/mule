@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.filters;
 
@@ -22,6 +22,7 @@ import static org.mule.compatibility.transport.http.HttpConstants.HEADER_AUTHORI
  * <code>HttpBasicAuthenticationFilter</code> TODO
  */
 public class HttpBasicAuthenticationFilter extends org.mule.runtime.module.http.internal.filter.HttpBasicAuthenticationFilter {
+
   /**
    * logger used by this class
    */
@@ -32,7 +33,8 @@ public class HttpBasicAuthenticationFilter extends org.mule.runtime.module.http.
   }
 
   /**
-   * Authenticates the current message if authenticate is set to true. This method will always populate the secure context in the session
+   * Authenticates the current message if authenticate is set to true. This method will always populate the secure context in the
+   * session
    *
    * @param event the current event being dispatched
    * @throws org.mule.api.security.SecurityException if authentication fails
@@ -60,6 +62,7 @@ public class HttpBasicAuthenticationFilter extends org.mule.runtime.module.http.
     String token = auth.getCredentials().toString();
     header.append(new String(Base64.encodeBase64(token.getBytes())));
 
-    event.setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty(HEADER_AUTHORIZATION, header.toString()).build());
+    event
+        .setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty(HEADER_AUTHORIZATION, header.toString()).build());
   }
 }

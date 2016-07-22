@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.store;
 
@@ -16,11 +16,12 @@ import java.util.concurrent.ConcurrentSkipListMap;
 import java.util.concurrent.TimeUnit;
 
 /**
- * <code>InMemoryObjectStore</code> implements an optionally bounded in-memory store for message IDs with periodic expiry of old entries.
- * The bounded size is a <i>soft</i> limit and only enforced periodically by the expiry process; this means that the store may temporarily
- * exceed its maximum size between expiry runs, but will eventually shrink to its configured size.
+ * <code>InMemoryObjectStore</code> implements an optionally bounded in-memory store for message IDs with periodic expiry of old
+ * entries. The bounded size is a <i>soft</i> limit and only enforced periodically by the expiry process; this means that the
+ * store may temporarily exceed its maximum size between expiry runs, but will eventually shrink to its configured size.
  */
 public class InMemoryObjectStore<T extends Serializable> extends AbstractMonitoredObjectStore<T> {
+
   protected ConcurrentSkipListMap<Long, StoredObject<T>> store;
 
   public InMemoryObjectStore() {
@@ -173,6 +174,7 @@ public class InMemoryObjectStore<T extends Serializable> extends AbstractMonitor
    * Represents the object stored in the store. This class holds the Object itslef and its ID.
    */
   protected static class StoredObject<T> {
+
     private Serializable id;
     private T item;
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.model;
@@ -21,12 +21,13 @@ public class MySqlTestDatabase extends AbstractTestDatabase {
   public static String SQL_CREATE_SP_GET_RECORDS =
       "CREATE DEFINER=CURRENT_USER PROCEDURE getTestRecords()\n" + "BEGIN\n" + "    SELECT * FROM PLANET;\n" + "END;";
 
-  public static String SQL_CREATE_SP_GET_SPLIT_RECORDS = "CREATE DEFINER=CURRENT_USER PROCEDURE getSplitTestRecords()\n" + "BEGIN\n"
-      + "    SELECT * FROM PLANET WHERE POSITION <= 2;\n" + "    SELECT * FROM PLANET WHERE POSITION > 2;\n" + "END;";
+  public static String SQL_CREATE_SP_GET_SPLIT_RECORDS = "CREATE DEFINER=CURRENT_USER PROCEDURE getSplitTestRecords()\n"
+      + "BEGIN\n" + "    SELECT * FROM PLANET WHERE POSITION <= 2;\n" + "    SELECT * FROM PLANET WHERE POSITION > 2;\n" + "END;";
 
   @Override
   public void createPlanetTable(Connection connection) throws SQLException {
-    executeDdl(connection, "CREATE TABLE PLANET(ID INTEGER NOT NULL AUTO_INCREMENT,POSITION INTEGER,NAME VARCHAR(255), PRIMARY KEY (ID))");
+    executeDdl(connection,
+        "CREATE TABLE PLANET(ID INTEGER NOT NULL AUTO_INCREMENT,POSITION INTEGER,NAME VARCHAR(255), PRIMARY KEY (ID))");
   }
 
   @Override
@@ -108,8 +109,8 @@ public class MySqlTestDatabase extends AbstractTestDatabase {
   public void createDelayFunction(DataSource dataSource) throws SQLException {
     executeDdl(dataSource, "DROP FUNCTION IF EXISTS DELAY;\n");
 
-    final String sql =
-        "CREATE FUNCTION DELAY(seconds INTEGER) RETURNS INTEGER\n" + "BEGIN\n" + " DO SLEEP(seconds * 1000);\n" + " RETURN 1;\n" + "END;";
+    final String sql = "CREATE FUNCTION DELAY(seconds INTEGER) RETURNS INTEGER\n" + "BEGIN\n" + " DO SLEEP(seconds * 1000);\n"
+        + " RETURN 1;\n" + "END;";
     createStoredProcedure(dataSource, sql);
   }
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.lifecycle;
 
@@ -14,6 +14,7 @@ import java.util.Iterator;
  * Restrict possible results - only OK or a retry based on some throwable are currently allowed.
  */
 public final class LifecycleTransitionResult {
+
   /**
    * The logic for processing a collection of children
    *
@@ -39,9 +40,11 @@ public final class LifecycleTransitionResult {
     }
   }
 
-  private static void processSingleNoRetry(Object target, Method method, Class<?> exception, Class<?> iface) throws LifecycleException {
+  private static void processSingleNoRetry(Object target, Method method, Class<?> exception, Class<?> iface)
+      throws LifecycleException {
     if (!iface.isAssignableFrom(target.getClass())) {
-      throw new IllegalArgumentException(ClassUtils.getSimpleName(target.getClass()) + " is not an " + ClassUtils.getSimpleName(iface));
+      throw new IllegalArgumentException(
+          ClassUtils.getSimpleName(target.getClass()) + " is not an " + ClassUtils.getSimpleName(iface));
     }
     try {
       method.invoke(target);

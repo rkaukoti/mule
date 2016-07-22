@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.generics;
 
@@ -87,8 +87,8 @@ public abstract class GenericTypeResolver {
   }
 
   /**
-   * Resolve the single type argument of the given generic interface against the given target class which is assumed to implement the
-   * generic interface and possibly declare a concrete type for its type variable.
+   * Resolve the single type argument of the given generic interface against the given target class which is assumed to implement
+   * the generic interface and possibly declare a concrete type for its type variable.
    *
    * @param clazz the target class to check against
    * @param genericIfc the generic interface to resolve the type argument from
@@ -107,13 +107,13 @@ public abstract class GenericTypeResolver {
   }
 
   /**
-   * Resolve the type arguments of the given generic interface against the given target class which is assumed to implement the generic
-   * interface and possibly declare concrete types for its type variables.
+   * Resolve the type arguments of the given generic interface against the given target class which is assumed to implement the
+   * generic interface and possibly declare concrete types for its type variables.
    *
    * @param clazz the target class to check against
    * @param genericIfc the generic interface to resolve the type argument from
-   * @return the resolved type of each argument, with the array size matching the number of actual type arguments, or <code>null</code> if
-   *         not resolvable
+   * @return the resolved type of each argument, with the array size matching the number of actual type arguments, or
+   *         <code>null</code> if not resolvable
    */
   public static Class[] resolveTypeArguments(Class clazz, Class genericIfc) {
     return doResolveTypeArguments(clazz, clazz, genericIfc);
@@ -186,8 +186,8 @@ public abstract class GenericTypeResolver {
   }
 
   /**
-   * Build a mapping of {@link TypeVariable#getName TypeVariable names} to concrete {@link Class} for the specified {@link Class}. Searches
-   * all super types, enclosing types and interfaces.
+   * Build a mapping of {@link TypeVariable#getName TypeVariable names} to concrete {@link Class} for the specified {@link Class}.
+   * Searches all super types, enclosing types and interfaces.
    */
   static Map<TypeVariable, Type> getTypeVariableMap(Class clazz) {
     Reference<Map<TypeVariable, Type>> ref = typeVariableCache.get(clazz);
@@ -244,7 +244,8 @@ public abstract class GenericTypeResolver {
     return bound;
   }
 
-  private static void extractTypeVariablesFromGenericInterfaces(Type[] genericInterfaces, Map<TypeVariable, Type> typeVariableMap) {
+  private static void extractTypeVariablesFromGenericInterfaces(Type[] genericInterfaces,
+      Map<TypeVariable, Type> typeVariableMap) {
     for (Type genericInterface : genericInterfaces) {
       if (genericInterface instanceof ParameterizedType) {
         ParameterizedType pt = (ParameterizedType) genericInterface;
@@ -266,7 +267,8 @@ public abstract class GenericTypeResolver {
    * <p/>
    * public class FooImpl implements Foo<String, Integer> { .. }
    * </pre>
-   * For '<code>FooImpl</code>' the following mappings would be added to the {@link Map}: {S=java.lang.String, T=java.lang.Integer}.
+   * For '<code>FooImpl</code>' the following mappings would be added to the {@link Map}: {S=java.lang.String,
+   * T=java.lang.Integer}.
    */
   private static void populateTypeMapFromParameterizedType(ParameterizedType type, Map<TypeVariable, Type> typeVariableMap) {
     if (type.getRawType() instanceof Class) {

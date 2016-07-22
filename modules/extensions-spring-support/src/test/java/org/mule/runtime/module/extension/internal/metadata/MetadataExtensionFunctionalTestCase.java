@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.metadata;
 
@@ -45,7 +45,8 @@ public abstract class MetadataExtensionFunctionalTestCase extends ExtensionFunct
 
   protected static final String METADATA_TEST_STATIC_NO_REF_CONFIGURATION = "metadata-tests-static-no-ref-configuration.xml";
   protected static final String METADATA_TEST_DYNAMIC_NO_REF_CONFIGURATION = "metadata-tests-dynamic-no-ref-configuration.xml";
-  protected static final String METADATA_TEST_DYNAMIC_IMPLICIT_CONFIGURATION = "metadata-tests-dynamic-implicit-configuration.xml";
+  protected static final String METADATA_TEST_DYNAMIC_IMPLICIT_CONFIGURATION =
+      "metadata-tests-dynamic-implicit-configuration.xml";
 
   protected static final String CONTENT_METADATA_WITH_KEY_ID = "contentMetadataWithKeyId";
   protected static final String OUTPUT_METADATA_WITH_KEY_ID = "outputMetadataWithKeyId";
@@ -73,7 +74,8 @@ public abstract class MetadataExtensionFunctionalTestCase extends ExtensionFunct
   protected static final String RESOLVER_WITH_IMPLICIT_DYNAMIC_CONFIG = "resolverWithImplicitDynamicConfig";
   protected static final String RESOLVER_WITH_IMPLICIT_STATIC_CONFIG = "resolverWithImplicitStaticConfig";
   protected static final String OUTPUT_ATTRIBUTES_WITH_DYNAMIC_METADATA = "outputAttributesWithDynamicMetadata";
-  protected static final String OUTPUT_ATTRIBUTES_WITH_DECLARED_SUBTYPES_METADATA = "outputAttributesWithDeclaredSubtypesMetadata";
+  protected static final String OUTPUT_ATTRIBUTES_WITH_DECLARED_SUBTYPES_METADATA =
+      "outputAttributesWithDeclaredSubtypesMetadata";
   protected static final String RESOLVER_KEYS_WITH_CONTEXT_CLASSLOADER = "resolverTypeKeysWithContextClassLoader";
   protected static final String RESOLVER_CONTENT_WITH_CONTEXT_CLASSLOADER = "resolverContentWithContextClassLoader";
   protected static final String RESOLVER_OUTPUT_WITH_CONTEXT_CLASSLOADER = "resolverOutputWithContextClassLoader";
@@ -142,8 +144,8 @@ public abstract class MetadataExtensionFunctionalTestCase extends ExtensionFunct
     }
   }
 
-  protected void assertExpectedOutput(MetadataResult<OutputMetadataDescriptor> outputDescriptor, Type payloadType, Type attributesType)
-      throws IOException {
+  protected void assertExpectedOutput(MetadataResult<OutputMetadataDescriptor> outputDescriptor, Type payloadType,
+      Type attributesType) throws IOException {
     assertExpectedType(outputDescriptor.get().getPayloadMetadata(), payloadType);
     assertExpectedType(outputDescriptor.get().getAttributesMetadata(), attributesType);
   }
@@ -164,7 +166,8 @@ public abstract class MetadataExtensionFunctionalTestCase extends ExtensionFunct
     assertThat(descriptor.get().getType(), is(typeLoader.load(type)));
   }
 
-  protected void assertExpectedType(MetadataResult<ParameterMetadataDescriptor> descriptor, String name, Type type) throws IOException {
+  protected void assertExpectedType(MetadataResult<ParameterMetadataDescriptor> descriptor, String name, Type type)
+      throws IOException {
     assertThat(descriptor.get().getType(), is(typeLoader.load(type)));
     if (!StringUtils.isBlank(name)) {
       assertThat(descriptor.get().getName(), is(name));

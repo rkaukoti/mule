@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.dsl.api;
 
@@ -16,8 +16,8 @@ import static org.mule.runtime.core.util.Preconditions.checkState;
  * <p/>
  * An attribute may be configured to be set by using a constructor or a setter.
  * <p/>
- * The {@link org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder} allows to create an {@code AttributeDefinition} from many
- * different sources.
+ * The {@link org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder} allows to create an {@code AttributeDefinition}
+ * from many different sources.
  *
  * @since 4.0
  */
@@ -116,8 +116,8 @@ public class AttributeDefinition {
     }
 
     /**
-     * Calling this method declares that the attribute will be assigned with all declared simple configuration attribute and its value. By
-     * simple attribute we consider those with a key and a string value as content.
+     * Calling this method declares that the attribute will be assigned with all declared simple configuration attribute and its
+     * value. By simple attribute we consider those with a key and a string value as content.
      * <p/>
      * The simple attributes are store in a {@code java.util.Map} so the attribute type must also be a {@code java.util.Map}.
      *
@@ -130,8 +130,8 @@ public class AttributeDefinition {
     }
 
     /**
-     * Used when attribute an attribute must be set with an object provided by the runtime. For instance when the object requires access to
-     * the {@code org.mule.runtime.core.api.MuleContext} or a {@code org.mule.runtime.core.time.TimeSupplier}.
+     * Used when attribute an attribute must be set with an object provided by the runtime. For instance when the object requires
+     * access to the {@code org.mule.runtime.core.api.MuleContext} or a {@code org.mule.runtime.core.time.TimeSupplier}.
      *
      * @param referenceObjectType type of the object expected to be injected.
      * @return the builder
@@ -155,8 +155,9 @@ public class AttributeDefinition {
     }
 
     /**
-     * Calling this method declares that the attribute will be assigned with all declared complex configuration object that did not were map
-     * by other {@code AttributeDefinition}s. By complex attribute we consider those that are represented by complex object types.
+     * Calling this method declares that the attribute will be assigned with all declared complex configuration object that did
+     * not were map by other {@code AttributeDefinition}s. By complex attribute we consider those that are represented by complex
+     * object types.
      * <p/>
      * The complex attributes are store in a {@code java.util.List} so the attribute type must also be a {@code java.util.List}.
      *
@@ -218,8 +219,8 @@ public class AttributeDefinition {
     }
 
     /**
-     * Used when several attributes or child components needs to be mapped to a single attribute. The attribute must be of type Map where
-     * the key are the attribute name or the child element name and the value is the actual object.
+     * Used when several attributes or child components needs to be mapped to a single attribute. The attribute must be of type
+     * Map where the key are the attribute name or the child element name and the value is the actual object.
      *
      * @param definitions the set of attribute definitions along with its keys
      * @return the builder
@@ -241,9 +242,9 @@ public class AttributeDefinition {
     }
 
     /**
-     * Defines the parent identifier used to wrap a child element. Useful when there are children with the same type and we need to make a
-     * distinction to know how to do injection over multiple attributes with the same type. The identifier provided does not require a
-     * component definition since it will be just for qualifying a child.
+     * Defines the parent identifier used to wrap a child element. Useful when there are children with the same type and we need
+     * to make a distinction to know how to do injection over multiple attributes with the same type. The identifier provided does
+     * not require a component definition since it will be just for qualifying a child.
      *
      * i.e.:
      * 
@@ -258,8 +259,8 @@ public class AttributeDefinition {
      *     </parent-component>
      * </pre>
      *
-     * The first-wrapper and second-wrapper elements are just used to univocally identify the object attribute in which the child-component
-     * object must be injected.
+     * The first-wrapper and second-wrapper elements are just used to univocally identify the object attribute in which the
+     * child-component object must be injected.
      *
      * @param identifier component identifier in the configuration for the parent element wrapping the child component
      */

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.model.resolvers;
 
@@ -15,11 +15,12 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 /**
- * Provides the default implementation of an {@link org.mule.runtime.core.api.model.EntryPointResolverSet} It resolves a method to call on
- * the given service when an event is received. This object maintains a set of Resolvers that will be used in order to resolve an entrypoint
- * on a service object until one is found or until the set is exhausted.
+ * Provides the default implementation of an {@link org.mule.runtime.core.api.model.EntryPointResolverSet} It resolves a method to
+ * call on the given service when an event is received. This object maintains a set of Resolvers that will be used in order to
+ * resolve an entrypoint on a service object until one is found or until the set is exhausted.
  */
 public class DefaultEntryPointResolverSet implements EntryPointResolverSet {
+
   private final Set<EntryPointResolver> entryPointResolvers = new LinkedHashSet<EntryPointResolver>(4);
 
   public Object invoke(Object component, MuleEventContext context) throws Exception {
@@ -39,8 +40,8 @@ public class DefaultEntryPointResolverSet implements EntryPointResolverSet {
   }
 
   /**
-   * @return the entry point resolves configured in this resolver set. Note that access to the set is not thread safe. Client code must take
-   *         proper precautions to synchronize.
+   * @return the entry point resolves configured in this resolver set. Note that access to the set is not thread safe. Client code
+   *         must take proper precautions to synchronize.
    */
   public Set<EntryPointResolver> getEntryPointResolvers() {
     return entryPointResolvers;

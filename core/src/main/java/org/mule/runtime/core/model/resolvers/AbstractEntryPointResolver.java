@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.model.resolvers;
 
@@ -19,11 +19,12 @@ import java.lang.reflect.Method;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * A Base class for {@link org.mule.runtime.core.api.model.EntryPointResolver}. It provides parameters for detemining if the payload of the
- * message should be transformed first and whether void methods are acceptible. It also provides a method cashe for those resolvers that use
- * reflection to discover methods on the service.
+ * A Base class for {@link org.mule.runtime.core.api.model.EntryPointResolver}. It provides parameters for detemining if the
+ * payload of the message should be transformed first and whether void methods are acceptible. It also provides a method cashe for
+ * those resolvers that use reflection to discover methods on the service.
  */
 public abstract class AbstractEntryPointResolver implements EntryPointResolver {
+
   private static final Logger logger = LoggerFactory.getLogger(AbstractEntryPointResolver.class);
   // @GuardedBy(itself)
   private final ConcurrentHashMap<Class<?>, ConcurrentHashMap<String, Method>> methodCache =

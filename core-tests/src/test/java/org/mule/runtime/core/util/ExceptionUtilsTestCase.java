@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -31,6 +31,7 @@ import static org.mule.runtime.core.util.ExceptionUtils.getFullStackTraceWithout
 
 @SmallTest
 public class ExceptionUtilsTestCase extends AbstractMuleTestCase {
+
   private static final String ERROR_MESSAGE = "Excepted Error Message";
 
   @Test
@@ -66,7 +67,8 @@ public class ExceptionUtilsTestCase extends AbstractMuleTestCase {
 
     assertSame(expected, getDeepestOccurenceOfType(new Exception(expected), IllegalArgumentException.class));
 
-    assertSame(expected, getDeepestOccurenceOfType(new IllegalArgumentException(new Exception(expected)), IllegalArgumentException.class));
+    assertSame(expected,
+        getDeepestOccurenceOfType(new IllegalArgumentException(new Exception(expected)), IllegalArgumentException.class));
 
     assertNull(getDeepestOccurenceOfType(new IllegalArgumentException(new Exception(expected)), IOException.class));
   }

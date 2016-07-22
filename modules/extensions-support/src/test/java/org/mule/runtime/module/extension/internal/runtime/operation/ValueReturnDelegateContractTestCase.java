@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.operation;
 
@@ -33,6 +33,7 @@ import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
 public abstract class ValueReturnDelegateContractTestCase extends AbstractMuleTestCase {
+
   @Mock(answer = RETURNS_DEEP_STUBS)
   protected MuleContext muleContext;
 
@@ -51,7 +52,8 @@ public abstract class ValueReturnDelegateContractTestCase extends AbstractMuleTe
   public void before() {
     delegate = createReturnDelegate();
     when(operationContext.getEvent()).thenReturn(event);
-    when(event.getMessage()).thenReturn(org.mule.runtime.core.api.MuleMessage.builder().payload("").attributes(attributes).build());
+    when(event.getMessage())
+        .thenReturn(org.mule.runtime.core.api.MuleMessage.builder().payload("").attributes(attributes).build());
   }
 
   @Test

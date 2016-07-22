@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.api.debug;
@@ -13,8 +13,9 @@ import static org.mule.runtime.core.util.Preconditions.checkArgument;
  * Provides debug information for an object field.
  *
  * <p/>
- * Debug information is for informative purposes while debugging a Mule application. Obtaining such information can cause collateral
- * effects, for example when an MEL expression is evaluated to obtain the value and then evaluated again on the real execution.
+ * Debug information is for informative purposes while debugging a Mule application. Obtaining such information can cause
+ * collateral effects, for example when an MEL expression is evaluated to obtain the value and then evaluated again on the real
+ * execution.
  *
  * @param <T> type of the field's value
  * @since 3.8.0

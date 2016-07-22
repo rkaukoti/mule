@@ -1,14 +1,14 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.lifecycle;
 
 import org.mule.runtime.core.lifecycle.phases.NotInLifecyclePhase;
 
 /**
- * The LifecycleManager is responsible for managing the different lifecycle phases of the server and managing the transitions between
- * lifecycle phases.
+ * The LifecycleManager is responsible for managing the different lifecycle phases of the server and managing the transitions
+ * between lifecycle phases.
  *
  * @since 3.0
  */
@@ -25,8 +25,8 @@ public interface LifecycleManager {
   void fireLifecycle(String phase) throws LifecycleException;
 
   /**
-   * The current phase for the lifecycle manager. While in transition this will reflect the last completed phase not the currently executing
-   * phase, use {@link #getExecutingPhase()} to get the phase being executed.
+   * The current phase for the lifecycle manager. While in transition this will reflect the last completed phase not the currently
+   * executing phase, use {@link #getExecutingPhase()} to get the phase being executed.
    *
    * @return The current completed phase for the lifecycle manager
    */
@@ -40,8 +40,8 @@ public interface LifecycleManager {
   String getExecutingPhase();
 
   /**
-   * Applies lifecycle phase to an object independent of the current lifecycle phase. All phases between the {@code startPhase} (not
-   * inclusive) and the {@code endPhase} will be executed.
+   * Applies lifecycle phase to an object independent of the current lifecycle phase. All phases between the {@code startPhase}
+   * (not inclusive) and the {@code endPhase} will be executed.
    *
    * @param object the object to apply lifecycle to
    * @param startPhase the lifecycle phase the object is currently in. Must not be null.
@@ -72,17 +72,18 @@ public interface LifecycleManager {
   boolean isPhaseComplete(String phaseName);
 
   /**
-   * Will check that the phase passed in is a valid next phase for this lifecycle manager. If the phase is not a valid next transition an
-   * exception will be thrown
+   * Will check that the phase passed in is a valid next phase for this lifecycle manager. If the phase is not a valid next
+   * transition an exception will be thrown
    *
    * @param name The name of the lifecycle to validate as a valid next transition
-   * @throws IllegalStateException if the lifecycle name is not recognised or the phase is not valid for the current lifecycle state
+   * @throws IllegalStateException if the lifecycle name is not recognised or the phase is not valid for the current lifecycle
+   *         state
    */
   void checkPhase(String name) throws IllegalStateException;
 
   /**
-   * Provides access to a state machine for this lifecycle manager. components in the registry can use this to assert lifecycle rather than
-   * managing thier own lifecycle state
+   * Provides access to a state machine for this lifecycle manager. components in the registry can use this to assert lifecycle
+   * rather than managing thier own lifecycle state
    *
    * @return A state machine for this lifecycle manager
    * @since 3.0

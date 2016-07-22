@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.filters;
 
@@ -31,6 +31,7 @@ import static org.mule.runtime.core.util.ClassUtils.equal;
 import static org.mule.runtime.core.util.ClassUtils.hash;
 
 public class XPathFilter extends AbstractJaxpFilter implements Filter, Initialisable, MuleContextAware {
+
   protected transient Logger logger = LoggerFactory.getLogger(getClass());
 
   private String pattern;
@@ -114,7 +115,8 @@ public class XPathFilter extends AbstractJaxpFilter implements Filter, Initialis
         pattern = pattern.substring(0, pattern.lastIndexOf("="));
       } else {
         if (logger.isInfoEnabled()) {
-          logger.info("''expectedValue'' attribute for {} is not set, using 'true' by default", ClassUtils.getSimpleName(getClass()));
+          logger.info("''expectedValue'' attribute for {} is not set, using 'true' by default",
+              ClassUtils.getSimpleName(getClass()));
         }
         expectedValue = Boolean.TRUE.toString();
       }
@@ -125,8 +127,8 @@ public class XPathFilter extends AbstractJaxpFilter implements Filter, Initialis
       node = toDOMNode(payload);
     } catch (Exception e) {
       if (logger.isWarnEnabled()) {
-        logger.warn(
-            ClassUtils.getSimpleName(getClass()) + " filter rejected message because of an error while parsing XML: " + e.getMessage(), e);
+        logger.warn(ClassUtils.getSimpleName(getClass()) + " filter rejected message because of an error while parsing XML: "
+            + e.getMessage(), e);
       }
       return false;
     }
@@ -144,15 +146,15 @@ public class XPathFilter extends AbstractJaxpFilter implements Filter, Initialis
       xpathResult = xpathEvaluator.evaluate(pattern, node, RequestContext.getEvent());
     } catch (Exception e) {
       if (logger.isWarnEnabled()) {
-        logger.warn(ClassUtils.getSimpleName(getClass()) + " filter rejected message because of an error while evaluating the expression: "
-            + e.getMessage(), e);
+        logger.warn(ClassUtils.getSimpleName(getClass())
+            + " filter rejected message because of an error while evaluating the expression: " + e.getMessage(), e);
       }
       return false;
     }
 
     if (logger.isDebugEnabled()) {
-      logger.debug(MessageFormat.format("{0} Expression result = ''{1}'' -  Expected value = ''{2}''", ClassUtils.getSimpleName(getClass()),
-          xpathResult, expectedValue));
+      logger.debug(MessageFormat.format("{0} Expression result = ''{1}'' -  Expected value = ''{2}''",
+          ClassUtils.getSimpleName(getClass()), xpathResult, expectedValue));
     }
 
     // Compare the XPath result with the expected result.
@@ -166,7 +168,8 @@ public class XPathFilter extends AbstractJaxpFilter implements Filter, Initialis
       // A null result was not expected, something probably went wrong.
       else {
         if (logger.isDebugEnabled()) {
-          logger.debug(MessageFormat.format("{0} expression evaluates to null: {1}", ClassUtils.getSimpleName(getClass()), pattern));
+          logger.debug(
+              MessageFormat.format("{0} expression evaluates to null: {1}", ClassUtils.getSimpleName(getClass()), pattern));
         }
       }
     }

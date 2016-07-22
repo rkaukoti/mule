@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.queue.objectstore;
 
@@ -23,6 +23,7 @@ import java.io.Serializable;
  */
 @Deprecated
 class TransactionalQueueSession extends DefaultXASession implements QueueSession {
+
   protected TransactionalQueueManager queueManager;
   private Logger logger = LoggerFactory.getLogger(org.mule.runtime.core.util.queue.TransactionalQueueSession.class);
 
@@ -38,6 +39,7 @@ class TransactionalQueueSession extends DefaultXASession implements QueueSession
   }
 
   protected class QueueImpl implements Queue {
+
     protected QueueInfo queue;
 
     public QueueImpl(QueueInfo queue) {

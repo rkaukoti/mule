@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.config.dsl.config;
 
@@ -70,11 +70,11 @@ class ConfigurationProviderObjectFactory extends AbstractExtensionObjectFactory<
     ConfigurationProvider<Object> configurationProvider;
     try {
       if (resolverSet.isDynamic() || connectionProviderResolver.isDynamic()) {
-        configurationProvider = configurationProviderFactory.createDynamicConfigurationProvider(name, configurationModel, resolverSet,
-            connectionProviderResolver, getDynamicConfigPolicy());
+        configurationProvider = configurationProviderFactory.createDynamicConfigurationProvider(name, configurationModel,
+            resolverSet, connectionProviderResolver, getDynamicConfigPolicy());
       } else {
-        configurationProvider = configurationProviderFactory.createStaticConfigurationProvider(name, configurationModel, resolverSet,
-            connectionProviderResolver, muleContext);
+        configurationProvider = configurationProviderFactory.createStaticConfigurationProvider(name, configurationModel,
+            resolverSet, connectionProviderResolver, muleContext);
       }
 
       muleContext.getInjector().inject(configurationProvider);

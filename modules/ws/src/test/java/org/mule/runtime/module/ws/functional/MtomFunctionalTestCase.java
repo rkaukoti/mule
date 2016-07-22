@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.ws.functional;
 
@@ -35,10 +35,11 @@ public class MtomFunctionalTestCase extends AbstractWSConsumerFunctionalTestCase
 
   @Test
   public void uploadAttachmentTest() throws Exception {
-    String request = String
-        .format("<ns:uploadAttachment xmlns:ns=\"http://consumer.ws.module.runtime.mule.org/\">" + "<fileName>%s</fileName><attachment>"
+    String request = String.format(
+        "<ns:uploadAttachment xmlns:ns=\"http://consumer.ws.module.runtime.mule.org/\">" + "<fileName>%s</fileName><attachment>"
             + "<xop:Include xmlns:xop=\"http://www.w3.org/2004/08/xop/include\" href=\"cid:testAttachmentId\"/>"
-            + "</attachment></ns:uploadAttachment>", TEST_FILE_ATTACHMENT);
+            + "</attachment></ns:uploadAttachment>",
+        TEST_FILE_ATTACHMENT);
 
     MuleEvent event = flowRunner("clientUploadAttachment").withPayload(request)
         .withOutboundAttachment("testAttachmentId", buildDataHandler(TEST_FILE_ATTACHMENT)).run();

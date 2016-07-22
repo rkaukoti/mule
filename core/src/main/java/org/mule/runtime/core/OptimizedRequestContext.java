@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core;
 
@@ -10,17 +10,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * NOT FOR PUBLIC USE - please use the interface provided by RequestContext. This is a temporary interface that helps provide an (optimized)
- * fix for message scribbling.
+ * NOT FOR PUBLIC USE - please use the interface provided by RequestContext. This is a temporary interface that helps provide an
+ * (optimized) fix for message scribbling.
  *
  * <p>
- * Mutating methods have three versions: default (RequestContext; safe, makes and returns a new copy - although this can be changed via
- * {@link RequestContext#DEFAULT_ACTION}); unsafe (doesn't make a copy, use only where certain no threading); critical (safe, documents that
- * threading a known issue).
+ * Mutating methods have three versions: default (RequestContext; safe, makes and returns a new copy - although this can be
+ * changed via {@link RequestContext#DEFAULT_ACTION}); unsafe (doesn't make a copy, use only where certain no threading); critical
+ * (safe, documents that threading a known issue).
  * </p>
  *
  * @deprecated If access to MuleEvent or MuleMessage is required, then implement a
- *             {@link org.mule.runtime.core.api.processor.MessageProcessor} or {@link org.mule.runtime.core.api.lifecycle.Callable} instead
+ *             {@link org.mule.runtime.core.api.processor.MessageProcessor} or
+ *             {@link org.mule.runtime.core.api.lifecycle.Callable} instead
  */
 @Deprecated
 public final class OptimizedRequestContext {
@@ -57,8 +58,8 @@ public final class OptimizedRequestContext {
   }
 
   /**
-   * Sets a new message payload in the RequestContext but maintains all other properties (session, endpoint, synchronous, etc.) from the
-   * previous event. Unsafe: use only when known to be single threaded
+   * Sets a new message payload in the RequestContext but maintains all other properties (session, endpoint, synchronous, etc.)
+   * from the previous event. Unsafe: use only when known to be single threaded
    *
    * @param message - the new message payload
    * @return The message set

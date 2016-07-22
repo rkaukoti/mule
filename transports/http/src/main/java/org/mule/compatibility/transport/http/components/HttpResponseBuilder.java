@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.components;
 
@@ -45,7 +45,9 @@ import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_I
 import static org.mule.runtime.core.api.config.MuleProperties.MULE_CORRELATION_SEQUENCE_PROPERTY;
 import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_PROPERTY;
 
-public class HttpResponseBuilder extends AbstractMessageProcessorOwner implements Initialisable, MessageProcessor, NonBlockingSupported {
+public class HttpResponseBuilder extends AbstractMessageProcessorOwner
+    implements Initialisable, MessageProcessor, NonBlockingSupported {
+
   private static final Logger logger = LoggerFactory.getLogger(HttpResponseBuilder.class);
 
   private Map<String, String> headers = new HashMap<>();
@@ -124,8 +126,8 @@ public class HttpResponseBuilder extends AbstractMessageProcessorOwner implement
   private void copyCorrelationIdProperties(HttpResponse response, MuleMessage message) {
     message.getCorrelation().getId().ifPresent(v -> {
       response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_ID_PROPERTY, v));
-      message.getCorrelation().getGroupSize()
-          .ifPresent(s -> response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_GROUP_SIZE_PROPERTY, valueOf(s))));
+      message.getCorrelation().getGroupSize().ifPresent(
+          s -> response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_GROUP_SIZE_PROPERTY, valueOf(s))));
       message.getCorrelation().getSequence()
           .ifPresent(s -> response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_SEQUENCE_PROPERTY, valueOf(s))));
     });
@@ -207,8 +209,8 @@ public class HttpResponseBuilder extends AbstractMessageProcessorOwner implement
       for (CookieWrapper cookie : cookies) {
         try {
           cookie.parse(event, muleContext.getExpressionManager());
-          response
-              .addHeader(new Header(HttpConstants.HEADER_COOKIE_SET, CookieHelper.formatCookieForASetCookieHeader(cookie.createCookie())));
+          response.addHeader(
+              new Header(HttpConstants.HEADER_COOKIE_SET, CookieHelper.formatCookieForASetCookieHeader(cookie.createCookie())));
 
         } catch (Exception e) {
           throw new DefaultMuleException(e);

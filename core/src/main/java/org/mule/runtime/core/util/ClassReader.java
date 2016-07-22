@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -18,11 +18,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This is the class file reader for obtaining the parameter names for declared methods in a class. The class must have debugging attributes
- * for us to obtain this information.
+ * This is the class file reader for obtaining the parameter names for declared methods in a class. The class must have debugging
+ * attributes for us to obtain this information.
  * <p>
- * This does not work for inherited methods. To obtain parameter names for inherited methods, you must use a paramReader for the class that
- * originally declared the method.
+ * This does not work for inherited methods. To obtain parameter names for inherited methods, you must use a paramReader for the
+ * class that originally declared the method.
  * <p>
  * don't get tricky, it's the bare minimum. Instances of this class are not threadsafe -- don't share them.
  * <p>
@@ -30,6 +30,7 @@ import java.util.Map;
  * @author Edwin Smith, Macromedia
  */
 public class ClassReader extends ByteArrayInputStream {
+
   // constants values that appear in java class files,
   // from jvm spec 2nd ed, section 4.4, pp 103
   private static final int CONSTANT_CLASS = 7;
@@ -44,8 +45,8 @@ public class ClassReader extends ByteArrayInputStream {
   private static final int CONSTANT_NAME_AND_TYPE = 12;
   private static final int CONSTANT_UTF_8 = 1;
   /**
-   * the constant pool. constant pool indices in the class file directly index into this array. The value stored in this array is the
-   * position in the class file where that constant begins.
+   * the constant pool. constant pool indices in the class file directly index into this array. The value stored in this array is
+   * the position in the class file where that constant begins.
    */
   private int[] cpoolIndex;
   private Object[] cpool;
@@ -59,8 +60,8 @@ public class ClassReader extends ByteArrayInputStream {
   }
 
   /**
-   * load the bytecode for a given class, by using the class's defining classloader and assuming that for a class named P.C, the bytecodes
-   * are in a resource named /P/C.class.
+   * load the bytecode for a given class, by using the class's defining classloader and assuming that for a class named P.C, the
+   * bytecodes are in a resource named /P/C.class.
    *
    * @param c the class of interest
    * @return a byte array containing the bytecode
@@ -349,8 +350,8 @@ public class ClassReader extends ByteArrayInputStream {
   }
 
   /**
-   * read an attributes array. the elements of a class file that can contain attributes are: fields, methods, the class itself, and some
-   * other types of attributes.
+   * read an attributes array. the elements of a class file that can contain attributes are: fields, methods, the class itself,
+   * and some other types of attributes.
    */
   protected final void readAttributes() throws IOException {
     int count = readShort();
@@ -405,6 +406,7 @@ public class ClassReader extends ByteArrayInputStream {
   }
 
   private static class NameAndType {
+
     String name;
     String type;
 

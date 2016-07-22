@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.pgp;
 
@@ -12,7 +12,8 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 
 /**
- * A {@link LazyTransformedInputStream} represents an {@link InputStream} that has been transformed when someone needs to read from it.
+ * A {@link LazyTransformedInputStream} represents an {@link InputStream} that has been transformed when someone needs to read
+ * from it.
  *
  * Internally, the {@link LazyTransformedInputStream} has a pipe that is written by an {@link StreamTransformer} according to a
  * {@link TransformPolicy}.
@@ -21,6 +22,7 @@ import java.io.PipedOutputStream;
  * {@link InputStream} is closed of finalized. In this way we avoid any problems with broken pipes.
  */
 public class LazyTransformedInputStream extends InputStream {
+
   private PipedInputStream in;
   private PipedOutputStream out;
   private TransformPolicy transformPolicy;

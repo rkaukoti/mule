@@ -1,18 +1,18 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.functional.classloading.isolation.maven;
 
 /**
- * Defines the multi-module folder name for an artifactId. It is useful when the convention of using the same artifactId as folder name for
- * the module. This will allow to have different names.
+ * Defines the multi-module folder name for an artifactId. It is useful when the convention of using the same artifactId as folder
+ * name for the module. This will allow to have different names.
  * <p/>
- * Whenever the test class that is being executed with {@link org.mule.functional.junit4.runners.ArtifactClassLoaderRunner} belongs to an
- * artifact that is part of a multi-module maven project and the test is executed from IDE with the other modules opened either from maven
- * when the test goal is executed from the parent pom this mapper would be used due to those artifacts are not going to be packaged as jars
- * in the maven repository yet.
+ * Whenever the test class that is being executed with {@link org.mule.functional.junit4.runners.ArtifactClassLoaderRunner}
+ * belongs to an artifact that is part of a multi-module maven project and the test is executed from IDE with the other modules
+ * opened either from maven when the test goal is executed from the parent pom this mapper would be used due to those artifacts
+ * are not going to be packaged as jars in the maven repository yet.
  *
  * @since 4.0
  */

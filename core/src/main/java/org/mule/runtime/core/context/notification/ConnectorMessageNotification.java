@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.context.notification;
 
@@ -43,7 +43,8 @@ public class ConnectorMessageNotification extends ServerNotification implements 
   private String endpoint;
   private FlowConstruct flowConstruct;
 
-  public ConnectorMessageNotification(Object component, MuleMessage resource, String endpoint, FlowConstruct flowConstruct, int action) {
+  public ConnectorMessageNotification(Object component, MuleMessage resource, String endpoint, FlowConstruct flowConstruct,
+      int action) {
     super(resource, action, flowConstruct != null ? flowConstruct.getName() : null);
     this.component = component;
     this.endpoint = endpoint;

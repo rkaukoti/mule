@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.management;
 
@@ -82,6 +82,7 @@ public class ServerNotificationsTestCase extends AbstractMuleContextTestCase imp
     final CountDownLatch latch = new CountDownLatch(2);
 
     muleContext.registerListener(new DummyNotificationListener() {
+
       public void onNotification(ServerNotification notification) {
         if (notification.getAction() == DummyNotification.EVENT_RECEIVED) {
           customNotificationCount.incrementAndGet();
@@ -105,6 +106,7 @@ public class ServerNotificationsTestCase extends AbstractMuleContextTestCase imp
     final CountDownLatch latch = new CountDownLatch(2);
 
     muleContext.registerListener(new DummyNotificationListener() {
+
       public void onNotification(ServerNotification notification) {
         if (notification.getAction() == DummyNotification.EVENT_RECEIVED) {
           customNotificationCount.incrementAndGet();
@@ -114,7 +116,8 @@ public class ServerNotificationsTestCase extends AbstractMuleContextTestCase imp
       }
     }, "* quick brown*");
 
-    muleContext.fireNotification(new DummyNotification("the quick brown fox jumped over the lazy dog", DummyNotification.EVENT_RECEIVED));
+    muleContext.fireNotification(
+        new DummyNotification("the quick brown fox jumped over the lazy dog", DummyNotification.EVENT_RECEIVED));
     muleContext.fireNotification(new DummyNotification("e quick bro", DummyNotification.EVENT_RECEIVED));
     muleContext.fireNotification(new DummyNotification(" quick brown", DummyNotification.EVENT_RECEIVED));
 
@@ -135,6 +138,7 @@ public class ServerNotificationsTestCase extends AbstractMuleContextTestCase imp
   }
 
   public class DummyNotification extends CustomNotification {
+
     public static final int EVENT_RECEIVED = -999999;
     /**
      * Serial version

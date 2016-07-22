@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -24,9 +24,9 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * MULE-7534: JMS connector doesn't reconnect to ActiveMQ broker 5.6 when using blocking=true When using ActiveMQ 5.6, the
- * createConnection() method of the connection factory returns an invalid connection object instead of failing when the broker is down, in
- * newer versions the createConnection() method throws an exception. To reproduce the problem a custom connection factory is used that
- * returns invalid Connection objects when needed.
+ * createConnection() method of the connection factory returns an invalid connection object instead of failing when the broker is
+ * down, in newer versions the createConnection() method throws an exception. To reproduce the problem a custom connection factory
+ * is used that returns invalid Connection objects when needed.
  */
 public class JmsReconnectionActiveMQTestCase extends AbstractBrokerFunctionalTestCase {
 
@@ -53,8 +53,8 @@ public class JmsReconnectionActiveMQTestCase extends AbstractBrokerFunctionalTes
     assertMessageRouted();
 
     // Stop the broker, and make the connection factory return invalid connections.
-    ConnectionListener connectionListener =
-        new ConnectionListener(muleContext).setExpectedAction(ConnectionNotification.CONNECTION_FAILED).setNumberOfExecutionsRequired(3);
+    ConnectionListener connectionListener = new ConnectionListener(muleContext)
+        .setExpectedAction(ConnectionNotification.CONNECTION_FAILED).setNumberOfExecutionsRequired(3);
 
     CustomConnectionFactory.returnInvalidConnections = true;
     amqBroker.stop();
@@ -69,6 +69,7 @@ public class JmsReconnectionActiveMQTestCase extends AbstractBrokerFunctionalTes
 
     // Wait until jmsConnector is reconnected and started.
     prober.check(new Probe() {
+
       @Override
       public boolean isSatisfied() {
         return jmsConnector.isStarted();

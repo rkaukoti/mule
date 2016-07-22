@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -26,6 +26,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 public class ForeachTestCase extends AbstractMuleContextTestCase {
+
   private static String ERR_NUMBER_MESSAGES = "Not a correct number of messages processed";
   private static String ERR_PAYLOAD_TYPE = "Type error on processed payloads";
   private static String ERR_OUTPUT = "Messages processed incorrectly";
@@ -243,6 +244,7 @@ public class ForeachTestCase extends AbstractMuleContextTestCase {
   }
 
   public class DummySimpleIterableClass implements Iterable<String> {
+
     public List<String> strings = new ArrayList<>();
 
     public DummySimpleIterableClass() {
@@ -257,6 +259,7 @@ public class ForeachTestCase extends AbstractMuleContextTestCase {
   }
 
   private class DummyNestedIterableClass implements Iterable<DummySimpleIterableClass> {
+
     private List<DummySimpleIterableClass> iterables = new ArrayList<>();
 
     public DummyNestedIterableClass() {

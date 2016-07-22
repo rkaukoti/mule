@@ -1,14 +1,14 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.pgp;
 
 import java.io.PipedOutputStream;
 
 /**
- * A {@link TransformPolicy} that copies the transformed bytes continuously into the {@link PipedOutputStream} without taking into account
- * about how many bytes the object has requested.
+ * A {@link TransformPolicy} that copies the transformed bytes continuously into the {@link PipedOutputStream} without taking into
+ * account about how many bytes the object has requested.
  */
 public class TransformContinuouslyPolicy extends AbstractTransformPolicy {
 
@@ -30,8 +30,8 @@ public class TransformContinuouslyPolicy extends AbstractTransformPolicy {
   @Override
   public void readRequest(long length) {
     /**
-     * Avoid calling super so that we don't add more bytes. The ContinuousWork will add the requested bytes as necessary only start the
-     * copying thread
+     * Avoid calling super so that we don't add more bytes. The ContinuousWork will add the requested bytes as necessary only
+     * start the copying thread
      */
     startCopyingThread();
   }
@@ -45,6 +45,7 @@ public class TransformContinuouslyPolicy extends AbstractTransformPolicy {
   }
 
   private class ContinuousWork extends TransformerWork {
+
     @Override
     protected void execute() throws Exception {
       getTransformer().initialize(getInputStream().getOut());

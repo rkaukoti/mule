@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.module.management.agent;
 
@@ -21,8 +21,9 @@ import javax.management.NotCompliantMBeanException;
 import javax.management.ObjectName;
 
 public abstract class AbstractTransportsJmxAgent extends AbstractJmxAgent {
-  protected void registerEndpointServices()
-      throws NotCompliantMBeanException, MBeanRegistrationException, InstanceAlreadyExistsException, MalformedObjectNameException {
+
+  protected void registerEndpointServices() throws NotCompliantMBeanException, MBeanRegistrationException,
+      InstanceAlreadyExistsException, MalformedObjectNameException {
     for (Connector connector : muleContext.getRegistry().lookupObjects(Connector.class)) {
       if (connector instanceof AbstractConnector) {
         for (MessageReceiver messageReceiver : ((AbstractConnector) connector).getReceivers().values()) {
@@ -63,8 +64,8 @@ public abstract class AbstractTransportsJmxAgent extends AbstractJmxAgent {
     return fullName.toString();
   }
 
-  protected void registerConnectorServices()
-      throws MalformedObjectNameException, NotCompliantMBeanException, MBeanRegistrationException, InstanceAlreadyExistsException {
+  protected void registerConnectorServices() throws MalformedObjectNameException, NotCompliantMBeanException,
+      MBeanRegistrationException, InstanceAlreadyExistsException {
     for (Connector connector : muleContext.getRegistry().lookupLocalObjects(Connector.class)) {
       ConnectorServiceMBean service = new ConnectorService(connector);
       final String rawName = service.getName();

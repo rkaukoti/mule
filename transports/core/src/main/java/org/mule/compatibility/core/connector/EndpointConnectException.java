@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.connector;
 
@@ -18,6 +18,7 @@ import javax.resource.spi.work.Work;
  * When this exception is thrown it will trigger a retry (reconnection) policy to go into effect if one is configured.
  */
 public class EndpointConnectException extends ConnectException {
+
   /**
    * Serial version
    */
@@ -63,6 +64,7 @@ public class EndpointConnectException extends ConnectException {
     // Reconnect (retry policy will go into effect here if configured)
     try {
       connector.getMuleContext().getWorkManager().scheduleWork(new Work() {
+
         @Override
         public void release() {}
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.internal.metadata;
 
@@ -13,8 +13,8 @@ import org.mule.runtime.extension.api.runtime.ConfigurationInstance;
 import java.util.Optional;
 
 /**
- * Default immutable implementation of {@link MetadataContext}, it provides access to the extension configuration and connection in the
- * metadata fetch invocation.
+ * Default immutable implementation of {@link MetadataContext}, it provides access to the extension configuration and connection
+ * in the metadata fetch invocation.
  *
  * @since 4.0
  */
@@ -32,7 +32,8 @@ public class DefaultMetadataContext implements MetadataContext {
    *        {@param configInstance}
    * @param cache instance of the {@link MetadataCache} for this context
    */
-  public DefaultMetadataContext(ConfigurationInstance<Object> configInstance, ConnectionManager connectionManager, MetadataCache cache) {
+  public DefaultMetadataContext(ConfigurationInstance<Object> configInstance, ConnectionManager connectionManager,
+      MetadataCache cache) {
     this.configInstance = configInstance;
     this.connectionManager = connectionManager;
     this.cache = cache;
@@ -51,8 +52,8 @@ public class DefaultMetadataContext implements MetadataContext {
    * Retrieves the connection for the related component and configuration
    *
    * @param <C> Connection type
-   * @return A connection instance of {@param <C>} type for the component. If the related configuration does not require a connection
-   *         {@link Optional#empty()} will be returned
+   * @return A connection instance of {@param <C>} type for the component. If the related configuration does not require a
+   *         connection {@link Optional#empty()} will be returned
    * @throws ConnectionException when no valid connection is found for the related component and configuration
    */
   @Override

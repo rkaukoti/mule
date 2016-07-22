@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api;
 
@@ -12,13 +12,13 @@ import java.io.Serializable;
 import java.util.Set;
 
 /**
- * <code>MuleSession</code> is the context in which a request is processed by Mule. The scope of the MuleSession context includes all Mule
- * Flows and Services that the request is routed through on the same or different Mule instances. A MuleSession instance has a unique id,
- * session scope properties and an optional security context.
+ * <code>MuleSession</code> is the context in which a request is processed by Mule. The scope of the MuleSession context includes
+ * all Mule Flows and Services that the request is routed through on the same or different Mule instances. A MuleSession instance
+ * has a unique id, session scope properties and an optional security context.
  * <p>
- * In order for the session to be propagated from one Flow or Service to the next a transports that support message properties needs to be
- * used. A {@link SessionHandler} is used to store the session in an outbound message property and then retrieve it from an inbound property
- * using a specific strategy.
+ * In order for the session to be propagated from one Flow or Service to the next a transports that support message properties
+ * needs to be used. A {@link SessionHandler} is used to store the session in an outbound message property and then retrieve it
+ * from an inbound property using a specific strategy.
  *
  * @see SessionHandler
  */
@@ -46,14 +46,16 @@ public interface MuleSession extends Serializable {
   String getId();
 
   /**
-   * The security context for this session. If not null outbound, inbound and/or method invocations will be authenticated using this context
+   * The security context for this session. If not null outbound, inbound and/or method invocations will be authenticated using
+   * this context
    *
    * @return the context for this session or null if the request is not secure.
    */
   SecurityContext getSecurityContext();
 
   /**
-   * The security context for this session. If not null outbound, inbound and/or method invocations will be authenticated using this context
+   * The security context for this session. If not null outbound, inbound and/or method invocations will be authenticated using
+   * this context
    *
    * @param context the context for this session or null if the request is not secure.
    */
@@ -105,8 +107,8 @@ public interface MuleSession extends Serializable {
   Set<String> getPropertyNamesAsSet();
 
   /**
-   * Merge current session with an updated version Result session will contain all the properties from updatedSession plus those properties
-   * in the current session that couldn't be serialized In case updatedSession is null, then no change will be applied.
+   * Merge current session with an updated version Result session will contain all the properties from updatedSession plus those
+   * properties in the current session that couldn't be serialized In case updatedSession is null, then no change will be applied.
    *
    * @param updatedSession mule session with updated properties
    */

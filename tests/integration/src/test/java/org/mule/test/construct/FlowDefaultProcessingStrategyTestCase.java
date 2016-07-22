@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.construct;
 
@@ -46,7 +46,8 @@ public class FlowDefaultProcessingStrategyTestCase extends FunctionalTestCase {
 
   @Test
   public void requestResponseTransacted() throws Exception {
-    flowRunner("Flow").withPayload(TEST_PAYLOAD).transactionally(TransactionConfigEnum.ACTION_NONE, new TestTransactionFactory()).run();
+    flowRunner("Flow").withPayload(TEST_PAYLOAD).transactionally(TransactionConfigEnum.ACTION_NONE, new TestTransactionFactory())
+        .run();
 
     MuleMessage message = muleContext.getClient().request("test://out", RECEIVE_TIMEOUT);
     assertThat(message.getOutboundProperty(PROCESSOR_THREAD), is(Thread.currentThread().getName()));
@@ -62,7 +63,8 @@ public class FlowDefaultProcessingStrategyTestCase extends FunctionalTestCase {
   }
 
   protected void testTransacted(MessageExchangePattern mep) throws Exception {
-    flowRunner("Flow").withPayload(TEST_PAYLOAD).transactionally(TransactionConfigEnum.ACTION_NONE, new TestTransactionFactory()).run();
+    flowRunner("Flow").withPayload(TEST_PAYLOAD).transactionally(TransactionConfigEnum.ACTION_NONE, new TestTransactionFactory())
+        .run();
 
     MuleMessage message = muleContext.getClient().request("test://out", RECEIVE_TIMEOUT);
     assertThat(message.getOutboundProperty(PROCESSOR_THREAD), is(Thread.currentThread().getName()));
@@ -70,9 +72,11 @@ public class FlowDefaultProcessingStrategyTestCase extends FunctionalTestCase {
 
 
   public static class ThreadSensingMessageProcessor implements MessageProcessor {
+
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException {
-      event.setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty(PROCESSOR_THREAD, currentThread().getName()).build());
+      event.setMessage(
+          MuleMessage.builder(event.getMessage()).addOutboundProperty(PROCESSOR_THREAD, currentThread().getName()).build());
       return event;
     }
   }

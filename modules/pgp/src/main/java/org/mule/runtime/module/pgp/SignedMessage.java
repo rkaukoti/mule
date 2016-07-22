@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.pgp;
 
@@ -16,8 +16,8 @@ public class SignedMessage implements Message {
 
   private LazyTransformedInputStream encryptedMessage;
 
-  public SignedMessage(InputStream toBeDecrypted, PGPPublicKey publicKey, PGPSecretKey secretKey, String password, Provider provider)
-      throws IOException {
+  public SignedMessage(InputStream toBeDecrypted, PGPPublicKey publicKey, PGPSecretKey secretKey, String password,
+      Provider provider) throws IOException {
     StreamTransformer transformer = new DecryptStreamTransformer(toBeDecrypted, publicKey, secretKey, password, provider);
     this.encryptedMessage = new LazyTransformedInputStream(new TransformContinuouslyPolicy(), transformer);
   }

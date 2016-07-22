@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer;
 
@@ -94,7 +94,8 @@ public class TransformerUtils {
    * @throws TransformerException if the out[ut value is of a unexpected type.
    */
   public static void checkTransformerReturnClass(Transformer transformer, Object value) throws TransformerException {
-    if (value == null && (transformer instanceof AbstractTransformer && ((AbstractTransformer) transformer).isAllowNullReturn())) {
+    if (value == null
+        && (transformer instanceof AbstractTransformer && ((AbstractTransformer) transformer).isAllowNullReturn())) {
       return;
     }
 
@@ -124,7 +125,8 @@ public class TransformerUtils {
     return transformedData;
   }
 
-  private static <S, R> R attemptTransformation(DataType sourceDataType, S source, DataType resultDataType, MuleContext muleContext) {
+  private static <S, R> R attemptTransformation(DataType sourceDataType, S source, DataType resultDataType,
+      MuleContext muleContext) {
     Transformer transformer;
     try {
       transformer = muleContext.getRegistry().lookupTransformer(sourceDataType, resultDataType);

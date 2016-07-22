@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime;
 
@@ -21,8 +21,8 @@ import java.util.List;
 import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getField;
 
 /**
- * A specialization of {@link BaseObjectBuilder} which generates object based on an {@link EnrichableModel} for with parameter groups have
- * been defined based on a {@link ParameterGroupModelProperty}
+ * A specialization of {@link BaseObjectBuilder} which generates object based on an {@link EnrichableModel} for with parameter
+ * groups have been defined based on a {@link ParameterGroupModelProperty}
  *
  * @param <T> the generic type of the instances to be produced
  * @since 4.0

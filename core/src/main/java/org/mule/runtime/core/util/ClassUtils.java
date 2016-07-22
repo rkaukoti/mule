@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -49,8 +49,8 @@ import static org.mule.runtime.core.util.Preconditions.checkArgument;
  * Extend the Apache Commons ClassUtils to provide additional functionality.
  * <p/>
  * <p>
- * This class is useful for loading resources and classes in a fault tolerant manner that works across different applications servers. The
- * resource and classloading methods are SecurityManager friendly.
+ * This class is useful for loading resources and classes in a fault tolerant manner that works across different applications
+ * servers. The resource and classloading methods are SecurityManager friendly.
  * </p>
  */
 public class ClassUtils extends org.apache.commons.lang.ClassUtils {
@@ -123,7 +123,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
     });
 
     if (url == null) {
-      url = AccessController.doPrivileged((PrivilegedAction<URL>) () -> ClassUtils.class.getClassLoader().getResource(resourceName));
+      url = AccessController
+          .doPrivileged((PrivilegedAction<URL>) () -> ClassUtils.class.getClassLoader().getResource(resourceName));
     }
 
     if (url == null) {
@@ -226,7 +227,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
    * @return The Class instance
    * @throws ClassNotFoundException If the class cannot be found anywhere.
    */
-  public static <T extends Class> T loadClass(final String className, final Class<?> callingClass, T type) throws ClassNotFoundException {
+  public static <T extends Class> T loadClass(final String className, final Class<?> callingClass, T type)
+      throws ClassNotFoundException {
     if (className.length() <= 8) {
       // Could be a primitive - likely.
       if (primitiveTypeNameMap.containsKey(className)) {
@@ -317,7 +319,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
       }
     }
 
-    throw new NoSuchFieldException(String.format("Could not find field '%s' in class %s", fieldName, target.getClass().getName()));
+    throw new NoSuchFieldException(
+        String.format("Could not find field '%s' in class %s", fieldName, target.getClass().getName()));
   }
 
   public static void setFieldValue(Object target, String fieldName, Object value, boolean recursive)
@@ -341,13 +344,14 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
       }
     }
 
-    throw new NoSuchFieldException(String.format("Could not find field '%s' in class %s", fieldName, target.getClass().getName()));
+    throw new NoSuchFieldException(
+        String.format("Could not find field '%s' in class %s", fieldName, target.getClass().getName()));
   }
 
 
   /**
-   * Ensure that the given class is properly initialized when the argument is passed in as .class literal. This method can never fail unless
-   * the bytecode is corrupted or the VM is otherwise seriously confused.
+   * Ensure that the given class is properly initialized when the argument is passed in as .class literal. This method can never
+   * fail unless the bytecode is corrupted or the VM is otherwise seriously confused.
    *
    * @param clazz the Class to be initialized
    * @return the same class but initialized
@@ -362,8 +366,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
     }
   }
 
-  public static <T> T instanciateClass(Class<? extends T> clazz, Object... constructorArgs) throws SecurityException, NoSuchMethodException,
-      IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
+  public static <T> T instanciateClass(Class<? extends T> clazz, Object... constructorArgs) throws SecurityException,
+      NoSuchMethodException, IllegalArgumentException, InstantiationException, IllegalAccessException, InvocationTargetException {
     Class<?>[] args;
     if (constructorArgs != null) {
       args = new Class[constructorArgs.length];
@@ -392,7 +396,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
       for (Class<?> arg : args) {
         argsString.append(arg.getName()).append(", ");
       }
-      throw new NoSuchMethodException("could not find constructor on class: " + clazz + ", with matching arg params: " + argsString);
+      throw new NoSuchMethodException(
+          "could not find constructor on class: " + clazz + ", with matching arg params: " + argsString);
     }
 
     return (T) ctor.newInstance(constructorArgs);
@@ -440,8 +445,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
   }
 
   /**
-   * Returns a matching method for the given name and parameters on the given class If the parameterTypes arguments is null it will return
-   * the first matching method on the class.
+   * Returns a matching method for the given name and parameters on the given class If the parameterTypes arguments is null it
+   * will return the first matching method on the class.
    *
    * @param clazz the class to find the method on
    * @param name the method name to find
@@ -649,9 +654,9 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
   }
 
   /**
-   * Returns true if the types from array c2 are assignable to the types from c1 and the arrays are the same size. If matchOnObject argument
-   * is true and there is a parameter of type Object in c1 then the method returns false. If acceptNulls argument is true, null values are
-   * accepted in c2.
+   * Returns true if the types from array c2 are assignable to the types from c1 and the arrays are the same size. If
+   * matchOnObject argument is true and there is a parameter of type Object in c1 then the method returns false. If acceptNulls
+   * argument is true, null values are accepted in c2.
    *
    * @param c1 parameter types array
    * @param c2 parameter types array
@@ -803,11 +808,12 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
     return hash;
   }
 
-  public static void addLibrariesToClasspath(List urls) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
+  public static void addLibrariesToClasspath(List urls)
+      throws NoSuchMethodException, IllegalAccessException, InvocationTargetException {
     ClassLoader sys = ClassLoader.getSystemClassLoader();
     if (!(sys instanceof URLClassLoader)) {
-      throw new IllegalArgumentException("PANIC: Mule has been started with an unsupported classloader: " + sys.getClass().getName() + ". "
-          + "Please report this error to user<at>mule<dot>codehaus<dot>org");
+      throw new IllegalArgumentException("PANIC: Mule has been started with an unsupported classloader: "
+          + sys.getClass().getName() + ". " + "Please report this error to user<at>mule<dot>codehaus<dot>org");
     }
 
     // system classloader is in this case the one that launched the application,
@@ -816,12 +822,12 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
 
     /*
      * IMPORTANT NOTE: The more 'natural' way would be to create a custom URLClassLoader and configure it, but then there's a
-     * chicken-and-egg problem, as all classes MuleBootstrap depends on would have been loaded by a parent classloader, and not ours.
-     * There's no straightforward way to change this, and is documented in a Sun's classloader guide. The solution would've involved
-     * overriding the ClassLoader.findClass() method and modifying the semantics to be child-first, but that way we are calling for trouble.
-     * Hacking the primordial classloader is a bit brutal, but works perfectly in case of running from the command-line as a standalone app.
-     * All Mule embedding options then delegate the classpath config to the embedder (a developer embedding Mule in the app), thus
-     * classloaders are not modified in those scenarios.
+     * chicken-and-egg problem, as all classes MuleBootstrap depends on would have been loaded by a parent classloader, and not
+     * ours. There's no straightforward way to change this, and is documented in a Sun's classloader guide. The solution would've
+     * involved overriding the ClassLoader.findClass() method and modifying the semantics to be child-first, but that way we are
+     * calling for trouble. Hacking the primordial classloader is a bit brutal, but works perfectly in case of running from the
+     * command-line as a standalone app. All Mule embedding options then delegate the classpath config to the embedder (a
+     * developer embedding Mule in the app), thus classloaders are not modified in those scenarios.
      */
 
     // get a Method ref from the normal class, but invoke on a proprietary parent
@@ -855,13 +861,14 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
   /**
    * Checks that {@code value} is an instance of {@code type}.
    * <p/>
-   * The value that this method adds over something like {@link Class#isInstance(Object)} is that it also considers the case in which
-   * {@code type} and {@code value} are evaluate by {@link #isWrapperAndPrimitivePair(Class, Class)} as {@code true}
+   * The value that this method adds over something like {@link Class#isInstance(Object)} is that it also considers the case in
+   * which {@code type} and {@code value} are evaluate by {@link #isWrapperAndPrimitivePair(Class, Class)} as {@code true}
    *
    * @param type the {@link Class} you want to check the {@code value against}
    * @param value an instance you want to verify is instance of {@code type}
    * @param <T> the generic type of {@code type}
-   * @return {@code true} if {@code value} is an instance of {@code type} or if they are a wrapper-primitive pair. {@code false} otherwise
+   * @return {@code true} if {@code value} is an instance of {@code type} or if they are a wrapper-primitive pair. {@code false}
+   *         otherwise
    */
   public static <T> boolean isInstance(Class<T> type, Object value) {
     if (value == null) {
@@ -901,8 +908,9 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
    * Checks that a wrapper-primitive relationship exists between the two types, no matter which one is the wrapper or which is the
    * primitive.
    * <p/>
-   * For example, this method will return {@code true} for both the {@link Double}/{@code double} and the {@code double}/{@link Double}
-   * pairs. Notice that {@code false} will be returned for the pair {@link Long}/{code int} since they don't represent the same data type.
+   * For example, this method will return {@code true} for both the {@link Double}/{@code double} and the
+   * {@code double}/{@link Double} pairs. Notice that {@code false} will be returned for the pair {@link Long}/{code int} since
+   * they don't represent the same data type.
    * <p/>
    * If any of the two types is neither wrappers or primitives, it will return {@code false}
    *
@@ -950,8 +958,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
   /**
    * Executes the given {@code runnable} using the given {@code classLoader} as the current {@link Thread}'s context classloader.
    * <p>
-   * This method guarantees that whatever the outcome, the thread's context classloader is set back to the value that it had before
-   * executing this method
+   * This method guarantees that whatever the outcome, the thread's context classloader is set back to the value that it had
+   * before executing this method
    *
    * @param classLoader the context {@link ClassLoader} on which the {@code runnable} should be executed
    * @param runnable a closure
@@ -970,8 +978,8 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
   /**
    * Executes the given {@code callable} using the given {@code classLoader} as the current {@link Thread}'s context classloader.
    * <p>
-   * This method guarantees that whatever the outcome, the thread's context classloader is set back to the value that it had before
-   * executing this method
+   * This method guarantees that whatever the outcome, the thread's context classloader is set back to the value that it had
+   * before executing this method
    *
    * @param classLoader the context {@link ClassLoader} on which the {@code runnable} should be executed
    * @param callable a {@link Callable}
@@ -986,13 +994,14 @@ public class ClassUtils extends org.apache.commons.lang.ClassUtils {
   /**
    * Executes the given {@code callable} using the given {@code classLoader} as the current {@link Thread}'s context classloader.
    * <p>
-   * This method guarantees that whatever the outcome, the thread's context classloader is set back to the value that it had before
-   * executing this method.
+   * This method guarantees that whatever the outcome, the thread's context classloader is set back to the value that it had
+   * before executing this method.
    * <p>
-   * This method also accounts for the possibility of the {@code callable} to throw and exception of type {@code expectedExceptionType}. If
-   * that happens, then the exception is re-thrown. If the {@code callable} throws a {@link RuntimeException} of a different type, it is
-   * also re-thrown. Finally, if an exception of any other type is found, then it is handled delegating into the {@code exceptionHandler}
-   * which might in turn throw another exception of {@code expectedExceptionType} or return a value
+   * This method also accounts for the possibility of the {@code callable} to throw and exception of type
+   * {@code expectedExceptionType}. If that happens, then the exception is re-thrown. If the {@code callable} throws a
+   * {@link RuntimeException} of a different type, it is also re-thrown. Finally, if an exception of any other type is found, then
+   * it is handled delegating into the {@code exceptionHandler} which might in turn throw another exception of
+   * {@code expectedExceptionType} or return a value
    *
    * @param classLoader the context {@link ClassLoader} on which the {@code runnable} should be executed
    * @param callable a {@link Callable}

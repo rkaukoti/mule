@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.exceptions;
 
@@ -34,6 +34,7 @@ import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.verify;
 
 public class ExceptionHandlingTestCase extends FunctionalTestCase {
+
   public static final String MESSAGE = "some message";
 
   private static MessagingExceptionHandler injectedMessagingExceptionHandler;
@@ -130,7 +131,8 @@ public class ExceptionHandlingTestCase extends FunctionalTestCase {
   public void testOutboundDynamicEndpointInScope() throws Exception {
     LinkedList<String> list = new LinkedList<String>();
     list.add(MESSAGE);
-    flowRunner("outboundDynamicEndpointInScope").withPayload(list).withInboundProperties(getMessageProperties()).asynchronously().run();
+    flowRunner("outboundDynamicEndpointInScope").withPayload(list).withInboundProperties(getMessageProperties()).asynchronously()
+        .run();
 
     MuleClient client = muleContext.getClient();
     MuleMessage response = client.request("test://outScope3", 3000);
@@ -225,7 +227,8 @@ public class ExceptionHandlingTestCase extends FunctionalTestCase {
     return props;
   }
 
-  private void testTransactionalScope(String flowName, String expected, Map<String, Serializable> messageProperties) throws Exception {
+  private void testTransactionalScope(String flowName, String expected, Map<String, Serializable> messageProperties)
+      throws Exception {
     flowRunner(flowName).withPayload(MESSAGE).withInboundProperties(messageProperties).asynchronously().run();
 
     MuleClient client = muleContext.getClient();
@@ -243,6 +246,7 @@ public class ExceptionHandlingTestCase extends FunctionalTestCase {
   }
 
   public static class ExecutionCountProcessor implements MessageProcessor {
+
     @Override
     public synchronized MuleEvent process(MuleEvent event) throws MuleException {
       latch.countDown();

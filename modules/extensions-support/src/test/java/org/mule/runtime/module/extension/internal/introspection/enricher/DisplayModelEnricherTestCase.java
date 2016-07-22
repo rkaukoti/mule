@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection.enricher;
 
@@ -52,7 +52,8 @@ public class DisplayModelEnricherTestCase extends AbstractMuleTestCase {
     ExtensionDeclaration extensionDeclaration = declarer.getDeclaration();
     List<ParameterDeclaration> parameters = extensionDeclaration.getConfigurations().get(0).getParameters();
 
-    assertParameterDisplayName(findParameter(parameters, PARAMETER_ORIGINAL_OVERRIDED_DISPLAY_NAME), PARAMETER_OVERRIDED_DISPLAY_NAME);
+    assertParameterDisplayName(findParameter(parameters, PARAMETER_ORIGINAL_OVERRIDED_DISPLAY_NAME),
+        PARAMETER_OVERRIDED_DISPLAY_NAME);
   }
 
   @Test
@@ -66,7 +67,8 @@ public class DisplayModelEnricherTestCase extends AbstractMuleTestCase {
   @Test
   public void parseDisplayNameAnnotationOnOperationParameter() {
     ExtensionDeclaration extensionDeclaration = declarer.getDeclaration();
-    OperationDeclaration operation = getOperation(extensionDeclaration, HeisenbergOperations.OPERATION_WITH_DISPLAY_NAME_PARAMETER);
+    OperationDeclaration operation =
+        getOperation(extensionDeclaration, HeisenbergOperations.OPERATION_WITH_DISPLAY_NAME_PARAMETER);
 
     assertThat(operation, is(notNullValue()));
     List<ParameterDeclaration> parameters = operation.getParameters();
@@ -110,6 +112,7 @@ public class DisplayModelEnricherTestCase extends AbstractMuleTestCase {
   }
 
   private ParameterDeclaration findParameter(List<ParameterDeclaration> parameters, final String name) {
-    return (ParameterDeclaration) CollectionUtils.find(parameters, object -> name.equals(((ParameterDeclaration) object).getName()));
+    return (ParameterDeclaration) CollectionUtils.find(parameters,
+        object -> name.equals(((ParameterDeclaration) object).getName()));
   }
 }

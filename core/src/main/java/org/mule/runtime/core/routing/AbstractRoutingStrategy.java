@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -55,8 +55,8 @@ public abstract class AbstractRoutingStrategy implements RoutingStrategy {
   }
 
   /**
-   * Asserts that the {@link MuleMessage} in the {@link MuleEvent} doesn't carry a consumable payload. This method is useful for routers
-   * which need to clone the message before dispatching the message to multiple routes.
+   * Asserts that the {@link MuleMessage} in the {@link MuleEvent} doesn't carry a consumable payload. This method is useful for
+   * routers which need to clone the message before dispatching the message to multiple routes.
    *
    * @param event The {@link MuleEvent}.
    * @param event The {@link MuleMessage} whose payload is to be verified.
@@ -94,8 +94,8 @@ public abstract class AbstractRoutingStrategy implements RoutingStrategy {
       if (logger.isTraceEnabled()) {
         if (resultMessage != null) {
           try {
-            logger.trace("Response payload: \n"
-                + StringMessageUtils.truncate(muleContext.getTransformationService().getPayloadForLogging(resultMessage), 100, false));
+            logger.trace("Response payload: \n" + StringMessageUtils
+                .truncate(muleContext.getTransformationService().getPayloadForLogging(resultMessage), 100, false));
           } catch (Exception e) {
             logger.trace("Response payload: \n(unable to retrieve payload: " + e.getMessage());
           }

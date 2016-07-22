@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -18,8 +18,8 @@ public class VersionRange {
   public static final String UPPER_BOUND_EXCLUSIVE = ")";
 
   /**
-   * pattern for extracting a ranges of versions. example: [1.5.0_11,1.6),[1.6.0_15,1.7),[1.7.0,] G1: [1.5.0_11,1.6) G2: [ G3: 1.5.0_11 G4:
-   * 1.6 G5: ) G6: [1.6.0_15,1.7),[1.7.0,]
+   * pattern for extracting a ranges of versions. example: [1.5.0_11,1.6),[1.6.0_15,1.7),[1.7.0,] G1: [1.5.0_11,1.6) G2: [ G3:
+   * 1.5.0_11 G4: 1.6 G5: ) G6: [1.6.0_15,1.7),[1.7.0,]
    */
   public static final Pattern VERSION_RANGES = Pattern.compile("(" + VERSION_RANGE + "),?");
   public static final Pattern VALID_VERSION_RANGES = Pattern.compile("^(?:" + VERSION_RANGE + ",?)+$");

@@ -1,19 +1,20 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.functional;
 
 import org.mule.runtime.core.api.MuleEventContext;
 
 /**
- * A test callback that writes the results of a service invocation to the response output stream of the event This should only be used when
- * testing Asynchronous calls with the {@link FunctionalTestComponent} otherwise you will get duplicate messages, since both this class and
- * the {@link FunctionalTestComponent} will write a return message back to the callee.
+ * A test callback that writes the results of a service invocation to the response output stream of the event This should only be
+ * used when testing Asynchronous calls with the {@link FunctionalTestComponent} otherwise you will get duplicate messages, since
+ * both this class and the {@link FunctionalTestComponent} will write a return message back to the callee.
  *
  * @see FunctionalTestComponent
  */
 public class ResponseWriterCallback extends CounterCallback {
+
   @Override
   public void eventReceived(MuleEventContext context, Object component) throws Exception {
     if (context.getExchangePattern().hasResponse()) {

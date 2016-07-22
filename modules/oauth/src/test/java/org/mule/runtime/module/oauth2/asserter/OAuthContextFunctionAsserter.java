@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.oauth2.asserter;
 
@@ -56,7 +56,8 @@ public class OAuthContextFunctionAsserter {
       assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s','%s').state", configName, userId)),
           Is.<Object>is(expectedState));
     } else {
-      assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s').state", configName)), Is.<Object>is(expectedState));
+      assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s').state", configName)),
+          Is.<Object>is(expectedState));
     }
     return this;
   }
@@ -66,7 +67,8 @@ public class OAuthContextFunctionAsserter {
       assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s','%s').expiresIn", configName, userId)),
           Is.<Object>is(expectedExpiresIs));
     } else {
-      assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s').expiresIn", configName)), Is.<Object>is(expectedExpiresIs));
+      assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s').expiresIn", configName)),
+          Is.<Object>is(expectedExpiresIs));
     }
     return this;
   }
@@ -78,7 +80,8 @@ public class OAuthContextFunctionAsserter {
               .evaluate(String.format("oauthContext('%s','%s').tokenResponseParameters['%s']", configName, userId, paramName)),
           Is.<Object>is(paramValue));
     } else {
-      assertThat(expressionLanguage.evaluate(String.format("oauthContext('%s').tokenResponseParameters['%s']", configName, paramName)),
+      assertThat(
+          expressionLanguage.evaluate(String.format("oauthContext('%s').tokenResponseParameters['%s']", configName, paramName)),
           Is.<Object>is(paramValue));
     }
     return this;

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.config.domain.query;
@@ -62,8 +62,8 @@ public class ParameterizedQueryTemplateFactoryBeanTestCase extends AbstractMuleT
 
   @Test
   public void createsQueryWithDefaultParams() throws Exception {
-    List<QueryParam> defaultParams = Collections
-        .<QueryParam>singletonList(new DefaultInputQueryParam(1, JdbcTypes.INTEGER_DB_TYPE, TEMPLATE_PARAM_VALUE, POSITION_PARAM_NAME));
+    List<QueryParam> defaultParams = Collections.<QueryParam>singletonList(
+        new DefaultInputQueryParam(1, JdbcTypes.INTEGER_DB_TYPE, TEMPLATE_PARAM_VALUE, POSITION_PARAM_NAME));
     QueryTemplate queryTemplate = new QueryTemplate(PARSED_PARAMETERIZED_QUERY, QueryType.SELECT, defaultParams);
 
     QueryTemplateParser queryParser = mock(QueryTemplateParser.class);
@@ -123,7 +123,8 @@ public class ParameterizedQueryTemplateFactoryBeanTestCase extends AbstractMuleT
     doOutputParamOverrideTest(UnknownDbType.getInstance(), JdbcTypes.INTEGER_DB_TYPE, JdbcTypes.INTEGER_DB_TYPE);
   }
 
-  private void doInputParamOverrideTest(DbType templateParamType, DbType overriddenParamType, DbType expectedParamType) throws Exception {
+  private void doInputParamOverrideTest(DbType templateParamType, DbType overriddenParamType, DbType expectedParamType)
+      throws Exception {
     QueryParam overriddenParam = new DefaultInputQueryParam(2, overriddenParamType, OVERRIDDEN_PARAM_VALUE, POSITION_PARAM_NAME);
 
     QueryTemplate createdQueryTemplate = doOverriddenParamTest(templateParamType, overriddenParam);
@@ -136,7 +137,8 @@ public class ParameterizedQueryTemplateFactoryBeanTestCase extends AbstractMuleT
     assertThat(inputQueryParam.getValue(), IsEqual.<Object>equalTo(OVERRIDDEN_PARAM_VALUE));
   }
 
-  private void doInOutParamOverrideTest(DbType templateParamType, DbType overriddenParamType, DbType expectedParamType) throws Exception {
+  private void doInOutParamOverrideTest(DbType templateParamType, DbType overriddenParamType, DbType expectedParamType)
+      throws Exception {
     QueryParam overriddenParam = new DefaultInOutQueryParam(2, overriddenParamType, POSITION_PARAM_NAME, OVERRIDDEN_PARAM_VALUE);
 
     QueryTemplate createdQueryTemplate = doOverriddenParamTest(templateParamType, overriddenParam);
@@ -150,8 +152,8 @@ public class ParameterizedQueryTemplateFactoryBeanTestCase extends AbstractMuleT
   }
 
   private QueryTemplate doOverriddenParamTest(DbType templateParamType, QueryParam overriddenParam) throws Exception {
-    List<QueryParam> defaultParams =
-        Collections.<QueryParam>singletonList(new DefaultInputQueryParam(1, templateParamType, TEMPLATE_PARAM_VALUE, POSITION_PARAM_NAME));
+    List<QueryParam> defaultParams = Collections
+        .<QueryParam>singletonList(new DefaultInputQueryParam(1, templateParamType, TEMPLATE_PARAM_VALUE, POSITION_PARAM_NAME));
     QueryTemplate queryTemplate = new QueryTemplate(PARSED_PARAMETERIZED_QUERY, QueryType.SELECT, defaultParams);
 
     QueryTemplateParser queryParser = mock(QueryTemplateParser.class);
@@ -165,11 +167,12 @@ public class ParameterizedQueryTemplateFactoryBeanTestCase extends AbstractMuleT
     return factoryBean.getObject();
   }
 
-  private void doOutputParamOverrideTest(DbType templateParamType, DbType overriddenParamType, DbType expectedParamType) throws Exception {
+  private void doOutputParamOverrideTest(DbType templateParamType, DbType overriddenParamType, DbType expectedParamType)
+      throws Exception {
     QueryParam overriddenParam = new DefaultOutputQueryParam(2, overriddenParamType, POSITION_PARAM_NAME);
 
-    List<QueryParam> defaultParams =
-        Collections.<QueryParam>singletonList(new DefaultInputQueryParam(1, templateParamType, TEMPLATE_PARAM_VALUE, POSITION_PARAM_NAME));
+    List<QueryParam> defaultParams = Collections
+        .<QueryParam>singletonList(new DefaultInputQueryParam(1, templateParamType, TEMPLATE_PARAM_VALUE, POSITION_PARAM_NAME));
     QueryTemplate queryTemplate = new QueryTemplate(PARSED_PARAMETERIZED_QUERY, QueryType.SELECT, defaultParams);
 
     QueryTemplateParser queryParser = mock(QueryTemplateParser.class);

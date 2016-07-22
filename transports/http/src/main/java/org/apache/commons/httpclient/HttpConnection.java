@@ -1,21 +1,24 @@
 /*
- * $Header: /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//httpclient/src/java/org/apache/commons/httpclient/
- * HttpConnection.java,v 1.107 2005/01/14 21:30:59 olegk Exp $ $Revision: 480424 $ $Date: 2006-11-29 06:56:49 +0100 (Wed, 29 Nov 2006) $
+ * $Header:
+ * /home/jerenkrantz/tmp/commons/commons-convert/cvs/home/cvs/jakarta-commons//httpclient/src/java/org/apache/commons/httpclient/
+ * HttpConnection.java,v 1.107 2005/01/14 21:30:59 olegk Exp $ $Revision: 480424 $ $Date: 2006-11-29 06:56:49 +0100 (Wed, 29 Nov
+ * 2006) $
  *
  * ====================================================================
  *
- * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership. The ASF licenses this file to You under the Apache License, Version
- * 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file
+ * distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to You under
+ * the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may
+ * obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
- * and limitations under the License. ====================================================================
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS"
+ * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License. ====================================================================
  *
- * This software consists of voluntary contributions made by many individuals on behalf of the Apache Software Foundation. For more
- * information on the Apache Software Foundation, please see <http://www.apache.org/>.
+ * This software consists of voluntary contributions made by many individuals on behalf of the Apache Software Foundation. For
+ * more information on the Apache Software Foundation, please see <http://www.apache.org/>.
  *
  */
 
@@ -42,9 +45,9 @@ import java.net.Socket;
 import java.net.SocketException;
 
 /**
- * This is a modified version of the HttpConnection class from commons-httpclient that doesn't limit the size of the input/output buffers to
- * 2KB. They are always set to the sizes of the send/receive buffers of the socket if they are defined. See the {@code open()} and
- * {@code tunnelCreated()} methods.
+ * This is a modified version of the HttpConnection class from commons-httpclient that doesn't limit the size of the input/output
+ * buffers to 2KB. They are always set to the sizes of the send/receive buffers of the socket if they are defined. See the
+ * {@code open()} and {@code tunnelCreated()} methods.
  *
  * An abstraction of an HTTP {@link InputStream} and {@link OutputStream} pair, together with the relevant attributes.
  * <p>
@@ -218,14 +221,14 @@ public class HttpConnection {
    * @param hostConfiguration the host/proxy/protocol to use
    */
   public HttpConnection(HostConfiguration hostConfiguration) {
-    this(hostConfiguration.getProxyHost(), hostConfiguration.getProxyPort(), hostConfiguration.getHost(), hostConfiguration.getPort(),
-        hostConfiguration.getProtocol());
+    this(hostConfiguration.getProxyHost(), hostConfiguration.getProxyPort(), hostConfiguration.getHost(),
+        hostConfiguration.getPort(), hostConfiguration.getProtocol());
     this.localAddress = hostConfiguration.getLocalAddress();
   }
 
   /**
-   * Creates a new HTTP connection for the given host with the virtual alias and port via the given proxy host and port using the given
-   * protocol.
+   * Creates a new HTTP connection for the given host with the virtual alias and port via the given proxy host and port using the
+   * given protocol.
    *
    * @param proxyHost the host to proxy via
    * @param proxyPort the port to proxy via
@@ -240,8 +243,8 @@ public class HttpConnection {
   }
 
   /**
-   * Creates a new HTTP connection for the given host with the virtual alias and port via the given proxy host and port using the given
-   * protocol.
+   * Creates a new HTTP connection for the given host with the virtual alias and port via the given proxy host and port using the
+   * given protocol.
    *
    * @param proxyHost the host to proxy via
    * @param proxyPort the port to proxy via
@@ -312,8 +315,8 @@ public class HttpConnection {
   /**
    * Sets the virtual host to target.
    *
-   * @param host the virtual host name that should be used instead of physical host name when sending HTTP requests. Virtual host name can
-   *        be set to <tt> null</tt> if virtual host name is not to be used
+   * @param host the virtual host name that should be used instead of physical host name when sending HTTP requests. Virtual host
+   *        name can be set to <tt> null</tt> if virtual host name is not to be used
    * @throws IllegalStateException if the connection is already open
    * @deprecated no longer applicable
    */
@@ -484,9 +487,9 @@ public class HttpConnection {
    * Sets whether or not isStale() will be called when testing if this connection is open.
    *
    * <p>
-   * Setting this flag to <code>false</code> will increase performance when reusing connections, but it will also make them less reliable.
-   * Stale checking ensures that connections are viable before they are used. When set to <code>false</code> some method executions will
-   * result in IOExceptions and they will have to be retried.
+   * Setting this flag to <code>false</code> will increase performance when reusing connections, but it will also make them less
+   * reliable. Stale checking ensures that connections are viable before they are used. When set to <code>false</code> some method
+   * executions will result in IOExceptions and they will have to be retried.
    * </p>
    *
    * @param staleCheckEnabled <code>true</code> to enable isStale()
@@ -499,19 +502,19 @@ public class HttpConnection {
   }
 
   /**
-   * Determines whether this connection is "stale", which is to say that either it is no longer open, or an attempt to read the connection
-   * would fail.
+   * Determines whether this connection is "stale", which is to say that either it is no longer open, or an attempt to read the
+   * connection would fail.
    *
    * <p>
-   * Unfortunately, due to the limitations of the JREs prior to 1.4, it is not possible to test a connection to see if both the read and
-   * write channels are open - except by reading and writing. This leads to a difficulty when some connections leave the "write" channel
-   * open, but close the read channel and ignore the request. This function attempts to ameliorate that problem by doing a test read,
-   * assuming that the caller will be doing a write followed by a read, rather than the other way around.
+   * Unfortunately, due to the limitations of the JREs prior to 1.4, it is not possible to test a connection to see if both the
+   * read and write channels are open - except by reading and writing. This leads to a difficulty when some connections leave the
+   * "write" channel open, but close the read channel and ignore the request. This function attempts to ameliorate that problem by
+   * doing a test read, assuming that the caller will be doing a write followed by a read, rather than the other way around.
    * </p>
    *
    * <p>
-   * To avoid side-effects, the underlying connection is wrapped by a {@link BufferedInputStream}, so although data might be read, what is
-   * visible to clients of the connection will not change with this call.</p.
+   * To avoid side-effects, the underlying connection is wrapped by a {@link BufferedInputStream}, so although data might be read,
+   * what is visible to clients of the connection will not change with this call.</p.
    *
    * @return <tt>true</tt> if the connection is already closed, or a read would fail.
    * @throws IOException if the stale connection test is interrupted.
@@ -568,9 +571,9 @@ public class HttpConnection {
    *
    * <p>
    * Clients will generally not need to call this function unless using HttpConnection directly, instead of calling
-   * {@link HttpClient#executeMethod}. For those clients, call this function, and if it returns a non-null stream, close the stream before
-   * attempting to execute a method. Note that calling "close" on the stream returned by this function <i>may</i> close the connection if
-   * the previous response contained a "Connection: close" header.
+   * {@link HttpClient#executeMethod}. For those clients, call this function, and if it returns a non-null stream, close the
+   * stream before attempting to execute a method. Note that calling "close" on the stream returned by this function <i>may</i>
+   * close the connection if the previous response contained a "Connection: close" header.
    * </p>
    *
    * @return An {@link InputStream} corresponding to the body of the last response.
@@ -583,8 +586,9 @@ public class HttpConnection {
    * Set the state to keep track of the last response for the last request.
    *
    * <p>
-   * The connection managers use this to ensure that previous requests are properly closed before a new request is attempted. That way, a
-   * GET request need not be read in its entirety before a new request is issued. Instead, this stream can be closed as appropriate.
+   * The connection managers use this to ensure that previous requests are properly closed before a new request is attempted. That
+   * way, a GET request need not be read in its entirety before a new request is issued. Instead, this stream can be closed as
+   * appropriate.
    * </p>
    *
    * @param inStream The stream associated with an HttpMethod.
@@ -617,8 +621,8 @@ public class HttpConnection {
   }
 
   /**
-   * Sets <code>SO_TIMEOUT</code> value directly on the underlying {@link Socket socket}. This method does not change the default read
-   * timeout value set via {@link HttpConnectionParams}.
+   * Sets <code>SO_TIMEOUT</code> value directly on the underlying {@link Socket socket}. This method does not change the default
+   * read timeout value set via {@link HttpConnectionParams}.
    *
    * @param timeout the timeout value
    * @throws SocketException - if there is an error in the underlying protocol, such as a TCP error.
@@ -633,8 +637,8 @@ public class HttpConnection {
   }
 
   /**
-   * Returns the {@link Socket}'s timeout, via {@link Socket#getSoTimeout}, if the connection is already open. If no connection is open,
-   * return the value subsequent connection will use.
+   * Returns the {@link Socket}'s timeout, via {@link Socket#getSoTimeout}, if the connection is already open. If no connection is
+   * open, return the value subsequent connection will use.
    * <p>
    * Note: This is not a connection timeout but a timeout on network traffic!
    *
@@ -646,8 +650,8 @@ public class HttpConnection {
   }
 
   /**
-   * Set the {@link Socket}'s timeout, via {@link Socket#setSoTimeout}. If the connection is already open, the SO_TIMEOUT is changed. If no
-   * connection is open, then subsequent connections will use the timeout value.
+   * Set the {@link Socket}'s timeout, via {@link Socket#setSoTimeout}. If the connection is already open, the SO_TIMEOUT is
+   * changed. If no connection is open, then subsequent connections will use the timeout value.
    * <p>
    * Note: This is not a connection timeout but a timeout on network traffic!
    *
@@ -663,8 +667,8 @@ public class HttpConnection {
   }
 
   /**
-   * Sets the connection timeout. This is the maximum time that may be spent until a connection is established. The connection will fail
-   * after this amount of time.
+   * Sets the connection timeout. This is the maximum time that may be spent until a connection is established. The connection
+   * will fail after this amount of time.
    *
    * @param timeout The timeout in milliseconds. 0 means timeout is not used.
    * @deprecated Use {@link HttpConnectionParams#setConnectionTimeout(int)}, {@link HttpConnection#getParams()}.
@@ -706,9 +710,9 @@ public class HttpConnection {
       }
 
       /*
-       * "Nagling has been broadly implemented across networks, including the Internet, and is generally performed by default - although it
-       * is sometimes considered to be undesirable in highly interactive environments, such as some client/server situations. In such cases,
-       * nagling may be turned off through use of the TCP_NODELAY sockets option."
+       * "Nagling has been broadly implemented across networks, including the Internet, and is generally performed by default -
+       * although it is sometimes considered to be undesirable in highly interactive environments, such as some client/server
+       * situations. In such cases, nagling may be turned off through use of the TCP_NODELAY sockets option."
        */
 
       socket.setTcpNoDelay(this.params.getTcpNoDelay());
@@ -803,8 +807,8 @@ public class HttpConnection {
   }
 
   /**
-   * Flushes the output request stream. This method should be called to ensure that data written to the request OutputStream is sent to the
-   * server.
+   * Flushes the output request stream. This method should be called to ensure that data written to the request OutputStream is
+   * sent to the server.
    *
    * @throws IOException if an I/O problem occurs
    */
@@ -922,8 +926,8 @@ public class HttpConnection {
   /**
    * Writes <i>length</i> bytes in <i>data</i> starting at <i>offset</i> to the output stream.
    *
-   * The general contract for write(b, off, len) is that some of the bytes in the array b are written to the output stream in order; element
-   * b[off] is the first byte written and b[off+len-1] is the last byte written by this operation.
+   * The general contract for write(b, off, len) is that some of the bytes in the array b are written to the output stream in
+   * order; element b[off] is the first byte written and b[off+len-1] is the last byte written by this operation.
    *
    * @param data array containing the data to be written.
    * @param offset the start offset in the data.
@@ -1041,8 +1045,8 @@ public class HttpConnection {
   }
 
   /**
-   * Reads up to <tt>"\n"</tt> from the (unchunked) input stream. If the stream ends before the line terminator is found, the last part of
-   * the string will still be returned.
+   * Reads up to <tt>"\n"</tt> from the (unchunked) input stream. If the stream ends before the line terminator is found, the last
+   * part of the string will still be returned.
    *
    * @return a line from the response
    * @throws IllegalStateException if the connection is not open
@@ -1057,8 +1061,8 @@ public class HttpConnection {
   }
 
   /**
-   * Reads up to <tt>"\n"</tt> from the (unchunked) input stream. If the stream ends before the line terminator is found, the last part of
-   * the string will still be returned.
+   * Reads up to <tt>"\n"</tt> from the (unchunked) input stream. If the stream ends before the line terminator is found, the last
+   * part of the string will still be returned.
    *
    * @param charset the charset to use for reading the data
    * @return a line from the response
@@ -1123,8 +1127,8 @@ public class HttpConnection {
   }
 
   /**
-   * Releases the connection. If the connection is locked or does not have a connection manager associated with it, this method has no
-   * effect. Note that it is completely safe to call this method multiple times.
+   * Releases the connection. If the connection is locked or does not have a connection manager associated with it, this method
+   * has no effect. Note that it is completely safe to call this method multiple times.
    */
   public void releaseConnection() {
     LOG.trace("enter HttpConnection.releaseConnection()");
@@ -1139,8 +1143,8 @@ public class HttpConnection {
   }
 
   /**
-   * Tests if the connection is locked. Locked connections cannot be released. An attempt to release a locked connection will have no
-   * effect.
+   * Tests if the connection is locked. Locked connections cannot be released. An attempt to release a locked connection will have
+   * no effect.
    *
    * @return <tt>true</tt> if the connection is locked, <tt>false</tt> otherwise.
    * @since 3.0
@@ -1150,7 +1154,8 @@ public class HttpConnection {
   }
 
   /**
-   * Locks or unlocks the connection. Locked connections cannot be released. An attempt to release a locked connection will have no effect.
+   * Locks or unlocks the connection. Locked connections cannot be released. An attempt to release a locked connection will have
+   * no effect.
    *
    * @param locked <tt>true</tt> to lock the connection, <tt>false</tt> to unlock the connection.
    * @since 3.0
@@ -1232,7 +1237,8 @@ public class HttpConnection {
   /**
    * Gets the socket's sendBufferSize.
    *
-   * @return the size of the buffer for the socket OutputStream, -1 if the value has not been set and the socket has not been opened
+   * @return the size of the buffer for the socket OutputStream, -1 if the value has not been set and the socket has not been
+   *         opened
    * @throws SocketException if an error occurs while getting the socket value
    * @see Socket#getSendBufferSize()
    */

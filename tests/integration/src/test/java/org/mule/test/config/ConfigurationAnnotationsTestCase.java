@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.config;
 
@@ -39,9 +39,10 @@ public class ConfigurationAnnotationsTestCase extends FunctionalTestCase {
     assertThat(getSourceFile(stb), is("annotations-config.xml"));
     assertThat(getSourceFileLine(stb), is(10));
     assertThat(getSourceElement(stb),
-        is("<string-to-byte-array-transformer name=\"StringtoByteArray\" doc:name=\"stb-transformer\">" + SystemUtils.LINE_SEPARATOR
-            + "<annotations>" + SystemUtils.LINE_SEPARATOR + "<doc:description>Convert a String to a Byte Array</doc:description>"
-            + SystemUtils.LINE_SEPARATOR + "</annotations>" + SystemUtils.LINE_SEPARATOR + "</string-to-byte-array-transformer>"));
+        is("<string-to-byte-array-transformer name=\"StringtoByteArray\" doc:name=\"stb-transformer\">"
+            + SystemUtils.LINE_SEPARATOR + "<annotations>" + SystemUtils.LINE_SEPARATOR
+            + "<doc:description>Convert a String to a Byte Array</doc:description>" + SystemUtils.LINE_SEPARATOR
+            + "</annotations>" + SystemUtils.LINE_SEPARATOR + "</string-to-byte-array-transformer>"));
   }
 
   @Test
@@ -53,9 +54,10 @@ public class ConfigurationAnnotationsTestCase extends FunctionalTestCase {
     assertThat(getSourceFile(flow), is("annotations.xml"));
     assertThat(getSourceFileLine(flow), is(7));
     assertThat(getSourceElement(flow),
-        is("<flow name=\"Bridge\" doc:name=\"Bridge flow\">" + SystemUtils.LINE_SEPARATOR + "<annotations>" + SystemUtils.LINE_SEPARATOR
-            + "<doc:description>Main flow</doc:description>" + SystemUtils.LINE_SEPARATOR + "</annotations>" + SystemUtils.LINE_SEPARATOR
-            + "<echo-component doc:name=\"echo\">" + "</echo-component>" + SystemUtils.LINE_SEPARATOR + "</flow>"));
+        is("<flow name=\"Bridge\" doc:name=\"Bridge flow\">" + SystemUtils.LINE_SEPARATOR + "<annotations>"
+            + SystemUtils.LINE_SEPARATOR + "<doc:description>Main flow</doc:description>" + SystemUtils.LINE_SEPARATOR
+            + "</annotations>" + SystemUtils.LINE_SEPARATOR + "<echo-component doc:name=\"echo\">" + "</echo-component>"
+            + SystemUtils.LINE_SEPARATOR + "</flow>"));
   }
 
   @Test
@@ -69,8 +71,8 @@ public class ConfigurationAnnotationsTestCase extends FunctionalTestCase {
     assertThat(getSourceElement(flow),
         is("<flow name=\"WithRefExceptionStrategy\" doc:name=\"With Referenced Exception Strategy\">" + SystemUtils.LINE_SEPARATOR
             + "<echo-component doc:name=\"echo_ex\">" + "</echo-component>" + SystemUtils.LINE_SEPARATOR
-            + "<exception-strategy ref=\"Catch_Exception_Strategy\" doc:name=\"Reference Exception Strategy\">" + "</exception-strategy>"
-            + SystemUtils.LINE_SEPARATOR + "</flow>"));
+            + "<exception-strategy ref=\"Catch_Exception_Strategy\" doc:name=\"Reference Exception Strategy\">"
+            + "</exception-strategy>" + SystemUtils.LINE_SEPARATOR + "</flow>"));
   }
 
   @Test
@@ -117,11 +119,13 @@ public class ConfigurationAnnotationsTestCase extends FunctionalTestCase {
   }
 
   protected String getDocDescription(Object obj) {
-    return (String) ((AnnotatedObject) obj).getAnnotation(new QName("http://www.mulesoft.org/schema/mule/documentation", "description"));
+    return (String) ((AnnotatedObject) obj)
+        .getAnnotation(new QName("http://www.mulesoft.org/schema/mule/documentation", "description"));
   }
 
   protected String getSourceFile(Object obj) {
-    return (String) ((AnnotatedObject) obj).getAnnotation(new QName("http://www.mulesoft.org/schema/mule/documentation", "sourceFileName"));
+    return (String) ((AnnotatedObject) obj)
+        .getAnnotation(new QName("http://www.mulesoft.org/schema/mule/documentation", "sourceFileName"));
   }
 
   protected Integer getSourceFileLine(Object obj) {
@@ -130,6 +134,7 @@ public class ConfigurationAnnotationsTestCase extends FunctionalTestCase {
   }
 
   protected String getSourceElement(Object obj) {
-    return (String) ((AnnotatedObject) obj).getAnnotation(new QName("http://www.mulesoft.org/schema/mule/documentation", "sourceElement"));
+    return (String) ((AnnotatedObject) obj)
+        .getAnnotation(new QName("http://www.mulesoft.org/schema/mule/documentation", "sourceElement"));
   }
 }

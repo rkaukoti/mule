@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.log4j2;
 
@@ -58,12 +58,14 @@ public class DispatchingLoggerTestCase extends AbstractMuleTestCase {
     currentClassLoader = Thread.currentThread().getContextClassLoader();
     when(loggerContext.getConfiguration().getLoggerConfig(anyString()).getLevel()).thenReturn(Level.INFO);
 
-    logger = new DispatchingLogger(originalLogger, currentClassLoader.hashCode(), loggerContext, contextSelector, messageFactory) {
-      @Override
-      public String getName() {
-        return LOGGER_NAME;
-      }
-    };
+    logger =
+        new DispatchingLogger(originalLogger, currentClassLoader.hashCode(), loggerContext, contextSelector, messageFactory) {
+
+          @Override
+          public String getName() {
+            return LOGGER_NAME;
+          }
+        };
   }
 
   @Test

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transaction;
 
@@ -13,7 +13,8 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
 import javax.transaction.TransactionManager;
 
 /**
- * <code>XaTransactionFactory</code> Is used to create/retrieve a Transaction from a transaction manager configured on the MuleManager.
+ * <code>XaTransactionFactory</code> Is used to create/retrieve a Transaction from a transaction manager configured on the
+ * MuleManager.
  */
 public class XaTransactionFactory implements ExternalTransactionAwareTransactionFactory {
 
@@ -48,8 +49,8 @@ public class XaTransactionFactory implements ExternalTransactionAwareTransaction
   }
 
   /**
-   * Determines whether this transaction factory creates transactions that are really transacted or if they are being used to simulate batch
-   * actions, such as using Jms Client Acknowledge.
+   * Determines whether this transaction factory creates transactions that are really transacted or if they are being used to
+   * simulate batch actions, such as using Jms Client Acknowledge.
    */
   public boolean isTransacted() {
     return true;

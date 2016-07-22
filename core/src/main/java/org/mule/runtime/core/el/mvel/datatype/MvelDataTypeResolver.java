@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.el.mvel.datatype;
@@ -46,8 +46,8 @@ public class MvelDataTypeResolver {
    * @param value result of evaluating the expression on the given message
    * @param event event under evaluation
    * @param serializedExpression expression
-   * @return the data type corresponding to the given expression if there is an expression resolver able to resolved it. A default data type
-   *         for the value if the expression was not resolved.
+   * @return the data type corresponding to the given expression if there is an expression resolver able to resolved it. A default
+   *         data type for the value if the expression was not resolved.
    */
   public DataType resolve(Object value, MuleEvent event, Serializable serializedExpression) {
     DataType result = null;

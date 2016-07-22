@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -19,6 +19,7 @@ import javax.naming.NamingException;
  * This class acts as common baseclass for both Rmi & EjbConnector Resolves Jndi root for connector usage
  */
 public abstract class AbstractJndiConnector extends AbstractConnector {
+
   protected String jndiInitialFactory;
 
   protected String jndiUrlPkgPrefixes;

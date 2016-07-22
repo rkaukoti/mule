@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.tcp;
 
@@ -14,8 +14,8 @@ import java.io.IOException;
 import java.net.Socket;
 
 /**
- * Creates a client socket using the socket address extracted from the endpoint. Addtional socket parameters will also be set from the
- * connector
+ * Creates a client socket using the socket address extracted from the endpoint. Addtional socket parameters will also be set from
+ * the connector
  */
 public abstract class AbstractTcpSocketFactory implements KeyedPoolableObjectFactory {
 
@@ -64,8 +64,8 @@ public abstract class AbstractTcpSocketFactory implements KeyedPoolableObjectFac
   public void passivateObject(Object key, Object object) throws Exception {
     TcpSocketKey socketKey = (TcpSocketKey) key;
 
-    boolean keepSocketOpen = MapUtils.getBooleanValue(socketKey.getEndpoint().getProperties(), TcpConnector.KEEP_SEND_SOCKET_OPEN_PROPERTY,
-        socketKey.getConnector().isKeepSendSocketOpen());
+    boolean keepSocketOpen = MapUtils.getBooleanValue(socketKey.getEndpoint().getProperties(),
+        TcpConnector.KEEP_SEND_SOCKET_OPEN_PROPERTY, socketKey.getConnector().isKeepSendSocketOpen());
     Socket socket = (Socket) object;
 
     if (!keepSocketOpen) {

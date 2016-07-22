@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.file;
 
@@ -18,6 +18,7 @@ import static org.mule.compatibility.transport.file.FileTestUtils.createDataFile
 import static org.mule.compatibility.transport.file.FileTestUtils.createFolder;
 
 public class FileEncodingFunctionalTestCase extends AbstractFileFunctionalTestCase {
+
   private static final String TEST_MESSAGE_EUC_JP_ENCODED = "\u3053";
   private static final int FIVE_SECONDS_TIMEOUT = 5000;
   private static final Charset ENCODING = Charset.forName("EUC-JP");

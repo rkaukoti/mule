@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.json;
 
@@ -62,8 +62,8 @@ public final class DefaultJsonParser implements JsonParser {
    * </ul>
    * </li>
    * <p/>
-   * If {@code input} is not of any of those types, then this parser will try to locate a {@link Transformer} capable of transforming it
-   * into any of the following types (in the listed order):
+   * If {@code input} is not of any of those types, then this parser will try to locate a {@link Transformer} capable of
+   * transforming it into any of the following types (in the listed order):
    * <p/>
    * <li>
    * <ul>
@@ -83,7 +83,8 @@ public final class DefaultJsonParser implements JsonParser {
   public JsonNode asJsonNode(Object input) throws IOException {
     JsonNode jsonNode = toJsonNode(input);
     if (jsonNode == null) {
-      LOGGER.debug("Input type {} was not of any supported type. Attempting with transformer resolution of the following types {}",
+      LOGGER.debug(
+          "Input type {} was not of any supported type. Attempting with transformer resolution of the following types {}",
           input.getClass().getName(), TRANSFORMABLE_SUPPORTED_TYPES_AS_STRING);
 
       input = TransformerUtils.transformToAny(input, muleContext, TRANSFORMABLE_SUPPORTED_TYPES);

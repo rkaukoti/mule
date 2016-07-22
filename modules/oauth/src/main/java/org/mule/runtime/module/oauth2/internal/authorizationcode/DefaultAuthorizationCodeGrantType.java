@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode;
 
@@ -28,9 +28,9 @@ import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessa
 /**
  * Represents the config element for oauth:authentication-code-config.
  * <p/>
- * This config will: - If the authorization-request is defined then it will create a flow listening for an user call to begin the oauth
- * login. - If the token-request is defined then it will create a flow for listening in the redirect uri so we can get the authentication
- * code and retrieve the access token
+ * This config will: - If the authorization-request is defined then it will create a flow listening for an user call to begin the
+ * oauth login. - If the token-request is defined then it will create a flow for listening in the redirect uri so we can get the
+ * authentication code and retrieve the access token
  */
 public class DefaultAuthorizationCodeGrantType extends AbstractGrantType
     implements Initialisable, AuthorizationCodeGrantType, Startable, MuleContextAware {
@@ -142,8 +142,8 @@ public class DefaultAuthorizationCodeGrantType extends AbstractGrantType
   public void authenticate(MuleEvent muleEvent, HttpRequestBuilder builder) throws MuleException {
     final String resourceOwnerId = resourceOwnerIdEvaluator.resolveStringValue(muleEvent);
     if (resourceOwnerId == null) {
-      throw new RequestAuthenticationException(createStaticMessage(
-          String.format("Evaluation of %s return an empty resourceOwnerId", localAuthorizationUrlResourceOwnerIdEvaluator.getRawValue())));
+      throw new RequestAuthenticationException(createStaticMessage(String.format(
+          "Evaluation of %s return an empty resourceOwnerId", localAuthorizationUrlResourceOwnerIdEvaluator.getRawValue())));
     }
     final String accessToken = getUserOAuthContext().getContextForResourceOwner(resourceOwnerId).getAccessToken();
     if (accessToken == null) {

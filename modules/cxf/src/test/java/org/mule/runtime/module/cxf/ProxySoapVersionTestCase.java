@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf;
 
@@ -17,6 +17,7 @@ import static org.junit.Assert.assertTrue;
 import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 public class ProxySoapVersionTestCase extends FunctionalTestCase {
+
   private static final HttpRequestOptions HTTP_REQUEST_OPTIONS =
       newOptions().method(HttpConstants.Methods.POST.name()).disableStatusCodeValidation().build();
   @Rule
@@ -25,11 +26,11 @@ public class ProxySoapVersionTestCase extends FunctionalTestCase {
       "<urn:doGoogleSearch xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:urn=\"urn:GoogleSearch\">";
   // Message using Soap 1.2 version
   String msgWithComment = "<soap12:Envelope xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">" + "<!-- comment 1 -->"
-      + "<soap12:Header>" + "<!-- comment 2 -->" + "</soap12:Header>" + "<!-- comment 3 -->" + "<soap12:Body>" + "<!-- comment 4 -->"
-      + doGoogleSearch + "<!-- this comment breaks it -->" + "<key>1</key>" + "<!-- comment 5 -->" + "<q>a</q>" + "<start>0</start>"
-      + "<maxResults>1</maxResults>" + "<filter>false</filter>" + "<restrict>a</restrict>" + "<safeSearch>true</safeSearch>" + "<lr>a</lr>"
-      + "<ie>b</ie>" + "<oe>c</oe>" + "</urn:doGoogleSearch>" + "<!-- comment 6 -->" + "</soap12:Body>" + "<!-- comment 7 -->"
-      + "</soap12:Envelope>";
+      + "<soap12:Header>" + "<!-- comment 2 -->" + "</soap12:Header>" + "<!-- comment 3 -->" + "<soap12:Body>"
+      + "<!-- comment 4 -->" + doGoogleSearch + "<!-- this comment breaks it -->" + "<key>1</key>" + "<!-- comment 5 -->"
+      + "<q>a</q>" + "<start>0</start>" + "<maxResults>1</maxResults>" + "<filter>false</filter>" + "<restrict>a</restrict>"
+      + "<safeSearch>true</safeSearch>" + "<lr>a</lr>" + "<ie>b</ie>" + "<oe>c</oe>" + "</urn:doGoogleSearch>"
+      + "<!-- comment 6 -->" + "</soap12:Body>" + "<!-- comment 7 -->" + "</soap12:Envelope>";
 
   @Override
   protected String getConfigFile() {

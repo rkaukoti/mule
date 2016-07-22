@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.jaas;
 
@@ -25,6 +25,7 @@ import javax.security.auth.login.LoginException;
  * This is the Provider for Mule's Jaas Security.
  */
 public class JaasSimpleAuthenticationProvider extends AbstractSecurityProvider {
+
   private String loginConfig;
   private String loginContextName;
   private String credentials;
@@ -102,8 +103,8 @@ public class JaasSimpleAuthenticationProvider extends AbstractSecurityProvider {
   // ~ Methods ================================================================
 
   /**
-   * @throws IOException The configureJaas method gets the resource path of the jaas configuration file and constructs the URL for the login
-   *         configuration.
+   * @throws IOException The configureJaas method gets the resource path of the jaas configuration file and constructs the URL for
+   *         the login configuration.
    */
   private void configureJaas() throws IOException {
 
@@ -132,12 +133,13 @@ public class JaasSimpleAuthenticationProvider extends AbstractSecurityProvider {
   }
 
   /**
-   * The authenticate method first creates the jaas Login Context using the callback handler and the name of the class or directory to
-   * prtect. If the Login Context is successfully created, it will then attempt to login.
+   * The authenticate method first creates the jaas Login Context using the callback handler and the name of the class or
+   * directory to prtect. If the Login Context is successfully created, it will then attempt to login.
    *
    * @return Authentication
    */
-  public final Authentication authenticate(Authentication authentication) throws org.mule.runtime.core.api.security.SecurityException {
+  public final Authentication authenticate(Authentication authentication)
+      throws org.mule.runtime.core.api.security.SecurityException {
     LoginContext loginContext;
     JaasAuthentication auth = (JaasAuthentication) authentication;
 
@@ -172,9 +174,9 @@ public class JaasSimpleAuthenticationProvider extends AbstractSecurityProvider {
   }
 
   /**
-   * The initialise method checks whether a jaas configuration file exists. If it exists, it will call the configureJaas() method to create
-   * the context URL of that file. If such a configuration file is not present, it will then try to configure jaas programmatically. It also
-   * attempts to create the JaasSecurityContextFactory.
+   * The initialise method checks whether a jaas configuration file exists. If it exists, it will call the configureJaas() method
+   * to create the context URL of that file. If such a configuration file is not present, it will then try to configure jaas
+   * programmatically. It also attempts to create the JaasSecurityContextFactory.
    */
   protected void doInitialise() throws InitialisationException {
     // configure jaas from properties passed to the provider from the Mule XML

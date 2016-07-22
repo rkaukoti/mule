@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.metadata;
 
@@ -15,6 +15,7 @@ import org.mule.runtime.api.metadata.MediaType;
  * @since 1.0
  */
 public class SimpleDataType implements DataType {
+
   private static final long serialVersionUID = -4590745924720880358L;
 
   protected final Class<?> type;
@@ -52,8 +53,8 @@ public class SimpleDataType implements DataType {
       return false;
     }
 
-    if (this.getMediaType() != null && !this.getMediaType().matches(that.getMediaType()) && !MediaType.ANY.matches(that.getMediaType())
-        && !MediaType.ANY.matches(this.getMediaType())) {
+    if (this.getMediaType() != null && !this.getMediaType().matches(that.getMediaType())
+        && !MediaType.ANY.matches(that.getMediaType()) && !MediaType.ANY.matches(this.getMediaType())) {
       return false;
     }
 

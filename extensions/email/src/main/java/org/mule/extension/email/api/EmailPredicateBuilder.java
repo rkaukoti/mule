@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.email.api;
 
@@ -16,16 +16,17 @@ import java.util.function.Predicate;
 import static java.util.regex.Pattern.compile;
 
 /**
- * Builds a {@link Predicate} which verifies that a {@link EmailAttributes} instance is compliant with a number of criteria. This builder is
- * stateful and not thread-safe. A new instance should be use per each desired {@link Predicate}.
+ * Builds a {@link Predicate} which verifies that a {@link EmailAttributes} instance is compliant with a number of criteria. This
+ * builder is stateful and not thread-safe. A new instance should be use per each desired {@link Predicate}.
  * <p>
- * This builder can either be used programmatically or through Mule's SDK since its internal state is annotated with the {@link Parameter}
- * annotation.
+ * This builder can either be used programmatically or through Mule's SDK since its internal state is annotated with the
+ * {@link Parameter} annotation.
  * <p>
- * Criterias are evaluated using an {@code AND} operator, meaning that for the predicate to accept a file, ALL the criterias must be
- * complied with.
+ * Criterias are evaluated using an {@code AND} operator, meaning that for the predicate to accept a file, ALL the criterias must
+ * be complied with.
  * <p>
- * None of the criteria fields are mandatory. If a particular criteria is not specified, then it's simply not applied on the evaluation.
+ * None of the criteria fields are mandatory. If a particular criteria is not specified, then it's simply not applied on the
+ * evaluation.
  * <p>
  * The class is also given the &quot;matcher&quot; alias to make it DSL/XML friendly.
  *
@@ -126,21 +127,23 @@ public class EmailPredicateBuilder {
     }
 
     if (receivedSince != null) {
-      predicate = predicate
-          .and(attributes -> attributes.getReceivedDate() != null && TIME_SINCE.apply(receivedSince, attributes.getReceivedDate()));
+      predicate = predicate.and(
+          attributes -> attributes.getReceivedDate() != null && TIME_SINCE.apply(receivedSince, attributes.getReceivedDate()));
     }
 
     if (receivedUntil != null) {
-      predicate = predicate
-          .and(attributes -> attributes.getReceivedDate() != null && TIME_UNTIL.apply(receivedUntil, attributes.getReceivedDate()));
+      predicate = predicate.and(
+          attributes -> attributes.getReceivedDate() != null && TIME_UNTIL.apply(receivedUntil, attributes.getReceivedDate()));
     }
 
     if (sentSince != null) {
-      predicate = predicate.and(attributes -> attributes.getSentDate() != null && TIME_SINCE.apply(sentSince, attributes.getSentDate()));
+      predicate =
+          predicate.and(attributes -> attributes.getSentDate() != null && TIME_SINCE.apply(sentSince, attributes.getSentDate()));
     }
 
     if (sentUntil != null) {
-      predicate = predicate.and(attributes -> attributes.getSentDate() != null && TIME_UNTIL.apply(sentUntil, attributes.getSentDate()));
+      predicate =
+          predicate.and(attributes -> attributes.getSentDate() != null && TIME_UNTIL.apply(sentUntil, attributes.getSentDate()));
     }
 
     if (recent != null) {

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.issues;
 
@@ -17,6 +17,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class MulticastRouterMule2112TestCase extends FunctionalTestCase {
+
   @Override
   protected String getConfigFile() {
     return "issues/multicast-router-mule-2112-test.xml";
@@ -31,6 +32,7 @@ public class MulticastRouterMule2112TestCase extends FunctionalTestCase {
 
     final AtomicBoolean hop1made = new AtomicBoolean(false);
     EventCallback callback1 = new EventCallback() {
+
       @Override
       public void eventReceived(final MuleEventContext context, final Object component) throws Exception {
         assertTrue(hop1made.compareAndSet(false, true));
@@ -39,6 +41,7 @@ public class MulticastRouterMule2112TestCase extends FunctionalTestCase {
 
     final AtomicBoolean hop2made = new AtomicBoolean(false);
     EventCallback callback2 = new EventCallback() {
+
       @Override
       public void eventReceived(final MuleEventContext context, final Object component) throws Exception {
         assertTrue(hop2made.compareAndSet(false, true));

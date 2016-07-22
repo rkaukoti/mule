@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor;
 
@@ -18,7 +18,9 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
  * Abstract {@link InterceptingMessageProcessor} that can be easily be extended and used for filtering message flow through a
  * {@link MessageProcessor} chain. The default behaviour when the filter is not accepted is to return the request event.
  */
-public abstract class AbstractFilteringMessageProcessor extends AbstractInterceptingMessageProcessor implements NonBlockingSupported {
+public abstract class AbstractFilteringMessageProcessor extends AbstractInterceptingMessageProcessor
+    implements NonBlockingSupported {
+
   /**
    * Throw a FilterUnacceptedException when a message is rejected by the filter?
    */

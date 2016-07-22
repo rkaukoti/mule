@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing.filters;
 
@@ -23,11 +23,12 @@ import static org.mule.runtime.core.util.ClassUtils.hash;
 import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 
 /**
- * Allows boolean expressions to be executed on a message. Note that when using this filter you must be able to either specify a boolean
- * expression when using an expression filter or use one of the standard Mule filters. Otherwise you can use eny expression filter providing
- * you can define a boolean expression i.e. <code>
+ * Allows boolean expressions to be executed on a message. Note that when using this filter you must be able to either specify a
+ * boolean expression when using an expression filter or use one of the standard Mule filters. Otherwise you can use eny
+ * expression filter providing you can define a boolean expression i.e. <code>
  * #[xpath:count(/Foo/Bar) == 0]
- * </code> Note that it if the expression is not a boolean expression this filter will return true if the expression returns a result
+ * </code> Note that it if the expression is not a boolean expression this filter will return true if the expression returns a
+ * result
  */
 public class ExpressionFilter implements Filter, MuleContextAware {
 

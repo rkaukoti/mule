@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.integration;
 
@@ -19,7 +19,9 @@ import static org.junit.Assert.assertNotNull;
  * Test jms using JmsClientAcknowledgeTransactionFactory
  */
 public class JmsClientAcknowledgeTransactionTestCase extends AbstractJmsFunctionalTestCase {
+
   Scenario scenarioAcknowledge = new NonTransactedScenario() {
+
     @Override
     public int getAcknowledge() {
       return Session.CLIENT_ACKNOWLEDGE;
@@ -39,6 +41,7 @@ public class JmsClientAcknowledgeTransactionTestCase extends AbstractJmsFunction
     }
   };
   Scenario scenarioWithoutAcknowledge = new NonTransactedScenario() {
+
     @Override
     public int getAcknowledge() {
       return Session.CLIENT_ACKNOWLEDGE;

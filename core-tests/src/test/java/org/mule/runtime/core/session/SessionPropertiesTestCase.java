@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.session;
 
@@ -38,7 +38,8 @@ public class SessionPropertiesTestCase extends AbstractMuleContextTestCase {
    */
   @Test
   public void asyncInterceptingProcessorSessionPropertyPropagation() throws Exception {
-    AsyncInterceptingMessageProcessor async = new AsyncInterceptingMessageProcessor(muleContext.getDefaultThreadingProfile(), "async", 0);
+    AsyncInterceptingMessageProcessor async =
+        new AsyncInterceptingMessageProcessor(muleContext.getDefaultThreadingProfile(), "async", 0);
     SensingNullMessageProcessor asyncListener = new SensingNullMessageProcessor();
     async.setListener(asyncListener);
     async.start();
@@ -118,8 +119,8 @@ public class SessionPropertiesTestCase extends AbstractMuleContextTestCase {
 
     // Serialize and deserialize session using default session handler
     message = new SerializeAndEncodeSessionHandler().storeSessionInfoToMessage(event.getSession(), message, muleContext);
-    message =
-        MuleMessage.builder(message).addInboundProperty(MULE_SESSION_PROPERTY, message.getOutboundProperty(MULE_SESSION_PROPERTY)).build();
+    message = MuleMessage.builder(message)
+        .addInboundProperty(MULE_SESSION_PROPERTY, message.getOutboundProperty(MULE_SESSION_PROPERTY)).build();
     MuleSession newSession = new SerializeAndEncodeSessionHandler().retrieveSessionInfoFromMessage(message, muleContext);
 
     // Session after deserialization is a new instance that does not equal old
@@ -167,7 +168,8 @@ public class SessionPropertiesTestCase extends AbstractMuleContextTestCase {
   }
 
   /**
-   * Serialization of a MuleSession with session properties to message using SessionHandler serializes only serializable properties
+   * Serialization of a MuleSession with session properties to message using SessionHandler serializes only serializable
+   * properties
    */
   @Test
   public void defaultSessionHandlerNonSerializableSessionPropertyPropagation() throws Exception {
@@ -180,8 +182,8 @@ public class SessionPropertiesTestCase extends AbstractMuleContextTestCase {
 
     // Serialize and deserialize session using default session handler
     message = new SerializeAndEncodeSessionHandler().storeSessionInfoToMessage(event.getSession(), message, muleContext);
-    message =
-        MuleMessage.builder(message).addInboundProperty(MULE_SESSION_PROPERTY, message.getOutboundProperty(MULE_SESSION_PROPERTY)).build();
+    message = MuleMessage.builder(message)
+        .addInboundProperty(MULE_SESSION_PROPERTY, message.getOutboundProperty(MULE_SESSION_PROPERTY)).build();
     MuleSession newSession = new SerializeAndEncodeSessionHandler().retrieveSessionInfoFromMessage(message, muleContext);
 
     // Session after deserialization is a new instance that does not equal old

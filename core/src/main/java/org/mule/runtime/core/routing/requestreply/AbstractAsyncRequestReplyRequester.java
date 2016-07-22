@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing.requestreply;
 
@@ -46,6 +46,7 @@ import static org.mule.runtime.core.message.Correlation.NOT_SET;
 
 public abstract class AbstractAsyncRequestReplyRequester extends AbstractInterceptingMessageProcessorBase
     implements RequestReplyRequesterMessageProcessor, FlowConstructAware, Initialisable, Startable, Stoppable, Disposable {
+
   public static final int MAX_PROCESSED_GROUPS = 50000;
   public static final int UNCLAIMED_TIME_TO_LIVE = 60000;
   public static final String NAME_TEMPLATE = "%s.%s.%s.asyncReplies";
@@ -213,9 +214,11 @@ public abstract class AbstractAsyncRequestReplyRequester extends AbstractInterce
       addProcessed(asyncReplyCorrelationId);
 
       if (failOnTimeout) {
-        event.getMuleContext().fireNotification(new RoutingNotification(event.getMessage(), null, RoutingNotification.ASYNC_REPLY_TIMEOUT));
+        event.getMuleContext()
+            .fireNotification(new RoutingNotification(event.getMessage(), null, RoutingNotification.ASYNC_REPLY_TIMEOUT));
 
-        throw new ResponseTimeoutException(CoreMessages.responseTimedOutWaitingForId((int) timeout, asyncReplyCorrelationId), event, null);
+        throw new ResponseTimeoutException(CoreMessages.responseTimedOutWaitingForId((int) timeout, asyncReplyCorrelationId),
+            event, null);
       } else {
         return null;
       }
@@ -252,6 +255,7 @@ public abstract class AbstractAsyncRequestReplyRequester extends AbstractInterce
   }
 
   class InternalAsyncReplyMessageProcessor implements MessageProcessor {
+
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException {
       String messageId = getAsyncReplyCorrelationId(event);
@@ -262,6 +266,7 @@ public abstract class AbstractAsyncRequestReplyRequester extends AbstractInterce
   }
 
   private class AsyncReplyMonitoringThread extends EventProcessingThread {
+
     AsyncReplyMonitoringThread(String name) {
       super(name, 100);
     }
@@ -281,11 +286,12 @@ public abstract class AbstractAsyncRequestReplyRequester extends AbstractInterce
               MuleEvent event = (MuleEvent) store.retrieve(correlationId);
               if (logger.isDebugEnabled()) {
                 logger.debug("An event was received for an event group that has already been processed, "
-                    + "this is probably because the async-reply timed out. Correlation Id is: " + correlationId + ". Dropping event");
+                    + "this is probably because the async-reply timed out. Correlation Id is: " + correlationId
+                    + ". Dropping event");
               }
               // Fire a notification to say we received this message
-              event.getMuleContext().fireNotification(new RoutingNotification(event.getMessage(), event.getMessageSourceURI().toString(),
-                  RoutingNotification.MISSED_ASYNC_REPLY));
+              event.getMuleContext().fireNotification(new RoutingNotification(event.getMessage(),
+                  event.getMessageSourceURI().toString(), RoutingNotification.MISSED_ASYNC_REPLY));
             } else {
               Latch l = locks.get(correlationId);
               if (l != null) {

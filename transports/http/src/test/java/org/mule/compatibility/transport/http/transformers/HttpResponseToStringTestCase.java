@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.transformers;
 
@@ -18,16 +18,17 @@ import static java.nio.charset.StandardCharsets.ISO_8859_1;
 import static org.junit.Assert.assertEquals;
 
 public class HttpResponseToStringTestCase extends AbstractMuleContextEndpointTestCase {
+
   private final String _statusLine = "HTTP/1.1 200 OK";
   private final String _headerCT = "Content-Type: text/plain";
   private final String _headerTE = "Transfer-Encoding: chunked";
   private final String _contentLength = "Content-Length: ";
   private final String _body = "<html><head></head><body><p>WOW</p></body></html>";
 
-  private String _resultChunked = _statusLine + ResponseWriter.CRLF + _headerCT + ResponseWriter.CRLF + _contentLength + _body.length()
-      + ResponseWriter.CRLF + _headerTE + ResponseWriter.CRLF + ResponseWriter.CRLF;
-  private String _resultNotChunked = _statusLine + ResponseWriter.CRLF + _headerCT + ResponseWriter.CRLF + _contentLength + _body.length()
-      + ResponseWriter.CRLF + ResponseWriter.CRLF;
+  private String _resultChunked = _statusLine + ResponseWriter.CRLF + _headerCT + ResponseWriter.CRLF + _contentLength
+      + _body.length() + ResponseWriter.CRLF + _headerTE + ResponseWriter.CRLF + ResponseWriter.CRLF;
+  private String _resultNotChunked = _statusLine + ResponseWriter.CRLF + _headerCT + ResponseWriter.CRLF + _contentLength
+      + _body.length() + ResponseWriter.CRLF + ResponseWriter.CRLF;
 
   private HttpResponse _resp = null;
 

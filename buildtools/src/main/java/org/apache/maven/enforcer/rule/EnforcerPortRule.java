@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.apache.maven.enforcer.rule;
 
@@ -14,6 +14,7 @@ import java.net.DatagramSocket;
 import java.net.ServerSocket;
 
 public class EnforcerPortRule implements EnforcerRule {
+
   /**
    * Simple param. This rule will fail if the value is true.
    */
@@ -71,8 +72,8 @@ public class EnforcerPortRule implements EnforcerRule {
 
   /**
    * If your rule is cacheable, you must return a unique id when parameters or conditions change that would cause the result to be
-   * different. Multiple cached results are stored based on their id. The easiest way to do this is to return a hash computed from the
-   * values of your parameters. If your rule is not cacheable, then the result here is not important, you may return anything.
+   * different. Multiple cached results are stored based on their id. The easiest way to do this is to return a hash computed from
+   * the values of your parameters. If your rule is not cacheable, then the result here is not important, you may return anything.
    */
   public String getCacheId() {
     // no hash on boolean...only parameter so no hash is needed.
@@ -80,18 +81,18 @@ public class EnforcerPortRule implements EnforcerRule {
   }
 
   /**
-   * This tells the system if the results are cacheable at all. Keep in mind that during forked builds and other things, a given rule may be
-   * executed more than once for the same project. This means that even things that change from project to project may still be cacheable in
-   * certain instances.
+   * This tells the system if the results are cacheable at all. Keep in mind that during forked builds and other things, a given
+   * rule may be executed more than once for the same project. This means that even things that change from project to project may
+   * still be cacheable in certain instances.
    */
   public boolean isCacheable() {
     return false;
   }
 
   /**
-   * If the rule is cacheable and the same id is found in the cache, the stored results are passed to this method to allow double checking
-   * of the results. Most of the time this can be done by generating unique ids, but sometimes the results of objects returned by the helper
-   * need to be queried. You may for example, store certain objects in your rule and then query them later.
+   * If the rule is cacheable and the same id is found in the cache, the stored results are passed to this method to allow double
+   * checking of the results. Most of the time this can be done by generating unique ids, but sometimes the results of objects
+   * returned by the helper need to be queried. You may for example, store certain objects in your rule and then query them later.
    */
   public boolean isResultValid(EnforcerRule arg0) {
     return false;

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher;
 
@@ -8,10 +8,10 @@ import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * A slightly tweaked default thread factory that uses the following pattern: <code>[%s].config.change.%d.thread.%d</code>, where %s stands
- * for application name, the next number will tell one how many redeployments this app had during this container's lifetime and the last
- * digit, thread count, should always be 1. Left there for debugging purposes to quickly locate any duplicate threads trying to perform a
- * redeploy.
+ * A slightly tweaked default thread factory that uses the following pattern: <code>[%s].config.change.%d.thread.%d</code>, where
+ * %s stands for application name, the next number will tell one how many redeployments this app had during this container's
+ * lifetime and the last digit, thread count, should always be 1. Left there for debugging purposes to quickly locate any
+ * duplicate threads trying to perform a redeploy.
  */
 public class ConfigChangeMonitorThreadFactory implements ThreadFactory {
 

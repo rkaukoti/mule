@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -21,11 +21,13 @@ import static org.junit.Assert.fail;
 import static org.mockito.Mockito.mock;
 
 public class RoundRobinRoutingStrategyTestCase extends AbstractDynamicRoundRobinTestCase {
+
   private RoundRobinRoutingStrategy roundRobinRoutingStrategy;
 
   @Before
   public void setUp() {
     roundRobinRoutingStrategy = new RoundRobinRoutingStrategy(muleContext, new IdentifiableDynamicRouteResolver() {
+
       @Override
       public String getRouteIdentifier(MuleEvent event) throws MessagingException {
         return event.getFlowVariable(ID_PROPERTY_NAME);

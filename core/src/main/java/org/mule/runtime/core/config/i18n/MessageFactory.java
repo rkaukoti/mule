@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.config.i18n;
 
@@ -18,15 +18,17 @@ import static org.apache.commons.collections.CollectionUtils.union;
 
 
 public abstract class MessageFactory {
+
   /**
    * Default is {@link ReloadControl.Always}.
    */
   public static final ResourceBundle.Control DEFAULT_RELOAD_CONTROL = new ReloadControl.Always();
   /**
-   * Do not use the default reload control to avoid loading the resource bundle upon each request. Subclasses can override to provide a
-   * different default.
+   * Do not use the default reload control to avoid loading the resource bundle upon each request. Subclasses can override to
+   * provide a different default.
    */
   protected static final ResourceBundle.Control reloadControl = new ResourceBundle.Control() {
+
     // Avoid trying to load the java class.
     private List<String> formats = new ArrayList<>(union(FORMAT_PROPERTIES, FORMAT_CLASS));
 
@@ -38,7 +40,8 @@ public abstract class MessageFactory {
     ;
   };
   /**
-   * This error code is used for {@link Message} instances that are not read from a resource bundles but are created only with a string.
+   * This error code is used for {@link Message} instances that are not read from a resource bundles but are created only with a
+   * string.
    */
   private static final int STATIC_ERROR_CODE = -1;
   private static final transient Object[] EMPTY_ARGS = new Object[] {};
@@ -76,8 +79,8 @@ public abstract class MessageFactory {
   }
 
   /**
-   * Factory method to create a new {@link Message} instance that is filled with the formatted message with id <code>code</code> from the
-   * resource bundle <code>bundlePath</code>.
+   * Factory method to create a new {@link Message} instance that is filled with the formatted message with id <code>code</code>
+   * from the resource bundle <code>bundlePath</code>.
    *
    * @param bundlePath complete path to the resource bundle for lookup
    * @param code numeric code of the message
@@ -88,8 +91,8 @@ public abstract class MessageFactory {
   }
 
   /**
-   * Factory method to create a new {@link Message} instance that is filled with the formatted message with id <code>code</code> from the
-   * resource bundle <code>bundlePath</code>.
+   * Factory method to create a new {@link Message} instance that is filled with the formatted message with id <code>code</code>
+   * from the resource bundle <code>bundlePath</code>.
    *
    * @param bundlePath complete path to the resource bundle for lookup
    * @param code numeric code of the message
@@ -100,8 +103,8 @@ public abstract class MessageFactory {
   }
 
   /**
-   * Factory method to create a new {@link Message} instance that is filled with the formatted message with id <code>code</code> from the
-   * resource bundle <code>bundlePath</code>.
+   * Factory method to create a new {@link Message} instance that is filled with the formatted message with id <code>code</code>
+   * from the resource bundle <code>bundlePath</code>.
    *
    * @param bundlePath complete path to the resource bundle for lookup
    * @param code numeric code of the message
@@ -112,8 +115,8 @@ public abstract class MessageFactory {
   }
 
   /**
-   * Factory method to create a new {@link Message} instance that is filled with the formatted message with id <code>code</code> from the
-   * resource bundle <code>bundlePath</code>.
+   * Factory method to create a new {@link Message} instance that is filled with the formatted message with id <code>code</code>
+   * from the resource bundle <code>bundlePath</code>.
    *
    * <b>Attention:</b> do not confuse this method with <code>createMessage(String, int, Object)</code>.
    *
@@ -127,8 +130,8 @@ public abstract class MessageFactory {
   }
 
   /**
-   * Factory method to create a new {@link Message} instance that is filled with the formatted message with id <code>code</code> from the
-   * resource bundle <code>bundlePath</code>.
+   * Factory method to create a new {@link Message} instance that is filled with the formatted message with id <code>code</code>
+   * from the resource bundle <code>bundlePath</code>.
    *
    * @param bundlePath complete path to the resource bundle for lookup
    * @param code numeric code of the message
@@ -213,8 +216,8 @@ public abstract class MessageFactory {
   }
 
   /**
-   * Subclasses should override to customize the bundle reload control. Implementations must save the instance in a field for stateful
-   * reload control. Return null to fallback to default JVM behavior (permanent cache).
+   * Subclasses should override to customize the bundle reload control. Implementations must save the instance in a field for
+   * stateful reload control. Return null to fallback to default JVM behavior (permanent cache).
    *
    * @see #DEFAULT_RELOAD_CONTROL
    */

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.api.registry;
 
@@ -30,13 +30,15 @@ import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.l
  */
 @Deprecated
 public class ServiceDescriptorFactory {
+
   protected static Logger logger = LoggerFactory.getLogger(ServiceDescriptorFactory.class);
 
   /**
    * Factory method to create a new service descriptor.
    *
    * @param type the service type to create
-   * @param name the name of the service. In the case of a stransport service, the full endpoint sheme should be used here i.e. 'cxf:http'
+   * @param name the name of the service. In the case of a stransport service, the full endpoint sheme should be used here i.e.
+   *        'cxf:http'
    * @param props The properties defined by this service type
    * @param overrides any overrides that should be configured on top of the standard propertiers for the service
    * @param muleContext the MuleContext for this mule instance
@@ -44,8 +46,8 @@ public class ServiceDescriptorFactory {
    * @return a ServiceDescriptor instance that can be used to create the service objects associated with the service name
    * @throws ServiceException if the service cannot be located
    */
-  public static ServiceDescriptor create(ServiceType type, String name, Properties props, Properties overrides, MuleContext muleContext,
-      ClassLoader classLoader) throws ServiceException {
+  public static ServiceDescriptor create(ServiceType type, String name, Properties props, Properties overrides,
+      MuleContext muleContext, ClassLoader classLoader) throws ServiceException {
     if (overrides != null) {
       props.putAll(overrides);
     }

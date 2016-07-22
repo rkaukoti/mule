@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.config.domain.database;
@@ -27,6 +27,7 @@ import java.util.Map;
 import static org.springframework.util.xml.DomUtils.getChildElementByTagName;
 
 public class DbConfigDefinitionParser extends MuleOrphanDefinitionParser {
+
   public static final String CONNECTION_PROPERTIES_ELEMENT_NAME = "connection-properties";
   public static final String PROPERTY_ELEMENT_NAME = "property";
   public static final String DATA_TYPES_ELEMENT = "data-types";

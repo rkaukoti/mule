@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.listener;
 
@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import java.io.ByteArrayInputStream;
 
 public class ErrorRequestHandler implements RequestHandler {
+
   private Logger logger = LoggerFactory.getLogger(getClass());
 
   private int statusCode;
@@ -30,9 +31,12 @@ public class ErrorRequestHandler implements RequestHandler {
   @Override
   public void handleRequest(HttpRequestContext requestContext, HttpResponseReadyCallback responseCallback) {
     String resolvedEntity = String.format(entityFormat, requestContext.getRequest().getUri());
-    responseCallback.responseReady(new org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder().setStatusCode(statusCode)
-        .setReasonPhrase(reasonPhrase).setEntity(new InputStreamHttpEntity(new ByteArrayInputStream(resolvedEntity.getBytes()))).build(),
+    responseCallback.responseReady(
+        new org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder().setStatusCode(statusCode)
+            .setReasonPhrase(reasonPhrase)
+            .setEntity(new InputStreamHttpEntity(new ByteArrayInputStream(resolvedEntity.getBytes()))).build(),
         new ResponseStatusCallback() {
+
           @Override
           public void responseSendFailure(Throwable exception) {
             logger.warn(String.format("Error while sending %s response %s", statusCode, exception.getMessage()));

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.functional;
 
@@ -19,6 +19,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class HttpStemTestCase extends FunctionalTestCase {
+
   @Rule
   public DynamicPort dynamicPort = new DynamicPort("port1");
 
@@ -37,11 +38,13 @@ public class HttpStemTestCase extends FunctionalTestCase {
     doTest(client, "http://localhost:" + port + "/bar/baz", "/bar", "/bar/baz");
   }
 
-  protected void doTest(MuleClient client, final String url, final String contextPath, final String requestPath) throws Exception {
+  protected void doTest(MuleClient client, final String url, final String contextPath, final String requestPath)
+      throws Exception {
     FunctionalTestComponent testComponent = (FunctionalTestComponent) getComponent(contextPath);
     assertNotNull(testComponent);
 
     EventCallback callback = new EventCallback() {
+
       @Override
       public void eventReceived(final MuleEventContext context, final Object component) throws Exception {
         MuleMessage msg = context.getMessage();

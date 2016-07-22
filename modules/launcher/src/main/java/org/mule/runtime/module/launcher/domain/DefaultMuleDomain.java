@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.domain;
 
@@ -136,8 +136,9 @@ public class DefaultMuleDomain implements Domain {
 
   private ConfigurationBuilder createConfigurationBuilder() {
     try {
-      return (ConfigurationBuilder) ClassUtils.instanciateClass("org.mule.runtime.config.spring.SpringXmlDomainConfigurationBuilder",
-          new Object[] {getResourceFiles()[0].getName()}, deploymentClassLoader.getClassLoader());
+      return (ConfigurationBuilder) ClassUtils.instanciateClass(
+          "org.mule.runtime.config.spring.SpringXmlDomainConfigurationBuilder", new Object[] {getResourceFiles()[0].getName()},
+          deploymentClassLoader.getClassLoader());
     } catch (Exception e) {
       throw new MuleRuntimeException(e);
     }
@@ -162,7 +163,8 @@ public class DefaultMuleDomain implements Domain {
         deployLogger.info(splashScreen.toString());
       });
     } catch (Exception e) {
-      throw new DeploymentStartException(CoreMessages.createStaticMessage("Failure trying to start domain " + getArtifactName()), e);
+      throw new DeploymentStartException(CoreMessages.createStaticMessage("Failure trying to start domain " + getArtifactName()),
+          e);
     }
   }
 
@@ -176,7 +178,8 @@ public class DefaultMuleDomain implements Domain {
         this.muleContext.stop();
       }
     } catch (Exception e) {
-      throw new DeploymentStopException(CoreMessages.createStaticMessage("Failure trying to stop domain " + getArtifactName()), e);
+      throw new DeploymentStopException(CoreMessages.createStaticMessage("Failure trying to stop domain " + getArtifactName()),
+          e);
     }
   }
 
@@ -217,7 +220,8 @@ public class DefaultMuleDomain implements Domain {
         this.muleContext.initialise();
       }
     } catch (InitialisationException e) {
-      throw new DeploymentInitException(CoreMessages.createStaticMessage("Failure trying to initialise domain " + getArtifactName()), e);
+      throw new DeploymentInitException(
+          CoreMessages.createStaticMessage("Failure trying to initialise domain " + getArtifactName()), e);
     }
   }
 

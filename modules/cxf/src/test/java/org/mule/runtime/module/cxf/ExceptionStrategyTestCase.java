@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf;
 
@@ -42,11 +42,11 @@ public class ExceptionStrategyTestCase extends FunctionalTestCase {
       + "    <arg0>Hello</arg0>\n" + "</hi:sayHi>\n" + "</soap:Body>\n" + "</soap:Envelope>";
 
   private static final String requestFaultPayload = "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"\n"
-      + "           xmlns:hi=\"http://cxf.module.runtime.mule.org/\">\n" + "<soap:Body>\n" + "<hi:sayHi>\n" + "    <arg0>Hello</arg0>\n"
-      + "</hi:sayHi>\n" + "</soap:Body>\n" + "</soap:Envelope>";
+      + "           xmlns:hi=\"http://cxf.module.runtime.mule.org/\">\n" + "<soap:Body>\n" + "<hi:sayHi>\n"
+      + "    <arg0>Hello</arg0>\n" + "</hi:sayHi>\n" + "</soap:Body>\n" + "</soap:Envelope>";
 
-  private static final HttpRequestOptions HTTP_REQUEST_OPTIONS =
-      newOptions().method(org.mule.runtime.module.http.api.HttpConstants.Methods.POST.name()).disableStatusCodeValidation().build();
+  private static final HttpRequestOptions HTTP_REQUEST_OPTIONS = newOptions()
+      .method(org.mule.runtime.module.http.api.HttpConstants.Methods.POST.name()).disableStatusCodeValidation().build();
   @Rule
   public DynamicPort dynamicPort = new DynamicPort("port1");
   @Rule
@@ -68,7 +68,8 @@ public class ExceptionStrategyTestCase extends FunctionalTestCase {
         client.send("http://localhost:" + dynamicPort.getNumber() + "/testServiceWithFault", request, HTTP_REQUEST_OPTIONS);
     assertNotNull(response);
     assertTrue(getPayloadAsString(response).contains("<faultstring>"));
-    assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()), response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
+    assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()),
+        response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
     assertTrue(latch.await(3000, TimeUnit.MILLISECONDS));
   }
 
@@ -82,7 +83,8 @@ public class ExceptionStrategyTestCase extends FunctionalTestCase {
         client.send("http://localhost:" + dynamicPort.getNumber() + "/testServiceWithException", request, HTTP_REQUEST_OPTIONS);
     assertNotNull(response);
     assertTrue(getPayloadAsString(response).contains("<faultstring>"));
-    assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()), response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
+    assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()),
+        response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
     assertTrue(latch.await(3000, TimeUnit.MILLISECONDS));
   }
 
@@ -110,7 +112,8 @@ public class ExceptionStrategyTestCase extends FunctionalTestCase {
     assertNotNull(response);
     assertTrue(getPayloadAsString(response).contains("<faultstring>"));
 
-    assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()), response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
+    assertEquals(String.valueOf(INTERNAL_SERVER_ERROR.getStatusCode()),
+        response.getInboundProperty(HTTP_STATUS_PROPERTY).toString());
     assertTrue(latch.await(3000, TimeUnit.MILLISECONDS));
   }
 
@@ -121,6 +124,7 @@ public class ExceptionStrategyTestCase extends FunctionalTestCase {
   }
 
   public static class CxfTransformerThrowsExceptions extends AbstractTransformer {
+
     @Override
     protected Object doTransform(Object src, Charset enc) throws TransformerException {
       throw new TransformerException(CoreMessages.failedToBuildMessage());
@@ -128,6 +132,7 @@ public class ExceptionStrategyTestCase extends FunctionalTestCase {
   }
 
   public static class CustomProcessor implements MessageProcessor {
+
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException {
       return event;

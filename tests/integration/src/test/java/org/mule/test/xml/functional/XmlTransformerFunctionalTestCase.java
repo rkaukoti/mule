@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.xml.functional;
 
@@ -18,10 +18,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 public class XmlTransformerFunctionalTestCase extends AbstractXmlFunctionalTestCase {
+
   public static final String SIMPLE_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<parent><child name=\"poot\"/></parent>";
   public static final String CHILDLESS_XML = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<parent/>";
-  public static final String SERIALIZED = "<org.mule.test.xml.functional.XmlTransformerFunctionalTestCase_-Parent>\n" + "  <child/>\n"
-      + "</org.mule.test.xml.functional.XmlTransformerFunctionalTestCase_-Parent>";
+  public static final String SERIALIZED = "<org.mule.test.xml.functional.XmlTransformerFunctionalTestCase_-Parent>\n"
+      + "  <child/>\n" + "</org.mule.test.xml.functional.XmlTransformerFunctionalTestCase_-Parent>";
 
   @Override
   protected String getConfigFile() {
@@ -92,6 +93,7 @@ public class XmlTransformerFunctionalTestCase extends AbstractXmlFunctionalTestC
   }
 
   public static class Parent {
+
     private Child child;
 
     public Parent() {

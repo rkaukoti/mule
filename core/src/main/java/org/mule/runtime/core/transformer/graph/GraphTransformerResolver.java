@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer.graph;
 
@@ -27,8 +27,8 @@ public class GraphTransformerResolver implements TransformerResolver {
     this.readWriteLock = new ReentrantReadWriteLock();
     this.graph = new TransformationGraph();
     lookupStrategyTransformation = new TransformationGraphLookupStrategy(graph);
-    converterFilter = new CompositeConverterFilter(new TransformationLengthConverterFilter(), new PriorityWeightingConverterFilter(),
-        new NameConverterFilter());
+    converterFilter = new CompositeConverterFilter(new TransformationLengthConverterFilter(),
+        new PriorityWeightingConverterFilter(), new NameConverterFilter());
     cache = new LRUMap();
   }
 
@@ -45,7 +45,8 @@ public class GraphTransformerResolver implements TransformerResolver {
       readWriteLock.readLock().unlock();
     }
 
-    List<Converter> converters = converterFilter.filter(lookupStrategyTransformation.lookupConverters(source, result), source, result);
+    List<Converter> converters =
+        converterFilter.filter(lookupStrategyTransformation.lookupConverters(source, result), source, result);
 
     if (converters.size() > 1) {
       throw new ResolverException(CoreMessages.transformHasMultipleMatches(source.getType(), result.getType(), converters));

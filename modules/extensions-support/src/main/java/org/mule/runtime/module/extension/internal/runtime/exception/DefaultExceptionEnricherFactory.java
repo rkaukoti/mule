@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.exception;
 
@@ -12,6 +12,7 @@ import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessa
 import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 public final class DefaultExceptionEnricherFactory implements ExceptionEnricherFactory {
+
   private final ExceptionEnricher enricher;
 
   public DefaultExceptionEnricherFactory(Class<? extends ExceptionEnricher> enricherType) {
@@ -19,7 +20,8 @@ public final class DefaultExceptionEnricherFactory implements ExceptionEnricherF
     try {
       enricher = enricherType.newInstance();
     } catch (Exception e) {
-      throw new MuleRuntimeException(createStaticMessage("Could not create ExceptionEnricher of type " + enricherType.getName()), e);
+      throw new MuleRuntimeException(createStaticMessage("Could not create ExceptionEnricher of type " + enricherType.getName()),
+          e);
     }
   }
 

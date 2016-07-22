@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.operation;
 
@@ -182,8 +182,8 @@ public class OperationMessageProcessorTestCase extends AbstractMuleContextTestCa
     when(operationModel.getOutput())
         .thenReturn(new ImmutableOutputModel("MuleMessage.Payload", toMetadataType(String.class), false, emptySet()));
     when(operationModel.getExecutor()).thenReturn(operationExecutorFactory);
-    when(operationModel.getModelProperty(MetadataKeyIdModelProperty.class)).thenReturn(
-        Optional.of(new MetadataKeyIdModelProperty(ExtensionsTypeLoaderFactory.getDefault().createTypeLoader().load(String.class))));
+    when(operationModel.getModelProperty(MetadataKeyIdModelProperty.class)).thenReturn(Optional
+        .of(new MetadataKeyIdModelProperty(ExtensionsTypeLoaderFactory.getDefault().createTypeLoader().load(String.class))));
     when(operationModel.getModelProperty(ConnectivityModelProperty.class)).thenReturn(empty());
     when(operationExecutorFactory.createExecutor()).thenReturn(operationExecutor);
 
@@ -200,12 +200,14 @@ public class OperationMessageProcessorTestCase extends AbstractMuleContextTestCa
 
     when(keyParamMock.getName()).thenReturn("type");
     when(keyParamMock.getType()).thenReturn(stringType);
-    when(keyParamMock.getModelProperty(MetadataKeyPartModelProperty.class)).thenReturn(Optional.of(new MetadataKeyPartModelProperty(0)));
+    when(keyParamMock.getModelProperty(MetadataKeyPartModelProperty.class))
+        .thenReturn(Optional.of(new MetadataKeyPartModelProperty(0)));
     when(keyParamMock.getModelProperty(MetadataContentModelProperty.class)).thenReturn(empty());
 
     when(contentMock.getName()).thenReturn("content");
     when(contentMock.getType()).thenReturn(stringType);
-    when(contentMock.getModelProperty(MetadataContentModelProperty.class)).thenReturn(Optional.of(new MetadataContentModelProperty()));
+    when(contentMock.getModelProperty(MetadataContentModelProperty.class))
+        .thenReturn(Optional.of(new MetadataContentModelProperty()));
     when(contentMock.getModelProperty(MetadataKeyPartModelProperty.class)).thenReturn(empty());
 
     when(operationModel.getParameterModels()).thenReturn(Arrays.asList(keyParamMock, contentMock));

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.capability.xml.schema.builder;
 
@@ -75,8 +75,10 @@ final class ConnectionProviderSchemaDelegate {
   }
 
   private void addConnectionProviderPoolingProfile(ExplicitGroup choice, ConnectionProviderModel providerModel) {
-    PoolingSupport poolingSupport = providerModel.getModelProperty(ConnectionHandlingTypeModelProperty.class).get().getPoolingSupport();
-    TopLevelElement objectElement = builder.createRefElement(MULE_POOLING_PROFILE_TYPE, poolingSupport == PoolingSupport.REQUIRED);
+    PoolingSupport poolingSupport =
+        providerModel.getModelProperty(ConnectionHandlingTypeModelProperty.class).get().getPoolingSupport();
+    TopLevelElement objectElement =
+        builder.createRefElement(MULE_POOLING_PROFILE_TYPE, poolingSupport == PoolingSupport.REQUIRED);
 
     choice.getParticle().add(objectFactory.createElement(objectElement));
   }

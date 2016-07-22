@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.ws.functional;
 
@@ -32,6 +32,7 @@ public class SoapFaultCodeMatcher extends TypeSafeMatcher<SoapFaultException> {
 
   @Override
   protected void describeMismatchSafely(SoapFaultException item, Description mismatchDescription) {
-    mismatchDescription.appendText("is not a SoapFaultException with fault code ").appendValue(item.getFaultCode().getLocalPart());
+    mismatchDescription.appendText("is not a SoapFaultException with fault code ")
+        .appendValue(item.getFaultCode().getLocalPart());
   }
 }

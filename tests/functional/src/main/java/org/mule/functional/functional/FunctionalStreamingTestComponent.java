@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.functional;
 
@@ -16,17 +16,18 @@ import java.io.InputStream;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
- * A service that can be used by streaming functional tests. This service accepts an EventCallback that can be used to assert the state of
- * the current event. To access the service when embedded in an (XML) model, make sure that the descriptor sets the singleton attribute true
- * - see uses in TCP and FTP.
+ * A service that can be used by streaming functional tests. This service accepts an EventCallback that can be used to assert the
+ * state of the current event. To access the service when embedded in an (XML) model, make sure that the descriptor sets the
+ * singleton attribute true - see uses in TCP and FTP.
  *
- * Note that although this implements the full StreamingService interface, nothing is written to the output stream - this is intended as a
- * final sink.
+ * Note that although this implements the full StreamingService interface, nothing is written to the output stream - this is
+ * intended as a final sink.
  *
  * @see EventCallback
  */
 
 public class FunctionalStreamingTestComponent implements Callable {
+
   public static final int STREAM_SAMPLE_SIZE = 4;
   public static final int STREAM_BUFFER_SIZE = 4096;
   private static AtomicInteger count = new AtomicInteger(0);
@@ -112,8 +113,8 @@ public class FunctionalStreamingTestComponent implements Callable {
     return in.read(buffer);
   }
 
-  private void doCallback(byte[] startData, long startDataSize, byte[] endData, long endDataSize, long endRingPointer, long streamLength,
-      MuleEventContext context) throws Exception {
+  private void doCallback(byte[] startData, long startDataSize, byte[] endData, long endDataSize, long endRingPointer,
+      long streamLength, MuleEventContext context) throws Exception {
     // make a nice summary of the data
     StringBuilder result = new StringBuilder("Received stream");
     result.append("; length: ");
@@ -136,7 +137,8 @@ public class FunctionalStreamingTestComponent implements Callable {
     summary = result.toString();
 
     String msg = StringMessageUtils.getBoilerPlate(
-        "Message Received in service: " + context.getFlowConstruct().getName() + ". " + summary + "\n callback: " + eventCallback, '*', 80);
+        "Message Received in service: " + context.getFlowConstruct().getName() + ". " + summary + "\n callback: " + eventCallback,
+        '*', 80);
 
     logger.info(msg);
 

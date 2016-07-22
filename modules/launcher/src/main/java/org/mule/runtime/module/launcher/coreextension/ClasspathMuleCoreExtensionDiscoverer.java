@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.coreextension;
 
@@ -25,7 +25,8 @@ import static org.mule.runtime.core.util.Preconditions.checkArgument;
  */
 public class ClasspathMuleCoreExtensionDiscoverer implements MuleCoreExtensionDiscoverer {
 
-  public static final String CORE_EXTENSION_RESOURCE_NAME = "META-INF/services/org/mule/runtime/core/config/core-extensions.properties";
+  public static final String CORE_EXTENSION_RESOURCE_NAME =
+      "META-INF/services/org/mule/runtime/core/config/core-extensions.properties";
 
   private static Logger logger = LoggerFactory.getLogger(ClasspathMuleCoreExtensionDiscoverer.class);
   private final ArtifactClassLoader containerClassLoader;

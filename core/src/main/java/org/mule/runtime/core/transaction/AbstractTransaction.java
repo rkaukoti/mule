@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transaction;
 
@@ -107,7 +107,8 @@ public abstract class AbstractTransaction implements Transaction {
   protected abstract void doRollback() throws TransactionException;
 
   /**
-   * Fires a server notification to all registered {@link org.mule.runtime.core.api.context.notification.TransactionNotificationListener}s.
+   * Fires a server notification to all registered
+   * {@link org.mule.runtime.core.api.context.notification.TransactionNotificationListener}s.
    */
   protected void fireNotification(TransactionNotification notification) {
     // TODO profile this piece of code

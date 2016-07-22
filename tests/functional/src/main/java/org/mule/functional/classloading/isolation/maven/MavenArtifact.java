@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.functional.classloading.isolation.maven;
@@ -105,8 +105,8 @@ public class MavenArtifact {
 
   @Override
   public String toString() {
-    return groupId + MAVEN_DEPENDENCIES_DELIMITER + artifactId + MAVEN_DEPENDENCIES_DELIMITER + type + MAVEN_DEPENDENCIES_DELIMITER
-        + (!isEmpty(version) ? version : "") + MAVEN_DEPENDENCIES_DELIMITER + scope;
+    return groupId + MAVEN_DEPENDENCIES_DELIMITER + artifactId + MAVEN_DEPENDENCIES_DELIMITER + type
+        + MAVEN_DEPENDENCIES_DELIMITER + (!isEmpty(version) ? version : "") + MAVEN_DEPENDENCIES_DELIMITER + scope;
   }
 
   @Override

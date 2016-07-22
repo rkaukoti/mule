@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer.simple;
 
@@ -20,10 +20,11 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 
 /**
- * <code>ObjectToString</code> transformer is useful for debugging. It will return human-readable output for various kinds of objects. Right
- * now, it is just coded to handle Map and Collection objects. Others will be added.
+ * <code>ObjectToString</code> transformer is useful for debugging. It will return human-readable output for various kinds of
+ * objects. Right now, it is just coded to handle Map and Collection objects. Others will be added.
  */
 public class ObjectToString extends AbstractTransformer implements DiscoverableTransformer {
+
   protected static final int DEFAULT_BUFFER_SIZE = 80;
 
   /**

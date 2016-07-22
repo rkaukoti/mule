@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api;
 
@@ -9,7 +9,8 @@ import java.util.Optional;
 /**
  * Interface that allows to customize the set of services provided by the {@code MuleContext}.
  *
- * It's possible to add new services or replace default implementation for services specifying a service implementation or a services class.
+ * It's possible to add new services or replace default implementation for services specifying a service implementation or a
+ * services class.
  *
  * For replacing an existent service, the service identifier must be used which can be located on
  * {@link org.mule.runtime.core.api.config.MuleProperties} class.
@@ -19,8 +20,8 @@ import java.util.Optional;
 public interface CustomizationService {
 
   /**
-   * Allows to customize a service. The provided implementation will be used instead of the default one if it's replacing an existent
-   * service.
+   * Allows to customize a service. The provided implementation will be used instead of the default one if it's replacing an
+   * existent service.
    * <p>
    * The service implementation can be annotated with @Inject and implement methods from
    * {@link org.mule.runtime.core.api.lifecycle.Lifecycle}.
@@ -34,8 +35,8 @@ public interface CustomizationService {
   <T> void customizeServiceImpl(String serviceId, T serviceImpl);
 
   /**
-   * Allows to customize a service. The provided class will be used to instantiate the service that replaces the default one if it's
-   * replacing an existent service.
+   * Allows to customize a service. The provided class will be used to instantiate the service that replaces the default one if
+   * it's replacing an existent service.
    * <p>
    * The service class can be annotated with {@link javax.inject.Inject} and implement methods from
    * {@link org.mule.runtime.core.api.lifecycle.Lifecycle}.

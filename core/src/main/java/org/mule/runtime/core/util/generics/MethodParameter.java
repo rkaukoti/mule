@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.generics;
 
@@ -13,8 +13,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Helper class that encapsulates the specification of a method parameter, i.e. a Method or Constructor plus a parameter index and a nested
- * type index for a declared generic type. Useful as a specification object to pass along.
+ * Helper class that encapsulates the specification of a method parameter, i.e. a Method or Constructor plus a parameter index and
+ * a nested type index for a declared generic type. Useful as a specification object to pass along.
  * <p/>
  * author: Spring
  */
@@ -50,10 +50,10 @@ public class MethodParameter {
    * Create a new MethodParameter for the given method.
    *
    * @param method the Method to specify a parameter for
-   * @param parameterIndex the index of the parameter (-1 for the method return type; 0 for the first method parameter, 1 for the second
-   *        method parameter, etc)
-   * @param nestingLevel the nesting level of the target type (typically 1; e.g. in case of a List of Lists, 1 would indicate the nested
-   *        List, whereas 2 would indicate the element of the nested List)
+   * @param parameterIndex the index of the parameter (-1 for the method return type; 0 for the first method parameter, 1 for the
+   *        second method parameter, etc)
+   * @param nestingLevel the nesting level of the target type (typically 1; e.g. in case of a List of Lists, 1 would indicate the
+   *        nested List, whereas 2 would indicate the element of the nested List)
    */
   public MethodParameter(Method method, int parameterIndex, int nestingLevel) {
     this.method = method;
@@ -76,8 +76,8 @@ public class MethodParameter {
    *
    * @param constructor the Constructor to specify a parameter for
    * @param parameterIndex the index of the parameter
-   * @param nestingLevel the nesting level of the target type (typically 1; e.g. in case of a List of Lists, 1 would indicate the nested
-   *        List, whereas 2 would indicate the element of the nested List)
+   * @param nestingLevel the nesting level of the target type (typically 1; e.g. in case of a List of Lists, 1 would indicate the
+   *        nested List, whereas 2 would indicate the element of the nested List)
    */
   public MethodParameter(Constructor constructor, int parameterIndex, int nestingLevel) {
     this.constructor = constructor;
@@ -86,8 +86,8 @@ public class MethodParameter {
   }
 
   /**
-   * Copy constructor, resulting in an independent MethodParameter object based on the same metadata and cache state that the original
-   * object was in.
+   * Copy constructor, resulting in an independent MethodParameter object based on the same metadata and cache state that the
+   * original object was in.
    *
    * @param original the original MethodParameter object to copy from
    */
@@ -248,8 +248,8 @@ public class MethodParameter {
   /**
    * Initialize parameter name discovery for this method parameter.
    * <p>
-   * This method does not actually try to retrieve the parameter name at this point; it just allows discovery to happen when the application
-   * calls {@link #getParameterName()} (if ever).
+   * This method does not actually try to retrieve the parameter name at this point; it just allows discovery to happen when the
+   * application calls {@link #getParameterName()} (if ever).
    */
   public void initParameterNameDiscovery(ParameterNameDiscoverer parameterNameDiscoverer) {
     this.parameterNameDiscoverer = parameterNameDiscoverer;
@@ -293,8 +293,8 @@ public class MethodParameter {
   }
 
   /**
-   * Return the nesting level of the target type (typically 1; e.g. in case of a List of Lists, 1 would indicate the nested List, whereas 2
-   * would indicate the element of the nested List).
+   * Return the nesting level of the target type (typically 1; e.g. in case of a List of Lists, 1 would indicate the nested List,
+   * whereas 2 would indicate the element of the nested List).
    */
   public int getNestingLevel() {
     return this.nestingLevel;

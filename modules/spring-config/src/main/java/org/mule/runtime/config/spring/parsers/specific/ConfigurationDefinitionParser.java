@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
@@ -17,8 +17,8 @@ import org.w3c.dom.Element;
 import static org.mule.runtime.config.spring.util.ProcessingStrategyUtils.DEFAULT_PROCESSING_STRATEGY;
 
 /**
- * Parses the <mule:configuration> element. If this element appears in multiple Xml config files each will its configuration to a single
- * {@link MuleConfiguration} object.
+ * Parses the <mule:configuration> element. If this element appears in multiple Xml config files each will its configuration to a
+ * single {@link MuleConfiguration} object.
  *
  * @see MuleConfiguration
  */

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.execution;
 
@@ -44,6 +44,7 @@ public class ExceptionHandlingReplyToHandlerDecoratorTestCase extends AbstractMu
     MessagingException messagingException = new MessagingException(sourceEvent, new RuntimeException());
 
     when(messagingExceptionHandler.handleException(messagingException, sourceEvent)).thenAnswer(new Answer<MuleEvent>() {
+
       @Override
       public MuleEvent answer(InvocationOnMock invocation) throws Throwable {
         return handledEvent;
@@ -66,6 +67,7 @@ public class ExceptionHandlingReplyToHandlerDecoratorTestCase extends AbstractMu
     MessagingException messagingException = new MessagingException(sourceEvent, new RuntimeException());
 
     when(messagingExceptionHandler.handleException(messagingException, sourceEvent)).thenAnswer(new Answer<MuleEvent>() {
+
       @Override
       public MuleEvent answer(InvocationOnMock invocation) throws Throwable {
         ((MessagingException) invocation.getArguments()[0]).setHandled(true);

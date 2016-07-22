@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.config;
 
@@ -29,11 +29,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Configures a FunctionalTestComponent wrapped as a JavaComponent. This parser provides a short form way of configuring a test component in
- * Mule.
+ * Configures a FunctionalTestComponent wrapped as a JavaComponent. This parser provides a short form way of configuring a test
+ * component in Mule.
  */
 // TODO This should really extend StaticComponentDefinitionParser from mule-core as it is quite similar.
 public class TestComponentDefinitionParser extends ComponentDefinitionParser {
+
   private static Class<?> OBJECT_FACTORY_TYPE = SingletonObjectFactory.class;
   private Class<?> componentInstanceClass = FunctionalTestComponent.class;
 
@@ -61,7 +62,8 @@ public class TestComponentDefinitionParser extends ComponentDefinitionParser {
     // property value for the component
     AbstractBeanDefinition objectFactoryBeanDefinition = new GenericBeanDefinition();
     objectFactoryBeanDefinition.setBeanClass(OBJECT_FACTORY_TYPE);
-    objectFactoryBeanDefinition.getPropertyValues().addPropertyValue(AbstractObjectFactory.ATTRIBUTE_OBJECT_CLASS, componentInstanceClass);
+    objectFactoryBeanDefinition.getPropertyValues().addPropertyValue(AbstractObjectFactory.ATTRIBUTE_OBJECT_CLASS,
+        componentInstanceClass);
     objectFactoryBeanDefinition.setInitMethodName(Initialisable.PHASE_NAME);
     objectFactoryBeanDefinition.setDestroyMethodName(Disposable.PHASE_NAME);
     Map<String, Object> props = new HashMap<String, Object>();

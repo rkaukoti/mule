@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.util;
 
@@ -70,8 +70,8 @@ public class IntrospectionUtilsTestCase extends AbstractMuleTestCase {
 
   @Test
   public void getMethodArgumentTypes() throws Exception {
-    MetadataType[] types =
-        IntrospectionUtils.getMethodArgumentTypes(getMethod("bar", String.class, Long.class, Apple.class, Map.class), TYPE_LOADER);
+    MetadataType[] types = IntrospectionUtils
+        .getMethodArgumentTypes(getMethod("bar", String.class, Long.class, Apple.class, Map.class), TYPE_LOADER);
     assertNotNull(types);
     assertEquals(4, types.length);
 
@@ -122,9 +122,12 @@ public class IntrospectionUtilsTestCase extends AbstractMuleTestCase {
     assertField("fruitLikeList", arrayOf(List.class, objectTypeBuilder(Fruit.class)), exposedFields);
     assertField("wildCardList", arrayOf(List.class, objectTypeBuilder(Object.class)), exposedFields);
     assertField("rawList", arrayOf(List.class, objectTypeBuilder(Object.class)), exposedFields);
-    assertField("wildCardMap", dictionaryOf(Map.class, objectTypeBuilder(Object.class), objectTypeBuilder(Object.class)), exposedFields);
-    assertField("rawMap", dictionaryOf(Map.class, objectTypeBuilder(Object.class), objectTypeBuilder(Object.class)), exposedFields);
-    assertField("fruitLikeMap", dictionaryOf(Map.class, objectTypeBuilder(Object.class), objectTypeBuilder(Fruit.class)), exposedFields);
+    assertField("wildCardMap", dictionaryOf(Map.class, objectTypeBuilder(Object.class), objectTypeBuilder(Object.class)),
+        exposedFields);
+    assertField("rawMap", dictionaryOf(Map.class, objectTypeBuilder(Object.class), objectTypeBuilder(Object.class)),
+        exposedFields);
+    assertField("fruitLikeMap", dictionaryOf(Map.class, objectTypeBuilder(Object.class), objectTypeBuilder(Fruit.class)),
+        exposedFields);
   }
 
   private void assertField(String name, MetadataType metadataType, Collection<Field> fields) {

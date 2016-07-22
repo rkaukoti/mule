@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -27,8 +27,9 @@ import static org.junit.Assert.assertTrue;
 import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.registerConnector;
 
 /**
- * This test case tests the both dispatcher threading profile and it's rejection handlers and AbstractConnector dispatch logic by dispatch
- * events using TestConnector with varying threading profile configurations and asserting the correct outcome. See: MULE-4752
+ * This test case tests the both dispatcher threading profile and it's rejection handlers and AbstractConnector dispatch logic by
+ * dispatch events using TestConnector with varying threading profile configurations and asserting the correct outcome. See:
+ * MULE-4752
  */
 public class DispatcherThreadingProfileTestCase extends AbstractMuleContextEndpointTestCase {
 
@@ -80,8 +81,8 @@ public class DispatcherThreadingProfileTestCase extends AbstractMuleContextEndpo
     // Second job waits in workQueue for first job to complete.
     latch = new CountDownLatch(2);
 
-    createTestConnectorWithSingleDispatcherThread(1, ThreadingProfile.WHEN_EXHAUSTED_WAIT, ThreadingProfile.DEFAULT_THREAD_WAIT_TIMEOUT,
-        ThreadingProfile.DEFAULT_MAX_BUFFER_SIZE);
+    createTestConnectorWithSingleDispatcherThread(1, ThreadingProfile.WHEN_EXHAUSTED_WAIT,
+        ThreadingProfile.DEFAULT_THREAD_WAIT_TIMEOUT, ThreadingProfile.DEFAULT_MAX_BUFFER_SIZE);
     dispatchTwoAsyncEvents();
 
     // Both execute in serial as the second job wait for the fist job to complete
@@ -161,8 +162,8 @@ public class DispatcherThreadingProfileTestCase extends AbstractMuleContextEndpo
     createTestConnectorWithSingleDispatcherThread(1, exhaustedAction, 1, 1);
   }
 
-  protected void createTestConnectorWithSingleDispatcherThread(int threads, int exhaustedAction, long waitTimeout, int maxBufferSize)
-      throws MuleException {
+  protected void createTestConnectorWithSingleDispatcherThread(int threads, int exhaustedAction, long waitTimeout,
+      int maxBufferSize) throws MuleException {
     TestConnector connector = new TestConnector(muleContext);
     ThreadingProfile threadingProfile = new ImmutableThreadingProfile(threads, threads, maxBufferSize,
         ThreadingProfile.DEFAULT_MAX_THREAD_TTL, waitTimeout, exhaustedAction, true, null, null);
@@ -180,6 +181,7 @@ public class DispatcherThreadingProfileTestCase extends AbstractMuleContextEndpo
   }
 
   public class DelayTestMessageDispatcher extends TestMessageDispatcher {
+
     public DelayTestMessageDispatcher(OutboundEndpoint endpoint) {
       super(endpoint);
     }
@@ -193,6 +195,7 @@ public class DispatcherThreadingProfileTestCase extends AbstractMuleContextEndpo
   }
 
   class DelayTestMessageDispatcherFactory extends TestMessageDispatcherFactory {
+
     @Override
     public MessageDispatcher create(OutboundEndpoint endpoint) throws MuleException {
       return new DelayTestMessageDispatcher(endpoint);

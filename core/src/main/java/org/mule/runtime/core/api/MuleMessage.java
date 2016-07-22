@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api;
 
@@ -57,8 +57,8 @@ public interface MuleMessage extends org.mule.runtime.api.message.MuleMessage, M
   /**
    * gets the unique identifier for the message. It's up to the implementation to ensure a unique id
    *
-   * @return a unique message id. The Id should never be null. If the underlying transport does not have the notion of a message Id, one
-   *         should be generated. The generated Id should be a UUID.
+   * @return a unique message id. The Id should never be null. If the underlying transport does not have the notion of a message
+   *         Id, one should be generated. The generated Id should be a UUID.
    */
   String getUniqueId();
 
@@ -77,16 +77,17 @@ public interface MuleMessage extends org.mule.runtime.api.message.MuleMessage, M
   Correlation getCorrelation();
 
   /**
-   * Returns a replyTo address for this message. This is useful in an asynchronous environment where the caller doesn't wait for a response
-   * and the response needs to be routed somewhere for further processing. The value of this field can be any valid endpointUri url.
+   * Returns a replyTo address for this message. This is useful in an asynchronous environment where the caller doesn't wait for a
+   * response and the response needs to be routed somewhere for further processing. The value of this field can be any valid
+   * endpointUri url.
    *
    * @return the endpointUri url to reply to or null if one has not been set
    */
   Object getReplyTo();
 
   /**
-   * If an error occurred during the processing of this message this will return a ErrorPayload that contains the root exception and Mule
-   * error code, plus any other releated info
+   * If an error occurred during the processing of this message this will return a ErrorPayload that contains the root exception
+   * and Mule error code, plus any other releated info
    *
    * @return The exception payload (if any) attached to this message
    */
@@ -263,6 +264,7 @@ public interface MuleMessage extends org.mule.runtime.api.message.MuleMessage, M
   }
 
   interface CollectionBuilder extends org.mule.runtime.api.message.MuleMessage.CollectionBuilder, Builder {
+
     @Override
     CollectionBuilder itemMediaType(MediaType mediaType);
 

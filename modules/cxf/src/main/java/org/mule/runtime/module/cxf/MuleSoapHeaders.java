@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf;
 
@@ -28,6 +28,7 @@ import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_PROP
  * <code>MuleSoapHeaders</code> is a helper class for extracting and writing Mule header properties to s Soap message
  */
 public class MuleSoapHeaders {
+
   public static final String MULE_10_ACTOR = "http://www.muleumo.org/providers/soap/1.0";
   public static final String MULE_NAMESPACE = "mule";
   public static final String MULE_HEADER = "header";
@@ -159,21 +160,22 @@ public class MuleSoapHeaders {
     }
 
     if (correlationId != null) {
-      Node e =
-          muleHeader.appendChild(new DOMElement(new QName(MULE_CORRELATION_ID_PROPERTY, new Namespace(MULE_NAMESPACE, MULE_10_ACTOR))));
+      Node e = muleHeader
+          .appendChild(new DOMElement(new QName(MULE_CORRELATION_ID_PROPERTY, new Namespace(MULE_NAMESPACE, MULE_10_ACTOR))));
       e.setNodeValue(correlationId);
 
-      e = muleHeader
-          .appendChild(new DOMElement(new QName(MULE_CORRELATION_GROUP_SIZE_PROPERTY, new Namespace(MULE_NAMESPACE, MULE_10_ACTOR))));
+      e = muleHeader.appendChild(
+          new DOMElement(new QName(MULE_CORRELATION_GROUP_SIZE_PROPERTY, new Namespace(MULE_NAMESPACE, MULE_10_ACTOR))));
       e.setNodeValue(correlationGroup);
 
-      e = muleHeader
-          .appendChild(new DOMElement(new QName(MULE_CORRELATION_SEQUENCE_PROPERTY, new Namespace(MULE_NAMESPACE, MULE_10_ACTOR))));
+      e = muleHeader.appendChild(
+          new DOMElement(new QName(MULE_CORRELATION_SEQUENCE_PROPERTY, new Namespace(MULE_NAMESPACE, MULE_10_ACTOR))));
       e.setNodeValue(correlationSequence);
     }
     if (replyTo != null) {
 
-      Node e = muleHeader.appendChild(new DOMElement(new QName(MULE_REPLY_TO_PROPERTY, new Namespace(MULE_NAMESPACE, MULE_10_ACTOR))));
+      Node e =
+          muleHeader.appendChild(new DOMElement(new QName(MULE_REPLY_TO_PROPERTY, new Namespace(MULE_NAMESPACE, MULE_10_ACTOR))));
       e.setNodeValue(replyTo);
     }
     return muleHeader;

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -17,10 +17,12 @@ import javax.jms.Message;
 import javax.jms.Session;
 
 /**
- * <code>JmsClientAcknowledgeTransaction</code> is a transaction implementation of performing a message acknowledgement. There is no notion
- * of rollback with client acknowledgement, but this transaction can be useful for controlling how messages are consumed from a destination.
+ * <code>JmsClientAcknowledgeTransaction</code> is a transaction implementation of performing a message acknowledgement. There is
+ * no notion of rollback with client acknowledgement, but this transaction can be useful for controlling how messages are consumed
+ * from a destination.
  */
 public class JmsClientAcknowledgeTransaction extends AbstractSingleResourceTransaction {
+
   private volatile Message message;
 
   public JmsClientAcknowledgeTransaction(MuleContext muleContext) {
@@ -63,7 +65,8 @@ public class JmsClientAcknowledgeTransaction extends AbstractSingleResourceTrans
       return;
     }
     if (!(key instanceof Connection) || !(resource instanceof Session)) {
-      throw new IllegalTransactionStateException(CoreMessages.transactionCanOnlyBindToResources("javax.jms.Connection/javax.jms.Session"));
+      throw new IllegalTransactionStateException(
+          CoreMessages.transactionCanOnlyBindToResources("javax.jms.Connection/javax.jms.Session"));
     }
 
     Session session = (Session) resource;

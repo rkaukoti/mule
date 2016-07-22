@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -16,8 +16,8 @@ import javax.jms.JMSException;
 import javax.jms.Session;
 
 /**
- * <code>JmsTransaction</code> is a wrapper for a JMS local transaction. This object holds the JMS session and controls when the transaction
- * is committed or rolled back.
+ * <code>JmsTransaction</code> is a wrapper for a JMS local transaction. This object holds the JMS session and controls when the
+ * transaction is committed or rolled back.
  */
 public class JmsTransaction extends AbstractSingleResourceTransaction {
 
@@ -28,7 +28,8 @@ public class JmsTransaction extends AbstractSingleResourceTransaction {
   @Override
   public void bindResource(Object key, Object resource) throws TransactionException {
     if (!(key instanceof Connection) || !(resource instanceof Session)) {
-      throw new IllegalTransactionStateException(CoreMessages.transactionCanOnlyBindToResources("javax.jms.Connection/javax.jms.Session"));
+      throw new IllegalTransactionStateException(
+          CoreMessages.transactionCanOnlyBindToResources("javax.jms.Connection/javax.jms.Session"));
     }
 
     Session session = (Session) resource;

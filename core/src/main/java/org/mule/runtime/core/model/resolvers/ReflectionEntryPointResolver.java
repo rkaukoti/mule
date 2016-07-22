@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.model.resolvers;
 
@@ -19,16 +19,16 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * <code>ReflectEntryPointResolver</code> is used to determine the entry point on a service after an event has been received for it. The
- * entrypoint is discovered using the event payload type(s) as the argument using reflection. An entry point will try and match for
- * different argument types, so it's possible to have multiple entry points on a single service.
+ * <code>ReflectEntryPointResolver</code> is used to determine the entry point on a service after an event has been received for
+ * it. The entrypoint is discovered using the event payload type(s) as the argument using reflection. An entry point will try and
+ * match for different argument types, so it's possible to have multiple entry points on a single service.
  * <p/>
- * For multiple parameters the payload of context.getMessage().getPayload() should be an Array of objects. If the message payload is of type
- * {@link org.mule.runtime.api.message.NullPayload} the resolver will look for a no-argument method to call that doesn't match the set of
- * ignoredMethods on the resolver.
+ * For multiple parameters the payload of context.getMessage().getPayload() should be an Array of objects. If the message payload
+ * is of type {@link org.mule.runtime.api.message.NullPayload} the resolver will look for a no-argument method to call that
+ * doesn't match the set of ignoredMethods on the resolver.
  * <p/>
- * Also a set of 'ignored' methods are available (and the use can add others) to tell the resolver to not resolve to these methods. The
- * default ones are:
+ * Also a set of 'ignored' methods are available (and the use can add others) to tell the resolver to not resolve to these
+ * methods. The default ones are:
  * <ul>
  * <li>{@link #toString()}
  * <li>{@link #getClass()}
@@ -45,10 +45,11 @@ import java.util.Set;
  * Note that wildcard expressions can be used.
  */
 public class ReflectionEntryPointResolver extends AbstractEntryPointResolver {
+
   protected WildcardFilter filter;
   // we don't want to match these methods when looking for a service method
-  private Set<String> ignoredMethods = new HashSet<String>(Arrays.asList("equals", "getInvocationHandler", "set*", "toString", "getClass",
-      "notify", "notifyAll", "wait", "hashCode", "clone", "is*", "get*"));
+  private Set<String> ignoredMethods = new HashSet<String>(Arrays.asList("equals", "getInvocationHandler", "set*", "toString",
+      "getClass", "notify", "notifyAll", "wait", "hashCode", "clone", "is*", "get*"));
 
   public ReflectionEntryPointResolver() {
     updateFilter();
@@ -59,7 +60,8 @@ public class ReflectionEntryPointResolver extends AbstractEntryPointResolver {
   }
 
   /**
-   * Returns an unmodifiable Set of ignoredMethods on this resolver To add method to the resolver use {@link #addIgnoredMethod(String)}
+   * Returns an unmodifiable Set of ignoredMethods on this resolver To add method to the resolver use
+   * {@link #addIgnoredMethod(String)}
    *
    * @return unmodifiable set of method names set on this resolver
    */
@@ -84,10 +86,10 @@ public class ReflectionEntryPointResolver extends AbstractEntryPointResolver {
   }
 
   /**
-   * Will discover the entrypoint on the service using the payload type to figure out the method to call. For multiple parameters the
-   * payload of context.getMessage().geTPayload() should be an Array of objects. If the message payload is of type
-   * {@link org.mule.runtime.api.message.NullPayload} the resolver will look for a no-argument method to call that doesn't match the set of
-   * ignoredMethods on the resover.
+   * Will discover the entrypoint on the service using the payload type to figure out the method to call. For multiple parameters
+   * the payload of context.getMessage().geTPayload() should be an Array of objects. If the message payload is of type
+   * {@link org.mule.runtime.api.message.NullPayload} the resolver will look for a no-argument method to call that doesn't match
+   * the set of ignoredMethods on the resover.
    */
   public InvocationResult invoke(Object component, MuleEventContext context) throws Exception {
     Object[] payload = getPayloadFromMessage(context);
@@ -118,7 +120,8 @@ public class ReflectionEntryPointResolver extends AbstractEntryPointResolver {
       // found exact match for method with context argument
       method = this.addMethodByArguments(component, methods.get(0), payload);
     } else {
-      methods = ClassUtils.getSatisfiableMethods(component.getClass(), ClassUtils.getClassTypes(payload), true, true, ignoredMethods);
+      methods =
+          ClassUtils.getSatisfiableMethods(component.getClass(), ClassUtils.getClassTypes(payload), true, true, ignoredMethods);
 
       numMethods = methods.size();
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.config.spring.editors;
 
@@ -12,11 +12,13 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
 import java.beans.PropertyEditorSupport;
 
 /**
- * Translates a connector name property into the corresponding {@link org.mule.compatibility.core.api.transport.Connector} instance.
+ * Translates a connector name property into the corresponding {@link org.mule.compatibility.core.api.transport.Connector}
+ * instance.
  *
  * TODO - Why isn't this simply a reference?
  */
 public class ConnectorPropertyEditor extends PropertyEditorSupport implements MuleContextAware {
+
   private MuleContext muleContext;
 
   @Override

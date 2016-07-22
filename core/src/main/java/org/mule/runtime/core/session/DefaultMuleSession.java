@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.session;
 
@@ -30,6 +30,7 @@ import java.util.Set;
  */
 
 public final class DefaultMuleSession implements MuleSession {
+
   /**
    * Serial version
    */
@@ -48,8 +49,8 @@ public final class DefaultMuleSession implements MuleSession {
   private String id;
 
   /**
-   * The security context associated with the session. Note that this context will only be serialized if the SecurityContext object is
-   * Serializable.
+   * The security context associated with the session. Note that this context will only be serialized if the SecurityContext
+   * object is Serializable.
    */
   private SecurityContext securityContext;
 
@@ -91,7 +92,8 @@ public final class DefaultMuleSession implements MuleSession {
   }
 
   /**
-   * The security context for this session. If not null outbound, inbound and/or method invocations will be authenticated using this context
+   * The security context for this session. If not null outbound, inbound and/or method invocations will be authenticated using
+   * this context
    *
    * @return the context for this session or null if the request is not secure.
    */
@@ -101,7 +103,8 @@ public final class DefaultMuleSession implements MuleSession {
   }
 
   /**
-   * The security context for this session. If not null outbound, inbound and/or method invocations will be authenticated using this context
+   * The security context for this session. If not null outbound, inbound and/or method invocations will be authenticated using
+   * this context
    *
    * @param context the context for this session or null if the request is not secure.
    */
@@ -111,8 +114,8 @@ public final class DefaultMuleSession implements MuleSession {
   }
 
   /**
-   * Will set a session level property. These will either be stored and retrieved using the underlying transport mechanism of stored using a
-   * default mechanism
+   * Will set a session level property. These will either be stored and retrieved using the underlying transport mechanism of
+   * stored using a default mechanism
    *
    * @param key the key for the object data being stored on the session
    * @param value the value of the session data

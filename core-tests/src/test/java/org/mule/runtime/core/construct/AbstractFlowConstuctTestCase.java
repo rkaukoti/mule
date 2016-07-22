@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.construct;
 
@@ -19,6 +19,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public abstract class AbstractFlowConstuctTestCase extends AbstractMuleContextTestCase {
+
   protected DirectInboundMessageSource directInboundMessageSource;
 
   @Override
@@ -143,6 +144,7 @@ public abstract class AbstractFlowConstuctTestCase extends AbstractMuleContextTe
   }
 
   public static class DirectInboundMessageSource implements MessageSource {
+
     private MessageProcessor listener;
 
     public void setListener(MessageProcessor listener) {

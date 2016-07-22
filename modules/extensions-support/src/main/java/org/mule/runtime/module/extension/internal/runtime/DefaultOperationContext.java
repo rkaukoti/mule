@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime;
 
@@ -28,8 +28,8 @@ import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils
 import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.toActionCode;
 
 /**
- * Default implementation of {@link OperationContextAdapter} which adds additional information which is relevant to this implementation of
- * the extensions-api, even though it's not part of the API itself
+ * Default implementation of {@link OperationContextAdapter} which adds additional information which is relevant to this
+ * implementation of the extensions-api, even though it's not part of the API itself
  *
  * @since 3.7.0
  */
@@ -188,10 +188,12 @@ public class DefaultOperationContext implements OperationContextAdapter {
   }
 
   private OperationTransactionalAction getTransactionalAction() {
-    OperationTransactionalAction action = getTypeSafeParameter(TRANSACTIONAL_ACTION_PARAMETER_NAME, OperationTransactionalAction.class);
+    OperationTransactionalAction action =
+        getTypeSafeParameter(TRANSACTIONAL_ACTION_PARAMETER_NAME, OperationTransactionalAction.class);
     if (action == null) {
-      throw new IllegalArgumentException(format("Operation '%s' from extension '%s' is transactional but no transactional action defined",
-          operationModel.getName(), configuration.getModel().getExtensionModel().getName()));
+      throw new IllegalArgumentException(
+          format("Operation '%s' from extension '%s' is transactional but no transactional action defined",
+              operationModel.getName(), configuration.getModel().getExtensionModel().getName()));
     }
 
     return action;

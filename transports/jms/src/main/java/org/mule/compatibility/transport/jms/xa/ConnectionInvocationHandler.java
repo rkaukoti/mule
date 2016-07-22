@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.xa;
 
@@ -23,6 +23,7 @@ import javax.jms.XATopicConnection;
 import javax.jms.XATopicSession;
 
 public class ConnectionInvocationHandler implements TargetInvocationHandler {
+
   private Object xaConnection;
   private Boolean sameRMOverrideValue;
 
@@ -52,7 +53,8 @@ public class ConnectionInvocationHandler implements TargetInvocationHandler {
       if (tx != null) {
         XASession xas = ((XAConnection) xaConnection).createXASession();
         return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
-            new Class[] {Session.class, XaTransaction.MuleXaObject.class}, new SessionInvocationHandler(xas, sameRMOverrideValue));
+            new Class[] {Session.class, XaTransaction.MuleXaObject.class},
+            new SessionInvocationHandler(xas, sameRMOverrideValue));
       } else {
         return ((XAConnection) xaConnection).createSession(false, Session.AUTO_ACKNOWLEDGE);
       }
@@ -60,7 +62,8 @@ public class ConnectionInvocationHandler implements TargetInvocationHandler {
       if (tx != null) {
         XAQueueSession xaqs = ((XAQueueConnection) xaConnection).createXAQueueSession();
         return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
-            new Class[] {QueueSession.class, XaTransaction.MuleXaObject.class}, new SessionInvocationHandler(xaqs, sameRMOverrideValue));
+            new Class[] {QueueSession.class, XaTransaction.MuleXaObject.class},
+            new SessionInvocationHandler(xaqs, sameRMOverrideValue));
       } else {
         return ((XAQueueConnection) xaConnection).createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
       }
@@ -68,7 +71,8 @@ public class ConnectionInvocationHandler implements TargetInvocationHandler {
       if (tx != null) {
         XATopicSession xats = ((XATopicConnection) xaConnection).createXATopicSession();
         return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(),
-            new Class[] {TopicSession.class, XaTransaction.MuleXaObject.class}, new SessionInvocationHandler(xats, sameRMOverrideValue));
+            new Class[] {TopicSession.class, XaTransaction.MuleXaObject.class},
+            new SessionInvocationHandler(xats, sameRMOverrideValue));
       } else {
         return ((XATopicConnection) xaConnection).createTopicSession(false, Session.AUTO_ACKNOWLEDGE);
       }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.config.spring.parsers;
 
@@ -24,7 +24,8 @@ public class EndpointParsersTestNamespaceHandler extends AbstractMuleNamespaceHa
     registerMuleBeanDefinitionParser("address", new ChildAddressDefinitionParser("test")).addAlias("address", "host");
     registerBeanDefinitionParser("orphan-endpoint", new OrphanEndpointDefinitionParser(EndpointURIEndpointBuilder.class));
     registerBeanDefinitionParser("child-endpoint", new ChildEndpointDefinitionParser(InboundEndpointFactoryBean.class));
-    registerBeanDefinitionParser("unaddressed-orphan-endpoint", new OrphanEndpointDefinitionParser(EndpointURIEndpointBuilder.class));
+    registerBeanDefinitionParser("unaddressed-orphan-endpoint",
+        new OrphanEndpointDefinitionParser(EndpointURIEndpointBuilder.class));
     registerBeanDefinitionParser("addressed-orphan-endpoint",
         new AddressedEndpointDefinitionParser("test", AddressedEndpointDefinitionParser.PROTOCOL,
             new OrphanEndpointDefinitionParser(EndpointURIEndpointBuilder.class), new String[] {"path"}, new String[] {}));
@@ -32,7 +33,8 @@ public class EndpointParsersTestNamespaceHandler extends AbstractMuleNamespaceHa
         new TransportEndpointDefinitionParser("test", InboundEndpointFactoryBean.class, new String[] {}));
 
     registerMuleBeanDefinitionParser("complex-endpoint", new TransportGlobalEndpointDefinitionParser("test",
-        TransportGlobalEndpointDefinitionParser.PROTOCOL, new String[] {"path"}, new String[] {"string", "bar"})).addAlias("bar", "foo");
+        TransportGlobalEndpointDefinitionParser.PROTOCOL, new String[] {"path"}, new String[] {"string", "bar"})).addAlias("bar",
+            "foo");
   }
 
 }

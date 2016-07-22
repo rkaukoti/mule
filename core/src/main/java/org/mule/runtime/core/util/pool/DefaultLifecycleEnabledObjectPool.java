@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.pool;
 
@@ -24,12 +24,13 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * A LifecyleEnabledObjectPool implementation for pooling {@link LifecycleAdapter} instances for implementations of {@link JavaComponent}
- * that require {@link LifecycleAdapter} pooling such as {@link PooledJavaComponent}.
+ * A LifecyleEnabledObjectPool implementation for pooling {@link LifecycleAdapter} instances for implementations of
+ * {@link JavaComponent} that require {@link LifecycleAdapter} pooling such as {@link PooledJavaComponent}.
  *
  * @see PooledJavaComponent
  */
 public class DefaultLifecycleEnabledObjectPool extends CommonsPoolObjectPool implements LifecyleEnabledObjectPool {
+
   /**
    * logger used by this class
    */
@@ -40,8 +41,8 @@ public class DefaultLifecycleEnabledObjectPool extends CommonsPoolObjectPool imp
   private List items = new LinkedList();
 
   /**
-   * @param objectFactory The object factory that should be used to create new {@link org.mule.runtime.core.api.component.LifecycleAdapter}
-   *        instance for the pool
+   * @param objectFactory The object factory that should be used to create new
+   *        {@link org.mule.runtime.core.api.component.LifecycleAdapter} instance for the pool
    * @param poolingProfile The pooling progile ot be used to configure pool
    */
   public DefaultLifecycleEnabledObjectPool(ObjectFactory objectFactory, PoolingProfile poolingProfile, MuleContext muleContext) {

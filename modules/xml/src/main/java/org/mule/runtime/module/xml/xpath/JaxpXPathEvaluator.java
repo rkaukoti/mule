@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.xpath;
 
@@ -30,25 +30,25 @@ import javax.xml.xpath.XPathVariableResolver;
 import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
- * This is the preferred base implementation of {@link XPathEvaluator}. Because it's based on the JAXP API (JSR-206), it's ideal for keeping
- * a common code base which can work with different engines, as long as they implement that API.
+ * This is the preferred base implementation of {@link XPathEvaluator}. Because it's based on the JAXP API (JSR-206), it's ideal
+ * for keeping a common code base which can work with different engines, as long as they implement that API.
  *
- * This base class contains all of the logic necessary to comply with the {@link XPathEvaluator} contract. Implementations only need to
- * implement {@link #createXPathFactory()} in order to provide the {@link XPathFactory} implementation it wishes to use.
+ * This base class contains all of the logic necessary to comply with the {@link XPathEvaluator} contract. Implementations only
+ * need to implement {@link #createXPathFactory()} in order to provide the {@link XPathFactory} implementation it wishes to use.
  *
  * Another important feature of this implementation is that it caches compiled versions of executed expressions to provide better
  * performance. Expressions that haven't been used for more than a minute are automatically evicted.
  *
- * In addition to the {@link #registerNamespaces(Map)} and {@link #registerNamespaces(NamespaceManager)} methods, this implementation also
- * provides out of the box support for the standard namespaces defined in {@link XPathNamespaceContext}
+ * In addition to the {@link #registerNamespaces(Map)} and {@link #registerNamespaces(NamespaceManager)} methods, this
+ * implementation also provides out of the box support for the standard namespaces defined in {@link XPathNamespaceContext}
  *
  * In order to allow binding expression parameters to flow variables, this class also implements the {@link XPathVariableResolver}
- * interface. Because this class caches compiled expressions which might be executed concurrently in different threads, we need a way to
- * correlate different {@link MuleEvent} instances to each invocation of the {@link #resolveVariable(QName)} method. To do that, it uses a
- * {@link ThreadLocal} in the {@link #evaluationEvent} attribute, so that we can determine the corresponding event for each thread
- * evaluating an XPath expression. Notice that because xpath evaluation is an operation that happens in RAM memory (basically because the
- * DOM {@link Node} needs to be completely loaded), we can use a {@link ThreadLocal} without risking failure if this is executed in a
- * non-blocking environment.
+ * interface. Because this class caches compiled expressions which might be executed concurrently in different threads, we need a
+ * way to correlate different {@link MuleEvent} instances to each invocation of the {@link #resolveVariable(QName)} method. To do
+ * that, it uses a {@link ThreadLocal} in the {@link #evaluationEvent} attribute, so that we can determine the corresponding event
+ * for each thread evaluating an XPath expression. Notice that because xpath evaluation is an operation that happens in RAM memory
+ * (basically because the DOM {@link Node} needs to be completely loaded), we can use a {@link ThreadLocal} without risking
+ * failure if this is executed in a non-blocking environment.
  *
  * @since 3.6.0
  */
@@ -60,6 +60,7 @@ public abstract class JaxpXPathEvaluator implements XPathEvaluator, XPathVariabl
   private NamespaceContext namespaceContext;
   private final LoadingCache<String, XPathExpression> expressionCache =
       CacheBuilder.newBuilder().expireAfterAccess(1, TimeUnit.MINUTES).build(new CacheLoader<String, XPathExpression>() {
+
         @Override
         public XPathExpression load(String key) throws Exception {
           return compile(key);
@@ -139,8 +140,8 @@ public abstract class JaxpXPathEvaluator implements XPathEvaluator, XPathVariabl
   }
 
   /**
-   * {@inheritDoc} Returns an immutable map with the current registered namespaces. The returned map will not reflect any changes performed
-   * afterwards.
+   * {@inheritDoc} Returns an immutable map with the current registered namespaces. The returned map will not reflect any changes
+   * performed afterwards.
    */
   @Override
   public Map<String, String> getRegisteredNamespaces() {

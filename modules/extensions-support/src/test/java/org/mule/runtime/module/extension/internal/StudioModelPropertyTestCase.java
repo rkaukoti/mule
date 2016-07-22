@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal;
 
@@ -49,7 +49,8 @@ public class StudioModelPropertyTestCase extends AbstractMuleTestCase {
   public void verifyPropertyIsPopulated() throws Exception {
     DescribingContext context = new DefaultDescribingContext(HeisenbergExtension.class.getClassLoader());
     ExtensionDeclarer declarer =
-        new AnnotationsBasedDescriber(HeisenbergExtension.class, new StaticVersionResolver(getProductVersion())).describe(context);
+        new AnnotationsBasedDescriber(HeisenbergExtension.class, new StaticVersionResolver(getProductVersion()))
+            .describe(context);
     ExtensionModel extensionModel = extensionFactory.createFrom(declarer, context);
     StudioModelProperty studioModelProperty = extensionModel.getModelProperty(StudioModelProperty.class).get();
     assertThat(studioModelProperty.getEditorFileName(), is(""));

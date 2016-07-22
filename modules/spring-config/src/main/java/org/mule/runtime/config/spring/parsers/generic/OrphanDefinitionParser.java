@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.generic;
 
@@ -9,15 +9,16 @@ import org.w3c.dom.Element;
 
 /**
  * <p>
- * Contructs a single, standalone bean from an element - it is not injected into any other object. This parser can be configured to
- * automatically set the class of the object, the init and destroy methods and whether this object is a singleton.
+ * Contructs a single, standalone bean from an element - it is not injected into any other object. This parser can be configured
+ * to automatically set the class of the object, the init and destroy methods and whether this object is a singleton.
  * </p>
  * <p>
- * Typically, you should use {@link MuleOrphanDefinitionParser} instead of this class, since these elements occur in the <mule> top level
- * element.
+ * Typically, you should use {@link MuleOrphanDefinitionParser} instead of this class, since these elements occur in the <mule>
+ * top level element.
  * </p>
  */
 public class OrphanDefinitionParser extends AbstractMuleBeanDefinitionParser {
+
   private Class<?> beanClass = null;
   private boolean dynamicClass = false;
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.domain.database;
@@ -78,7 +78,8 @@ public class DataSourceFactory implements MuleContextAware, Disposable {
   }
 
   protected DataSource createSingleDataSource(DataSourceConfig resolvedDataSourceConfig) throws SQLException {
-    StandardDataSource dataSource = resolvedDataSourceConfig.isUseXaTransactions() ? new StandardXADataSource() : new StandardDataSource();
+    StandardDataSource dataSource =
+        resolvedDataSourceConfig.isUseXaTransactions() ? new StandardXADataSource() : new StandardDataSource();
     dataSource.setDriverName(resolvedDataSourceConfig.getDriverClassName());
     if (resolvedDataSourceConfig.getConnectionTimeout() >= 0) {
       dataSource.setLoginTimeout(resolvedDataSourceConfig.getConnectionTimeout());
@@ -99,7 +100,8 @@ public class DataSourceFactory implements MuleContextAware, Disposable {
     }
   }
 
-  protected DataSource createPooledStandardDataSource(DataSource dataSource, DbPoolingProfile poolingProfile) throws SQLException {
+  protected DataSource createPooledStandardDataSource(DataSource dataSource, DbPoolingProfile poolingProfile)
+      throws SQLException {
     Map<String, Object> config = new HashMap<>();
     config.put("maxPoolSize", poolingProfile.getMaxPoolSize());
     config.put("minPoolSize", poolingProfile.getMinPoolSize());

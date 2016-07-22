@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.security;
 
@@ -14,10 +14,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A security provider which only authenticates a single user at a time (i.e., authentication of a new user overwrites the previous
- * authentication).
+ * A security provider which only authenticates a single user at a time (i.e., authentication of a new user overwrites the
+ * previous authentication).
  */
 public class TestSingleUserSecurityProvider extends AbstractSecurityProvider {
+
   public static final String PROPERTY_FAVORITE_COLOR = "FAVORITE_COLOR";
   public static final String PROPERTY_NUMBER_LOGINS = "NUMBER_LOGINS";
   protected transient final Logger logger = LoggerFactory.getLogger(getClass());
@@ -43,7 +44,8 @@ public class TestSingleUserSecurityProvider extends AbstractSecurityProvider {
       String favoriteColor = (String) props.get(PROPERTY_FAVORITE_COLOR);
       props.put(PROPERTY_NUMBER_LOGINS, numberLogins + 1);
       authentication.setProperties(props);
-      logger.info("Welcome back " + user + " (" + numberLogins + 1 + " logins), we remembered your favorite color: " + favoriteColor);
+      logger.info(
+          "Welcome back " + user + " (" + numberLogins + 1 + " logins), we remembered your favorite color: " + favoriteColor);
     } else {
       String favoriteColor = getFavoriteColor(user);
       logger.info("First login for user: " + user + ", favorite color is " + favoriteColor);

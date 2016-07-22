@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -11,8 +11,8 @@ import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.util.ClassUtils;
 
 /**
- * <code>AbstractMessageDispatcherFactory</code> is a base implementation of the <code>MessageDispatcherFactory</code> interface for
- * managing the lifecycle of message dispatchers.
+ * <code>AbstractMessageDispatcherFactory</code> is a base implementation of the <code>MessageDispatcherFactory</code> interface
+ * for managing the lifecycle of message dispatchers.
  *
  * @see MessageDispatcherFactory
  */
@@ -23,8 +23,8 @@ public abstract class AbstractMessageDispatcherFactory implements MessageDispatc
   }
 
   /**
-   * This default implementation of {@link MessageDispatcherFactory#isCreateDispatcherPerRequest()} returns <code>false</code>, which means
-   * that dispatchers are pooled according to their lifecycle as described in {@link MessageDispatcher}.
+   * This default implementation of {@link MessageDispatcherFactory#isCreateDispatcherPerRequest()} returns <code>false</code>,
+   * which means that dispatchers are pooled according to their lifecycle as described in {@link MessageDispatcher}.
    *
    * @return <code>false</code> by default, unless overwritten by a subclass.
    */

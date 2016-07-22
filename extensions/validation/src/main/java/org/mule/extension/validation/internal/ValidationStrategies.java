@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.validation.internal;
 
@@ -27,12 +27,12 @@ import static org.mule.extension.validation.internal.ImmutableValidationResult.e
 public final class ValidationStrategies {
 
   /**
-   * Perform a list of nested validation operations and informs only one {@link MultipleValidationResult} which summarizes all of the found
-   * errors (if any).
+   * Perform a list of nested validation operations and informs only one {@link MultipleValidationResult} which summarizes all of
+   * the found errors (if any).
    * <p/>
    * If {@code throwsException} is {@code true}, then the {@link ValidationResult} is communicated by throwing a
-   * {@link ValidationException}. On the other hand, if {@code throwsException} is {@code false}, then the {@link ValidationResult} is set
-   * as the message payload.
+   * {@link ValidationException}. On the other hand, if {@code throwsException} is {@code false}, then the
+   * {@link ValidationResult} is set as the message payload.
    * <p/>
    * When configured through XML, all the {@code validations} must include the All the child processors must contain the
    * {@code validator-message-processor} substitution group.

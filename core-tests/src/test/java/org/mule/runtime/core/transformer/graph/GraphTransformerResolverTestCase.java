@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer.graph;
 
@@ -28,6 +28,7 @@ import static org.mockito.Mockito.mock;
 
 @SmallTest
 public class GraphTransformerResolverTestCase extends AbstractMuleTestCase {
+
   private static final DataType XML_DATA_TYPE = mock(DataType.class, "XML_DATA_TYPE");
   private static final DataType JSON_DATA_TYPE = mock(DataType.class, "JSON_DATA_TYPE");
   private static final DataType INPUT_STREAM_DATA_TYPE = mock(DataType.class, "INPUT_STREAM_DATA_TYPE");
@@ -139,9 +140,10 @@ public class GraphTransformerResolverTestCase extends AbstractMuleTestCase {
   public void resolvesTransformersWithDifferentLength() throws ResolverException {
     Converter xmlToInputStream =
         new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(1).build();
-    Converter xmlToJson = new MockConverterBuilder().named("xmlToJson").from(XML_DATA_TYPE).to(JSON_DATA_TYPE).weighting(1).build();
-    Converter inputStreamToJson =
-        new MockConverterBuilder().named("inputStreamToJson").from(INPUT_STREAM_DATA_TYPE).to(JSON_DATA_TYPE).weighting(1).build();
+    Converter xmlToJson =
+        new MockConverterBuilder().named("xmlToJson").from(XML_DATA_TYPE).to(JSON_DATA_TYPE).weighting(1).build();
+    Converter inputStreamToJson = new MockConverterBuilder().named("inputStreamToJson").from(INPUT_STREAM_DATA_TYPE)
+        .to(JSON_DATA_TYPE).weighting(1).build();
 
     graphResolver.transformerChange(xmlToInputStream, TransformerResolver.RegistryAction.ADDED);
     graphResolver.transformerChange(xmlToJson, TransformerResolver.RegistryAction.ADDED);
@@ -156,9 +158,10 @@ public class GraphTransformerResolverTestCase extends AbstractMuleTestCase {
   public void resolvesTransformersWithSameLengthAndDifferentWeight() throws ResolverException {
     Converter xmlToInputStream =
         new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(1).build();
-    Converter xmlToString = new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
-    Converter inputStreamToJson =
-        new MockConverterBuilder().named("inputStreamToJson").from(INPUT_STREAM_DATA_TYPE).to(JSON_DATA_TYPE).weighting(2).build();
+    Converter xmlToString =
+        new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
+    Converter inputStreamToJson = new MockConverterBuilder().named("inputStreamToJson").from(INPUT_STREAM_DATA_TYPE)
+        .to(JSON_DATA_TYPE).weighting(2).build();
     Converter stringToJson =
         new MockConverterBuilder().named("stringToJson").from(STRING_DATA_TYPE).to(JSON_DATA_TYPE).weighting(1).build();
 
@@ -180,9 +183,10 @@ public class GraphTransformerResolverTestCase extends AbstractMuleTestCase {
   public void resolvesTransformerWithSameLengthAndSameWeight() throws ResolverException {
     Converter xmlToInputStream =
         new MockConverterBuilder().named("xmlToInputStream").from(XML_DATA_TYPE).to(INPUT_STREAM_DATA_TYPE).weighting(1).build();
-    Converter xmlToString = new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
-    Converter inputStreamToJson =
-        new MockConverterBuilder().named("inputStreamToJson").from(INPUT_STREAM_DATA_TYPE).to(JSON_DATA_TYPE).weighting(1).build();
+    Converter xmlToString =
+        new MockConverterBuilder().named("xmlToString").from(XML_DATA_TYPE).to(STRING_DATA_TYPE).weighting(1).build();
+    Converter inputStreamToJson = new MockConverterBuilder().named("inputStreamToJson").from(INPUT_STREAM_DATA_TYPE)
+        .to(JSON_DATA_TYPE).weighting(1).build();
     Converter stringToJson =
         new MockConverterBuilder().named("stringToJson").from(STRING_DATA_TYPE).to(JSON_DATA_TYPE).weighting(1).build();
 

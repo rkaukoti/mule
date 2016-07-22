@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.builder;
 
@@ -48,11 +48,13 @@ import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * An abstract builder for CXF services. It handles all common operations such as interceptor configuration, mule header enabling, etc.
- * Subclasses can extend this and control how the Server is created and how the {@link CxfInboundMessageProcessor} is configured.
+ * An abstract builder for CXF services. It handles all common operations such as interceptor configuration, mule header enabling,
+ * etc. Subclasses can extend this and control how the Server is created and how the {@link CxfInboundMessageProcessor} is
+ * configured.
  */
 public abstract class AbstractInboundMessageProcessorBuilder extends AbstractAnnotatedObject
     implements MuleContextAware, MessageProcessorBuilder {
+
   protected MuleContext muleContext;
   private CxfConfiguration configuration;
   private Server server;

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.generic;
 
@@ -11,6 +11,7 @@ import org.w3c.dom.Node;
  * Same as ChildDefinitionParser but injects the child element into the grandparent object (2 levels up in the XML tree).
  */
 public class GrandchildDefinitionParser extends ChildDefinitionParser {
+
   public GrandchildDefinitionParser(String setterMethod, Class clazz) {
     super(setterMethod, clazz);
   }

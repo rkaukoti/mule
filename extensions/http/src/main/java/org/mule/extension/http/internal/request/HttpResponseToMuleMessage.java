@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.http.internal.request;
 
@@ -46,6 +46,7 @@ import static org.mule.runtime.module.http.internal.util.HttpToMuleMessage.getMe
  * @since 4.0
  */
 public class HttpResponseToMuleMessage {
+
   private static final Logger logger = LoggerFactory.getLogger(HttpResponseToMuleMessage.class);
   private static final String MULTI_PART_PREFIX = "multipart/";
 
@@ -90,8 +91,8 @@ public class HttpResponseToMuleMessage {
     HttpResponseAttributes responseAttributes = createAttributes(response, parts);
 
     dataType = DataType.builder(dataType).charset(encoding).build();
-    return MuleMessage.builder(muleEvent.getMessage()).payload(payload).mediaType(dataType.getMediaType()).attributes(responseAttributes)
-        .build();
+    return MuleMessage.builder(muleEvent.getMessage()).payload(payload).mediaType(dataType.getMediaType())
+        .attributes(responseAttributes).build();
   }
 
   private HttpResponseAttributes createAttributes(HttpResponse response, Map<String, DataHandler> parts) {

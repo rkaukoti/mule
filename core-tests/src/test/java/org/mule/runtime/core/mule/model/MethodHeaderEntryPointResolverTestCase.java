@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.mule.model;
 
@@ -86,8 +86,8 @@ public class MethodHeaderEntryPointResolverTestCase extends AbstractMuleContextT
   }
 
   /**
-   * If a method with correct name is available then it should be used if the parameter type is assignable from the payload type and not
-   * just if there is an exact match. See MULE-3636.
+   * If a method with correct name is available then it should be used if the parameter type is assignable from the payload type
+   * and not just if there is an exact match. See MULE-3636.
    */
   @Test
   public void testMethodPropertyParameterAssignableFromPayload() throws Exception {
@@ -106,10 +106,12 @@ public class MethodHeaderEntryPointResolverTestCase extends AbstractMuleContextT
   }
 
   private MuleEventContext createMuleEventContext(Object payload, Map<String, Serializable> inboundProperties) throws Exception {
-    return new DefaultMuleEventContext(getTestEvent(MuleMessage.builder().payload(payload).inboundProperties(inboundProperties).build()));
+    return new DefaultMuleEventContext(
+        getTestEvent(MuleMessage.builder().payload(payload).inboundProperties(inboundProperties).build()));
   }
 
   public static class TestFruitCleaner {
+
     public void wash(Fruit fruit) {
       // dummy
     }

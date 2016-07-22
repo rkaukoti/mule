@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.routing;
 
@@ -25,6 +25,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class UntilSuccessfulTestCase extends AbstractMuleContextTestCase {
+
   private EndpointDlqUntilSuccessful untilSuccessful;
   private ListableObjectStore<MuleEvent> objectStore;
   private ConfigurableMessageProcessor targetMessageProcessor;
@@ -75,6 +76,7 @@ public class UntilSuccessfulTestCase extends AbstractMuleContextTestCase {
     assertSame(VoidMuleEvent.getInstance(), untilSuccessful.process(testEvent));
 
     pollingProber.check(new JUnitProbe() {
+
       @Override
       protected boolean test() throws Exception {
         verify(dlqEndpoint).process(any(MuleEvent.class));
@@ -89,6 +91,7 @@ public class UntilSuccessfulTestCase extends AbstractMuleContextTestCase {
   }
 
   public static class ConfigurableMessageProcessor implements MessageProcessor {
+
     private volatile int eventCount;
     private volatile MuleEvent event;
     private volatile int numberOfFailuresToSimulate;

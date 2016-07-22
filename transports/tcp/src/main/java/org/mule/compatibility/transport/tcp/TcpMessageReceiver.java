@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.tcp;
 
@@ -49,6 +49,7 @@ import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_CLIENT
  * <code>TcpMessageReceiver</code> acts like a TCP server to receive socket requests.
  */
 public class TcpMessageReceiver extends AbstractMessageReceiver implements Work {
+
   protected final AtomicBoolean disposing = new AtomicBoolean(false);
   private ServerSocket serverSocket = null;
 
@@ -117,6 +118,7 @@ public class TcpMessageReceiver extends AbstractMessageReceiver implements Work 
       if (connector.isStarted() && !disposing.get()) {
         try {
           retryTemplate.execute(new RetryCallback() {
+
             @Override
             public void doWork(RetryContext context) throws Exception {
               Socket socket = null;
@@ -177,6 +179,7 @@ public class TcpMessageReceiver extends AbstractMessageReceiver implements Work 
   }
 
   protected class TcpWorker extends AbstractReceiverResourceWorker implements Disposable, Expirable {
+
     protected Socket socket = null;
     protected TcpInputStream dataIn;
     protected InputStream underlyingIn;
@@ -197,6 +200,7 @@ public class TcpMessageReceiver extends AbstractMessageReceiver implements Work 
 
       underlyingIn = new BufferedInputStream(socket.getInputStream());
       dataIn = new TcpInputStream(underlyingIn) {
+
         @Override
         public void close() throws IOException {
           // Don't actually close the stream, we just want to know if the

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.source.polling.watermark.selector;
@@ -43,15 +43,15 @@ public class SelectorWatermark extends Watermark implements Initialisable, MuleC
       this.muleContext.getExpressionManager().validateExpression(this.selectorExpression);
     } catch (InvalidExpressionException e) {
       throw new InitialisationException(
-          MessageFactory.createStaticMessage(
-              String.format("selector-expression requires a valid MEL expression. '%s' was found instead", this.selectorExpression)),
+          MessageFactory.createStaticMessage(String
+              .format("selector-expression requires a valid MEL expression. '%s' was found instead", this.selectorExpression)),
           e, this);
     }
   }
 
   /**
-   * Returns the {@link #selectorBroker} value and resets it so that its reusable. Notice that the selectorBroker is reusable without risk
-   * of concurrency issues because watermark only works on synchronous flows
+   * Returns the {@link #selectorBroker} value and resets it so that its reusable. Notice that the selectorBroker is reusable
+   * without risk of concurrency issues because watermark only works on synchronous flows
    */
   @Override
   protected Object getUpdatedValue(MuleEvent event) {

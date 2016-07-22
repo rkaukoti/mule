@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.connector;
 
@@ -13,8 +13,8 @@ import org.mule.runtime.core.api.retry.RetryContext;
 public interface Connectable extends Lifecycle {
 
   /**
-   * Make the connection to the underlying transport. The fact that this object is connected or not should have no influence on the
-   * lifecycle, especially the start / stop state if applicable.
+   * Make the connection to the underlying transport. The fact that this object is connected or not should have no influence on
+   * the lifecycle, especially the start / stop state if applicable.
    */
   void connect() throws Exception;
 
@@ -34,8 +34,8 @@ public interface Connectable extends Lifecycle {
   String getConnectionDescription();
 
   /**
-   * Test whether the connector is able to connect to its resource(s). This will allow a retry policy to go into effect in the case of
-   * failure. Implementations must call either:
+   * Test whether the connector is able to connect to its resource(s). This will allow a retry policy to go into effect in the
+   * case of failure. Implementations must call either:
    * <ul>
    * <li>{@link RetryContext#setOk()} when no problems found (or no validation required).
    * <li>{@link RetryContext#setFailed(Throwable)} with a root cause for a connection failure.

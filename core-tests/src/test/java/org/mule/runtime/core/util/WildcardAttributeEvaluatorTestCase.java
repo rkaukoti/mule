@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -18,6 +18,7 @@ import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class WildcardAttributeEvaluatorTestCase extends AbstractMuleTestCase {
+
   @Test
   public void testStartsWithWildcard() {
     List<String> testValues = Arrays.asList("MULE", "MULEMAN", "EMULE", "MULE\\*", "\\*MULE");
@@ -62,6 +63,7 @@ public class WildcardAttributeEvaluatorTestCase extends AbstractMuleTestCase {
     assertThat(wildcardAttributeEvaluator.hasWildcards(), Is.is(true));
     final List<String> resultingValues = new ArrayList<String>();
     wildcardAttributeEvaluator.processValues(testValues, new WildcardAttributeEvaluator.MatchCallback() {
+
       @Override
       public void processMatch(String matchedValue) {
         resultingValues.add(matchedValue);

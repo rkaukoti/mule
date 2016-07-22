@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.core;
 
@@ -16,10 +16,11 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 /**
- * Test for MULE-4412 : selective-consumer filter is applied twice. We test that the filter is only applied once in the positive case, plus
- * make sure it doesn't get filtered at all when the message does not meet the filter criteria
+ * Test for MULE-4412 : selective-consumer filter is applied twice. We test that the filter is only applied once in the positive
+ * case, plus make sure it doesn't get filtered at all when the message does not meet the filter criteria
  */
 public class Mule4412TestCase extends FunctionalTestCase {
+
   @Override
   protected String getConfigFile() {
     return "mule-4412-flow.xml";

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
@@ -16,11 +16,12 @@ import java.util.Map;
 import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
- * This class represents the outcome of the evaluation of a {@link ResolverSet}. This class maps a set of {@link ParameterModel} to a set of
- * result {@link Object}s.
+ * This class represents the outcome of the evaluation of a {@link ResolverSet}. This class maps a set of {@link ParameterModel}
+ * to a set of result {@link Object}s.
  * <p/>
- * This classes {@link #equals(Object)} and {@link #hashCode()} methods have been redefined to be consistent with the result objects. This
- * is so that given two instances of this class you can determine if the evaluations they represent have an equivalent outcome
+ * This classes {@link #equals(Object)} and {@link #hashCode()} methods have been redefined to be consistent with the result
+ * objects. This is so that given two instances of this class you can determine if the evaluations they represent have an
+ * equivalent outcome
  * <p/>
  * Instances of this class can only be created through a {@link Builder} obtained via {@link #newBuilder()}
  *
@@ -60,9 +61,10 @@ public class ResolverSetResult {
   }
 
   /**
-   * Defines equivalence by comparing the values in both objects. To consider that two instances are equal, they both must have equivalent
-   * results for every registered {@link ParameterModel}. Values will be tested for equality using their own implementation of
-   * {@link Object#equals(Object)}. For the case of a {@code null} value, equality requires the other one to be {@code null} as well.
+   * Defines equivalence by comparing the values in both objects. To consider that two instances are equal, they both must have
+   * equivalent results for every registered {@link ParameterModel}. Values will be tested for equality using their own
+   * implementation of {@link Object#equals(Object)}. For the case of a {@code null} value, equality requires the other one to be
+   * {@code null} as well.
    * <p/>
    * This implementation fails fast. Evaluation is finished at the first non equal value, returning {@code false}
    *
@@ -73,8 +75,8 @@ public class ResolverSetResult {
   public boolean equals(Object obj) {
     if (obj instanceof ResolverSetResult) {
       ResolverSetResult other = (ResolverSetResult) obj;
-      return !evaluationResult.entrySet().stream().filter(entry -> !Objects.equal(entry.getValue(), other.get(entry.getKey()))).findFirst()
-          .isPresent();
+      return !evaluationResult.entrySet().stream().filter(entry -> !Objects.equal(entry.getValue(), other.get(entry.getKey())))
+          .findFirst().isPresent();
     }
 
     return false;
@@ -91,8 +93,8 @@ public class ResolverSetResult {
   }
 
   /**
-   * A builder for creating instances of {@link ResolverSetResult}. You should use a new builder for each {@link ResolverSetResult} you want
-   * to create
+   * A builder for creating instances of {@link ResolverSetResult}. You should use a new builder for each
+   * {@link ResolverSetResult} you want to create
    *
    * @since 3.7.0
    */

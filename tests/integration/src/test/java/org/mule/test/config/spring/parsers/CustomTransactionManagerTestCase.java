@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.config.spring.parsers;
 
@@ -17,6 +17,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class CustomTransactionManagerTestCase extends FunctionalTestCase {
+
   @Override
   public String getConfigFile() {
     return "test-custom-transaction-manager.xml";
@@ -38,8 +39,8 @@ public class CustomTransactionManagerTestCase extends FunctionalTestCase {
 
 
   /*
-   * Attention: this test only runs successful when it's the only one. As soon as the test above is added, muleContext contains more than
-   * one transaction manager and all kinds of havoc happen here.
+   * Attention: this test only runs successful when it's the only one. As soon as the test above is added, muleContext contains
+   * more than one transaction manager and all kinds of havoc happen here.
    * 
    * @Test public void testWeblogicTransactionManager() throws Exception { TransactionManager transactionManager =
    * muleContext.getTransactionManager(); assertNotNull(transactionManager); transactionManager.begin(); Transaction transaction =

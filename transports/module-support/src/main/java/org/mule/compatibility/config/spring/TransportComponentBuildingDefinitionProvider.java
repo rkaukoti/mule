@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.config.spring;
 
@@ -59,8 +59,9 @@ public class TransportComponentBuildingDefinitionProvider implements ComponentBu
     componentBuildingDefinitions.add(getInboundEndpointBuildingDefinitionBuilder().build());
     componentBuildingDefinitions.add(getOutboundEndpointBuildingDefinitionBuilder().build());
     componentBuildingDefinitions.add(getEndpointBuildingDefinitionBuilder().build());
-    componentBuildingDefinitions.add(baseDefinition.copy().withIdentifier(ENDPOINT_RESPONSE_ELEMENT)
-        .withTypeDefinition(fromType(MessageProcessor.class)).withObjectFactoryType(MessageProcessorChainFactoryBean.class).build());
+    componentBuildingDefinitions
+        .add(baseDefinition.copy().withIdentifier(ENDPOINT_RESPONSE_ELEMENT).withTypeDefinition(fromType(MessageProcessor.class))
+            .withObjectFactoryType(MessageProcessorChainFactoryBean.class).build());
     componentBuildingDefinitions.add(baseDefinition.copy().withIdentifier("service-overrides")
         .withObjectFactoryType(ServiceOverridesObjectFactory.class).withTypeDefinition(fromType(Map.class))
         .withSetterParameterDefinition("messageReceiver", fromSimpleParameter("messageReceiver").build())
@@ -88,8 +89,8 @@ public class TransportComponentBuildingDefinitionProvider implements ComponentBu
   }
 
   protected ComponentBuildingDefinition.Builder getOutboundEndpointBuildingDefinitionBuilder() {
-    return baseDefinition.copy().withIdentifier(OUTBOUND_ENDPOINT_ELEMENT).withObjectFactoryType(OutboundEndpointFactoryBean.class)
-        .withTypeDefinition(fromType(OutboundEndpoint.class))
+    return baseDefinition.copy().withIdentifier(OUTBOUND_ENDPOINT_ELEMENT)
+        .withObjectFactoryType(OutboundEndpointFactoryBean.class).withTypeDefinition(fromType(OutboundEndpoint.class))
         .withSetterParameterDefinition("connector", fromSimpleReferenceParameter("connector-ref").build())
         .withSetterParameterDefinition("name", fromSimpleParameter("name").build())
         .withSetterParameterDefinition("encoding", fromSimpleParameter("encoding").build())

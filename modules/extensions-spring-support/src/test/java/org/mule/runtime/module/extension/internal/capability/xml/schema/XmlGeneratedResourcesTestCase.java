@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.capability.xml.schema;
 
@@ -68,8 +68,8 @@ public class XmlGeneratedResourcesTestCase extends AbstractGeneratedResourceFact
 
   @Before
   public void before() {
-    xmlModelProperty = new XmlModelProperty(EXTENSION_VERSION, EXTENSION_NAME, UNESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION, SCHEMA_NAME,
-        String.format("%s/%s/%s", UNESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION, CURRENT_VERSION, SCHEMA_NAME));
+    xmlModelProperty = new XmlModelProperty(EXTENSION_VERSION, EXTENSION_NAME, UNESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION,
+        SCHEMA_NAME, String.format("%s/%s/%s", UNESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION, CURRENT_VERSION, SCHEMA_NAME));
 
     when(extensionModel.getModelProperty(XmlModelProperty.class)).thenReturn(Optional.of(xmlModelProperty));
     when(extensionModel.getModelProperty(SubTypesModelProperty.class)).thenReturn(Optional.empty());
@@ -85,7 +85,8 @@ public class XmlGeneratedResourcesTestCase extends AbstractGeneratedResourceFact
 
   @Override
   protected Class<? extends GeneratedResourceFactory>[] getResourceFactoryTypes() {
-    return new Class[] {SpringHandlerBundleResourceFactory.class, SchemaResourceFactory.class, SpringSchemaBundleResourceFactory.class};
+    return new Class[] {SpringHandlerBundleResourceFactory.class, SchemaResourceFactory.class,
+        SpringSchemaBundleResourceFactory.class};
   }
 
   @Test
@@ -109,7 +110,8 @@ public class XmlGeneratedResourcesTestCase extends AbstractGeneratedResourceFact
     assertThat(resource.getPath(), equalTo(GENERATED_FILE_NAME));
 
     StringBuilder expected = new StringBuilder();
-    expected.append(String.format(BUNDLE_MASK, ESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION, EXTENSION_VERSION, SCHEMA_NAME, SCHEMA_NAME));
+    expected.append(
+        String.format(BUNDLE_MASK, ESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION, EXTENSION_VERSION, SCHEMA_NAME, SCHEMA_NAME));
     expected.append(String.format(BUNDLE_MASK, ESCAPED_LOCATION_PREFIX + SCHEMA_LOCATION, "current", SCHEMA_NAME, SCHEMA_NAME));
 
 

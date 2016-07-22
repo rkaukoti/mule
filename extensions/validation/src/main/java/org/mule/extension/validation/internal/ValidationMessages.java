@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.validation.internal;
 
@@ -15,9 +15,9 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 /**
- * A {@link MessageFactory} that provides the feedback messages for the {@link Validator}s that are provided out of the box. By default, it
- * uses a default bundle with the default messages in english language, but it is also possible to provide a custom bundle and
- * {@link java.util.Locale}
+ * A {@link MessageFactory} that provides the feedback messages for the {@link Validator}s that are provided out of the box. By
+ * default, it uses a default bundle with the default messages in english language, but it is also possible to provide a custom
+ * bundle and {@link java.util.Locale}
  *
  * @since 3.7.0
  */
@@ -200,8 +200,8 @@ public final class ValidationMessages extends MessageFactory {
   }
 
   /**
-   * Generates a {@link Message} for a {@code time} expressed as a {@link String} but couldn't be parsed using the given {@code locale} and
-   * {@code pattern}
+   * Generates a {@link Message} for a {@code time} expressed as a {@link String} but couldn't be parsed using the given
+   * {@code locale} and {@code pattern}
    *
    * @param time the {@link String} that couldn't be parsed
    * @param locale the locale that was used when parsing

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.jndi;
 
@@ -15,8 +15,8 @@ import javax.naming.NamingException;
 /**
  * Defines a {@link JndiNameResolver} that uses a cache in order to store the already resolved names.
  * <p/>
- * The cache does not have an automated mechanism for cleaning up the data. In case of getting corrupt data, a way to cleaning up the cache
- * is to stop and then restart the instance.
+ * The cache does not have an automated mechanism for cleaning up the data. In case of getting corrupt data, a way to cleaning up
+ * the cache is to stop and then restart the instance.
  */
 public class CachedJndiNameResolver extends AbstractJndiNameResolver {
 

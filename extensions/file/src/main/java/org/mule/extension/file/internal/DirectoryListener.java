@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.file.internal;
 
@@ -76,18 +76,19 @@ import static org.mule.runtime.module.extension.file.api.FileDisplayConstants.MA
 import static org.mule.runtime.module.extension.file.api.FileDisplayConstants.MATCH_WITH;
 
 /**
- * Listens for near real-time events that happens on files contained inside a directory or on the directory itself. The events are not
- * acquired by polling the filesystem but rather actually listening for operating system events.
+ * Listens for near real-time events that happens on files contained inside a directory or on the directory itself. The events are
+ * not acquired by polling the filesystem but rather actually listening for operating system events.
  * <p>
- * Whenever a file (or the directory) is created, updated or deleted, this {@link Source} will fire a {@link MuleMessage} which payload
- * reference the affected file and the attributes will be a {@link ListenerFileAttributes} instance.
+ * Whenever a file (or the directory) is created, updated or deleted, this {@link Source} will fire a {@link MuleMessage} which
+ * payload reference the affected file and the attributes will be a {@link ListenerFileAttributes} instance.
  * <p>
  * There're however some special cases to be considered:
  * <p>
  * <ul>
  * <li>If the file has been deleted, then it's not possible to obtain its content so the message payload will be {@code null}</li>
- * <li>Also in the case of file deletion, all its attributes are also not available. Thus, the message attributes will actually be an
- * instance of {@link DeletedFileAttributes} which throws {@link IllegalStateException} whenever a non available attribute is requested</li>
+ * <li>Also in the case of file deletion, all its attributes are also not available. Thus, the message attributes will actually be
+ * an instance of {@link DeletedFileAttributes} which throws {@link IllegalStateException} whenever a non available attribute is
+ * requested</li>
  * <li>When the event references a directory, then the payload is also a {@code null}</li>
  * </ul>
  * <p>
@@ -97,27 +98,28 @@ import static org.mule.runtime.module.extension.file.api.FileDisplayConstants.MA
  * transaction files being added on a drop folder, settings files updated, etc. All of the above cases could be done using a
  * {@code <file:list>} operation inside a poll scope (maybe also combined with a {@code <watermark>}.
  * <p>
- * However, although polling is a powerful and reliable solution, it's not an efficient one. Because this listener relies on operating
- * system notifications, it's much more efficient in terms of resources.
+ * However, although polling is a powerful and reliable solution, it's not an efficient one. Because this listener relies on
+ * operating system notifications, it's much more efficient in terms of resources.
  * <p>
  * <b>Reliability</b>
  * <p>
- * The trade-off between a poll reliability and this listener's performance is reliability. Because operating system events don't generally
- * include the concept of transaction or replay, there's no way to guarantee that no event is going to be lost in case of failure or server
- * crash. Although you can always use mule to implement a reliable acquisition pattern, there's no fallback is such acquisition fails. What
- * this means is that this listener is no silver bullet and it should not been seen as the recommended approach over a poll+list+watermark
- * approach. Users should analyse each use case and environment to determine which the best option is.
+ * The trade-off between a poll reliability and this listener's performance is reliability. Because operating system events don't
+ * generally include the concept of transaction or replay, there's no way to guarantee that no event is going to be lost in case
+ * of failure or server crash. Although you can always use mule to implement a reliable acquisition pattern, there's no fallback
+ * is such acquisition fails. What this means is that this listener is no silver bullet and it should not been seen as the
+ * recommended approach over a poll+list+watermark approach. Users should analyse each use case and environment to determine which
+ * the best option is.
  * <p>
  * <b>Operating system limitations</b>
  * <p>
- * This component's behaviour might be slightly different depending on the OS on which it is deployed. The main differences are usually (but
- * not exclusively) related to:
+ * This component's behaviour might be slightly different depending on the OS on which it is deployed. The main differences are
+ * usually (but not exclusively) related to:
  * <ul>
- * <li>Overflows: In highly concurrent scenarios a given file might be associated to hundreds of events per second. Some OS might not be
- * able to handle that gracefully and decide to drop some of those events or even fail.</li>
- * <li>Polling: Some operation systems (like older versions of OSX) don't actually support file system notifications. In those cases, the
- * JRE decides to compensate by using a high frequency poll, in which case the listener becomes pretty much the same as using a poll
- * element</li>
+ * <li>Overflows: In highly concurrent scenarios a given file might be associated to hundreds of events per second. Some OS might
+ * not be able to handle that gracefully and decide to drop some of those events or even fail.</li>
+ * <li>Polling: Some operation systems (like older versions of OSX) don't actually support file system notifications. In those
+ * cases, the JRE decides to compensate by using a high frequency poll, in which case the listener becomes pretty much the same as
+ * using a poll element</li>
  * </ul>
  *
  * @since 4.0
@@ -158,12 +160,13 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
   /**
    * Whether or not to also listen for notification which happen on sub directories which are also contained on the main one.
    * <p>
-   * This option is set to {@code false} by default. Consider that when enabled, some operating systems might fire many notifications when
-   * an event happens on a subdirectory. One per each watched directory on the notification's path.
+   * This option is set to {@code false} by default. Consider that when enabled, some operating systems might fire many
+   * notifications when an event happens on a subdirectory. One per each watched directory on the notification's path.
    */
   @Parameter
   @Optional(defaultValue = "false")
-  @Summary("Whether or not to also listen for notification which happen on sub directories which are also contained " + "on the main one.")
+  @Summary("Whether or not to also listen for notification which happen on sub directories which are also contained "
+      + "on the main one.")
   private boolean recursive = false;
   /**
    * A matcher used to filter events on files which do not meet the matcher's criteria
@@ -199,8 +202,8 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
     createWatcherService();
 
     matcher = predicateBuilder != null ? predicateBuilder.build() : new NullFilePayloadPredicate();
-    executorService =
-        newSingleThreadExecutor(r -> new Thread(r, format("%s%s.file.listener", getPrefix(muleContext), flowConstruct.getName())));
+    executorService = newSingleThreadExecutor(
+        r -> new Thread(r, format("%s%s.file.listener", getPrefix(muleContext), flowConstruct.getName())));
     started = true;
     stopRequested.set(false);
     executorService.execute(this::listen);
@@ -271,8 +274,9 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
     ListenerFileAttributes attributes = new ListenerFileAttributes(path, FileEventType.of(kind));
     if (!matcher.test(attributes)) {
       if (LOGGER.isDebugEnabled()) {
-        LOGGER.debug(format("Detected a '%s' event on path '%s' but it will be skipped because it does not meet the matcher's criteria",
-            FileEventType.of(kind), path.toString()));
+        LOGGER.debug(
+            format("Detected a '%s' event on path '%s' but it will be skipped because it does not meet the matcher's criteria",
+                FileEventType.of(kind), path.toString()));
       }
       return;
     }
@@ -338,7 +342,8 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
       }
     } catch (InterruptedException e) {
       if (LOGGER.isWarnEnabled()) {
-        LOGGER.warn("Got interrupted while trying to terminate pending events for directory listener on flow " + flowConstruct.getName());
+        LOGGER.warn(
+            "Got interrupted while trying to terminate pending events for directory listener on flow " + flowConstruct.getName());
       }
     }
   }
@@ -352,7 +357,8 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
       watcher.close();
     } catch (IOException e) {
       if (LOGGER.isWarnEnabled()) {
-        LOGGER.warn("Found exception trying to close watcher service for directory listener on flow " + flowConstruct.getName(), e);
+        LOGGER.warn("Found exception trying to close watcher service for directory listener on flow " + flowConstruct.getName(),
+            e);
       }
     }
 
@@ -370,7 +376,8 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
         registerPath(path);
       } catch (IOException e) {
         if (LOGGER.isWarnEnabled()) {
-          LOGGER.warn(format("Directory '%s' became unavailable and a new listener could not be established on it", path.toString()));
+          LOGGER.warn(
+              format("Directory '%s' became unavailable and a new listener could not be established on it", path.toString()));
         }
       }
     }
@@ -388,6 +395,7 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
 
     if (recursive) {
       walkFileTree(rootPath, new SimpleFileVisitor<Path>() {
+
         @Override
         public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
           if (!dir.equals(rootPath)) {
@@ -417,8 +425,9 @@ public class DirectoryListener extends Source<InputStream, ListenerFileAttribute
     enabledEventTypes = types.build();
 
     if (enabledEventTypes.isEmpty()) {
-      throw new ConfigurationException(createStaticMessage(format(
-          "File listener in flow '%s' has disabled all notification types. At least one should be enabled", flowConstruct.getName())));
+      throw new ConfigurationException(createStaticMessage(
+          format("File listener in flow '%s' has disabled all notification types. At least one should be enabled",
+              flowConstruct.getName())));
     }
   }
 

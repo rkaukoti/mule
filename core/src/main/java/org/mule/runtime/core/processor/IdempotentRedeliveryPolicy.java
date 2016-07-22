@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor;
 
@@ -35,11 +35,13 @@ import java.util.concurrent.locks.Lock;
 import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
 
 /**
- * Implement a retry policy for Mule. This is similar to JMS retry policies that will redeliver a message a maximum number of times. If this
- * maximum is exceeded, the message is sent to a dead letter queue, Here, if the processing of the messages fails too often, the message is
- * sent to the failedMessageProcessor MP, whence success is force to be returned, to allow the message to be considered "consumed".
+ * Implement a retry policy for Mule. This is similar to JMS retry policies that will redeliver a message a maximum number of
+ * times. If this maximum is exceeded, the message is sent to a dead letter queue, Here, if the processing of the messages fails
+ * too often, the message is sent to the failedMessageProcessor MP, whence success is force to be returned, to allow the message
+ * to be considered "consumed".
  */
 public class IdempotentRedeliveryPolicy extends AbstractRedeliveryPolicy {
+
   private final ObjectToByteArray objectToByteArray = new ObjectToByteArray();
   private final ByteArrayToHexString byteArrayToHexString = new ByteArrayToHexString();
 
@@ -63,12 +65,13 @@ public class IdempotentRedeliveryPolicy extends AbstractRedeliveryPolicy {
     }
     if (!useSecureHash && messageDigestAlgorithm != null) {
       throw new InitialisationException(
-          CoreMessages.initialisationFailure(
-              String.format("The message digest algorithm '%s' was specified when a secure hash will not be used", messageDigestAlgorithm)),
+          CoreMessages.initialisationFailure(String.format(
+              "The message digest algorithm '%s' was specified when a secure hash will not be used", messageDigestAlgorithm)),
           this);
     }
     if (!useSecureHash && idExpression == null) {
-      throw new InitialisationException(CoreMessages.initialisationFailure("No method for identifying messages was specified"), this);
+      throw new InitialisationException(CoreMessages.initialisationFailure("No method for identifying messages was specified"),
+          this);
     }
     if (useSecureHash) {
       if (messageDigestAlgorithm == null) {
@@ -77,8 +80,10 @@ public class IdempotentRedeliveryPolicy extends AbstractRedeliveryPolicy {
       try {
         MessageDigest.getInstance(messageDigestAlgorithm);
       } catch (NoSuchAlgorithmException e) {
-        throw new InitialisationException(CoreMessages.initialisationFailure(
-            String.format("Exception '%s' initializing message digest algorithm %s", e.getMessage(), messageDigestAlgorithm)), this);
+        throw new InitialisationException(
+            CoreMessages.initialisationFailure(
+                String.format("Exception '%s' initializing message digest algorithm %s", e.getMessage(), messageDigestAlgorithm)),
+            this);
 
       }
     }
@@ -97,7 +102,8 @@ public class IdempotentRedeliveryPolicy extends AbstractRedeliveryPolicy {
   protected Factory internalObjectStoreFactory() {
     return () -> {
       ObjectStoreManager objectStoreManager = muleContext.getObjectStoreManager();
-      return objectStoreManager.getObjectStore(flowConstruct.getName() + "." + getClass().getName(), false, -1, 60 * 5 * 1000, 6000);
+      return objectStoreManager.getObjectStore(flowConstruct.getName() + "." + getClass().getName(), false, -1, 60 * 5 * 1000,
+          6000);
     };
   }
 

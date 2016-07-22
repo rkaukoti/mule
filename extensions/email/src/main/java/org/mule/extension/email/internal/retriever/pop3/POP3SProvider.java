@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.email.internal.retriever.pop3;
 
@@ -44,7 +44,8 @@ public class POP3SProvider extends AbstractRetrieverProvider<RetrieverConnection
   private String port;
 
   /**
-   * A factory for TLS contexts. A TLS context is configured with a key store and a trust store. Allows to create a TLS secured connections.
+   * A factory for TLS contexts. A TLS context is configured with a key store and a trust store. Allows to create a TLS secured
+   * connections.
    */
   @Parameter
   @Summary("TLS Configuration for the secure connection of the POP3S protocol")
@@ -65,7 +66,7 @@ public class POP3SProvider extends AbstractRetrieverProvider<RetrieverConnection
    */
   @Override
   public RetrieverConnection connect() throws ConnectionException {
-    return new RetrieverConnection(POP3S, settings.getUser(), settings.getPassword(), settings.getHost(), port, getConnectionTimeout(),
-        getReadTimeout(), getWriteTimeout(), getProperties(), tlsContextFactory);
+    return new RetrieverConnection(POP3S, settings.getUser(), settings.getPassword(), settings.getHost(), port,
+        getConnectionTimeout(), getReadTimeout(), getWriteTimeout(), getProperties(), tlsContextFactory);
   }
 }

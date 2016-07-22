@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.tcp.config;
 
@@ -32,6 +32,7 @@ import org.mule.runtime.config.spring.parsers.generic.MuleOrphanDefinitionParser
  * Registers a Bean Definition Parser for handling <code><tcp:connector></code> elements.
  */
 public class TcpNamespaceHandler extends AbstractMuleTransportsNamespaceHandler {
+
   private static final String TCP_PROTOCOL_PROPERTY = "tcpProtocol";
 
   @Override
@@ -54,8 +55,8 @@ public class TcpNamespaceHandler extends AbstractMuleTransportsNamespaceHandler 
     registerBeanDefinitionParser("streaming-protocol",
         new ByteOrMessageProtocolDefinitionParser(StreamingProtocol.class, MuleMessageDirectProtocol.class));
     registerBeanDefinitionParser("custom-protocol", new ClassOrRefDefinitionParser(TCP_PROTOCOL_PROPERTY));
-    registerBeanDefinitionParser("custom-class-loading-protocol",
-        new ByteOrMessageProtocolDefinitionParser(CustomClassLoadingLengthProtocol.class, CustomClassLoadingLengthProtocol.class));
+    registerBeanDefinitionParser("custom-class-loading-protocol", new ByteOrMessageProtocolDefinitionParser(
+        CustomClassLoadingLengthProtocol.class, CustomClassLoadingLengthProtocol.class));
     registerBeanDefinitionParser("client-socket-properties",
         new RootOrNestedElementBeanDefinitionParser(DefaultTcpClientSocketProperties.class, "clientSocketProperties"));
     registerBeanDefinitionParser("server-socket-properties",

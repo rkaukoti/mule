@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.config;
 
@@ -18,6 +18,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class WsConfig implements MuleContextAware {
+
   Map<String, Object> configProperties = new HashMap<>();
 
   private MuleContext muleContext;
@@ -44,6 +45,7 @@ public class WsConfig implements MuleContextAware {
   }
 
   private static class DynamicAttributeEvalutorMap implements Map<String, Object> {
+
     private Map<String, Object> map;
     private MuleContext muleContext;
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.context.notification;
 
@@ -9,10 +9,11 @@ import org.mule.runtime.core.api.context.notification.BlockingServerEvent;
 import org.mule.runtime.core.api.context.notification.ServerNotification;
 
 /**
- * <code>FlowConstructNotification</code> is fired when an event such as the flow construct starting occurs. The payload of this event will
- * always be a reference to the flow construct.
+ * <code>FlowConstructNotification</code> is fired when an event such as the flow construct starting occurs. The payload of this
+ * event will always be a reference to the flow construct.
  */
 public class FlowConstructNotification extends ServerNotification implements BlockingServerEvent {
+
   public static final int FLOW_CONSTRUCT_INITIALISED = FLOW_CONSTRUCT_EVENT_ACTION_START_RANGE + 1;
   public static final int FLOW_CONSTRUCT_STARTED = FLOW_CONSTRUCT_EVENT_ACTION_START_RANGE + 2;
   public static final int FLOW_CONSTRUCT_STOPPED = FLOW_CONSTRUCT_EVENT_ACTION_START_RANGE + 3;

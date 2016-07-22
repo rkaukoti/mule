@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.config;
 
@@ -29,6 +29,7 @@ import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.l
  * Test configuration of security filters
  */
 public class SecurityFilterTestCase extends FunctionalTestCase {
+
   @Override
   protected String getConfigFile() {
     return "org/mule/test/config/security-filter-config.xml";
@@ -71,12 +72,13 @@ public class SecurityFilterTestCase extends FunctionalTestCase {
    * Custom security filter class that does nothing at all
    */
   public static class CustomSecurityFilter extends AbstractAuthenticationFilter {
+
     @Override
     protected void doInitialise() throws InitialisationException {}
 
     @Override
-    public void authenticate(MuleEvent event) throws SecurityException, UnknownAuthenticationTypeException, CryptoFailureException,
-        SecurityProviderNotFoundException, EncryptionStrategyNotFoundException, InitialisationException {
+    public void authenticate(MuleEvent event) throws SecurityException, UnknownAuthenticationTypeException,
+        CryptoFailureException, SecurityProviderNotFoundException, EncryptionStrategyNotFoundException, InitialisationException {
       // TODO Auto-generated method stub
 
     }

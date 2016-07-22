@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.context.notification;
 
@@ -36,9 +36,10 @@ import static java.lang.Thread.currentThread;
  * A reworking of the event manager that allows efficient behaviour without global on/off switches in the config.
  *
  * <p>
- * The configuration and resulting policy are separate; the policy is a summary of the configuration that contains information to decide
- * whether a particular message can be handled, and which updates that with experience gained handling messages. When the configuration is
- * changed the policy is rebuilt. In this way we get a fairly efficient system without needing controls elsewhere.
+ * The configuration and resulting policy are separate; the policy is a summary of the configuration that contains information to
+ * decide whether a particular message can be handled, and which updates that with experience gained handling messages. When the
+ * configuration is changed the policy is rebuilt. In this way we get a fairly efficient system without needing controls
+ * elsewhere.
  *
  * <p>
  * However, measurements showed that there was still a small impact on speed in some cases. To improve behaviour further the
@@ -46,8 +47,8 @@ import static java.lang.Thread.currentThread;
  * notifications to cache locally a handler optimised for a particular class.
  *
  * <p>
- * The dynamic flag stops this caching from occurring. This reduces efficiency slightly (about 15% cost on simple VM messages, less on other
- * transports)
+ * The dynamic flag stops this caching from occurring. This reduces efficiency slightly (about 15% cost on simple VM messages,
+ * less on other transports)
  * </p>
  *
  * <p>
@@ -58,6 +59,7 @@ import static java.lang.Thread.currentThread;
  * </ul>
  */
 public class ServerNotificationManager implements Work, Disposable, ServerNotificationHandler, MuleContextAware {
+
   public static final String NULL_SUBSCRIPTION = "NULL";
   protected Logger logger = LoggerFactory.getLogger(getClass());
   private boolean dynamic = false;
@@ -132,7 +134,8 @@ public class ServerNotificationManager implements Work, Disposable, ServerNotifi
     configuration.disableInterface(iface);
   }
 
-  public void setDisabledInterfaces(Collection<Class<? extends ServerNotificationListener>> interfaces) throws ClassNotFoundException {
+  public void setDisabledInterfaces(Collection<Class<? extends ServerNotificationListener>> interfaces)
+      throws ClassNotFoundException {
     configuration.disabledAllInterfaces(interfaces);
   }
 

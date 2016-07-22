@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.tck.junit4.matcher;
 
@@ -18,6 +18,7 @@ import java.util.function.Function;
  * @param <R> the type of the object to match against.
  */
 public final class FunctionExpressionMatcher<T, R> extends TypeSafeMatcher<T> {
+
   private Function<T, R> resolver;
   private Matcher<? extends R> matcher;
 
@@ -34,7 +35,8 @@ public final class FunctionExpressionMatcher<T, R> extends TypeSafeMatcher<T> {
    * @return a matcher that lazily evaluates the object to match.
    */
   @Factory
-  public static final <T, R> FunctionExpressionMatcher<T, R> expressionMatches(Function<T, R> resolver, Matcher<? extends R> matcher) {
+  public static final <T, R> FunctionExpressionMatcher<T, R> expressionMatches(Function<T, R> resolver,
+      Matcher<? extends R> matcher) {
     return new FunctionExpressionMatcher<>(resolver, matcher);
 
   }

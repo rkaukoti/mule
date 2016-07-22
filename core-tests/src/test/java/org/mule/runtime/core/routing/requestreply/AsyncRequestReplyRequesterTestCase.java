@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing.requestreply;
 
@@ -78,6 +78,7 @@ public class AsyncRequestReplyRequesterTestCase extends AbstractMuleContextTestC
     asyncReplyMP = new TestAsyncRequestReplyRequester(muleContext);
     SensingNullMessageProcessor target = getSensingNullMessageProcessor();
     LaxAsyncInterceptingMessageProcessor asyncMP = new LaxAsyncInterceptingMessageProcessor(new WorkManagerSource() {
+
       public WorkManager getWorkManager() throws MuleException {
         return muleContext.getWorkManager();
       }
@@ -127,6 +128,7 @@ public class AsyncRequestReplyRequesterTestCase extends AbstractMuleContextTestC
   @Ignore("See MULE-8830")
   public void returnsNullWhenInterruptedWhileWaitingForReply() throws Exception {
     final Latch fakeLatch = new Latch() {
+
       @Override
       public void await() throws InterruptedException {
         throw new InterruptedException();
@@ -134,6 +136,7 @@ public class AsyncRequestReplyRequesterTestCase extends AbstractMuleContextTestC
     };
 
     asyncReplyMP = new TestAsyncRequestReplyRequester(muleContext) {
+
       @Override
       protected Latch createEventLock() {
         return fakeLatch;
@@ -154,6 +157,7 @@ public class AsyncRequestReplyRequesterTestCase extends AbstractMuleContextTestC
     final Object[] responseEvent = new Object[1];
 
     Thread thread = new Thread(new Runnable() {
+
       public void run() {
         try {
           responseEvent[0] = asyncReplyMP.process(event);
@@ -191,6 +195,7 @@ public class AsyncRequestReplyRequesterTestCase extends AbstractMuleContextTestC
     final AtomicInteger count = new AtomicInteger();
     for (int i = 0; i < 500; i++) {
       muleContext.getWorkManager().scheduleWork(new Work() {
+
         public void run() {
           MuleEvent event;
           try {
@@ -223,6 +228,7 @@ public class AsyncRequestReplyRequesterTestCase extends AbstractMuleContextTestC
   }
 
   class TestAsyncRequestReplyRequester extends AbstractAsyncRequestReplyRequester {
+
     TestAsyncRequestReplyRequester(MuleContext muleContext) throws MuleException {
       setMuleContext(muleContext);
       initialise();

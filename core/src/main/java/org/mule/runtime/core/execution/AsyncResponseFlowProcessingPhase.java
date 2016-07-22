@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.execution;
 
@@ -32,7 +32,8 @@ import static org.mule.runtime.core.context.notification.ConnectorMessageNotific
  * To participate of this phase, {@link org.mule.runtime.core.execution.MessageProcessTemplate} must implement
  * {@link org.mule.runtime.core.execution.FlowProcessingPhaseTemplate}
  */
-public class AsyncResponseFlowProcessingPhase extends NotificationFiringProcessingPhase<AsyncResponseFlowProcessingPhaseTemplate> {
+public class AsyncResponseFlowProcessingPhase
+    extends NotificationFiringProcessingPhase<AsyncResponseFlowProcessingPhaseTemplate> {
 
   protected transient Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -45,6 +46,7 @@ public class AsyncResponseFlowProcessingPhase extends NotificationFiringProcessi
   public void runPhase(final AsyncResponseFlowProcessingPhaseTemplate template, final MessageProcessContext messageProcessContext,
       final PhaseResultNotifier phaseResultNotifier) {
     Work flowExecutionWork = new Work() {
+
       @Override
       public void release() {
 
@@ -56,10 +58,10 @@ public class AsyncResponseFlowProcessingPhase extends NotificationFiringProcessi
           MessageSource messageSource = messageProcessContext.getMessageSource();
           try {
             final MessagingExceptionHandler exceptionHandler = messageProcessContext.getFlowConstruct().getExceptionListener();
-            TransactionalErrorHandlingExecutionTemplate transactionTemplate =
-                TransactionalErrorHandlingExecutionTemplate.createMainExecutionTemplate(
-                    messageProcessContext.getFlowConstruct().getMuleContext(), (messageProcessContext.getTransactionConfig() == null
-                        ? new MuleTransactionConfig() : messageProcessContext.getTransactionConfig()),
+            TransactionalErrorHandlingExecutionTemplate transactionTemplate = TransactionalErrorHandlingExecutionTemplate
+                .createMainExecutionTemplate(messageProcessContext.getFlowConstruct().getMuleContext(),
+                    (messageProcessContext.getTransactionConfig() == null ? new MuleTransactionConfig()
+                        : messageProcessContext.getTransactionConfig()),
                     exceptionHandler);
             final MuleEvent response = transactionTemplate.execute(() -> {
               MuleEvent muleEvent = template.getMuleEvent();
@@ -100,8 +102,10 @@ public class AsyncResponseFlowProcessingPhase extends NotificationFiringProcessi
     }
   }
 
-  private ResponseCompletionCallback createSendFailureResponseCompletationCallback(final PhaseResultNotifier phaseResultNotifier) {
+  private ResponseCompletionCallback createSendFailureResponseCompletationCallback(
+      final PhaseResultNotifier phaseResultNotifier) {
     return new ResponseCompletionCallback() {
+
       @Override
       public void responseSentSuccessfully() {
         phaseResultNotifier.phaseSuccessfully();
@@ -118,6 +122,7 @@ public class AsyncResponseFlowProcessingPhase extends NotificationFiringProcessi
   private ResponseCompletionCallback createResponseCompletationCallback(final PhaseResultNotifier phaseResultNotifier,
       final MessagingExceptionHandler exceptionListener) {
     return new ResponseCompletionCallback() {
+
       @Override
       public void responseSentSuccessfully() {
         phaseResultNotifier.phaseSuccessfully();

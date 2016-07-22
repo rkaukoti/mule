@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.source.polling.watermark.selector;
@@ -39,14 +39,14 @@ public class SelectorWatermarkPollingInterceptor extends WatermarkPollingInterce
    * {@inheritDoc}
    * </p>
    * <p>
-   * If the payload is a {@link Iterable}, then it is iterated passing all values evaluated through the selector. This is so because not
-   * only different kinds of collections can be traversed in unpredictable ways, but also collections are often copied before being iterated
-   * in which case we have no interception point.
+   * If the payload is a {@link Iterable}, then it is iterated passing all values evaluated through the selector. This is so
+   * because not only different kinds of collections can be traversed in unpredictable ways, but also collections are often copied
+   * before being iterated in which case we have no interception point.
    * </p>
    * <p>
-   * If the payload is an {@link Iterator}, then a static proxy is generated so that we can intercept all values an evaluate them through
-   * the selector. <b>Notice that if the {@link Iterable} or {@link Iterator} are not fully consumed, the unretrieved values will not be
-   * received by the {@link WatermarkSelector}
+   * If the payload is an {@link Iterator}, then a static proxy is generated so that we can intercept all values an evaluate them
+   * through the selector. <b>Notice that if the {@link Iterable} or {@link Iterator} are not fully consumed, the unretrieved
+   * values will not be received by the {@link WatermarkSelector}
    * </p>
    */
   @SuppressWarnings("unchecked")
@@ -63,8 +63,8 @@ public class SelectorWatermarkPollingInterceptor extends WatermarkPollingInterce
         selector.acceptValue(object);
       }
     } else if (payload instanceof Iterator) {
-      event.setMessage(
-          MuleMessage.builder(event.getMessage()).payload(new SelectorIteratorProxy<>((Iterator<Object>) payload, selector)).build());
+      event.setMessage(MuleMessage.builder(event.getMessage())
+          .payload(new SelectorIteratorProxy<>((Iterator<Object>) payload, selector)).build());
     } else {
       throw new ConfigurationException(CoreMessages.createStaticMessage(String.format(
           "Poll executing with payload of class %s but selector can only handle Iterator and Iterable objects when watermark is to be updated via selectors",
@@ -80,6 +80,7 @@ public class SelectorWatermarkPollingInterceptor extends WatermarkPollingInterce
   }
 
   private static class SelectorIteratorProxy<T> implements Iterator<T>, ProvidesTotalHint {
+
     private final Iterator<T> delegate;
     private final WatermarkSelector selector;
 

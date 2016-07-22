@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.delegate;
 
@@ -10,8 +10,8 @@ import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 
 /**
- * Extend {@link org.mule.runtime.config.spring.parsers.delegate.AbstractSerialDelegatingDefinitionParser} to return the first definition as
- * the final result
+ * Extend {@link org.mule.runtime.config.spring.parsers.delegate.AbstractSerialDelegatingDefinitionParser} to return the first
+ * definition as the final result
  */
 public class AbstractFirstResultSerialDefinitionParser extends AbstractSerialDelegatingDefinitionParser {
 
@@ -30,7 +30,8 @@ public class AbstractFirstResultSerialDefinitionParser extends AbstractSerialDel
     this.returnFirstResult = returnFirstResult;
   }
 
-  protected AbstractBeanDefinition doSingleBean(int index, MuleDefinitionParser parser, Element element, ParserContext parserContext) {
+  protected AbstractBeanDefinition doSingleBean(int index, MuleDefinitionParser parser, Element element,
+      ParserContext parserContext) {
     try {
       AbstractBeanDefinition result = null;
       try {

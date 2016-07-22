@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.security.tls;
 
@@ -11,8 +11,9 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * Move a {@link TlsConfiguration} to and from Properties (typically System Properties). This can be used to store TLS/SSL configuration for
- * a library (eg. Javamail, which reads java.mail properties) or for later retrieval by {@link TlsPropertiesSocketFactory}.
+ * Move a {@link TlsConfiguration} to and from Properties (typically System Properties). This can be used to store TLS/SSL
+ * configuration for a library (eg. Javamail, which reads java.mail properties) or for later retrieval by
+ * {@link TlsPropertiesSocketFactory}.
  */
 public class TlsPropertiesMapper {
 
@@ -66,7 +67,8 @@ public class TlsPropertiesMapper {
     configuration.setTrustStore(getProperty(properties, TRUST_NAME_SUFFIX, configuration.getTrustStore()));
     configuration.setTrustStoreType(getProperty(properties, TRUST_TYPE_SUFFIX, configuration.getTrustStoreType()));
     configuration.setTrustStorePassword(getProperty(properties, TRUST_PASSWORD_SUFFIX, configuration.getTrustStorePassword()));
-    configuration.setTrustManagerAlgorithm(getProperty(properties, TRUST_ALGORITHM_SUFFIX, configuration.getTrustManagerAlgorithm()));
+    configuration
+        .setTrustManagerAlgorithm(getProperty(properties, TRUST_ALGORITHM_SUFFIX, configuration.getTrustManagerAlgorithm()));
   }
 
   private void writeKeyStoreToProperties(Properties properties, TlsConfiguration configuration) {

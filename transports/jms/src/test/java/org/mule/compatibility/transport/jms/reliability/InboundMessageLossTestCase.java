@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.reliability;
 
@@ -21,12 +21,13 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 /**
- * Verify that no inbound messages are lost when exceptions occur. The message must either make it all the way to the SEDA queue (in the
- * case of an asynchronous inbound endpoint), or be restored/rolled back at the source.
+ * Verify that no inbound messages are lost when exceptions occur. The message must either make it all the way to the SEDA queue
+ * (in the case of an asynchronous inbound endpoint), or be restored/rolled back at the source.
  *
  * In the case of JMS, this will cause the failed message to be redelivered if JMSRedelivery is configured.
  */
 public class InboundMessageLossTestCase extends AbstractJmsReliabilityTestCase {
+
   protected final int latchTimeout = 5000;
   protected Latch messageRedelivered;
 
@@ -45,6 +46,7 @@ public class InboundMessageLossTestCase extends AbstractJmsReliabilityTestCase {
     // Tell us when a MessageRedeliverdException has been handled
     messageRedelivered = new Latch();
     muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>() {
+
       @Override
       public void onNotification(ExceptionNotification notification) {
         if (notification.getException() instanceof MessageRedeliveredException) {
@@ -103,6 +105,7 @@ public class InboundMessageLossTestCase extends AbstractJmsReliabilityTestCase {
   public void testRollbackExceptionStrategyConsumesMessage() throws Exception {
     final CountDownLatch exceptionStrategyListener = new CountDownLatch(4);
     muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>() {
+
       @Override
       public void onNotification(ExceptionNotification notification) {
         exceptionStrategyListener.countDown();
@@ -112,7 +115,8 @@ public class InboundMessageLossTestCase extends AbstractJmsReliabilityTestCase {
     if (!exceptionStrategyListener.await(RECEIVE_TIMEOUT, TimeUnit.MILLISECONDS)) {
       fail("Message should have been redelivered");
     }
-    assertThat(muleContext.getClient().request("jms://rollbackOnException?connector=jmsConnectorNoRedelivery", RECEIVE_TIMEOUT / 10),
+    assertThat(
+        muleContext.getClient().request("jms://rollbackOnException?connector=jmsConnectorNoRedelivery", RECEIVE_TIMEOUT / 10),
         IsNull.<Object>nullValue());
   }
 

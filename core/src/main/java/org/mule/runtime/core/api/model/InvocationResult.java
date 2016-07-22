@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.model;
 
@@ -12,6 +12,7 @@ import java.lang.reflect.Method;
  * Tracks the state of an invocation on a component using an {@link EntryPointResolver}
  */
 public class InvocationResult {
+
   private String errorMessage;
   /**
    * the name of the method called for this invocation
@@ -32,11 +33,13 @@ public class InvocationResult {
 
   /**
    * Will construct an InvocationResult with a given state. The state must be either
-   * {@link org.mule.runtime.core.api.model.InvocationResult.State#NOT_SUPPORTED} if the resolver performing the invocation knows that it
-   * cannot attempt to make the invocation {@link org.mule.runtime.core.api.model.InvocationResult.State#FAILED} If an invocation attempt is
-   * made but fails {@link org.mule.runtime.core.api.model.InvocationResult.State#SUCCESSFUL} If the invocation was successful
+   * {@link org.mule.runtime.core.api.model.InvocationResult.State#NOT_SUPPORTED} if the resolver performing the invocation knows
+   * that it cannot attempt to make the invocation {@link org.mule.runtime.core.api.model.InvocationResult.State#FAILED} If an
+   * invocation attempt is made but fails {@link org.mule.runtime.core.api.model.InvocationResult.State#SUCCESSFUL} If the
+   * invocation was successful
    *
-   * Typically, this constructor is used when the state is {@link org.mule.runtime.core.api.model.InvocationResult.State#NOT_SUPPORTED} or
+   * Typically, this constructor is used when the state is
+   * {@link org.mule.runtime.core.api.model.InvocationResult.State#NOT_SUPPORTED} or
    * {@link org.mule.runtime.core.api.model.InvocationResult.State#FAILED}
    *
    * @param resolver the resolver being used to make the invocation
@@ -85,8 +88,9 @@ public class InvocationResult {
   }
 
   /**
-   * @return the state of this invocation. Possible values are: {@link org.mule.runtime.core.api.model.InvocationResult.State#NOT_SUPPORTED}
-   *         if the resolver performing the invocation knows that it cannot attempt to make the invocation
+   * @return the state of this invocation. Possible values are:
+   *         {@link org.mule.runtime.core.api.model.InvocationResult.State#NOT_SUPPORTED} if the resolver performing the
+   *         invocation knows that it cannot attempt to make the invocation
    *         {@link org.mule.runtime.core.api.model.InvocationResult.State#FAILED} If an invocation attempt is made but fails
    *         {@link org.mule.runtime.core.api.model.InvocationResult.State#SUCCESSFUL} If the invocation was successful
    */
@@ -126,8 +130,8 @@ public class InvocationResult {
   }
 
   public void setErrorTooManyMatchingMethods(Object component, Class<?>[] argTypes, String methods) {
-    setErrorMessage(
-        CoreMessages.tooManyAcceptableMethodsOnObjectUsingResolverForTypes(component.getClass().getName(), argTypes, methods).toString());
+    setErrorMessage(CoreMessages
+        .tooManyAcceptableMethodsOnObjectUsingResolverForTypes(component.getClass().getName(), argTypes, methods).toString());
   }
 
   public void setErrorNoMatchingMethods(Object component, Class<?>[] args) {
@@ -135,7 +139,8 @@ public class InvocationResult {
   }
 
   public void setErrorNoMatchingMethodsCalled(Object component, String methods) {
-    setErrorMessage(CoreMessages.noMatchingMethodsOnObjectCalledUsingResolver(component.getClass().getName(), methods).toString());
+    setErrorMessage(
+        CoreMessages.noMatchingMethodsOnObjectCalledUsingResolver(component.getClass().getName(), methods).toString());
   }
 
   public static enum State {

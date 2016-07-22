@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer.wire;
 
@@ -23,10 +23,12 @@ import java.io.OutputStream;
 import java.nio.charset.Charset;
 
 /**
- * A pairing of an outbound transformer and an inbound transformer that can be used to serialize and deserialize data. THis is used when
- * marshalling requests over the wire. IN Mule the MuleClient RemoteDispatcher uses wire formats to communicate with the server.
+ * A pairing of an outbound transformer and an inbound transformer that can be used to serialize and deserialize data. THis is
+ * used when marshalling requests over the wire. IN Mule the MuleClient RemoteDispatcher uses wire formats to communicate with the
+ * server.
  */
 public class TransformerPairWireFormat implements WireFormat {
+
   /**
    * logger used by this class
    */

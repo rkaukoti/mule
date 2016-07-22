@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.config.domain.query;
@@ -66,7 +66,8 @@ public class QueryDefinitionParser {
   }
 
   private BeanDefinition parseDynamicQuery(Element queryElement) {
-    BeanDefinitionBuilder queryTemplateFactory = BeanDefinitionBuilder.genericBeanDefinition(DynamicQueryTemplateFactoryBean.class);
+    BeanDefinitionBuilder queryTemplateFactory =
+        BeanDefinitionBuilder.genericBeanDefinition(DynamicQueryTemplateFactoryBean.class);
     queryTemplateFactory.addConstructorArgValue(queryElement.getTextContent());
 
     BeanDefinitionBuilder queryBuilder = BeanDefinitionBuilder.genericBeanDefinition(Query.class);
@@ -94,7 +95,8 @@ public class QueryDefinitionParser {
   private BeanDefinition parseParameterizedQuery(Element queryElement, List<Element> paramElements, ParserContext nestedCtx) {
     List<BeanDefinition> params = parseStoreProcedureParams(paramElements, nestedCtx);
 
-    BeanDefinitionBuilder queryTemplateFactory = BeanDefinitionBuilder.genericBeanDefinition(ParameterizedQueryTemplateFactoryBean.class);
+    BeanDefinitionBuilder queryTemplateFactory =
+        BeanDefinitionBuilder.genericBeanDefinition(ParameterizedQueryTemplateFactoryBean.class);
     queryTemplateFactory.addConstructorArgValue(queryElement.getTextContent());
     queryTemplateFactory.addConstructorArgValue(params);
     queryTemplateFactory.addConstructorArgValue(new SimpleQueryTemplateParser());
@@ -131,8 +133,8 @@ public class QueryDefinitionParser {
   public BeanDefinition parseQuery(Element element, ParserContext nestedCtx) {
     List<Element> childElementsByTagName = DomUtils.getChildElementsByTagName(element, QUERY_TAG_NAMES);
     if (childElementsByTagName.size() == 0) {
-      throw new IllegalArgumentException(String.format("Element %s must contain one of the following elements: %s", element.getTagName(),
-          Arrays.toString(QUERY_TAG_NAMES)));
+      throw new IllegalArgumentException(String.format("Element %s must contain one of the following elements: %s",
+          element.getTagName(), Arrays.toString(QUERY_TAG_NAMES)));
     }
 
     List<Element> params = DomUtils.getChildElementsByTagName(element, new String[] {IN_PARAM_TAG, "out-param", "inout-param"});

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -25,6 +25,7 @@ import org.mule.runtime.core.api.routing.filter.Filter;
  * A holder for a pair of MessageProcessor and Filter.
  */
 public class MessageProcessorFilterPair implements FlowConstructAware, MuleContextAware, Lifecycle {
+
   private final MessageProcessor messageProcessor;
   private final Filter filter;
 

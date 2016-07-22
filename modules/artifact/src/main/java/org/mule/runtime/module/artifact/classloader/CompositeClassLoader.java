@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.artifact.classloader;
@@ -29,10 +29,11 @@ import static org.mule.runtime.module.artifact.classloader.ClassLoaderLookupStra
 /**
  * Defines a classloader that delegates classes and resources resolution to a list of classloaders.
  * <p/>
- * By using a {@link ClassLoaderLookupPolicy} this classLoader can use parent-first, parent-only or child-first classloading lookup mode per
- * package.
+ * By using a {@link ClassLoaderLookupPolicy} this classLoader can use parent-first, parent-only or child-first classloading
+ * lookup mode per package.
  */
 public class CompositeClassLoader extends ClassLoader implements ClassLoaderLookupPolicyProvider {
+
   protected static final Logger logger = LoggerFactory.getLogger(CompositeClassLoader.class);
 
   static {
@@ -204,7 +205,8 @@ public class CompositeClassLoader extends ClassLoader implements ClassLoaderLook
   }
 
 
-  protected Method findDeclaredMethod(ClassLoader classLoader, String methodName, Class<?>... params) throws NoSuchMethodException {
+  protected Method findDeclaredMethod(ClassLoader classLoader, String methodName, Class<?>... params)
+      throws NoSuchMethodException {
     Class clazz = classLoader.getClass();
 
     while (clazz != null) {
@@ -223,7 +225,8 @@ public class CompositeClassLoader extends ClassLoader implements ClassLoaderLook
   }
 
   protected void logReflectionLoadingError(String name, ClassLoader classLoader, Exception e, String type) {
-    if (e instanceof InvocationTargetException && ((InvocationTargetException) e).getTargetException() instanceof ClassNotFoundException) {
+    if (e instanceof InvocationTargetException
+        && ((InvocationTargetException) e).getTargetException() instanceof ClassNotFoundException) {
       logger.debug(String.format("'%s' '%s' not found in class loader '%s'", type, name, classLoader));
     } else {
       final String errorMessage;
@@ -233,8 +236,8 @@ public class CompositeClassLoader extends ClassLoader implements ClassLoaderLook
         errorMessage = e.getMessage();
       }
 
-      logger.debug(
-          String.format("Error loading '%s' '%s' from class loader '%s': '%s'", type.toLowerCase(), name, classLoader, errorMessage));
+      logger.debug(String.format("Error loading '%s' '%s' from class loader '%s': '%s'", type.toLowerCase(), name, classLoader,
+          errorMessage));
     }
   }
 }

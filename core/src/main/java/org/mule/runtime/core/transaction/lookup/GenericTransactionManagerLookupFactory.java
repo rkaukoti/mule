@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transaction.lookup;
 
@@ -23,11 +23,12 @@ import javax.transaction.TransactionManager;
 /**
  * A factory performing a JNDI lookup for TransactionManager.
  * <p/>
- * NOTE: Java EE 1.4 specification does not mandate application server vendors to expose a TransactionManager for direct use, nor does it
- * name the standard way to locate it. For some servers the TransactionManager is not even available in the global JNDI namespace, so your
- * only bet is to run Mule in the same JVM as the application server.
+ * NOTE: Java EE 1.4 specification does not mandate application server vendors to expose a TransactionManager for direct use, nor
+ * does it name the standard way to locate it. For some servers the TransactionManager is not even available in the global JNDI
+ * namespace, so your only bet is to run Mule in the same JVM as the application server.
  */
 public class GenericTransactionManagerLookupFactory implements TransactionManagerFactory, Initialisable {
+
   protected final Logger logger = LoggerFactory.getLogger(getClass());
 
   protected Context context;
@@ -84,12 +85,13 @@ public class GenericTransactionManagerLookupFactory implements TransactionManage
   }
 
   /**
-   * Method used to perform any initialisation work. If a fatal error occurs during initialisation an <code>InitialisationException</code>
-   * should be thrown, causing the Mule instance to shutdown. If the error is recoverable, say by retrying to connect, a
-   * <code>RecoverableException</code> should be thrown. There is no guarantee that by throwing a Recoverable exception that the Mule
-   * instance will not shut down.
+   * Method used to perform any initialisation work. If a fatal error occurs during initialisation an
+   * <code>InitialisationException</code> should be thrown, causing the Mule instance to shutdown. If the error is recoverable,
+   * say by retrying to connect, a <code>RecoverableException</code> should be thrown. There is no guarantee that by throwing a
+   * Recoverable exception that the Mule instance will not shut down.
    *
-   * @throws org.mule.runtime.core.api.lifecycle.InitialisationException if a fatal error occurs causing the Mule instance to shutdown
+   * @throws org.mule.runtime.core.api.lifecycle.InitialisationException if a fatal error occurs causing the Mule instance to
+   *         shutdown
    */
   public void initialise() throws InitialisationException {
     if (txManager == null && StringUtils.isEmpty(StringUtils.trim(jndiName))) {

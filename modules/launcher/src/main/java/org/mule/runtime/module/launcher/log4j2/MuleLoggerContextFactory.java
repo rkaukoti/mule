@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.log4j2;
 
@@ -37,6 +37,7 @@ import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessa
  * @since 3.8.0
  */
 public class MuleLoggerContextFactory {
+
   /**
    * Builds a new {@link LoggerContext} for the given {@code classLoader} and {@code selector}
    *
@@ -56,6 +57,7 @@ public class MuleLoggerContextFactory {
       final ArtifactClassLoader artifactClassLoader = (ArtifactClassLoader) classLoader;
 
       artifactClassLoader.addShutdownListener(new ShutdownListener() {
+
         @Override
         public void execute() {
           selector.destroyLoggersFor(ArtifactAwareContextSelector.resolveLoggerContextClassLoader(classLoader));
@@ -98,13 +100,14 @@ public class MuleLoggerContextFactory {
       }
     } catch (Exception e) {
       ArtifactAwareContextSelector.logger.warn(
-          "{} while looking for 'log.configFile' entry in app descriptor: {}. Using default configuration.", e.getClass().getName(),
-          e.getMessage());
+          "{} while looking for 'log.configFile' entry in app descriptor: {}. Using default configuration.",
+          e.getClass().getName(), e.getMessage());
       appLogConfig = getLogConfig(muleCL);
     }
 
     if (appLogConfig != null && ArtifactAwareContextSelector.logger.isInfoEnabled()) {
-      ArtifactAwareContextSelector.logger.info("Found logging config for application '{}' at '{}'", muleCL.getArtifactName(), appLogConfig);
+      ArtifactAwareContextSelector.logger.info("Found logging config for application '{}' at '{}'", muleCL.getArtifactName(),
+          appLogConfig);
     }
 
     return appLogConfig;
@@ -119,8 +122,8 @@ public class MuleLoggerContextFactory {
   }
 
   /**
-   * Checks if there's an app-specific logging configuration available, scope the lookup to this classloader only, as getResource() will
-   * delegate to parents locate xml config first, fallback to properties format if not found
+   * Checks if there's an app-specific logging configuration available, scope the lookup to this classloader only, as
+   * getResource() will delegate to parents locate xml config first, fallback to properties format if not found
    */
   private URI getLogConfig(LocalResourceLocator localResourceLocator) {
     URL appLogConfig = localResourceLocator.findLocalResource("log4j2-test.xml");
@@ -152,6 +155,7 @@ public class MuleLoggerContextFactory {
     ArtifactDescriptorFactory<ApplicationDescriptor> applicationDescriptorFactory = new ApplicationDescriptorFactory(
         new ArtifactPluginDescriptorLoader(new ArtifactPluginDescriptorFactory(new DefaultArtifactClassLoaderFilterFactory())),
         new ArtifactPluginRepository() {
+
           public List<ArtifactPluginDescriptor> getContainerArtifactPluginDescriptors() {
             // Don't need plugins, just need to get the descriptor to access log configuration
             return emptyList();

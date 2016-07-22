@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.issues;
 
@@ -31,7 +31,8 @@ import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.
 
 public class ProxyMule6829TestCase extends FunctionalTestCase {
 
-  private static final HttpRequestOptions HTTP_REQUEST_OPTIONS = newOptions().method(POST.name()).disableStatusCodeValidation().build();
+  private static final HttpRequestOptions HTTP_REQUEST_OPTIONS =
+      newOptions().method(POST.name()).disableStatusCodeValidation().build();
 
   @Rule
   public DynamicPort dynamicPort = new DynamicPort("port1");
@@ -133,17 +134,20 @@ public class ProxyMule6829TestCase extends FunctionalTestCase {
   private MuleMessage executeSoap11Call(String msgString, String soapAction) throws MuleException {
     MuleMessage msg = MuleMessage.builder().payload(msgString).addOutboundProperty("soapAction", soapAction).build();
 
-    return muleContext.getClient().send("http://localhost:" + dynamicPort.getNumber() + "/EchoService11", msg, HTTP_REQUEST_OPTIONS);
+    return muleContext.getClient().send("http://localhost:" + dynamicPort.getNumber() + "/EchoService11", msg,
+        HTTP_REQUEST_OPTIONS);
   }
 
   private MuleMessage executeSoap12Call(String msgString, String soapAction) throws MuleException {
     String contentType = APP_SOAP_XML.withCharset(UTF_8).toRfcString() + ";action=\"" + soapAction + "\"";
     MuleMessage msg = MuleMessage.builder().payload(msgString).mediaType(MediaType.parse(contentType)).build();
 
-    return muleContext.getClient().send("http://localhost:" + dynamicPort.getNumber() + "/EchoService12", msg, HTTP_REQUEST_OPTIONS);
+    return muleContext.getClient().send("http://localhost:" + dynamicPort.getNumber() + "/EchoService12", msg,
+        HTTP_REQUEST_OPTIONS);
   }
 
   private static class TestCxfEventCallback implements EventCallback {
+
     private final Latch latch;
     private String cxfOperationName;
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.file;
 
@@ -42,11 +42,11 @@ public class LocalFilePredicateBuilderTestCase
 
   @Test
   public void matchesAll() {
-    builder.setFilenamePattern("glob:*.{java, js}").setPathPattern("glob:**.{java, js}").setCreatedSince(LocalDateTime.of(1980, 1, 1, 0, 0))
-        .setCreatedUntil(LocalDateTime.of(1990, 1, 1, 0, 0)).setUpdatedSince(LocalDateTime.of(2010, 9, 24, 0, 0))
-        .setUpdatedUntil(LocalDateTime.of(2013, 11, 3, 6, 0)).setAccessedSince(LocalDateTime.of(2013, 11, 3, 0, 0))
-        .setAccessedUntil(LocalDateTime.of(2015, 4, 20, 0, 0)).setRegularFile(true).setDirectory(false).setSymbolicLink(false)
-        .setMinSize(1L).setMaxSize(1024L);
+    builder.setFilenamePattern("glob:*.{java, js}").setPathPattern("glob:**.{java, js}")
+        .setCreatedSince(LocalDateTime.of(1980, 1, 1, 0, 0)).setCreatedUntil(LocalDateTime.of(1990, 1, 1, 0, 0))
+        .setUpdatedSince(LocalDateTime.of(2010, 9, 24, 0, 0)).setUpdatedUntil(LocalDateTime.of(2013, 11, 3, 6, 0))
+        .setAccessedSince(LocalDateTime.of(2013, 11, 3, 0, 0)).setAccessedUntil(LocalDateTime.of(2015, 4, 20, 0, 0))
+        .setRegularFile(true).setDirectory(false).setSymbolicLink(false).setMinSize(1L).setMaxSize(1024L);
 
     assertMatch();
   }

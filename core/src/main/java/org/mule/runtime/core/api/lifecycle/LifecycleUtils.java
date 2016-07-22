@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.lifecycle;
 
@@ -25,8 +25,8 @@ import static org.mule.runtime.core.util.Preconditions.checkArgument;
  * Utility class for performing lifecycle operations on objects, as long as they implement cooresponding annotations such as
  * {@link Initialisable}, {@link Startable}, {@link Stoppable}, {@link Disposable} or even {@link MuleContextAware}.
  * <p>
- * The {@link Optional} object container is also supported, in which case the operation will be evaluated on the value it holds or not at
- * all if the value is not present.
+ * The {@link Optional} object container is also supported, in which case the operation will be evaluated on the value it holds or
+ * not at all if the value is not present.
  *
  * @since 3.7.0
  */
@@ -47,8 +47,9 @@ public class LifecycleUtils {
   }
 
   /**
-   * The same as {@link #initialiseIfNeeded(Object, MuleContext)}, only that it also checks if it implements {@link FlowConstructAware}, in
-   * which case it will invoke {@link FlowConstructAware#setFlowConstruct(FlowConstruct)} with the given {@code flowConstruct}
+   * The same as {@link #initialiseIfNeeded(Object, MuleContext)}, only that it also checks if it implements
+   * {@link FlowConstructAware}, in which case it will invoke {@link FlowConstructAware#setFlowConstruct(FlowConstruct)} with the
+   * given {@code flowConstruct}
    *
    * @param object the object you're trying to initialise
    * @param muleContext a {@link MuleContext}
@@ -64,8 +65,8 @@ public class LifecycleUtils {
   }
 
   /**
-   * The same as {@link #initialiseIfNeeded(Object)}, only that before checking for {@code object} being {@link Initialisable}, it uses the
-   * given {@code muleContext} to perform further initialization.
+   * The same as {@link #initialiseIfNeeded(Object)}, only that before checking for {@code object} being {@link Initialisable}, it
+   * uses the given {@code muleContext} to perform further initialization.
    * <p>
    * It checks if the {@code object} implements {@link MuleContextAware}, in which case it will invoke
    * {@link MuleContextAware#setMuleContext(MuleContext)} with the given {@code muleContext}.
@@ -79,8 +80,8 @@ public class LifecycleUtils {
   }
 
   /**
-   * The same as {@link #initialiseIfNeeded(Object)}, only that before checking for {@code object} being {@link Initialisable}, it uses the
-   * given {@code muleContext} to perform further initialization.
+   * The same as {@link #initialiseIfNeeded(Object)}, only that before checking for {@code object} being {@link Initialisable}, it
+   * uses the given {@code muleContext} to perform further initialization.
    * <p>
    * It checks if the {@code object} implements {@link MuleContextAware}, in which case it will invoke
    * {@link MuleContextAware#setMuleContext(MuleContext)} with the given {@code muleContext}.
@@ -135,7 +136,8 @@ public class LifecycleUtils {
    * @param objects the list of objects to be initialised
    * @param muleContext a {@link MuleContext}
    */
-  public static void initialiseIfNeeded(Collection<? extends Object> objects, MuleContext muleContext) throws InitialisationException {
+  public static void initialiseIfNeeded(Collection<? extends Object> objects, MuleContext muleContext)
+      throws InitialisationException {
     try {
       doApplyPhase(Initialisable.PHASE_NAME, objects, muleContext, null);
     } catch (MuleException e) {
@@ -156,8 +158,8 @@ public class LifecycleUtils {
   }
 
   /**
-   * For each item in the {@code objects} collection, it invokes the the {@link Startable#start()} if it implements the {@link Startable}
-   * interface.
+   * For each item in the {@code objects} collection, it invokes the the {@link Startable#start()} if it implements the
+   * {@link Startable} interface.
    *
    * @param objects the list of objects to be started
    */
@@ -166,8 +168,8 @@ public class LifecycleUtils {
   }
 
   /**
-   * For each item in the {@code objects} collection, it invokes the {@link Stoppable#stop()} if it implements the {@link Stoppable}
-   * interface.
+   * For each item in the {@code objects} collection, it invokes the {@link Stoppable#stop()} if it implements the
+   * {@link Stoppable} interface.
    *
    * @param objects the list of objects to be stopped
    */
@@ -176,12 +178,12 @@ public class LifecycleUtils {
   }
 
   /**
-   * For each item in the {@code objects} collection, it invokes the {@link Stoppable#stop()} if it implements the {@link Stoppable}
-   * interface.
+   * For each item in the {@code objects} collection, it invokes the {@link Stoppable#stop()} if it implements the
+   * {@link Stoppable} interface.
    * <p>
-   * This method is considered safe because it will not throw exception and the {@link Stoppable#stop()} method will be called on all the
-   * {@code objects} regarding on any (or all) of them throwing exceptions. Any exceptions generated will be logged using the provided
-   * {@code logger} and processing will continue
+   * This method is considered safe because it will not throw exception and the {@link Stoppable#stop()} method will be called on
+   * all the {@code objects} regarding on any (or all) of them throwing exceptions. Any exceptions generated will be logged using
+   * the provided {@code logger} and processing will continue
    *
    * @param objects the list of objects to be stopped
    * @param logger the {@link Logger} in which any exception found is to be logged
@@ -207,8 +209,8 @@ public class LifecycleUtils {
   }
 
   /**
-   * Invokes {@link Disposable#dispose()} on {@code object} if it implements the {@link Disposable} interface. If the dispose operation
-   * fails, then the exception will be silently logged using the provided {@code logger}
+   * Invokes {@link Disposable#dispose()} on {@code object} if it implements the {@link Disposable} interface. If the dispose
+   * operation fails, then the exception will be silently logged using the provided {@code logger}
    *
    * @param object the object you're trying to dispose
    */
@@ -224,8 +226,8 @@ public class LifecycleUtils {
   }
 
   /**
-   * For each item in the {@code objects} collection, it invokes {@link Disposable#dispose()} if it implements the {@link Disposable}
-   * interface.
+   * For each item in the {@code objects} collection, it invokes {@link Disposable#dispose()} if it implements the
+   * {@link Disposable} interface.
    * <p>
    * Per each dispose operation that fails, the exception will be silently logged using the provided {@code logger}
    *

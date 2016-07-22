@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.context;
 
@@ -319,12 +319,14 @@ public class MuleContextLifecycleTestCase extends AbstractMuleTestCase {
 
     final AtomicReference<MuleContext> contextFromNotification = new AtomicReference<MuleContext>();
     final AtomicReference<String> resourceId = new AtomicReference<String>();
-    MuleContextNotificationListener<MuleContextNotification> listener = new MuleContextNotificationListener<MuleContextNotification>() {
-      public void onNotification(MuleContextNotification notification) {
-        contextFromNotification.set(notification.getMuleContext());
-        resourceId.set(notification.getResourceIdentifier());
-      }
-    };
+    MuleContextNotificationListener<MuleContextNotification> listener =
+        new MuleContextNotificationListener<MuleContextNotification>() {
+
+          public void onNotification(MuleContextNotification notification) {
+            contextFromNotification.set(notification.getMuleContext());
+            resourceId.set(notification.getResourceIdentifier());
+          }
+        };
     ctx.registerListener(listener);
     ctx.start();
 
@@ -352,7 +354,8 @@ public class MuleContextLifecycleTestCase extends AbstractMuleTestCase {
   }
 
   private void assertLifecycleManagerDidApplyAllPhases() {
-    assertLifecycleManagerDidApplyPhases(Initialisable.PHASE_NAME, Startable.PHASE_NAME, Stoppable.PHASE_NAME, Disposable.PHASE_NAME);
+    assertLifecycleManagerDidApplyPhases(Initialisable.PHASE_NAME, Startable.PHASE_NAME, Stoppable.PHASE_NAME,
+        Disposable.PHASE_NAME);
   }
 
   @Test(expected = InitialisationException.class)

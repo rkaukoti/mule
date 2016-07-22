@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.exceptions;
 
@@ -21,6 +21,7 @@ import static org.hamcrest.core.IsInstanceOf.instanceOf;
 import static org.junit.Assert.assertThat;
 
 public class ChoiceExceptionStrategyTestCase extends FunctionalTestCase {
+
   @Rule
   public ExpectedException expectedException = ExpectedException.none();
 
@@ -41,7 +42,8 @@ public class ChoiceExceptionStrategyTestCase extends FunctionalTestCase {
 
   @Test
   public void testMatchesCorrectExceptionStrategyUsingWrapperAndCause() throws Exception {
-    callAndThrowException(new ResolverException(CoreMessages.createStaticMessage(""), new RuntimeException(new IllegalStateException())),
+    callAndThrowException(
+        new ResolverException(CoreMessages.createStaticMessage(""), new RuntimeException(new IllegalStateException())),
         "0 catch-2");
   }
 
@@ -106,12 +108,14 @@ public class ChoiceExceptionStrategyTestCase extends FunctionalTestCase {
     callAndThrowException("0", exceptionToThrow, expectedMessage);
   }
 
-  private void callAndThrowException(Object payload, final Exception exceptionToThrow, final String expectedMessage) throws Exception {
+  private void callAndThrowException(Object payload, final Exception exceptionToThrow, final String expectedMessage)
+      throws Exception {
     FunctionalTestComponent ftc = getFunctionalTestComponent("matchesCorrectExceptionStrategyUsingExceptionType");
     ftc.setEventCallback((context, component) -> {
       throw exceptionToThrow;
     });
-    MuleMessage response = flowRunner("matchesCorrectExceptionStrategyUsingExceptionType").withPayload(payload).run().getMessage();
+    MuleMessage response =
+        flowRunner("matchesCorrectExceptionStrategyUsingExceptionType").withPayload(payload).run().getMessage();
     assertThat(getPayloadAsString(response), is(expectedMessage));
   }
 

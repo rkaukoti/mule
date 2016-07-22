@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.spring;
 
@@ -26,9 +26,9 @@ import static org.junit.Assert.assertNotNull;
 public class SchemaValidationMule2225TestCase extends AbstractMuleTestCase {
 
   /**
-   * This test will fail when run with plain JDK 1.4 or even 1.5 - schema validation requires a proper JAXP installation in the JDK's
-   * endorsed directory. It works fine with Xerces 2.9.1 (as with mule 1.4.x) or a manually installed JAXP Sun RI on JDK 1.5; JDK 1.6 works
-   * out of the box.
+   * This test will fail when run with plain JDK 1.4 or even 1.5 - schema validation requires a proper JAXP installation in the
+   * JDK's endorsed directory. It works fine with Xerces 2.9.1 (as with mule 1.4.x) or a manually installed JAXP Sun RI on JDK
+   * 1.5; JDK 1.6 works out of the box.
    */
   @Test
   public void testValidation() throws SAXException, IOException {

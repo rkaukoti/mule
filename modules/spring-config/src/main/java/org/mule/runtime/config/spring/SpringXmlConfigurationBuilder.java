@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring;
 
@@ -23,8 +23,8 @@ import static java.util.Collections.emptyMap;
 import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
 
 /**
- * <code>SpringXmlConfigurationBuilder</code> enables Mule to be configured from a Spring XML Configuration file used with Mule name-spaces.
- * Multiple configuration files can be loaded from this builder (specified as a comma-separated list).
+ * <code>SpringXmlConfigurationBuilder</code> enables Mule to be configured from a Spring XML Configuration file used with Mule
+ * name-spaces. Multiple configuration files can be loaded from this builder (specified as a comma-separated list).
  */
 public class SpringXmlConfigurationBuilder extends AbstractResourceConfigurationBuilder
     implements ParentMuleContextAwareConfigurationBuilder {
@@ -37,8 +37,8 @@ public class SpringXmlConfigurationBuilder extends AbstractResourceConfiguration
   protected ApplicationContext parentContext;
   protected ApplicationContext applicationContext;
 
-  public SpringXmlConfigurationBuilder(String[] configResources, Map<String, String> artifactProperties, ArtifactType artifactType)
-      throws ConfigurationException {
+  public SpringXmlConfigurationBuilder(String[] configResources, Map<String, String> artifactProperties,
+      ArtifactType artifactType) throws ConfigurationException {
     super(configResources, artifactProperties);
     this.artifactType = artifactType;
   }
@@ -104,7 +104,8 @@ public class SpringXmlConfigurationBuilder extends AbstractResourceConfiguration
 
   protected ApplicationContext doCreateApplicationContext(MuleContext muleContext, ConfigResource[] artifactConfigResources,
       OptionalObjectsController optionalObjectsController) {
-    return new MuleArtifactContext(muleContext, artifactConfigResources, optionalObjectsController, getArtifactProperties(), artifactType);
+    return new MuleArtifactContext(muleContext, artifactConfigResources, optionalObjectsController, getArtifactProperties(),
+        artifactType);
   }
 
 
@@ -132,8 +133,8 @@ public class SpringXmlConfigurationBuilder extends AbstractResourceConfiguration
     if (applicationContext instanceof ConfigurableApplicationContext) {
       registry = new SpringRegistry((ConfigurableApplicationContext) applicationContext, parentContext, muleContext);
     } else {
-      throw new ConfigurationException(MessageFactory
-          .createStaticMessage("Cannot set a parent context if the ApplicationContext does not implement ConfigurableApplicationContext"));
+      throw new ConfigurationException(MessageFactory.createStaticMessage(
+          "Cannot set a parent context if the ApplicationContext does not implement ConfigurableApplicationContext"));
     }
   }
 

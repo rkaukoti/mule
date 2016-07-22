@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.tcp;
 
@@ -32,11 +32,12 @@ import java.net.SocketException;
 import java.net.URI;
 
 /**
- * <code>TcpConnector</code> can bind or sent to a given TCP port on a given host. Other socket-based transports can be built on top of this
- * class by providing the appropriate socket factories and application level protocols as required (see the constructor and the SSL
- * transport for examples).
+ * <code>TcpConnector</code> can bind or sent to a given TCP port on a given host. Other socket-based transports can be built on
+ * top of this class by providing the appropriate socket factories and application level protocols as required (see the
+ * constructor and the SSL transport for examples).
  */
 public class TcpConnector extends AbstractConnector {
+
   public static final String TCP = "tcp";
   public static final String SEND_TCP_NO_DELAY_SYSTEM_PROPERTY =
       MuleProperties.SYSTEM_PROPERTY_PREFIX + "transport.tcp.defaultSendTcpNoDelay";
@@ -74,14 +75,15 @@ public class TcpConnector extends AbstractConnector {
   private Boolean failOnUnresolvedHost = Boolean.TRUE;
 
   /**
-   * If set, the socket is not closed after sending a message. This attribute only applies when sending data over a socket (Client).
+   * If set, the socket is not closed after sending a message. This attribute only applies when sending data over a socket
+   * (Client).
    */
   private boolean keepSendSocketOpen = false;
 
   /**
-   * Enables SO_KEEPALIVE behavior on open sockets. This automatically checks socket connections that are open but unused for long periods
-   * and closes them if the connection becomes unavailable. This is a property on the socket itself and is used by a server socket to
-   * control whether connections to the server are kept alive before they are recycled.
+   * Enables SO_KEEPALIVE behavior on open sockets. This automatically checks socket connections that are open but unused for long
+   * periods and closes them if the connection becomes unavailable. This is a property on the socket itself and is used by a
+   * server socket to control whether connections to the server are kept alive before they are recycled.
    */
   private boolean keepAlive = false;
 

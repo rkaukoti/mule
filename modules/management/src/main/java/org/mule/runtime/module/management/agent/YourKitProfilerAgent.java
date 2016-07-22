@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.management.agent;
 
@@ -30,6 +30,7 @@ import javax.management.MalformedObjectNameException;
 import javax.management.ObjectName;
 
 public class YourKitProfilerAgent implements Agent, MuleContextAware {
+
   /**
    * MBean name to register under.
    */
@@ -93,7 +94,8 @@ public class YourKitProfilerAgent implements Agent, MuleContextAware {
   /**
    * Unregister Profiler MBean if there are any left over the old deployment
    */
-  protected void unregisterMBeansIfNecessary() throws MalformedObjectNameException, InstanceNotFoundException, MBeanRegistrationException {
+  protected void unregisterMBeansIfNecessary()
+      throws MalformedObjectNameException, InstanceNotFoundException, MBeanRegistrationException {
     if (mBeanServer == null || profilerName == null) {
       return;
     }

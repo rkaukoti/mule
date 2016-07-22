@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -49,18 +49,19 @@ import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_DEFAULT_MES
 import static org.mule.runtime.core.context.notification.ConnectorMessageNotification.MESSAGE_RESPONSE;
 
 /**
- * <code>AbstractMessageReceiver</code> provides common methods for all Message Receivers provided with Mule. A message receiver enables an
- * endpoint to receive a message from an external system.
+ * <code>AbstractMessageReceiver</code> provides common methods for all Message Receivers provided with Mule. A message receiver
+ * enables an endpoint to receive a message from an external system.
  */
 public abstract class AbstractMessageReceiver extends AbstractTransportMessageHandler implements MessageReceiver {
+
   /**
    * The Service with which this receiver is associated with
    */
   protected FlowConstruct flowConstruct;
 
   /**
-   * {@link MessageProcessor} chain used to process messages once the transport specific {@link MessageReceiver} has received transport
-   * message and created the {@link MuleEvent}
+   * {@link MessageProcessor} chain used to process messages once the transport specific {@link MessageReceiver} has received
+   * transport message and created the {@link MuleEvent}
    */
   protected MessageProcessor listener;
 
@@ -72,8 +73,8 @@ public abstract class AbstractMessageReceiver extends AbstractTransportMessageHa
   protected List<Transformer> defaultResponseTransformers;
   protected ReplyToHandler replyToHandler;
   /**
-   * Stores the endpointUri that this receiver listens on. This enpoint can be different to the endpointUri in the endpoint stored on the
-   * receiver as endpoint endpointUri may get rewritten if this endpointUri is a wildcard endpointUri such as jms.*
+   * Stores the endpointUri that this receiver listens on. This enpoint can be different to the endpointUri in the endpoint stored
+   * on the receiver as endpoint endpointUri may get rewritten if this endpointUri is a wildcard endpointUri such as jms.*
    */
   private EndpointURI endpointUri;
   private PrimaryNodeLifecycleNotificationListener primaryNodeLifecycleNotificationListener;
@@ -86,12 +87,13 @@ public abstract class AbstractMessageReceiver extends AbstractTransportMessageHa
    *
    * @param connector the endpoint that created this listener
    * @param flowConstruct the flow construct to associate with the receiver.
-   * @param endpoint the provider contains the endpointUri on which the receiver will listen on. The endpointUri can be anything and is
-   *        specific to the receiver implementation i.e. an email address, a directory, a jms destination or port address.
+   * @param endpoint the provider contains the endpointUri on which the receiver will listen on. The endpointUri can be anything
+   *        and is specific to the receiver implementation i.e. an email address, a directory, a jms destination or port address.
    * @see FlowConstruct
    * @see InboundEndpoint
    */
-  public AbstractMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint) throws CreateException {
+  public AbstractMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint)
+      throws CreateException {
     super(endpoint);
 
     if (flowConstruct == null) {
@@ -108,10 +110,10 @@ public abstract class AbstractMessageReceiver extends AbstractTransportMessageHa
   }
 
   /**
-   * Method used to perform any initialisation work. If a fatal error occurs during initialisation an <code>InitialisationException</code>
-   * should be thrown, causing the Mule instance to shutdown. If the error is recoverable, say by retrying to connect, a
-   * <code>RecoverableException</code> should be thrown. There is no guarantee that by throwing a Recoverable exception that the Mule
-   * instance will not shut down.
+   * Method used to perform any initialisation work. If a fatal error occurs during initialisation an
+   * <code>InitialisationException</code> should be thrown, causing the Mule instance to shutdown. If the error is recoverable,
+   * say by retrying to connect, a <code>RecoverableException</code> should be thrown. There is no guarantee that by throwing a
+   * Recoverable exception that the Mule instance will not shut down.
    *
    * @throws org.mule.api.lifecycle.InitialisationException if a fatal error occurs causing the Mule instance to shutdown
    * @throws org.mule.api.lifecycle.RecoverableException if an error occurs that can be recovered from
@@ -425,7 +427,8 @@ public abstract class AbstractMessageReceiver extends AbstractTransportMessageHa
     return resultEvent;
   }
 
-  protected void processMessage(final MessageProcessTemplate messageProcessTemplate, final MessageProcessContext messageProcessContext) {
+  protected void processMessage(final MessageProcessTemplate messageProcessTemplate,
+      final MessageProcessContext messageProcessContext) {
     messageProcessingManager.processMessage(messageProcessTemplate, messageProcessContext);
   }
 

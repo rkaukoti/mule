@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.api.socket;
 
@@ -36,8 +36,8 @@ public abstract class AbstractSocketProperties implements SocketProperties {
   protected Integer receiveBufferSize;
 
   /**
-   * This sets the SO_TIMEOUT value on sockets. Indicates the amount of time (in milliseconds) that the socket will wait in a blocking
-   * operation before failing.
+   * This sets the SO_TIMEOUT value on sockets. Indicates the amount of time (in milliseconds) that the socket will wait in a
+   * blocking operation before failing.
    * <p>
    * A value of 0 (the default) means waiting indefinitely.
    */
@@ -46,8 +46,8 @@ public abstract class AbstractSocketProperties implements SocketProperties {
   protected Integer clientTimeout;
 
   /**
-   * If set (the default), SO_REUSEADDRESS is set on the sockets before binding. This helps reduce "address already in use" errors when a
-   * socket is re-used.
+   * If set (the default), SO_REUSEADDRESS is set on the sockets before binding. This helps reduce "address already in use" errors
+   * when a socket is re-used.
    */
   @Parameter
   @Optional(defaultValue = "true")

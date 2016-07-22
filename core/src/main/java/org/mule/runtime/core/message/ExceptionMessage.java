@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.message;
 
@@ -20,10 +20,11 @@ import java.util.Iterator;
 import java.util.Map;
 
 /**
- * <code>ExceptionMessage</code> is used by the DefaultServiceExceptionStrategy for wrapping an exception with a message to send via an
- * endpointUri.
+ * <code>ExceptionMessage</code> is used by the DefaultServiceExceptionStrategy for wrapping an exception with a message to send
+ * via an endpointUri.
  */
 public class ExceptionMessage implements Serializable {
+
   /**
    * Serial version
    */
@@ -147,7 +148,7 @@ public class ExceptionMessage implements Serializable {
 
   @Override
   public String toString() {
-    return "ExceptionMessage{" + "payload=" + getPayload() + ", context=" + properties + "exception=" + exception + ", componentName='"
-        + componentName + "'" + ", endpointUri=" + endpointUri + ", timeStamp=" + timeStamp + "}";
+    return "ExceptionMessage{" + "payload=" + getPayload() + ", context=" + properties + "exception=" + exception
+        + ", componentName='" + componentName + "'" + ", endpointUri=" + endpointUri + ", timeStamp=" + timeStamp + "}";
   }
 }

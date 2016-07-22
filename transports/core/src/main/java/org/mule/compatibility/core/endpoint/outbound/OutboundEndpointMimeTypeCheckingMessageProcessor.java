@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.endpoint.outbound;
 
@@ -18,6 +18,7 @@ import org.mule.runtime.core.util.ObjectUtils;
  * Verify that the outbound mime type is acceptable by this endpoint.
  */
 public class OutboundEndpointMimeTypeCheckingMessageProcessor implements MessageProcessor {
+
   private OutboundEndpoint endpoint;
 
   public OutboundEndpointMimeTypeCheckingMessageProcessor(OutboundEndpoint endpoint) {
@@ -35,7 +36,8 @@ public class OutboundEndpointMimeTypeCheckingMessageProcessor implements Message
       } else {
         if (!dataType.getMediaType().matches(endpointMimeType)) {
           throw new MessagingException(
-              CoreMessages.unexpectedMIMEType(dataType.getMediaType().toRfcString(), endpointMimeType.toRfcString()), event, this);
+              CoreMessages.unexpectedMIMEType(dataType.getMediaType().toRfcString(), endpointMimeType.toRfcString()), event,
+              this);
         }
       }
     }

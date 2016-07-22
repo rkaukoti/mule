@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.reboot;
 
@@ -73,7 +73,8 @@ public class MuleContainerBootstrapUtilsTestCase {
   }
 
   /**
-   * Test method for {@link org.mule.runtime.module.reboot.MuleContainerBootstrapUtils#getResource(java.lang.String, java.lang.Class)}.
+   * Test method for
+   * {@link org.mule.runtime.module.reboot.MuleContainerBootstrapUtils#getResource(java.lang.String, java.lang.Class)}.
    */
   @Test
   public void testGetResource() throws IOException {
@@ -101,7 +102,8 @@ public class MuleContainerBootstrapUtilsTestCase {
   }
 
   /**
-   * Test method for {@link org.mule.runtime.module.reboot.MuleContainerBootstrapUtils#renameFileHard(java.io.File, java.io.File)}.
+   * Test method for
+   * {@link org.mule.runtime.module.reboot.MuleContainerBootstrapUtils#renameFileHard(java.io.File, java.io.File)}.
    */
   @Test
   public void testRenameFileHard() throws IOException {
@@ -116,7 +118,8 @@ public class MuleContainerBootstrapUtilsTestCase {
   }
 
   /**
-   * Test method for {@link org.mule.runtime.module.reboot.MuleContainerBootstrapUtils#copy(java.io.InputStream, java.io.OutputStream)}.
+   * Test method for
+   * {@link org.mule.runtime.module.reboot.MuleContainerBootstrapUtils#copy(java.io.InputStream, java.io.OutputStream)}.
    */
   @Test
   public void testCopy() throws IOException {

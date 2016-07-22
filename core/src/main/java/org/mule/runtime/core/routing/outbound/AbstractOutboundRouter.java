@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing.outbound;
 
@@ -54,6 +54,7 @@ import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_REQU
  * <code>AbstractOutboundRouter</code> is a base router class that tracks statistics about message processing through the router.
  */
 public abstract class AbstractOutboundRouter extends AbstractMessageProcessorOwner implements OutboundRouter {
+
   /**
    * logger used by this class
    */
@@ -74,7 +75,8 @@ public abstract class AbstractOutboundRouter extends AbstractMessageProcessorOwn
   protected AtomicBoolean initialised = new AtomicBoolean(false);
   protected AtomicBoolean started = new AtomicBoolean(false);
   private RouterStatistics routerStatistics;
-  private MessageProcessorExecutionTemplate notificationTemplate = MessageProcessorExecutionTemplate.createNotificationExecutionTemplate();
+  private MessageProcessorExecutionTemplate notificationTemplate =
+      MessageProcessorExecutionTemplate.createNotificationExecutionTemplate();
 
   @Override
   public MuleEvent process(final MuleEvent event) throws MuleException {
@@ -129,8 +131,8 @@ public abstract class AbstractOutboundRouter extends AbstractMessageProcessorOwn
       if (logger.isTraceEnabled()) {
         if (resultMessage != null) {
           try {
-            logger.trace("Response payload: \n"
-                + StringMessageUtils.truncate(muleContext.getTransformationService().getPayloadForLogging(resultMessage), 100, false));
+            logger.trace("Response payload: \n" + StringMessageUtils
+                .truncate(muleContext.getTransformationService().getPayloadForLogging(resultMessage), 100, false));
           } catch (Exception e) {
             logger.trace("Response payload: \n(unable to retrieve payload: " + e.getMessage());
           }
@@ -145,8 +147,8 @@ public abstract class AbstractOutboundRouter extends AbstractMessageProcessorOwn
     MuleMessage message = event.getMessage();
     if (replyTo != null) {
       // if replyTo is set we'll probably want the correlationId set as well
-      event.setMessage(
-          MuleMessage.builder(message).replyTo(replyTo).addOutboundProperty(MULE_REPLY_TO_REQUESTOR_PROPERTY, service.getName()).build());
+      event.setMessage(MuleMessage.builder(message).replyTo(replyTo)
+          .addOutboundProperty(MULE_REPLY_TO_REQUESTOR_PROPERTY, service.getName()).build());
     }
     if (enableCorrelation != CorrelationMode.NEVER) {
       String correlation = service.getMessageInfoMapping().getCorrelationId(event);
@@ -277,8 +279,8 @@ public abstract class AbstractOutboundRouter extends AbstractMessageProcessorOwn
   /**
    * Send message event to destination.
    */
-  protected MuleEvent sendRequestEvent(MuleEvent originalEvent, MuleEvent eventToRoute, MessageProcessor route, boolean awaitResponse)
-      throws MuleException {
+  protected MuleEvent sendRequestEvent(MuleEvent originalEvent, MuleEvent eventToRoute, MessageProcessor route,
+      boolean awaitResponse) throws MuleException {
     if (route == null) {
       throw new DispatchException(CoreMessages.objectIsNull("connector operation"), originalEvent, null);
     }

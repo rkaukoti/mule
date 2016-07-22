@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.multipart;
 
@@ -30,12 +30,12 @@ import java.util.ListIterator;
 /* ------------------------------------------------------------ */
 
 /**
- * Lazy List creation. A List helper class that attempts to avoid unnecessary List creation. If a method needs to create a List to return,
- * but it is expected that this will either be empty or frequently contain a single item, then using LazyList will avoid additional object
- * creations by using Collections.EMPTY_LIST or Collections.singletonList where possible.
+ * Lazy List creation. A List helper class that attempts to avoid unnecessary List creation. If a method needs to create a List to
+ * return, but it is expected that this will either be empty or frequently contain a single item, then using LazyList will avoid
+ * additional object creations by using Collections.EMPTY_LIST or Collections.singletonList where possible.
  * <p>
- * LazyList works by passing an opaque representation of the list in and out of all the LazyList methods. This opaque object is either null
- * for an empty list, an Object for a list with a single entry or an ArrayList<Object> for a list of items.
+ * LazyList works by passing an opaque representation of the list in and out of all the LazyList methods. This opaque object is
+ * either null for an empty list, an Object for a list with a single entry or an ArrayList<Object> for a list of items.
  *
  * <p>
  * <h4>Usage</h4>
@@ -55,6 +55,7 @@ import java.util.ListIterator;
  * @see java.util.List
  */
 public class LazyList implements Cloneable, Serializable {
+
   private static final String[] __EMTPY_STRING_ARRAY = new String[0];
 
   /* ------------------------------------------------------------ */

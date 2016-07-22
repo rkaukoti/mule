@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode;
 
@@ -22,22 +22,22 @@ public interface AuthorizationCodeGrantType extends ApplicationCredentials {
   String getRedirectionUrl();
 
   /**
-   * @return expression to determine if a call to the resource secured with oauth failed because the access token has expired or was
-   *         revoked.
+   * @return expression to determine if a call to the resource secured with oauth failed because the access token has expired or
+   *         was revoked.
    */
   String getRefreshTokenWhen();
 
   /**
-   * @return the expression or static value of a certain user authenticated through this config. By being an expression we allow to
-   *         authenticate several users and hold state (access token, refresh token, etc) for all those users. This expression is used
-   *         during the local authorization url call to determine the resource owner id.
+   * @return the expression or static value of a certain user authenticated through this config. By being an expression we allow
+   *         to authenticate several users and hold state (access token, refresh token, etc) for all those users. This expression
+   *         is used during the local authorization url call to determine the resource owner id.
    */
   AttributeEvaluator getLocalAuthorizationUrlResourceOwnerIdEvaluator();
 
   /**
-   * @return the expression or static value of a certain user authenticated through this config. By being an expression we allow to
-   *         authenticate several users and hold state (access token, refresh token, etc) for all those users. This expressions is used
-   *         during http:request execution to determine the resource owner id.
+   * @return the expression or static value of a certain user authenticated through this config. By being an expression we allow
+   *         to authenticate several users and hold state (access token, refresh token, etc) for all those users. This expressions
+   *         is used during http:request execution to determine the resource owner id.
    */
   AttributeEvaluator getResourceOwnerIdEvaluator();
 

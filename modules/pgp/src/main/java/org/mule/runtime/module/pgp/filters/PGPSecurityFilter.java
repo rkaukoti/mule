@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.pgp.filters;
 
@@ -24,6 +24,7 @@ import org.mule.runtime.module.pgp.SignedMessage;
 import org.mule.runtime.module.pgp.i18n.PGPMessages;
 
 public class PGPSecurityFilter extends AbstractOperationSecurityFilter {
+
   private EncryptionStrategy strategy;
 
   private String strategyName;
@@ -33,7 +34,8 @@ public class PGPSecurityFilter extends AbstractOperationSecurityFilter {
   private PGPKeyRing keyManager;
 
   @Override
-  protected void authenticateInbound(MuleEvent event) throws SecurityException, UnauthorisedException, UnknownAuthenticationTypeException {
+  protected void authenticateInbound(MuleEvent event)
+      throws SecurityException, UnauthorisedException, UnknownAuthenticationTypeException {
     MuleMessage message = event.getMessage();
 
     String userId = (String) getCredentialsAccessor().getCredentials(event);

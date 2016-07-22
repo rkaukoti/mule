@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.context.notification;
 
@@ -8,14 +8,15 @@ import org.mule.runtime.core.api.context.notification.CustomNotificationListener
 import org.mule.runtime.core.api.context.notification.ServerNotification;
 
 /**
- * <code>CustomNotification</code> Custom notifications can be used by components and other objects such as routers, transformers, agents,
- * etc to communicate a change of state to each other. The Action value for the event is abitary. However care should be taken not to set
- * the action code to an existing action code. To ensure this doesn't happen always set the action code greater than the
- * CUSTOM_ACTION_START_RANGE.
+ * <code>CustomNotification</code> Custom notifications can be used by components and other objects such as routers, transformers,
+ * agents, etc to communicate a change of state to each other. The Action value for the event is abitary. However care should be
+ * taken not to set the action code to an existing action code. To ensure this doesn't happen always set the action code greater
+ * than the CUSTOM_ACTION_START_RANGE.
  *
  * @see CustomNotificationListener
  */
 public class CustomNotification extends ServerNotification {
+
   /**
    * Serial version
    */

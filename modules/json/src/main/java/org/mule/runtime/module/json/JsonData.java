@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.json;
 
@@ -18,11 +18,11 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * A wrapper for the {@link org.codehaus.jackson.JsonNode} object that allows for nested object keys i.e. user/name will return the name
- * property on the user object.
+ * A wrapper for the {@link org.codehaus.jackson.JsonNode} object that allows for nested object keys i.e. user/name will return
+ * the name property on the user object.
  * <p/>
- * There is no 'xpath' for JSON yet (though I expect Jackson to do implement this at some point). This class provides a simple way to
- * navigate a Json data structure. To select a child entry use - <code>
+ * There is no 'xpath' for JSON yet (though I expect Jackson to do implement this at some point). This class provides a simple way
+ * to navigate a Json data structure. To select a child entry use - <code>
  * person/name
  * </code>
  * <p/>
@@ -45,6 +45,7 @@ import java.util.List;
  * </code>
  */
 public class JsonData implements Serializable {
+
   private JsonNode node;
 
   public JsonData(JsonNode node) {

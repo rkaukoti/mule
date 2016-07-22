@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.request;
 
@@ -54,6 +54,7 @@ import static org.mule.runtime.module.http.internal.request.DefaultHttpRequester
 
 
 public class MuleEventToHttpRequest {
+
   private static final Logger logger = LoggerFactory.getLogger(MuleEventToHttpRequest.class);
   private static final List<String> ignoredProperties = Arrays.asList(CONNECTION, HOST, TRANSFER_ENCODING);
 
@@ -166,7 +167,8 @@ public class MuleEventToHttpRequest {
     return emptyBody;
   }
 
-  private HttpEntity createRequestEntityFromPayload(HttpRequestBuilder requestBuilder, MuleEvent muleEvent) throws MessagingException {
+  private HttpEntity createRequestEntityFromPayload(HttpRequestBuilder requestBuilder, MuleEvent muleEvent)
+      throws MessagingException {
     Object payload = muleEvent.getMessage().getPayload();
 
     if (!muleEvent.getMessage().getOutboundAttachmentNames().isEmpty()) {
@@ -195,7 +197,8 @@ public class MuleEventToHttpRequest {
       if (contentType == null || contentType.equals(APPLICATION_X_WWW_FORM_URLENCODED.toRfcString())) {
         if (muleEvent.getMessage().getPayload() instanceof Map) {
           String body = HttpParser.encodeString(
-              muleEvent.getMessage().getDataType().getMediaType().getCharset().orElse(getDefaultEncoding(muleContext)), (Map) payload);
+              muleEvent.getMessage().getDataType().getMediaType().getCharset().orElse(getDefaultEncoding(muleContext)),
+              (Map) payload);
           requestBuilder.addHeader(CONTENT_TYPE, APPLICATION_X_WWW_FORM_URLENCODED.toRfcString());
           return new ByteArrayHttpEntity(body.getBytes());
         }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -43,6 +43,7 @@ import java.util.List;
  * <code>HttpClientMessageDispatcher</code> dispatches Mule events over HTTP.
  */
 public class HttpClientMessageDispatcher extends AbstractMessageDispatcher {
+
   /**
    * Range start for http error status codes.
    */
@@ -98,8 +99,8 @@ public class HttpClientMessageDispatcher extends AbstractMessageDispatcher {
       if (returnException(event, httpMethod)) {
         logger.error(httpMethod.getResponseBodyAsString());
 
-        Exception cause =
-            new Exception(String.format("Http call returned a status of: %1d %1s", httpMethod.getStatusCode(), httpMethod.getStatusText()));
+        Exception cause = new Exception(
+            String.format("Http call returned a status of: %1d %1s", httpMethod.getStatusCode(), httpMethod.getStatusText()));
         throw new DispatchException(event, getEndpoint(), cause);
       } else if (httpMethod.getStatusCode() >= REDIRECT_STATUS_CODE_RANGE_START) {
         if (logger.isInfoEnabled()) {
@@ -200,14 +201,15 @@ public class HttpClientMessageDispatcher extends AbstractMessageDispatcher {
     }
   }
 
-  protected HttpMethod createEntityMethod(MuleEvent event, Object body, EntityEnclosingMethod postMethod) throws TransformerException {
+  protected HttpMethod createEntityMethod(MuleEvent event, Object body, EntityEnclosingMethod postMethod)
+      throws TransformerException {
     HttpMethod httpMethod;
     if (body instanceof String) {
       httpMethod = (HttpMethod) sendTransformer.transform(body.toString());
     } else if (body instanceof byte[]) {
       byte[] buffer = (byte[]) event.transformMessage(DataType.BYTE_ARRAY);
-      postMethod
-          .setRequestEntity(new ByteArrayRequestEntity(buffer, event.getMessage().getDataType().getMediaType().getCharset().get().name()));
+      postMethod.setRequestEntity(
+          new ByteArrayRequestEntity(buffer, event.getMessage().getDataType().getMediaType().getCharset().get().name()));
       httpMethod = postMethod;
     } else {
       if (!(body instanceof OutputHandler)) {
@@ -236,8 +238,8 @@ public class HttpClientMessageDispatcher extends AbstractMessageDispatcher {
       DefaultExceptionPayload ep = null;
 
       if (returnException(event, httpMethod)) {
-        ep = new DefaultExceptionPayload(
-            new DispatchException(event, getEndpoint(), new HttpResponseException(httpMethod.getStatusText(), httpMethod.getStatusCode())));
+        ep = new DefaultExceptionPayload(new DispatchException(event, getEndpoint(),
+            new HttpResponseException(httpMethod.getStatusText(), httpMethod.getStatusCode())));
       } else if (httpMethod.getStatusCode() >= REDIRECT_STATUS_CODE_RANGE_START) {
         try {
           return handleRedirect(httpMethod, event);
@@ -261,12 +263,13 @@ public class HttpClientMessageDispatcher extends AbstractMessageDispatcher {
     }
   }
 
-  protected MuleMessage handleRedirect(HttpMethod method, MuleEvent event) throws HttpResponseException, MuleException, IOException {
+  protected MuleMessage handleRedirect(HttpMethod method, MuleEvent event)
+      throws HttpResponseException, MuleException, IOException {
     String followRedirects = (String) endpoint.getProperty("followRedirects");
     if (followRedirects == null || "false".equalsIgnoreCase(followRedirects)) {
       if (logger.isInfoEnabled()) {
-        logger.info(
-            "Received a redirect, but followRedirects=false. Response code: " + method.getStatusCode() + " " + method.getStatusText());
+        logger.info("Received a redirect, but followRedirects=false. Response code: " + method.getStatusCode() + " "
+            + method.getStatusText());
       }
       return getResponseFromMethod(method, null);
     }
@@ -295,8 +298,8 @@ public class HttpClientMessageDispatcher extends AbstractMessageDispatcher {
   }
 
   /**
-   * An exception is thrown if http.status >= 400 and exceptions are not disabled through one of the following mechanisms in order of
-   * precedence:
+   * An exception is thrown if http.status >= 400 and exceptions are not disabled through one of the following mechanisms in order
+   * of precedence:
    *
    * - setting to true the flow variable "http.disable.status.code.exception.check" - setting to true the outbound property
    * "http.disable.status.code.exception.check" - setting to false the outbound endpoint attribute "exceptionOnMessageError"

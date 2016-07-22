@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -22,6 +22,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class BeanUtilsTestCase extends AbstractMuleTestCase {
+
   private Map<String, String> map;
 
   @Before
@@ -70,6 +71,7 @@ public class BeanUtilsTestCase extends AbstractMuleTestCase {
   }
 
   private class OrangeInvocationHandler implements InvocationHandler {
+
     private Orange orange;
 
     public OrangeInvocationHandler(Orange orange) {

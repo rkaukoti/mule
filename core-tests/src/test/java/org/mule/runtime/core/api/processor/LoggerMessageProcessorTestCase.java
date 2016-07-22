@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.processor;
 
@@ -51,8 +51,8 @@ public class LoggerMessageProcessorTestCase extends AbstractMuleTestCase {
   }
 
   // Verifies if the right call to the logger was made depending on the level enabled
-  private void verifyLogCall(LoggerMessageProcessor loggerMessageProcessor, String logLevel, String enabledLevel, MuleEvent muleEvent,
-      String message) {
+  private void verifyLogCall(LoggerMessageProcessor loggerMessageProcessor, String logLevel, String enabledLevel,
+      MuleEvent muleEvent, String message) {
     when(loggerMessageProcessor.logger.isTraceEnabled()).thenReturn("TRACE".equals(enabledLevel));
     when(loggerMessageProcessor.logger.isDebugEnabled()).thenReturn("DEBUG".equals(enabledLevel));
     when(loggerMessageProcessor.logger.isInfoEnabled()).thenReturn("INFO".equals(enabledLevel));
@@ -93,39 +93,47 @@ public class LoggerMessageProcessorTestCase extends AbstractMuleTestCase {
     MuleEvent muleEvent = buildMuleEvent();
     verifyLogCall(loggerMessageProcessor, level, level, muleEvent, muleEvent.getMessage().toString()); // Level is enabled
     loggerMessageProcessor = buildLoggerMessageProcessorWithLevel(level);
-    verifyLogCall(loggerMessageProcessor, level, "not" + level, muleEvent, muleEvent.getMessage().toString()); // Level is disabled by
-                                                                                                               // prepending it with "not"
+    verifyLogCall(loggerMessageProcessor, level, "not" + level, muleEvent, muleEvent.getMessage().toString()); // Level is
+                                                                                                               // disabled by
+                                                                                                               // prepending it
+                                                                                                               // with "not"
   }
 
   // Orchestrates the verifications for a call with a 'message' set on the logger
   private void verifyLoggerMessageByLevel(String level) {
     MuleEvent muleEvent = buildMuleEvent();
-    verifyLogCall(buildLoggerMessageProcessorForExpressionEvaluation(level), level, level, muleEvent, "text to log".toString()); // Level is
+    verifyLogCall(buildLoggerMessageProcessorForExpressionEvaluation(level), level, level, muleEvent, "text to log".toString()); // Level
+                                                                                                                                 // is
                                                                                                                                  // enabled
-    verifyLogCall(buildLoggerMessageProcessorForExpressionEvaluation(level), level, "not" + level, muleEvent, "text to log".toString()); // Level
-                                                                                                                                         // is
-                                                                                                                                         // disabled
-                                                                                                                                         // by
-                                                                                                                                         // prepending
-                                                                                                                                         // it
-                                                                                                                                         // with
-                                                                                                                                         // "not"
+    verifyLogCall(buildLoggerMessageProcessorForExpressionEvaluation(level), level, "not" + level, muleEvent,
+        "text to log".toString()); // Level
+                                   // is
+                                   // disabled
+                                   // by
+                                   // prepending
+                                   // it
+                                   // with
+                                   // "not"
     verifyExpressionEvaluation(buildLoggerMessageProcessorForExpressionEvaluation(level), level, level, muleEvent, times(1)); // Expression
-                                                                                                                              // should be
+                                                                                                                              // should
+                                                                                                                              // be
                                                                                                                               // evaluated
-                                                                                                                              // when the
-                                                                                                                              // level is
+                                                                                                                              // when
+                                                                                                                              // the
+                                                                                                                              // level
+                                                                                                                              // is
                                                                                                                               // enabled
-    verifyExpressionEvaluation(buildLoggerMessageProcessorForExpressionEvaluation(level), level, "not" + level, muleEvent, never()); // Expression
-                                                                                                                                     // should
-                                                                                                                                     // not
-                                                                                                                                     // be
-                                                                                                                                     // evaluated
-                                                                                                                                     // when
-                                                                                                                                     // the
-                                                                                                                                     // level
-                                                                                                                                     // is
-                                                                                                                                     // enabled
+    verifyExpressionEvaluation(buildLoggerMessageProcessorForExpressionEvaluation(level), level, "not" + level, muleEvent,
+        never()); // Expression
+                  // should
+                  // not
+                  // be
+                  // evaluated
+                  // when
+                  // the
+                  // level
+                  // is
+                  // enabled
   }
 
   private Logger buildMockLogger() {

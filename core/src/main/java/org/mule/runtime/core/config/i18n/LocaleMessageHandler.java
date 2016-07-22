@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.config.i18n;
 
@@ -12,17 +12,19 @@ import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
- * The <code>LocaleMessageHandler</code> is essentially a merging of the Message and Messages classes, since there is no good reason to have
- * them separate. A key point is that this Handler is meant to be used for application-specific messages, rather than core system messages.
- * (That's not to say it couldn't eventually replace the latter, however). Note that message codes are Strings here, instead of the ints in
- * Message.
+ * The <code>LocaleMessageHandler</code> is essentially a merging of the Message and Messages classes, since there is no good
+ * reason to have them separate. A key point is that this Handler is meant to be used for application-specific messages, rather
+ * than core system messages. (That's not to say it couldn't eventually replace the latter, however). Note that message codes are
+ * Strings here, instead of the ints in Message.
  * <p/>
- * The LocaleMessageHandler can be called directly, but is really meant to be called by LocaleMessage classes as done in the examples.
+ * The LocaleMessageHandler can be called directly, but is really meant to be called by LocaleMessage classes as done in the
+ * examples.
  * <p/>
- * Note that this class assumes the resource bundle is in the format <bundle-name>-messages and is located at the top of the jar or classes
- * directory. We can later add the ability to specify a path prefix.
+ * Note that this class assumes the resource bundle is in the format <bundle-name>-messages and is located at the top of the jar
+ * or classes directory. We can later add the ability to specify a path prefix.
  */
 public class LocaleMessageHandler {
+
   /**
    * logger used by this class
    */
@@ -69,7 +71,8 @@ public class LocaleMessageHandler {
   }
 
   /**
-   * Get the resource string for the given bundle name, locale, resource code and array of arguments. All above methods invoke this one.
+   * Get the resource string for the given bundle name, locale, resource code and array of arguments. All above methods invoke
+   * this one.
    */
   public static String getString(String bundleName, Locale locale, String code, Object[] args) {
     String path = bundleName + "-messages";

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.tcp.integration;
 
@@ -57,8 +57,8 @@ public class BigInputStream extends InputStream {
       if (++sent > nextMessage) {
         double percent = 100l * sent / ((double) size);
         Runtime runtime = Runtime.getRuntime();
-        logger.info(FORMAT
-            .format(new Object[] {new Long(sent), new Double(percent), new Long(runtime.freeMemory()), new Long(runtime.maxMemory())}));
+        logger.info(FORMAT.format(
+            new Object[] {new Long(sent), new Double(percent), new Long(runtime.freeMemory()), new Long(runtime.maxMemory())}));
         nextMessage = ++printedMessages * ((int) Math.floor(((double) size) / (messages - 1)) - 1);
       }
       if (dataIndex == data.length) {

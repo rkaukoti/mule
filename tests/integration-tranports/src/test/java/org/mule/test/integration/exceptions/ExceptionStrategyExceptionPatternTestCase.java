@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.exceptions;
 
@@ -43,6 +43,7 @@ public class ExceptionStrategyExceptionPatternTestCase extends FunctionalTestCas
   @Before
   public void setUp() throws Exception {
     muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>() {
+
       @Override
       public void onNotification(ExceptionNotification notification) {
         exceptionLatch.release();
@@ -50,12 +51,14 @@ public class ExceptionStrategyExceptionPatternTestCase extends FunctionalTestCas
     });
     FunctionalTestComponent failingFlow = getFunctionalTestComponent("failingFlow");
     failingFlow.setEventCallback(new EventCallback() {
+
       @Override
       public void eventReceived(MuleEventContext context, Object component) throws Exception {
         throw exceptionHolder.get();
       }
     });
     muleContext.registerListener(new TransactionNotificationListener<TransactionNotification>() {
+
       @Override
       public void onNotification(TransactionNotification notification) {
         if (notification.getAction() == TransactionNotification.TRANSACTION_COMMITTED) {

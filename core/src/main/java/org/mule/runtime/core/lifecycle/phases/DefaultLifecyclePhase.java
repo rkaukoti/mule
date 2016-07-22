@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.lifecycle.phases;
 
@@ -24,19 +24,21 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Represents a configurable lifecycle phase. This is a default implementation of a 'generic phase' in that is can be configured to represnt
- * any phase. Instances of this phase can then be registered with a {@link org.mule.runtime.core.api.lifecycle.LifecycleManager} and by used
- * to enforce a lifecycle phase on an object. Usually, Lifecycle phases have a fixed configuration in which case a specialisation of this
- * class should be created that initialises its configuration internally.
+ * Represents a configurable lifecycle phase. This is a default implementation of a 'generic phase' in that is can be configured
+ * to represnt any phase. Instances of this phase can then be registered with a
+ * {@link org.mule.runtime.core.api.lifecycle.LifecycleManager} and by used to enforce a lifecycle phase on an object. Usually,
+ * Lifecycle phases have a fixed configuration in which case a specialisation of this class should be created that initialises its
+ * configuration internally.
  * <p>
- * Note that this class and {@link org.mule.runtime.core.api.lifecycle.LifecycleTransitionResult} both make assumptions about the interfaces
- * used - the return values and exceptions. These are, currently, that the return value is either void or
- * {@link org.mule.runtime.core.api.lifecycle.LifecycleTransitionResult} and either 0 or 1 exceptions can be thrown which are either
- * {@link InstantiationException} or {@link org.mule.runtime.core.api.lifecycle.LifecycleException}.
+ * Note that this class and {@link org.mule.runtime.core.api.lifecycle.LifecycleTransitionResult} both make assumptions about the
+ * interfaces used - the return values and exceptions. These are, currently, that the return value is either void or
+ * {@link org.mule.runtime.core.api.lifecycle.LifecycleTransitionResult} and either 0 or 1 exceptions can be thrown which are
+ * either {@link InstantiationException} or {@link org.mule.runtime.core.api.lifecycle.LifecycleException}.
  *
  * @see org.mule.runtime.core.api.lifecycle.LifecyclePhase
  */
 public class DefaultLifecyclePhase implements LifecyclePhase, MuleContextAware {
+
   protected transient final Logger logger = LoggerFactory.getLogger(DefaultLifecyclePhase.class);
   private final Method lifecycleMethod;
   private final String name;
@@ -61,8 +63,8 @@ public class DefaultLifecyclePhase implements LifecyclePhase, MuleContextAware {
   }
 
   /**
-   * Subclasses can override this method to order <code>objects</code> before the lifecycle method is applied to them. This method does not
-   * apply any special ordering to <code>objects</code>.
+   * Subclasses can override this method to order <code>objects</code> before the lifecycle method is applied to them. This method
+   * does not apply any special ordering to <code>objects</code>.
    *
    * @return List with ordered objects
    */

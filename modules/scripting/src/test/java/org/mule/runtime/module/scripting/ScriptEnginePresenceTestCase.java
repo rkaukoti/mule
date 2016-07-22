@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.scripting;
 
@@ -42,9 +42,9 @@ public class ScriptEnginePresenceTestCase extends AbstractMuleTestCase {
 
   @Parameters
   public static Collection<Object[]> data() {
-    return Arrays.asList(new Object[][] {{"groovy", "groovy", "Groovy Scripting Engine", "2.0"}, {"jython", "py", "jython", "2.7.0"},
-        {"jruby", "rb", "JSR 223 JRuby Engine", "1.7.24"}, {"rhino", "js", "Mozilla Rhino", "1.6R5"},
-        {"rhino", "js", "Mozilla Rhino", "1.6 release 2"}});
+    return Arrays.asList(new Object[][] {{"groovy", "groovy", "Groovy Scripting Engine", "2.0"},
+        {"jython", "py", "jython", "2.7.0"}, {"jruby", "rb", "JSR 223 JRuby Engine", "1.7.24"},
+        {"rhino", "js", "Mozilla Rhino", "1.6R5"}, {"rhino", "js", "Mozilla Rhino", "1.6 release 2"}});
   }
 
   @Before
@@ -59,6 +59,7 @@ public class ScriptEnginePresenceTestCase extends AbstractMuleTestCase {
       scriptEngineFactory.getScriptEngine();
     }
     assertThat(engineFactories, hasItem(new TypeSafeMatcher<ScriptEngineFactory>() {
+
       @Override
       public void describeTo(Description description) {
         description.appendText("expected '" + fullName + " " + version + "'");

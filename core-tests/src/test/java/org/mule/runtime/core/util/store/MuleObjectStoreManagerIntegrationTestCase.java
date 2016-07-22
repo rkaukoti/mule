@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.store;
 
@@ -43,9 +43,9 @@ public class MuleObjectStoreManagerIntegrationTestCase extends AbstractMuleConte
 
   @Parameterized.Parameters
   public static Collection<Object[]> parameters() {
-    return Arrays.asList(
-        new Object[][] {{new ObjectStoreFactory(false, ObjectStoreType.DEFAULT)}, {new ObjectStoreFactory(true, ObjectStoreType.DEFAULT)},
-            {new ObjectStoreFactory(false, ObjectStoreType.USER)}, {new ObjectStoreFactory(true, ObjectStoreType.USER)}});
+    return Arrays.asList(new Object[][] {{new ObjectStoreFactory(false, ObjectStoreType.DEFAULT)},
+        {new ObjectStoreFactory(true, ObjectStoreType.DEFAULT)}, {new ObjectStoreFactory(false, ObjectStoreType.USER)},
+        {new ObjectStoreFactory(true, ObjectStoreType.USER)}});
   }
 
   @Before
@@ -84,6 +84,7 @@ public class MuleObjectStoreManagerIntegrationTestCase extends AbstractMuleConte
 
     PollingProber prober = new PollingProber(expirationInterval * 5, expirationInterval);
     prober.check(new JUnitProbe() {
+
       @Override
       public boolean test() throws Exception {
         assertThat(os.contains(0), is(false));
@@ -115,6 +116,7 @@ public class MuleObjectStoreManagerIntegrationTestCase extends AbstractMuleConte
 
     PollingProber prober = new PollingProber(1000, expirationInterval);
     prober.check(new JUnitProbe() {
+
       @Override
       public boolean test() throws Exception {
         return os.allKeys().isEmpty();
@@ -175,6 +177,7 @@ public class MuleObjectStoreManagerIntegrationTestCase extends AbstractMuleConte
 
     PollingProber prober = new PollingProber(5000, 1000);
     prober.check(new JUnitProbe() {
+
       @Override
       public boolean test() throws Exception {
         assertThat(os.allKeys().size(), is(maxEntries));
@@ -209,6 +212,7 @@ public class MuleObjectStoreManagerIntegrationTestCase extends AbstractMuleConte
   }
 
   private static class ObjectStoreFactory {
+
     private final boolean isPersistent;
     private final ObjectStoreType objectStoreType;
     private MuleObjectStoreManager muleObjectStoreManager;

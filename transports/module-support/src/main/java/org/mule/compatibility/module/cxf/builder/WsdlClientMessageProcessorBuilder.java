@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.module.cxf.builder;
 
@@ -12,10 +12,11 @@ import org.mule.runtime.module.cxf.builder.AbstractOutboundMessageProcessorBuild
 import javax.xml.namespace.QName;
 
 /**
- * Builds an outbound CXF MessageProcessor based on a WSDL using CXF's {@link DynamicClientFactory}. The <code>wsdlLocation</code> attribute
- * is required. The port and service attributes can also be supplied to select the correct service and port in the WSDL.
+ * Builds an outbound CXF MessageProcessor based on a WSDL using CXF's {@link DynamicClientFactory}. The <code>wsdlLocation</code>
+ * attribute is required. The port and service attributes can also be supplied to select the correct service and port in the WSDL.
  */
 public class WsdlClientMessageProcessorBuilder extends AbstractOutboundMessageProcessorBuilder {
+
   private final static Object CLIENT_CREATION_LOCK = new Object();
 
   private String service;

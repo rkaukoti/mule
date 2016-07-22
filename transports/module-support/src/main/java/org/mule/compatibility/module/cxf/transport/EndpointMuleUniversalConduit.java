@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.module.cxf.transport;
 
@@ -122,6 +122,7 @@ public class EndpointMuleUniversalConduit extends MuleUniversalConduit {
     final MuleEvent finalEvent = event;
     final OutboundEndpoint finalEndpoint = ep;
     AbstractPhaseInterceptor<Message> i = new AbstractPhaseInterceptor<Message>(Phase.PRE_STREAM) {
+
       @Override
       public void handleMessage(Message m) throws Fault {
         try {
@@ -143,6 +144,7 @@ public class EndpointMuleUniversalConduit extends MuleUniversalConduit {
         final ReplyToHandler originalReplyToHandler = reqEvent.getReplyToHandler();
 
         reqEvent = new DefaultMuleEvent(reqEvent, new NonBlockingReplyToHandler() {
+
           @Override
           public void processReplyTo(MuleEvent event, MuleMessage returnMessage, Object replyTo) throws MuleException {
             try {
@@ -176,7 +178,8 @@ public class EndpointMuleUniversalConduit extends MuleUniversalConduit {
   }
 
   protected MuleEvent processNext(MuleEvent event, Exchange exchange, OutboundEndpoint endpoint) throws MuleException {
-    CxfOutboundMessageProcessor processor = (CxfOutboundMessageProcessor) exchange.get(CxfConstants.CXF_OUTBOUND_MESSAGE_PROCESSOR);
+    CxfOutboundMessageProcessor processor =
+        (CxfOutboundMessageProcessor) exchange.get(CxfConstants.CXF_OUTBOUND_MESSAGE_PROCESSOR);
     MuleEvent response;
     if (processor == null) {
       response = endpoint.process(event);

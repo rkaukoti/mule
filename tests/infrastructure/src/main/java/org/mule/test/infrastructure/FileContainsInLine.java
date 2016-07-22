@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.test.infrastructure;
@@ -20,6 +20,7 @@ import static org.junit.Assert.fail;
 
 
 public class FileContainsInLine extends TypeSafeMatcher<File> {
+
   private final Matcher<String> stringMatcher;
 
   private FileContainsInLine(Matcher<String> matcher) {
@@ -47,8 +48,8 @@ public class FileContainsInLine extends TypeSafeMatcher<File> {
         }
       }
     } catch (IOException e) {
-      fail(String.format("Exception %s caught while reading the file %s trying to match its line with the matcher %s", e.getMessage(),
-          file.getAbsolutePath(), stringMatcher.toString()));
+      fail(String.format("Exception %s caught while reading the file %s trying to match its line with the matcher %s",
+          e.getMessage(), file.getAbsolutePath(), stringMatcher.toString()));
       return false;
     }
     return false;

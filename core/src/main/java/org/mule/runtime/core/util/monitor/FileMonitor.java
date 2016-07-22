@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.monitor;
 
@@ -18,11 +18,12 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
- * Class for monitoring changes in disk files. Usage: 1. Implement the FileListener interface. 2. Create a FileMonitor instance. 3. Add the
- * file(s)/directory(ies) to listen for. fileChanged() will be called when a monitored file is created, deleted or its modified time
- * changes.
+ * Class for monitoring changes in disk files. Usage: 1. Implement the FileListener interface. 2. Create a FileMonitor instance.
+ * 3. Add the file(s)/directory(ies) to listen for. fileChanged() will be called when a monitored file is created, deleted or its
+ * modified time changes.
  */
 public class FileMonitor {
+
   private Timer timer;
   private Map<File, Long> files;
   private List<WeakReference<FileListener>> listeners;
@@ -52,8 +53,8 @@ public class FileMonitor {
   }
 
   /**
-   * Add file to listen for. File may be any java.io.File (including a directory) and may well be a non-existing file in the case where the
-   * creating of the file is to be trepped.
+   * Add file to listen for. File may be any java.io.File (including a directory) and may well be a non-existing file in the case
+   * where the creating of the file is to be trepped.
    * <p/>
    * More than one file can be listened for. When the specified file is created, modified or deleted, listeners are notified.
    *
@@ -114,6 +115,7 @@ public class FileMonitor {
    * This is the timer thread which is executed every n milliseconds according to the setting of the file monitor.
    */
   public class FileMonitorNotifier extends TimerTask {
+
     private ExceptionListener exceptionListener;
 
     public FileMonitorNotifier() {

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.operation;
 
@@ -23,8 +23,8 @@ import static org.mule.runtime.module.extension.internal.ExtensionProperties.MIM
 /**
  * Base class for {@link ReturnDelegate} implementations.
  * <p/>
- * Contains the logic for taking an operation's output value and turn it into a {@link MuleMessage} which not only contains the updated
- * payload but also the proper {@link DataType} and attributes.
+ * Contains the logic for taking an operation's output value and turn it into a {@link MuleMessage} which not only contains the
+ * updated payload but also the proper {@link DataType} and attributes.
  *
  * @since 4.0
  */
@@ -78,7 +78,8 @@ abstract class AbstractReturnDelegate implements ReturnDelegate {
     }
 
     if (operationContext.hasParameter(ENCODING_PARAMETER_NAME)) {
-      mediaType = mediaType.withCharset(Charset.forName(operationContext.getTypeSafeParameter(ENCODING_PARAMETER_NAME, String.class)));
+      mediaType =
+          mediaType.withCharset(Charset.forName(operationContext.getTypeSafeParameter(ENCODING_PARAMETER_NAME, String.class)));
     } else {
       mediaType = mediaType.withCharset(existingEncoding);
     }

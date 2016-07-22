@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.vendor.oracle;
@@ -73,8 +73,8 @@ public class OracleStoredProcedureXmlParamTestCase extends AbstractOracleXmlType
     try {
       Object xmlType = OracleXmlType.createXmlType(connection, Alien.ET.getXml());
 
-      final MuleEvent responseEvent = flowRunner("xmlTypeInputParam").withPayload(TEST_MESSAGE).withInboundProperty("name", "Monguito")
-          .withFlowVariable(DESCRIPTION_FIELD, xmlType).run();
+      final MuleEvent responseEvent = flowRunner("xmlTypeInputParam").withPayload(TEST_MESSAGE)
+          .withInboundProperty("name", "Monguito").withFlowVariable(DESCRIPTION_FIELD, xmlType).run();
 
       final MuleMessage response = responseEvent.getMessage();
 

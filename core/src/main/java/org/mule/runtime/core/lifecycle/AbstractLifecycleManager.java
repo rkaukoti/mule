@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.lifecycle;
 
@@ -26,14 +26,15 @@ import java.util.Set;
 import java.util.TreeMap;
 
 /**
- * This is a base implementation of the {@link org.mule.runtime.core.api.lifecycle.LifecycleManager} interface and provides almost all the
- * plumbing required to write a {@link org.mule.runtime.core.api.lifecycle.LifecycleManager} implementation. This class handles the tracking
- * ofg the phases, transition validation and checking state.
+ * This is a base implementation of the {@link org.mule.runtime.core.api.lifecycle.LifecycleManager} interface and provides almost
+ * all the plumbing required to write a {@link org.mule.runtime.core.api.lifecycle.LifecycleManager} implementation. This class
+ * handles the tracking ofg the phases, transition validation and checking state.
  *
  * @param <O> The object type being managed by this {@link org.mule.runtime.core.api.lifecycle.LifecycleManager}
  * @since 3.0
  */
 public abstract class AbstractLifecycleManager<O> implements LifecycleManager {
+
   /**
    * logger used by this class
    */
@@ -81,7 +82,8 @@ public abstract class AbstractLifecycleManager<O> implements LifecycleManager {
       if (name.equalsIgnoreCase(executingPhase)) {
         throw new IllegalStateException("Phase '" + name + "' is already currently being executed");
       } else {
-        throw new IllegalStateException("Cannot fire phase '" + name + "', currently executing lifecycle phase: " + executingPhase);
+        throw new IllegalStateException(
+            "Cannot fire phase '" + name + "', currently executing lifecycle phase: " + executingPhase);
       }
     }
 
@@ -222,8 +224,9 @@ public abstract class AbstractLifecycleManager<O> implements LifecycleManager {
   }
 
   /**
-   * Allows any for any state adjustments in sub classes. For example, it may be necessary to remove a state from the 'completedPhases'
-   * collection once a transition occurs. This is only necessary for a Lifecycle Manager that introduces a new phase pair.
+   * Allows any for any state adjustments in sub classes. For example, it may be necessary to remove a state from the
+   * 'completedPhases' collection once a transition occurs. This is only necessary for a Lifecycle Manager that introduces a new
+   * phase pair.
    *
    * @param phase the currently completed phase
    */

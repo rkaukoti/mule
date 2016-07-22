@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.context.notification;
 
@@ -47,8 +47,8 @@ public class ComponentMessageNotification extends ServerNotification {
 
   @Override
   public String toString() {
-    return EVENT_NAME + "{action=" + getActionName(action) + ", message: " + source + ", resourceId=" + resourceIdentifier + ", timestamp="
-        + timestamp + ", serverId=" + serverId + ", component: " + "}";
+    return EVENT_NAME + "{action=" + getActionName(action) + ", message: " + source + ", resourceId=" + resourceIdentifier
+        + ", timestamp=" + timestamp + ", serverId=" + serverId + ", component: " + "}";
   }
 
   @Override

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.email.api;
 
@@ -19,8 +19,8 @@ import javax.mail.Folder;
 import javax.mail.Message;
 
 /**
- * Contains all the metadata of an email, it carries information such as the subject of the email, the id in the mailbox and the recipients
- * between others.
+ * Contains all the metadata of an email, it carries information such as the subject of the email, the id in the mailbox and the
+ * recipients between others.
  * <p>
  * This class aims to be returned as attributes in a {@link MuleMessage} for every retriever operation.
  * <p>
@@ -32,11 +32,11 @@ import javax.mail.Message;
 public class EmailAttributes extends BaseAttributes {
 
   /**
-   * The id is the relative position of the email in its Folder. Note that the id for a particular email can change during a session if
-   * other emails in the Folder are isDeleted and expunged.
+   * The id is the relative position of the email in its Folder. Note that the id for a particular email can change during a
+   * session if other emails in the Folder are isDeleted and expunged.
    * <p>
-   * Valid message ids start at 1. Emails that do not belong to any folder (like newly composed or derived messages) have 0 as their message
-   * id.
+   * Valid message ids start at 1. Emails that do not belong to any folder (like newly composed or derived messages) have 0 as
+   * their message id.
    */
   private final int id;
 
@@ -147,8 +147,8 @@ public class EmailAttributes extends BaseAttributes {
   }
 
   /**
-   * Get the addresses to which replies should be directed. This will usually be the sender of the email, but some emails may direct replies
-   * to a different address
+   * Get the addresses to which replies should be directed. This will usually be the sender of the email, but some emails may
+   * direct replies to a different address
    *
    * @return all the recipient addresses of replyTo type.
    */
@@ -222,8 +222,8 @@ public class EmailAttributes extends BaseAttributes {
    * Get the attachments of the email, there are returned as a {@link Map} name/content in which the name is represented with a
    * {@link String} and the content with a {@link DataHandler}.
    * <p>
-   * If there is no attachments the an empty {@link Map} will be returned. No attachments means that the content was not opened or the email
-   * message has no attachments.
+   * If there is no attachments the an empty {@link Map} will be returned. No attachments means that the content was not opened or
+   * the email message has no attachments.
    *
    * @return a {@link Map} with the attachments of the email message.
    */

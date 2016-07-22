@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.context.notification;
 
@@ -17,8 +17,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * For a particular configuration, this describes what events should be delivered where. It is read-only and a lazy instance is cached by
- * the {@link Configuration}
+ * For a particular configuration, this describes what events should be delivered where. It is read-only and a lazy instance is
+ * cached by the {@link Configuration}
  */
 class Policy {
 
@@ -35,7 +35,8 @@ class Policy {
    * For each listener, we check each interface and see what events can be delivered.
    */
   Policy(Map<Class<? extends ServerNotificationListener>, Set<Class<? extends ServerNotification>>> interfaceToEvents,
-      Set<ListenerSubscriptionPair> listenerSubscriptionPairs, Set<Class<? extends ServerNotificationListener>> disabledInterfaces,
+      Set<ListenerSubscriptionPair> listenerSubscriptionPairs,
+      Set<Class<? extends ServerNotificationListener>> disabledInterfaces,
       Set<Class<? extends ServerNotification>> disabledEvents) {
     for (ListenerSubscriptionPair pair : listenerSubscriptionPairs) {
       ServerNotificationListener listener = pair.getListener();
@@ -111,9 +112,9 @@ class Policy {
   }
 
   /**
-   * This returns a very "conservative" value - it is true if the notification or any subclass would be accepted. So if it returns false
-   * then you can be sure that there is no need to send the notification. On the other hand, if it returns true there is no guarantee that
-   * the notification "really" will be dispatched to any listener.
+   * This returns a very "conservative" value - it is true if the notification or any subclass would be accepted. So if it returns
+   * false then you can be sure that there is no need to send the notification. On the other hand, if it returns true there is no
+   * guarantee that the notification "really" will be dispatched to any listener.
    *
    * @param notfnClass Either the notification class being generated or some superclass
    * @return false if there is no need to dispatch the notification
@@ -137,7 +138,8 @@ class Policy {
       knownEventsExact.put(notfnClass, Boolean.valueOf(found));
 
     }
-    return ((Boolean) knownEventsSuper.get(notfnClass)).booleanValue() || ((Boolean) knownEventsExact.get(notfnClass)).booleanValue();
+    return ((Boolean) knownEventsSuper.get(notfnClass)).booleanValue()
+        || ((Boolean) knownEventsExact.get(notfnClass)).booleanValue();
   }
 
 }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.config;
 
@@ -12,9 +12,11 @@ import org.springframework.beans.factory.xml.ParserContext;
 import org.w3c.dom.Element;
 
 /**
- * Bean definition parser for query parameters, URI parameters and headers, for both the request-builder and the response-builder elements.
+ * Bean definition parser for query parameters, URI parameters and headers, for both the request-builder and the response-builder
+ * elements.
  */
 public class HttpMessageSingleParamDefinitionParser extends ChildDefinitionParser {
+
   private HttpParamType httpParamType;
 
   public HttpMessageSingleParamDefinitionParser(Class<? extends HttpParam> clazz, HttpParamType httpParamType) {

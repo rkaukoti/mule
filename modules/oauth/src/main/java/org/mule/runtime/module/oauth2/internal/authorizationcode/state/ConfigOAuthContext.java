@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode.state;
 
@@ -27,7 +27,8 @@ public class ConfigOAuthContext {
   }
 
   /**
-   * Retrieves the oauth context for a particular user. If there's no state for that user a new state is retrieve so never returns null.
+   * Retrieves the oauth context for a particular user. If there's no state for that user a new state is retrieve so never returns
+   * null.
    *
    * @param resourceOwnerId id of the user.
    * @return oauth state

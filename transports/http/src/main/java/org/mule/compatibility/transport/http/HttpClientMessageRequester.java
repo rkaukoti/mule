@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -48,8 +48,8 @@ public class HttpClientMessageRequester extends AbstractMessageRequester {
   /**
    * Make a specific request to the underlying transport
    *
-   * @param timeout the maximum time the operation should block before returning. The call should return immediately if there is data
-   *        available. If no data becomes available before the timeout elapses, null will be returned
+   * @param timeout the maximum time the operation should block before returning. The call should return immediately if there is
+   *        data available. If no data becomes available before the timeout elapses, null will be returned
    * @return the result of the request wrapped in a MuleMessage object. Null will be returned if no data was avaialable
    * @throws Exception if the call to the underlying protocal cuases an exception
    */
@@ -71,7 +71,8 @@ public class HttpClientMessageRequester extends AbstractMessageRequester {
         return res;
       } else {
         releaseConn = true;
-        throw new ReceiveException(HttpMessages.requestFailedWithStatus(httpMethod.getStatusLine().toString()), endpoint, timeout);
+        throw new ReceiveException(HttpMessages.requestFailedWithStatus(httpMethod.getStatusLine().toString()), endpoint,
+            timeout);
       }
     } catch (ReceiveException e) {
       releaseConn = true;

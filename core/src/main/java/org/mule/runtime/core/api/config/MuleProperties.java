@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.config;
 
@@ -9,6 +9,7 @@ package org.mule.runtime.core.api.config;
  * <code>MuleProperties</code> is a set of constants pertaining to Mule properties.
  */
 public class MuleProperties {
+
   /**
    * The prefix for any Mule-specific properties set on an event
    */
@@ -37,8 +38,8 @@ public class MuleProperties {
   public static final String MULE_ERROR_CODE_PROPERTY = PROPERTY_PREFIX + "ERROR_CODE";
   public static final String MULE_REPLY_TO_PROPERTY = PROPERTY_PREFIX + "REPLYTO";
   /**
-   * Prevents processing of the ReplyTo property by the Service. This is useful if you're component routed the message somewhere else which
-   * processed the ReplyTo.
+   * Prevents processing of the ReplyTo property by the Service. This is useful if you're component routed the message somewhere
+   * else which processed the ReplyTo.
    */
   public static final String MULE_REPLY_TO_STOP_PROPERTY = PROPERTY_PREFIX + "REPLYTO_STOP";
   public static final String MULE_USER_PROPERTY = PROPERTY_PREFIX + "USER";
@@ -65,7 +66,8 @@ public class MuleProperties {
    */
 
   public static final String LOG_CONTEXT_SELECTOR_PROPERTY = "Log4jContextSelector";
-  public static final String DEFAULT_LOG_CONTEXT_SELECTOR = "org.mule.runtime.core.module.launcher.log4j.ArtifactAwareContextSelector";
+  public static final String DEFAULT_LOG_CONTEXT_SELECTOR =
+      "org.mule.runtime.core.module.launcher.log4j.ArtifactAwareContextSelector";
   public static final String LOG_CONFIGURATION_FACTORY_PROPERTY = "log4j.configurationFactory";
   public static final String DEFAULT_LOG_CONFIGURATION_FACTORY =
       "org.mule.runtime.core.module.launcher.log4j.MuleLoggerConfigurationFactory";
@@ -167,8 +169,8 @@ public class MuleProperties {
   public static final String OBJECT_NOTIFICATION_MANAGER = "_muleNotificationManager";
 
   /**
-   * Specifies whether mule should process messages synchronously, i.e. that a mule-model can only process one message at a time, or
-   * asynchronously. The default value is 'false'.
+   * Specifies whether mule should process messages synchronously, i.e. that a mule-model can only process one message at a time,
+   * or asynchronously. The default value is 'false'.
    */
   // TODO BL-76: remove me!
   public static final String SYNCHRONOUS_PROPERTY = "synchronous";

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf;
 
@@ -60,8 +60,9 @@ public class DatabindingTestCase extends FunctionalTestCase {
   }
 
   private void doTest(String service) throws Exception {
-    MuleMessage result = muleContext.getClient().send(format("http://localhost:%d/services/%s?wsdl", dynamicPort.getNumber(), service),
-        MuleMessage.builder().nullPayload().build(), HTTP_REQUEST_OPTIONS);
+    MuleMessage result =
+        muleContext.getClient().send(format("http://localhost:%d/services/%s?wsdl", dynamicPort.getNumber(), service),
+            MuleMessage.builder().nullPayload().build(), HTTP_REQUEST_OPTIONS);
     assertNotNull(result.getPayload());
   }
 }

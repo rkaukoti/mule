@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.email.internal.retriever.imap;
 
@@ -36,8 +36,9 @@ public class IMAPOperations {
   /**
    * Marks an incoming email as READ.
    * <p>
-   * This operation can target a single email, but if no emailID is specified and the incoming {@link MuleMessage} is carrying a list of
-   * emails this operation will mark all the emails that the {@link MuleMessage} is carrying if they belong to the specified folder.
+   * This operation can target a single email, but if no emailID is specified and the incoming {@link MuleMessage} is carrying a
+   * list of emails this operation will mark all the emails that the {@link MuleMessage} is carrying if they belong to the
+   * specified folder.
    *
    * @param message The incoming {@link MuleMessage}.
    * @param connection The corresponding {@link RetrieverConnection} instance.
@@ -57,8 +58,8 @@ public class IMAPOperations {
    * {@link IMAPOperations#expungeFolder(RetrieverConnection, String)} or
    * {@link RetrieverOperations#delete(MuleMessage, RetrieverConnection, String, Integer)} is executed.
    * <p>
-   * This operation can target a single email, but also if the incoming {@link MuleMessage} is carrying a list of emails this operation will
-   * mark all the emails that the {@link MuleMessage} is carrying.
+   * This operation can target a single email, but also if the incoming {@link MuleMessage} is carrying a list of emails this
+   * operation will mark all the emails that the {@link MuleMessage} is carrying.
    *
    * @param message The incoming {@link MuleMessage}.
    * @param connection The corresponding {@link RetrieverConnection} instance.
@@ -75,9 +76,11 @@ public class IMAPOperations {
    * Eliminates from the mailbox all the messages scheduled for deletion with the DELETED flag set.
    *
    * @param connection The associated {@link RetrieverConnection}.
-   * @param mailboxFolder Mailbox folder where the emails with the 'DELETED' flag are going to be scheduled to be definitely deleted
+   * @param mailboxFolder Mailbox folder where the emails with the 'DELETED' flag are going to be scheduled to be definitely
+   *        deleted
    */
-  public void expungeFolder(@Connection RetrieverConnection connection, @Optional(defaultValue = INBOX_FOLDER) String mailboxFolder) {
+  public void expungeFolder(@Connection RetrieverConnection connection,
+      @Optional(defaultValue = INBOX_FOLDER) String mailboxFolder) {
     expungeCommand.expunge(connection, mailboxFolder);
   }
 }

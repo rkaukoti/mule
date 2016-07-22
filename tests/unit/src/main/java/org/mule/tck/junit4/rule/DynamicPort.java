@@ -1,14 +1,15 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.tck.junit4.rule;
 
 /**
- * Defines a socket port number that will be dynamically assigned as an external resource. The instance will check that the port has been
- * released on test shutdown. To use an instance dynamic socket port:
+ * Defines a socket port number that will be dynamically assigned as an external resource. The instance will check that the port
+ * has been released on test shutdown. To use an instance dynamic socket port:
  * 
  * <pre>
+ * 
  * &#64;Rule
  * public DynamicPort serverPort = new DynamicPort("server_port");
  * </pre>
@@ -17,6 +18,7 @@ package org.mule.tck.junit4.rule;
  * <p/>
  * 
  * <pre>
+ * 
  * &#64;ClassRule
  * public static DynamicPort dynamicPort = new DynamicPort("server_port");
  * </pre>
@@ -58,8 +60,8 @@ public class DynamicPort extends SystemProperty {
   /**
    * Creates a dynamic port resource for a given port name.
    *
-   * @param name the name assigned to the port number. On resource creation a new system property will be created with that name and the
-   *        value will be the port number.
+   * @param name the name assigned to the port number. On resource creation a new system property will be created with that name
+   *        and the value will be the port number.
    */
   public DynamicPort(String name) {
     super(name);

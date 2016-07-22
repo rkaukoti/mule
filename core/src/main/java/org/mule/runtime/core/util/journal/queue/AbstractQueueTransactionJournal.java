@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.journal.queue;
 
@@ -36,6 +36,7 @@ public abstract class AbstractQueueTransactionJournal<T, K extends JournalEntry<
     checkArgument(maximumFileSizeInMegabytes == null || maximumFileSizeInMegabytes > 0,
         "Maximum tx log file size needs to be greater than zero");
     this.logFile = new TransactionJournal(logFilesDirectory, new TransactionCompletePredicate() {
+
       @Override
       public boolean isTransactionComplete(JournalEntry journalEntry) {
         AbstractQueueTxJournalEntry abstractQueueTxJournalEntry = (AbstractQueueTxJournalEntry) journalEntry;
@@ -48,32 +49,32 @@ public abstract class AbstractQueueTransactionJournal<T, K extends JournalEntry<
     if (logger.isDebugEnabled()) {
       logger.debug("Logging queue add operation for tx " + txId);
     }
-    logFile.logUpdateOperation(
-        createUpdateJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.ADD.getByteRepresentation(), queue.getName(), value));
+    logFile.logUpdateOperation(createUpdateJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.ADD.getByteRepresentation(),
+        queue.getName(), value));
   }
 
   public void logAddFirst(T txId, QueueStore queue, Serializable item) {
     if (logger.isDebugEnabled()) {
       logger.debug("Logging queue add first operation for tx " + txId);
     }
-    logFile.logUpdateOperation(
-        createUpdateJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.ADD_FIRST.getByteRepresentation(), queue.getName(), item));
+    logFile.logUpdateOperation(createUpdateJournalEntry(txId,
+        AbstractQueueTxJournalEntry.Operation.ADD_FIRST.getByteRepresentation(), queue.getName(), item));
   }
 
   public void logRemove(T txId, QueueStore queue, Serializable value) {
     if (logger.isDebugEnabled()) {
       logger.debug("Logging queue remove operation for tx " + txId);
     }
-    logFile.logUpdateOperation(
-        createUpdateJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.REMOVE.getByteRepresentation(), queue.getName(), value));
+    logFile.logUpdateOperation(createUpdateJournalEntry(txId,
+        AbstractQueueTxJournalEntry.Operation.REMOVE.getByteRepresentation(), queue.getName(), value));
   }
 
   public void logCommit(T txId) {
     if (logger.isDebugEnabled()) {
       logger.debug("Logging queue commit operation for tx " + txId);
     }
-    logFile
-        .logCheckpointOperation(createCheckpointJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.COMMIT.getByteRepresentation()));
+    logFile.logCheckpointOperation(
+        createCheckpointJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.COMMIT.getByteRepresentation()));
   }
 
   /**
@@ -100,8 +101,8 @@ public abstract class AbstractQueueTransactionJournal<T, K extends JournalEntry<
     if (logger.isDebugEnabled()) {
       logger.debug("Logging queue rollback operation for tx " + txId);
     }
-    logFile
-        .logCheckpointOperation(createCheckpointJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.ROLLBACK.getByteRepresentation()));
+    logFile.logCheckpointOperation(
+        createCheckpointJournalEntry(txId, AbstractQueueTxJournalEntry.Operation.ROLLBACK.getByteRepresentation()));
   }
 
   public synchronized void close() {

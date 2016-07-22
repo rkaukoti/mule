@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.ws.functional;
@@ -43,14 +43,17 @@ public class WSConsumerNonBlockingFunctionalTestCase extends AbstractWSConsumerF
   @Test
   public void validRequestReturnsExpectedAnswer() throws Exception {
     assertValidResponse("http://localhost:" + dynamicPort.getNumber() + "/in");
-    muleContext.getRegistry().lookupObject(SensingNullRequestResponseMessageProcessor.class).assertRequestResponseThreadsDifferent();
+    muleContext.getRegistry().lookupObject(SensingNullRequestResponseMessageProcessor.class)
+        .assertRequestResponseThreadsDifferent();
   }
 
   @Test
   public void invalidRequestFormatReturnsSOAPFault() throws Exception {
     String message = "<tns:echo xmlns:tns=\"http://consumer.ws.module.runtime.mule.org/\"><invalid>Hello</invalid></tns:echo>";
-    assertSoapFault("http://localhost:" + dynamicPort.getNumber() + "/in", message, "unexpected element (uri:\"\", local:\"invalid\")");
-    muleContext.getRegistry().lookupObject(SensingNullRequestResponseMessageProcessor.class).assertRequestResponseThreadsDifferent();
+    assertSoapFault("http://localhost:" + dynamicPort.getNumber() + "/in", message,
+        "unexpected element (uri:\"\", local:\"invalid\")");
+    muleContext.getRegistry().lookupObject(SensingNullRequestResponseMessageProcessor.class)
+        .assertRequestResponseThreadsDifferent();
   }
 
   @Test
@@ -58,7 +61,8 @@ public class WSConsumerNonBlockingFunctionalTestCase extends AbstractWSConsumerF
     String message = "<tns:echo xmlns:tns=\"http://invalid/\"><text>Hello</text></tns:echo>";
     assertSoapFault("http://localhost:" + dynamicPort.getNumber() + "/in", message,
         "Unexpected wrapper element {http://invalid/}echo found");
-    muleContext.getRegistry().lookupObject(SensingNullRequestResponseMessageProcessor.class).assertRequestResponseThreadsDifferent();
+    muleContext.getRegistry().lookupObject(SensingNullRequestResponseMessageProcessor.class)
+        .assertRequestResponseThreadsDifferent();
   }
 
   @Test

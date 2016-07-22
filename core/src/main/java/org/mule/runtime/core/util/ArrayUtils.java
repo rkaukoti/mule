@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -16,8 +16,8 @@ import static org.mule.runtime.core.util.Preconditions.checkArgument;
 public class ArrayUtils extends org.apache.commons.lang.ArrayUtils {
 
   /**
-   * Like {@link #toString(Object)} but considers at most <code>maxElements</code> values; overflow is indicated by an appended "[..]"
-   * ellipsis.
+   * Like {@link #toString(Object)} but considers at most <code>maxElements</code> values; overflow is indicated by an appended
+   * "[..]" ellipsis.
    */
   public static String toString(Object array, int maxElements) {
     String result;
@@ -56,14 +56,14 @@ public class ArrayUtils extends org.apache.commons.lang.ArrayUtils {
   }
 
   /**
-   * Creates a copy of the given array, but with the given <code>Class</code> as element type. Useful for arrays of objects that implement
-   * multiple interfaces and a "typed view" onto these objects is required.
+   * Creates a copy of the given array, but with the given <code>Class</code> as element type. Useful for arrays of objects that
+   * implement multiple interfaces and a "typed view" onto these objects is required.
    *
    * @param objects the array of objects
    * @param clazz the desired service type of the new array
-   * @return <code>null</code> when objects is <code>null</code>, or a new array containing the elements of the source array which is typed
-   *         to the given <code>clazz</code> parameter. If <code>clazz</code> is already the service type of the source array, the source
-   *         array is returned (i.e. no copy is created).
+   * @return <code>null</code> when objects is <code>null</code>, or a new array containing the elements of the source array which
+   *         is typed to the given <code>clazz</code> parameter. If <code>clazz</code> is already the service type of the source
+   *         array, the source array is returned (i.e. no copy is created).
    * @throws IllegalArgumentException if the <code>clazz</code> argument is <code>null</code>.
    * @throws ArrayStoreException if the elements in <code>objects</code> cannot be cast to <code>clazz</code>.
    */

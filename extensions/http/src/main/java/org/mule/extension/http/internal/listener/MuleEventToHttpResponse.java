@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.extension.http.internal.listener;
@@ -51,6 +51,7 @@ import static org.mule.runtime.module.http.api.HttpHeaders.Values.CHUNKED;
  * @since 4.0
  */
 public class MuleEventToHttpResponse {
+
   public static final String MULTIPART = "multipart";
   private Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -66,14 +67,15 @@ public class MuleEventToHttpResponse {
    * Creates an {@HttpResponse}.
    *
    * @param event The {@link MuleEvent} that should be used to set the {@link HttpResponse} content.
-   * @param responseBuilder The {@link HttpResponseBuilder} that should be modified if necessary and used to build the {@link HttpResponse}.
+   * @param responseBuilder The {@link HttpResponseBuilder} that should be modified if necessary and used to build the
+   *        {@link HttpResponse}.
    * @param listenerResponseBuilder The generic {@HttpListenerResponseBuilder} configured for this listener.
    * @param supportsTransferEncoding boolean that determines whether the HTTP protocol of the response supports streaming.
    * @return an {@HttpResponse} configured based on the parameters.
    * @throws MessagingException if the response creation fails.
    */
-  public HttpResponse create(MuleEvent event, HttpResponseBuilder responseBuilder, HttpListenerResponseBuilder listenerResponseBuilder,
-      boolean supportsTransferEncoding) throws MessagingException {
+  public HttpResponse create(MuleEvent event, HttpResponseBuilder responseBuilder,
+      HttpListenerResponseBuilder listenerResponseBuilder, boolean supportsTransferEncoding) throws MessagingException {
     Map<String, String> headers = listenerResponseBuilder.getHeaders(event);
 
     final HttpResponseHeaderBuilder httpResponseHeaderBuilder = new HttpResponseHeaderBuilder();
@@ -235,12 +237,14 @@ public class MuleEventToHttpResponse {
   private void warnNoMultipartContentTypeButMultipartEntity(String contentType) {
     if (!multipartEntityWithNoMultipartContentyTypeWarned) {
       logger.warn(String.format(
-          "Sending http response with Content-Type %s but the message has attachment and a multipart entity is generated.", contentType));
+          "Sending http response with Content-Type %s but the message has attachment and a multipart entity is generated.",
+          contentType));
       multipartEntityWithNoMultipartContentyTypeWarned = true;
     }
   }
 
-  private HttpEntity createMultipartEntity(MuleEvent event, String contentType, Map<String, DataHandler> parts) throws MessagingException {
+  private HttpEntity createMultipartEntity(MuleEvent event, String contentType, Map<String, DataHandler> parts)
+      throws MessagingException {
     if (logger.isDebugEnabled()) {
       logger.debug("Message contains attachments. Ignoring payload and trying to generate multipart response.");
     }
@@ -250,8 +254,8 @@ public class MuleEventToHttpResponse {
       multipartEntity = new MultipartHttpEntity(HttpPartDataSource.createFrom(parts));
       return new ByteArrayHttpEntity(HttpMultipartEncoder.createMultipartContent(multipartEntity, contentType));
     } catch (Exception e) {
-      throw new MessagingException(MessageFactory.createStaticMessage("Error creating multipart HTTP entity."), event.getMessage(),
-          event.getMuleContext(), e);
+      throw new MessagingException(MessageFactory.createStaticMessage("Error creating multipart HTTP entity."),
+          event.getMessage(), event.getMuleContext(), e);
     }
   }
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf;
 
@@ -17,9 +17,10 @@ import org.mule.tck.junit4.AbstractMuleContextTestCase;
 import static org.junit.Assert.assertThat;
 
 public class CxfOutboundMessageProcessorTestCase extends AbstractMuleContextTestCase {
+
   String msg = "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\"><soap:Body>"
-      + "<ns1:echo xmlns:ns1=\"http://simple.component.api.core.runtime.mule.org/\">" + "<ns1:return>hello</ns1:return>" + "</ns1:echo>"
-      + "</soap:Body></soap:Envelope>";
+      + "<ns1:echo xmlns:ns1=\"http://simple.component.api.core.runtime.mule.org/\">" + "<ns1:return>hello</ns1:return>"
+      + "</ns1:echo>" + "</soap:Body></soap:Envelope>";
 
   boolean gotEvent = false;
   Object payload;

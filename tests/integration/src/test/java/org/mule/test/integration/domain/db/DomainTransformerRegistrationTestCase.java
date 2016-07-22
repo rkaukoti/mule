@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.test.integration.domain.db;
@@ -27,12 +27,14 @@ public class DomainTransformerRegistrationTestCase extends DomainFunctionalTestC
 
   @Override
   public ApplicationConfig[] getConfigResources() {
-    return new ApplicationConfig[] {new ApplicationConfig(APP1, APPLICATION_RESOURCES), new ApplicationConfig(APP2, APPLICATION_RESOURCES)};
+    return new ApplicationConfig[] {new ApplicationConfig(APP1, APPLICATION_RESOURCES),
+        new ApplicationConfig(APP2, APPLICATION_RESOURCES)};
   }
 
   @Test
   public void registerTransformerOnce() throws Exception {
-    final MuleMessage response = new FlowRunner(getMuleContextForApp(APP1), "main").withPayload(TRUE.toString()).run().getMessage();
+    final MuleMessage response =
+        new FlowRunner(getMuleContextForApp(APP1), "main").withPayload(TRUE.toString()).run().getMessage();
     assertThat(response.getPayload(), instanceOf(Boolean.class));
   }
 }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring;
 
@@ -79,8 +79,8 @@ import static org.springframework.context.annotation.AnnotationConfigUtils.CONFI
 import static org.springframework.context.annotation.AnnotationConfigUtils.REQUIRED_ANNOTATION_PROCESSOR_BEAN_NAME;
 
 /**
- * <code>MuleArtifactContext</code> is a simple extension application context that allows resources to be loaded from the Classpath of file
- * system using the MuleBeanDefinitionReader.
+ * <code>MuleArtifactContext</code> is a simple extension application context that allows resources to be loaded from the
+ * Classpath of file system using the MuleBeanDefinitionReader.
  */
 public class MuleArtifactContext extends AbstractXmlApplicationContext {
 
@@ -91,7 +91,8 @@ public class MuleArtifactContext extends AbstractXmlApplicationContext {
   private static final int VALIDATION_XSD = 3;
   private static final ThreadLocal<MuleContext> currentMuleContext = new ThreadLocal<>();
   protected final XmlApplicationParser xmlApplicationParser;
-  private final ComponentBuildingDefinitionRegistry componentBuildingDefinitionRegistry = new ComponentBuildingDefinitionRegistry();
+  private final ComponentBuildingDefinitionRegistry componentBuildingDefinitionRegistry =
+      new ComponentBuildingDefinitionRegistry();
   private final OptionalObjectsController optionalObjectsController;
   private final Map<String, String> artifactProperties;
   private final ServiceRegistry serviceRegistry = new SpiServiceRegistry();
@@ -104,8 +105,8 @@ public class MuleArtifactContext extends AbstractXmlApplicationContext {
   private ArtifactType artifactType;
 
   /**
-   * Parses configuration files creating a spring ApplicationContext which is used as a parent registry using the SpringRegistry registry
-   * implementation to wraps the spring ApplicationContext
+   * Parses configuration files creating a spring ApplicationContext which is used as a parent registry using the SpringRegistry
+   * registry implementation to wraps the spring ApplicationContext
    *
    * @param muleContext the {@link MuleContext} that own this context
    * @param optionalObjectsController the {@link OptionalObjectsController} to use. Cannot be {@code null}
@@ -129,7 +130,8 @@ public class MuleArtifactContext extends AbstractXmlApplicationContext {
 
     serviceRegistry.lookupProviders(ComponentBuildingDefinitionProvider.class).forEach(componentBuildingDefinitionProvider -> {
       componentBuildingDefinitionProvider.init(muleContext);
-      componentBuildingDefinitionProvider.getComponentBuildingDefinitions().stream().forEach(componentBuildingDefinitionRegistry::register);
+      componentBuildingDefinitionProvider.getComponentBuildingDefinitions().stream()
+          .forEach(componentBuildingDefinitionRegistry::register);
     });
 
     xmlApplicationParser = new XmlApplicationParser(new XmlServiceRegistry(serviceRegistry, muleContext));
@@ -167,8 +169,8 @@ public class MuleArtifactContext extends AbstractXmlApplicationContext {
       return;
     }
     applicationModel.executeOnEveryComponentTree(componentModel -> {
-      Optional<ComponentIdentifier> parentIdentifierOptional =
-          ofNullable(componentModel.getParent()).flatMap(parentComponentModel -> Optional.ofNullable(parentComponentModel.getIdentifier()));
+      Optional<ComponentIdentifier> parentIdentifierOptional = ofNullable(componentModel.getParent())
+          .flatMap(parentComponentModel -> Optional.ofNullable(parentComponentModel.getIdentifier()));
       if (!beanDefinitionFactory.hasDefinition(componentModel.getIdentifier(), parentIdentifierOptional)) {
         useNewParsingMechanism = false;
       }
@@ -201,7 +203,8 @@ public class MuleArtifactContext extends AbstractXmlApplicationContext {
   private Document getXmlDocument(Resource artifactResource) {
     try {
       Document document = new MuleDocumentLoader().loadDocument(new InputSource(artifactResource.getInputStream()),
-          new DelegatingEntityResolver(Thread.currentThread().getContextClassLoader()), new DefaultHandler(), VALIDATION_XSD, true);
+          new DelegatingEntityResolver(Thread.currentThread().getContextClassLoader()), new DefaultHandler(), VALIDATION_XSD,
+          true);
       return document;
     } catch (Exception e) {
       throw new MuleRuntimeException(e);
@@ -248,8 +251,8 @@ public class MuleArtifactContext extends AbstractXmlApplicationContext {
       if (useNewParsingMechanism) {
         applicationModel.executeOnEveryMuleComponentTree(componentModel -> {
           if (componentModel.isRoot()) {
-            beanDefinitionFactory.resolveComponentRecursively(applicationModel.getRootComponentModel(), componentModel, beanFactory,
-                (resolvedComponentModel, registry) -> {
+            beanDefinitionFactory.resolveComponentRecursively(applicationModel.getRootComponentModel(), componentModel,
+                beanFactory, (resolvedComponentModel, registry) -> {
                   if (resolvedComponentModel.isRoot()) {
                     String nameAttribute = resolvedComponentModel.getNameAttribute();
                     if (resolvedComponentModel.getIdentifier().equals(CONFIGURATION_IDENTIFIER)) {
@@ -271,7 +274,8 @@ public class MuleArtifactContext extends AbstractXmlApplicationContext {
   @Override
   protected void customizeBeanFactory(DefaultListableBeanFactory beanFactory) {
     super.customizeBeanFactory(beanFactory);
-    new SpringMuleContextServiceConfigurator(muleContext, artifactType, optionalObjectsController, beanFactory).createArtifactServices();
+    new SpringMuleContextServiceConfigurator(muleContext, artifactType, optionalObjectsController, beanFactory)
+        .createArtifactServices();
   }
 
   @Override
@@ -287,7 +291,8 @@ public class MuleArtifactContext extends AbstractXmlApplicationContext {
   }
 
   protected BeanDefinitionReader createBeanDefinitionReader(DefaultListableBeanFactory beanFactory) {
-    beanDefinitionReader = new MuleXmlBeanDefinitionReader(beanFactory, createBeanDefinitionDocumentReader(beanDefinitionFactory));
+    beanDefinitionReader =
+        new MuleXmlBeanDefinitionReader(beanFactory, createBeanDefinitionDocumentReader(beanDefinitionFactory));
     // annotate parsed elements with metadata
     beanDefinitionReader.setDocumentLoader(createLoader());
     // hook in our custom hierarchical reader
@@ -311,9 +316,10 @@ public class MuleArtifactContext extends AbstractXmlApplicationContext {
   }
 
   private void registerAnnotationConfigProcessors(BeanDefinitionRegistry registry, Object source) {
-    registerAnnotationConfigProcessor(registry, CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME, ConfigurationClassPostProcessor.class,
-        source);
-    registerAnnotationConfigProcessor(registry, REQUIRED_ANNOTATION_PROCESSOR_BEAN_NAME, RequiredAnnotationBeanPostProcessor.class, source);
+    registerAnnotationConfigProcessor(registry, CONFIGURATION_ANNOTATION_PROCESSOR_BEAN_NAME,
+        ConfigurationClassPostProcessor.class, source);
+    registerAnnotationConfigProcessor(registry, REQUIRED_ANNOTATION_PROCESSOR_BEAN_NAME,
+        RequiredAnnotationBeanPostProcessor.class, source);
     registerInjectorProcessor(registry);
   }
 
@@ -357,8 +363,8 @@ public class MuleArtifactContext extends AbstractXmlApplicationContext {
   }
 
   /**
-   * {@inheritDoc} This implementation returns {@code false} if the context hasn't been initialised yet, in opposition to the default
-   * implementation which throws an exception
+   * {@inheritDoc} This implementation returns {@code false} if the context hasn't been initialised yet, in opposition to the
+   * default implementation which throws an exception
    */
   @Override
   public boolean isRunning() {
@@ -389,8 +395,8 @@ public class MuleArtifactContext extends AbstractXmlApplicationContext {
       if (extensionManager != null) {
         extensionNamespaces = extensionManager.getExtensions().stream().map(ext -> {
           XmlModelProperty xmlModelProperty = ext.getModelProperty(XmlModelProperty.class).orElse(null);
-          return xmlModelProperty != null ? new StaticXmlNamespaceInfo(xmlModelProperty.getNamespaceUri(), xmlModelProperty.getNamespace())
-              : null;
+          return xmlModelProperty != null
+              ? new StaticXmlNamespaceInfo(xmlModelProperty.getNamespaceUri(), xmlModelProperty.getNamespace()) : null;
         }).filter(info -> info != null).collect(new ImmutableListCollector<>());
       } else {
         extensionNamespaces = ImmutableList.of();

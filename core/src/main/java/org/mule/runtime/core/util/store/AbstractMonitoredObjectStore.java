@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.store;
 
@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit;
  */
 public abstract class AbstractMonitoredObjectStore<T extends Serializable>
     implements ObjectStore<T>, Runnable, MuleContextAware, Initialisable, Disposable {
+
   protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   protected MuleContext context;
@@ -36,15 +37,15 @@ public abstract class AbstractMonitoredObjectStore<T extends Serializable>
   protected int maxEntries = 4000;
 
   /**
-   * The time-to-live for each message ID, specified in milliseconds, or <em>-1</em> for entries that should never expire. <b>DO NOT</b>
-   * combine this with an unbounded store!
+   * The time-to-live for each message ID, specified in milliseconds, or <em>-1</em> for entries that should never expire. <b>DO
+   * NOT</b> combine this with an unbounded store!
    */
   protected int entryTTL = -1;
 
   /**
-   * The interval for periodic bounded size enforcement and entry expiration, specified in milliseconds. Arbitrary positive values between 1
-   * millisecond and several hours or days are possible, but should be chosen carefully according to the expected message rate to prevent
-   * out of memory conditions.
+   * The interval for periodic bounded size enforcement and entry expiration, specified in milliseconds. Arbitrary positive values
+   * between 1 millisecond and several hours or days are possible, but should be chosen carefully according to the expected
+   * message rate to prevent out of memory conditions.
    */
   protected int expirationInterval = 1000;
 

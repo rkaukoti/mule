@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.component;
 
@@ -22,9 +22,11 @@ import org.mule.runtime.core.model.resolvers.LegacyEntryPointResolverSet;
 import java.util.Collection;
 
 /**
- * Abstract implementation of JavaComponent adds JavaComponent specifics like {@link EntryPointResolverSet} and {@link ObjectFactory}.
+ * Abstract implementation of JavaComponent adds JavaComponent specifics like {@link EntryPointResolverSet} and
+ * {@link ObjectFactory}.
  */
 public abstract class AbstractJavaComponent extends AbstractComponent implements JavaComponent {
+
   protected EntryPointResolverSet entryPointResolverSet;
 
   protected ObjectFactory objectFactory;
@@ -71,8 +73,8 @@ public abstract class AbstractJavaComponent extends AbstractComponent implements
   }
 
   /**
-   * Creates and initialises a new LifecycleAdaptor instance wrapped the component object instance obtained from the configured object
-   * factory.
+   * Creates and initialises a new LifecycleAdaptor instance wrapped the component object instance obtained from the configured
+   * object factory.
    */
   protected LifecycleAdapter createLifecycleAdaptor() throws Exception {
     // Todo this could be moved to the LCAFactory potentially

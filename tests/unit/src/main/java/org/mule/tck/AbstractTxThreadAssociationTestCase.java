@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.tck;
 
@@ -27,10 +27,11 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 /**
- * Validate certain expectations when working with JTA API. It is called to catch discrepancies in TM implementations and alert early.
- * Subclasses are supposed to plug in specific transaction managers for tests.
+ * Validate certain expectations when working with JTA API. It is called to catch discrepancies in TM implementations and alert
+ * early. Subclasses are supposed to plug in specific transaction managers for tests.
  */
 public abstract class AbstractTxThreadAssociationTestCase extends AbstractMuleContextTestCase {
+
   protected static final int TRANSACTION_TIMEOUT_SECONDS = 3;
   /* To allow access from the dead TX threads we spawn. */
   private TransactionManager tm;
@@ -119,7 +120,8 @@ public abstract class AbstractTxThreadAssociationTestCase extends AbstractMuleCo
     // this is one component with a TX always begin
     TransactionConfig config = new MuleTransactionConfig(TransactionConfig.ACTION_ALWAYS_BEGIN);
     config.setFactory(new XaTransactionFactory());
-    ExecutionTemplate<Void> executionTemplate = TransactionalExecutionTemplate.createTransactionalExecutionTemplate(muleContext, config);
+    ExecutionTemplate<Void> executionTemplate =
+        TransactionalExecutionTemplate.createTransactionalExecutionTemplate(muleContext, config);
 
     // and the callee component which should begin new transaction, current must be suspended
     final TransactionConfig nestedConfig = new MuleTransactionConfig(TransactionConfig.ACTION_ALWAYS_BEGIN);
@@ -127,6 +129,7 @@ public abstract class AbstractTxThreadAssociationTestCase extends AbstractMuleCo
 
     // start the call chain
     executionTemplate.execute(new ExecutionCallback<Void>() {
+
       @Override
       public Void process() throws Exception {
         // the callee executes within its own TX template, but uses the same global XA transaction,
@@ -137,6 +140,7 @@ public abstract class AbstractTxThreadAssociationTestCase extends AbstractMuleCo
         assertNotNull(firstTx);
         assertEquals(firstTx.getStatus(), Status.STATUS_ACTIVE);
         return innerExecutionTemplate.execute(new ExecutionCallback<Void>() {
+
           @Override
           public Void process() throws Exception {
             Transaction secondTx = tm.getTransaction();
@@ -191,7 +195,8 @@ public abstract class AbstractTxThreadAssociationTestCase extends AbstractMuleCo
     // this is one component with a TX always begin
     TransactionConfig config = new MuleTransactionConfig(TransactionConfig.ACTION_ALWAYS_BEGIN);
     config.setFactory(new XaTransactionFactory());
-    ExecutionTemplate<Void> executionTemplate = TransactionalExecutionTemplate.createTransactionalExecutionTemplate(muleContext, config);
+    ExecutionTemplate<Void> executionTemplate =
+        TransactionalExecutionTemplate.createTransactionalExecutionTemplate(muleContext, config);
 
     // and the callee component which should begin new transaction, current must be suspended
     final TransactionConfig nestedConfig = new MuleTransactionConfig(TransactionConfig.ACTION_NONE);
@@ -199,6 +204,7 @@ public abstract class AbstractTxThreadAssociationTestCase extends AbstractMuleCo
 
     // start the call chain
     executionTemplate.execute(new ExecutionCallback<Void>() {
+
       @Override
       public Void process() throws Exception {
         // the callee executes within its own TX template, but uses the same global XA transaction,
@@ -209,6 +215,7 @@ public abstract class AbstractTxThreadAssociationTestCase extends AbstractMuleCo
         assertNotNull(firstTx);
         assertEquals(firstTx.getStatus(), Status.STATUS_ACTIVE);
         return nestedExecutionTemplate.execute(new ExecutionCallback<Void>() {
+
           @Override
           public Void process() throws Exception {
             Transaction secondTx = tm.getTransaction();
@@ -276,7 +283,8 @@ public abstract class AbstractTxThreadAssociationTestCase extends AbstractMuleCo
     // this is one service with a TX always begin
     TransactionConfig config = new MuleTransactionConfig(TransactionConfig.ACTION_ALWAYS_BEGIN);
     config.setFactory(new XaTransactionFactory());
-    ExecutionTemplate<Void> executionTemplate = TransactionalExecutionTemplate.createTransactionalExecutionTemplate(muleContext, config);
+    ExecutionTemplate<Void> executionTemplate =
+        TransactionalExecutionTemplate.createTransactionalExecutionTemplate(muleContext, config);
 
     // and the callee service which should join the current XA transaction, not begin a nested one
     final TransactionConfig nestedConfig = new MuleTransactionConfig(TransactionConfig.ACTION_BEGIN_OR_JOIN);
@@ -284,6 +292,7 @@ public abstract class AbstractTxThreadAssociationTestCase extends AbstractMuleCo
 
     // start the call chain
     executionTemplate.execute(new ExecutionCallback<Void>() {
+
       @Override
       public Void process() throws Exception {
         // the callee executes within its own TX template, but uses the same global XA transaction,
@@ -291,6 +300,7 @@ public abstract class AbstractTxThreadAssociationTestCase extends AbstractMuleCo
         ExecutionTemplate<Void> nestedExecutionTemplate =
             TransactionalExecutionTemplate.createTransactionalExecutionTemplate(muleContext, nestedConfig);
         return nestedExecutionTemplate.execute(new ExecutionCallback<Void>() {
+
           @Override
           public Void process() throws Exception {
             // do not care about the return really

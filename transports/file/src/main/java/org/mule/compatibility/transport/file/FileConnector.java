@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.file;
 
@@ -37,8 +37,8 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * <code>FileConnector</code> is used for setting up listeners on a directory and for writing files to a directory. The connecotry provides
- * support for defining file output patterns and filters for receiving files.
+ * <code>FileConnector</code> is used for setting up listeners on a directory and for writing files to a directory. The connecotry
+ * provides support for defining file output patterns and filters for receiving files.
  */
 
 public class FileConnector extends AbstractConnector {
@@ -185,7 +185,8 @@ public class FileConnector extends AbstractConnector {
           new Object[] {readDir, moveTo, moveToPattern, Long.valueOf(polling)});
 
     } catch (Exception e) {
-      throw new InitialisationException(TransportCoreMessages.failedToCreateObjectWith("Message Receiver", serviceDescriptor), e, this);
+      throw new InitialisationException(TransportCoreMessages.failedToCreateObjectWith("Message Receiver", serviceDescriptor), e,
+          this);
     }
   }
 
@@ -389,8 +390,8 @@ public class FileConnector extends AbstractConnector {
   }
 
   /**
-   * Well get the output stream (if any) for this type of transport. Typically this will be called only when Streaming is being used on an
-   * outbound endpoint
+   * Well get the output stream (if any) for this type of transport. Typically this will be called only when Streaming is being
+   * used on an outbound endpoint
    *
    * @param endpoint the endpoint that releates to this Dispatcher
    * @param event the current event being processed
@@ -449,7 +450,8 @@ public class FileConnector extends AbstractConnector {
 
       // move didn't work - bail out
       if (!fileWasMoved) {
-        throw new DefaultMuleException(FileMessages.failedToMoveFile(sourceFile.getAbsolutePath(), destinationFile.getAbsolutePath()));
+        throw new DefaultMuleException(
+            FileMessages.failedToMoveFile(sourceFile.getAbsolutePath(), destinationFile.getAbsolutePath()));
       }
     }
   }

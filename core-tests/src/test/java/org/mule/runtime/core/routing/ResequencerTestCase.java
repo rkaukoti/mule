@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -62,8 +62,8 @@ public class ResequencerTestCase extends AbstractMuleContextTestCase {
     MuleMessage resultMessage = resultEvent.getMessage();
     assertNotNull(resultMessage);
 
-    assertTrue(getPayloadAsString(resultMessage).equals("test event A") || getPayloadAsString(resultMessage).equals("test event B")
-        || getPayloadAsString(resultMessage).equals("test event C"));
+    assertTrue(getPayloadAsString(resultMessage).equals("test event A")
+        || getPayloadAsString(resultMessage).equals("test event B") || getPayloadAsString(resultMessage).equals("test event C"));
 
   }
 
@@ -125,6 +125,7 @@ public class ResequencerTestCase extends AbstractMuleContextTestCase {
     @Override
     protected EventCorrelatorCallback getCorrelatorCallback(MuleContext muleContext) {
       return new ResequenceMessagesCorrelatorCallback(getEventComparator(), muleContext, storePrefix) {
+
         @Override
         public boolean shouldAggregateEvents(EventGroup events) {
           eventCount++;

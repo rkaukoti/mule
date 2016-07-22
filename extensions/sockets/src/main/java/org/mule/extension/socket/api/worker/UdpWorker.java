@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.api.worker;
 
@@ -27,9 +27,9 @@ import static org.mule.extension.socket.internal.SocketUtils.createPacket;
 import static org.mule.extension.socket.internal.SocketUtils.getUdpAllowedByteArray;
 
 /**
- * One worker is created per received package. If the other end of the connection is awaiting for a response, one will be sent but not from
- * the same listener socket the source has. The response will be sent from a new different {@link DatagramSocket} bound to a port choose by
- * the system.
+ * One worker is created per received package. If the other end of the connection is awaiting for a response, one will be sent but
+ * not from the same listener socket the source has. The response will be sent from a new different {@link DatagramSocket} bound
+ * to a port choose by the system.
  */
 public final class UdpWorker extends SocketWorker {
 
@@ -51,6 +51,7 @@ public final class UdpWorker extends SocketWorker {
     SocketAttributes attributes = new ImmutableSocketAttributes(packet);
     InputStream content = new ByteArrayInputStream(copyOf(packet.getData(), packet.getLength()));
     messageHandler.handle(createMuleMessage(content, attributes), new CompletionHandler<MuleEvent, Exception, MuleEvent>() {
+
       @Override
       public void onCompletion(MuleEvent muleEvent, ExceptionCallback<MuleEvent, Exception> exceptionCallback) {
         try {

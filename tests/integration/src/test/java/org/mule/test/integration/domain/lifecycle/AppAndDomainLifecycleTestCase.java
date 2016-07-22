@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.domain.lifecycle;
 
@@ -34,16 +34,17 @@ public class AppAndDomainLifecycleTestCase extends AbstractMuleTestCase {
     MuleContext secondAppContext = null;
     try {
       domainContext = new DomainContextBuilder().setDomainConfig("domain/http/http-shared-listener-config.xml").build();
-      firstAppContext = new ApplicationContextBuilder().setApplicationResources(new String[] {"domain/http/http-hello-mule-app.xml"})
-          .setDomainContext(domainContext).build();
+      firstAppContext = new ApplicationContextBuilder()
+          .setApplicationResources(new String[] {"domain/http/http-hello-mule-app.xml"}).setDomainContext(domainContext).build();
       ApplicationContextBuilder secondApp = new ApplicationContextBuilder();
-      secondAppContext =
-          secondApp.setApplicationResources(new String[] {"domain/http/http-hello-world-app.xml"}).setDomainContext(domainContext).build();
+      secondAppContext = secondApp.setApplicationResources(new String[] {"domain/http/http-hello-world-app.xml"})
+          .setDomainContext(domainContext).build();
       firstAppContext.stop();
-      MuleMessage response = secondAppContext.getClient().send("http://localhost:" + dynamicPort.getNumber() + "/service/helloWorld",
-          MuleMessage.builder().payload("test").build());
+      MuleMessage response = secondAppContext.getClient().send(
+          "http://localhost:" + dynamicPort.getNumber() + "/service/helloWorld", MuleMessage.builder().payload("test").build());
       assertThat(response, notNullValue());
-      assertThat(secondAppContext.getTransformationService().transform(response, DataType.STRING).getPayload(), is("hello world"));
+      assertThat(secondAppContext.getTransformationService().transform(response, DataType.STRING).getPayload(),
+          is("hello world"));
       assertThat((domainContext.getRegistry().<DefaultHttpListenerConfig>get("sharedListenerConfig")).isStarted(), is(true));
     } finally {
       closeQuietly(domainContext);

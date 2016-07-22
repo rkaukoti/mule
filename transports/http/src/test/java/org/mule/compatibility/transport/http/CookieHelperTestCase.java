@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -22,6 +22,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class CookieHelperTestCase extends AbstractMuleTestCase {
+
   private static final String COOKIE_1_NAME = "cookie1";
   private static final String COOKIE_1_ORIGINAL_VALUE = "value1";
   private static final String COOKIE_2_NAME = "cookie2";
@@ -91,7 +92,8 @@ public class CookieHelperTestCase extends AbstractMuleTestCase {
     assertEquals(COOKIE_1_NEW_VALUE, cookiesObject.get(COOKIE_1_NAME));
     assertEquals(COOKIE_2_VALUE, cookiesObject.get(COOKIE_2_NAME));
 
-    Map<String, String> unModifiedCookiesObject = (Map<String, String>) CookieHelper.putAndMergeCookie(cookiesObject, (Cookie[]) null);
+    Map<String, String> unModifiedCookiesObject =
+        (Map<String, String>) CookieHelper.putAndMergeCookie(cookiesObject, (Cookie[]) null);
     assertSame(cookiesObject, unModifiedCookiesObject);
     assertEquals(2, cookiesObject.size());
   }

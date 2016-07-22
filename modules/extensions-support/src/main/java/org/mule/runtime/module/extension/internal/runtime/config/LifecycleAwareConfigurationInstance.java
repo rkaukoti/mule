@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.config;
 
@@ -37,12 +37,13 @@ import static org.mule.runtime.core.util.Preconditions.checkState;
  * Implementation of {@link ConfigurationInstance} which propagates dependency injection and lifecycle phases into the contained
  * configuration {@link #value} and {@link #connectionProvider} (if present).
  * <p>
- * It also implements the {@link Interceptable} interface which means that it contains a list of {@link Interceptor interceptors}, on which
- * IoC and lifecycle is propagated as well.
+ * It also implements the {@link Interceptable} interface which means that it contains a list of {@link Interceptor interceptors},
+ * on which IoC and lifecycle is propagated as well.
  * <p>
- * In the case of the {@link #connectionProvider} being present, then it also binds the {@link #value} to the {@link ConnectionProvider} by
- * the means of {@link ConnectionManager#bind(Object, ConnectionProvider)} when the {@link #initialise()} phase is executed. That bound will
- * be broken on the {@link #stop()} phase by using {@link ConnectionManager#unbind(Object)}
+ * In the case of the {@link #connectionProvider} being present, then it also binds the {@link #value} to the
+ * {@link ConnectionProvider} by the means of {@link ConnectionManager#bind(Object, ConnectionProvider)} when the
+ * {@link #initialise()} phase is executed. That bound will be broken on the {@link #stop()} phase by using
+ * {@link ConnectionManager#unbind(Object)}
  *
  * @since 4.0
  */
@@ -75,8 +76,8 @@ public final class LifecycleAwareConfigurationInstance<T> extends AbstractInterc
    * @param interceptors the {@link List} of {@link Interceptor interceptors} that applies
    * @param connectionProvider an {@link Optional} containing the {@link ConnectionProvider} to use
    */
-  public LifecycleAwareConfigurationInstance(String name, RuntimeConfigurationModel model, T value, List<Interceptor> interceptors,
-      Optional<ConnectionProvider> connectionProvider) {
+  public LifecycleAwareConfigurationInstance(String name, RuntimeConfigurationModel model, T value,
+      List<Interceptor> interceptors, Optional<ConnectionProvider> connectionProvider) {
     super(interceptors);
     this.name = name;
     this.model = model;

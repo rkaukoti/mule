@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.routing;
 
@@ -19,9 +19,11 @@ import org.mule.runtime.core.routing.correlation.EventCorrelatorCallback;
 import java.util.Iterator;
 
 public class TestAggregator extends AbstractAggregator {
+
   @Override
   protected EventCorrelatorCallback getCorrelatorCallback(MuleContext muleContext) {
     return new CollectionCorrelatorCallback(muleContext, storePrefix) {
+
       @Override
       public MuleEvent aggregateEvents(EventGroup events) throws AggregationException {
         StringBuilder buffer = new StringBuilder(128);

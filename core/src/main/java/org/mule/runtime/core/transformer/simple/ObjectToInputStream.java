@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer.simple;
 
@@ -15,8 +15,8 @@ import java.nio.charset.Charset;
 
 /**
  * <code>ObjectToInputStream</code> converts Serializable objects to an InputStream but treats <code>java.lang.String</code>,
- * <code>byte[]</code> and <code>org.mule.runtime.core.message.OutputHandler</code> differently by using their byte[] content rather thqn
- * Serializing them.
+ * <code>byte[]</code> and <code>org.mule.runtime.core.message.OutputHandler</code> differently by using their byte[] content
+ * rather thqn Serializing them.
  */
 public class ObjectToInputStream extends SerializableToByteArray {
 

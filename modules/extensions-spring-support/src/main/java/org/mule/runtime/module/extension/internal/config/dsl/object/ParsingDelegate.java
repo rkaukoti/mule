@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.config.dsl.object;
 
@@ -9,11 +9,12 @@ import org.mule.runtime.extension.xml.dsl.api.DslElementDeclaration;
 import org.mule.runtime.extension.xml.dsl.api.resolver.DslElementResolver;
 
 /**
- * A simple delegate interface for optionally parsing entities which type is represented by {@code M} and produce a value of type {@code T}.
+ * A simple delegate interface for optionally parsing entities which type is represented by {@code M} and produce a value of type
+ * {@code T}.
  * <p>
- * To know if this delegate is suitable to parse a given entity, call the {@link #accepts(MetadataType)} method. If it returns true, then
- * you can use the {@link #parse(String, MetadataType, DslElementResolver)} to obtain a value (do not call this method if the instance
- * didn't accept the type).
+ * To know if this delegate is suitable to parse a given entity, call the {@link #accepts(MetadataType)} method. If it returns
+ * true, then you can use the {@link #parse(String, MetadataType, DslElementResolver)} to obtain a value (do not call this method
+ * if the instance didn't accept the type).
  *
  * @param <M> the generic type of the accepted {@link MetadataType}s
  * @param <T> the generic type of the produced values

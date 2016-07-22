@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.log4j2;
 
@@ -83,6 +83,7 @@ public class LoggerContextConfigurerTestCase extends AbstractMuleTestCase {
     converter = null;
 
     doAnswer(new Answer<Object>() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         converter = invocation.getArguments()[1];
@@ -91,6 +92,7 @@ public class LoggerContextConfigurerTestCase extends AbstractMuleTestCase {
     }).when(configuration).addComponent(eq("Converter"), anyObject());
 
     when(configuration.getComponent(CONVERTER_COMPONENT)).thenAnswer(new Answer<Object>() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         return converter;
@@ -121,6 +123,7 @@ public class LoggerContextConfigurerTestCase extends AbstractMuleTestCase {
   @Test
   public void forceConsoleLog() {
     withForceConsoleLog(new Runnable() {
+
       @Override
       public void run() {
         contextConfigurer.update(context);
@@ -164,6 +167,7 @@ public class LoggerContextConfigurerTestCase extends AbstractMuleTestCase {
   @Test
   public void forceConsoleLogWithAppenderAlreadyPresent() {
     withForceConsoleLog(new Runnable() {
+
       @Override
       public void run() {
         LoggerConfig rootLogger = ((AbstractConfiguration) context.getConfiguration()).getRootLogger();

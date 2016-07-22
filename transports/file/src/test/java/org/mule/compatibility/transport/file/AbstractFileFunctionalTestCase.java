@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.file;
 
@@ -26,6 +26,7 @@ import static org.junit.Assert.assertTrue;
  * We are careful here to access the file system in a generic way. This means setting directories dynamically.
  */
 public abstract class AbstractFileFunctionalTestCase extends FunctionalTestCase {
+
   public static final String TEST_MESSAGE = "Test file contents";
   public static final String TARGET_FILE = "TARGET_FILE";
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.concurrent;
 
@@ -13,6 +13,7 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 public class WaitableBooleanTestCase extends AbstractMuleTestCase {
+
   protected final WaitableBoolean TRUE = new WaitableBoolean(true);
   protected final WaitableBoolean FALSE = new WaitableBoolean(false);
 
@@ -137,6 +138,7 @@ public class WaitableBooleanTestCase extends AbstractMuleTestCase {
     final WaitableBoolean actionPerformed = new WaitableBoolean(false);
 
     Runnable switcher = new Runnable() {
+
       public void run() {
         try {
           Thread.sleep(500);
@@ -149,6 +151,7 @@ public class WaitableBooleanTestCase extends AbstractMuleTestCase {
     };
 
     Runnable action = new Runnable() {
+
       public void run() {
         actionPerformed.set(true);
       }
@@ -167,6 +170,7 @@ public class WaitableBooleanTestCase extends AbstractMuleTestCase {
     final WaitableBoolean actionPerformed = new WaitableBoolean(false);
 
     Runnable action = new Runnable() {
+
       public void run() {
         actionPerformed.set(true);
       }
@@ -183,6 +187,7 @@ public class WaitableBooleanTestCase extends AbstractMuleTestCase {
     final WaitableBoolean actionPerformed = new WaitableBoolean(false);
 
     Runnable switcher = new Runnable() {
+
       public void run() {
         try {
           Thread.sleep(500);
@@ -195,6 +200,7 @@ public class WaitableBooleanTestCase extends AbstractMuleTestCase {
     };
 
     Runnable action = new Runnable() {
+
       public void run() {
         actionPerformed.set(true);
       }
@@ -212,6 +218,7 @@ public class WaitableBooleanTestCase extends AbstractMuleTestCase {
     final WaitableBoolean actionPerformed = new WaitableBoolean(false);
 
     Runnable action = new Runnable() {
+
       public void run() {
         actionPerformed.set(true);
       }

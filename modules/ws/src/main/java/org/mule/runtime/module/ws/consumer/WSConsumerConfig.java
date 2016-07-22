@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.ws.consumer;
 
@@ -60,11 +60,13 @@ public class WSConsumerConfig implements MuleContextAware {
 
   private MessageProcessor createHttpRequester() throws MuleException {
     return new MessageProcessor() {
+
       private HttpRequestOptions requestOptions;
 
       @Override
       public MuleEvent process(MuleEvent event) throws MuleException {
-        ConnectorOperationLocator connectorOperationLocator = muleContext.getRegistry().get(OBJECT_CONNECTOR_MESSAGE_PROCESSOR_LOCATOR);
+        ConnectorOperationLocator connectorOperationLocator =
+            muleContext.getRegistry().get(OBJECT_CONNECTOR_MESSAGE_PROCESSOR_LOCATOR);
         MessageProcessor messageProcessor =
             connectorOperationLocator.locateConnectorOperation(serviceAddress, getRequestOptions(), REQUEST_RESPONSE);
         return messageProcessor.process(event);
@@ -72,7 +74,8 @@ public class WSConsumerConfig implements MuleContextAware {
 
       private HttpRequestOptions getRequestOptions() {
         if (requestOptions == null) {
-          final HttpRequestOptionsBuilder builder = newOptions().method(POST.name()).disableStatusCodeValidation().disableParseResponse();
+          final HttpRequestOptionsBuilder builder =
+              newOptions().method(POST.name()).disableStatusCodeValidation().disableParseResponse();
           if (connectorConfig != null) {
             builder.requestConfig(connectorConfig);
           }

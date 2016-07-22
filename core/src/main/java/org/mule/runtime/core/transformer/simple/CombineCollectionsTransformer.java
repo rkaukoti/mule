@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer.simple;
 
@@ -17,12 +17,12 @@ import java.util.List;
 import static org.mule.runtime.api.metadata.DataType.MULE_MESSAGE_COLLECTION;
 
 /**
- * Takes a payload which is a Collection of Collections and turns into a single List. For example, if the payload is a Collection which
- * contains a Collection with elements A and B and another Collection with elements C and D, this will turn them into a single Collection
- * with elements A, B, C and D.
+ * Takes a payload which is a Collection of Collections and turns into a single List. For example, if the payload is a Collection
+ * which contains a Collection with elements A and B and another Collection with elements C and D, this will turn them into a
+ * single Collection with elements A, B, C and D.
  *
- * This transformer will also work on MuleMessageCollections. In this case, it will take the individual Collection payloads of each
- * MuleMessage and merge them into a single Collection on a new MuleMessage.
+ * This transformer will also work on MuleMessageCollections. In this case, it will take the individual Collection payloads of
+ * each MuleMessage and merge them into a single Collection on a new MuleMessage.
  */
 public class CombineCollectionsTransformer implements MessageProcessor {
 

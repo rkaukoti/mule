@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.util.ftp;
 
@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class FtpServer {
+
   public static final String FTP_SERVER_BASE_DIR = "target/ftpserver";
 
   private String ftpHost;
@@ -21,6 +22,7 @@ public class FtpServer {
   private FtpClient ftpClient;
 
   private Ftplet ftplet = new MuleFtplet(new MuleFtplet.Callback() {
+
     @Override
     public void fileUploadCompleted() {}
 

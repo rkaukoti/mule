@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.reboot;
 
@@ -18,16 +18,18 @@ import java.util.Date;
 import java.util.Properties;
 
 /**
- * Determine which is the main class to run and delegate control to the Java Service Wrapper. If OSGi is not being used to boot with,
- * configure the classpath based on the libraries in $MULE_HOME/lib/*
+ * Determine which is the main class to run and delegate control to the Java Service Wrapper. If OSGi is not being used to boot
+ * with, configure the classpath based on the libraries in $MULE_HOME/lib/*
  * <p/>
  * Note: this class is intentionally kept free of any external library dependencies and therefore repeats a few utility methods.
  */
 public class MuleContainerBootstrap {
-  public static final String CLI_OPTIONS[][] =
-      {{"main", "true", "Main Class"}, {"production", "false", "Modify the system class loader for production use (as in Mule 2.x)"},
-          {"version", "false", "Show product and version information"}};
-  private static final String MULE_MODULE_REBOOT_POM_FILE_PATH = "META-INF/maven/org.mule.module/mule-module-reboot/pom.properties";
+
+  public static final String CLI_OPTIONS[][] = {{"main", "true", "Main Class"},
+      {"production", "false", "Modify the system class loader for production use (as in Mule 2.x)"},
+      {"version", "false", "Show product and version information"}};
+  private static final String MULE_MODULE_REBOOT_POM_FILE_PATH =
+      "META-INF/maven/org.mule.module/mule-module-reboot/pom.properties";
 
   public static void main(String[] args) throws Exception {
     // Parse any command line options based on the list above.
@@ -65,7 +67,8 @@ public class MuleContainerBootstrap {
     }
 
     if (muleHome == null || !muleHome.exists() || !muleHome.isDirectory()) {
-      throw new IllegalArgumentException("Either the system property mule.home is not set or does not contain a valid directory.");
+      throw new IllegalArgumentException(
+          "Either the system property mule.home is not set or does not contain a valid directory.");
     }
     return muleHome;
   }
@@ -83,7 +86,8 @@ public class MuleContainerBootstrap {
   private static void setSystemMuleVersion() {
     InputStream propertiesStream = null;
     try {
-      URL mavenPropertiesUrl = MuleContainerBootstrapUtils.getResource(MULE_MODULE_REBOOT_POM_FILE_PATH, MuleContainerWrapper.class);
+      URL mavenPropertiesUrl =
+          MuleContainerBootstrapUtils.getResource(MULE_MODULE_REBOOT_POM_FILE_PATH, MuleContainerWrapper.class);
       propertiesStream = mavenPropertiesUrl.openStream();
 
       Properties mavenProperties = new Properties();

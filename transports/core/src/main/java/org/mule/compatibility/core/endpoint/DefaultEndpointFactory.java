@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.endpoint;
 
@@ -24,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupServiceDescriptor;
 
 public class DefaultEndpointFactory implements EndpointFactory {
+
   public static final String ENDPOINT_REGISTRY_PREFIX = "endpoint:";
   /**
    * logger used by this class
@@ -118,6 +119,7 @@ public class DefaultEndpointFactory implements EndpointFactory {
 
   public OutboundEndpoint getOutboundEndpoint(EndpointURI uri) throws MuleException {
     return (OutboundEndpoint) getEndpoint(uri, new EndpointSource() {
+
       @Override
       public ImmutableEndpoint getEndpoint(EndpointBuilder builder) throws MuleException {
         return getOutboundEndpoint(builder);
@@ -141,6 +143,7 @@ public class DefaultEndpointFactory implements EndpointFactory {
   }
 
   private interface EndpointSource {
+
     ImmutableEndpoint getEndpoint(EndpointBuilder endpointBuilder) throws MuleException;
   }
 

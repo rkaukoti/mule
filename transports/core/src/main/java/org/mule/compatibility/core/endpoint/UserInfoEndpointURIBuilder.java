@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.endpoint;
 
@@ -10,10 +10,11 @@ import java.net.URI;
 import java.util.Properties;
 
 /**
- * <code>UserInfoEndpointBuilder</code> builds an endpoint with the userinfo and host details. This endpoint builder is used where endpoints
- * as of the form : xxx://ross:secret@host:1000
+ * <code>UserInfoEndpointBuilder</code> builds an endpoint with the userinfo and host details. This endpoint builder is used where
+ * endpoints as of the form : xxx://ross:secret@host:1000
  */
 public class UserInfoEndpointURIBuilder extends AbstractEndpointURIBuilder {
+
   // TODO THis endpoint builder is redundant I think. We should be able to use the URL endpoint builder.
   // It depends on where deriving classes can work with the URL endpoint builder, but there are a lot of similarities
   protected void setEndpoint(URI uri, Properties props) throws MalformedEndpointException {

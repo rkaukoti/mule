@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.config;
 
@@ -15,8 +15,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 /**
- * The header element may appear either inside a request-builder element of the HTTP module, a response-builder element of the HTTP module,
- * or a response-builder element of the HTTP transport. This bean definition parser delegates into the corresponding parsers for each case.
+ * The header element may appear either inside a request-builder element of the HTTP module, a response-builder element of the
+ * HTTP module, or a response-builder element of the HTTP transport. This bean definition parser delegates into the corresponding
+ * parsers for each case.
  */
 public class HttpHeaderDefinitionParser extends AbstractParallelDelegatingDefinitionParser {
 
@@ -27,7 +28,8 @@ public class HttpHeaderDefinitionParser extends AbstractParallelDelegatingDefini
     if (parentContext.equals("response-builder") || parentContext.equals("error-response-builder")) {
       String responseBuilderParent = parentNode.getParentNode().getLocalName();
 
-      if (responseBuilderParent.equals(AbstractMuleBeanDefinitionParser.ROOT_ELEMENT) || responseBuilderParent.equals("listener")) {
+      if (responseBuilderParent.equals(AbstractMuleBeanDefinitionParser.ROOT_ELEMENT)
+          || responseBuilderParent.equals("listener")) {
         // header element is used in a response-builder element from the HTTP module
         return new HttpMessageSingleParamDefinitionParser(HttpSingleParam.class, HttpParamType.HEADER);
       } else {

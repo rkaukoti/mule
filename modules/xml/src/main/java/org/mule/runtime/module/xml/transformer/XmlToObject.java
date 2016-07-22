@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.transformer;
 
@@ -17,9 +17,9 @@ import java.io.Reader;
 import java.nio.charset.Charset;
 
 /**
- * <code>XmlToObject</code> converts xml created by the ObjectToXml transformer in to a java object graph. This transformer uses XStream.
- * Xstream uses some clever tricks so objects that get marshalled to XML do not need to implement any interfaces including Serializable and
- * you don't even need to specify a default constructor.
+ * <code>XmlToObject</code> converts xml created by the ObjectToXml transformer in to a java object graph. This transformer uses
+ * XStream. Xstream uses some clever tricks so objects that get marshalled to XML do not need to implement any interfaces
+ * including Serializable and you don't even need to specify a default constructor.
  *
  * @see ObjectToXml
  */

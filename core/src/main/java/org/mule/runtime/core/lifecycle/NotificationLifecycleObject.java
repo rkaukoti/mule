@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.lifecycle;
 
@@ -17,6 +17,7 @@ import java.lang.reflect.Constructor;
  * TODO
  */
 public class NotificationLifecycleObject extends LifecycleObject {
+
   private String preNotificationName;
   private String postNotificationName;
   private Constructor ctor;
@@ -36,8 +37,8 @@ public class NotificationLifecycleObject extends LifecycleObject {
     notificationClass = ClassUtils.initializeClass(notificationClass);
 
     if (!ServerNotification.class.isAssignableFrom(notificationClass)) {
-      throw new ClassCastException("Notification class must be of type: " + ServerNotification.class.getName() + ". Offending class is: "
-          + notificationClass.getName());
+      throw new ClassCastException("Notification class must be of type: " + ServerNotification.class.getName()
+          + ". Offending class is: " + notificationClass.getName());
     }
 
     ctor = ClassUtils.getConstructor(notificationClass, new Class[] {Object.class, String.class});

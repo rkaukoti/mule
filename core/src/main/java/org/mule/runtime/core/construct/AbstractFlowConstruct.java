@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.construct;
 
@@ -42,17 +42,18 @@ import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.stopIfNeeded;
  * <li>Is constructed with unique name and {@link MuleContext}.
  * <li>Uses a {@link MessageSource} as the source of messages.
  * <li>Uses a chain of {@link MessageProcessor}s to process messages.
- * <li>Has lifecycle and propagates this lifecycle to both {@link MessageSource} and {@link MessageProcessor}s in the correct order
- * depending on the lifecycle phase.
+ * <li>Has lifecycle and propagates this lifecycle to both {@link MessageSource} and {@link MessageProcessor}s in the correct
+ * order depending on the lifecycle phase.
  * <li>Allows an {@link ExceptionListener} to be set.
  * </ul>
- * Implementations of <code>AbstractFlowConstuct</code> should implement {@link #validateConstruct()} validate the resulting construct.
- * Validation may include validation of the type of attributes of the {@link MessageSource}.
+ * Implementations of <code>AbstractFlowConstuct</code> should implement {@link #validateConstruct()} validate the resulting
+ * construct. Validation may include validation of the type of attributes of the {@link MessageSource}.
  * <p/>
- * Implementations may also implement {@link #doInitialise()}, {@link #doStart()}, {@link #doStop()} and {@link #doDispose()} if they need
- * to perform any action on lifecycle transitions.
+ * Implementations may also implement {@link #doInitialise()}, {@link #doStart()}, {@link #doStop()} and {@link #doDispose()} if
+ * they need to perform any action on lifecycle transitions.
  */
 public abstract class AbstractFlowConstruct extends AbstractAnnotatedObject implements FlowConstruct, Lifecycle {
+
   /**
    * The initial states that the flow can be started in
    */
@@ -82,6 +83,7 @@ public abstract class AbstractFlowConstruct extends AbstractAnnotatedObject impl
         this.exceptionListener = muleContext.getDefaultExceptionStrategy();
       }
       lifecycleManager.fireInitialisePhase(new LifecycleCallback<FlowConstruct>() {
+
         public void onTransition(String phaseName, FlowConstruct object) throws MuleException {
           injectFlowConstructMuleContext(exceptionListener);
           initialiseIfInitialisable(exceptionListener);
@@ -108,6 +110,7 @@ public abstract class AbstractFlowConstruct extends AbstractAnnotatedObject impl
     }
 
     lifecycleManager.fireStartPhase(new LifecycleCallback<FlowConstruct>() {
+
       public void onTransition(String phaseName, FlowConstruct object) throws MuleException {
         startIfStartable(exceptionListener);
         doStart();
@@ -117,6 +120,7 @@ public abstract class AbstractFlowConstruct extends AbstractAnnotatedObject impl
 
   public final void stop() throws MuleException {
     lifecycleManager.fireStopPhase(new LifecycleCallback<FlowConstruct>() {
+
       public void onTransition(String phaseName, FlowConstruct object) throws MuleException {
         doStop();
         stopIfStoppable(exceptionListener);
@@ -131,6 +135,7 @@ public abstract class AbstractFlowConstruct extends AbstractAnnotatedObject impl
       }
 
       lifecycleManager.fireDisposePhase(new LifecycleCallback<FlowConstruct>() {
+
         public void onTransition(String phaseName, FlowConstruct object) throws MuleException {
           doDispose();
           disposeIfDisposable(exceptionListener);
@@ -224,8 +229,9 @@ public abstract class AbstractFlowConstruct extends AbstractAnnotatedObject impl
     if (exceptionListener instanceof MessagingExceptionHandlerAcceptor) {
       if (!((MessagingExceptionHandlerAcceptor) exceptionListener).acceptsAll()) {
         throw new FlowConstructInvalidException(
-            CoreMessages.createStaticMessage("Flow exception listener contains an exception strategy that doesn't handle all request,"
-                + " Perhaps there's an exception strategy with a when attribute set but it's not part of a catch exception strategy"),
+            CoreMessages
+                .createStaticMessage("Flow exception listener contains an exception strategy that doesn't handle all request,"
+                    + " Perhaps there's an exception strategy with a when attribute set but it's not part of a catch exception strategy"),
             this);
       }
     }

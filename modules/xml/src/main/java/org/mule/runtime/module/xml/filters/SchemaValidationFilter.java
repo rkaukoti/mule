@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.filters;
 
@@ -38,6 +38,7 @@ import javax.xml.validation.Validator;
  * Filter for schema validation.
  **/
 public class SchemaValidationFilter extends AbstractJaxpFilter implements Filter, Initialisable {
+
   public static final String DEFAULT_SCHEMA_LANGUAGE = "http://www.w3.org/2001/XMLSchema";
 
   protected transient Logger logger = LoggerFactory.getLogger(getClass());
@@ -128,6 +129,7 @@ public class SchemaValidationFilter extends AbstractJaxpFilter implements Filter
    */
   protected Object getDelayedResult(final Source source) {
     return new DelayedResult() {
+
       private String systemId;
 
       @Override

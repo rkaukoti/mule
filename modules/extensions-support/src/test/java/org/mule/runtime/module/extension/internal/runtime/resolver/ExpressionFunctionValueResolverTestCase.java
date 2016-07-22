@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
@@ -42,7 +42,8 @@ public class ExpressionFunctionValueResolverTestCase extends AbstractMuleContext
 
   @Test
   public void testEqualExpressionFunctions() {
-    assertThat(INTEGER_EXPRESSION_FUNCTION, is(equalTo(new ExpressionFunction(INTEGER_EXPRESSION, toMetadataType(Integer.class)))));
+    assertThat(INTEGER_EXPRESSION_FUNCTION,
+        is(equalTo(new ExpressionFunction(INTEGER_EXPRESSION, toMetadataType(Integer.class)))));
   }
 
   @Test

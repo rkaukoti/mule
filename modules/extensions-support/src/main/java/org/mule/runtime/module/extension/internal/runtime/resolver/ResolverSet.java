@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
@@ -17,13 +17,13 @@ import java.util.Map;
 import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
- * A {@link ValueResolver} which is based on associating a set of keys -&gt; {@link ValueResolver} pairs. The result of evaluating this
- * resolver is a {@link ResolverSetResult}.
+ * A {@link ValueResolver} which is based on associating a set of keys -&gt; {@link ValueResolver} pairs. The result of evaluating
+ * this resolver is a {@link ResolverSetResult}.
  * <p/>
  * The general purpose of this class is to repeatedly evaluate a set of {@link ValueResolver}s which results are to be used in the
- * construction of an object, so that the structure of such can be described only once (by the set of keys and {@link ValueResolver}s but
- * evaluated many times. With this goal in mind is that the return value of this resolver will always be a {@link ResolverSetResult} which
- * then can be used by a {@link ObjectBuilder} to generate an actual object.
+ * construction of an object, so that the structure of such can be described only once (by the set of keys and
+ * {@link ValueResolver}s but evaluated many times. With this goal in mind is that the return value of this resolver will always
+ * be a {@link ResolverSetResult} which then can be used by a {@link ObjectBuilder} to generate an actual object.
  * <p/>
  * Instances of this class are to be considered thread safe and reusable
  *
@@ -35,8 +35,8 @@ public class ResolverSet implements ValueResolver<ResolverSetResult> {
   private boolean dynamic = false;
 
   /**
-   * Links the given {@link ValueResolver} to the given {@link ParameterModel}. If such {@code parameter} was already added, then the
-   * associated {@code resolver} is replaced.
+   * Links the given {@link ValueResolver} to the given {@link ParameterModel}. If such {@code parameter} was already added, then
+   * the associated {@code resolver} is replaced.
    *
    * @param key a not {@code null} {@link ParameterModel}
    * @param resolver a not {@code null} {@link ValueResolver}

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.core.context.notification;
 
@@ -47,7 +47,8 @@ public class ProcessorsTraceTestCase extends FunctionalTestCase {
 
   @Before
   public void before() {
-    muleContext.getNotificationManager().addInterfaceToType(MessageProcessorNotificationListener.class, MessageProcessorNotification.class);
+    muleContext.getNotificationManager().addInterfaceToType(MessageProcessorNotificationListener.class,
+        MessageProcessorNotification.class);
 
     ProcessorsTraceAsserter.processorsTraceToAssert = null;
     ProcessorsTraceAsyncAsserter.latch = new CountDownLatch(1);
@@ -59,7 +60,8 @@ public class ProcessorsTraceTestCase extends FunctionalTestCase {
 
     assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, not(nullValue()));
 
-    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, hasExecutedProcessors("/flowStatic/processors/0", "/flow/processors/0"));
+    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert,
+        hasExecutedProcessors("/flowStatic/processors/0", "/flow/processors/0"));
   }
 
   @Test
@@ -78,7 +80,8 @@ public class ProcessorsTraceTestCase extends FunctionalTestCase {
 
     assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, not(nullValue()));
 
-    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, hasExecutedProcessors("/flowDynamic/processors/0", "/flow/processors/0"));
+    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert,
+        hasExecutedProcessors("/flowDynamic/processors/0", "/flow/processors/0"));
   }
 
   @Test
@@ -141,8 +144,8 @@ public class ProcessorsTraceTestCase extends FunctionalTestCase {
 
     assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, not(nullValue()));
 
-    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert,
-        hasExecutedProcessors("/flowStaticWithAsync/processors/0", "/flowStaticWithAsync/processors/0/0", "/flowInAsync/processors/0"));
+    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, hasExecutedProcessors("/flowStaticWithAsync/processors/0",
+        "/flowStaticWithAsync/processors/0/0", "/flowInAsync/processors/0"));
   }
 
   @Test
@@ -165,8 +168,8 @@ public class ProcessorsTraceTestCase extends FunctionalTestCase {
 
     assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, not(nullValue()));
 
-    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert,
-        hasExecutedProcessors("/flowDynamicWithAsync/processors/0", "/flowDynamicWithAsync/processors/0/0", "/flowInAsync/processors/0"));
+    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, hasExecutedProcessors("/flowDynamicWithAsync/processors/0",
+        "/flowDynamicWithAsync/processors/0/0", "/flowInAsync/processors/0"));
   }
 
   @Test
@@ -187,8 +190,8 @@ public class ProcessorsTraceTestCase extends FunctionalTestCase {
 
     assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, not(nullValue()));
 
-    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert,
-        hasExecutedProcessors("/flowStaticWithEnricher/processors/0", "/flowStaticWithEnricher/processors/0/0", "/flow/processors/0"));
+    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, hasExecutedProcessors("/flowStaticWithEnricher/processors/0",
+        "/flowStaticWithEnricher/processors/0/0", "/flow/processors/0"));
   }
 
   @Test
@@ -207,8 +210,8 @@ public class ProcessorsTraceTestCase extends FunctionalTestCase {
 
     assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, not(nullValue()));
 
-    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert,
-        hasExecutedProcessors("/flowDynamicWithEnricher/processors/0", "/flowDynamicWithEnricher/processors/0/0", "/flow/processors/0"));
+    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, hasExecutedProcessors("/flowDynamicWithEnricher/processors/0",
+        "/flowDynamicWithEnricher/processors/0/0", "/flow/processors/0"));
   }
 
   @Test
@@ -227,8 +230,8 @@ public class ProcessorsTraceTestCase extends FunctionalTestCase {
 
     assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, not(nullValue()));
 
-    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert,
-        hasExecutedProcessors("/flowStaticWithChoice/processors/0", "/flowStaticWithChoice/processors/0/0/0", "/flow/processors/0"));
+    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, hasExecutedProcessors("/flowStaticWithChoice/processors/0",
+        "/flowStaticWithChoice/processors/0/0/0", "/flow/processors/0"));
   }
 
   @Test
@@ -247,8 +250,8 @@ public class ProcessorsTraceTestCase extends FunctionalTestCase {
 
     assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, not(nullValue()));
 
-    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert,
-        hasExecutedProcessors("/flowDynamicWithChoice/processors/0", "/flowDynamicWithChoice/processors/0/0/0", "/flow/processors/0"));
+    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, hasExecutedProcessors("/flowDynamicWithChoice/processors/0",
+        "/flowDynamicWithChoice/processors/0/0/0", "/flow/processors/0"));
   }
 
   @Test
@@ -267,8 +270,9 @@ public class ProcessorsTraceTestCase extends FunctionalTestCase {
 
     assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, not(nullValue()));
 
-    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, hasExecutedProcessorsNoOrder("/flowStaticWithScatterGather/processors/0",
-        "/flowStaticWithScatterGather/processors/0/0/0", "/flowStaticWithScatterGather/processors/0/1/0", "/flow/processors/0"));
+    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert,
+        hasExecutedProcessorsNoOrder("/flowStaticWithScatterGather/processors/0", "/flowStaticWithScatterGather/processors/0/0/0",
+            "/flowStaticWithScatterGather/processors/0/1/0", "/flow/processors/0"));
   }
 
   @Test
@@ -278,8 +282,9 @@ public class ProcessorsTraceTestCase extends FunctionalTestCase {
     assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, not(nullValue()));
 
     assertThat(ProcessorsTraceAsserter.processorsTraceToAssert,
-        hasExecutedProcessorsNoOrder("/subFlowStaticWithScatterGather/processors/0", "/subFlowStaticWithScatterGather/processors/0/0/0",
-            "/subFlowStaticWithScatterGather/processors/0/1", "/subFlowStaticWithScatterGather/processors/0/1/subFlow/subprocessors/0"));
+        hasExecutedProcessorsNoOrder("/subFlowStaticWithScatterGather/processors/0",
+            "/subFlowStaticWithScatterGather/processors/0/0/0", "/subFlowStaticWithScatterGather/processors/0/1",
+            "/subFlowStaticWithScatterGather/processors/0/1/subFlow/subprocessors/0"));
   }
 
   @Ignore("MULE-6926: flaky test")
@@ -289,8 +294,10 @@ public class ProcessorsTraceTestCase extends FunctionalTestCase {
 
     assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, not(nullValue()));
 
-    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, hasExecutedProcessorsNoOrder("/flowDynamicWithScatterGather/processors/0",
-        "/flowDynamicWithScatterGather/processors/0/0/0", "/flowDynamicWithScatterGather/processors/0/1/0", "/flow/processors/0"));
+    assertThat(ProcessorsTraceAsserter.processorsTraceToAssert,
+        hasExecutedProcessorsNoOrder("/flowDynamicWithScatterGather/processors/0",
+            "/flowDynamicWithScatterGather/processors/0/0/0", "/flowDynamicWithScatterGather/processors/0/1/0",
+            "/flow/processors/0"));
   }
 
   @Test
@@ -300,8 +307,8 @@ public class ProcessorsTraceTestCase extends FunctionalTestCase {
     assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, not(nullValue()));
 
     assertThat(ProcessorsTraceAsserter.processorsTraceToAssert,
-        hasExecutedProcessorsNoOrder("/subFlowDynamicWithScatterGather/processors/0", "/subFlowDynamicWithScatterGather/processors/0/0/0",
-            "/subFlowDynamicWithScatterGather/processors/0/1/0",
+        hasExecutedProcessorsNoOrder("/subFlowDynamicWithScatterGather/processors/0",
+            "/subFlowDynamicWithScatterGather/processors/0/0/0", "/subFlowDynamicWithScatterGather/processors/0/1/0",
             "/subFlowDynamicWithScatterGather/processors/0/1/0/subFlow/subprocessors/0"));
   }
 
@@ -312,9 +319,9 @@ public class ProcessorsTraceTestCase extends FunctionalTestCase {
     assertThat(ProcessorsTraceAsserter.processorsTraceToAssert, not(nullValue()));
 
     assertThat(ProcessorsTraceAsserter.processorsTraceToAssert,
-        hasExecutedProcessorsNoOrder("/flowStaticWithScatterGatherChain/processors/0", "/flowStaticWithScatterGatherChain/processors/0/0/0",
-            "/flowStaticWithScatterGatherChain/processors/0/1", "/flowStaticWithScatterGatherChain/processors/0/1/0",
-            "/flow/processors/0"));
+        hasExecutedProcessorsNoOrder("/flowStaticWithScatterGatherChain/processors/0",
+            "/flowStaticWithScatterGatherChain/processors/0/0/0", "/flowStaticWithScatterGatherChain/processors/0/1",
+            "/flowStaticWithScatterGatherChain/processors/0/1/0", "/flow/processors/0"));
   }
 
   @Ignore("MULE-6926: flaky test")
@@ -358,6 +365,7 @@ public class ProcessorsTraceTestCase extends FunctionalTestCase {
 
   private Matcher<ProcessorsTrace> hasExecutedProcessors(final String... expectedProcessors) {
     return new ProcessorsMatcher(expectedProcessors) {
+
       @Override
       protected void doMatch(ProcessorsTrace processorsTrace, int i, String expectedProcessor) {
         Matcher processorItemMatcher = startsWith(expectedProcessor + " @");
@@ -370,6 +378,7 @@ public class ProcessorsTraceTestCase extends FunctionalTestCase {
 
   private Matcher<ProcessorsTrace> hasExecutedProcessorsNoOrder(final String... expectedProcessors) {
     return new ProcessorsMatcher(expectedProcessors) {
+
       @Override
       protected void doMatch(ProcessorsTrace processorsTrace, int i, String expectedProcessor) {
         Matcher<Iterable<? super String>> processorItemMatcher = hasItem(startsWith(expectedProcessor + " @"));
@@ -404,6 +413,7 @@ public class ProcessorsTraceTestCase extends FunctionalTestCase {
   }
 
   private abstract class ProcessorsMatcher extends TypeSafeMatcher<ProcessorsTrace> {
+
     protected List<Matcher> failed = new ArrayList<>();
     protected String[] expectedProcessors;
 

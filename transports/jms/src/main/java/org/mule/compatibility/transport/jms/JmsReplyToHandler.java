@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -32,12 +32,14 @@ import javax.jms.Session;
 import javax.jms.Topic;
 
 /**
- * <code>JmsReplyToHandler</code> will process a JMS replyTo or hand off to the default replyTo handler if the replyTo is a URL. The purpose
- * of this class is to send a result on a ReplyTo destination if one has been set. Note that the {@link JmsMessageDispatcher} also contains
- * logic for handling ReplyTo. However, the dispatcher is responsible attaching the replyTo information to the message and also receiving on
- * the same replyTo if 'remoteSync' is set. The {@link JmsMessageDispatcher} never writes to the 'replyTo' destination.
+ * <code>JmsReplyToHandler</code> will process a JMS replyTo or hand off to the default replyTo handler if the replyTo is a URL.
+ * The purpose of this class is to send a result on a ReplyTo destination if one has been set. Note that the
+ * {@link JmsMessageDispatcher} also contains logic for handling ReplyTo. However, the dispatcher is responsible attaching the
+ * replyTo information to the message and also receiving on the same replyTo if 'remoteSync' is set. The
+ * {@link JmsMessageDispatcher} never writes to the 'replyTo' destination.
  */
 public class JmsReplyToHandler extends EndpointReplyToHandler {
+
   /**
    * Serial version
    */
@@ -82,9 +84,10 @@ public class JmsReplyToHandler extends EndpointReplyToHandler {
 
       if (replyToDestination instanceof Topic && replyToDestination instanceof Queue
           && jmsConnector.getJmsSupport() instanceof Jms102bSupport) {
-        logger.error(StringMessageUtils.getBoilerPlate("ReplyTo destination implements both Queue and Topic "
-            + "while complying with JMS 1.0.2b specification. " + "Please report your application server or JMS vendor name and version "
-            + "to dev<_at_>mule.codehaus.org or http://mule.mulesoft.org/jira"));
+        logger.error(StringMessageUtils.getBoilerPlate(
+            "ReplyTo destination implements both Queue and Topic " + "while complying with JMS 1.0.2b specification. "
+                + "Please report your application server or JMS vendor name and version "
+                + "to dev<_at_>mule.codehaus.org or http://mule.mulesoft.org/jira"));
       }
 
       final boolean topic = jmsConnector.getTopicResolver().isTopic(replyToDestination);

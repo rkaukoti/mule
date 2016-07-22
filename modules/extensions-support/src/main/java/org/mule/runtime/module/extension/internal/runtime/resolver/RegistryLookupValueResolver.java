@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
@@ -14,8 +14,8 @@ import static org.mule.runtime.core.util.Preconditions.checkArgument;
 /**
  * Implementation of {@link ValueResolver} which accesses the mule registry and returns the value associated with {@link #key}.
  * <p/>
- * Although the registry is mutable, {@link #isDynamic()} will always return {@code false} since the value associated to a given key is not
- * meant to change.
+ * Although the registry is mutable, {@link #isDynamic()} will always return {@code false} since the value associated to a given
+ * key is not meant to change.
  * <p/>
  * The registry is accessed through the {@link MuleContext} that is exposed in the {@link MuleEvent} that is passed to the
  * {@link #resolve(MuleEvent)} method

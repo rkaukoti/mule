@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.domain;
 
@@ -30,8 +30,8 @@ public class DefaultDomainFactory implements DomainFactory {
   private final ArtifactClassLoader containerClassLoader;
   protected DeploymentListener deploymentListener;
 
-  public DefaultDomainFactory(DeployableArtifactClassLoaderFactory<DomainDescriptor> domainClassLoaderFactory, DomainManager domainManager,
-      ArtifactClassLoader containerClassLoader) {
+  public DefaultDomainFactory(DeployableArtifactClassLoaderFactory<DomainDescriptor> domainClassLoaderFactory,
+      DomainManager domainManager, ArtifactClassLoader containerClassLoader) {
     checkArgument(domainManager != null, "Domain manager cannot be null");
     checkArgument(containerClassLoader != null, "Container classLoader cannot be null");
     this.containerClassLoader = containerClassLoader;

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.pgp;
 
@@ -19,6 +19,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public class PGPExpiredIntegrationTestCase extends FunctionalTestCase {
+
   private static Throwable exceptionFromFlow = null;
 
   @Override
@@ -43,6 +44,7 @@ public class PGPExpiredIntegrationTestCase extends FunctionalTestCase {
   }
 
   public static class ExceptionSaver implements MessageProcessor {
+
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException {
       ExceptionPayload exceptionPayload = event.getMessage().getExceptionPayload();

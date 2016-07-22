@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.exception;
 
@@ -26,7 +26,8 @@ import org.mule.runtime.core.processor.chain.DefaultMessageProcessorChainBuilder
 import org.mule.runtime.core.routing.requestreply.ReplyToPropertyRequestReplyReplier;
 import org.mule.runtime.core.transaction.TransactionCoordination;
 
-public abstract class TemplateMessagingExceptionStrategy extends AbstractExceptionListener implements MessagingExceptionHandlerAcceptor {
+public abstract class TemplateMessagingExceptionStrategy extends AbstractExceptionListener
+    implements MessagingExceptionHandlerAcceptor {
 
   private MessageProcessorChain configuredMessageProcessors;
   private MessageProcessor replyToMessageProcessor = new ReplyToPropertyRequestReplyReplier();
@@ -91,7 +92,8 @@ public abstract class TemplateMessagingExceptionStrategy extends AbstractExcepti
   @Override
   protected void doInitialise(MuleContext muleContext) throws InitialisationException {
     super.doInitialise(muleContext);
-    DefaultMessageProcessorChainBuilder defaultMessageProcessorChainBuilder = new DefaultMessageProcessorChainBuilder(this.flowConstruct);
+    DefaultMessageProcessorChainBuilder defaultMessageProcessorChainBuilder =
+        new DefaultMessageProcessorChainBuilder(this.flowConstruct);
     try {
       configuredMessageProcessors = defaultMessageProcessorChainBuilder.chain(getMessageProcessors()).build();
     } catch (MuleException e) {
@@ -162,7 +164,8 @@ public abstract class TemplateMessagingExceptionStrategy extends AbstractExcepti
       fireNotification(exception);
       logException(exception, request);
       processStatistics(request);
-      request.setMessage(MuleMessage.builder(request.getMessage()).exceptionPayload(new DefaultExceptionPayload(exception)).build());
+      request
+          .setMessage(MuleMessage.builder(request.getMessage()).exceptionPayload(new DefaultExceptionPayload(exception)).build());
 
       markExceptionAsHandledIfRequired(exception);
       return beforeRouting(exception, request);

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.processors;
 
@@ -21,13 +21,13 @@ import org.w3c.dom.NodeList;
  * This iterates over child elements, parsing them and calling {@link #insertBean(BeanAssembler, Object, Element, Element)}.
  * </p>
  * <p>
- * There are two ways we can parse a tree of elements - have an external loop or let each parser iterate over its own children. Mule uses
- * the first strategy, but some (most? all?) third party BDPs use the second. This processor lets us use third party beans inside the Mule
- * framework.
+ * There are two ways we can parse a tree of elements - have an external loop or let each parser iterate over its own children.
+ * Mule uses the first strategy, but some (most? all?) third party BDPs use the second. This processor lets us use third party
+ * beans inside the Mule framework.
  * </p>
  * <p>
- * So this is a very specialised parser that should only be used when trying to inter-operate with beans from third party packages which
- * themselves control how their children are parsed.
+ * So this is a very specialised parser that should only be used when trying to inter-operate with beans from third party packages
+ * which themselves control how their children are parsed.
  * </p>
  * <p>
  * Since for Mule beans the iteration over child elements (at least currently) is done via
@@ -35,8 +35,8 @@ import org.w3c.dom.NodeList;
  * {@link MuleHierarchicalBeanDefinitionParserDelegate#MULE_NO_RECURSE} - this stops the Mule recursion from working.
  * </p>
  * <p>
- * NOTE - IMHO (ac) the Mule approach was probably a mistake; this processor could be used as a way to slowly migrate the Mule code to the
- * more common approach.
+ * NOTE - IMHO (ac) the Mule approach was probably a mistake; this processor could be used as a way to slowly migrate the Mule
+ * code to the more common approach.
  * </p>
  */
 public abstract class AbstractChildElementIterator implements PostProcessor {

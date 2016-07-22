@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.registry;
 
@@ -169,8 +169,8 @@ public class TransientRegistry extends AbstractRegistry {
   }
 
   /**
-   * Will fire any lifecycle methods according to the current lifecycle without actually registering the object in the registry. This is
-   * useful for prototype objects that are created per request and would clutter the registry with single use objects.
+   * Will fire any lifecycle methods according to the current lifecycle without actually registering the object in the registry.
+   * This is useful for prototype objects that are created per request and would clutter the registry with single use objects.
    *
    * @param object the object to process
    * @return the same object with lifecycle methods called (if it has any)
@@ -295,14 +295,15 @@ public class TransientRegistry extends AbstractRegistry {
   }
 
   /**
-   * This class encapsulates the {@link HashMap} that's used for storing the objects in the transient registry and also shields client code
-   * from having to deal with locking the {@link ReadWriteLock} for the exposed Map operations.
+   * This class encapsulates the {@link HashMap} that's used for storing the objects in the transient registry and also shields
+   * client code from having to deal with locking the {@link ReadWriteLock} for the exposed Map operations.
    */
   protected static class RegistryMap {
 
     private final Map<String, Object> registry = new HashMap<String, Object>();
     private final ReadWriteLock registryLock = new ReentrantReadWriteLock();
     private final Set<Object> lostObjects = new TreeSet<Object>(new Comparator<Object>() {
+
       @Override
       public int compare(Object o1, Object o2) {
         return o1 == o2 ? 0 : nvl(o1) - nvl(o2);
@@ -353,9 +354,11 @@ public class TransientRegistry extends AbstractRegistry {
           }
           // registry.put(key, value) would overwrite a previous entity with the same name. Is this really what we want?
           // Not sure whether to throw an exception or log a warning here.
-          // throw new RegistrationException("TransientRegistry already contains an object named '" + key + "'. The previous object would be
+          // throw new RegistrationException("TransientRegistry already contains an object named '" + key + "'. The previous
+          // object would be
           // overwritten.");
-          logger.warn("TransientRegistry already contains an object named '" + key + "'.  The previous object will be overwritten.");
+          logger.warn(
+              "TransientRegistry already contains an object named '" + key + "'.  The previous object will be overwritten.");
         }
       } finally {
         writeLock.unlock();

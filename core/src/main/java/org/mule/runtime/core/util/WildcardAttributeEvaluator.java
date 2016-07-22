@@ -1,12 +1,13 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
 import java.util.Collection;
 
 public class WildcardAttributeEvaluator {
+
   private String attributeValue;
   private String escapedValue;
   private Boolean hasWildcards;
@@ -17,8 +18,8 @@ public class WildcardAttributeEvaluator {
     }
     this.attributeValue = attributeValue;
     this.escapedValue = attributeValue.replaceAll("\\*", "*");
-    hasWildcards =
-        attributeValue.startsWith("*") || (attributeValue.endsWith("*") && !attributeValue.endsWith("\\*")) || attributeValue.equals("*");
+    hasWildcards = attributeValue.startsWith("*") || (attributeValue.endsWith("*") && !attributeValue.endsWith("\\*"))
+        || attributeValue.equals("*");
   }
 
   public boolean hasWildcards() {
@@ -52,6 +53,7 @@ public class WildcardAttributeEvaluator {
   }
 
   public interface MatchCallback {
+
     public void processMatch(String matchedValue);
   }
 }

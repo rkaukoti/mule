@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -166,7 +166,8 @@ public class JmsMessageReceiver extends AbstractMessageReceiver implements Messa
       String durableName = (String) endpoint.getProperties().get(JmsConstants.DURABLE_NAME_PROPERTY);
       if (durableName == null && durable && dest instanceof Topic) {
         durableName = "mule." + connector.getName() + "." + endpoint.getEndpointURI().getAddress();
-        logger.debug("Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: " + durableName);
+        logger.debug(
+            "Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: " + durableName);
       }
 
       // Create consumer
@@ -177,6 +178,7 @@ public class JmsMessageReceiver extends AbstractMessageReceiver implements Messa
   }
 
   protected class JmsWorker extends AbstractReceiverWorker {
+
     public JmsWorker(Message message, AbstractMessageReceiver receiver) {
       super(new ArrayList<Object>(1), receiver);
       messages.add(message);
@@ -203,8 +205,8 @@ public class JmsMessageReceiver extends AbstractMessageReceiver implements Messa
 
       if (m.getJMSRedelivered() && redeliveryHandler != null) {
         if (logger.isDebugEnabled()) {
-          logger.debug(
-              "Message with correlationId: " + m.getJMSCorrelationID() + " has redelivered flag set, handing off to Exception Handler");
+          logger.debug("Message with correlationId: " + m.getJMSCorrelationID()
+              + " has redelivered flag set, handing off to Exception Handler");
         }
         redeliveryHandler.handleRedelivery(m, receiver.getEndpoint(), receiver.getFlowConstruct());
       }

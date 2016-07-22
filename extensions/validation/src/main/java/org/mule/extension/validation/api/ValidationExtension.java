@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.validation.api;
 
@@ -40,16 +40,18 @@ import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessa
  * An extension which provides validation capabilities by exposing a series of {@link Validator}s as {@link ExtensionModel}
  * {@link OperationModel}s
  *
- * This class not only defines the extension but also acts as the only available {@link ConfigurationModel} for it. It allows parametrizing
- * the {@link Validator}s with custom {@link ExceptionFactory} and i18n bundles (through a {@link I18NConfig}
+ * This class not only defines the extension but also acts as the only available {@link ConfigurationModel} for it. It allows
+ * parametrizing the {@link Validator}s with custom {@link ExceptionFactory} and i18n bundles (through a {@link I18NConfig}
  *
- * THe configured {@link ExceptionFactory} (either user provided or default) is registered into the {@link MuleRegistry} allowing it to
- * participate on the mule lifecycle.
+ * THe configured {@link ExceptionFactory} (either user provided or default) is registered into the {@link MuleRegistry} allowing
+ * it to participate on the mule lifecycle.
  *
  * @since 3.7.0
  */
-@Extension(name = "Validation Module", description = "Allows performing validations and throw an Exception if the validation fails")
-@Operations({CommonValidationOperations.class, CustomValidatorOperation.class, ValidationStrategies.class, NumberValidationOperation.class})
+@Extension(name = "Validation Module",
+    description = "Allows performing validations and throw an Exception if the validation fails")
+@Operations({CommonValidationOperations.class, CustomValidatorOperation.class, ValidationStrategies.class,
+    NumberValidationOperation.class})
 @Extensible(alias = "validator-message-processor")
 @Export(resources = {"/META-INF/services/org/mule/runtime/core/i18n"})
 public class ValidationExtension extends AbstractAnnotatedObject implements Config, NamedObject, Initialisable, MuleContextAware {
@@ -98,7 +100,8 @@ public class ValidationExtension extends AbstractAnnotatedObject implements Conf
 
     try {
       ObjectNameHelper objectNameHelper = new ObjectNameHelper(muleContext);
-      muleContext.getRegistry().registerObject(objectNameHelper.getUniqueName(EXCEPTION_FACTORY_PARAMETER_NAME), exceptionFactory);
+      muleContext.getRegistry().registerObject(objectNameHelper.getUniqueName(EXCEPTION_FACTORY_PARAMETER_NAME),
+          exceptionFactory);
     } catch (RegistrationException e) {
       throw new MuleRuntimeException(
           createStaticMessage("Could not register ExceptionFactory of class " + exceptionFactory.getClass().getName()), e);

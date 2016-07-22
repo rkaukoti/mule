@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor;
 
@@ -67,6 +67,7 @@ public class IdempotentRedeliveryPolicyTestCase extends AbstractMuleTestCase {
   public void setUpTest() throws MuleException {
     when(mockFailingMessageProcessor.process(any(MuleEvent.class))).thenThrow(new RuntimeException("failing"));
     when(mockWaitingMessageProcessor.process(event)).thenAnswer(new Answer<MuleEvent>() {
+
       @Override
       public MuleEvent answer(InvocationOnMock invocationOnMock) throws Throwable {
         waitingMessageProcessorExecutionLatch.countDown();
@@ -84,6 +85,7 @@ public class IdempotentRedeliveryPolicyTestCase extends AbstractMuleTestCase {
     final InMemoryObjectStore inMemoryObjectStore = new InMemoryObjectStore();
     when(mockObjectStoreManager.getObjectStore(anyString(), anyBoolean(), anyInt(), anyInt(), anyInt()))
         .thenAnswer(new Answer<ObjectStore>() {
+
           @Override
           public ObjectStore answer(InvocationOnMock invocation) throws Throwable {
             return inMemoryObjectStore;
@@ -125,6 +127,7 @@ public class IdempotentRedeliveryPolicyTestCase extends AbstractMuleTestCase {
     final ObjectStore serializationObjectStore = new SerializationObjectStore();
     when(mockObjectStoreManager.getObjectStore(anyString(), anyBoolean(), anyInt(), anyInt(), anyInt()))
         .thenAnswer(new Answer<ObjectStore>() {
+
           @Override
           public ObjectStore answer(InvocationOnMock invocation) throws Throwable {
             return serializationObjectStore;
@@ -162,6 +165,7 @@ public class IdempotentRedeliveryPolicyTestCase extends AbstractMuleTestCase {
   }
 
   public static class SerializationObjectStore implements ObjectStore<AtomicInteger> {
+
     private Map<Serializable, Serializable> store = new HashMap<Serializable, Serializable>();
 
     @Override
@@ -198,6 +202,7 @@ public class IdempotentRedeliveryPolicyTestCase extends AbstractMuleTestCase {
   }
 
   public static class InMemoryObjectStore implements ObjectStore<AtomicInteger> {
+
     private Map<Serializable, AtomicInteger> store = new HashMap<Serializable, AtomicInteger>();
 
     @Override
@@ -232,6 +237,7 @@ public class IdempotentRedeliveryPolicyTestCase extends AbstractMuleTestCase {
   }
 
   public class ExecuteIrpThread extends Thread {
+
     public Exception exception;
 
     @Override

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.api.connection.tcp.protocol;
 
@@ -18,8 +18,8 @@ import java.io.OutputStream;
 import javax.inject.Inject;
 
 /**
- * This protocol is an application level {@link TcpProtocol} and precedes every message with a cookie. It should probably not be used in
- * production. Should probably change to {@link LengthProtocol}. Both sender and receiver must use the same protocol.
+ * This protocol is an application level {@link TcpProtocol} and precedes every message with a cookie. It should probably not be
+ * used in production. Should probably change to {@link LengthProtocol}. Both sender and receiver must use the same protocol.
  *
  * @since 4.0
  */
@@ -109,10 +109,10 @@ public class SafeProtocol extends AbstractByteProtocol {
   }
 
   private void helpUser(Exception e) throws IOException {
-    throw (IOException) new IOException(
-        "An error occurred while verifying your connection.  " + "You may not be using a consistent protocol on your TCP transport. "
-            + "Please read the documentation for the TCP transport, " + "paying particular attention to the protocol parameter.")
-                .initCause(e);
+    throw (IOException) new IOException("An error occurred while verifying your connection.  "
+        + "You may not be using a consistent protocol on your TCP transport. "
+        + "Please read the documentation for the TCP transport, " + "paying particular attention to the protocol parameter.")
+            .initCause(e);
   }
 
   @Inject

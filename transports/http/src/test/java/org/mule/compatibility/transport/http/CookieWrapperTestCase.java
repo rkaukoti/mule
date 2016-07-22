@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -31,6 +31,7 @@ import static org.mockito.Mockito.when;
 
 @SmallTest
 public class CookieWrapperTestCase extends AbstractMuleTestCase {
+
   private CookieWrapper cookieWrapper;
   private ExpressionManager mockExpressionManager;
   private MuleMessage mockMuleMessage;
@@ -162,6 +163,7 @@ public class CookieWrapperTestCase extends AbstractMuleTestCase {
 
   private void mockParse() {
     when(mockExpressionManager.parse(anyString(), Mockito.any(MuleEvent.class))).thenAnswer(new Answer<Object>() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         return invocation.getArguments()[0];

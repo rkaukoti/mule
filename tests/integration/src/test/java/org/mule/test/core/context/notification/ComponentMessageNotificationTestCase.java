@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.core.context.notification;
 
@@ -10,7 +10,8 @@ import org.mule.runtime.core.context.notification.ComponentMessageNotification;
 import static org.junit.Assert.assertNotNull;
 
 /**
- * Test ComponentNotifications/Listeners by sending events to a component. A pre and post notification should be received by listeners.
+ * Test ComponentNotifications/Listeners by sending events to a component. A pre and post notification should be received by
+ * listeners.
  */
 public class ComponentMessageNotificationTestCase extends AbstractNotificationTestCase {
 

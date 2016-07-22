@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf;
 
@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class HolderTestCase extends FunctionalTestCase {
+
   @Rule
   public DynamicPort dynamicPort = new DynamicPort("port1");
 
@@ -87,6 +88,7 @@ public class HolderTestCase extends FunctionalTestCase {
   }
 
   public static class HolderTransformer extends AbstractTransformer {
+
     @Override
     protected Object doTransform(Object src, Charset enc) throws TransformerException {
       Holder<String> outS1 = new Holder<>();
@@ -102,6 +104,7 @@ public class HolderTestCase extends FunctionalTestCase {
   }
 
   public static class HolderTransformer2 extends AbstractTransformer {
+
     @Override
     protected Object doTransform(Object src, Charset enc) throws TransformerException {
       Holder<String> outS1 = new Holder<>();
@@ -116,6 +119,7 @@ public class HolderTestCase extends FunctionalTestCase {
   }
 
   public static class HolderTransformer3 extends AbstractTransformer {
+
     @Override
     protected Object doTransform(Object src, Charset enc) throws TransformerException {
       Holder<String> outS1 = new Holder<>();

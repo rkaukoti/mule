@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -22,11 +22,12 @@ import static org.junit.Assert.assertNotSame;
 import static org.junit.Assert.assertSame;
 
 /**
- * This test verifies and illustrates various usage patterns with {@link MuleMessageFactory}. It uses {@link MessageDispatcher} instances
- * for the test but the same patterns apply to {@link MessageReceiver} and {@link MessageRequester} as well as all of the code resides in
- * their abstract superclasses.
+ * This test verifies and illustrates various usage patterns with {@link MuleMessageFactory}. It uses {@link MessageDispatcher}
+ * instances for the test but the same patterns apply to {@link MessageReceiver} and {@link MessageRequester} as well as all of
+ * the code resides in their abstract superclasses.
  */
 public class MuleMessageFactoryUsagePatternsTestCase extends AbstractMuleContextEndpointTestCase {
+
   private OutboundEndpoint endpoint;
   private AbstractConnector connector;
   private MuleMessageFactory factoryFromConnector;
@@ -65,6 +66,7 @@ public class MuleMessageFactoryUsagePatternsTestCase extends AbstractMuleContext
   }
 
   private static class FakeDispatcherFactory extends AbstractMessageDispatcherFactory {
+
     public FakeDispatcherFactory() {
       super();
     }
@@ -76,6 +78,7 @@ public class MuleMessageFactoryUsagePatternsTestCase extends AbstractMuleContext
   }
 
   private static class CustomDispatcherFactory extends AbstractMessageDispatcherFactory {
+
     public CustomDispatcherFactory() {
       super();
     }
@@ -87,6 +90,7 @@ public class MuleMessageFactoryUsagePatternsTestCase extends AbstractMuleContext
   }
 
   private static class MockMessageDispatcher extends AbstractMessageDispatcher {
+
     public MockMessageDispatcher(OutboundEndpoint endpoint) {
       super(endpoint);
     }
@@ -110,6 +114,7 @@ public class MuleMessageFactoryUsagePatternsTestCase extends AbstractMuleContext
   }
 
   private static class CustomMessageDispatcher extends AbstractMessageDispatcher {
+
     public CustomMessageDispatcher(OutboundEndpoint endpoint) {
       super(endpoint);
     }

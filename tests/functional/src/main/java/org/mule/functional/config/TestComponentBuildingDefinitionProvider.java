@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.config;
 
@@ -64,14 +64,17 @@ public class TestComponentBuildingDefinitionProvider implements ComponentBuildin
             .withSetterParameterDefinition("id", fromSimpleParameter("id").build())
             .withSetterParameterDefinition("muleContext", fromReferenceObject(MuleContext.class).build());
 
-    componentBuildingDefinitions.add(baseComponentDefinition.copy().withIdentifier("component")
-        .withTypeDefinition(fromType(MessageProcessor.class)).withObjectFactoryType(FunctionalComponentObjectFactory.class).build());
+    componentBuildingDefinitions
+        .add(baseComponentDefinition.copy().withIdentifier("component").withTypeDefinition(fromType(MessageProcessor.class))
+            .withObjectFactoryType(FunctionalComponentObjectFactory.class).build());
 
     componentBuildingDefinitions.add(baseComponentDefinition.copy().withIdentifier("web-service-component")
-        .withObjectFactoryType(TestFunctionalComponentObjectFactory.class).withTypeDefinition(fromType(MessageProcessor.class)).build());
+        .withObjectFactoryType(TestFunctionalComponentObjectFactory.class).withTypeDefinition(fromType(MessageProcessor.class))
+        .build());
 
-    componentBuildingDefinitions.add(baseDefinition.copy().withIdentifier("return-data").withTypeDefinition(fromType(Object.class))
-        .withObjectFactoryType(ReturnDataObjectFactory.class).withSetterParameterDefinition("file", fromSimpleParameter("file").build())
+    componentBuildingDefinitions.add(baseDefinition.copy().withIdentifier("return-data")
+        .withTypeDefinition(fromType(Object.class)).withObjectFactoryType(ReturnDataObjectFactory.class)
+        .withSetterParameterDefinition("file", fromSimpleParameter("file").build())
         .withSetterParameterDefinition("content", fromTextContent().build()).build());
 
     componentBuildingDefinitions
@@ -86,15 +89,15 @@ public class TestComponentBuildingDefinitionProvider implements ComponentBuildin
             .withSetterParameterDefinition("message", fromSimpleParameter("message").build())
             .withSetterParameterDefinition("count", fromSimpleParameter("count").build()).build());
 
-    componentBuildingDefinitions
-        .add(baseDefinition.copy().withIdentifier("invocation-counter").withTypeDefinition(fromType(InvocationCountMessageProcessor.class))
-            .withSetterParameterDefinition("name", fromSimpleParameter("name").build()).build());
+    componentBuildingDefinitions.add(baseDefinition.copy().withIdentifier("invocation-counter")
+        .withTypeDefinition(fromType(InvocationCountMessageProcessor.class))
+        .withSetterParameterDefinition("name", fromSimpleParameter("name").build()).build());
 
-    componentBuildingDefinitions.add(
-        baseDefinition.copy().withIdentifier("assert-intercepting").withTypeDefinition(fromType(ResponseAssertionMessageProcessor.class))
-            .withSetterParameterDefinition("responseExpression", fromSimpleParameter("responseExpression").build())
-            .withSetterParameterDefinition("responseCount", fromSimpleParameter("responseCount").build())
-            .withSetterParameterDefinition("responseSameThread", fromSimpleParameter("responseSameThread").build()).build());
+    componentBuildingDefinitions.add(baseDefinition.copy().withIdentifier("assert-intercepting")
+        .withTypeDefinition(fromType(ResponseAssertionMessageProcessor.class))
+        .withSetterParameterDefinition("responseExpression", fromSimpleParameter("responseExpression").build())
+        .withSetterParameterDefinition("responseCount", fromSimpleParameter("responseCount").build())
+        .withSetterParameterDefinition("responseSameThread", fromSimpleParameter("responseSameThread").build()).build());
 
     componentBuildingDefinitions.add(baseDefinition.copy().withIdentifier("non-blocking-processor")
         .withTypeDefinition(fromType(TestNonBlockingProcessor.class)).build());

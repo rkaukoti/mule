@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.generic;
 
@@ -22,13 +22,14 @@ import java.util.List;
  * A child definition parser that wraps the child object
  */
 public class WrappingChildDefinitionParser extends ChildDefinitionParser {
+
   private final Class wrapperClass;
   private final String propertyNameInWrapper;
   private final String unwrappedPropertyName;
   private final WrappingController wrappingController;
 
-  public WrappingChildDefinitionParser(String setterMethod, Class clazz, Class constraint, boolean allowClassAttribute, Class wrapperClass,
-      String propertyNameInWrapper, String unwrappedPropertyName, WrappingController wrappingController) {
+  public WrappingChildDefinitionParser(String setterMethod, Class clazz, Class constraint, boolean allowClassAttribute,
+      Class wrapperClass, String propertyNameInWrapper, String unwrappedPropertyName, WrappingController wrappingController) {
     super(setterMethod, clazz, constraint, allowClassAttribute);
     this.wrapperClass = wrapperClass;
     this.propertyNameInWrapper = propertyNameInWrapper;
@@ -59,10 +60,12 @@ public class WrappingChildDefinitionParser extends ChildDefinitionParser {
    * Determines whether to wrap the child based on the where it appears in the DOM.
    */
   public interface WrappingController {
+
     boolean shouldWrap(Element elm);
   }
 
   private static class MessageProcessorWrappingBeanAssemblerFactory implements BeanAssemblerFactory {
+
     private final Class wrapperClass;
     private final String propertyNameInWrapper;
 
@@ -71,13 +74,15 @@ public class WrappingChildDefinitionParser extends ChildDefinitionParser {
       this.propertyNameInWrapper = propertyNameInWrapper;
     }
 
-    public BeanAssembler newBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean, PropertyConfiguration targetConfig,
-        BeanDefinition target) {
-      return new MessageProcessorWrappingBeanAssembler(beanConfig, bean, targetConfig, target, wrapperClass, propertyNameInWrapper);
+    public BeanAssembler newBeanAssembler(PropertyConfiguration beanConfig, BeanDefinitionBuilder bean,
+        PropertyConfiguration targetConfig, BeanDefinition target) {
+      return new MessageProcessorWrappingBeanAssembler(beanConfig, bean, targetConfig, target, wrapperClass,
+          propertyNameInWrapper);
     }
   }
 
   private static class MessageProcessorWrappingBeanAssembler extends DefaultBeanAssembler {
+
     private final Class wrapperClass;
     private final String propertyNameInWrapper;
 

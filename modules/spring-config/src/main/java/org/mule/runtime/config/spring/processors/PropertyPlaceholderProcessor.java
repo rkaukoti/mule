@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.processors;
 
@@ -20,6 +20,7 @@ import java.util.Properties;
  * TODO
  */
 public class PropertyPlaceholderProcessor extends PropertyPlaceholderConfigurer implements MuleContextAware {
+
   private MuleContext muleContext;
   private Map factories = new HashMap();
 
@@ -68,6 +69,7 @@ public class PropertyPlaceholderProcessor extends PropertyPlaceholderConfigurer 
   }
 
   private class RegistryProperties extends Properties {
+
     public String getProperty(String key) {
       Object oval = super.get(key);
       if (oval == null) {

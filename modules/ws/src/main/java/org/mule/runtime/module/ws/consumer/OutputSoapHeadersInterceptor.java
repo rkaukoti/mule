@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.ws.consumer;
 
@@ -54,8 +54,8 @@ public class OutputSoapHeadersInterceptor extends AbstractSoapInterceptor {
 
           event.setMessage(MuleMessage.builder(event.getMessage()).addInboundProperty(key, value).build());
         } catch (TransformerException e) {
-          throw new Fault(new TransformerMessagingException(
-              CoreMessages.createStaticMessage("Cannot parse content of SOAP header %s in the response", header.getName().getLocalPart()),
+          throw new Fault(new TransformerMessagingException(CoreMessages
+              .createStaticMessage("Cannot parse content of SOAP header %s in the response", header.getName().getLocalPart()),
               event, transformer, e.getCause()));
         }
       }

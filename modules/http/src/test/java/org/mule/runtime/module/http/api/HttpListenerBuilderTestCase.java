@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.api;
 
@@ -105,7 +105,8 @@ public class HttpListenerBuilderTestCase extends AbstractMuleTestCase {
 
   @Test
   public void useExistentListenerConfig() throws Exception {
-    when((Object) (mockMuleContext.getRegistry().lookupObject(MessageProcessingManager.class))).thenReturn(mockMessageProcessingManager);
+    when((Object) (mockMuleContext.getRegistry().lookupObject(MessageProcessingManager.class)))
+        .thenReturn(mockMessageProcessingManager);
     when(mockMuleContext.getRegistry().lookupObjects(HttpListenerConfig.class))
         .thenReturn(Arrays.<HttpListenerConfig>asList(mockListenerConfig));
     when((Object) (mockMuleContext.getRegistry().lookupObject(HttpListenerConnectionManager.class)))
@@ -132,8 +133,8 @@ public class HttpListenerBuilderTestCase extends AbstractMuleTestCase {
   public void createListenerSslConfigIfThereIsNoMatch() throws Exception {
     when(mockTlsContextFactory.isKeyStoreConfigured()).thenReturn(true);
 
-    new HttpListenerBuilder(createMuleContext()).setTlsContextFactory(mockTlsContextFactory).setFlow(mockFlow).setHost(HOST).setPort(PORT)
-        .setPath(PATH).build();
+    new HttpListenerBuilder(createMuleContext()).setTlsContextFactory(mockTlsContextFactory).setFlow(mockFlow).setHost(HOST)
+        .setPort(PORT).setPath(PATH).build();
 
     verify(mockListenerConnectionManager).createSslServer(eq(new ServerAddress(IP, PORT)), any(WorkManagerSource.class),
         eq(mockTlsContextFactory), eq(true), eq(DefaultHttpListenerConfig.DEFAULT_CONNECTION_IDLE_TIMEOUT));
@@ -141,7 +142,8 @@ public class HttpListenerBuilderTestCase extends AbstractMuleTestCase {
 
   @Test
   public void useConfiguredListenerConfig() throws Exception {
-    when((Object) (mockMuleContext.getRegistry().lookupObject(MessageProcessingManager.class))).thenReturn(mockMessageProcessingManager);
+    when((Object) (mockMuleContext.getRegistry().lookupObject(MessageProcessingManager.class)))
+        .thenReturn(mockMessageProcessingManager);
 
     final HttpListener httpListener =
         new HttpListenerBuilder(mockMuleContext).setFlow(mockFlow).setListenerConfig(mockListenerConfig).setPath(PATH).build();
@@ -151,7 +153,8 @@ public class HttpListenerBuilderTestCase extends AbstractMuleTestCase {
 
   private MuleContext createMuleContext() throws Exception {
     MuleContext muleContext = new DefaultMuleContextFactory().createMuleContext();
-    muleContext.getRegistry().registerObject(HttpListenerConnectionManager.HTTP_LISTENER_CONNECTION_MANAGER, mockListenerConnectionManager);
+    muleContext.getRegistry().registerObject(HttpListenerConnectionManager.HTTP_LISTENER_CONNECTION_MANAGER,
+        mockListenerConnectionManager);
 
     return muleContext;
   }

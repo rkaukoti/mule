@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.api.store;
@@ -8,6 +8,7 @@ package org.mule.runtime.core.api.store;
 import java.io.Serializable;
 
 public interface ObjectStore<T extends Serializable> {
+
   /**
    * Check whether the given Object is already registered with this store.
    *
@@ -25,7 +26,8 @@ public interface ObjectStore<T extends Serializable> {
    * @param value the Object to store with <code>key</code>
    * @throws ObjectStoreException if the given key cannot be stored or is <code>null</code>.
    * @throws ObjectStoreNotAvaliableException if the store is not available or any other implementation-specific error occured.
-   * @throws ObjectAlreadyExistsException if an attempt is made to store an object for a key that already has an object associated.
+   * @throws ObjectAlreadyExistsException if an attempt is made to store an object for a key that already has an object
+   *         associated.
    */
   void store(Serializable key, T value) throws ObjectStoreException;
 
@@ -60,10 +62,10 @@ public interface ObjectStore<T extends Serializable> {
   boolean isPersistent();
 
   /**
-   * Removes all items of this store without disposing it, meaning that after performing a clear(), you should still be able perform other
-   * operations. Implementations of this method have to remove all items in the fastest way possible. No assumptions should be made
-   * regarding thread safeness. If the store implementation is thread-safe, then this method should also be. If the implementation does not
-   * guarantee thread-safeness, then you shouldn't expect that from this method either.
+   * Removes all items of this store without disposing it, meaning that after performing a clear(), you should still be able
+   * perform other operations. Implementations of this method have to remove all items in the fastest way possible. No assumptions
+   * should be made regarding thread safeness. If the store implementation is thread-safe, then this method should also be. If the
+   * implementation does not guarantee thread-safeness, then you shouldn't expect that from this method either.
    *
    * @throws ObjectStoreException if the operation fails
    */

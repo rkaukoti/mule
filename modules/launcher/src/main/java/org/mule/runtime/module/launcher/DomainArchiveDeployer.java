@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher;
 
@@ -153,6 +153,7 @@ public class DomainArchiveDeployer implements ArchiveDeployer<Domain> {
     File appsFolder = new File(domainFolder, DOMAIN_BUNDLE_APPS_FOLDER);
     if (appsFolder.exists()) {
       File[] files = appsFolder.listFiles(new FilenameFilter() {
+
         @Override
         public boolean accept(File dir, String name) {
           return name.endsWith(".zip");

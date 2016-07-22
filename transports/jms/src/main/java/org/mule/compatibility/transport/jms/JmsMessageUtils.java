@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -43,6 +43,7 @@ import javax.jms.Topic;
  * <code>JmsMessageUtils</code> contains helper method for dealing with JMS messages in Mule.
  */
 public class JmsMessageUtils {
+
   public static final char REPLACEMENT_CHAR = '_';
 
   private static final Logger logger = LoggerFactory.getLogger(JmsMessageUtils.class);
@@ -81,9 +82,10 @@ public class JmsMessageUtils {
       }
 
       if (nonCompliant) {
-        logger.warn(MessageFormat.format("Header: {0} is not compliant with JMS specification (sec. 3.5.1, 3.8.1.1). It will cause "
-            + "problems in your and other applications. Please update your application code to correct this. " + "Mule renamed it to {1}",
-            name, sb.toString()));
+        logger
+            .warn(MessageFormat.format("Header: {0} is not compliant with JMS specification (sec. 3.5.1, 3.8.1.1). It will cause "
+                + "problems in your and other applications. Please update your application code to correct this. "
+                + "Mule renamed it to {1}", name, sb.toString()));
       }
 
       return sb.toString();
@@ -251,7 +253,8 @@ public class JmsMessageUtils {
       if (JmsConstants.JMS_SPECIFICATION_11.equals(jmsSpec)) {
         long bmBodyLength = bMsg.getBodyLength();
         if (bmBodyLength > Integer.MAX_VALUE) {
-          throw new JMSException("Size of BytesMessage exceeds Integer.MAX_VALUE; " + "please consider using JMS StreamMessage instead");
+          throw new JMSException(
+              "Size of BytesMessage exceeds Integer.MAX_VALUE; " + "please consider using JMS StreamMessage instead");
         }
 
         if (bmBodyLength > 0) {
@@ -358,8 +361,9 @@ public class JmsMessageUtils {
   }
 
   /**
-   * {@link StreamMessage#writeObject(Object)} accepts only primitives (and wrappers), String and byte[]. An attempt to write anything else
-   * must fail with a MessageFormatException as per JMS 1.1 spec, Section 7.3 Standard Exceptions, page 89, 1st paragraph.
+   * {@link StreamMessage#writeObject(Object)} accepts only primitives (and wrappers), String and byte[]. An attempt to write
+   * anything else must fail with a MessageFormatException as per JMS 1.1 spec, Section 7.3 Standard Exceptions, page 89, 1st
+   * paragraph.
    * <p/>
    * Unfortunately, some JMS vendors are not compliant in this area, enforce here for consistent behavior.
    *
@@ -367,8 +371,9 @@ public class JmsMessageUtils {
    */
   protected static boolean validateStreamMessageType(Object candidate) {
     if (candidate == null || candidate instanceof Boolean || candidate instanceof Byte || candidate instanceof Short
-        || candidate instanceof Character || candidate instanceof Integer || candidate instanceof Long || candidate instanceof Float
-        || candidate instanceof Double || candidate instanceof String || candidate instanceof byte[]) {
+        || candidate instanceof Character || candidate instanceof Integer || candidate instanceof Long
+        || candidate instanceof Float || candidate instanceof Double || candidate instanceof String
+        || candidate instanceof byte[]) {
       return true;
     }
 
@@ -376,11 +381,12 @@ public class JmsMessageUtils {
   }
 
   /**
-   * <code>MapMessage#writeObject(Object)</code> accepts only primitives (and wrappers), String and byte[]. An attempt to write anything
-   * else must fail with a MessageFormatException as per JMS 1.1 spec, Section 7.3 Standard Exceptions, page 89, 1st paragraph.
+   * <code>MapMessage#writeObject(Object)</code> accepts only primitives (and wrappers), String and byte[]. An attempt to write
+   * anything else must fail with a MessageFormatException as per JMS 1.1 spec, Section 7.3 Standard Exceptions, page 89, 1st
+   * paragraph.
    * <p/>
-   * Unfortunately, some JMS vendors are not compliant in this area, enforce here for consistent behavior. Here we handle non-primitive maps
-   * as {@link ObjectMessage} rather than creating a {@link MapMessage}
+   * Unfortunately, some JMS vendors are not compliant in this area, enforce here for consistent behavior. Here we handle
+   * non-primitive maps as {@link ObjectMessage} rather than creating a {@link MapMessage}
    *
    * @param candidate Map to validate
    */

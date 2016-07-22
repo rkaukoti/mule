@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.integration;
 
@@ -20,8 +20,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 /**
- * TODO this test does not use the Test scenarios, I think it would need a new Method sendAndReceive It might make sense to leave this test
- * as is because it tests that the client also works with ReplyTo correctly
+ * TODO this test does not use the Test scenarios, I think it would need a new Method sendAndReceive It might make sense to leave
+ * this test as is because it tests that the client also works with ReplyTo correctly
  */
 public class JmsTemporaryReplyToTestCase extends AbstractJmsFunctionalTestCase {
 
@@ -52,7 +52,8 @@ public class JmsTemporaryReplyToTestCase extends AbstractJmsFunctionalTestCase {
 
   @Test
   public void testReplyEnabledNonBlockingTimeout() throws Exception {
-    MuleMessage response = flowRunner("JMSService1NonBlockingTimeoutFixed").nonBlocking().withPayload(TEST_MESSAGE).run().getMessage();
+    MuleMessage response =
+        flowRunner("JMSService1NonBlockingTimeoutFixed").nonBlocking().withPayload(TEST_MESSAGE).run().getMessage();
     assertNullPayloadResponse(response);
   }
 
@@ -109,6 +110,7 @@ public class JmsTemporaryReplyToTestCase extends AbstractJmsFunctionalTestCase {
   }
 
   public static class SetReplyTo extends AbstractMessageTransformer {
+
     @Override
     public Object transformMessage(MuleEvent event, Charset outputEncoding) throws TransformerException {
       final MuleMessage message =

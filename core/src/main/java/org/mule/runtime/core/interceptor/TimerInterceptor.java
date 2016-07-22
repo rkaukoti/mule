@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.interceptor;
 
@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
  * <code>TimerInterceptor</code> simply times and displays the time taken to process an event.
  */
 public class TimerInterceptor extends AbstractInterceptingMessageProcessor implements Interceptor {
+
   /**
    * logger used by this class
    */
@@ -27,8 +28,8 @@ public class TimerInterceptor extends AbstractInterceptingMessageProcessor imple
 
     if (logger.isInfoEnabled()) {
       long executionTime = System.currentTimeMillis() - startTime;
-      logger
-          .info(resultEvent.getFlowConstruct().getName() + " took " + executionTime + "ms to process event [" + resultEvent.getId() + "]");
+      logger.info(resultEvent.getFlowConstruct().getName() + " took " + executionTime + "ms to process event ["
+          + resultEvent.getId() + "]");
     }
 
     return resultEvent;

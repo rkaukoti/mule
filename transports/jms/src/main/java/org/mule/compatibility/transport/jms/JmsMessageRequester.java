@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -21,8 +21,9 @@ import javax.jms.MessageConsumer;
 import javax.jms.Session;
 
 /**
- * <code>JmsMessageDispatcher</code> is responsible for dispatching messages to JMS destinations. All JMS semantics apply and settings such
- * as replyTo and QoS properties are read from the event properties or defaults are used (according to the JMS specification)
+ * <code>JmsMessageDispatcher</code> is responsible for dispatching messages to JMS destinations. All JMS semantics apply and
+ * settings such as replyTo and QoS properties are read from the event properties or defaults are used (according to the JMS
+ * specification)
  */
 public class JmsMessageRequester extends AbstractMessageRequester {
 
@@ -46,8 +47,8 @@ public class JmsMessageRequester extends AbstractMessageRequester {
   /**
    * Make a specific request to the underlying transport
    *
-   * @param timeout the maximum time the operation should block before returning. The call should return immediately if there is data
-   *        available. If no data becomes available before the timeout elapses, null will be returned
+   * @param timeout the maximum time the operation should block before returning. The call should return immediately if there is
+   *        data available. If no data becomes available before the timeout elapses, null will be returned
    * @return the result of the request wrapped in a MuleMessage object. Null will be returned if no data was avaialable
    * @throws Exception if the call to the underlying protocal cuases an exception
    */
@@ -71,12 +72,13 @@ public class JmsMessageRequester extends AbstractMessageRequester {
         // register a session close listener
         final Session finalSession = session;
         getEndpoint().getMuleContext().registerListener(new TransactionNotificationListener<TransactionNotification>() {
+
           @Override
           public void onNotification(TransactionNotification txNotification) {
             final int txAction = txNotification.getAction();
             final String txId = txNotification.getTransactionStringId();
-            if ((txAction == TransactionNotification.TRANSACTION_COMMITTED || txAction == TransactionNotification.TRANSACTION_ROLLEDBACK)
-                && txId.equals(tx.getId())) {
+            if ((txAction == TransactionNotification.TRANSACTION_COMMITTED
+                || txAction == TransactionNotification.TRANSACTION_ROLLEDBACK) && txId.equals(tx.getId())) {
               connector.closeQuietly(finalSession);
             }
           }
@@ -114,7 +116,8 @@ public class JmsMessageRequester extends AbstractMessageRequester {
       if (durableName == null && durable && topic) {
         durableName = "mule." + connector.getName() + "." + endpoint.getEndpointURI().getAddress();
         if (logger.isDebugEnabled()) {
-          logger.debug("Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: " + durableName);
+          logger.debug(
+              "Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: " + durableName);
         }
       }
 

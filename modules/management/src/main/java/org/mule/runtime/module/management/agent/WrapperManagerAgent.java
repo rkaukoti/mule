@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.management.agent;
 
@@ -34,6 +34,7 @@ import javax.management.ObjectName;
  * <a href="http://wrapper.tanukisoftware.org">http://wrapper.tanukisoftware.org</a> for more details.
  */
 public class WrapperManagerAgent extends AbstractAgent {
+
   /**
    * MBean name to register under.
    */
@@ -63,9 +64,9 @@ public class WrapperManagerAgent extends AbstractAgent {
   }
 
   /**
-   * This method is a copy of the implementation of {@link WrapperManagerMBean#getJavaPID()} and it is here because that method is not
-   * present in the {@link WrapperManagerMBean} until version 3.2.3. SpringSource's TC Server uses The wrapper version 3.2.0 so having this
-   * method here allows us to be compatible with TC Server.
+   * This method is a copy of the implementation of {@link WrapperManagerMBean#getJavaPID()} and it is here because that method is
+   * not present in the {@link WrapperManagerMBean} until version 3.2.3. SpringSource's TC Server uses The wrapper version 3.2.0
+   * so having this method here allows us to be compatible with TC Server.
    *
    * @return The PID of the Java process.
    * @see <a href="http://www.mulesoft.org/jira/browse/MULE-5106">MULE-5106</a>
@@ -80,9 +81,9 @@ public class WrapperManagerAgent extends AbstractAgent {
   }
 
   /**
-   * This method is a copy of the implementation of {@link WrapperManagerMBean#getWrapperPID()} and it is here because that method is not
-   * present in the {@link WrapperManagerMBean} until version 3.2.3. SpringSource's TC Server uses The wrapper version 3.2.0 so having this
-   * method here allows us to be compatible with TC Server.
+   * This method is a copy of the implementation of {@link WrapperManagerMBean#getWrapperPID()} and it is here because that method
+   * is not present in the {@link WrapperManagerMBean} until version 3.2.3. SpringSource's TC Server uses The wrapper version
+   * 3.2.0 so having this method here allows us to be compatible with TC Server.
    *
    * @return The PID of the Wrapper process.
    * @see <a href="http://www.mulesoft.org/jira/browse/MULE-5106">MULE-5106</a>
@@ -107,9 +108,9 @@ public class WrapperManagerAgent extends AbstractAgent {
       mBeanServer = (MBeanServer) servers.get(0);
 
       /*
-       * Perform an extra check ourselves. If 'wrapper.native_library' property has not been set, which is the case for embedded scenarios,
-       * don't even try to construct the wrapper manager bean, as it performs a number of checks internally and outputs a very verbose
-       * warning.
+       * Perform an extra check ourselves. If 'wrapper.native_library' property has not been set, which is the case for embedded
+       * scenarios, don't even try to construct the wrapper manager bean, as it performs a number of checks internally and outputs
+       * a very verbose warning.
        */
       boolean launchedByWrapper;
       if (System.getProperty(WRAPPER_SYSTEM_PROPERTY_NAME) == null) {
@@ -117,8 +118,8 @@ public class WrapperManagerAgent extends AbstractAgent {
       }
       // Check if an external process registered a wrapper MBean under default name.
       else if (mBeanServer.isRegistered(jmxSupport.getObjectName(DEFAULT_WRAPPER_MBEAN_NAME))) {
-        logger.info("Mule is embedded in a container already launched by a wrapper." + "Duplicates will not be registered. Use the "
-            + DEFAULT_WRAPPER_MBEAN_NAME + " MBean " + "instead for control.");
+        logger.info("Mule is embedded in a container already launched by a wrapper."
+            + "Duplicates will not be registered. Use the " + DEFAULT_WRAPPER_MBEAN_NAME + " MBean " + "instead for control.");
         unregisterMeQuietly();
         return;
       } else {
@@ -203,7 +204,8 @@ public class WrapperManagerAgent extends AbstractAgent {
   /**
    * Unregister all MBeans if there are any left over the old deployment
    */
-  protected void unregisterMBeansIfNecessary() throws MalformedObjectNameException, InstanceNotFoundException, MBeanRegistrationException {
+  protected void unregisterMBeansIfNecessary()
+      throws MalformedObjectNameException, InstanceNotFoundException, MBeanRegistrationException {
     if (mBeanServer == null || wrapperName == null) {
       return;
     }

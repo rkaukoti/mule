@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.file.filters;
 
@@ -8,16 +8,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * <code>FilenameRegexFilter</code> filters incoming files from a directory, based on a regular expression. If the expression evaluates to
- * true, then the file will be accepted.
+ * <code>FilenameRegexFilter</code> filters incoming files from a directory, based on a regular expression. If the expression
+ * evaluates to true, then the file will be accepted.
  */
 public class FilenameRegexFilter extends FilenameWildcardFilter {
+
   protected volatile Pattern[] compiledPatterns = null;
 
   /**
    * Filter condition decider method.
    * <p>
-   * Returns <code>boolean</code> <code>TRUE</code> if the file conforms to the regular expression pattern or <code>FALSE</code> otherwise.
+   * Returns <code>boolean</code> <code>TRUE</code> if the file conforms to the regular expression pattern or <code>FALSE</code>
+   * otherwise.
    *
    * @return indication of acceptance as boolean.
    */

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -15,12 +15,13 @@ import org.mule.runtime.core.context.notification.ConnectionNotification;
 import org.mule.runtime.core.lifecycle.SimpleLifecycleManager;
 
 /**
- * Manages the lifecycle of connectors in Mule. Currently only manages the 'initialsie', 'start', 'stop' and 'dispose' phases, not the
- * connect phase which is managed by the Retry handler
+ * Manages the lifecycle of connectors in Mule. Currently only manages the 'initialsie', 'start', 'stop' and 'dispose' phases, not
+ * the connect phase which is managed by the Retry handler
  *
  * @since 3.0
  */
 public class ConnectorLifecycleManager extends SimpleLifecycleManager<Connector> {
+
   public ConnectorLifecycleManager(AbstractConnector connector) {
     super(connector.getName(), connector);
   }

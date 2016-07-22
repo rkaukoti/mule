@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.log4j2;
 
@@ -31,6 +31,7 @@ import static org.mockito.Mockito.when;
 @SmallTest
 @RunWith(MockitoJUnitRunner.class)
 public class MuleLoggerContextFactoryTestCase {
+
   private static final File CONFIG_LOCATION = new File("my/local/log4j2.xml");
 
   @Mock(answer = Answers.RETURNS_DEEP_STUBS)

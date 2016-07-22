@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.mule.enricher;
 
@@ -290,7 +290,8 @@ public class MessageEnricherTestCase extends AbstractMuleContextTestCase {
 
     Flow flow = mock(Flow.class);
     when(flow.getMuleContext()).thenReturn(muleContext);
-    MuleEvent in = new DefaultMuleEvent(MuleMessage.builder().payload(TEST_MESSAGE).build(), MessageExchangePattern.REQUEST_RESPONSE, flow);
+    MuleEvent in =
+        new DefaultMuleEvent(MuleMessage.builder().payload(TEST_MESSAGE).build(), MessageExchangePattern.REQUEST_RESPONSE, flow);
     MuleEvent out = enricher.process(in);
 
     assertThat(out, is(sameInstance(in)));
@@ -317,6 +318,7 @@ public class MessageEnricherTestCase extends AbstractMuleContextTestCase {
   @Test
   public void enricherConservesSameEventInstanceNonBlockingTargetBlocking() throws Exception {
     SensingNullMessageProcessor sensingNullMessageProcessor = new SensingNullMessageProcessor() {
+
       @Override
       public boolean isNonBlocking(MuleEvent event) {
         return false;

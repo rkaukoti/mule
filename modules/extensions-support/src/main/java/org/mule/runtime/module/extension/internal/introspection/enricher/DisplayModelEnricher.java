@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection.enricher;
 
@@ -41,6 +41,7 @@ public final class DisplayModelEnricher extends AbstractAnnotatedModelEnricher {
   @Override
   public void enrich(DescribingContext describingContext) {
     new IdempotentDeclarationWalker() {
+
       @Override
       public void onSource(WithSourcesDeclaration owner, SourceDeclaration declaration) {
         enrichTypes(declaration);
@@ -69,7 +70,8 @@ public final class DisplayModelEnricher extends AbstractAnnotatedModelEnricher {
   }
 
   private void enrichParameter(ParameterDeclaration declaration) {
-    final Optional<DeclaringMemberModelProperty> declaringMemberProperty = declaration.getModelProperty(DeclaringMemberModelProperty.class);
+    final Optional<DeclaringMemberModelProperty> declaringMemberProperty =
+        declaration.getModelProperty(DeclaringMemberModelProperty.class);
     final Optional<ImplementingParameterModelProperty> implementingParameterProperty =
         declaration.getModelProperty(ImplementingParameterModelProperty.class);
     AnnotatedElement annotatedElement = null;
@@ -86,7 +88,8 @@ public final class DisplayModelEnricher extends AbstractAnnotatedModelEnricher {
   }
 
   private void enrichTypes(BaseDeclaration declaration) {
-    final Optional<ImplementingTypeModelProperty> modelProperty = declaration.getModelProperty(ImplementingTypeModelProperty.class);
+    final Optional<ImplementingTypeModelProperty> modelProperty =
+        declaration.getModelProperty(ImplementingTypeModelProperty.class);
     if (modelProperty.isPresent()) {
       final Class<?> annotatedType = modelProperty.get().getType();
       final Summary summaryAnnotation = getAnnotation(annotatedType, Summary.class);
@@ -97,7 +100,8 @@ public final class DisplayModelEnricher extends AbstractAnnotatedModelEnricher {
   }
 
   private void enrichOperation(OperationDeclaration declaration) {
-    final Optional<ImplementingMethodModelProperty> modelProperty = declaration.getModelProperty(ImplementingMethodModelProperty.class);
+    final Optional<ImplementingMethodModelProperty> modelProperty =
+        declaration.getModelProperty(ImplementingMethodModelProperty.class);
     AnnotatedElement annotatedElement = null;
 
     if (modelProperty.isPresent()) {
@@ -115,7 +119,8 @@ public final class DisplayModelEnricher extends AbstractAnnotatedModelEnricher {
     }
   }
 
-  private void createDisplayModelProperty(BaseDeclaration declaration, Summary summaryAnnotation, DisplayName displayNameAnnotation) {
+  private void createDisplayModelProperty(BaseDeclaration declaration, Summary summaryAnnotation,
+      DisplayName displayNameAnnotation) {
     String summary = summaryAnnotation != null ? summaryAnnotation.value() : null;
     String displayName = displayNameAnnotation != null ? displayNameAnnotation.value() : null;
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.log4j2;
 
@@ -28,16 +28,17 @@ import static org.reflections.ReflectionUtils.withName;
 import static org.reflections.ReflectionUtils.withParameters;
 
 /**
- * Suppose that class X is used in applications Y and Z. If X holds a static reference to a logger L, then all the log events are going to
- * be added into the context {@link org.apache.logging.log4j.core.LoggerContext} on which L fast first initialized, regardless of which
- * application generated the event.
+ * Suppose that class X is used in applications Y and Z. If X holds a static reference to a logger L, then all the log events are
+ * going to be added into the context {@link org.apache.logging.log4j.core.LoggerContext} on which L fast first initialized,
+ * regardless of which application generated the event.
  * <p/>
- * This class is a wrapper for {@link org.apache.logging.log4j.core.Logger} class which is capable of detecting that the log event is being
- * generated from an application which {@link org.apache.logging.log4j.core.LoggerContext} is different than L's, and thus forward the event
- * to the correct context.
+ * This class is a wrapper for {@link org.apache.logging.log4j.core.Logger} class which is capable of detecting that the log event
+ * is being generated from an application which {@link org.apache.logging.log4j.core.LoggerContext} is different than L's, and
+ * thus forward the event to the correct context.
  * <p/>
- * Because this class is a fix for issues in static loggers, it must not hold any reference to any {@link java.lang.ClassLoader} since
- * otherwise that class loader would be GC unreachable. For that reason, it uses {@link #ownerClassLoaderHash} instead of the real reference
+ * Because this class is a fix for issues in static loggers, it must not hold any reference to any {@link java.lang.ClassLoader}
+ * since otherwise that class loader would be GC unreachable. For that reason, it uses {@link #ownerClassLoaderHash} instead of
+ * the real reference
  *
  * @since 3.6.0
  */
@@ -74,16 +75,16 @@ abstract class DispatchingLogger extends Logger {
 
   /**
    * @param currentClassLoader execution classloader of the logging operation
-   * @return true if the logger context associated with this instance must be used for logging, false if we still need to continue searching
-   *         for the right logger context
+   * @return true if the logger context associated with this instance must be used for logging, false if we still need to continue
+   *         searching for the right logger context
    */
   private boolean useThisLoggerContextClassLoader(ClassLoader currentClassLoader) {
     return currentClassLoader.hashCode() == ownerClassLoaderHash;
   }
 
   /**
-   * This is workaround for the low visibility of the {@link Logger#updateConfiguration(Configuration)} method, which invokes it on the
-   * {@code originalLogger}.
+   * This is workaround for the low visibility of the {@link Logger#updateConfiguration(Configuration)} method, which invokes it
+   * on the {@code originalLogger}.
    *
    * Using a wrapper in the log4j package causes an {@link IllegalAccessError}.
    */

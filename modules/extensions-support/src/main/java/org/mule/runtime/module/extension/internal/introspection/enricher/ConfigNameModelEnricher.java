@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection.enricher;
 
@@ -28,7 +28,8 @@ import static org.reflections.ReflectionUtils.withAnnotation;
 /**
  * A {@link ModelEnricher} which looks for configurations with fields annotated with {@link ConfigName}.
  * <p>
- * It validates that the annotations is used properly and if so it adds a {@link RequireNameField} on the {@link ConfigurationDeclaration}.
+ * It validates that the annotations is used properly and if so it adds a {@link RequireNameField} on the
+ * {@link ConfigurationDeclaration}.
  * <p>
  * If the {@link ConfigName} annotation is used in a way which breaks the rules set on its javadoc, an
  * {@link IllegalConfigurationModelDefinitionException} is thrown
@@ -40,6 +41,7 @@ public final class ConfigNameModelEnricher implements ModelEnricher {
   @Override
   public void enrich(DescribingContext describingContext) {
     new IdempotentDeclarationWalker() {
+
       @Override
       public void onConfiguration(ConfigurationDeclaration declaration) {
         doEnrich(declaration);

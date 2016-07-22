@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.exceptions;
 
@@ -20,6 +20,7 @@ import static org.junit.Assert.fail;
  * transaction. See MULE-4338
  */
 public class ExceptionStrategyTransactionTestCase extends FunctionalTestCase {
+
   private static String failure;
 
   @Override
@@ -54,6 +55,7 @@ public class ExceptionStrategyTransactionTestCase extends FunctionalTestCase {
   }
 
   public static class AssertRollbackServiceExceptionStrategy extends DefaultMessagingExceptionStrategy {
+
     private int visits = 0;
 
     @Override

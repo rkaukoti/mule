@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring;
 
@@ -32,9 +32,9 @@ import java.util.Map.Entry;
 import static org.apache.commons.lang.StringUtils.isNotEmpty;
 
 /**
- * Specialization of {@link SimpleRegistryBootstrap which instead of registering the objects directly into a {@link Registry}, generates
- * {@link BeanDefinition}s into a {@link BeanDefinitionRegistry} so that the Spring framework can create those objects when initialising an
- * {@link ApplicationContext}}
+ * Specialization of {@link SimpleRegistryBootstrap which instead of registering the objects directly into a {@link Registry},
+ * generates {@link BeanDefinition}s into a {@link BeanDefinitionRegistry} so that the Spring framework can create those objects
+ * when initialising an {@link ApplicationContext}}
  *
  * @since 3.7.0
  */
@@ -44,15 +44,15 @@ public class SpringRegistryBootstrap extends AbstractRegistryBootstrap implement
   private BeanDefinitionRegistry beanDefinitionRegistry;
 
   /**
-   * @param artifactType type of artifact. Bootstrap entries may be associated to an specific type of artifact. If it's not associated to
-   *        the related artifact it will be ignored.
+   * @param artifactType type of artifact. Bootstrap entries may be associated to an specific type of artifact. If it's not
+   *        associated to the related artifact it will be ignored.
    * @param muleContext the {@code MuleContext} of the artifact.
-   * @param optionalObjectsController a controller for objects that may be optional. When an object can be optional and mule it's not able
-   *        to create it, then it gets ignored.
+   * @param optionalObjectsController a controller for objects that may be optional. When an object can be optional and mule it's
+   *        not able to create it, then it gets ignored.
    * @param beanDefinitionRegistry the spring bean definition registry where the bean definitions gets stored
    */
-  public SpringRegistryBootstrap(ArtifactType artifactType, MuleContext muleContext, OptionalObjectsController optionalObjectsController,
-      BeanDefinitionRegistry beanDefinitionRegistry) {
+  public SpringRegistryBootstrap(ArtifactType artifactType, MuleContext muleContext,
+      OptionalObjectsController optionalObjectsController, BeanDefinitionRegistry beanDefinitionRegistry) {
     super(artifactType, muleContext);
     this.optionalObjectsController = optionalObjectsController;
     this.beanDefinitionRegistry = beanDefinitionRegistry;
@@ -102,8 +102,8 @@ public class SpringRegistryBootstrap extends AbstractRegistryBootstrap implement
   }
 
   /**
-   * We want the SpringRegistry to be the only default one. This method looks for other registries and absorbs its objects into the created
-   * {@code beanDefinitionRegistry}. Then, the absorbed registry is unregistered from the context
+   * We want the SpringRegistry to be the only default one. This method looks for other registries and absorbs its objects into
+   * the created {@code beanDefinitionRegistry}. Then, the absorbed registry is unregistered from the context
    */
   private void absorbAndDiscardOtherRegistries() {
     if (!(muleContext.getRegistry() instanceof RegistryProvider)) {

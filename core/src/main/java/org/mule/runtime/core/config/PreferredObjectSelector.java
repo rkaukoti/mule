@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.config;
 
@@ -8,8 +8,8 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 /**
- * Selects a preferred object from a collection of instances of the same type based on the weight of the {@link Preferred} annotation. If
- * there is no preferred instances, then it just returns the first object in the collection.
+ * Selects a preferred object from a collection of instances of the same type based on the weight of the {@link Preferred}
+ * annotation. If there is no preferred instances, then it just returns the first object in the collection.
  */
 public class PreferredObjectSelector<T> {
 
@@ -17,6 +17,7 @@ public class PreferredObjectSelector<T> {
 
   public PreferredObjectSelector() {
     comparator = new Comparator<T>() {
+
       private PreferredComparator preferredComparator = new PreferredComparator();
 
       public int compare(T candidate1, T candidate2) {
@@ -31,8 +32,8 @@ public class PreferredObjectSelector<T> {
   /**
    * Selects a preferred object from instances returned by an {@link Iterator}.
    * <p/>
-   * The preferred instance will be the instance annotated with {@link Preferred} annotation with the highest weight attribute if there is
-   * any, or a non annotated class otherwise.
+   * The preferred instance will be the instance annotated with {@link Preferred} annotation with the highest weight attribute if
+   * there is any, or a non annotated class otherwise.
    *
    * @param iterator contains the objects to select from
    * @return the preferred instance

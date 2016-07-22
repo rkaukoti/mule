@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.api;
@@ -29,6 +29,7 @@ import static org.mule.runtime.core.util.ClassUtils.isConsumable;
  */
 
 public class MessagingException extends MuleException {
+
   public static final String PAYLOAD_INFO_KEY = "Payload";
   public static final String PAYLOAD_TYPE_INFO_KEY = "Payload Type";
 
@@ -134,7 +135,8 @@ public class MessagingException extends MuleException {
           if (payload != null) {
             addInfo(PAYLOAD_TYPE_INFO_KEY, muleMessage.getDataType().getType().getName());
             try {
-              addInfo(PAYLOAD_INFO_KEY, muleContext.getTransformationService().transform(muleMessage, DataType.STRING).getPayload());
+              addInfo(PAYLOAD_INFO_KEY,
+                  muleContext.getTransformationService().transform(muleMessage, DataType.STRING).getPayload());
             } catch (Exception e) {
               addInfo(PAYLOAD_INFO_KEY, format("%s while getting payload: %s", e.getClass().getName(), e.getMessage()));
             }
@@ -262,7 +264,8 @@ public class MessagingException extends MuleException {
   }
 
   /**
-   * Signals if the exception cause rollback of any current transaction if any or if the message source should rollback incoming message
+   * Signals if the exception cause rollback of any current transaction if any or if the message source should rollback incoming
+   * message
    *
    * @return true if exception cause rollback, false otherwise
    */

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.generics;
 
@@ -32,8 +32,8 @@ public class GenericsUtilsTestCase extends AbstractMuleTestCase {
   public void createTestData() {
     this.targetClass = Foo.class;
     this.methods = new String[] {"a", "b", "b2", "b3", "c", "d", "d2", "d3", "e", "e2", "e3"};
-    this.expectedResults = new Class[] {Integer.class, null, Set.class, Set.class, null, Integer.class, Integer.class, Integer.class,
-        Integer.class, Integer.class, Integer.class};
+    this.expectedResults = new Class[] {Integer.class, null, Set.class, Set.class, null, Integer.class, Integer.class,
+        Integer.class, Integer.class, Integer.class, Integer.class};
   }
 
   protected Type getType(Method method) {

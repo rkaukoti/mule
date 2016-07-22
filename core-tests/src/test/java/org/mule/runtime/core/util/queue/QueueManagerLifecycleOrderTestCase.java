@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.queue;
 
@@ -29,6 +29,7 @@ import static org.junit.Assert.assertSame;
 
 @SmallTest
 public class QueueManagerLifecycleOrderTestCase extends AbstractMuleTestCase {
+
   private List<Object> startStopOrder = new ArrayList<>();
   private RecordingTQM rtqm = new RecordingTQM();
 
@@ -59,6 +60,7 @@ public class QueueManagerLifecycleOrderTestCase extends AbstractMuleTestCase {
   }
 
   private class RecordingTQM implements QueueManager {
+
     @Override
     public void start() throws MuleException {
       startStopOrder.add(this);
@@ -86,6 +88,7 @@ public class QueueManagerLifecycleOrderTestCase extends AbstractMuleTestCase {
   }
 
   private class RecordingFlow extends Flow {
+
     public RecordingFlow(String name, MuleContext muleContext) {
       super(name, muleContext);
     }
@@ -102,6 +105,7 @@ public class QueueManagerLifecycleOrderTestCase extends AbstractMuleTestCase {
   }
 
   private class QueueManagerOnlyConfigurationBuilder extends DefaultsConfigurationBuilder {
+
     @Override
     protected void doConfigure(MuleContext muleContext) throws Exception {
       muleContext.getRegistry().registerObject(MuleProperties.OBJECT_QUEUE_MANAGER, rtqm);

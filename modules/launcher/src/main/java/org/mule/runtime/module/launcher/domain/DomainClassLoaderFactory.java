@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.domain;
 
@@ -46,6 +46,7 @@ import static org.mule.runtime.module.launcher.domain.Domain.DEFAULT_DOMAIN_NAME
  * Creates {@link ArtifactClassLoader} for domain artifacts.
  */
 public class DomainClassLoaderFactory implements DeployableArtifactClassLoaderFactory<DomainDescriptor> {
+
   protected static final Logger logger = LoggerFactory.getLogger(DomainClassLoaderFactory.class);
   private final ClassLoader parentClassLoader;
 
@@ -151,7 +152,8 @@ public class DomainClassLoaderFactory implements DeployableArtifactClassLoaderFa
   }
 
   private ArtifactClassLoader getDefaultDomainClassLoader(ClassLoaderLookupPolicy containerLookupPolicy) {
-    return new MuleSharedDomainClassLoader(DEFAULT_DOMAIN_NAME, parentClassLoader, containerLookupPolicy.extend(emptyMap()), emptyList());
+    return new MuleSharedDomainClassLoader(DEFAULT_DOMAIN_NAME, parentClassLoader, containerLookupPolicy.extend(emptyMap()),
+        emptyList());
   }
 
   private void validateDomain(String domain) {
@@ -163,6 +165,7 @@ public class DomainClassLoaderFactory implements DeployableArtifactClassLoaderFa
 
   private ArtifactClassLoader createClassLoaderUnregisterWrapper(final ArtifactClassLoader classLoader) {
     return new ArtifactClassLoader() {
+
       @Override
       public String getArtifactName() {
         return classLoader.getArtifactName();

@@ -1,12 +1,13 @@
 /*
  * Copyright (c) 2012-2016 Sonatype, Inc. All rights reserved.
  *
- * This program is licensed to you under the Apache License Version 2.0, and you may not use this file except in compliance with the Apache
- * License Version 2.0. You may obtain a copy of the Apache License Version 2.0 at http://www.apache.org/licenses/LICENSE-2.0.
+ * This program is licensed to you under the Apache License Version 2.0, and you may not use this file except in compliance with
+ * the Apache License Version 2.0. You may obtain a copy of the Apache License Version 2.0 at
+ * http://www.apache.org/licenses/LICENSE-2.0.
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the Apache License Version 2.0 is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the Apache License Version 2.0 for the
- * specific language governing permissions and limitations there under.
+ * Unless required by applicable law or agreed to in writing, software distributed under the Apache License Version 2.0 is
+ * distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the Apache
+ * License Version 2.0 for the specific language governing permissions and limitations there under.
  */
 package com.ning.http.client.providers.grizzly;
 
@@ -44,6 +45,7 @@ import java.util.Set;
  *         This is a modified version from the original file from AHC.
  */
 public final class HttpTransactionContext {
+
   private static final Attribute<HttpTransactionContext> REQUEST_STATE_ATTR =
       Grizzly.DEFAULT_ATTRIBUTE_BUILDER.createAttribute(HttpTransactionContext.class.getName());
   final int maxRedirectCount;
@@ -63,6 +65,7 @@ public final class HttpTransactionContext {
   GrizzlyResponseFuture future;
   HttpResponsePacket responsePacket;
   private final CloseListener listener = new CloseListener<Closeable, CloseType>() {
+
     @Override
     public void onClosed(Closeable closeable, CloseType type) throws IOException {
       if (isGracefullyFinishResponseOnClose()) {
@@ -103,8 +106,8 @@ public final class HttpTransactionContext {
   volatile boolean isRequestFullySent;
   Set<CompletionHandler<HttpTransactionContext>> reqFullySentHandlers;
 
-  private HttpTransactionContext(final GrizzlyAsyncHttpProvider provider, final Connection connection, final GrizzlyResponseFuture future,
-      final Request ahcRequest) {
+  private HttpTransactionContext(final GrizzlyAsyncHttpProvider provider, final Connection connection,
+      final GrizzlyResponseFuture future, final Request ahcRequest) {
 
     this.provider = provider;
     this.connection = connection;
@@ -202,7 +205,8 @@ public final class HttpTransactionContext {
 
   boolean isGracefullyFinishResponseOnClose() {
     final HttpResponsePacket response = responsePacket;
-    return response != null && !response.getProcessingState().isKeepAlive() && !response.isChunked() && response.getContentLength() == -1;
+    return response != null && !response.getProcessingState().isKeepAlive() && !response.isChunked()
+        && response.getContentLength() == -1;
   }
 
   void abort(final Throwable t) {
@@ -253,7 +257,8 @@ public final class HttpTransactionContext {
     reqFullySentHandlers.add(completionHandler);
   }
 
-  private synchronized boolean removeRequestSentCompletionHandler(final CompletionHandler<HttpTransactionContext> completionHandler) {
+  private synchronized boolean removeRequestSentCompletionHandler(
+      final CompletionHandler<HttpTransactionContext> completionHandler) {
     return reqFullySentHandlers != null ? reqFullySentHandlers.remove(completionHandler) : false;
   }
 

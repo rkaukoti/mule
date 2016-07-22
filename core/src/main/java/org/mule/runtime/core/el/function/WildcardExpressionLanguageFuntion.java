@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.el.function;
 
@@ -13,14 +13,15 @@ import org.mule.runtime.core.el.context.MessageContext;
 import org.mule.runtime.core.util.StringUtils;
 
 public class WildcardExpressionLanguageFuntion implements ExpressionLanguageFunction {
+
   private static final boolean DEFAULT_SENSITIVITY = true;
 
   @Override
   public Object call(Object[] params, ExpressionLanguageContext context) {
     int numParams = params.length;
     if (numParams < 1 || numParams > 3) {
-      throw new IllegalArgumentException(
-          "invalid number of arguments for the signature wildcard(" + "wildcardExpression, [melExpression], [caseSensitive]) was expected");
+      throw new IllegalArgumentException("invalid number of arguments for the signature wildcard("
+          + "wildcardExpression, [melExpression], [caseSensitive]) was expected");
     }
 
     String wildcardPattern = verifyWildcardPattern(params[0]);
@@ -28,8 +29,8 @@ public class WildcardExpressionLanguageFuntion implements ExpressionLanguageFunc
 
     if (numParams == 1) {
       try {
-        result =
-            isMatch(wildcardPattern, context.getVariable("message", MessageContext.class).payloadAs(String.class), DEFAULT_SENSITIVITY);
+        result = isMatch(wildcardPattern, context.getVariable("message", MessageContext.class).payloadAs(String.class),
+            DEFAULT_SENSITIVITY);
       } catch (TransformerException e) {
         throw new RuntimeException("Unable to convert payload to string");
       }

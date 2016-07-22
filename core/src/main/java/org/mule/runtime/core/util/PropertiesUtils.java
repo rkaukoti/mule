@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -33,6 +33,7 @@ import static org.mule.runtime.core.util.Preconditions.checkArgument;
  */
 // @ThreadSafe
 public final class PropertiesUtils {
+
   private static final Logger logger = LoggerFactory.getLogger(PropertiesUtils.class);
 
   // @GuardedBy(itself)
@@ -66,12 +67,12 @@ public final class PropertiesUtils {
   }
 
   /**
-   * Returns the String representation of the property value or a masked String if the property key has been registered previously via
-   * {@link #registerMaskedPropertyName(String)}.
+   * Returns the String representation of the property value or a masked String if the property key has been registered previously
+   * via {@link #registerMaskedPropertyName(String)}.
    *
    * @param property a key/value pair
-   * @return String of the property value or a "masked" String that hides the contents, or <code>null</code> if the property, its key or its
-   *         value is <code>null</code>.
+   * @return String of the property value or a "masked" String that hides the contents, or <code>null</code> if the property, its
+   *         key or its value is <code>null</code>.
    */
   public static String maskedPropertyValue(Map.Entry<?, ?> property) {
     if (property == null) {
@@ -131,6 +132,7 @@ public final class PropertiesUtils {
         resourcesUrl.add(resources.nextElement());
       }
       Collections.sort(resourcesUrl, new Comparator<URL>() {
+
         @Override
         public int compare(URL url, URL url1) {
           if ("file".equals(url.getProtocol())) {
@@ -187,7 +189,8 @@ public final class PropertiesUtils {
   }
 
   /**
-   * Will create a map of properties where the names have a prefix Allows the callee to supply the target map so a comparator can be set
+   * Will create a map of properties where the names have a prefix Allows the callee to supply the target map so a comparator can
+   * be set
    *
    * @param props the source set of properties
    * @param prefix the prefix to filter on

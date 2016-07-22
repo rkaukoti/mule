@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -112,13 +112,13 @@ import static org.apache.commons.lang.SystemUtils.LINE_SEPARATOR;
 import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupServiceDescriptor;
 
 /**
- * <code>AbstractConnector</code> provides base functionality for all connectors provided with Mule. Connectors are the mechanism used to
- * connect to external systems and protocols in order to send and receive data.
+ * <code>AbstractConnector</code> provides base functionality for all connectors provided with Mule. Connectors are the mechanism
+ * used to connect to external systems and protocols in order to send and receive data.
  * <p/>
- * The <code>AbstractConnector</code> provides getter and setter methods for endpoint name, transport name and protocol. It also provides
- * methods to stop and start connectors and sets up a dispatcher threadpool which allows deriving connectors the possibility to dispatch
- * work to separate threads. This functionality is controlled with the <i> doThreading</i> property on the threadingProfiles for dispatchers
- * and receivers. The lifecycle for a connector is -
+ * The <code>AbstractConnector</code> provides getter and setter methods for endpoint name, transport name and protocol. It also
+ * provides methods to stop and start connectors and sets up a dispatcher threadpool which allows deriving connectors the
+ * possibility to dispatch work to separate threads. This functionality is controlled with the <i> doThreading</i> property on the
+ * threadingProfiles for dispatchers and receivers. The lifecycle for a connector is -
  * <ol>
  * <li>Create
  * <li>Initialise
@@ -135,13 +135,15 @@ import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.l
  * </ol>
  */
 public abstract class AbstractConnector extends AbstractAnnotatedObject implements Connector, WorkListener {
+
   /**
    * Default number of concurrent transactional receivers.
    */
   public static final int DEFAULT_NUM_CONCURRENT_TX_RECEIVERS = 4;
   public static final String PROPERTY_POLLING_FREQUENCY = "pollingFrequency";
   public static final String DEFAULT_CONTEXT_START_TIMEOUT = "15000";
-  public static final String MULE_CONTEXT_START_TIMEOUT_SYSTEM_PROPERTY = MuleProperties.SYSTEM_PROPERTY_PREFIX + "contextStartTimeout";
+  public static final String MULE_CONTEXT_START_TIMEOUT_SYSTEM_PROPERTY =
+      MuleProperties.SYSTEM_PROPERTY_PREFIX + "contextStartTimeout";
   private static final long SCHEDULER_FORCED_SHUTDOWN_TIMEOUT = 5000l;
   /**
    * logger used by this class
@@ -216,14 +218,14 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
   protected ConnectorLifecycleManager lifecycleManager;
   protected AtomicBoolean connecting = new AtomicBoolean(false);
   /**
-   * Indicates whether the connector should start upon connecting. This is necessary to support asynchronous retry policies, otherwise the
-   * start() method would block until connection is successful.
+   * Indicates whether the connector should start upon connecting. This is necessary to support asynchronous retry policies,
+   * otherwise the start() method would block until connection is successful.
    */
   protected boolean startOnConnect = false;
   /**
    * The will cause the connector not to start when {@link #start()} is called. The only way to start the connector is to call
-   * {@link #setInitialStateStopped(boolean)} with 'false' and then calling {@link #start()}. This flag is used internally since some
-   * connectors that rely on external servers may need to wait for that server to become available before starting
+   * {@link #setInitialStateStopped(boolean)} with 'false' and then calling {@link #start()}. This flag is used internally since
+   * some connectors that rely on external servers may need to wait for that server to become available before starting
    */
   protected boolean initialStateStopped = false;
   /**
@@ -240,8 +242,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
   private volatile ThreadingProfile receiverThreadingProfile;
   private RetryPolicyTemplate retryPolicyTemplate;
   /**
-   * Optimise the handling of message notifications. If dynamic is set to false then the cached notification handler implements a shortcut
-   * for message notifications.
+   * Optimise the handling of message notifications. If dynamic is set to false then the cached notification handler implements a
+   * shortcut for message notifications.
    */
   private boolean dynamicNotification = false;
   private NotificationHelper notificationHelper;
@@ -313,6 +315,7 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
   public final synchronized void initialise() throws InitialisationException {
     try {
       lifecycleManager.fireInitialisePhase(new LifecycleCallback<Connector>() {
+
         @Override
         public void onTransition(String phaseName, Connector object) throws MuleException {
           if (retryPolicyTemplate == null) {
@@ -555,8 +558,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
    * Create a {@link MuleMessageFactory} from this connector's configuration, typically through the transport descriptor.
    * </p>
    * <p/>
-   * <b>Attention!</b> This method is not meant to be used by client code directly. It is only publicly available to service message
-   * receivers which should be used as <em>real</em> factories to create {@link MuleMessage} instances.
+   * <b>Attention!</b> This method is not meant to be used by client code directly. It is only publicly available to service
+   * message receivers which should be used as <em>real</em> factories to create {@link MuleMessage} instances.
    *
    * @see MessageReceiver#createMuleMessage(Object)
    * @see MessageReceiver#createMuleMessage(Object, String)
@@ -586,8 +589,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
                 outstanding.isEmpty() ? "No" : Integer.toString(outstanding.size())));
           } else {
             if (!outstanding.isEmpty()) {
-              logger.warn(
-                  MessageFormat.format("Pool {0} terminated; {1} work items were cancelled.", name, Integer.toString(outstanding.size())));
+              logger.warn(MessageFormat.format("Pool {0} terminated; {1} work items were cancelled.", name,
+                  Integer.toString(outstanding.size())));
             }
           }
 
@@ -630,8 +633,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
     }
     if (requesterWorkManager.get() == null) {
       final String threadPrefix = ThreadNameHelper.requester(muleContext, getName());
-      WorkManager newWorkManager =
-          this.getRequesterThreadingProfile().createWorkManager(threadPrefix, muleContext.getConfiguration().getShutdownTimeout());
+      WorkManager newWorkManager = this.getRequesterThreadingProfile().createWorkManager(threadPrefix,
+          muleContext.getConfiguration().getShutdownTimeout());
 
       if (requesterWorkManager.compareAndSet(null, newWorkManager)) {
         newWorkManager.start();
@@ -775,8 +778,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
    * The connector creates a {@link MuleMessageFactory} lazily and holds a reference to it for others to use.
    * </p>
    * <p>
-   * The typical use case is to share a single {@link MuleMessageFactory} between all {@link MessageDispatcher}, {@link MessageReceiver} and
-   * {@link MessageRequester} instances belonging to this connector.
+   * The typical use case is to share a single {@link MuleMessageFactory} between all {@link MessageDispatcher},
+   * {@link MessageReceiver} and {@link MessageRequester} instances belonging to this connector.
    * </p>
    */
   public MuleMessageFactory getMuleMessageFactory() throws CreateException {
@@ -788,8 +791,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
 
   /**
    * The will cause the connector not to start when {@link #start()} is called. The only way to start the connector is to call
-   * {@link #setInitialStateStopped(boolean)} with 'false' and then calling {@link #start()}. This flag is used internally since some
-   * connectors that rely on external servers may need to wait for that server to become available before starting.
+   * {@link #setInitialStateStopped(boolean)} with 'false' and then calling {@link #start()}. This flag is used internally since
+   * some connectors that rely on external servers may need to wait for that server to become available before starting.
    *
    * @return true if the connector is not to be started with normal lifecycle, flase otherwise
    * @since 3.0.0
@@ -800,13 +803,13 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
 
   /**
    * The will cause the connector not to start when {@link #start()} is called. The only way to start the connector is to call
-   * {@link #setInitialStateStopped(boolean)} with 'false' and then calling {@link #start()}. This flag is used internally since some
-   * connectors that rely on external servers may need to wait for that server to become available before starting. The only time this
-   * method should be used is when a subclassing connector needs to delay the start lifecycle due to a dependence on an external system.
-   * Most users can ignore this.
+   * {@link #setInitialStateStopped(boolean)} with 'false' and then calling {@link #start()}. This flag is used internally since
+   * some connectors that rely on external servers may need to wait for that server to become available before starting. The only
+   * time this method should be used is when a subclassing connector needs to delay the start lifecycle due to a dependence on an
+   * external system. Most users can ignore this.
    *
-   * @param initialStateStopped true to stop the connector starting through normal lifecycle. It will be the responsibility of the code that
-   *        sets this property to start the connector
+   * @param initialStateStopped true to stop the connector starting through normal lifecycle. It will be the responsibility of the
+   *        code that sets this property to start the connector
    * @since 3.0.0
    */
   public void setInitialStateStopped(boolean initialStateStopped) {
@@ -839,8 +842,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
   }
 
   /**
-   * Checks if the connector was initialised or not. Some connectors fields are created during connector's initialization so this check
-   * should be used before accessing them.
+   * Checks if the connector was initialised or not. Some connectors fields are created during connector's initialization so this
+   * check should be used before accessing them.
    */
   private void checkDispatchersInitialised() {
     if (dispatchers == null) {
@@ -860,8 +863,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
 
   protected MessageDispatcher borrowDispatcher(OutboundEndpoint endpoint) throws MuleException {
     if (!isStarted()) {
-      throw new LifecycleException(TransportCoreMessages.lifecycleErrorCannotUseConnector(getName(), lifecycleManager.getCurrentPhase()),
-          this);
+      throw new LifecycleException(
+          TransportCoreMessages.lifecycleErrorCannotUseConnector(getName(), lifecycleManager.getCurrentPhase()), this);
     }
 
     if (endpoint == null) {
@@ -910,7 +913,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
       } catch (Exception e) {
         // ignore - if the dispatcher is broken, it will likely get cleaned
         // up by the factory
-        logger.error("Failed to dispose dispatcher for endpoint: " + endpoint + ". This will cause a memory leak. Please report to", e);
+        logger.error(
+            "Failed to dispose dispatcher for endpoint: " + endpoint + ". This will cause a memory leak. Please report to", e);
       }
 
     }
@@ -941,8 +945,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
 
   private MessageRequester getRequester(InboundEndpoint endpoint) throws MuleException {
     if (!isStarted()) {
-      throw new LifecycleException(TransportCoreMessages.lifecycleErrorCannotUseConnector(getName(), lifecycleManager.getCurrentPhase()),
-          this);
+      throw new LifecycleException(
+          TransportCoreMessages.lifecycleErrorCannotUseConnector(getName(), lifecycleManager.getCurrentPhase()), this);
     }
 
     if (endpoint == null) {
@@ -991,7 +995,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
       } catch (Exception e) {
         // ignore - if the requester is broken, it will likely get cleaned
         // up by the factory
-        logger.error("Failed to dispose requester for endpoint: " + endpoint + ". This will cause a memory leak. Please report to", e);
+        logger.error(
+            "Failed to dispose requester for endpoint: " + endpoint + ". This will cause a memory leak. Please report to", e);
       }
     }
 
@@ -1280,14 +1285,15 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
   @Override
   public void connect() throws Exception {
     if (lifecycleManager.getState().isDisposed()) {
-      throw new LifecycleException(TransportCoreMessages.lifecycleErrorCannotUseConnector(getName(), lifecycleManager.getCurrentPhase()),
-          this);
+      throw new LifecycleException(
+          TransportCoreMessages.lifecycleErrorCannotUseConnector(getName(), lifecycleManager.getCurrentPhase()), this);
     }
     if (isConnected()) {
       return;
     }
 
     RetryCallback callback = new RetryCallback() {
+
       @Override
       public void doWork(RetryContext context) throws Exception {
         connectionLock.lock();
@@ -1368,8 +1374,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
 
 
   /**
-   * Override this method to test whether the connector is able to connect to its resource(s). This will allow a retry policy to go into
-   * effect in the case of failure.
+   * Override this method to test whether the connector is able to connect to its resource(s). This will allow a retry policy to
+   * go into effect in the case of failure.
    *
    * @return retry context with a success flag or failure details
    * @see RetryContext#isOk()
@@ -1408,7 +1414,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
       if (logger.isInfoEnabled()) {
         logger.info("Disconnected: " + this.getConnectionDescription());
       }
-      this.fireNotification(new ConnectionNotification(this, getConnectEventId(), ConnectionNotification.CONNECTION_DISCONNECTED));
+      this.fireNotification(
+          new ConnectionNotification(this, getConnectEventId(), ConnectionNotification.CONNECTION_DISCONNECTED));
     } catch (Exception e) {
       logger.error(e.getMessage());
     } finally {
@@ -1458,9 +1465,9 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
   }
 
   /**
-   * For better throughput when using TransactedMessageReceivers this will enable a number of concurrent receivers, based on the value
-   * returned by {@link #getNumberOfConcurrentTransactedReceivers()}. This property is used by transports that support transactions,
-   * specifically receivers that extend the TransactedPollingMessageReceiver.
+   * For better throughput when using TransactedMessageReceivers this will enable a number of concurrent receivers, based on the
+   * value returned by {@link #getNumberOfConcurrentTransactedReceivers()}. This property is used by transports that support
+   * transactions, specifically receivers that extend the TransactedPollingMessageReceiver.
    *
    * @return true if multiple receivers will be enabled for this connection
    */
@@ -1520,9 +1527,10 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
   }
 
   /**
-   * Registers other protocols 'understood' by this connector. These must contain scheme meta info. Any protocol registered must begin with
-   * the protocol of this connector, i.e. If the connector is axis the protocol for jms over axis will be axis:jms. Here, 'axis' is the
-   * scheme meta info and 'jms' is the protocol. If the protocol argument does not start with the connector's protocol, it will be appended.
+   * Registers other protocols 'understood' by this connector. These must contain scheme meta info. Any protocol registered must
+   * begin with the protocol of this connector, i.e. If the connector is axis the protocol for jms over axis will be axis:jms.
+   * Here, 'axis' is the scheme meta info and 'jms' is the protocol. If the protocol argument does not start with the connector's
+   * protocol, it will be appended.
    *
    * @param protocol the supported protocol to register
    */
@@ -1536,8 +1544,9 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
   }
 
   /**
-   * Used by Meta endpoint descriptors to register support for endpoint of the meta endpoint type. For example an RSS endpoint uses the Http
-   * connector. By registering 'rss' as a supported meta protocol, this connector can be used when creating RSS endpoints.
+   * Used by Meta endpoint descriptors to register support for endpoint of the meta endpoint type. For example an RSS endpoint
+   * uses the Http connector. By registering 'rss' as a supported meta protocol, this connector can be used when creating RSS
+   * endpoints.
    *
    * @param protocol the meta protocol that can be used with this connector
    * @since 3.0.0
@@ -1549,10 +1558,10 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
 
   /**
    * Registers other protocols 'understood' by this connector. These must contain scheme meta info. Unlike the
-   * {@link #registerSupportedProtocol(String)} method, this allows you to register protocols that are not prefixed with the connector
-   * protocol. This is useful where you use a Service Finder to discover which Transport implementation to use. For example the 'wsdl'
-   * transport is a generic 'finder' transport that will use Axis or CXF to create the WSDL client. These transport protocols would be
-   * wsdl-axis and wsdl-cxf, but they can all support 'wsdl' protocol too.
+   * {@link #registerSupportedProtocol(String)} method, this allows you to register protocols that are not prefixed with the
+   * connector protocol. This is useful where you use a Service Finder to discover which Transport implementation to use. For
+   * example the 'wsdl' transport is a generic 'finder' transport that will use Axis or CXF to create the WSDL client. These
+   * transport protocols would be wsdl-axis and wsdl-cxf, but they can all support 'wsdl' protocol too.
    *
    * @param protocol the supported protocol to register
    */
@@ -1622,8 +1631,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
   }
 
   /**
-   * Returns a Scheduler service for periodic tasks, currently limited to internal use. Note: getScheduler() currently conflicts with the
-   * same method in the Quartz transport
+   * Returns a Scheduler service for periodic tasks, currently limited to internal use. Note: getScheduler() currently conflicts
+   * with the same method in the Quartz transport
    */
   public ScheduledExecutorService getScheduler() {
     return scheduler;
@@ -1774,6 +1783,7 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
   protected MuleMessage setupRequestReturn(final InboundEndpoint endpoint, final MessageRequester requester, MuleMessage result) {
     if (result != null && result.getPayload() instanceof InputStream) {
       DelegatingInputStream is = new DelegatingInputStream((InputStream) result.getPayload()) {
+
         @Override
         public void close() throws IOException {
           try {
@@ -1793,13 +1803,13 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
   // -------- Methods from the removed AbstractServiceEnabled Connector
 
   /**
-   * When this connector is created via the {@link org.mule.transport.service.TransportFactory} the endpoint used to determine the connector
-   * type is passed to this method so that any properties set on the endpoint that can be used to initialise the connector are made
-   * available.
+   * When this connector is created via the {@link org.mule.transport.service.TransportFactory} the endpoint used to determine the
+   * connector type is passed to this method so that any properties set on the endpoint that can be used to initialise the
+   * connector are made available.
    *
    * @param endpointUri the {@link EndpointURI} use to create this connector
-   * @throws InitialisationException If there are any problems with the configuration set on the Endpoint or if another exception is thrown
-   *         it is wrapped in an InitialisationException.
+   * @throws InitialisationException If there are any problems with the configuration set on the Endpoint or if another exception
+   *         is thrown it is wrapped in an InitialisationException.
    */
   public void initialiseFromUrl(EndpointURI endpointUri) throws InitialisationException {
     if (!supportsProtocol(endpointUri.getFullScheme())) {
@@ -1832,16 +1842,16 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
   }
 
   /**
-   * Initialises this connector from its {@link TransportServiceDescriptor} This will be called before the {@link #doInitialise()} method is
-   * called.
+   * Initialises this connector from its {@link TransportServiceDescriptor} This will be called before the {@link #doInitialise()}
+   * method is called.
    *
-   * @throws InitialisationException InitialisationException If there are any problems with the configuration or if another exception is
-   *         thrown it is wrapped in an InitialisationException.
+   * @throws InitialisationException InitialisationException If there are any problems with the configuration or if another
+   *         exception is thrown it is wrapped in an InitialisationException.
    */
   protected synchronized void initFromServiceDescriptor() throws InitialisationException {
     try {
-      serviceDescriptor = (TransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(), LegacyServiceType.TRANSPORT,
-          getProtocol().toLowerCase(), serviceOverrides);
+      serviceDescriptor = (TransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(),
+          LegacyServiceType.TRANSPORT, getProtocol().toLowerCase(), serviceOverrides);
       if (serviceDescriptor == null) {
         throw new ServiceException(TransportCoreMessages.noServiceTransportDescriptor(getProtocol()));
       }
@@ -1875,8 +1885,9 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
   }
 
   /**
-   * Get the {@link TransportServiceDescriptor} for this connector. This will be null if the connector was created by the developer. To
-   * create a connector the proper way the developer should use the {@link TransportFactory} and pass in an endpoint.
+   * Get the {@link TransportServiceDescriptor} for this connector. This will be null if the connector was created by the
+   * developer. To create a connector the proper way the developer should use the {@link TransportFactory} and pass in an
+   * endpoint.
    *
    * @return the {@link TransportServiceDescriptor} for this connector
    */
@@ -1892,18 +1903,18 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
    *
    * @param flowConstruct the service that will receive events from this receiver, the listener
    * @param endpoint the endpoint that defies this inbound communication
-   * @return an instance of the message receiver defined in this connectors' {@link org.mule.transport.service.TransportServiceDescriptor}
-   *         initialised using the service and endpoint.
-   * @throws Exception if there is a problem creating the receiver. This exception really depends on the underlying transport, thus any
-   *         exception could be thrown
+   * @return an instance of the message receiver defined in this connectors'
+   *         {@link org.mule.transport.service.TransportServiceDescriptor} initialised using the service and endpoint.
+   * @throws Exception if there is a problem creating the receiver. This exception really depends on the underlying transport,
+   *         thus any exception could be thrown
    */
   protected MessageReceiver createReceiver(FlowConstruct flowConstruct, InboundEndpoint endpoint) throws Exception {
     return getServiceDescriptor().createMessageReceiver(this, flowConstruct, endpoint);
   }
 
   /**
-   * A map of fully qualified class names that should override those in the connectors' service descriptor This map will be null if there
-   * are no overrides
+   * A map of fully qualified class names that should override those in the connectors' service descriptor This map will be null
+   * if there are no overrides
    *
    * @return a map of override values or null
    */
@@ -1922,9 +1933,10 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
   }
 
   /**
-   * Will get the output stream for this type of transport. Typically this will be called only when Streaming is being used on an outbound
-   * endpoint. If Streaming is not supported by this transport an {@link UnsupportedOperationException} is thrown. Note that the stream MUST
-   * release resources on close. For help doing so, see {@link org.mule.model.streaming.CallbackOutputStream}.
+   * Will get the output stream for this type of transport. Typically this will be called only when Streaming is being used on an
+   * outbound endpoint. If Streaming is not supported by this transport an {@link UnsupportedOperationException} is thrown. Note
+   * that the stream MUST release resources on close. For help doing so, see
+   * {@link org.mule.model.streaming.CallbackOutputStream}.
    *
    * @param endpoint the endpoint that releates to this Dispatcher
    * @param event the current event being processed
@@ -1998,8 +2010,8 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
   }
 
   /**
-   * Whether to test a connection on each take. A result is higher availability at the expense of a potential slight performance hit (when a
-   * test connection is made) or be very lightweight in other cases (like sending a hearbeat ping to the server).
+   * Whether to test a connection on each take. A result is higher availability at the expense of a potential slight performance
+   * hit (when a test connection is made) or be very lightweight in other cases (like sending a hearbeat ping to the server).
    * <p/>
    * Disable to obtain slight performance gain or if you are absolutely sure of the server availability.
    * <p/>
@@ -2097,6 +2109,7 @@ public abstract class AbstractConnector extends AbstractAnnotatedObject implemen
   }
 
   class DispatcherMessageProcessor implements MessageProcessor, Disposable {
+
     private OutboundNotificationMessageProcessor notificationMessageProcessor;
     private OutboundEndpoint endpoint;
 

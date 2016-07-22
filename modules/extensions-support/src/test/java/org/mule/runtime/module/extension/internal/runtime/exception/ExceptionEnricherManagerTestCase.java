@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.exception;
 
@@ -79,7 +79,8 @@ public class ExceptionEnricherManagerTestCase {
 
   @Test
   public void handleConnectionException() {
-    Throwable e = new Throwable(new RuntimeException(new ExecutionException(new ConnectionException(ERROR_MESSAGE, new Exception()))));
+    Throwable e =
+        new Throwable(new RuntimeException(new ExecutionException(new ConnectionException(ERROR_MESSAGE, new Exception()))));
     Exception resultException = manager.handleException(e);
     assertThat(resultException, is(instanceOf(ConnectionException.class)));
     assertThat(resultException.getMessage(), is(ERROR_MESSAGE));
@@ -87,7 +88,8 @@ public class ExceptionEnricherManagerTestCase {
 
   @Test
   public void handleInvocationTargetExceptionCause() {
-    Throwable e = new Throwable(new RuntimeException(new UndeclaredThrowableException(new IOException(ERROR_MESSAGE, new Exception()))));
+    Throwable e =
+        new Throwable(new RuntimeException(new UndeclaredThrowableException(new IOException(ERROR_MESSAGE, new Exception()))));
     Exception resultException = manager.handleException(e);
     assertThat(resultException, is(instanceOf(IOException.class)));
     assertThat(resultException.getMessage(), is(ERROR_MESSAGE));

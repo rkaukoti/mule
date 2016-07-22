@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.protocol;
 
@@ -23,6 +23,7 @@ import static org.junit.Assert.assertNotNull;
  */
 @SmallTest
 public class XmlMessageProtocolTestCase extends AbstractMuleTestCase {
+
   private XmlMessageProtocol xmp;
 
   protected void setProtocol(XmlMessageProtocol xmp) {
@@ -76,12 +77,13 @@ public class XmlMessageProtocolTestCase extends AbstractMuleTestCase {
   @Test
   public void testMultipleMessages() throws Exception {
     String[] msgData = {"<?xml version=\"1.0\"?><data>1</data>", "<?xml version=\"1.0\"?><data>22</data>",
-        "<?xml version=\"1.0\"?><data>333</data>", "<?xml version=\"1.0\"?><data>4444</data>", "<?xml version=\"1.0\"?><data>55555</data>",
-        "<?xml version=\"1.0\"?><data>666666</data>", "<?xml version=\"1.0\"?><data>7777777</data>",
-        "<?xml version=\"1.0\"?><data>88888888</data>", "<?xml version=\"1.0\"?><data>999999999</data>",
-        "<?xml version=\"1.0\"?><data>aaaaaaaaaa</data>", "<?xml version=\"1.0\"?><data>bbbbbbbbbbb</data>",
-        "<?xml version=\"1.0\"?><data>cccccccccccc</data>", "<?xml version=\"1.0\"?><data>ddddddddddddd</data>",
-        "<?xml version=\"1.0\"?><data>eeeeeeeeeeeeee</data>", "<?xml version=\"1.0\"?><data>fffffffffffffff</data>"};
+        "<?xml version=\"1.0\"?><data>333</data>", "<?xml version=\"1.0\"?><data>4444</data>",
+        "<?xml version=\"1.0\"?><data>55555</data>", "<?xml version=\"1.0\"?><data>666666</data>",
+        "<?xml version=\"1.0\"?><data>7777777</data>", "<?xml version=\"1.0\"?><data>88888888</data>",
+        "<?xml version=\"1.0\"?><data>999999999</data>", "<?xml version=\"1.0\"?><data>aaaaaaaaaa</data>",
+        "<?xml version=\"1.0\"?><data>bbbbbbbbbbb</data>", "<?xml version=\"1.0\"?><data>cccccccccccc</data>",
+        "<?xml version=\"1.0\"?><data>ddddddddddddd</data>", "<?xml version=\"1.0\"?><data>eeeeeeeeeeeeee</data>",
+        "<?xml version=\"1.0\"?><data>fffffffffffffff</data>"};
 
     StringBuilder allMsgData = new StringBuilder();
 

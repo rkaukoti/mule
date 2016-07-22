@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.routing;
 
@@ -28,6 +28,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 public class IdempotentMessageFilterMule6079TestCase extends AbstractMuleContextEndpointTestCase {
+
   private MuleSession session;
   private Flow flow;
   private InboundEndpoint inboundEndpoint;
@@ -37,8 +38,8 @@ public class IdempotentMessageFilterMule6079TestCase extends AbstractMuleContext
   private Boolean errorHappenedInChildThreads = false;
 
   /*
-   * This test admits two execution paths, note that the implementation of objectStore can lock on the await call of the latch, to avoid
-   * this a countDown call was added to contains method, since there is a trace that locks otherwise. See implementation of
+   * This test admits two execution paths, note that the implementation of objectStore can lock on the await call of the latch, to
+   * avoid this a countDown call was added to contains method, since there is a trace that locks otherwise. See implementation of
    * IdempotentMessageFilter.isNewMessage to understand the trace.
    */
   @Test
@@ -69,6 +70,7 @@ public class IdempotentMessageFilterMule6079TestCase extends AbstractMuleContext
   }
 
   private class TestForRaceConditionRunnable implements Runnable {
+
     @Override
     public void run() {
       MuleMessage okMessage = MuleMessage.builder().payload("OK").addOutboundProperty("id", "1").build();
@@ -95,6 +97,7 @@ public class IdempotentMessageFilterMule6079TestCase extends AbstractMuleContext
   }
 
   private class RaceConditionEnforcingObjectStore implements ObjectStore<String> {
+
     protected CountDownLatch barrier;
     Map<Serializable, String> map = new TreeMap<>();
 

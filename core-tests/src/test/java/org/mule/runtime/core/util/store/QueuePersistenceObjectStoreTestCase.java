@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.store;
 
@@ -43,6 +43,7 @@ import static org.mockito.Mockito.when;
 import static org.mule.tck.SerializationTestUtils.addJavaSerializerToMockMuleContext;
 
 public class QueuePersistenceObjectStoreTestCase extends AbstractObjectStoreContractTestCase {
+
   private static final String QUEUE_NAME = "the-queue";
 
   @Rule
@@ -201,13 +202,14 @@ public class QueuePersistenceObjectStoreTestCase extends AbstractObjectStoreCont
   }
 
   private File createStoreFile(String id) {
-    String path = String.format("%1s/%2s/%3s/%4s.msg", persistenceFolder.getAbsolutePath(), QueuePersistenceObjectStore.DEFAULT_QUEUE_STORE,
-        QUEUE_NAME, id);
+    String path = String.format("%1s/%2s/%3s/%4s.msg", persistenceFolder.getAbsolutePath(),
+        QueuePersistenceObjectStore.DEFAULT_QUEUE_STORE, QUEUE_NAME, id);
     return FileUtils.newFile(path);
   }
 
 
   private static class SerializableWrapper implements Serializable {
+
     Object data;
 
     SerializableWrapper(Object data) {

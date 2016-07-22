@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.request;
 
@@ -39,6 +39,7 @@ import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
 
 public class DefaultHttpRequesterConfig extends AbstractAnnotatedObject
     implements HttpRequesterConfig, Initialisable, Stoppable, Startable, MuleContextAware {
+
   public static final String OBJECT_HTTP_CLIENT_FACTORY = "_httpClientFactory";
   private static final int UNLIMITED_CONNECTIONS = -1;
   private static final int DEFAULT_CONNECTION_IDLE_TIMEOUT = 30 * 1000;
@@ -86,10 +87,8 @@ public class DefaultHttpRequesterConfig extends AbstractAnnotatedObject
     }
 
     if (protocol.equals(HTTP) && tlsContext != null) {
-      throw new InitialisationException(
-          CoreMessages.createStaticMessage(
-              "TlsContext cannot be configured with protocol HTTP, " + "when using tls:context you must set attribute protocol=\"HTTPS\""),
-          this);
+      throw new InitialisationException(CoreMessages.createStaticMessage("TlsContext cannot be configured with protocol HTTP, "
+          + "when using tls:context you must set attribute protocol=\"HTTPS\""), this);
     }
 
     if (protocol.equals(HTTPS) && tlsContext == null) {

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.transformers;
 
@@ -23,6 +23,7 @@ import static org.mule.compatibility.transport.http.HttpConstants.FORM_URLENCODE
 import static org.mule.compatibility.transport.http.HttpConstants.METHOD_GET;
 
 public class HttpRequestBodyToParamMap extends AbstractMessageTransformer {
+
   public HttpRequestBodyToParamMap() {
     registerSourceType(DataType.OBJECT);
     setReturnDataType(DataType.OBJECT);
@@ -61,7 +62,8 @@ public class HttpRequestBodyToParamMap extends AbstractMessageTransformer {
     return paramMap;
   }
 
-  protected void addQueryStringToParameterMap(String queryString, Map<String, Object> paramMap, Charset outputEncoding) throws Exception {
+  protected void addQueryStringToParameterMap(String queryString, Map<String, Object> paramMap, Charset outputEncoding)
+      throws Exception {
     String[] pairs = queryString.split("&");
     for (String pair : pairs) {
       String[] nameValue = pair.split("=");

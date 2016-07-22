@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -21,7 +21,8 @@ import static org.mockito.Mockito.mock;
 
 public class HttpsConnectorTestCase extends AbstractConnectorTestCase {
 
-  public static HttpsConnector createConnector(MuleContext context, boolean initialised) throws IOException, InitialisationException {
+  public static HttpsConnector createConnector(MuleContext context, boolean initialised)
+      throws IOException, InitialisationException {
     HttpsConnector cnn = new HttpsConnector(muleContext);
     cnn.setName("HttpsConnector");
     cnn.setKeyStore("serverKeystore");

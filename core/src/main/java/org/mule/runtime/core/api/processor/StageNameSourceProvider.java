@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.processor;
 
@@ -20,8 +20,8 @@ public interface StageNameSourceProvider {
   public StageNameSource getAsyncStageNameSource();
 
   /**
-   * Returns a {@link org.mule.runtime.core.api.processor.StageNameSource} that takes the given paramter into consideration when generating
-   * the name
+   * Returns a {@link org.mule.runtime.core.api.processor.StageNameSource} that takes the given paramter into consideration when
+   * generating the name
    *
    * @param asyncName a name to be consider when building the final name
    * @return a {@link org.mule.runtime.core.api.processor.StageNameSource}

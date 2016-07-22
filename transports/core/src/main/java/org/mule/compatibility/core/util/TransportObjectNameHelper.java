@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.util;
 
@@ -17,6 +17,7 @@ import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.l
  */
 // @ThreadSafe
 public final class TransportObjectNameHelper extends ObjectNameHelper {
+
   public static final String SEPARATOR = ".";
   // public static final char HASH = '#';
   public static final String CONNECTOR_PREFIX = "connector";

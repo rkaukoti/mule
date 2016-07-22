@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.tck.util;
 
@@ -19,6 +19,7 @@ import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.assertThat;
 
 public class FlowTraceUtils {
+
   public static void assertStackElements(FlowCallStack flowStack, Matcher<FlowStackElement>... flowStackElementMatchers) {
     assertThat(flowStack.getElements(), hasSize(flowStackElementMatchers.length));
     int i = 0;
@@ -30,6 +31,7 @@ public class FlowTraceUtils {
 
   public static Matcher<FlowStackElement> isFlowStackElement(final String flowName, final String executingMessageProcessor) {
     return new TypeSafeMatcher<FlowStackElement>() {
+
       @Override
       protected boolean matchesSafely(FlowStackElement flowStackElement) {
         return flowStackElement.getFlowName().startsWith(flowName)

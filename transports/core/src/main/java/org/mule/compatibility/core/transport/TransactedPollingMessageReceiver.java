@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -27,10 +27,11 @@ import java.util.concurrent.CountDownLatch;
 import javax.resource.spi.work.Work;
 
 /**
- * The TransactedPollingMessageReceiver is an abstract receiver that handles polling and transaction management. Derived implementations of
- * these class must be thread safe as several threads can be started at once for an improved throughput.
+ * The TransactedPollingMessageReceiver is an abstract receiver that handles polling and transaction management. Derived
+ * implementations of these class must be thread safe as several threads can be started at once for an improved throughput.
  */
 public abstract class TransactedPollingMessageReceiver extends AbstractPollingMessageReceiver {
+
   /**
    * time to sleep when there are no messages in the queue to avoid busy waiting *
    */
@@ -55,8 +56,8 @@ public abstract class TransactedPollingMessageReceiver extends AbstractPollingMe
    * @deprecated please use {@link #TransactedPollingMessageReceiver(Connector, FlowConstruct, InboundEndpoint)} instead
    */
   @Deprecated
-  public TransactedPollingMessageReceiver(Connector connector, FlowConstruct flowConstruct, final InboundEndpoint endpoint, long frequency)
-      throws CreateException {
+  public TransactedPollingMessageReceiver(Connector connector, FlowConstruct flowConstruct, final InboundEndpoint endpoint,
+      long frequency) throws CreateException {
     this(connector, flowConstruct, endpoint);
     this.setFrequency(frequency);
   }
@@ -110,6 +111,7 @@ public abstract class TransactedPollingMessageReceiver extends AbstractPollingMe
         // Do not enable threading here, but several workers
         // may have been started
         ExecutionCallback<MuleEvent> cb = new ExecutionCallback<MuleEvent>() {
+
           @Override
           public MuleEvent process() throws Exception {
             // this is not ideal, but jdbc receiver returns a list of maps, not List<MuleMessage>
@@ -136,8 +138,8 @@ public abstract class TransactedPollingMessageReceiver extends AbstractPollingMe
           final CountDownLatch countdown = new CountDownLatch(messages.size());
           for (Object message : messages) {
             try {
-              this.getWorkManager()
-                  .scheduleWork(new MessageProcessorWorker(pt, countdown, endpoint.getMuleContext().getExceptionListener(), message));
+              this.getWorkManager().scheduleWork(
+                  new MessageProcessorWorker(pt, countdown, endpoint.getMuleContext().getExceptionListener(), message));
             } catch (Exception e) {
               countdown.countDown();
               throw e;
@@ -165,6 +167,7 @@ public abstract class TransactedPollingMessageReceiver extends AbstractPollingMe
   protected abstract MuleEvent processMessage(Object message) throws Exception;
 
   protected class MessageProcessorWorker implements Work, ExecutionCallback<MuleEvent> {
+
     private final ExecutionTemplate<MuleEvent> pt;
     private final Object message;
     private final CountDownLatch latch;

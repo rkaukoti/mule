@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.domain;
 
@@ -9,12 +9,14 @@ import org.mule.runtime.module.launcher.artifact.DeployableArtifact;
 import org.mule.runtime.module.launcher.descriptor.DomainDescriptor;
 
 /**
- * A domain is a deployable Artifact that contains shared resources for {@link org.mule.runtime.module.launcher.application.Application}
+ * A domain is a deployable Artifact that contains shared resources for
+ * {@link org.mule.runtime.module.launcher.application.Application}
  * <p/>
- * A domain can just consist of a set of jar libraries to share between the domain applications or it can also contain shared resources such
- * as connectors or other mule components.
+ * A domain can just consist of a set of jar libraries to share between the domain applications or it can also contain shared
+ * resources such as connectors or other mule components.
  */
 public interface Domain extends DeployableArtifact<DomainDescriptor> {
+
   /**
    * Domain configuration file name
    */

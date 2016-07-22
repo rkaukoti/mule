@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.tcp;
 
@@ -12,9 +12,9 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 /**
- * The TcpProtocol interface enables to plug different application level protocols on a TcpConnector. Note that this interface has lost the
- * direct byte array write method. Standard callers should (and will, since it matches the same signature, which is why the method has not
- * been deprecated) use the generic method instead..
+ * The TcpProtocol interface enables to plug different application level protocols on a TcpConnector. Note that this interface has
+ * lost the direct byte array write method. Standard callers should (and will, since it matches the same signature, which is why
+ * the method has not been deprecated) use the generic method instead..
  */
 public interface TcpProtocol {
 
@@ -37,8 +37,8 @@ public interface TcpProtocol {
   void write(OutputStream os, Object data) throws IOException;
 
   /**
-   * This lets protocols encode a response stream. If the protocol does not support a response stream (ie does not support streaming) then
-   * the stream should thrown an exception when used.
+   * This lets protocols encode a response stream. If the protocol does not support a response stream (ie does not support
+   * streaming) then the stream should thrown an exception when used.
    *
    * @param socket The destination to write to
    * @return A stream whose output will be encoded

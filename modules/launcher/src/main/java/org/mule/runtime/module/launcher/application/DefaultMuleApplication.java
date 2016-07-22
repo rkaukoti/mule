@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.application;
 
@@ -148,10 +148,11 @@ public class DefaultMuleApplication implements Application {
     }
 
     try {
-      ArtifactMuleContextBuilder artifactBuilder = new ArtifactMuleContextBuilder().setArtifactProperties(descriptor.getAppProperties())
-          .setArtifactType(APP).setArtifactInstallationDirectory(new File(MuleContainerBootstrapUtils.getMuleAppsDir(), getArtifactName()))
-          .setConfigurationFiles(descriptor.getAbsoluteResourcePaths()).setDefaultEncoding(descriptor.getEncoding())
-          .setArtifactPlugins(artifactPlugins).setExecutionClassloader(deploymentClassLoader.getClassLoader());
+      ArtifactMuleContextBuilder artifactBuilder =
+          new ArtifactMuleContextBuilder().setArtifactProperties(descriptor.getAppProperties()).setArtifactType(APP)
+              .setArtifactInstallationDirectory(new File(MuleContainerBootstrapUtils.getMuleAppsDir(), getArtifactName()))
+              .setConfigurationFiles(descriptor.getAbsoluteResourcePaths()).setDefaultEncoding(descriptor.getEncoding())
+              .setArtifactPlugins(artifactPlugins).setExecutionClassloader(deploymentClassLoader.getClassLoader());
 
       Domain domain = domainRepository.getDomain(descriptor.getDomain());
       if (domain.getMuleContext() != null) {
@@ -202,6 +203,7 @@ public class DefaultMuleApplication implements Application {
 
   protected void setMuleContext(final MuleContext muleContext) throws NotificationException {
     statusListener = new MuleContextNotificationListener<MuleContextNotification>() {
+
       @Override
       public void onNotification(MuleContextNotification notification) {
         int action = notification.getAction();

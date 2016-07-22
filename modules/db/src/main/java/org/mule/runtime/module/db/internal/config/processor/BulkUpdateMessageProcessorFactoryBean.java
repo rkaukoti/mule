@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.config.processor;
@@ -26,8 +26,8 @@ import org.springframework.beans.factory.FactoryBean;
 import java.util.List;
 
 /**
- * Creates different {@link AbstractBulkUpdateMessageProcessor} implementations depending on whether the supplied query is parameterized or
- * dynamic.
+ * Creates different {@link AbstractBulkUpdateMessageProcessor} implementations depending on whether the supplied query is
+ * parameterized or dynamic.
  */
 public class BulkUpdateMessageProcessorFactoryBean implements FactoryBean<MessageProcessor>, MuleContextAware {
 
@@ -45,8 +45,8 @@ public class BulkUpdateMessageProcessorFactoryBean implements FactoryBean<Messag
   private MuleContext muleContext;
 
   public BulkUpdateMessageProcessorFactoryBean(DbConfigResolver dbConfigResolver, QueryResolver queryResolver,
-      BulkQueryExecutorFactory bulkUpdateExecutorFactory, TransactionalAction transactionalAction, List<QueryType> validQueryTypes,
-      Query query) {
+      BulkQueryExecutorFactory bulkUpdateExecutorFactory, TransactionalAction transactionalAction,
+      List<QueryType> validQueryTypes, Query query) {
     this.dbConfigResolver = dbConfigResolver;
     this.queryResolver = queryResolver;
     this.bulkUpdateExecutorFactory = bulkUpdateExecutorFactory;
@@ -60,11 +60,12 @@ public class BulkUpdateMessageProcessorFactoryBean implements FactoryBean<Messag
     AbstractBulkUpdateMessageProcessor bulkUpdateMessageProcessor;
 
     if (query.isDynamic()) {
-      bulkUpdateMessageProcessor = new DynamicBulkUpdateMessageProcessor(dbConfigResolver, queryResolver, bulkUpdateExecutorFactory,
-          transactionalAction, validQueryTypes);
+      bulkUpdateMessageProcessor = new DynamicBulkUpdateMessageProcessor(dbConfigResolver, queryResolver,
+          bulkUpdateExecutorFactory, transactionalAction, validQueryTypes);
     } else {
-      bulkUpdateMessageProcessor = new PreparedBulkUpdateMessageProcessor(dbConfigResolver, queryResolver, bulkUpdateExecutorFactory,
-          transactionalAction, validQueryTypes, new DynamicParamValueResolver(muleContext.getExpressionManager()));
+      bulkUpdateMessageProcessor =
+          new PreparedBulkUpdateMessageProcessor(dbConfigResolver, queryResolver, bulkUpdateExecutorFactory, transactionalAction,
+              validQueryTypes, new DynamicParamValueResolver(muleContext.getExpressionManager()));
     }
 
     bulkUpdateMessageProcessor.setSource(source);

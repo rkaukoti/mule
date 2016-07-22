@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.json.transformers;
 
@@ -22,10 +22,12 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.validation.SchemaFactory;
 
 public class TransformerInputs {
+
   private static final String PREFERRED_TRANSFORMATION_FACTORY_CLASS_NAME =
       "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl";
 
-  private static final String PREFERRED_SCHEMA_FACTORY_CLASS_NAME = "com.sun.org.apache.xerces.internal.jaxp.validation.XMLSchemaFactory";
+  private static final String PREFERRED_SCHEMA_FACTORY_CLASS_NAME =
+      "com.sun.org.apache.xerces.internal.jaxp.validation.XMLSchemaFactory";
   /**
    * Turn whatever we got as the transformer's source into either an input stream or a reader
    */

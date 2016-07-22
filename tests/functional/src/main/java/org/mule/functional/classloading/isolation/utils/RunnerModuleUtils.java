@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.functional.classloading.isolation.utils;
@@ -13,6 +13,7 @@ import java.util.Properties;
  * Utility class for runnner.
  */
 public final class RunnerModuleUtils {
+
   public static final String EXCLUDED_PROPERTIES_FILE = "excluded.properties";
 
   private RunnerModuleUtils() {}
@@ -25,7 +26,8 @@ public final class RunnerModuleUtils {
    * @throws IllegalStateException if the file couldn't be found.
    */
   public static final Properties getExcludedProperties() throws IllegalStateException, IOException {
-    try (InputStream excludedPropertiesUrl = RunnerModuleUtils.class.getClassLoader().getResourceAsStream(EXCLUDED_PROPERTIES_FILE)) {
+    try (InputStream excludedPropertiesUrl =
+        RunnerModuleUtils.class.getClassLoader().getResourceAsStream(EXCLUDED_PROPERTIES_FILE)) {
       if (excludedPropertiesUrl == null) {
         throw new IllegalStateException(
             "Couldn't find file: " + EXCLUDED_PROPERTIES_FILE + " in classpath, at least one should be defined");

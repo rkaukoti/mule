@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.config;
 
@@ -22,6 +22,7 @@ import javax.xml.transform.stream.StreamResult;
  * TODO
  */
 public class XsltTextDefinitionParser extends ChildDefinitionParser {
+
   public static final String STYLESHEET = "stylesheet";
   public static final int UNDEFINED = -1;
 
@@ -53,7 +54,8 @@ public class XsltTextDefinitionParser extends ChildDefinitionParser {
         }
       }
       if (null != stylesheet) {
-        assertArgument(STYLESHEET.equals(stylesheet.getLocalName()), "XSLT transformer child element must be named " + STYLESHEET);
+        assertArgument(STYLESHEET.equals(stylesheet.getLocalName()),
+            "XSLT transformer child element must be named " + STYLESHEET);
         assembler.extendTarget("xslt", domToString(stylesheet), false);
         // block processing by Spring
         element.removeChild(stylesheet);

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.json.transformers;
 
@@ -25,17 +25,19 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class JsonSchemaXsdValidationTestCase extends AbstractMuleContextTestCase {
-  private static final String EXPECTED_JSON = "{" + "    \"cust:customer\" : {" + "        \"@xmlns:cust\" : \"http:customer.com\","
-      + "        \"cust:id\" : \"112\"," + "        \"cust:first-name\" : \"Jane\"," + "        \"cust:last-name\" : \"Doe\","
-      + "        \"cust:address\" : {" + "           \"cust:street\" : \"123 A Street\"" + "        },"
-      + "        \"cust:phone-number\" : [ {" + "            \"@type\" : \"work\"," + "            \"$\" : \"555-1111\"" + "        }, {"
-      + "            \"@type\" : \"cell\"," + "            \"$\" : \"555-2222\"" + "        } ]" + "    }" + "}";
+
+  private static final String EXPECTED_JSON =
+      "{" + "    \"cust:customer\" : {" + "        \"@xmlns:cust\" : \"http:customer.com\"," + "        \"cust:id\" : \"112\","
+          + "        \"cust:first-name\" : \"Jane\"," + "        \"cust:last-name\" : \"Doe\"," + "        \"cust:address\" : {"
+          + "           \"cust:street\" : \"123 A Street\"" + "        }," + "        \"cust:phone-number\" : [ {"
+          + "            \"@type\" : \"work\"," + "            \"$\" : \"555-1111\"" + "        }, {"
+          + "            \"@type\" : \"cell\"," + "            \"$\" : \"555-2222\"" + "        } ]" + "    }" + "}";
 
   private static final String BAD_JSON = "{\n" + "  \"cust:customer\" : {\n" + "    \"@xmlns:cust\" : \"http:customer.com\",\n"
       + "    \"cust:ID\" : \"112\",\n" + "    \"cust:first-name\" : \"Jane\",\n" + "    \"cust:last-name\" : \"Doe\",\n"
-      + "    \"cust:address\" : {\n" + "      \"cust:street\" : \"123 A Street\"\n" + "    },\n" + "    \"cust:phone-number\" : [ {\n"
-      + "      \"@type\" : \"work\",\n" + "      \"$\" : \"555-1111\"\n" + "    }, {\n" + "      \"@type\" : \"cell\",\n"
-      + "      \"$\" : \"555-2222\"\n" + "    } ]\n" + "  }\n" + "}";
+      + "    \"cust:address\" : {\n" + "      \"cust:street\" : \"123 A Street\"\n" + "    },\n"
+      + "    \"cust:phone-number\" : [ {\n" + "      \"@type\" : \"work\",\n" + "      \"$\" : \"555-1111\"\n" + "    }, {\n"
+      + "      \"@type\" : \"cell\",\n" + "      \"$\" : \"555-2222\"\n" + "    } ]\n" + "  }\n" + "}";
 
   private JsonSchemaValidationFilter filter;
   private CountingErrorHandler errorHandler;
@@ -100,6 +102,7 @@ public class JsonSchemaXsdValidationTestCase extends AbstractMuleContextTestCase
   }
 
   private static class CountingErrorHandler implements ErrorHandler {
+
     private int errorCount = 0;
 
     @Override
@@ -123,11 +126,14 @@ public class JsonSchemaXsdValidationTestCase extends AbstractMuleContextTestCase
   }
 
   private static class Resolver implements LSResourceResolver {
-    private String schema = IOUtils.toString(JsonSchemaXsdValidationTestCase.class.getClassLoader().getResourceAsStream("customer.xsd"));
+
+    private String schema =
+        IOUtils.toString(JsonSchemaXsdValidationTestCase.class.getClassLoader().getResourceAsStream("customer.xsd"));
 
     @Override
     public LSInput resolveResource(String type, String namespaceURI, String publicId, String systemId, String baseURI) {
       return new LSInput() {
+
         @Override
         public Reader getCharacterStream() {
           return new StringReader(schema);

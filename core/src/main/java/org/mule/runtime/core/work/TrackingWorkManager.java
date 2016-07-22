@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.work;
 
@@ -67,8 +67,8 @@ public class TrackingWorkManager implements WorkManager {
     }
 
     if (logger.isDebugEnabled()) {
-      logger.debug(
-          String.format("Stop waiting for works completion. There are %s works unfinished works", workTracker.pendingWorks().size()));
+      logger.debug(String.format("Stop waiting for works completion. There are %s works unfinished works",
+          workTracker.pendingWorks().size()));
     }
 
     workTracker.dispose();
@@ -166,7 +166,8 @@ public class TrackingWorkManager implements WorkManager {
   }
 
   @Override
-  public void scheduleWork(Work work, long startTimeout, ExecutionContext execContext, WorkListener workListener) throws WorkException {
+  public void scheduleWork(Work work, long startTimeout, ExecutionContext execContext, WorkListener workListener)
+      throws WorkException {
     workTracker.addWork(work);
 
     try {

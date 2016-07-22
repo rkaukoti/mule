@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.retry.async;
 
@@ -11,11 +11,12 @@ import org.mule.runtime.core.api.retry.RetryContext;
 import java.util.Map;
 
 /**
- * An implementation of {@link RetryContext} to be used when a {@link org.mule.runtime.core.api.retry.RetryPolicyTemplate} is executed in a
- * separate thread via the {@link AsynchronousRetryTemplate}. A FutureRetryContext is a proxy to a real {@link RetryContext} and provides
- * access to the real context once it becomes available.
+ * An implementation of {@link RetryContext} to be used when a {@link org.mule.runtime.core.api.retry.RetryPolicyTemplate} is
+ * executed in a separate thread via the {@link AsynchronousRetryTemplate}. A FutureRetryContext is a proxy to a real
+ * {@link RetryContext} and provides access to the real context once it becomes available.
  */
 public class FutureRetryContext implements RetryContext {
+
   private RetryContext delegate;
 
   void setDelegateContext(RetryContext context) {

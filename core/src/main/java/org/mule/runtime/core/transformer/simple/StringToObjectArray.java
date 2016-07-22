@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer.simple;
 
@@ -14,11 +14,12 @@ import java.io.InputStream;
 import java.nio.charset.Charset;
 
 /**
- * <code>StringToObjectArray</code> converts a String into an object array. This is useful in certain situations, as when a string needs to
- * be converted into an Object[] in order to be passed to a SOAP service. The input String is parsed into the array based on a configurable
- * delimiter - default is a space.
+ * <code>StringToObjectArray</code> converts a String into an object array. This is useful in certain situations, as when a string
+ * needs to be converted into an Object[] in order to be passed to a SOAP service. The input String is parsed into the array based
+ * on a configurable delimiter - default is a space.
  */
 public class StringToObjectArray extends AbstractTransformer {
+
   private static final String DEFAULT_DELIMITER = " ";
   private String delimiter = null;
 

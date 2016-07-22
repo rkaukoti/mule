@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.servlet;
 
@@ -30,6 +30,7 @@ import static org.mule.compatibility.transport.http.HttpConnector.HTTP_STATUS_PR
  * THIS CLASS IS UNSUPPORTED AND THE IMPLEMENTATION DOES NOT CONFORM TO THE SERVLET SPECIFICATION!
  */
 public class MuleHttpServletResponse implements HttpServletResponse {
+
   private static String[] DAYS = {"Sat", "Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
   private static String[] MONTHS = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan"};
 
@@ -103,7 +104,8 @@ public class MuleHttpServletResponse implements HttpServletResponse {
 
   @Override
   public void setCharacterEncoding(String charset) {
-    message = MuleMessage.builder(message).mediaType(message.getDataType().getMediaType().withCharset(Charset.forName(charset))).build();
+    message = MuleMessage.builder(message).mediaType(message.getDataType().getMediaType().withCharset(Charset.forName(charset)))
+        .build();
   }
 
   @Override

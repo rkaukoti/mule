@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.store;
 
@@ -20,10 +20,12 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * A Simple object store that stores String objects by key to a text file. This store is only suitable for storing simple key value pair
- * strings. This store is backed by an in-memory store and supports the ability to expire and apply TTL to objects in the store.
+ * A Simple object store that stores String objects by key to a text file. This store is only suitable for storing simple key
+ * value pair strings. This store is backed by an in-memory store and supports the ability to expire and apply TTL to objects in
+ * the store.
  */
 public class TextFileObjectStore extends InMemoryObjectStore<String> {
+
   protected File fileStore;
   protected String directory;
   protected String encoding;

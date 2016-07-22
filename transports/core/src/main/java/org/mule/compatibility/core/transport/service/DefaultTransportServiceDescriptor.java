@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport.service;
 
@@ -44,6 +44,7 @@ import java.util.Properties;
 ;
 
 public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor implements TransportServiceDescriptor {
+
   MuleContext muleContext;
   private String connector;
   private String dispatcherFactory;
@@ -102,7 +103,8 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
     dispatcherFactory = props.getProperty(MuleProperties.CONNECTOR_DISPATCHER_FACTORY, dispatcherFactory);
     requesterFactory = props.getProperty(MuleProperties.CONNECTOR_REQUESTER_FACTORY, requesterFactory);
     messageReceiver = props.getProperty(MuleProperties.CONNECTOR_MESSAGE_RECEIVER_CLASS, messageReceiver);
-    transactedMessageReceiver = props.getProperty(MuleProperties.CONNECTOR_TRANSACTED_MESSAGE_RECEIVER_CLASS, transactedMessageReceiver);
+    transactedMessageReceiver =
+        props.getProperty(MuleProperties.CONNECTOR_TRANSACTED_MESSAGE_RECEIVER_CLASS, transactedMessageReceiver);
     xaTransactedMessageReceiver =
         props.getProperty(MuleProperties.CONNECTOR_XA_TRANSACTED_MESSAGE_RECEIVER_CLASS, xaTransactedMessageReceiver);
     messageFactory = props.getProperty(MuleProperties.CONNECTOR_MESSAGE_FACTORY, messageFactory);
@@ -187,8 +189,8 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
   }
 
   @Override
-  public MessageReceiver createMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint, Object... args)
-      throws MuleException {
+  public MessageReceiver createMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint,
+      Object... args) throws MuleException {
     String receiverClass = messageReceiver;
 
     if (endpoint.getTransactionConfig().isTransacted()) {
@@ -236,8 +238,8 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
       try {
         return (MessageDispatcherFactory) ClassUtils.instanciateClass(dispatcherFactory, ClassUtils.NO_ARGS, classLoader);
       } catch (Exception e) {
-        throw new TransportServiceException(TransportCoreMessages.failedToCreateObjectWith("Message Dispatcher Factory", dispatcherFactory),
-            e);
+        throw new TransportServiceException(
+            TransportCoreMessages.failedToCreateObjectWith("Message Dispatcher Factory", dispatcherFactory), e);
       }
     } else {
       // Its valid not to have a Dispatcher factory on the transport
@@ -251,8 +253,8 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
       try {
         return (MessageRequesterFactory) ClassUtils.instanciateClass(requesterFactory, ClassUtils.NO_ARGS, classLoader);
       } catch (Exception e) {
-        throw new TransportServiceException(TransportCoreMessages.failedToCreateObjectWith("Message Requester Factory", requesterFactory),
-            e);
+        throw new TransportServiceException(
+            TransportCoreMessages.failedToCreateObjectWith("Message Requester Factory", requesterFactory), e);
       }
     } else {
       // Its valid not to have a Requester factory on the transport
@@ -266,7 +268,8 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
       try {
         return (TransactionFactory) ClassUtils.instanciateClass(transactionFactory, ClassUtils.NO_ARGS, classLoader);
       } catch (Exception e) {
-        throw new TransportServiceException(TransportCoreMessages.failedToCreateObjectWith("Transaction Factory", transactionFactory), e);
+        throw new TransportServiceException(
+            TransportCoreMessages.failedToCreateObjectWith("Transaction Factory", transactionFactory), e);
       }
     } else {
       return null;
@@ -352,8 +355,8 @@ public class DefaultTransportServiceDescriptor extends AbstractServiceDescriptor
 
     EndpointAwareTransformer newTransformer;
     if (innerTransformer instanceof MessageTransformer) {
-      newTransformer =
-          new DefaultEndpointAwareMessageTransformer((MessageTransformer) innerTransformer, SystemUtils.getDefaultEncoding(muleContext));
+      newTransformer = new DefaultEndpointAwareMessageTransformer((MessageTransformer) innerTransformer,
+          SystemUtils.getDefaultEncoding(muleContext));
     } else {
       newTransformer = new DefaultEndpointAwareTransformer(innerTransformer, SystemUtils.getDefaultEncoding(muleContext));
     }

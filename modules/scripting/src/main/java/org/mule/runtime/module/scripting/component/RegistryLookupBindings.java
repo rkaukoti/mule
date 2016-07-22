@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.scripting.component;
 
@@ -13,10 +13,11 @@ import java.util.Set;
 import javax.script.Bindings;
 
 /**
- * This class will attempt to lookup up objects inside the registry in case they don't exist in the delegate binding. This makes it possible
- * to reference named objects inside of Mule (such as a Spring bean) from a script with no extra work.
+ * This class will attempt to lookup up objects inside the registry in case they don't exist in the delegate binding. This makes
+ * it possible to reference named objects inside of Mule (such as a Spring bean) from a script with no extra work.
  */
 public class RegistryLookupBindings implements Bindings {
+
   private final Bindings delegate;
   private final Registry registry;
 

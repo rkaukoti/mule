@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.ws.consumer;
 
@@ -30,6 +30,7 @@ import static org.junit.Assert.assertNull;
 @SmallTest
 @RunWith(Parameterized.class)
 public class RequestBodyGeneratorTestCase extends AbstractMuleTestCase {
+
   private static final String EXPECTED_BODY_PATTERN = "<ns:%s xmlns:ns=\"http://consumer.ws.module.runtime.mule.org/\" />";
 
   private static final String SERVICE_NAME = "TestParamsService";
@@ -89,7 +90,8 @@ public class RequestBodyGeneratorTestCase extends AbstractMuleTestCase {
     assertEquals(String.format(EXPECTED_BODY_PATTERN, "noParams"), requestBody);
   }
 
-  private String generateRequestBody(String wsdlLocation, String serviceName, String portName, String operationName) throws Exception {
+  private String generateRequestBody(String wsdlLocation, String serviceName, String portName, String operationName)
+      throws Exception {
     URL url = IOUtils.getResourceAsUrl(wsdlLocation, getClass());
 
     WSDLReader wsdlReader = WSDLFactory.newInstance().newWSDLReader();

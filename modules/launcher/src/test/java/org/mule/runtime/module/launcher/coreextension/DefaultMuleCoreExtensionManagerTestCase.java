@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.coreextension;
 
@@ -33,7 +33,8 @@ import static org.mockito.Mockito.when;
 public class DefaultMuleCoreExtensionManagerTestCase extends AbstractMuleTestCase {
 
   private final MuleCoreExtensionDiscoverer coreExtensionDiscoverer = mock(MuleCoreExtensionDiscoverer.class);
-  private final MuleCoreExtensionDependencyResolver coreExtensionDependencyResolver = mock(MuleCoreExtensionDependencyResolver.class);
+  private final MuleCoreExtensionDependencyResolver coreExtensionDependencyResolver =
+      mock(MuleCoreExtensionDependencyResolver.class);
   private MuleCoreExtensionManagerServer coreExtensionManager =
       new DefaultMuleCoreExtensionManagerServer(coreExtensionDiscoverer, coreExtensionDependencyResolver);
 
@@ -49,7 +50,8 @@ public class DefaultMuleCoreExtensionManagerTestCase extends AbstractMuleTestCas
     Consumer<DeploymentService> setServiceFunction = (service) -> coreExtensionManager.setDeploymentService(service);
     BiConsumer<List<TestDeploymentServiceAwareExtension>, DeploymentService> verificationFunction =
         (extensions, service) -> verify(extensions.get(0)).setDeploymentService(service);
-    testServiceInjection(DeploymentService.class, TestDeploymentServiceAwareExtension.class, setServiceFunction, verificationFunction);
+    testServiceInjection(DeploymentService.class, TestDeploymentServiceAwareExtension.class, setServiceFunction,
+        verificationFunction);
   }
 
   @Test
@@ -57,7 +59,8 @@ public class DefaultMuleCoreExtensionManagerTestCase extends AbstractMuleTestCas
     Consumer<RepositoryService> setServiceFunction = (service) -> coreExtensionManager.setRepositoryService(service);
     BiConsumer<List<TestRepositoryServiceAwareExtension>, RepositoryService> verificationFunction =
         (extensions, service) -> verify(extensions.get(0)).setRepositoryService(service);
-    testServiceInjection(RepositoryService.class, TestRepositoryServiceAwareExtension.class, setServiceFunction, verificationFunction);
+    testServiceInjection(RepositoryService.class, TestRepositoryServiceAwareExtension.class, setServiceFunction,
+        verificationFunction);
   }
 
   @Test
@@ -66,7 +69,8 @@ public class DefaultMuleCoreExtensionManagerTestCase extends AbstractMuleTestCas
     Consumer<DeploymentService> setServiceFunction = (service) -> coreExtensionManager.setDeploymentService(service);
     BiConsumer<List<TestDeploymentListenerExtension>, DeploymentService> verificationFunction =
         (extensions, service) -> verify(service).addDeploymentListener(extensions.get(0));
-    testServiceInjection(DeploymentService.class, TestDeploymentListenerExtension.class, setServiceFunction, verificationFunction);
+    testServiceInjection(DeploymentService.class, TestDeploymentListenerExtension.class, setServiceFunction,
+        verificationFunction);
   }
 
   @Test
@@ -75,7 +79,8 @@ public class DefaultMuleCoreExtensionManagerTestCase extends AbstractMuleTestCas
     };
     BiConsumer<List<TestCoreExtensionsAwareExtension>, DeploymentService> verificationFunction =
         (extensions, service) -> verify(extensions.get(0)).setCoreExtensions(new ArrayList<>(extensions));
-    testServiceInjection(DeploymentService.class, TestCoreExtensionsAwareExtension.class, setServiceFunction, verificationFunction);
+    testServiceInjection(DeploymentService.class, TestCoreExtensionsAwareExtension.class, setServiceFunction,
+        verificationFunction);
   }
 
   @Test
@@ -180,7 +185,8 @@ public class DefaultMuleCoreExtensionManagerTestCase extends AbstractMuleTestCas
 
   private <ServiceType, CoreExtensionType extends MuleCoreExtension> void testServiceInjection(Class<ServiceType> serviceType,
       Class<CoreExtensionType> coreExtensionType, Consumer<ServiceType> setServiceFunction,
-      BiConsumer<List<CoreExtensionType>, ServiceType> verificationFunction) throws DefaultMuleException, InitialisationException {
+      BiConsumer<List<CoreExtensionType>, ServiceType> verificationFunction)
+      throws DefaultMuleException, InitialisationException {
     List<MuleCoreExtension> extensions = new LinkedList<>();
     CoreExtensionType extension = mock(coreExtensionType);
     extensions.add(extension);

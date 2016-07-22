@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor.chain;
 
@@ -19,9 +19,9 @@ import java.util.List;
 /**
  * <p>
  * Constructs a chain of {@link MessageProcessor}s and wraps the invocation of the chain in a composite MessageProcessor. Both
- * MessageProcessors and InterceptingMessageProcessor's can be chained together arbitrarily in a single chain. InterceptingMessageProcessors
- * simply intercept the next MessageProcessor in the chain. When other non-intercepting MessageProcessors are used an adapter is used
- * internally to chain the MessageProcessor with the next in the chain.
+ * MessageProcessors and InterceptingMessageProcessor's can be chained together arbitrarily in a single chain.
+ * InterceptingMessageProcessors simply intercept the next MessageProcessor in the chain. When other non-intercepting
+ * MessageProcessors are used an adapter is used internally to chain the MessageProcessor with the next in the chain.
  * </p>
  * <p>
  * The MessageProcessor instance that this builder builds can be nested in other chains as required.
@@ -38,13 +38,15 @@ public class DefaultMessageProcessorChainBuilder extends AbstractMessageProcesso
   }
 
   /**
-   * This builder supports the chaining together of message processors that intercept and also those that don't. While one can iterate over
-   * message processor intercepting message processors need to be chained together. One solution is make all message processors intercepting
-   * (via adaption) and chain them all together, this results in huge stack traces and recursive calls with adaptor. The alternative is to
-   * build the chain in such a way that we iterate when we can and chain where we need to. <br>
-   * We iterate over the list of message processor to be chained together in reverse order collecting up those that can be iterated over in
-   * a temporary list, as soon as we have an intercepting message processor we create a DefaultMessageProcessorChain using the temporary
-   * list and set it as a listener of the intercepting message processor and then we continue with the algorithm
+   * This builder supports the chaining together of message processors that intercept and also those that don't. While one can
+   * iterate over message processor intercepting message processors need to be chained together. One solution is make all message
+   * processors intercepting (via adaption) and chain them all together, this results in huge stack traces and recursive calls
+   * with adaptor. The alternative is to build the chain in such a way that we iterate when we can and chain where we need to.
+   * <br>
+   * We iterate over the list of message processor to be chained together in reverse order collecting up those that can be
+   * iterated over in a temporary list, as soon as we have an intercepting message processor we create a
+   * DefaultMessageProcessorChain using the temporary list and set it as a listener of the intercepting message processor and then
+   * we continue with the algorithm
    */
   public MessageProcessorChain build() throws MuleException {
     LinkedList<MessageProcessor> tempList = new LinkedList<MessageProcessor>();

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.util;
 
@@ -23,6 +23,7 @@ import static org.junit.Assert.assertThat;
 
 @SmallTest
 public class MuleResourceResolverTestCase extends AbstractMuleTestCase {
+
   private static final String NON_EXISTENT_RESOURCE = "non-existent-resource";
 
   private static final String EXISTENT_CLASSPATH_SUBDIRECTORY = "localresourceresolver";
@@ -50,14 +51,15 @@ public class MuleResourceResolverTestCase extends AbstractMuleTestCase {
 
   @Test
   public void testsNonExistentResource() {
-    LSInput outcome = resolver.resolveResource(IDENTIFIER_TYPE, IDENTIFIER_NAMESPACE, IDENTIFIER_PUBLIC_ID, NON_EXISTENT_RESOURCE, null);
+    LSInput outcome =
+        resolver.resolveResource(IDENTIFIER_TYPE, IDENTIFIER_NAMESPACE, IDENTIFIER_PUBLIC_ID, NON_EXISTENT_RESOURCE, null);
     assertThat(outcome, is(nullValue()));
   }
 
   @Test
   public void testsExistentClasspathResource() {
-    LSInput outcome =
-        resolver.resolveResource(IDENTIFIER_TYPE, IDENTIFIER_NAMESPACE, IDENTIFIER_PUBLIC_ID, EXISTENT_CLASSPATH_ABSOLUTE_RESOURCE, null);
+    LSInput outcome = resolver.resolveResource(IDENTIFIER_TYPE, IDENTIFIER_NAMESPACE, IDENTIFIER_PUBLIC_ID,
+        EXISTENT_CLASSPATH_ABSOLUTE_RESOURCE, null);
     assertThat(outcome, is(not(nullValue())));
     assertThat(outcome.getBaseURI(), is(nullValue()));
     assertCommon(outcome);
@@ -66,7 +68,8 @@ public class MuleResourceResolverTestCase extends AbstractMuleTestCase {
   @Test
   public void testsExistentAbsoluteFileSystemResource() throws IOException {
     File file = temporaryFolder.newFile(UUID.getUUID());
-    LSInput outcome = resolver.resolveResource(IDENTIFIER_TYPE, IDENTIFIER_NAMESPACE, IDENTIFIER_PUBLIC_ID, file.getAbsolutePath(), null);
+    LSInput outcome =
+        resolver.resolveResource(IDENTIFIER_TYPE, IDENTIFIER_NAMESPACE, IDENTIFIER_PUBLIC_ID, file.getAbsolutePath(), null);
     assertThat(outcome, is(not(nullValue())));
     assertThat(outcome.getBaseURI(), is(nullValue()));
     assertCommon(outcome);
@@ -75,15 +78,16 @@ public class MuleResourceResolverTestCase extends AbstractMuleTestCase {
   @Test
   public void testsNonExistentAbsoluteFileSystemResource() throws IOException {
     String nonExistentAbsoluteFileSystemResource = new File(temporaryFolder.getRoot(), NON_EXISTENT_RESOURCE).getAbsolutePath();
-    LSInput outcome =
-        resolver.resolveResource(IDENTIFIER_TYPE, IDENTIFIER_NAMESPACE, IDENTIFIER_PUBLIC_ID, nonExistentAbsoluteFileSystemResource, null);
+    LSInput outcome = resolver.resolveResource(IDENTIFIER_TYPE, IDENTIFIER_NAMESPACE, IDENTIFIER_PUBLIC_ID,
+        nonExistentAbsoluteFileSystemResource, null);
     assertThat(outcome, is(nullValue()));
   }
 
   @Test
   public void testsExistentFileSystemResourceWithBaseUri() throws IOException {
     File file = temporaryFolder.newFile(UUID.getUUID());
-    LSInput outcome = resolver.resolveResource(IDENTIFIER_TYPE, IDENTIFIER_NAMESPACE, IDENTIFIER_PUBLIC_ID, file.getName(), file.getPath());
+    LSInput outcome =
+        resolver.resolveResource(IDENTIFIER_TYPE, IDENTIFIER_NAMESPACE, IDENTIFIER_PUBLIC_ID, file.getName(), file.getPath());
     assertThat(outcome, is(not(nullValue())));
     assertThat(outcome.getBaseURI(), is(not(nullValue())));
     assertCommon(outcome);
@@ -92,8 +96,8 @@ public class MuleResourceResolverTestCase extends AbstractMuleTestCase {
   @Test
   public void testsNonExistentFileSystemResourceWithBaseUri() throws IOException {
     File file = temporaryFolder.newFile(UUID.getUUID());
-    LSInput outcome =
-        resolver.resolveResource(IDENTIFIER_TYPE, IDENTIFIER_NAMESPACE, IDENTIFIER_PUBLIC_ID, file.getName(), NON_EXISTENT_RESOURCE);
+    LSInput outcome = resolver.resolveResource(IDENTIFIER_TYPE, IDENTIFIER_NAMESPACE, IDENTIFIER_PUBLIC_ID, file.getName(),
+        NON_EXISTENT_RESOURCE);
     assertThat(outcome, is(nullValue()));
   }
 

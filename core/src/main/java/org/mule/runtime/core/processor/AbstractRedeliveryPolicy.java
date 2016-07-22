@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor;
 
@@ -22,10 +22,10 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.mule.runtime.core.routing.MessageProcessorFilterPair;
 
 /**
- * Implement a redelivery policy for Mule. This is similar to JMS retry policies that will redeliver a message a maximum number of times. If
- * this maximum is exceeded, the message is sent to a dead letter queue, Here, if the processing of the messages fails too often, the
- * message is sent to the failedMessageProcessor MP, whence success is force to be returned, to allow the message to be considered
- * "consumed".
+ * Implement a redelivery policy for Mule. This is similar to JMS retry policies that will redeliver a message a maximum number of
+ * times. If this maximum is exceeded, the message is sent to a dead letter queue, Here, if the processing of the messages fails
+ * too often, the message is sent to the failedMessageProcessor MP, whence success is force to be returned, to allow the message
+ * to be considered "consumed".
  */
 public abstract class AbstractRedeliveryPolicy extends AbstractInterceptingMessageProcessor
     implements MessageProcessor, Lifecycle, MuleContextAware, FlowConstructAware, MessagingExceptionHandlerAware {

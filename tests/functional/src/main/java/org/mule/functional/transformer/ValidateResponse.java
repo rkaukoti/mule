@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.transformer;
 
@@ -16,6 +16,7 @@ import java.nio.charset.Charset;
  * Throws an exception if the message does not contain "success".
  */
 public class ValidateResponse extends AbstractTransformer {
+
   @Override
   protected Object doTransform(Object src, Charset encoding) throws TransformerException {
     String response = null;

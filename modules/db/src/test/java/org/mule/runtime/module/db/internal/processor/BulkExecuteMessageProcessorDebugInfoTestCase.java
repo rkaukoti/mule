@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.processor;
@@ -45,9 +45,11 @@ import static org.mule.tck.junit4.matcher.ObjectDebugInfoMatcher.objectLike;
 public class BulkExecuteMessageProcessorDebugInfoTestCase extends AbstractMuleTestCase {
 
   public static final String DELETE_QUERY = "DELETE FROM PLANET";
-  public static final QueryTemplate QUERY_TEMPLATE1 = new QueryTemplate(DELETE_QUERY, DELETE, Collections.<QueryParam>emptyList());
+  public static final QueryTemplate QUERY_TEMPLATE1 =
+      new QueryTemplate(DELETE_QUERY, DELETE, Collections.<QueryParam>emptyList());
   public static final String INSERT_QUERY = "INSERT INTO PLANET(POSITION, NAME) VALUES (6, 'Saturn')";
-  public static final QueryTemplate QUERY_TEMPLATE2 = new QueryTemplate(INSERT_QUERY, INSERT, Collections.<QueryParam>emptyList());
+  public static final QueryTemplate QUERY_TEMPLATE2 =
+      new QueryTemplate(INSERT_QUERY, INSERT, Collections.<QueryParam>emptyList());
   public static final String QUERY1 = DbDebugInfoUtils.QUERY_DEBUG_FIELD + 1;
   public static final String QUERY2 = DbDebugInfoUtils.QUERY_DEBUG_FIELD + 2;
 

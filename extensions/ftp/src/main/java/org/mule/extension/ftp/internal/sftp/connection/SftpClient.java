@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.ftp.internal.sftp.connection;
 
@@ -117,8 +117,8 @@ public class SftpClient {
   }
 
   /**
-   * Performs a login operation for the given {@code user} using the connection options and additional credentials optionally set on this
-   * client
+   * Performs a login operation for the given {@code user} using the connection options and additional credentials optionally set
+   * on this client
    *
    * @param user the authentication user
    */

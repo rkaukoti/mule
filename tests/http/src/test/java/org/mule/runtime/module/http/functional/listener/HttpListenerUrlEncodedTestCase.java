@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.listener;
 
@@ -60,7 +60,8 @@ public class HttpListenerUrlEncodedTestCase extends AbstractHttpTestCase {
   @Test
   public void urlEncodedParamsGenerateAMapPayload() throws Exception {
     final Response response = Request.Post(getListenerUrl())
-        .bodyForm(new BasicNameValuePair(PARAM_1_NAME, PARAM_1_VALUE), new BasicNameValuePair(PARAM_2_NAME, PARAM_2_VALUE)).execute();
+        .bodyForm(new BasicNameValuePair(PARAM_1_NAME, PARAM_1_VALUE), new BasicNameValuePair(PARAM_2_NAME, PARAM_2_VALUE))
+        .execute();
     final MuleMessage receivedMessage = muleContext.getClient().request(OUT_QUEUE_URL, 1000);
     assertThat(receivedMessage.getPayload(), instanceOf(ParameterMap.class));
     ParameterMap payloadAsMap = (ParameterMap) receivedMessage.getPayload();
@@ -80,13 +81,16 @@ public class HttpListenerUrlEncodedTestCase extends AbstractHttpTestCase {
 
     assertThat(httpResponse.getStatusLine().getStatusCode(), equalTo(200));
 
-    assertThat(URLDecoder.decode(IOUtils.toString(httpResponse.getEntity().getContent()), UTF_8.name()), is("Invalid url encoded content"));
+    assertThat(URLDecoder.decode(IOUtils.toString(httpResponse.getEntity().getContent()), UTF_8.name()),
+        is("Invalid url encoded content"));
   }
 
   @Test
   public void urlEncodedMultiValueParamsHasOldValues() throws Exception {
-    final Response response = Request.Post(getListenerUrl()).bodyForm(new BasicNameValuePair(PARAM_1_NAME, PARAM_1_VALUE),
-        new BasicNameValuePair(PARAM_2_NAME, PARAM_2_VALUE_1), new BasicNameValuePair(PARAM_2_NAME, PARAM_2_VALUE_2)).execute();
+    final Response response = Request
+        .Post(getListenerUrl()).bodyForm(new BasicNameValuePair(PARAM_1_NAME, PARAM_1_VALUE),
+            new BasicNameValuePair(PARAM_2_NAME, PARAM_2_VALUE_1), new BasicNameValuePair(PARAM_2_NAME, PARAM_2_VALUE_2))
+        .execute();
     final MuleMessage receivedMessage = muleContext.getClient().request(OUT_QUEUE_URL, 1000);
     assertThat(receivedMessage.getPayload(), instanceOf(ParameterMap.class));
     ParameterMap payloadAsMap = (ParameterMap) receivedMessage.getPayload();

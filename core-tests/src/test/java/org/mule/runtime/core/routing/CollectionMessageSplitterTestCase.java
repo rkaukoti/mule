@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -37,6 +37,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class CollectionMessageSplitterTestCase extends AbstractMuleContextTestCase {
+
   private static final List<String> TEST_LIST_MULTIPLE = Arrays.asList("abc", "def", "ghi");
   private static final List<String> TEST_LIST_SINGLE = Arrays.asList("abc");
 
@@ -151,7 +152,8 @@ public class CollectionMessageSplitterTestCase extends AbstractMuleContextTestCa
       expectedSequences.add(i);
     }
 
-    MuleMessage toSplit = MuleMessage.builder().payload(payload).inboundProperties(inboundProps).outboundProperties(outboundProps).build();
+    MuleMessage toSplit =
+        MuleMessage.builder().payload(payload).inboundProperties(inboundProps).outboundProperties(outboundProps).build();
     CollectionSplitter splitter = new CollectionSplitter();
     splitter.setMuleContext(muleContext);
     Grabber grabber = new Grabber();
@@ -169,8 +171,9 @@ public class CollectionMessageSplitterTestCase extends AbstractMuleContextTestCa
     assertEquals(expectedSequences, actualSequences);
   }
 
-  private void assertSplitParts(int count, boolean counted, Map<String, Serializable> inboundProps, Map<String, Serializable> outboundProps,
-      Map<String, Object> invocationProps, List<MuleEvent> splits, Set<Object> actualSequences) {
+  private void assertSplitParts(int count, boolean counted, Map<String, Serializable> inboundProps,
+      Map<String, Serializable> outboundProps, Map<String, Object> invocationProps, List<MuleEvent> splits,
+      Set<Object> actualSequences) {
     for (MuleEvent event : splits) {
       MuleMessage msg = event.getMessage();
       assertTrue(msg.getPayload() instanceof String);
@@ -195,6 +198,7 @@ public class CollectionMessageSplitterTestCase extends AbstractMuleContextTestCa
   }
 
   private static class Grabber implements MessageProcessor {
+
     private List<MuleEvent> events = new ArrayList<>();
 
     @Override

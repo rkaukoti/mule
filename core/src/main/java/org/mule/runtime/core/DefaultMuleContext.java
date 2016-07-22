@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core;
 
@@ -95,8 +95,8 @@ import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.stopIfNeeded;
 public class DefaultMuleContext implements MuleContext {
 
   /**
-   * TODO: Remove these constants. These constants only make sense until we have a reliable solution for durable persistence in Clustering.
-   * These are not part of Mule's API and you should not use them in applications or extensions
+   * TODO: Remove these constants. These constants only make sense until we have a reliable solution for durable persistence in
+   * Clustering. These are not part of Mule's API and you should not use them in applications or extensions
    */
   public static final String LOCAL_TRANSIENT_OBJECT_STORE_KEY = "_localInMemoryObjectStore";
   public static final String LOCAL_PERSISTENT_OBJECT_STORE_KEY = "_localPersistentObjectStore";
@@ -150,7 +150,8 @@ public class DefaultMuleContext implements MuleContext {
   private PollingController pollingController = new DefaultPollingController();
   private ClusterConfiguration clusterConfiguration = new NullClusterConfiguration();
   private Map<QName, Set<Object>> configurationAnnotations = new HashMap<QName, Set<Object>>();
-  private SingleResourceTransactionFactoryManager singleResourceTransactionFactoryManager = new SingleResourceTransactionFactoryManager();
+  private SingleResourceTransactionFactoryManager singleResourceTransactionFactoryManager =
+      new SingleResourceTransactionFactoryManager();
   private LockFactory lockFactory;
   private ExpressionLanguage expressionLanguage;
   private ProcessingTimeWatcher processingTimeWatcher;
@@ -226,7 +227,8 @@ public class DefaultMuleContext implements MuleContext {
     try {
       JdkVersionUtils.validateJdk();
     } catch (RuntimeException e) {
-      throw new InitialisationException(CoreMessages.invalidJdk(SystemUtils.JAVA_VERSION, JdkVersionUtils.getSupportedJdks()), this);
+      throw new InitialisationException(CoreMessages.invalidJdk(SystemUtils.JAVA_VERSION, JdkVersionUtils.getSupportedJdks()),
+          this);
     }
 
     try {
@@ -316,7 +318,8 @@ public class DefaultMuleContext implements MuleContext {
     try {
       getLifecycleManager().fireLifecycle(Disposable.PHASE_NAME);
 
-      // THis is a little odd. I find the relationship between the MuleRegistry Helper and the registry broker, too much abstraction?
+      // THis is a little odd. I find the relationship between the MuleRegistry Helper and the registry broker, too much
+      // abstraction?
       muleRegistryHelper.dispose();
     } catch (Exception e) {
       logger.debug("Failed to cleanly dispose Mule: " + e.getMessage(), e);
@@ -438,8 +441,8 @@ public class DefaultMuleContext implements MuleContext {
   }
 
   /**
-   * Fires a server notification to all registered {@link org.mule.runtime.core.api.context.notification.CustomNotificationListener}
-   * notificationManager.
+   * Fires a server notification to all registered
+   * {@link org.mule.runtime.core.api.context.notification.CustomNotificationListener} notificationManager.
    *
    * @param notification the notification to fire. This must be of type
    *        {@link org.mule.runtime.core.context.notification.CustomNotification} otherwise an exception will be thrown.
@@ -457,11 +460,11 @@ public class DefaultMuleContext implements MuleContext {
   }
 
   /**
-   * Gets the security manager used by this Mule instance to authenticate and authorise incoming and outgoing event traffic and service
-   * invocations
+   * Gets the security manager used by this Mule instance to authenticate and authorise incoming and outgoing event traffic and
+   * service invocations
    *
-   * @return he security manager used by this Mule instance to authenticate and authorise incoming and outgoing event traffic and service
-   *         invocations
+   * @return he security manager used by this Mule instance to authenticate and authorise incoming and outgoing event traffic and
+   *         service invocations
    */
   @Override
   public SecurityManager getSecurityManager() {
@@ -479,11 +482,11 @@ public class DefaultMuleContext implements MuleContext {
   }
 
   /**
-   * Sets the security manager used by this Mule instance to authenticate and authorise incoming and outgoing event traffic and service
-   * invocations
+   * Sets the security manager used by this Mule instance to authenticate and authorise incoming and outgoing event traffic and
+   * service invocations
    *
-   * @param securityManager the security manager used by this Mule instance to authenticate and authorise incoming and outgoing event
-   *        traffic and service invocations
+   * @param securityManager the security manager used by this Mule instance to authenticate and authorise incoming and outgoing
+   *        event traffic and service invocations
    */
   @Override
   public void setSecurityManager(SecurityManager securityManager) throws RegistrationException {
@@ -492,12 +495,13 @@ public class DefaultMuleContext implements MuleContext {
   }
 
   /**
-   * Obtains a workManager instance that can be used to schedule work in a thread pool. This will be used primarially by Agents wanting to
-   * schedule work. This work Manager must <b>never</b> be used by provider implementations as they have their own workManager accible on
-   * the connector.
+   * Obtains a workManager instance that can be used to schedule work in a thread pool. This will be used primarially by Agents
+   * wanting to schedule work. This work Manager must <b>never</b> be used by provider implementations as they have their own
+   * workManager accible on the connector.
    * <p/>
    * If a workManager has not been set by the time the <code>initialise()</code> method has been called a default
-   * <code>MuleWorkManager</code> will be created using the <i>DefaultThreadingProfile</i> on the <code>MuleConfiguration</code> object.
+   * <code>MuleWorkManager</code> will be created using the <i>DefaultThreadingProfile</i> on the <code>MuleConfiguration</code>
+   * object.
    *
    * @return a workManager instance used by the current MuleManager
    * @see org.mule.runtime.core.api.config.ThreadingProfile
@@ -565,9 +569,9 @@ public class DefaultMuleContext implements MuleContext {
 
   /**
    * When running in clustered mode, it returns a {@link org.mule.runtime.core.api.store.ObjectStoreManager} that creates
-   * {@link org.mule.runtime.core.api.store.ObjectStore} instances which are only local to the current node. This is just a workaround until
-   * we introduce a solution for durable persistent stores in HA. This is not part of Mule's API and you should not use this in your apps or
-   * extensions
+   * {@link org.mule.runtime.core.api.store.ObjectStore} instances which are only local to the current node. This is just a
+   * workaround until we introduce a solution for durable persistent stores in HA. This is not part of Mule's API and you should
+   * not use this in your apps or extensions
    *
    * @return a {@link org.mule.runtime.core.api.store.ObjectStoreManager}
    * @since 3.5.0
@@ -578,9 +582,9 @@ public class DefaultMuleContext implements MuleContext {
 
   /**
    * When running in clustered mode, it returns a {@link org.mule.runtime.core.util.queue.QueueManager} that creates
-   * {@link org.mule.runtime.core.util.queue.Queue} instances which are only local to the current node. This is just a workaround until we
-   * introduce a solution for durable persistent queues in HA. This is not part of Mule's API and you should not use this in your apps or
-   * extensions
+   * {@link org.mule.runtime.core.util.queue.Queue} instances which are only local to the current node. This is just a workaround
+   * until we introduce a solution for durable persistent queues in HA. This is not part of Mule's API and you should not use this
+   * in your apps or extensions
    *
    * @return a {@link org.mule.runtime.core.util.queue.QueueManager}
    * @since 3.5.0
@@ -751,14 +755,16 @@ public class DefaultMuleContext implements MuleContext {
   }
 
   protected SplashScreen buildStartupSplash() {
-    SplashScreen startupScreen = config.isContainerMode() ? new ApplicationStartupSplashScreen() : new ServerStartupSplashScreen();
+    SplashScreen startupScreen =
+        config.isContainerMode() ? new ApplicationStartupSplashScreen() : new ServerStartupSplashScreen();
     startupScreen.setHeader(this);
     startupScreen.setFooter(this);
     return startupScreen;
   }
 
   protected SplashScreen buildShutdownSplash() {
-    SplashScreen shutdownScreen = config.isContainerMode() ? new ApplicationShutdownSplashScreen() : new ServerShutdownSplashScreen();
+    SplashScreen shutdownScreen =
+        config.isContainerMode() ? new ApplicationShutdownSplashScreen() : new ServerShutdownSplashScreen();
     shutdownScreen.setHeader(this);
     return shutdownScreen;
   }
@@ -829,8 +835,8 @@ public class DefaultMuleContext implements MuleContext {
     if (config.getDefaultExceptionStrategyName() != null) {
       defaultExceptionStrategy = getRegistry().lookupObject(config.getDefaultExceptionStrategyName());
       if (defaultExceptionStrategy == null) {
-        throw new MuleRuntimeException(CoreMessages
-            .createStaticMessage(String.format("No global exception strategy named %s", config.getDefaultExceptionStrategyName())));
+        throw new MuleRuntimeException(CoreMessages.createStaticMessage(
+            String.format("No global exception strategy named %s", config.getDefaultExceptionStrategyName())));
       }
     } else {
       defaultExceptionStrategy = new DefaultMessagingExceptionStrategy(this);

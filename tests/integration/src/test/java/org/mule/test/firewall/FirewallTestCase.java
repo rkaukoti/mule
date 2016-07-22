@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.firewall;
 
@@ -24,6 +24,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotSame;
 
 public class FirewallTestCase extends AbstractMuleTestCase {
+
   public static final String LOCALHOST = "localhost";
   public static final String LOCALADDR = "127.0.0.1";
   public static final int TEST_COUNT = 1;
@@ -65,8 +66,8 @@ public class FirewallTestCase extends AbstractMuleTestCase {
     // names always to resolve to the same address, and for addresses not to change
     // when going via a name (in other words, any aliases are consistent).
     assertEquals(name + " -> " + address + " is inconsistent", address, InetAddress.getByName(name).getHostAddress());
-    assertEquals(name + " -> " + address + " -> " + name + " -> " + address + " is inconsistent", address,
-        InetAddress.getByName(name(InetAddress.getByName(InetAddress.getByName(name).getHostAddress()), canonical)).getHostAddress());
+    assertEquals(name + " -> " + address + " -> " + name + " -> " + address + " is inconsistent", address, InetAddress
+        .getByName(name(InetAddress.getByName(InetAddress.getByName(name).getHostAddress()), canonical)).getHostAddress());
   }
 
   protected String name(InetAddress address, boolean canonical) {

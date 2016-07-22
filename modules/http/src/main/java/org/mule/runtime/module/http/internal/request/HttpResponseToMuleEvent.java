@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.request;
 
@@ -46,12 +46,13 @@ import static org.mule.runtime.module.http.internal.request.DefaultHttpRequester
 import static org.mule.runtime.module.http.internal.util.HttpToMuleMessage.getMediaType;
 
 /**
- * Maps an HTTP response into a Mule event. A new message is set in the event with the contents of the response. The body will be set as
- * payload by default (except that the target attribute is set in the requester, in that case the enricher expression provided will be used
- * to set the response). Headers are mapped as inbound properties. The status code is mapped as an inbound property
- * {@code HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY}.
+ * Maps an HTTP response into a Mule event. A new message is set in the event with the contents of the response. The body will be
+ * set as payload by default (except that the target attribute is set in the requester, in that case the enricher expression
+ * provided will be used to set the response). Headers are mapped as inbound properties. The status code is mapped as an inbound
+ * property {@code HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY}.
  */
 public class HttpResponseToMuleEvent {
+
   private static final Logger logger = LoggerFactory.getLogger(HttpResponseToMuleEvent.class);
 
   private static final String MULTI_PART_PREFIX = "multipart/";
@@ -142,7 +143,8 @@ public class HttpResponseToMuleEvent {
     return response.getHeaderValue(headerName);
   }
 
-  private Map<String, DataHandler> getInboundAttachments(InputStream responseInputStream, String responseContentType) throws IOException {
+  private Map<String, DataHandler> getInboundAttachments(InputStream responseInputStream, String responseContentType)
+      throws IOException {
     Collection<HttpPartDataSource> httpParts =
         HttpPartDataSource.createFrom(HttpParser.parseMultipartContent(responseInputStream, responseContentType));
     Map<String, DataHandler> attachments = new HashMap<>();
@@ -155,8 +157,8 @@ public class HttpResponseToMuleEvent {
   }
 
   /**
-   * Stores the response payload (body of the HTTP response) in the Mule message according to the "target" property. If empty, it will be
-   * stored in the payload. If not, it will use the target expression to enrich the message with the body of the response.
+   * Stores the response payload (body of the HTTP response) in the Mule message according to the "target" property. If empty, it
+   * will be stored in the payload. If not, it will use the target expression to enrich the message with the body of the response.
    */
   private void setResponsePayload(Object payload, MuleEvent muleEvent) {
     if (StringUtils.isEmpty(requester.getTarget()) || DEFAULT_PAYLOAD_EXPRESSION.equals(requester.getTarget())) {

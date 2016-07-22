@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.config.spring.factories;
@@ -47,12 +47,15 @@ public class WatermarkFactoryBean extends AbstractFactoryBean<Watermark> impleme
   protected Watermark createInstance() throws Exception {
     if (this.selector != null) {
       if (!StringUtils.isEmpty(this.updateExpression)) {
-        throw new IllegalArgumentException("You specified a watermark with both an update expression and a selector and/or a selector.\n"
-            + "Those cannot co-exist. You have to either specify an updateExpression or selector options");
+        throw new IllegalArgumentException(
+            "You specified a watermark with both an update expression and a selector and/or a selector.\n"
+                + "Those cannot co-exist. You have to either specify an updateExpression or selector options");
       }
-      String selectorExpression = StringUtils.isEmpty(this.selectorExpression) ? DEFAULT_SELECTOR_EXPRESSION : this.selectorExpression;
+      String selectorExpression =
+          StringUtils.isEmpty(this.selectorExpression) ? DEFAULT_SELECTOR_EXPRESSION : this.selectorExpression;
 
-      return new SelectorWatermark(this.acquireObjectStore(), this.variable, this.defaultExpression, this.selector, selectorExpression);
+      return new SelectorWatermark(this.acquireObjectStore(), this.variable, this.defaultExpression, this.selector,
+          selectorExpression);
     } else {
       return new UpdateExpressionWatermark(this.acquireObjectStore(), this.variable, this.defaultExpression, updateExpression);
     }

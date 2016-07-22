@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.shutdown;
 
@@ -47,14 +47,16 @@ public class ShutdownAppInDomainTestCase extends DomainFunctionalTestCase {
 
   @Override
   public ApplicationConfig[] getConfigResources() {
-    return new ApplicationConfig[] {new ApplicationConfig("app-with-flows", new String[] {"org/mule/shutdown/app-with-flows.xml"})};
+    return new ApplicationConfig[] {
+        new ApplicationConfig("app-with-flows", new String[] {"org/mule/shutdown/app-with-flows.xml"})};
   }
 
   @Test
   public void jms() throws MuleException {
     final MuleContext muleContextForApp = getMuleContextForApp("app-with-flows");
 
-    muleContextForApp.getClient().dispatch("jms://in?connector=sharedJmsConnector", MuleMessage.builder().payload("payload").build());
+    muleContextForApp.getClient().dispatch("jms://in?connector=sharedJmsConnector",
+        MuleMessage.builder().payload("payload").build());
     muleContextForApp.getClient().request("jms://out?connector=sharedJmsConnector", MESSAGE_TIMEOUT);
 
     muleContextForApp.dispose();
@@ -64,6 +66,7 @@ public class ShutdownAppInDomainTestCase extends DomainFunctionalTestCase {
 
   private void assertEventsUnreferenced() {
     new PollingProber(PROBER_POLIING_TIMEOUT, PROBER_POLLING_INTERVAL).check(new JUnitProbe() {
+
       @Override
       protected boolean test() throws Exception {
         System.gc();
@@ -76,6 +79,7 @@ public class ShutdownAppInDomainTestCase extends DomainFunctionalTestCase {
   }
 
   public static class RetrieveRequestContext implements MessageProcessor {
+
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException {
       requestContextRefs.add(new PhantomReference<MuleEvent>(RequestContext.getEvent(), new ReferenceQueue<MuleEvent>()));

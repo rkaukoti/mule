@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.metadata;
 
@@ -36,16 +36,16 @@ import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils
 import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.getMetadataKeyParts;
 
 /**
- * Provides an instance of the annotated {@link MetadataKeyId} parameter type. The instance will be populated with all the corresponding
- * values of the passed {@link Map} key.
+ * Provides an instance of the annotated {@link MetadataKeyId} parameter type. The instance will be populated with all the
+ * corresponding values of the passed {@link Map} key.
  *
  * @since 4.0
  */
 final class MetadataKeyIdObjectResolver {
 
   /**
-   * Given a {@link ComponentModel} and a {@link Map} key, return the populated key in the Type that the {@link Component} parameter
-   * requires.
+   * Given a {@link ComponentModel} and a {@link Map} key, return the populated key in the Type that the {@link Component}
+   * parameter requires.
    *
    * @param component the component model that contains the parameter annotated with {@link MetadataKeyId}
    * @param key the {@link MetadataKey} associated to the {@link MetadataKeyId}
@@ -64,15 +64,16 @@ final class MetadataKeyIdObjectResolver {
 
   private Object resolveMetadataKeyWhenPresent(MetadataKey key, ComponentModel componentModel) throws MetadataResolvingException {
 
-    final MetadataType metadataType =
-        componentModel.getModelProperty(MetadataKeyIdModelProperty.class).map(MetadataKeyIdModelProperty::getType).orElseThrow(
-            () -> buildException(format("Component '%s' doesn't have a MetadataKeyId parameter associated", componentModel.getName())));
+    final MetadataType metadataType = componentModel.getModelProperty(MetadataKeyIdModelProperty.class)
+        .map(MetadataKeyIdModelProperty::getType).orElseThrow(() -> buildException(
+            format("Component '%s' doesn't have a MetadataKeyId parameter associated", componentModel.getName())));
 
     final Class<?> metadataKeyType = getType(metadataType);
     final ValueHolder<Object> keyValueHolder = new ValueHolder<>();
     final ValueHolder<MetadataResolvingException> exceptionValueHolder = new ValueHolder<>();
 
     metadataType.accept(new MetadataTypeVisitor() {
+
       @Override
       protected void defaultVisit(MetadataType metadataType) {
         exceptionValueHolder.set(buildException(
@@ -122,7 +123,8 @@ final class MetadataKeyIdObjectResolver {
           metadataKeyType.getSimpleName(), componentModel.getName()), e);
     }
 
-    fieldValueMap.entrySet().forEach(entry -> new FieldSetter<Object, String>(entry.getKey()).set(metadataKeyId, entry.getValue()));
+    fieldValueMap.entrySet()
+        .forEach(entry -> new FieldSetter<Object, String>(entry.getKey()).set(metadataKeyId, entry.getValue()));
     return metadataKeyId;
   }
 
@@ -159,9 +161,9 @@ final class MetadataKeyIdObjectResolver {
   private void checkOneChildPerLevel(MetadataKey key) throws MetadataResolvingException {
     if (key.getChilds().size() > 1) {
       final List<String> keyNames = key.getChilds().stream().map(MetadataKey::getId).collect(toList());
-      throw buildException(
-          String.format("MetadataKey used for Metadata resolution must only have one child per level. Key '%s' has %s as children.",
-              key.getId(), keyNames));
+      throw buildException(String.format(
+          "MetadataKey used for Metadata resolution must only have one child per level. Key '%s' has %s as children.",
+          key.getId(), keyNames));
     }
   }
 

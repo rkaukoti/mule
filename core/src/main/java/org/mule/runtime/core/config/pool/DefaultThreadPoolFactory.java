@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.config.pool;
 
@@ -19,6 +19,7 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public class DefaultThreadPoolFactory extends ThreadPoolFactory {
+
   // deliberately shadow the superclass' static logger as to avoid log congestion on it
   protected final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -91,8 +92,8 @@ public class DefaultThreadPoolFactory extends ThreadPoolFactory {
   }
 
   protected ThreadPoolExecutor internalCreatePool(String name, ThreadingProfile tp, BlockingQueue buffer) {
-    return new ThreadPoolExecutor(Math.min(tp.getMaxThreadsIdle(), tp.getMaxThreadsActive()), tp.getMaxThreadsActive(), tp.getThreadTTL(),
-        TimeUnit.MILLISECONDS, buffer);
+    return new ThreadPoolExecutor(Math.min(tp.getMaxThreadsIdle(), tp.getMaxThreadsActive()), tp.getMaxThreadsActive(),
+        tp.getThreadTTL(), TimeUnit.MILLISECONDS, buffer);
   }
 
   protected ScheduledThreadPoolExecutor internalCreateScheduledPool(ThreadingProfile tp) {

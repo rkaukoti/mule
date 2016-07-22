@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.el.mvel.datatype;
@@ -82,7 +82,8 @@ public abstract class AbstractVarAssignmentDataTypePropagatorTestCase extends Ab
     final ParserConfiguration parserConfiguration = MVELExpressionLanguage.createParserConfiguration(Collections.EMPTY_MAP);
     final MVELExpressionLanguageContext context = createMvelExpressionLanguageContext(testEvent, parserConfiguration);
 
-    CompiledExpression compiledExpression = (CompiledExpression) compileExpression(expression, new ParserContext(parserConfiguration));
+    CompiledExpression compiledExpression =
+        (CompiledExpression) compileExpression(expression, new ParserContext(parserConfiguration));
 
     // Expression must be executed, otherwise the variable accessor is not properly configured
     MVEL.executeExpression(compiledExpression, context);
@@ -97,9 +98,12 @@ public abstract class AbstractVarAssignmentDataTypePropagatorTestCase extends Ab
     final GlobalVariableResolverFactory globalContext =
         new GlobalVariableResolverFactory(Collections.EMPTY_MAP, Collections.EMPTY_MAP, parserConfiguration, muleContext);
 
-    context.setNextFactory(new CachedMapVariableResolverFactory(Collections.EMPTY_MAP, new DelegateVariableResolverFactory(staticContext,
-        new MessageVariableResolverFactory(parserConfiguration, muleContext, testEvent, new DelegateVariableResolverFactory(globalContext,
-            new VariableVariableResolverFactory(parserConfiguration, muleContext, testEvent))))));
+    context
+        .setNextFactory(new CachedMapVariableResolverFactory(Collections.EMPTY_MAP,
+            new DelegateVariableResolverFactory(staticContext,
+                new MessageVariableResolverFactory(parserConfiguration, muleContext, testEvent,
+                    new DelegateVariableResolverFactory(globalContext,
+                        new VariableVariableResolverFactory(parserConfiguration, muleContext, testEvent))))));
     return context;
   }
 }

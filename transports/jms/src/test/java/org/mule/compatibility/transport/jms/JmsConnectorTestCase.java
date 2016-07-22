@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -43,6 +43,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class JmsConnectorTestCase extends AbstractMuleContextTestCase {
+
   private static final String CLIENT_ID1 = "client1";
   private static final String CLIENT_ID2 = "client2";
 
@@ -172,7 +173,8 @@ public class JmsConnectorTestCase extends AbstractMuleContextTestCase {
     ConnectionFactory mockConnectionFactory = mock(ConnectionFactory.class);
     JmsConnector connector = createConnectionFactoryWhenGettingConnection(mockConnectionFactory);
     assertThat(connector.getConnectionFactory(), instanceOf(CustomCachingConnectionFactory.class));
-    assertThat(((CachingConnectionFactory) connector.getConnectionFactory()).getTargetConnectionFactory(), is(mockConnectionFactory));
+    assertThat(((CachingConnectionFactory) connector.getConnectionFactory()).getTargetConnectionFactory(),
+        is(mockConnectionFactory));
   }
 
   @Test
@@ -195,6 +197,7 @@ public class JmsConnectorTestCase extends AbstractMuleContextTestCase {
      * Fetches a ClusterNodeNotificationListener added to a mock mule context
      */
     class NotificationAnswer implements Answer {
+
       ClusterNodeNotificationListener listener;
 
       @Override
@@ -212,6 +215,7 @@ public class JmsConnectorTestCase extends AbstractMuleContextTestCase {
      * Validates the classloader used in connector's connect is the app classloader
      */
     class ConnectClassLoaderCheckAnswer implements Answer {
+
       ClassLoader expectedClassLoader;
 
       public ConnectClassLoaderCheckAnswer(ClassLoader expectedClassLoader) {
@@ -227,10 +231,11 @@ public class JmsConnectorTestCase extends AbstractMuleContextTestCase {
     };
 
     /**
-     * On testing the muleContext.getExecutionClassLoader wont be different than the test thread. This is used to check the class loader is
-     * effectively changed when performing the connection
+     * On testing the muleContext.getExecutionClassLoader wont be different than the test thread. This is used to check the class
+     * loader is effectively changed when performing the connection
      */
     ClassLoader expectedClassLoader = new ClassLoader() {
+
       String thismakesme = "different";
     };
 
@@ -240,7 +245,8 @@ public class JmsConnectorTestCase extends AbstractMuleContextTestCase {
     doReturn(expectedClassLoader).when(muleContextSpy).getExecutionClassLoader();
     doAnswer(notificationAnswer).when(muleContextSpy).registerListener(any(ClusterNodeNotificationListener.class));
 
-    JmsConnector connectorSpy = spy(createConnectionFactoryWhenGettingConnection(mock(TestXAConnectionFactory.class), muleContextSpy));
+    JmsConnector connectorSpy =
+        spy(createConnectionFactoryWhenGettingConnection(mock(TestXAConnectionFactory.class), muleContextSpy));
     connectorSpy.setClientId("MyClientId");
     connectorSpy.initialise();
     connectorSpy.connect();
@@ -260,8 +266,8 @@ public class JmsConnectorTestCase extends AbstractMuleContextTestCase {
     return createConnectionFactoryWhenGettingConnection(mockConnectionFactory, muleContext);
   }
 
-  private JmsConnector createConnectionFactoryWhenGettingConnection(ConnectionFactory mockConnectionFactory, MuleContext muleContext)
-      throws JMSException, MuleException {
+  private JmsConnector createConnectionFactoryWhenGettingConnection(ConnectionFactory mockConnectionFactory,
+      MuleContext muleContext) throws JMSException, MuleException {
     final Connection connection = mock(Connection.class);
 
     JmsSupport jmsSupport = mock(Jms11Support.class);

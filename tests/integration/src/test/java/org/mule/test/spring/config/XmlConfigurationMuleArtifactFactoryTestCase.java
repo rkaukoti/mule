@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.spring.config;
 
@@ -51,7 +51,8 @@ public abstract class XmlConfigurationMuleArtifactFactoryTestCase extends Abstra
     doTestMessageProcessor(document, callback, null);
   }
 
-  protected void doTestMessageProcessor(Document document, XmlConfigurationCallback callback) throws MuleArtifactFactoryException {
+  protected void doTestMessageProcessor(Document document, XmlConfigurationCallback callback)
+      throws MuleArtifactFactoryException {
     doTestMessageProcessor(document, callback, TestResult.Status.SUCCESS);
   }
 
@@ -106,6 +107,7 @@ public abstract class XmlConfigurationMuleArtifactFactoryTestCase extends Abstra
   }
 
   protected static class MapXmlConfigurationCallback implements XmlConfigurationCallback {
+
     private Map<String, String> refNameToXml;
     private Map<String, String> namespaceUriToSchemaLocation;
 

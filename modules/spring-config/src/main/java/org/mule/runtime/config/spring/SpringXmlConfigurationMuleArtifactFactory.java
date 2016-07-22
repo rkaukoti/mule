@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring;
 
@@ -51,7 +51,8 @@ public class SpringXmlConfigurationMuleArtifactFactory implements XmlConfigurati
   private Map<MuleArtifact, MuleContext> contexts = new HashMap<MuleArtifact, MuleContext>();
 
   @Override
-  public MuleArtifact getArtifact(org.w3c.dom.Element element, XmlConfigurationCallback callback) throws MuleArtifactFactoryException {
+  public MuleArtifact getArtifact(org.w3c.dom.Element element, XmlConfigurationCallback callback)
+      throws MuleArtifactFactoryException {
     return doGetArtifact(element, callback, false);
   }
 
@@ -120,8 +121,8 @@ public class SpringXmlConfigurationMuleArtifactFactory implements XmlConfigurati
     processGlobalReferencesInChildElements(element, callback, rootElement, schemaLocations);
   }
 
-  private void processGlobalReferencesInChildElements(org.w3c.dom.Element element, XmlConfigurationCallback callback, Element rootElement,
-      Map<String, String> schemaLocations) throws ParserConfigurationException {
+  private void processGlobalReferencesInChildElements(org.w3c.dom.Element element, XmlConfigurationCallback callback,
+      Element rootElement, Map<String, String> schemaLocations) throws ParserConfigurationException {
     if (element != null && element.getChildNodes() != null) {
       // Look for references in first level of child nodes
       for (int i = 0; i < element.getChildNodes().getLength(); i++) {
@@ -157,8 +158,8 @@ public class SpringXmlConfigurationMuleArtifactFactory implements XmlConfigurati
 
   }
 
-  private void addReferencedGlobalElement(XmlConfigurationCallback callback, Element rootElement, org.w3c.dom.Element dependentElement,
-      Map<String, String> schemaLocations) throws ParserConfigurationException {
+  private void addReferencedGlobalElement(XmlConfigurationCallback callback, Element rootElement,
+      org.w3c.dom.Element dependentElement, Map<String, String> schemaLocations) throws ParserConfigurationException {
     if (dependentElement != null) {
       if (isSpringBean(dependentElement)) {
         wrapElementInSpringBeanContainer(rootElement, dependentElement);
@@ -240,7 +241,8 @@ public class SpringXmlConfigurationMuleArtifactFactory implements XmlConfigurati
     }
   }
 
-  protected void addSchemaLocation(org.w3c.dom.Element element, XmlConfigurationCallback callback, Map<String, String> schemaLocations) {
+  protected void addSchemaLocation(org.w3c.dom.Element element, XmlConfigurationCallback callback,
+      Map<String, String> schemaLocations) {
     String key = element.getNamespaceURI();
     if (key != null && !schemaLocations.containsKey(key)) {
       schemaLocations.put(element.getNamespaceURI(), callback.getSchemaLocation(element.getNamespaceURI()));

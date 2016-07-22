@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.reliability;
 
@@ -25,12 +25,14 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Verify that no inbound messages are lost when exceptions occur. The message must either make it all the way to the SEDA queue (in the
- * case of an asynchronous inbound endpoint), or be restored/rolled back at the source.
+ * Verify that no inbound messages are lost when exceptions occur. The message must either make it all the way to the SEDA queue
+ * (in the case of an asynchronous inbound endpoint), or be restored/rolled back at the source.
  *
- * In the case of the HTTP transport, there is no way to restore the source message so an exception is simply returned to the client.
+ * In the case of the HTTP transport, there is no way to restore the source message so an exception is simply returned to the
+ * client.
  */
 public class InboundMessageLossTestCase extends FunctionalTestCase {
+
   @Rule
   public DynamicPort dynamicPort = new DynamicPort("port1");
   protected HttpClient httpClient = new HttpClient();
@@ -110,6 +112,7 @@ public class InboundMessageLossTestCase extends FunctionalTestCase {
    * Custom Exception Handler that handles an exception
    */
   public static class Handler extends AbstractMessagingExceptionStrategy {
+
     @Override
     public MuleEvent handleException(Exception ex, MuleEvent event) {
       doHandleException(ex, event);
@@ -122,11 +125,13 @@ public class InboundMessageLossTestCase extends FunctionalTestCase {
    * Custom Exception Handler that creates a different exception
    */
   public static class BadHandler extends AbstractMessagingExceptionStrategy {
+
     @Override
     public MuleEvent handleException(Exception ex, MuleEvent event) {
       doHandleException(ex, event);
       MuleMessage message = MuleMessage.builder().nullPayload()
-          .exceptionPayload(new DefaultExceptionPayload(new MessagingException(event, new RuntimeException("Bad news!")))).build();
+          .exceptionPayload(new DefaultExceptionPayload(new MessagingException(event, new RuntimeException("Bad news!"))))
+          .build();
       return new DefaultMuleEvent(message, event);
     }
   }

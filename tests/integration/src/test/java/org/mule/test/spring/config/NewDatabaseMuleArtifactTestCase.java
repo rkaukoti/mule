@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.spring.config;
 
@@ -37,7 +37,8 @@ public class NewDatabaseMuleArtifactTestCase extends XmlConfigurationMuleArtifac
   }
 
   @Test
-  public void validatesDbConnectorGenericMySqlTemplateQueryRefResolution() throws SAXException, IOException, MuleArtifactFactoryException {
+  public void validatesDbConnectorGenericMySqlTemplateQueryRefResolution()
+      throws SAXException, IOException, MuleArtifactFactoryException {
     String config =
         "<db:select config-ref=\"mysql-config\" xmlns:db=\"http://www.mulesoft.org/schema/mule/db\"><db:template-query-ref name=\"template\"/></db:select>";
     Document document = XMLUnit.buildControlDocument(config);
@@ -56,7 +57,8 @@ public class NewDatabaseMuleArtifactTestCase extends XmlConfigurationMuleArtifac
   }
 
   @Test(expected = MuleArtifactFactoryException.class)
-  public void detectsDbConnectorGenericMySqlMissingTemplateQueryRef() throws SAXException, IOException, MuleArtifactFactoryException {
+  public void detectsDbConnectorGenericMySqlMissingTemplateQueryRef()
+      throws SAXException, IOException, MuleArtifactFactoryException {
     String config =
         "<db:select config-ref=\"mysql-config\" xmlns:db=\"http://www.mulesoft.org/schema/mule/db\"><db:template-query-ref name=\"template1\"/></db:select>";
     Document document = XMLUnit.buildControlDocument(config);
@@ -99,7 +101,8 @@ public class NewDatabaseMuleArtifactTestCase extends XmlConfigurationMuleArtifac
 
   @Test
   @Ignore("MULE-6926: Flaky test")
-  public void validatesDbDerbyConnectorTemplateQueryRefResolution() throws SAXException, IOException, MuleArtifactFactoryException {
+  public void validatesDbDerbyConnectorTemplateQueryRefResolution()
+      throws SAXException, IOException, MuleArtifactFactoryException {
     String config =
         "<db:select config-ref=\"derby-config\" xmlns:db=\"http://www.mulesoft.org/schema/mule/db\"><db:template-query-ref name=\"template\"/></db:select>";
     Document document = XMLUnit.buildControlDocument(config);

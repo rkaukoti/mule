@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.handlers;
 
@@ -15,14 +15,14 @@ import java.lang.reflect.Method;
  * Turns a POJO into a config element and a set of method tags which map to MessageProcessors.
  */
 public abstract class AbstractPojoNamespaceHandler extends AbstractMuleNamespaceHandler {
+
   protected static String splitCamelCase(String s) {
     if (s.contains("get")) {
       s = s.substring(3);
     }
-    return s
-        .replaceAll(String.format("%s|%s|%s", "(?<=[A-Z])(?=[A-Z][a-z][0-9])", "(?<=[^A-Z])(?=[A-Z])", "(?<=[A-Za-z0-9])(?=[^A-Za-z0-9])"),
-            "-")
-        .toLowerCase();
+    return s.replaceAll(
+        String.format("%s|%s|%s", "(?<=[A-Z])(?=[A-Z][a-z][0-9])", "(?<=[^A-Z])(?=[A-Z])", "(?<=[A-Za-z0-9])(?=[^A-Za-z0-9])"),
+        "-").toLowerCase();
   }
 
   public void registerPojo(String configElementName, Class<?> cls) {

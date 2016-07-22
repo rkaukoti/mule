@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.file.api;
 
@@ -17,16 +17,17 @@ import static java.lang.String.format;
 import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 /**
- * Builds a {@link Predicate} which verifies that a {@link FileAttributes} instance is compliant with a number of criterias. This builder is
- * stateful and not thread-safe. A new instance should be use per each desired {@link Predicate}.
+ * Builds a {@link Predicate} which verifies that a {@link FileAttributes} instance is compliant with a number of criterias. This
+ * builder is stateful and not thread-safe. A new instance should be use per each desired {@link Predicate}.
  * <p>
- * This builder can either be used programmatically or through Mule's SDK since its internal state is annotated with the {@link Parameter}
- * annotation.
+ * This builder can either be used programmatically or through Mule's SDK since its internal state is annotated with the
+ * {@link Parameter} annotation.
  * <p>
- * Criterias are evaluated using an {@code AND} operator, meaning that for the predicate to accept a file, ALL the criterias must be
- * complied with.
+ * Criterias are evaluated using an {@code AND} operator, meaning that for the predicate to accept a file, ALL the criterias must
+ * be complied with.
  * <p>
- * None of the criteria fields are mandatory. If a particular criteria is not specified, then it's simply not applied on the evaluation.
+ * None of the criteria fields are mandatory. If a particular criteria is not specified, then it's simply not applied on the
+ * evaluation.
  * <p>
  * The class is also given the &quot;matcher&quot; alias to make it DSL/XML friendly.
  *
@@ -41,7 +42,8 @@ public abstract class FilePredicateBuilder<T extends FilePredicateBuilder, Attri
   private static final String SIZE_MUST_BE_GREATER_THAN_ZERO_MESSAGE =
       "Matcher attribute '%s' must be greater than zero but '%d' was received";
   /**
-   * A matching pattern to be applied on the file name. This pattern needs to be consistent with the rules of {@link PathMatcherPredicate}
+   * A matching pattern to be applied on the file name. This pattern needs to be consistent with the rules of
+   * {@link PathMatcherPredicate}
    */
   @Parameter
   @Optional
@@ -49,7 +51,8 @@ public abstract class FilePredicateBuilder<T extends FilePredicateBuilder, Attri
   private String filenamePattern;
 
   /**
-   * A matching pattern to be applied on the file path. This pattern needs to be consistent with the rules of {@link PathMatcherPredicate}
+   * A matching pattern to be applied on the file path. This pattern needs to be consistent with the rules of
+   * {@link PathMatcherPredicate}
    */
   @Parameter
   @Optional
@@ -57,8 +60,8 @@ public abstract class FilePredicateBuilder<T extends FilePredicateBuilder, Attri
   private String pathPattern;
 
   /**
-   * If {@code true}, the predicate will only accept files which are directories. If {@code false}, the predicate will only accept files
-   * which are not directories. If not set, then the criteria doesn't apply.
+   * If {@code true}, the predicate will only accept files which are directories. If {@code false}, the predicate will only accept
+   * files which are not directories. If not set, then the criteria doesn't apply.
    */
   @Parameter
   @Optional
@@ -66,8 +69,8 @@ public abstract class FilePredicateBuilder<T extends FilePredicateBuilder, Attri
   private Boolean directory;
 
   /**
-   * If {@code true}, the predicate will only accept files which are not directories nor symbolic links. If {@code false}, the predicate
-   * will only accept files which are directories or symbolic links. If not set, then the criteria doesn't apply.
+   * If {@code true}, the predicate will only accept files which are not directories nor symbolic links. If {@code false}, the
+   * predicate will only accept files which are directories or symbolic links. If not set, then the criteria doesn't apply.
    */
   @Parameter
   @Optional
@@ -76,8 +79,8 @@ public abstract class FilePredicateBuilder<T extends FilePredicateBuilder, Attri
   private Boolean regularFile;
 
   /**
-   * If {@code true}, the predicate will only accept files which are symbolic links. If {@code false}, the predicate will only accept files
-   * which are symbolic links. If not set, then the criteria doesn't apply.
+   * If {@code true}, the predicate will only accept files which are symbolic links. If {@code false}, the predicate will only
+   * accept files which are symbolic links. If not set, then the criteria doesn't apply.
    */
   @Parameter
   @Optional

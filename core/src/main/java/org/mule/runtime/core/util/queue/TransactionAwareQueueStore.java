@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.queue;
 
@@ -14,9 +14,9 @@ import org.slf4j.LoggerFactory;
 import java.io.Serializable;
 
 /**
- * Queue implementation that executes operations: - If there is no transaction context then executes the operation directly to the queue. -
- * If there is a transaction context then executes the operation through the transaction context. - During queue dispose a
- * {@link QueueStoreCacheListener} will be notified
+ * Queue implementation that executes operations: - If there is no transaction context then executes the operation directly to the
+ * queue. - If there is a transaction context then executes the operation through the transaction context. - During queue dispose
+ * a {@link QueueStoreCacheListener} will be notified
  */
 public class TransactionAwareQueueStore implements Queue {
 
@@ -25,7 +25,8 @@ public class TransactionAwareQueueStore implements Queue {
   private final QueueStore queue;
   protected transient Logger logger = LoggerFactory.getLogger(getClass());
 
-  public TransactionAwareQueueStore(QueueStore queue, TransactionContextProvider transactionContextProvider, MuleContext muleContext) {
+  public TransactionAwareQueueStore(QueueStore queue, TransactionContextProvider transactionContextProvider,
+      MuleContext muleContext) {
     this.queue = queue;
     this.transactionContextProvider = transactionContextProvider;
     this.muleContext = muleContext;

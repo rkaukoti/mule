@@ -1,13 +1,14 @@
 /**
- * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership. The ASF licenses this file to you under the Apache License, Version
- * 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file
+ * distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to you under
+ * the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may
+ * obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions
- * and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS"
+ * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language
+ * governing permissions and limitations under the License.
  */
 
 package org.mule.runtime.core.util;
@@ -22,11 +23,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * This is the class file reader for obtaining the parameter names for declared methods in a class. The class must have debugging attributes
- * for us to obtain this information.
+ * This is the class file reader for obtaining the parameter names for declared methods in a class. The class must have debugging
+ * attributes for us to obtain this information.
  * <p/>
- * This does not work for inherited methods. To obtain parameter names for inherited methods, you must use a paramReader for the class that
- * originally declared the method.
+ * This does not work for inherited methods. To obtain parameter names for inherited methods, you must use a paramReader for the
+ * class that originally declared the method.
  * <p/>
  * don't get tricky, it's the bare minimum. Instances of this class are not threadsafe -- don't share them.
  * <p/>
@@ -93,8 +94,8 @@ public class ParamReader extends ClassReader {
   }
 
   /**
-   * Retrieve a list of function parameter names from a method Returns null if unable to read parameter names (i.e. bytecode not built with
-   * debug).
+   * Retrieve a list of function parameter names from a method Returns null if unable to read parameter names (i.e. bytecode not
+   * built with debug).
    */
   public static String[] getParameterNamesFromDebugInfo(Method method) {
     // Don't worry about it if there are no params.
@@ -141,9 +142,9 @@ public class ParamReader extends ClassReader {
   }
 
   /**
-   * return the names of the declared parameters for the given constructor. If we cannot determine the names, return null. The returned
-   * array will have one name per parameter. The length of the array will be the same as the length of the Class[] array returned by
-   * Constructor.getParameterTypes().
+   * return the names of the declared parameters for the given constructor. If we cannot determine the names, return null. The
+   * returned array will have one name per parameter. The length of the array will be the same as the length of the Class[] array
+   * returned by Constructor.getParameterTypes().
    *
    * @return String[] array of names, one per parameter, or null
    */
@@ -153,9 +154,9 @@ public class ParamReader extends ClassReader {
   }
 
   /**
-   * return the names of the declared parameters for the given method. If we cannot determine the names, return null. The returned array
-   * will have one name per parameter. The length of the array will be the same as the length of the Class[] array returned by
-   * Method.getParameterTypes().
+   * return the names of the declared parameters for the given method. If we cannot determine the names, return null. The returned
+   * array will have one name per parameter. The length of the array will be the same as the length of the Class[] array returned
+   * by Method.getParameterTypes().
    *
    * @return String[] array of names, one per parameter, or null
    */

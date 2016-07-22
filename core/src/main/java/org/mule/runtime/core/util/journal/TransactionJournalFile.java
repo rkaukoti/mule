@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.journal;
 
@@ -34,7 +34,8 @@ import java.util.Collections;
 class TransactionJournalFile<T, K extends JournalEntry<T>> {
 
   /**
-   * Defines the minimum number of entries in the log that are required to clear the log file once there are no more transactions pending.
+   * Defines the minimum number of entries in the log that are required to clear the log file once there are no more transactions
+   * pending.
    */
   private static final int MINIMUM_ENTRIES_TO_CLEAR_FILE = 10000;
   private final File journalFile;
@@ -47,8 +48,8 @@ class TransactionJournalFile<T, K extends JournalEntry<T>> {
   private int journalOperations = 0;
 
   /**
-   * @param journalFile journal file to use. Will be created if it doesn't exists. If exists then transaction entries will get loaded from
-   *        it.
+   * @param journalFile journal file to use. Will be created if it doesn't exists. If exists then transaction entries will get
+   *        loaded from it.
    * @param journalEntrySerializer serializer for {@link JournalEntry}
    * @param transactionCompletePredicate a callback to determine if a transaction is complete.
    */
@@ -138,8 +139,8 @@ class TransactionJournalFile<T, K extends JournalEntry<T>> {
   }
 
   /**
-   * @return all journal entries exactly as stored in the journal. No modifications should be done to such collections and the journal file
-   *         should not be access concurrently for other purposes while working with the collection.
+   * @return all journal entries exactly as stored in the journal. No modifications should be done to such collections and the
+   *         journal file should not be access concurrently for other purposes while working with the collection.
    */
   public synchronized Multimap<T, K> getAllLogEntries() {
     return entries;
@@ -201,8 +202,8 @@ class TransactionJournalFile<T, K extends JournalEntry<T>> {
           logger.debug("Expected exception since there are no more log entries", e);
           logEntryCreationFailed = true;
         } catch (Exception e) {
-          logger.warn(
-              "Exception reading transaction content. This is normal if the mule server was shutdown due to a failure" + e.getMessage());
+          logger.warn("Exception reading transaction content. This is normal if the mule server was shutdown due to a failure"
+              + e.getMessage());
           if (logger.isDebugEnabled()) {
             logger.debug("Error reading transaction journal file", e);
           }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.transformers;
 
@@ -57,7 +57,8 @@ public class ObjectToHttpClientMethodRequestTestCase extends AbstractMuleContext
     return message;
   }
 
-  private MuleMessage setupRequestContextForCollection(final String url, final String method, List<MuleMessage> messages) throws Exception {
+  private MuleMessage setupRequestContextForCollection(final String url, final String method, List<MuleMessage> messages)
+      throws Exception {
     HttpRequest request = new HttpRequest(new RequestLine(method, url, HTTP_1_1), null, UTF_8);
 
     endpoint = getEndpointFactory().getInboundEndpoint(url);
@@ -86,7 +87,8 @@ public class ObjectToHttpClientMethodRequestTestCase extends AbstractMuleContext
   @Test
   public void testUrlWithoutQuery() throws Exception {
     // transforming NullPayload will make sure that no body=xxx query is added
-    MuleMessage message = MuleMessage.builder(setupRequestContext("http://localhost:8080/services", METHOD_GET)).nullPayload().build();
+    MuleMessage message =
+        MuleMessage.builder(setupRequestContext("http://localhost:8080/services", METHOD_GET)).nullPayload().build();
 
     ObjectToHttpClientMethodRequest transformer = createTransformer();
     Object response = transformer.transform(message);
@@ -115,8 +117,8 @@ public class ObjectToHttpClientMethodRequestTestCase extends AbstractMuleContext
   @Test
   public void testUrlWithUnescapedQuery() throws Exception {
     // transforming NullPayload will make sure that no body=xxx query is added
-    MuleMessage message =
-        MuleMessage.builder(setupRequestContext("http://mycompany.com/test?fruits=apple%20orange", METHOD_GET)).nullPayload().build();
+    MuleMessage message = MuleMessage.builder(setupRequestContext("http://mycompany.com/test?fruits=apple%20orange", METHOD_GET))
+        .nullPayload().build();
 
     ObjectToHttpClientMethodRequest transformer = createTransformer();
     Object response = transformer.transform(message);
@@ -163,8 +165,8 @@ public class ObjectToHttpClientMethodRequestTestCase extends AbstractMuleContext
   public void testPostMethod() throws Exception {
 
     final String contentType = "text/plain";
-    MuleMessage message = MuleMessage.builder(setupRequestContext("http://localhost:8080/services", METHOD_POST)).payload("I'm a payload")
-        .mediaType(MediaType.parse(contentType)).build();
+    MuleMessage message = MuleMessage.builder(setupRequestContext("http://localhost:8080/services", METHOD_POST))
+        .payload("I'm a payload").mediaType(MediaType.parse(contentType)).build();
 
     final ObjectToHttpClientMethodRequest transformer = createTransformer();
     final Object response = transformer.transform(message);
@@ -178,8 +180,8 @@ public class ObjectToHttpClientMethodRequestTestCase extends AbstractMuleContext
 
   public void testPutMethod() throws Exception {
     final String contentType = "text/plain";
-    MuleMessage message = MuleMessage.builder(setupRequestContext("http://localhost:8080/services", METHOD_PUT)).payload("I'm a payload")
-        .addOutboundProperty(HEADER_CONTENT_TYPE, contentType).build();
+    MuleMessage message = MuleMessage.builder(setupRequestContext("http://localhost:8080/services", METHOD_PUT))
+        .payload("I'm a payload").addOutboundProperty(HEADER_CONTENT_TYPE, contentType).build();
 
     final ObjectToHttpClientMethodRequest transformer = createTransformer();
     final Object response = transformer.transform(message);
@@ -216,9 +218,9 @@ public class ObjectToHttpClientMethodRequestTestCase extends AbstractMuleContext
     final MuleMessage messageOne =
         MuleMessage.builder(setupRequestContext("http://localhost:8080/services", METHOD_POST)).payload(payload).build();
 
-    final MuleMessage message =
-        MuleMessage.builder(setupRequestContextForCollection("http://localhost:8080/services", METHOD_POST, singletonList(messageOne)))
-            .mediaType(MediaType.parse(contentType)).addOutboundProperty(HTTP_VERSION_PROPERTY, HTTP10).build();
+    final MuleMessage message = MuleMessage
+        .builder(setupRequestContextForCollection("http://localhost:8080/services", METHOD_POST, singletonList(messageOne)))
+        .mediaType(MediaType.parse(contentType)).addOutboundProperty(HTTP_VERSION_PROPERTY, HTTP10).build();
 
     final ObjectToHttpClientMethodRequest transformer = createTransformer();
     final Object response = transformer.transform(message);

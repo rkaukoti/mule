@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.reconnect;
 
@@ -62,6 +62,7 @@ public class ReconnectWorkManager implements WorkManager {
   @Override
   public void start() throws MuleException {
     executor = Executors.newSingleThreadExecutor(new ThreadFactory() {
+
       @Override
       public Thread newThread(Runnable runnable) {
         return new Thread(runnable, String.format("%s.endpoint.reconnection", ThreadNameHelper.getPrefix(muleContext)));
@@ -86,7 +87,8 @@ public class ReconnectWorkManager implements WorkManager {
   }
 
   @Override
-  public long startWork(Work work, long startTimeout, ExecutionContext execContext, WorkListener workListener) throws WorkException {
+  public long startWork(Work work, long startTimeout, ExecutionContext execContext, WorkListener workListener)
+      throws WorkException {
     throw new UnsupportedOperationException();
   }
 
@@ -96,12 +98,14 @@ public class ReconnectWorkManager implements WorkManager {
   }
 
   @Override
-  public void scheduleWork(Work work, long startTimeout, ExecutionContext execContext, WorkListener workListener) throws WorkException {
+  public void scheduleWork(Work work, long startTimeout, ExecutionContext execContext, WorkListener workListener)
+      throws WorkException {
     throw new UnsupportedOperationException();
   }
 
   @Deprecated
   public static class WorkDelegate implements Work {
+
     private Work work;
 
     public void setWork(Work work) {

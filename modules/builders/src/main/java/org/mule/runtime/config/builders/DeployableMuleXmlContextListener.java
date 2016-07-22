@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.builders;
 
@@ -18,8 +18,8 @@ import javax.servlet.ServletContextListener;
 
 /**
  * This ServletContextListener should be used instead of {@link MuleXmlBuilderContextListener} when the webapp is contributing a
- * configuration to an existing Mule instance configured and started at the server level rather than embedding a Mule instance in the webapp
- * itself.
+ * configuration to an existing Mule instance configured and started at the server level rather than embedding a Mule instance in
+ * the webapp itself.
  */
 public class DeployableMuleXmlContextListener implements ServletContextListener {
 
@@ -28,7 +28,8 @@ public class DeployableMuleXmlContextListener implements ServletContextListener 
   private WebappMuleXmlConfigurationBuilder configurationBuilder;
 
   /**
-   * This method is to be used only by application server or web container integrations that allow web applications to be hot-deployed.
+   * This method is to be used only by application server or web container integrations that allow web applications to be
+   * hot-deployed.
    *
    * @param context the single shared muleContext instance that will be used to configure mule configurations hot-deployed as web
    *        application.

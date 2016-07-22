@@ -1,29 +1,30 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 /*
  * Encodes and decodes to and from Base64 notation.
  *
- * <p> Change Log: </p> <ul> <li>current - cleaned up by Holger Hoffstaette (holger@codehaus.org) for Mule; removed System.out/err printing
- * and properly throw IOExceptions from all methods. <li>v2.1 - Cleaned up javadoc comments and unused variables and methods. Added some
- * convenience methods for reading and writing to and from files.</li> <li>v2.0.2 - Now specifies UTF-8 encoding in places where the code
- * fails on systems with other encodings (like EBCDIC).</li> <li>v2.0.1 - Fixed an error when decoding a single byte, that is, when the
- * encoded data was a single byte.</li> <li>v2.0 - I got rid of methods that used booleans to set options. Now everything is more
- * consolidated and cleaner. The code now detects when data that's being decoded is gzip-compressed and will decompress it automatically.
- * Generally things are cleaner. You'll probably have to change some method calls that you were making to support the new options format
- * (<tt>int</tt>s that you "OR" together).</li> <li>v1.5.1 - Fixed bug when decompressing and decoding to a byte[] using <tt>decode( String
- * s, boolean gzipCompressed )</tt>. Added the ability to "suspend" encoding in the Output Stream so you can turn on and off the encoding if
- * you need to embed base64 data in an otherwise "normal" stream (like an XML file).</li> <li>v1.5 - Output stream pases on flush() command
- * but doesn't do anything itself. This helps when using GZIP streams. Added the ability to GZip-compress objects before encoding them.</li>
- * <li>v1.4 - Added helper methods to read/write files.</li> <li>v1.3.6 - Fixed OutputStream.flush() so that 'position' is reset.</li>
- * <li>v1.3.5 - Added flag to turn on and off line breaks. Fixed bug in input stream where last buffer being read, if not completely full,
- * was not returned.</li> <li>v1.3.4 - Fixed when "improperly padded stream" error was thrown at the wrong time.</li> <li>v1.3.3 - Fixed I/O
- * streams which were totally messed up.</li> </ul>
+ * <p> Change Log: </p> <ul> <li>current - cleaned up by Holger Hoffstaette (holger@codehaus.org) for Mule; removed System.out/err
+ * printing and properly throw IOExceptions from all methods. <li>v2.1 - Cleaned up javadoc comments and unused variables and
+ * methods. Added some convenience methods for reading and writing to and from files.</li> <li>v2.0.2 - Now specifies UTF-8
+ * encoding in places where the code fails on systems with other encodings (like EBCDIC).</li> <li>v2.0.1 - Fixed an error when
+ * decoding a single byte, that is, when the encoded data was a single byte.</li> <li>v2.0 - I got rid of methods that used
+ * booleans to set options. Now everything is more consolidated and cleaner. The code now detects when data that's being decoded
+ * is gzip-compressed and will decompress it automatically. Generally things are cleaner. You'll probably have to change some
+ * method calls that you were making to support the new options format (<tt>int</tt>s that you "OR" together).</li> <li>v1.5.1 -
+ * Fixed bug when decompressing and decoding to a byte[] using <tt>decode( String s, boolean gzipCompressed )</tt>. Added the
+ * ability to "suspend" encoding in the Output Stream so you can turn on and off the encoding if you need to embed base64 data in
+ * an otherwise "normal" stream (like an XML file).</li> <li>v1.5 - Output stream pases on flush() command but doesn't do anything
+ * itself. This helps when using GZIP streams. Added the ability to GZip-compress objects before encoding them.</li> <li>v1.4 -
+ * Added helper methods to read/write files.</li> <li>v1.3.6 - Fixed OutputStream.flush() so that 'position' is reset.</li>
+ * <li>v1.3.5 - Added flag to turn on and off line breaks. Fixed bug in input stream where last buffer being read, if not
+ * completely full, was not returned.</li> <li>v1.3.4 - Fixed when "improperly padded stream" error was thrown at the wrong
+ * time.</li> <li>v1.3.3 - Fixed I/O streams which were totally messed up.</li> </ul>
  *
- * <p> I am placing this code in the Public Domain. Do with it as you will. This software comes with no guarantees or warranties but with
- * plenty of well-wishing instead! Please visit <a href="http://iharder.net/base64">http://iharder.net/base64</a> periodically to check for
- * updates or to contribute improvements. </p>
+ * <p> I am placing this code in the Public Domain. Do with it as you will. This software comes with no guarantees or warranties
+ * but with plenty of well-wishing instead! Please visit <a href="http://iharder.net/base64">http://iharder.net/base64</a>
+ * periodically to check for updates or to contribute improvements. </p>
  *
  * @author Robert Harder
  * 
@@ -110,13 +111,13 @@ public final class Base64 {
 
   private static final byte[] NATIVE_ALPHABET =
       /* May be something funny like EBCDIC */
-      {(byte) 'A', (byte) 'B', (byte) 'C', (byte) 'D', (byte) 'E', (byte) 'F', (byte) 'G', (byte) 'H', (byte) 'I', (byte) 'J', (byte) 'K',
-          (byte) 'L', (byte) 'M', (byte) 'N', (byte) 'O', (byte) 'P', (byte) 'Q', (byte) 'R', (byte) 'S', (byte) 'T', (byte) 'U',
-          (byte) 'V', (byte) 'W', (byte) 'X', (byte) 'Y', (byte) 'Z', (byte) 'a', (byte) 'b', (byte) 'c', (byte) 'd', (byte) 'e',
-          (byte) 'f', (byte) 'g', (byte) 'h', (byte) 'i', (byte) 'j', (byte) 'k', (byte) 'l', (byte) 'm', (byte) 'n', (byte) 'o',
-          (byte) 'p', (byte) 'q', (byte) 'r', (byte) 's', (byte) 't', (byte) 'u', (byte) 'v', (byte) 'w', (byte) 'x', (byte) 'y',
-          (byte) 'z', (byte) '0', (byte) '1', (byte) '2', (byte) '3', (byte) '4', (byte) '5', (byte) '6', (byte) '7', (byte) '8',
-          (byte) '9', (byte) '+', (byte) '/'};
+      {(byte) 'A', (byte) 'B', (byte) 'C', (byte) 'D', (byte) 'E', (byte) 'F', (byte) 'G', (byte) 'H', (byte) 'I', (byte) 'J',
+          (byte) 'K', (byte) 'L', (byte) 'M', (byte) 'N', (byte) 'O', (byte) 'P', (byte) 'Q', (byte) 'R', (byte) 'S', (byte) 'T',
+          (byte) 'U', (byte) 'V', (byte) 'W', (byte) 'X', (byte) 'Y', (byte) 'Z', (byte) 'a', (byte) 'b', (byte) 'c', (byte) 'd',
+          (byte) 'e', (byte) 'f', (byte) 'g', (byte) 'h', (byte) 'i', (byte) 'j', (byte) 'k', (byte) 'l', (byte) 'm', (byte) 'n',
+          (byte) 'o', (byte) 'p', (byte) 'q', (byte) 'r', (byte) 's', (byte) 't', (byte) 'u', (byte) 'v', (byte) 'w', (byte) 'x',
+          (byte) 'y', (byte) 'z', (byte) '0', (byte) '1', (byte) '2', (byte) '3', (byte) '4', (byte) '5', (byte) '6', (byte) '7',
+          (byte) '8', (byte) '9', (byte) '+', (byte) '/'};
   /**
    * Translates a Base64 value to either its 6-bit reconstruction value or a negative number indicating some other meaning.
    */
@@ -146,11 +147,11 @@ public final class Base64 {
       // 'z'
       -9, -9, -9, -9 // Decimal 123 - 126
       /*
-       * ,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 127 - 139 -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 140 - 152
-       * -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 153 - 165 -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 166 - 178
-       * -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 179 - 191 -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 192 - 204
-       * -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 205 - 217 -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 218 - 230
-       * -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 231 - 243 -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9 // Decimal 244 - 255
+       * ,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 127 - 139 -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 140 -
+       * 152 -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 153 - 165 -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 166 -
+       * 178 -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 179 - 191 -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 192 -
+       * 204 -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 205 - 217 -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 218 -
+       * 230 -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9, // Decimal 231 - 243 -9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9,-9 // Decimal 244 - 255
        */
   };
   // I think I end up not using the BAD_ENCODING indicator.
@@ -184,9 +185,9 @@ public final class Base64 {
   /* ******** E N C O D I N G M E T H O D S ******** */
 
   /**
-   * Encodes up to the first three bytes of array <var>threeBytes</var> and returns a four-byte array in Base64 notation. The actual number
-   * of significant bytes in your array is given by <var>numSigBytes</var>. The array <var>threeBytes</var> needs only be as big as
-   * <var>numSigBytes</var>. Code can reuse a byte array by passing a four-byte array as <var>b4</var>.
+   * Encodes up to the first three bytes of array <var>threeBytes</var> and returns a four-byte array in Base64 notation. The
+   * actual number of significant bytes in your array is given by <var>numSigBytes</var>. The array <var>threeBytes</var> needs
+   * only be as big as <var>numSigBytes</var>. Code can reuse a byte array by passing a four-byte array as <var>b4</var>.
    *
    * @param b4 A reusable byte array to reduce array instantiation
    * @param threeBytes the array to convert
@@ -200,11 +201,11 @@ public final class Base64 {
   } // end encode3to4
 
   /**
-   * Encodes up to three bytes of the array <var>source</var> and writes the resulting four Base64 bytes to <var>destination</var>. The
-   * source and destination arrays can be manipulated anywhere along their length by specifying <var>srcOffset</var> and
-   * <var>destOffset</var>. This method does not check to make sure your arrays are large enough to accomodate <var>srcOffset</var> + 3 for
-   * the <var>source</var> array or <var>destOffset</var> + 4 for the <var>destination</var> array. The actual number of significant bytes
-   * in your array is given by <var>numSigBytes</var>.
+   * Encodes up to three bytes of the array <var>source</var> and writes the resulting four Base64 bytes to
+   * <var>destination</var>. The source and destination arrays can be manipulated anywhere along their length by specifying
+   * <var>srcOffset</var> and <var>destOffset</var>. This method does not check to make sure your arrays are large enough to
+   * accomodate <var>srcOffset</var> + 3 for the <var>source</var> array or <var>destOffset</var> + 4 for the
+   * <var>destination</var> array. The actual number of significant bytes in your array is given by <var>numSigBytes</var>.
    *
    * @param source the array to convert
    * @param srcOffset the index where conversion begins
@@ -227,8 +228,9 @@ public final class Base64 {
     // We have to shift left 24 in order to flush out the 1's that appear
     // when Java treats a value as negative that is cast from a byte to an
     // int.
-    int inBuff = (numSigBytes > 0 ? ((source[srcOffset] << 24) >>> 8) : 0) | (numSigBytes > 1 ? ((source[srcOffset + 1] << 24) >>> 16) : 0)
-        | (numSigBytes > 2 ? ((source[srcOffset + 2] << 24) >>> 24) : 0);
+    int inBuff =
+        (numSigBytes > 0 ? ((source[srcOffset] << 24) >>> 8) : 0) | (numSigBytes > 1 ? ((source[srcOffset + 1] << 24) >>> 16) : 0)
+            | (numSigBytes > 2 ? ((source[srcOffset + 2] << 24) >>> 24) : 0);
 
     switch (numSigBytes) {
       case 3:
@@ -258,8 +260,8 @@ public final class Base64 {
   } // end encode3to4
 
   /**
-   * Serializes an object and returns the Base64-encoded version of that serialized object. If the object cannot be serialized or there is
-   * another error, the method will return <tt>null</tt>. The object is not GZip-compressed before being encoded.
+   * Serializes an object and returns the Base64-encoded version of that serialized object. If the object cannot be serialized or
+   * there is another error, the method will return <tt>null</tt>. The object is not GZip-compressed before being encoded.
    *
    * @param serializableObject The object to encode
    * @return The Base64-encoded object
@@ -270,8 +272,8 @@ public final class Base64 {
   } // end encodeObject
 
   /**
-   * Serializes an object and returns the Base64-encoded version of that serialized object. If the object cannot be serialized or there is
-   * another error, the method will return <tt>null</tt>.
+   * Serializes an object and returns the Base64-encoded version of that serialized object. If the object cannot be serialized or
+   * there is another error, the method will return <tt>null</tt>.
    * <p>
    * Valid options:
    *
@@ -505,11 +507,11 @@ public final class Base64 {
   /* ******** D E C O D I N G M E T H O D S ******** */
 
   /**
-   * Decodes four bytes from array <var>source</var> and writes the resulting bytes (up to three of them) to <var>destination</var>. The
-   * source and destination arrays can be manipulated anywhere along their length by specifying <var>srcOffset</var> and
-   * <var>destOffset</var>. This method does not check to make sure your arrays are large enough to accomodate <var>srcOffset</var> + 4 for
-   * the <var>source</var> array or <var>destOffset</var> + 3 for the <var>destination</var> array. This method returns the actual number of
-   * bytes that were converted from the Base64 encoding.
+   * Decodes four bytes from array <var>source</var> and writes the resulting bytes (up to three of them) to
+   * <var>destination</var>. The source and destination arrays can be manipulated anywhere along their length by specifying
+   * <var>srcOffset</var> and <var>destOffset</var>. This method does not check to make sure your arrays are large enough to
+   * accomodate <var>srcOffset</var> + 4 for the <var>source</var> array or <var>destOffset</var> + 3 for the
+   * <var>destination</var> array. This method returns the actual number of bytes that were converted from the Base64 encoding.
    *
    * @param source the array to convert
    * @param srcOffset the index where conversion begins
@@ -577,8 +579,8 @@ public final class Base64 {
   } // end decodeToBytes
 
   /**
-   * Very low-level access to decoding ASCII characters in the form of a byte array. Does not support automatically gunzipping or any other
-   * "fancy" features.
+   * Very low-level access to decoding ASCII characters in the form of a byte array. Does not support automatically gunzipping or
+   * any other "fancy" features.
    *
    * @param source The Base64 encoded data
    * @param off The offset of where to begin decoding
@@ -636,8 +638,8 @@ public final class Base64 {
   } // end decode
 
   /**
-   * Similar to {@link #decode(String)} only that it will not check the decoded value for GZip compression and thus will not decompress
-   * anything
+   * Similar to {@link #decode(String)} only that it will not check the decoded value for GZip compression and thus will not
+   * decompress anything
    *
    * @param encodedValue a Base64 encoded value
    * @return a byte array
@@ -877,13 +879,14 @@ public final class Base64 {
   /* ******** I N N E R C L A S S I N P U T S T R E A M ******** */
 
   /**
-   * A {@link Base64.InputStream} will read data from another <tt>InputStream</tt>, given in the constructor, and encode/decode to/from
-   * Base64 notation on the fly.
+   * A {@link Base64.InputStream} will read data from another <tt>InputStream</tt>, given in the constructor, and encode/decode
+   * to/from Base64 notation on the fly.
    *
    * @see Base64
    * @since 1.3
    */
   public static class InputStream extends FilterInputStream {
+
     private boolean encode; // Encoding or decoding
     private int position; // Current position in the buffer
     private byte[] buffer; // Small buffer holding converted data
@@ -1044,8 +1047,8 @@ public final class Base64 {
     } // end read
 
     /**
-     * Calls {@link #read()} repeatedly until the end of stream is reached or <var>len</var> bytes are read. Returns number of bytes read
-     * into array or -1 if end of stream is encountered.
+     * Calls {@link #read()} repeatedly until the end of stream is reached or <var>len</var> bytes are read. Returns number of
+     * bytes read into array or -1 if end of stream is encountered.
      *
      * @param dest array to hold values
      * @param off offset for array
@@ -1078,13 +1081,14 @@ public final class Base64 {
   /* ******** I N N E R C L A S S O U T P U T S T R E A M ******** */
 
   /**
-   * A {@link Base64.OutputStream} will write data to another <tt>OutputStream</tt>, given in the constructor, and encode/decode to/from
-   * Base64 notation on the fly.
+   * A {@link Base64.OutputStream} will write data to another <tt>OutputStream</tt>, given in the constructor, and encode/decode
+   * to/from Base64 notation on the fly.
    *
    * @see Base64
    * @since 1.3
    */
   public static class OutputStream extends FilterOutputStream {
+
     private boolean encode;
     private int position;
     private byte[] buffer;
@@ -1139,8 +1143,8 @@ public final class Base64 {
     } // end constructor
 
     /**
-     * Writes the byte to the output stream after converting to/from Base64 notation. When encoding, bytes are buffered three at a time
-     * before the output stream actually gets a write() call. When decoding, bytes are buffered four at a time.
+     * Writes the byte to the output stream after converting to/from Base64 notation. When encoding, bytes are buffered three at a
+     * time before the output stream actually gets a write() call. When decoding, bytes are buffered four at a time.
      *
      * @param theByte the byte to write
      * @since 1.3

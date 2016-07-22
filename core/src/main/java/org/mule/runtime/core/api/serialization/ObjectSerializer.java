@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.serialization;
 
@@ -11,15 +11,16 @@ import java.io.OutputStream;
 import java.io.Serializable;
 
 /**
- * Defines a component capable to serialize/deserialize objects into/from an array of {@link byte}s. Unlike usual serializing components,
- * this one doesn't enforce the serialized object to implement {@link Serializable}. However, some implementations might require that
- * condition and throw {@link IllegalArgumentException} if not met.
+ * Defines a component capable to serialize/deserialize objects into/from an array of {@link byte}s. Unlike usual serializing
+ * components, this one doesn't enforce the serialized object to implement {@link Serializable}. However, some implementations
+ * might require that condition and throw {@link IllegalArgumentException} if not met.
  * <p/>
- * Implementations are also responsible for the correct initialization of classes implementing the {@link DeserializationPostInitialisable}
- * interface.
+ * Implementations are also responsible for the correct initialization of classes implementing the
+ * {@link DeserializationPostInitialisable} interface.
  * <p/>
  * <p/>
- * Unexpected behavior can result of deserializing objects that were generated with a different implementation of {@link ObjectSerializer}.
+ * Unexpected behavior can result of deserializing objects that were generated with a different implementation of
+ * {@link ObjectSerializer}.
  * <p/>
  * Implementations are required to be thread-safe
  *
@@ -47,10 +48,11 @@ public interface ObjectSerializer {
   void serialize(Object object, OutputStream out) throws SerializationException;
 
   /**
-   * Deserializes the given bytes. Unexpected behavior can result of deserializing a byte[] that was generated with another implementation.
+   * Deserializes the given bytes. Unexpected behavior can result of deserializing a byte[] that was generated with another
+   * implementation.
    * <p/>
-   * If the obtained object implements {@link DeserializationPostInitialisable} then this serializer will be responsible for properly
-   * initializing the object before returning it.
+   * If the obtained object implements {@link DeserializationPostInitialisable} then this serializer will be responsible for
+   * properly initializing the object before returning it.
    * <p/>
    * Implementation will choose the {@link java.lang.ClassLoader} to use for deserialization.
    *
@@ -64,8 +66,8 @@ public interface ObjectSerializer {
   /**
    * Deserializes the given bytes.
    * <p/>
-   * If the obtained object implements {@link DeserializationPostInitialisable} then this serializer will be responsible for properly
-   * initializing the object before returning it.
+   * If the obtained object implements {@link DeserializationPostInitialisable} then this serializer will be responsible for
+   * properly initializing the object before returning it.
    *
    * @param bytes an array of byte that an original object was serialized into
    * @param classLoader the {@link java.lang.ClassLoader} to deserialize with
@@ -82,8 +84,8 @@ public interface ObjectSerializer {
    * <p/>
    * Even if deserialization fails, this method will close the {@code inputStream}
    * <p/>
-   * If the obtained object implements {@link DeserializationPostInitialisable} then this serializer will be responsible for properly
-   * initializing the object before returning it.
+   * If the obtained object implements {@link DeserializationPostInitialisable} then this serializer will be responsible for
+   * properly initializing the object before returning it.
    *
    * @param inputStream a stream of bytes that an original object was serialized into
    * @return the deserialized object
@@ -97,8 +99,8 @@ public interface ObjectSerializer {
    * <p/>
    * Even if deserialization fails, this method will close the {@code inputStream}
    * <p/>
-   * If the obtained object implements {@link DeserializationPostInitialisable} then this serializer will be responsible for properly
-   * initializing the object before returning it.
+   * If the obtained object implements {@link DeserializationPostInitialisable} then this serializer will be responsible for
+   * properly initializing the object before returning it.
    *
    * @param inputStream a stream of bytes that an original object was serialized into
    * @param classLoader the {@link java.lang.ClassLoader} to deserialize with

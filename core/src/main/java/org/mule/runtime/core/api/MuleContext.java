@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api;
 
@@ -50,6 +50,7 @@ import javax.transaction.TransactionManager;
 import javax.xml.namespace.QName;
 
 public interface MuleContext extends Lifecycle {
+
   /**
    * Returns the Jta transaction manager used by this Mule server instance. or null if a transaction manager has not been set
    *
@@ -94,9 +95,9 @@ public interface MuleContext extends Lifecycle {
   boolean isDisposing();
 
   /**
-   * Registers an intenal server event listener. The listener will be notified when a particular event happens within the server. Typically
-   * this is not an event in the same sense as an MuleEvent (although there is nothing stopping the implementation of this class triggering
-   * listeners when a MuleEvent is received).
+   * Registers an intenal server event listener. The listener will be notified when a particular event happens within the server.
+   * Typically this is not an event in the same sense as an MuleEvent (although there is nothing stopping the implementation of
+   * this class triggering listeners when a MuleEvent is received).
    * <p/>
    * The types of notifications fired is entirely defined by the implementation of this class
    *
@@ -105,21 +106,21 @@ public interface MuleContext extends Lifecycle {
   void registerListener(ServerNotificationListener l) throws NotificationException;
 
   /**
-   * Registers an intenal server event listener. The listener will be notified when a particular event happens within the server. Typically
-   * this is not an event in the same sense as an MuleEvent (although there is nothing stopping the implementation of this class triggering
-   * listeners when a MuleEvent is received).
+   * Registers an intenal server event listener. The listener will be notified when a particular event happens within the server.
+   * Typically this is not an event in the same sense as an MuleEvent (although there is nothing stopping the implementation of
+   * this class triggering listeners when a MuleEvent is received).
    * <p/>
    * The types of notifications fired is entirely defined by the implementation of this class
    *
    * @param l the listener to register
-   * @param resourceIdentifier a particular resource name for the given type of listener For example, the resourceName could be the name of
-   *        a service if the listener was a ServiceNotificationListener
+   * @param resourceIdentifier a particular resource name for the given type of listener For example, the resourceName could be
+   *        the name of a service if the listener was a ServiceNotificationListener
    */
   void registerListener(ServerNotificationListener l, String resourceIdentifier) throws NotificationException;
 
   /**
-   * Unregisters a previously registered listener. If the listener has not already been registered, this method should return without
-   * exception
+   * Unregisters a previously registered listener. If the listener has not already been registered, this method should return
+   * without exception
    *
    * @param l the listener to unregister
    */
@@ -133,27 +134,27 @@ public interface MuleContext extends Lifecycle {
   void fireNotification(ServerNotification notification);
 
   /**
-   * Gets the security manager used by this Mule instance to authenticate and authorise incoming and outgoing event traffic and service
-   * invocations
+   * Gets the security manager used by this Mule instance to authenticate and authorise incoming and outgoing event traffic and
+   * service invocations
    *
-   * @return he security manager used by this Mule instance to authenticate and authorise incoming and outgoing event traffic and service
-   *         invocations
+   * @return he security manager used by this Mule instance to authenticate and authorise incoming and outgoing event traffic and
+   *         service invocations
    */
   SecurityManager getSecurityManager();
 
   /**
-   * Sets the security manager used by this Mule instance to authenticate and authorise incoming and outgoing event traffic and service
-   * invocations
+   * Sets the security manager used by this Mule instance to authenticate and authorise incoming and outgoing event traffic and
+   * service invocations
    *
-   * @param securityManager the security manager used by this Mule instance to authenticate and authorise incoming and outgoing event
-   *        traffic and service invocations
+   * @param securityManager the security manager used by this Mule instance to authenticate and authorise incoming and outgoing
+   *        event traffic and service invocations
    */
   void setSecurityManager(SecurityManager securityManager) throws InitialisationException, RegistrationException;
 
   /**
-   * Obtains a workManager instance that can be used to schedule work in a thread pool. This will be used primarially by Agents wanting to
-   * schedule work. This work Manager must <b>never</b> be used by provider implementations as they have their own workManager accible on
-   * the connector.
+   * Obtains a workManager instance that can be used to schedule work in a thread pool. This will be used primarially by Agents
+   * wanting to schedule work. This work Manager must <b>never</b> be used by provider implementations as they have their own
+   * workManager accible on the connector.
    *
    * @return a workManager instance used by the current MuleManager
    */
@@ -267,7 +268,8 @@ public interface MuleContext extends Lifecycle {
   void handleException(Exception e);
 
   /**
-   * @return the ID of the cluster the current instance belongs to. Returns the empty string if this instance isn't part of a cluster.
+   * @return the ID of the cluster the current instance belongs to. Returns the empty string if this instance isn't part of a
+   *         cluster.
    */
   String getClusterId();
 
@@ -298,13 +300,14 @@ public interface MuleContext extends Lifecycle {
   MessagingExceptionHandler getDefaultExceptionStrategy();
 
   /**
-   * @return single resource transaction factory manager. Used to retrieve a transaction factory for each transactional resource (i.e jdbc
-   *         DataSource, jms Connection)
+   * @return single resource transaction factory manager. Used to retrieve a transaction factory for each transactional resource
+   *         (i.e jdbc DataSource, jms Connection)
    */
   SingleResourceTransactionFactoryManager getTransactionFactoryManager();
 
   /**
-   * @return a non null {@link org.mule.runtime.core.DataTypeConversionResolver} instance to resolve implicit data type conversions
+   * @return a non null {@link org.mule.runtime.core.DataTypeConversionResolver} instance to resolve implicit data type
+   *         conversions
    */
   DataTypeConversionResolver getDataTypeConverterResolver();
 
@@ -355,8 +358,8 @@ public interface MuleContext extends Lifecycle {
 
   /**
    * Gets application wide instance of {@link TransformationService} used for applying
-   * {@link org.mule.runtime.core.api.transformer.Transformer}'s to a {@link MuleMessage} and for obtaining different representations of the
-   * message payload.
+   * {@link org.mule.runtime.core.api.transformer.Transformer}'s to a {@link MuleMessage} and for obtaining different
+   * representations of the message payload.
    *
    * @return transformation service
    */

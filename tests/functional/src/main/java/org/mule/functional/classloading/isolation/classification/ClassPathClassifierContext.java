@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.functional.classloading.isolation.classification;
@@ -28,11 +28,13 @@ import static org.mule.functional.classloading.isolation.utils.RunnerModuleUtils
 import static org.mule.functional.util.AnnotationUtils.getAnnotationAttributeFromHierarchy;
 
 /**
- * Represents a context that contains what is needed in order to do a classpath classification. It is used in {@link ClassPathClassifier}.
+ * Represents a context that contains what is needed in order to do a classpath classification. It is used in
+ * {@link ClassPathClassifier}.
  *
  * @since 4.0
  */
 public class ClassPathClassifierContext {
+
   public static final int GROUP_ID_ARTIFACT_ID_TYPE_PATTERN_CHUNKS = 3;
   public static final String EXCLUDED_MODULES = "excluded.modules";
   protected final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -53,8 +55,9 @@ public class ClassPathClassifierContext {
    * @throws IOException if an error happened while reading
    *         {@link org.mule.functional.classloading.isolation.utils.RunnerModuleUtils#EXCLUDED_PROPERTIES_FILE} file
    */
-  public ClassPathClassifierContext(final Class<?> testClass, final List<URL> classPathURLs, final DependenciesGraph dependenciesGraph,
-      final MavenMultiModuleArtifactMapping mavenMultiModuleArtifactMapping) throws IOException {
+  public ClassPathClassifierContext(final Class<?> testClass, final List<URL> classPathURLs,
+      final DependenciesGraph dependenciesGraph, final MavenMultiModuleArtifactMapping mavenMultiModuleArtifactMapping)
+      throws IOException {
     this.testClass = testClass;
     this.classPathURLs = classPathURLs;
     this.dependenciesGraph = dependenciesGraph;
@@ -94,28 +97,28 @@ public class ClassPathClassifierContext {
   }
 
   /**
-   * @return {@link Predicate} to be used to exclude artifacts from being added to application {@link ClassLoader} due to they are going to
-   *         be in container {@link ClassLoader}.
+   * @return {@link Predicate} to be used to exclude artifacts from being added to application {@link ClassLoader} due to they are
+   *         going to be in container {@link ClassLoader}.
    */
   public Predicate<MavenArtifact> getExclusions() {
     return exclusions;
   }
 
   /**
-   * @return {@link Set} of {@link String}s containing the extra boot packages defined to be appended to the container in addition to the
-   *         pre-defined ones.
+   * @return {@link Set} of {@link String}s containing the extra boot packages defined to be appended to the container in addition
+   *         to the pre-defined ones.
    */
   public Set<String> getExtraBootPackages() {
     return extraBootPackages;
   }
 
   /**
-   * The list of exclusion GroutId/ArtifactId/Type to be excluded from application/plugin class loaders due to these are supposed to be
-   * exposed by the container.
+   * The list of exclusion GroutId/ArtifactId/Type to be excluded from application/plugin class loaders due to these are supposed
+   * to be exposed by the container.
    * <p/>
-   * It defined by the file {@link org.mule.functional.classloading.isolation.utils.RunnerModuleUtils#EXCLUDED_PROPERTIES_FILE} and can be
-   * changed by having this file in the module that is tested or appended to the default excluded groutId/artifactId/type by marking the
-   * test with the annotation {@link ArtifactClassLoaderRunnerConfig}.
+   * It defined by the file {@link org.mule.functional.classloading.isolation.utils.RunnerModuleUtils#EXCLUDED_PROPERTIES_FILE}
+   * and can be changed by having this file in the module that is tested or appended to the default excluded
+   * groutId/artifactId/type by marking the test with the annotation {@link ArtifactClassLoaderRunnerConfig}.
    *
    * @param klass the test {@link Class} being tested
    * @param excludedProperties {@link Properties} that has the list of excluded modules
@@ -130,7 +133,8 @@ public class ClassPathClassifierContext {
       logger.warn(EXCLUDED_MODULES
           + " found but there is no list of modules defined to be excluded, this could be the reason why the test may fail later due to JUnit classes are not found");
     }
-    List<String> exclusionsAnnotated = getAnnotationAttributeFromHierarchy(klass, ArtifactClassLoaderRunnerConfig.class, "exclusions");
+    List<String> exclusionsAnnotated =
+        getAnnotationAttributeFromHierarchy(klass, ArtifactClassLoaderRunnerConfig.class, "exclusions");
     for (String exclusionsToBeAppended : exclusionsAnnotated) {
       if (exclusionsToBeAppended != null && exclusionsToBeAppended.length() > 0) {
         exclusionPredicate = createPredicate(exclusionPredicate, exclusionsToBeAppended);
@@ -167,8 +171,8 @@ public class ClassPathClassifierContext {
   }
 
   /**
-   * Gets the {@link Set} of {@link String}s of packages to be added to the container {@link ClassLoader} in addition to the ones already
-   * pre-defined by the mule container.
+   * Gets the {@link Set} of {@link String}s of packages to be added to the container {@link ClassLoader} in addition to the ones
+   * already pre-defined by the mule container.
    *
    * @param klass the test {@link Class} being tested
    * @param excludedProperties {@link Properties }that has the list of extra boot packages definitions

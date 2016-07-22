@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer;
 
@@ -130,6 +130,7 @@ public class TransformerChainingTestCase extends AbstractMuleContextTestCase {
 
   private Transformer getInvalidTransformer() throws Exception {
     AbstractTransformer transformer = new AbstractTransformer() {
+
       @Override
       protected Object doTransform(final Object src, final Charset encoding) throws TransformerException {
         throw new RuntimeException("This transformer must not perform any transformations.");
@@ -144,6 +145,7 @@ public class TransformerChainingTestCase extends AbstractMuleContextTestCase {
 
   private Transformer getIncreaseByOneTransformer() throws Exception {
     AbstractTransformer transformer = new AbstractTransformer() {
+
       @Override
       protected Object doTransform(Object src, Charset encoding) throws TransformerException {
         return new Integer(((Integer) src).intValue() + 1);

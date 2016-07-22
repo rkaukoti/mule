@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing.filters;
 
@@ -17,11 +17,11 @@ import static org.mule.runtime.core.util.ClassUtils.equal;
 import static org.mule.runtime.core.util.ClassUtils.hash;
 
 /**
- * <code>MessagePropertyFilter</code> can be used to filter against properties on an event. This can be very useful as the event properties
- * represent all the meta information about the event from the underlying transport, so for an event received over HTTP you can check for
- * HTTP headers etc. The pattern should be expressed as a key/value pair, i.e. "propertyName=value". If you want to compare more than one
- * property you can use the logic filters for And, Or and Not expressions. By default the comparison is case sensitive; you can set the
- * <i>caseSensitive</i> property to override this.
+ * <code>MessagePropertyFilter</code> can be used to filter against properties on an event. This can be very useful as the event
+ * properties represent all the meta information about the event from the underlying transport, so for an event received over HTTP
+ * you can check for HTTP headers etc. The pattern should be expressed as a key/value pair, i.e. "propertyName=value". If you want
+ * to compare more than one property you can use the logic filters for And, Or and Not expressions. By default the comparison is
+ * case sensitive; you can set the <i>caseSensitive</i> property to override this.
  * <p/>
  * Since 3.0.0 its possible to set the property value as a wildcard expression i.e.
  * <p/>
@@ -31,6 +31,7 @@ import static org.mule.runtime.core.util.ClassUtils.hash;
  * </pre>
  */
 public class MessagePropertyFilter implements Filter {
+
   /**
    * logger used by this class
    */
@@ -101,7 +102,8 @@ public class MessagePropertyFilter implements Filter {
     int i = expression.indexOf('=');
 
     if (i == -1) {
-      throw new IllegalArgumentException("Pattern is malformed - it should be a key value pair, i.e. property=value: " + expression);
+      throw new IllegalArgumentException(
+          "Pattern is malformed - it should be a key value pair, i.e. property=value: " + expression);
     }
 
     if (x > -1 && x < i) {

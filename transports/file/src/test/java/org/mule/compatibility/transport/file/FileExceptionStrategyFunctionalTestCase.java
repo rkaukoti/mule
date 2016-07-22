@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.file;
 
@@ -30,6 +30,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 public class FileExceptionStrategyFunctionalTestCase extends FunctionalTestCase {
+
   public static final String TEST_MESSAGE = "Test file contents";
 
   public static final String FILE_WORKING_DIRECTORY_FOLDER = "temp/work-directory/";
@@ -103,6 +104,7 @@ public class FileExceptionStrategyFunctionalTestCase extends FunctionalTestCase 
     inputDir = getFileInsideWorkingDirectory("temp/input-streaming-catch");
     inputFile = createDataFile(inputDir, "test1.txt");
     pollingProber.check(new Probe() {
+
       @Override
       public boolean isSatisfied() {
         return !inputFile.exists();
@@ -120,6 +122,7 @@ public class FileExceptionStrategyFunctionalTestCase extends FunctionalTestCase 
     final CountDownLatch countDownLatch = new CountDownLatch(2);
     FunctionalTestComponent ftc = getFunctionalTestComponent("consumeFileWithStreamingAndRollback");
     ftc.setEventCallback(new EventCallback() {
+
       @Override
       public void eventReceived(MuleEventContext context, Object component) throws Exception {
         countDownLatch.countDown();
@@ -139,6 +142,7 @@ public class FileExceptionStrategyFunctionalTestCase extends FunctionalTestCase 
     final CountDownLatch countDownLatch = new CountDownLatch(3);
     FunctionalTestComponent ftc = getFunctionalTestComponent("consumeFileWithStreamingAndRollbackWithRedelivery");
     ftc.setEventCallback(new EventCallback() {
+
       @Override
       public void eventReceived(MuleEventContext context, Object component) throws Exception {
         countDownLatch.countDown();
@@ -151,6 +155,7 @@ public class FileExceptionStrategyFunctionalTestCase extends FunctionalTestCase 
       fail("file should not be consumed at this point");
     }
     pollingProber.check(new Probe() {
+
       @Override
       public boolean isSatisfied() {
         return !inputFile.exists();
@@ -172,6 +177,7 @@ public class FileExceptionStrategyFunctionalTestCase extends FunctionalTestCase 
     BeforeCloseStream.awaitLatch.release();
     AfterCloseStream.releaseLatch.await(RECEIVE_TIMEOUT, TimeUnit.MILLISECONDS);
     pollingProber.check(new Probe() {
+
       @Override
       public boolean isSatisfied() {
         return !inputFile.exists();
@@ -188,6 +194,7 @@ public class FileExceptionStrategyFunctionalTestCase extends FunctionalTestCase 
     flow = (Flow) muleContext.getRegistry().lookupFlowConstruct(flowName);
     DefaultMessagingExceptionStrategy exceptionListener = (DefaultMessagingExceptionStrategy) flow.getExceptionListener();
     exceptionListener.getMessageProcessors().add(new MessageProcessor() {
+
       @Override
       public MuleEvent process(MuleEvent event) throws MuleException {
         latch.countDown();
@@ -215,6 +222,7 @@ public class FileExceptionStrategyFunctionalTestCase extends FunctionalTestCase 
   }
 
   public static class BeforeCloseStream implements MessageProcessor {
+
     public static Latch releaseLatch = new Latch();
     public static Latch awaitLatch = new Latch();
     public File file;
@@ -232,6 +240,7 @@ public class FileExceptionStrategyFunctionalTestCase extends FunctionalTestCase 
   }
 
   public static class AfterCloseStream implements MessageProcessor {
+
     public static Latch releaseLatch = new Latch();
     public File file;
 

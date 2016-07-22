@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.transformer;
 
@@ -38,6 +38,7 @@ import javax.xml.transform.stream.StreamResult;
  * <code>AbstractXmlTransformer</code> offers some XSLT transform on a DOM (or other XML-ish) object.
  */
 public abstract class AbstractXmlTransformer extends AbstractMessageTransformer implements Initialisable {
+
   private String outputEncoding;
   private XMLInputFactory xmlInputFactory;
   private XMLOutputFactory xmlOutputFactory;
@@ -70,6 +71,7 @@ public abstract class AbstractXmlTransformer extends AbstractMessageTransformer 
     }
     if (byte[].class.equals(desiredClass) || InputStream.class.isAssignableFrom(desiredClass)) {
       return new ResultHolder() {
+
         ByteArrayOutputStream resultStream = new ByteArrayOutputStream();
         StreamResult result = new StreamResult(resultStream);
 
@@ -85,6 +87,7 @@ public abstract class AbstractXmlTransformer extends AbstractMessageTransformer 
       };
     } else if (String.class.equals(desiredClass)) {
       return new ResultHolder() {
+
         StringWriter writer = new StringWriter();
         StreamResult result = new StreamResult(writer);
 
@@ -108,6 +111,7 @@ public abstract class AbstractXmlTransformer extends AbstractMessageTransformer 
       }
 
       return new ResultHolder() {
+
         @Override
         public Result getResult() {
           return result;
@@ -120,6 +124,7 @@ public abstract class AbstractXmlTransformer extends AbstractMessageTransformer 
       };
     } else if (org.dom4j.io.DocumentResult.class.isAssignableFrom(desiredClass)) {
       return new ResultHolder() {
+
         DocumentResult result = new DocumentResult();
 
         @Override
@@ -134,6 +139,7 @@ public abstract class AbstractXmlTransformer extends AbstractMessageTransformer 
       };
     } else if (org.dom4j.Document.class.isAssignableFrom(desiredClass)) {
       return new ResultHolder() {
+
         DocumentResult result = new DocumentResult();
 
         @Override
@@ -184,11 +190,11 @@ public abstract class AbstractXmlTransformer extends AbstractMessageTransformer 
   }
 
   /**
-   * Converts an XML in-memory representation to a String using a specific encoding. If using an encoding which cannot represent specific
-   * characters, these are written as entities, even if they can be represented as a Java String.
+   * Converts an XML in-memory representation to a String using a specific encoding. If using an encoding which cannot represent
+   * specific characters, these are written as entities, even if they can be represented as a Java String.
    *
-   * @param obj Object to convert (could be byte[], String, DOM, or DOM4J Document). If the object is a byte[], the character encoding used
-   *        MUST match the declared encoding standard, or a parse error will occur.
+   * @param obj Object to convert (could be byte[], String, DOM, or DOM4J Document). If the object is a byte[], the character
+   *        encoding used MUST match the declared encoding standard, or a parse error will occur.
    * @param outputEncoding Name of the XML encoding to use, e.g. US-ASCII, or null for UTF-8
    * @return String including XML header using the specified encoding
    * @throws TransformerFactoryConfigurationError On error
@@ -221,8 +227,8 @@ public abstract class AbstractXmlTransformer extends AbstractMessageTransformer 
   /**
    * Converts an XML in-memory representation to a String using a specific encoding.
    *
-   * @param obj Object to convert (could be byte[], String, DOM, or DOM4J Document). If the object is a byte[], the character encoding used
-   *        MUST match the declared encoding standard, or a parse error will occur.
+   * @param obj Object to convert (could be byte[], String, DOM, or DOM4J Document). If the object is a byte[], the character
+   *        encoding used MUST match the declared encoding standard, or a parse error will occur.
    * @param outputEncoding Name of the XML encoding to use, e.g. US-ASCII, or null for UTF-8
    * @return String including XML header using the specified encoding
    * @throws TransformerFactoryConfigurationError On error
@@ -308,6 +314,7 @@ public abstract class AbstractXmlTransformer extends AbstractMessageTransformer 
    * Result callback interface used when processing XML through JAXP
    */
   protected static interface ResultHolder {
+
     /**
      * @return A Result to use in a transformation (e.g. writing a DOM to a stream)
      */

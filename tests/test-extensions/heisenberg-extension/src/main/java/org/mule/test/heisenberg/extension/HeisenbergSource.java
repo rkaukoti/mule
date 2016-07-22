@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.heisenberg.extension;
 
@@ -65,12 +65,13 @@ public class HeisenbergSource extends Source<Void, Attributes> implements Initia
     }
 
     executor = newScheduledThreadPool(1);
-    executor.scheduleAtFixedRate(() -> sourceContext.getMessageHandler().handle(makeMessage(sourceContext), completionHandler()), 0, 100,
-        TimeUnit.MILLISECONDS);
+    executor.scheduleAtFixedRate(() -> sourceContext.getMessageHandler().handle(makeMessage(sourceContext), completionHandler()),
+        0, 100, TimeUnit.MILLISECONDS);
   }
 
   private CompletionHandler<MuleEvent, Exception, MuleEvent> completionHandler() {
     return new BlockingCompletionHandler<MuleEvent, Exception, MuleEvent>() {
+
       @Override
       protected void doOnCompletion(MuleEvent event) {
         Long payment = (Long) ((org.mule.runtime.core.api.MuleEvent) event).getMessage().getPayload();
@@ -102,7 +103,8 @@ public class HeisenbergSource extends Source<Void, Attributes> implements Initia
     }
 
     return MuleMessage.builder()
-        .payload(format("Meth Batch %d. If found by DEA contact %s", ++initialBatchNumber, connection.getSaulPhoneNumber())).build();
+        .payload(format("Meth Batch %d. If found by DEA contact %s", ++initialBatchNumber, connection.getSaulPhoneNumber()))
+        .build();
   }
 
 

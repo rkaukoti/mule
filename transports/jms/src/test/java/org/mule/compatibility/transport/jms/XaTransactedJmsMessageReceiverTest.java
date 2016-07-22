@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -160,8 +160,8 @@ public class XaTransactedJmsMessageReceiverTest extends AbstractMuleTestCase {
     final MessageConsumer consumer = mock(MessageConsumer.class);
     when(consumer.receive(anyLong())).then(buildLatchedReceiveAnswer(receivingLatch, disconnectedLatch));
 
-    when(jmsSupport.createConsumer(any(Session.class), any(Destination.class), anyString(), anyBoolean(), anyString(), anyBoolean(),
-        eq(mockInboundEndpoint))).thenReturn(consumer);
+    when(jmsSupport.createConsumer(any(Session.class), any(Destination.class), anyString(), anyBoolean(), anyString(),
+        anyBoolean(), eq(mockInboundEndpoint))).thenReturn(consumer);
 
     final XaTransactedJmsMessageReceiver messageReceiver =
         new XaTransactedJmsMessageReceiver(mockJmsConnector, mockFlowConstruct, mockInboundEndpoint);
@@ -189,8 +189,8 @@ public class XaTransactedJmsMessageReceiverTest extends AbstractMuleTestCase {
     when(consumer2.receive(anyLong())).then(buildLatchedReceiveAnswer(receivingLatch, disconnectedLatch));
     when(consumer3.receive(anyLong())).then(buildLatchedReceiveAnswer(receivingLatch, disconnectedLatch));
 
-    when(jmsSupport.createConsumer(any(Session.class), any(Destination.class), anyString(), anyBoolean(), anyString(), anyBoolean(),
-        eq(mockInboundEndpoint))).thenReturn(consumer1, consumer2, consumer3);
+    when(jmsSupport.createConsumer(any(Session.class), any(Destination.class), anyString(), anyBoolean(), anyString(),
+        anyBoolean(), eq(mockInboundEndpoint))).thenReturn(consumer1, consumer2, consumer3);
 
     final XaTransactedJmsMessageReceiver messageReceiver =
         new XaTransactedJmsMessageReceiver(mockJmsConnector, mockFlowConstruct, mockInboundEndpoint);

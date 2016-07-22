@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.config.dsl;
 
@@ -12,8 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Context to be used while registering parsers for an {@link ExtensionModel} definition, to keep track of global data accross all the
- * different definition parsers
+ * Context to be used while registering parsers for an {@link ExtensionModel} definition, to keep track of global data accross all
+ * the different definition parsers
  *
  * @since 4.0
  */
@@ -36,7 +36,8 @@ public class ExtensionParsingContext {
   /**
    * @param name the {@code name} of the element
    * @param namespace the {@code namespace} of the element
-   * @return {@code true} if an {@link ObjectType} with the given {@code name} and {@code namespace} was registered in the current context
+   * @return {@code true} if an {@link ObjectType} with the given {@code name} and {@code namespace} was registered in the current
+   *         context
    */
   public boolean isRegistered(String name, String namespace) {
     return parsedObjectTypes.containsKey(generateObjectKey(name, namespace));

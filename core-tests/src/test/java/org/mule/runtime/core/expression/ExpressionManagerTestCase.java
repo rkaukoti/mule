@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.expression;
 
@@ -17,6 +17,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class ExpressionManagerTestCase extends AbstractMuleContextTestCase {
+
   @Test
   public void testManager() throws Exception {
     MuleEvent event = getTestEvent("test");
@@ -30,21 +31,21 @@ public class ExpressionManagerTestCase extends AbstractMuleContextTestCase {
   @Test
   public void testValidator() throws Exception {
     // fail for old-style ${}
-    assertFalse(
-        muleContext.getExpressionManager().isValidExpression("http://${bean:user}:${bean:password}@${header:host}:${header:port}/foo/bar"));
+    assertFalse(muleContext.getExpressionManager()
+        .isValidExpression("http://${bean:user}:${bean:password}@${header:host}:${header:port}/foo/bar"));
     assertFalse(muleContext.getExpressionManager().isValidExpression("${bean:user}"));
 
     // wiggly mule style!
     assertTrue(muleContext.getExpressionManager().isValidExpression("#[bean:user]"));
-    assertTrue(
-        muleContext.getExpressionManager().isValidExpression("http://#[bean:user]:#[bean:password]@#[header:host]:#[header:port]/foo/bar"));
+    assertTrue(muleContext.getExpressionManager()
+        .isValidExpression("http://#[bean:user]:#[bean:password]@#[header:host]:#[header:port]/foo/bar"));
 
     assertFalse(muleContext.getExpressionManager().isValidExpression("{bean:user}"));
     assertFalse(muleContext.getExpressionManager().isValidExpression("#{bean:user"));
     assertFalse(muleContext.getExpressionManager().isValidExpression("user"));
 
-    assertFalse(
-        muleContext.getExpressionManager().isValidExpression("http://#[bean:user:#[bean:password]@#[header:host]:#[header:port]/foo/bar"));
+    assertFalse(muleContext.getExpressionManager()
+        .isValidExpression("http://#[bean:user:#[bean:password]@#[header:host]:#[header:port]/foo/bar"));
     assertTrue(muleContext.getExpressionManager()
         .isValidExpression("http://#[bean:user]:##[bean:password]@#[header:host]:#[header:port]/foo/bar"));
     assertTrue(muleContext.getExpressionManager()
@@ -58,8 +59,9 @@ public class ExpressionManagerTestCase extends AbstractMuleContextTestCase {
   @Test
   public void testParsing() throws Exception {
     MuleEvent event = getTestEvent("test");
-    event.setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty("user", "vasya").addOutboundProperty("password", "pupkin")
-        .addOutboundProperty("host", "example.com").addOutboundProperty("port", "12345").build());
+    event.setMessage(
+        MuleMessage.builder(event.getMessage()).addOutboundProperty("user", "vasya").addOutboundProperty("password", "pupkin")
+            .addOutboundProperty("host", "example.com").addOutboundProperty("port", "12345").build());
 
     String result = muleContext.getExpressionManager().parse(
         "http://#[message.outboundProperties.user]:#[message.outboundProperties.password]@#[message.outboundProperties.host]:#[message.outboundProperties.port]/foo/bar",
@@ -71,8 +73,9 @@ public class ExpressionManagerTestCase extends AbstractMuleContextTestCase {
   @Test
   public void testBooleanEvaluation() throws Exception {
     MuleEvent event = getTestEvent("test");
-    event.setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty("user", "vasya").addOutboundProperty("password", "pupkin")
-        .addOutboundProperty("host", "example.com").addOutboundProperty("port", "12345").build());
+    event.setMessage(
+        MuleMessage.builder(event.getMessage()).addOutboundProperty("user", "vasya").addOutboundProperty("password", "pupkin")
+            .addOutboundProperty("host", "example.com").addOutboundProperty("port", "12345").build());
 
     // Non-boolean string value
     assertFalse(muleContext.getExpressionManager().evaluateBoolean("message.outboundProperties.user", event));

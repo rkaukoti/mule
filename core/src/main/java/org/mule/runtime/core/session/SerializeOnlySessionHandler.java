@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.session;
 
@@ -15,11 +15,12 @@ import org.slf4j.LoggerFactory;
 import static org.mule.runtime.core.api.config.MuleProperties.MULE_SESSION_PROPERTY;
 
 /**
- * A session handler used to store and retrieve session information on an event. The MuleSession information is stored as a header on the
- * message (does not support Tcp, Udp, etc. unless the MuleMessage object is serialised across the wire). The session is stored in the
- * "MULE_SESSION" property as an array of bytes (byte[])
+ * A session handler used to store and retrieve session information on an event. The MuleSession information is stored as a header
+ * on the message (does not support Tcp, Udp, etc. unless the MuleMessage object is serialised across the wire). The session is
+ * stored in the "MULE_SESSION" property as an array of bytes (byte[])
  */
 public class SerializeOnlySessionHandler extends AbstractSessionHandler {
+
   protected transient Logger logger = LoggerFactory.getLogger(getClass());
 
   @Override
@@ -34,7 +35,8 @@ public class SerializeOnlySessionHandler extends AbstractSessionHandler {
   }
 
   @Override
-  public MuleMessage storeSessionInfoToMessage(MuleSession session, MuleMessage message, MuleContext context) throws MuleException {
+  public MuleMessage storeSessionInfoToMessage(MuleSession session, MuleMessage message, MuleContext context)
+      throws MuleException {
     byte[] serializedSession = context.getObjectSerializer().serialize(removeNonSerializableProperties(session, context));
 
     if (logger.isDebugEnabled()) {

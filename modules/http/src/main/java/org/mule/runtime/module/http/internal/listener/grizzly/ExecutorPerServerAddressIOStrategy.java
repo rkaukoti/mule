@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.listener.grizzly;
 
@@ -21,8 +21,8 @@ import java.util.logging.Logger;
  * Grizzly IO Strategy that will handle each work to an specific {@link java.util.concurrent.Executor} based on the
  * {@link org.mule.runtime.module.http.internal.listener.ServerAddress} of a {@link org.glassfish.grizzly.Connection}.
  * <p/>
- * There's logic from {@link org.glassfish.grizzly.strategies.WorkerThreadIOStrategy} that need to be reused but unfortunately that class
- * cannot be override.
+ * There's logic from {@link org.glassfish.grizzly.strategies.WorkerThreadIOStrategy} that need to be reused but unfortunately
+ * that class cannot be override.
  */
 public class ExecutorPerServerAddressIOStrategy extends AbstractIOStrategy {
 
@@ -42,7 +42,8 @@ public class ExecutorPerServerAddressIOStrategy extends AbstractIOStrategy {
   }
 
   @Override
-  public boolean executeIoEvent(final Connection connection, final IOEvent ioEvent, final boolean isIoEventEnabled) throws IOException {
+  public boolean executeIoEvent(final Connection connection, final IOEvent ioEvent, final boolean isIoEventEnabled)
+      throws IOException {
 
     final boolean isReadOrWriteEvent = isReadWrite(ioEvent);
 
@@ -85,7 +86,8 @@ public class ExecutorPerServerAddressIOStrategy extends AbstractIOStrategy {
     final IOEvent ioEvent;
     final IOEventLifeCycleListener lifeCycleListener;
 
-    private WorkerThreadRunnable(final Connection connection, final IOEvent ioEvent, final IOEventLifeCycleListener lifeCycleListener) {
+    private WorkerThreadRunnable(final Connection connection, final IOEvent ioEvent,
+        final IOEventLifeCycleListener lifeCycleListener) {
       this.connection = connection;
       this.ioEvent = ioEvent;
       this.lifeCycleListener = lifeCycleListener;

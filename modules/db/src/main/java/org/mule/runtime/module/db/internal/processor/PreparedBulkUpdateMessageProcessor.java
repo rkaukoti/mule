@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.processor;
@@ -36,8 +36,8 @@ import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.QUE
 /**
  * Executes an update query in bulk mode on a database *
  * <p/>
- * An update query can be parametrized update, insert or delete query or a stored procedure taking input parameters only and returning an
- * update count.
+ * An update query can be parametrized update, insert or delete query or a stored procedure taking input parameters only and
+ * returning an update count.
  * <p/>
  * Both database and queries are resolved, if required, using the {@link org.mule.runtime.core.api.MuleEvent} being processed.
  */
@@ -46,8 +46,8 @@ public class PreparedBulkUpdateMessageProcessor extends AbstractBulkUpdateMessag
   private final ParamValueResolver paramValueResolver;
 
   public PreparedBulkUpdateMessageProcessor(DbConfigResolver dbConfigResolver, QueryResolver queryResolver,
-      BulkQueryExecutorFactory bulkUpdateExecutorFactory, TransactionalAction transactionalAction, List<QueryType> validQueryTypes,
-      ParamValueResolver paramValueResolver) {
+      BulkQueryExecutorFactory bulkUpdateExecutorFactory, TransactionalAction transactionalAction,
+      List<QueryType> validQueryTypes, ParamValueResolver paramValueResolver) {
     super(dbConfigResolver, transactionalAction, validQueryTypes, queryResolver, bulkUpdateExecutorFactory);
     this.paramValueResolver = paramValueResolver;
   }

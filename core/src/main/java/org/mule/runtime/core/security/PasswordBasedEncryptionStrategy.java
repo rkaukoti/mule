@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.security;
 
@@ -17,8 +17,8 @@ import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
 
 /**
- * Provides password-based encryption using JCE. Users must specify a password and optionally a salt and iteration count as well. The
- * default algorithm is PBEWithMD5AndDES, but users can specify any valid algorithm supported by JCE.
+ * Provides password-based encryption using JCE. Users must specify a password and optionally a salt and iteration count as well.
+ * The default algorithm is PBEWithMD5AndDES, but users can specify any valid algorithm supported by JCE.
  */
 public class PasswordBasedEncryptionStrategy extends AbstractJCEEncryptionStrategy {
 

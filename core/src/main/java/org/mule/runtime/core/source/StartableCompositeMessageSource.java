@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.source;
 
@@ -32,8 +32,8 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Implementation of {@link CompositeMessageSource} that propagates both injection of {@link FlowConstruct} and lifecycle to nested
- * {@link MessageSource}s.
+ * Implementation of {@link CompositeMessageSource} that propagates both injection of {@link FlowConstruct} and lifecycle to
+ * nested {@link MessageSource}s.
  * <p>
  * <li>This message source cannot be started without a listener set.
  * <li>If sources are added when this composie is started they will be started as well.
@@ -41,6 +41,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * <li>Message will only be received from endpoints if the connector is also started.
  */
 public class StartableCompositeMessageSource implements CompositeMessageSource, Lifecycle, FlowConstructAware, MuleContextAware {
+
   protected static final Logger logger = LoggerFactory.getLogger(StartableCompositeMessageSource.class);
   protected final List<MessageSource> sources = Collections.synchronizedList(new ArrayList<MessageSource>());
   private final MessageProcessor internalListener = new InternalMessageProcessor();
@@ -188,6 +189,7 @@ public class StartableCompositeMessageSource implements CompositeMessageSource, 
   }
 
   private class InternalMessageProcessor implements MessageProcessor {
+
     public InternalMessageProcessor() {
       super();
     }
@@ -198,8 +200,9 @@ public class StartableCompositeMessageSource implements CompositeMessageSource, 
         return listener.process(event);
       } else {
         // TODO i18n
-        throw new IllegalStateException(String.format("A message was receieved from MessageSource, but CompositeMessageSource is stopped.%n"
-            + "  Message: %s%n" + "  CompositeMessageSource: %s", event, this));
+        throw new IllegalStateException(
+            String.format("A message was receieved from MessageSource, but CompositeMessageSource is stopped.%n"
+                + "  Message: %s%n" + "  CompositeMessageSource: %s", event, this));
       }
     }
 

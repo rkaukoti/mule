@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.processor;
 
@@ -50,6 +50,7 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 
 public abstract class AbstractMessageProcessorTestCase extends AbstractMuleContextEndpointTestCase {
+
   protected static final String TEST_URI = "test://myTestUri";
   protected static String RESPONSE_MESSAGE = "response-message";
   protected static MuleMessage responseMessage;
@@ -79,8 +80,8 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
     return createTestInboundEndpoint(null, null, transformer, responseTransformer, MessageExchangePattern.REQUEST_RESPONSE, null);
   }
 
-  protected InboundEndpoint createTestInboundEndpoint(Filter filter, SecurityFilter securityFilter, MessageExchangePattern exchangePattern,
-      TransactionConfig txConfig) throws InitialisationException, EndpointException {
+  protected InboundEndpoint createTestInboundEndpoint(Filter filter, SecurityFilter securityFilter,
+      MessageExchangePattern exchangePattern, TransactionConfig txConfig) throws InitialisationException, EndpointException {
     return createTestInboundEndpoint(filter, securityFilter, null, null, exchangePattern, txConfig);
   }
 
@@ -108,15 +109,16 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
 
   protected MuleEvent createTestInboundEvent(InboundEndpoint endpoint) throws Exception {
     final DefaultMuleEvent event =
-        new DefaultMuleEvent(MuleMessage.builder().payload(TEST_MESSAGE).addOutboundProperty("prop1", "value1").build(), getTestFlow(),
-            getTestSession(null, muleContext));
+        new DefaultMuleEvent(MuleMessage.builder().payload(TEST_MESSAGE).addOutboundProperty("prop1", "value1").build(),
+            getTestFlow(), getTestSession(null, muleContext));
     DefaultMuleEventEndpointUtils.populateFieldsFromInboundEndpoint(event, endpoint);
     return event;
   }
 
   protected OutboundEndpoint createTestOutboundEndpoint(Transformer transformer, Transformer responseTransformer)
       throws EndpointException, InitialisationException {
-    return createTestOutboundEndpoint(null, null, transformer, responseTransformer, MessageExchangePattern.REQUEST_RESPONSE, null);
+    return createTestOutboundEndpoint(null, null, transformer, responseTransformer, MessageExchangePattern.REQUEST_RESPONSE,
+        null);
   }
 
   protected OutboundEndpoint createTestOutboundEndpoint(Filter filter, EndpointSecurityFilter securityFilter,
@@ -124,15 +126,16 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
     return createTestOutboundEndpoint(filter, securityFilter, null, null, exchangePattern, txConfig);
   }
 
-  protected OutboundEndpoint createTestOutboundEndpoint(Filter filter, EndpointSecurityFilter securityFilter, Transformer transformer,
-      Transformer responseTransformer, MessageExchangePattern exchangePattern, TransactionConfig txConfig)
-      throws EndpointException, InitialisationException {
-    return createTestOutboundEndpoint("test://test", filter, securityFilter, transformer, responseTransformer, exchangePattern, txConfig);
+  protected OutboundEndpoint createTestOutboundEndpoint(Filter filter, EndpointSecurityFilter securityFilter,
+      Transformer transformer, Transformer responseTransformer, MessageExchangePattern exchangePattern,
+      TransactionConfig txConfig) throws EndpointException, InitialisationException {
+    return createTestOutboundEndpoint("test://test", filter, securityFilter, transformer, responseTransformer, exchangePattern,
+        txConfig);
   }
 
-  protected OutboundEndpoint createTestOutboundEndpoint(String uri, Filter filter, SecurityFilter securityFilter, Transformer transformer,
-      Transformer responseTransformer, MessageExchangePattern exchangePattern, TransactionConfig txConfig)
-      throws EndpointException, InitialisationException {
+  protected OutboundEndpoint createTestOutboundEndpoint(String uri, Filter filter, SecurityFilter securityFilter,
+      Transformer transformer, Transformer responseTransformer, MessageExchangePattern exchangePattern,
+      TransactionConfig txConfig) throws EndpointException, InitialisationException {
     EndpointURIEndpointBuilder endpointBuilder = new EndpointURIEndpointBuilder(uri, muleContext);
     if (filter != null) {
       endpointBuilder.addMessageProcessor(new MessageFilter(filter));
@@ -169,9 +172,10 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
     if (exceptionListener != null) {
       flow.setExceptionListener(exceptionListener);
     }
-    final DefaultMuleEvent event = new DefaultMuleEvent(MuleMessage.builder().payload(TEST_MESSAGE).outboundProperties(props).build(), flow,
-        getTestSession(null, muleContext));
-    DefaultMuleEventEndpointUtils.populateFieldsFromInboundEndpoint(event, getTestInboundEndpoint(MessageExchangePattern.REQUEST_RESPONSE));
+    final DefaultMuleEvent event = new DefaultMuleEvent(
+        MuleMessage.builder().payload(TEST_MESSAGE).outboundProperties(props).build(), flow, getTestSession(null, muleContext));
+    DefaultMuleEventEndpointUtils.populateFieldsFromInboundEndpoint(event,
+        getTestInboundEndpoint(MessageExchangePattern.REQUEST_RESPONSE));
     return event;
   }
 
@@ -180,6 +184,7 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
   }
 
   public static class TestFilter implements Filter {
+
     public boolean accept;
 
     public TestFilter(boolean accept) {
@@ -193,6 +198,7 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
   }
 
   public static class TestSecurityNotificationListener implements SecurityNotificationListener<SecurityNotification> {
+
     public SecurityNotification securityNotification;
     public Latch latch = new Latch();
 
@@ -204,6 +210,7 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
   }
 
   public static class TestListener implements MessageProcessor {
+
     public MuleEvent sensedEvent;
 
     @Override
@@ -213,7 +220,9 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
     }
   }
 
-  public static class TestEndpointMessageNotificationListener implements EndpointMessageNotificationListener<EndpointMessageNotification> {
+  public static class TestEndpointMessageNotificationListener
+      implements EndpointMessageNotificationListener<EndpointMessageNotification> {
+
     public EndpointMessageNotification messageNotification;
     public List<EndpointMessageNotification> messageNotificationList = new ArrayList<>();
     public CountDownLatch latchFirst;
@@ -241,6 +250,7 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
   }
 
   public static class ExceptionThrowingMessageProcessor implements MessageProcessor {
+
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException {
       throw new IllegalStateException();
@@ -248,6 +258,7 @@ public abstract class AbstractMessageProcessorTestCase extends AbstractMuleConte
   }
 
   public static class TestExceptionListener implements MessagingExceptionHandler {
+
     public Exception sensedException;
 
     @Override

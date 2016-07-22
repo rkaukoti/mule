@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.management.mbeans;
 
@@ -40,7 +40,8 @@ public class MBeansRegistrationTestCase extends FunctionalTestCase {
   @Override
   protected void doSetUp() throws Exception {
     super.doSetUp();
-    TransportsJmxApplicationAgent jmxAgent = (TransportsJmxApplicationAgent) muleContext.getRegistry().lookupAgent("transports-jmx-agent");
+    TransportsJmxApplicationAgent jmxAgent =
+        (TransportsJmxApplicationAgent) muleContext.getRegistry().lookupAgent("transports-jmx-agent");
     jmxSupport = jmxAgent.getJmxSupportFactory().getJmxSupport();
     domainName = jmxSupport.getDomainName(muleContext);
     mBeanServer = jmxAgent.getMBeanServer();

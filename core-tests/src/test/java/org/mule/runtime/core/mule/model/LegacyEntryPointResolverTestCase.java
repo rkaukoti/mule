@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.mule.model;
 
@@ -115,8 +115,8 @@ public class LegacyEntryPointResolverTestCase extends AbstractMuleContextTestCas
   }
 
   /**
-   * If there was a method parameter specified to override the discovery mechanism and no such method exists, an exception should be thrown,
-   * and no fallback to the default discovery should take place.
+   * If there was a method parameter specified to override the discovery mechanism and no such method exists, an exception should
+   * be thrown, and no fallback to the default discovery should take place.
    */
   @Test
   public void testMethodOverrideDoesNotFallback() throws Exception {
@@ -135,8 +135,8 @@ public class LegacyEntryPointResolverTestCase extends AbstractMuleContextTestCas
   }
 
   /**
-   * If there was a method parameter specified to override the discovery mechanism and a Callable instance is serving the request, call the
-   * Callable, ignore the method override parameter.
+   * If there was a method parameter specified to override the discovery mechanism and a Callable instance is serving the request,
+   * call the Callable, ignore the method override parameter.
    */
   @Test
   public void testMethodOverrideIgnoredWithCallable() throws Exception {
@@ -146,10 +146,12 @@ public class LegacyEntryPointResolverTestCase extends AbstractMuleContextTestCas
 
     // those are usually set on the endpoint and copied over to the message
     MuleEvent event = RequestContext.getEventContext().getEvent();
-    event.setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty(METHOD_PROPERTY_NAME, INVALID_METHOD_NAME).build());
+    event.setMessage(
+        MuleMessage.builder(event.getMessage()).addOutboundProperty(METHOD_PROPERTY_NAME, INVALID_METHOD_NAME).build());
 
     Apple apple = new Apple();
     apple.setAppleCleaner(new FruitCleaner() {
+
       @Override
       public void wash(Fruit fruit) {
         // dummy

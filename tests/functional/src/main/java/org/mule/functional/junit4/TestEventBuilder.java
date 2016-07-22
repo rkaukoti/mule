@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.junit4;
 
@@ -271,8 +271,8 @@ public class TestEventBuilder {
     final MuleMessage muleMessage = messageBuilder.build();
 
     DefaultMuleEvent event = new DefaultMuleEvent((MuleMessage) spyTransformer.transform(muleMessage), URI.create("none"), "none",
-        exchangePattern, flow, new DefaultMuleSession(), muleContext.getConfiguration().getDefaultResponseTimeout(), null, null, transacted,
-        null, replyToHandler);
+        exchangePattern, flow, new DefaultMuleSession(), muleContext.getConfiguration().getDefaultResponseTimeout(), null, null,
+        transacted, null, replyToHandler);
 
     for (Entry<String, Attachment> outboundAttachmentEntry : outboundAttachments.entrySet()) {
       outboundAttachmentEntry.getValue().addOutboundTo(event, outboundAttachmentEntry.getKey());
@@ -320,8 +320,8 @@ public class TestEventBuilder {
     @Override
     public void addOutboundTo(MuleEvent event, String key) {
       try {
-        event.setMessage(
-            MuleMessage.builder(event.getMessage()).addOutboundAttachment(key, IOUtils.toDataHandler(key, object, contentType)).build());
+        event.setMessage(MuleMessage.builder(event.getMessage())
+            .addOutboundAttachment(key, IOUtils.toDataHandler(key, object, contentType)).build());
       } catch (Exception e) {
         throw new MuleRuntimeException(e);
       }

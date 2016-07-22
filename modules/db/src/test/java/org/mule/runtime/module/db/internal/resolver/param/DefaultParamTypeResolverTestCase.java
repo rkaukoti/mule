@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.resolver.param;
@@ -43,7 +43,8 @@ public class DefaultParamTypeResolverTestCase extends AbstractMuleTestCase {
 
   private final DbTypeManager dbTypeManager = mock(DbTypeManager.class);
   private final ParamTypeResolver metadataParamTypeResolver = mock(ParamTypeResolver.class);
-  private final DefaultParamTypeResolver paramTypeResolver = new DefaultParamTypeResolver(dbTypeManager, metadataParamTypeResolver);
+  private final DefaultParamTypeResolver paramTypeResolver =
+      new DefaultParamTypeResolver(dbTypeManager, metadataParamTypeResolver);
   private final DbConnection connection = mock(DbConnection.class);
 
   @Test

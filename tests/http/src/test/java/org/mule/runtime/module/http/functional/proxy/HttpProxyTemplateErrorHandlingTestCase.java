@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.proxy;
 
@@ -50,8 +50,8 @@ public class HttpProxyTemplateErrorHandlingTestCase extends AbstractHttpRequestT
     this.configFile = configFile;
     this.nonBlocking = nonBlocking;
     if (nonBlocking) {
-      systemProperty =
-          new SystemProperty(MuleProperties.MULE_DEFAULT_PROCESSING_STRATEGY, ProcessingStrategyUtils.NON_BLOCKING_PROCESSING_STRATEGY);
+      systemProperty = new SystemProperty(MuleProperties.MULE_DEFAULT_PROCESSING_STRATEGY,
+          ProcessingStrategyUtils.NON_BLOCKING_PROCESSING_STRATEGY);
     }
   }
 
@@ -79,14 +79,16 @@ public class HttpProxyTemplateErrorHandlingTestCase extends AbstractHttpRequestT
 
   @Test
   public void noExceptionStrategy() throws Exception {
-    HttpResponse response = Request.Get(getProxyUrl("noExceptionStrategy")).connectTimeout(RECEIVE_TIMEOUT).execute().returnResponse();
+    HttpResponse response =
+        Request.Get(getProxyUrl("noExceptionStrategy")).connectTimeout(RECEIVE_TIMEOUT).execute().returnResponse();
 
     assertThat(response.getStatusLine().getStatusCode(), is(500));
   }
 
   @Test
   public void catchExceptionStrategy() throws Exception {
-    HttpResponse response = Request.Get(getProxyUrl("catchExceptionStrategy")).connectTimeout(RECEIVE_TIMEOUT).execute().returnResponse();
+    HttpResponse response =
+        Request.Get(getProxyUrl("catchExceptionStrategy")).connectTimeout(RECEIVE_TIMEOUT).execute().returnResponse();
 
     assertThat(response.getStatusLine().getStatusCode(), is(200));
     assertThat(IOUtils.toString(response.getEntity().getContent()), equalTo(SERVICE_DOWN_MESSAGE));

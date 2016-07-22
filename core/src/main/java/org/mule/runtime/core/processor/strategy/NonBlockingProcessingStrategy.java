@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor.strategy;
 
@@ -27,8 +27,9 @@ public class NonBlockingProcessingStrategy extends AbstractThreadingProfileProce
   }
 
   @Override
-  public void configureProcessors(List<MessageProcessor> processors, org.mule.runtime.core.api.processor.StageNameSource nameSource,
-      MessageProcessorChainBuilder chainBuilder, MuleContext muleContext) {
+  public void configureProcessors(List<MessageProcessor> processors,
+      org.mule.runtime.core.api.processor.StageNameSource nameSource, MessageProcessorChainBuilder chainBuilder,
+      MuleContext muleContext) {
     for (MessageProcessor processor : processors) {
       chainBuilder.chain((MessageProcessor) processor);
     }
@@ -36,8 +37,8 @@ public class NonBlockingProcessingStrategy extends AbstractThreadingProfileProce
 
   public WorkManager createWorkManager(FlowConstruct flowConstruct) {
     MuleContext muleContext = flowConstruct.getMuleContext();
-    MuleWorkManager workManager = (MuleWorkManager) createThreadingProfile(muleContext)
-        .createWorkManager(getThreadPoolName(flowConstruct.getName(), muleContext), muleContext.getConfiguration().getShutdownTimeout());
+    MuleWorkManager workManager = (MuleWorkManager) createThreadingProfile(muleContext).createWorkManager(
+        getThreadPoolName(flowConstruct.getName(), muleContext), muleContext.getConfiguration().getShutdownTimeout());
     return workManager;
   }
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.listener;
 
@@ -34,14 +34,16 @@ public class HttpListenerRequestStreamingTestCase extends AbstractHttpTestCase {
   @Test
   public void listenerReceivedChunkedRequest() throws Exception {
     String url = format("http://localhost:%s/", listenPort.getNumber());
-    getFunctionalTestComponent("defaultFlow").setEventCallback((context, component) -> flowReceivedMessage = context.getMessageAsString());
+    getFunctionalTestComponent("defaultFlow")
+        .setEventCallback((context, component) -> flowReceivedMessage = context.getMessageAsString());
     testChunkedRequestContentAndResponse(url);
     // We check twice to verify that the chunked request is consumed completely. Otherwise second request would fail
     testChunkedRequestContentAndResponse(url);
   }
 
   private void testChunkedRequestContentAndResponse(String url) throws Exception {
-    Request.Post(url).body(new InputStreamEntity(new ByteArrayInputStream(LARGE_MESSAGE.getBytes()))).connectTimeout(1000).execute();
+    Request.Post(url).body(new InputStreamEntity(new ByteArrayInputStream(LARGE_MESSAGE.getBytes()))).connectTimeout(1000)
+        .execute();
     assertThat(flowReceivedMessage, is(LARGE_MESSAGE));
   }
 

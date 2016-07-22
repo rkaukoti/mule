@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.xa;
 
@@ -15,9 +15,11 @@ import java.util.Collections;
 import javax.transaction.Status;
 
 /**
- * This code is based on code coming from the <a href="http://jakarta.apache.org/commons/transaction/">commons-transaction</a> project.
+ * This code is based on code coming from the <a href="http://jakarta.apache.org/commons/transaction/">commons-transaction</a>
+ * project.
  */
 public abstract class AbstractResourceManager {
+
   /**
    * Shutdown mode: Wait for all transactions to complete
    */
@@ -278,7 +280,8 @@ public abstract class AbstractResourceManager {
    * Flag this resource manager as dirty. No more operations will be allowed until a recovery has been successfully performed.
    */
   protected void setDirty(AbstractTransactionContext context, Throwable t) {
-    logger.error("Fatal error during critical commit/rollback of transaction " + context + ", setting resource manager to dirty.", t);
+    logger.error("Fatal error during critical commit/rollback of transaction " + context + ", setting resource manager to dirty.",
+        t);
     dirty = true;
   }
 

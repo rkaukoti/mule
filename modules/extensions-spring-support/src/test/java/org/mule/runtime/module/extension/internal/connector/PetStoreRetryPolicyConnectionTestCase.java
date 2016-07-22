@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.connector;
 
@@ -92,13 +92,15 @@ public class PetStoreRetryPolicyConnectionTestCase extends ExtensionFunctionalTe
   public static class PooledPetStoreConnectionProviderWithValidConnection extends PetStoreConnectionProvider {
 
     @Override
-    public ConnectionHandlingStrategy<PetStoreClient> getHandlingStrategy(ConnectionHandlingStrategyFactory handlingStrategyFactory) {
+    public ConnectionHandlingStrategy<PetStoreClient> getHandlingStrategy(
+        ConnectionHandlingStrategyFactory handlingStrategyFactory) {
       return handlingStrategyFactory.requiresPooling();
     }
   }
 
   @Alias("invalid")
   public static class PooledPetStoreConnectionProviderWithFailureInvalidConnection extends PetStoreConnectionProvider {
+
     @Override
     public ConnectionValidationResult validate(PetStoreClient connection) {
       return ConnectionValidationResult.failure(CONNECTION_FAIL, ConnectionExceptionCode.INCORRECT_CREDENTIALS,
@@ -106,12 +108,14 @@ public class PetStoreRetryPolicyConnectionTestCase extends ExtensionFunctionalTe
     }
 
     @Override
-    public ConnectionHandlingStrategy<PetStoreClient> getHandlingStrategy(ConnectionHandlingStrategyFactory handlingStrategyFactory) {
+    public ConnectionHandlingStrategy<PetStoreClient> getHandlingStrategy(
+        ConnectionHandlingStrategyFactory handlingStrategyFactory) {
       return handlingStrategyFactory.requiresPooling();
     }
   }
 
   public static class PetStoreOperationsWithFailures extends PetStoreOperations {
+
     public Integer failConnection(@Connection PetStoreClient client) throws ConnectionException {
       throw new ConnectionException(CONNECTION_FAIL);
     }

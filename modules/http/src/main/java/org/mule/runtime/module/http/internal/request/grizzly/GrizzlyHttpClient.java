@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.request.grizzly;
 
@@ -150,7 +150,8 @@ public class GrizzlyHttpClient implements HttpClient {
   protected final ProxyServer buildProxy(ProxyConfig proxyConfig) {
     ProxyServer proxyServer;
     if (!StringUtils.isEmpty(proxyConfig.getUsername())) {
-      proxyServer = new ProxyServer(proxyConfig.getHost(), proxyConfig.getPort(), proxyConfig.getUsername(), proxyConfig.getPassword());
+      proxyServer =
+          new ProxyServer(proxyConfig.getHost(), proxyConfig.getPort(), proxyConfig.getUsername(), proxyConfig.getPassword());
       if (proxyConfig instanceof NtlmProxyConfig) {
         proxyServer.setNtlmDomain(((NtlmProxyConfig) proxyConfig).getNtlmDomain());
         try {
@@ -200,8 +201,8 @@ public class GrizzlyHttpClient implements HttpClient {
   }
 
   @Override
-  public HttpResponse send(HttpRequest request, int responseTimeout, boolean followRedirects, HttpRequestAuthentication authentication)
-      throws IOException, TimeoutException {
+  public HttpResponse send(HttpRequest request, int responseTimeout, boolean followRedirects,
+      HttpRequestAuthentication authentication) throws IOException, TimeoutException {
 
     Request grizzlyRequest = createGrizzlyRequest(request, responseTimeout, followRedirects, authentication);
     ListenableFuture<Response> future = asyncHttpClient.executeRequest(grizzlyRequest);
@@ -308,8 +309,8 @@ public class GrizzlyHttpClient implements HttpClient {
 
         for (HttpPart part : multipartHttpEntity.getParts()) {
           if (part.getFileName() != null) {
-            builder.addBodyPart(new ByteArrayPart(part.getName(), IOUtils.toByteArray(part.getInputStream()), part.getContentType(), null,
-                part.getFileName()));
+            builder.addBodyPart(new ByteArrayPart(part.getName(), IOUtils.toByteArray(part.getInputStream()),
+                part.getContentType(), null, part.getFileName()));
           } else {
             byte[] content = IOUtils.toByteArray(part.getInputStream());
             builder.addBodyPart(new ByteArrayPart(part.getName(), content, part.getContentType(), null));
@@ -368,7 +369,8 @@ public class GrizzlyHttpClient implements HttpClient {
     private CompletionHandler<HttpResponse, Exception, Void> completionHandler;
     private WorkManager workManager;
 
-    WorkManagerSourceAsyncCompletionHandler(CompletionHandler<HttpResponse, Exception, Void> completionHandler, WorkManager workManager) {
+    WorkManagerSourceAsyncCompletionHandler(CompletionHandler<HttpResponse, Exception, Void> completionHandler,
+        WorkManager workManager) {
       this.completionHandler = completionHandler;
       this.workManager = workManager;
     }

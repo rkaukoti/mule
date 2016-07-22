@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.schedule;
 
@@ -25,6 +25,7 @@ import static org.junit.Assert.assertEquals;
  * This is a test for poll with schedulers. It validates that the polls can be executed, stopped, run.
  */
 public class PollScheduleTestCase extends FunctionalTestCase {
+
   private static List<String> foo = new ArrayList<String>();
   private static List<String> bar = new ArrayList<String>();
 
@@ -45,12 +46,13 @@ public class PollScheduleTestCase extends FunctionalTestCase {
   /**
    * This test validate that the polls can be stopped and run on demand.
    *
-   * It checks correct functionality of polls. Stop the schedulers Waits for the polls to be executed (they shouldn't, as they are stopped)
-   * Checks that the polls where not executed. Runs the polls on demand Checks that the polls where executed only once.
+   * It checks correct functionality of polls. Stop the schedulers Waits for the polls to be executed (they shouldn't, as they are
+   * stopped) Checks that the polls where not executed. Runs the polls on demand Checks that the polls where executed only once.
    */
   @Test
   public void test() throws Exception {
     workingPollProber.check(new Probe() {
+
       @Override
       public boolean isSatisfied() {
         return (foo.size() > 2 && checkCollectionValues(foo, "foo")) && (bar.size() > 2 && checkCollectionValues(bar, "bar"));
@@ -97,7 +99,8 @@ public class PollScheduleTestCase extends FunctionalTestCase {
 
 
   private void runSchedulersOnce() throws Exception {
-    Collection<Scheduler> schedulers = muleContext.getRegistry().lookupScheduler(Schedulers.flowConstructPollingSchedulers("pollfoo"));
+    Collection<Scheduler> schedulers =
+        muleContext.getRegistry().lookupScheduler(Schedulers.flowConstructPollingSchedulers("pollfoo"));
 
     for (Scheduler scheduler : schedulers) {
       scheduler.schedule();
@@ -105,7 +108,8 @@ public class PollScheduleTestCase extends FunctionalTestCase {
   }
 
   private void stopSchedulers() throws MuleException {
-    Collection<Scheduler> schedulers = muleContext.getRegistry().lookupScheduler(Schedulers.flowConstructPollingSchedulers("pollfoo"));
+    Collection<Scheduler> schedulers =
+        muleContext.getRegistry().lookupScheduler(Schedulers.flowConstructPollingSchedulers("pollfoo"));
 
     for (Scheduler scheduler : schedulers) {
       scheduler.stop();

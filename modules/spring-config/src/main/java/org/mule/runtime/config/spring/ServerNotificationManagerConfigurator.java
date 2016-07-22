@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring;
 
@@ -71,8 +71,8 @@ public class ServerNotificationManagerConfigurator implements SmartFactoryBean {
         try {
           disableFunction.run();
         } catch (Exception e) {
-          throw new MuleRuntimeException(
-              createStaticMessage(format("Fail trying to disable a notification of type %s since such type does not exists", type)), e);
+          throw new MuleRuntimeException(createStaticMessage(
+              format("Fail trying to disable a notification of type %s since such type does not exists", type)), e);
         }
       };
       if (disabledNotification.isInterfaceExplicitlyConfigured()) {
@@ -165,6 +165,7 @@ public class ServerNotificationManagerConfigurator implements SmartFactoryBean {
   }
 
   interface DisableNotificationTask {
+
     void run() throws ClassNotFoundException;
   }
 }

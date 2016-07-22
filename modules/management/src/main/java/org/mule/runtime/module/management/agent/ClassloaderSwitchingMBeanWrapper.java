@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.management.agent;
 
@@ -16,12 +16,13 @@ import javax.management.ReflectionException;
 import javax.management.StandardMBean;
 
 /**
- * Ensures any external jmx invocation (like e.g. remote) is executed with a correct application classloader (otherwise a bootstrap
- * classloader is used by default for platform mbean server). Note the irony - extends StandardMBean, but StandardMBean is not your
- * 'standard mbean', but rather a special kind of the DynamicMBean which generates attributes/operations based on the passed in interface
- * (via reflection).
+ * Ensures any external jmx invocation (like e.g. remote) is executed with a correct application classloader (otherwise a
+ * bootstrap classloader is used by default for platform mbean server). Note the irony - extends StandardMBean, but StandardMBean
+ * is not your 'standard mbean', but rather a special kind of the DynamicMBean which generates attributes/operations based on the
+ * passed in interface (via reflection).
  */
 public class ClassloaderSwitchingMBeanWrapper extends StandardMBean implements MBeanRegistration {
+
   protected Logger logger = LoggerFactory.getLogger(getClass());
 
   private ClassLoader executionClassLoader;

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.tcp.issues;
 
@@ -19,6 +19,7 @@ import static org.junit.Assert.assertNull;
  * Tests how sockets are bound to addresses by the TCP transport. This test is related to MULE-6584.
  */
 public class TcpSocketToAddressBindingTestCase extends AbstractTcpSocketToAddressBindingTestCase {
+
   public TcpSocketToAddressBindingTestCase() throws SocketException {
     super();
   }
@@ -62,8 +63,8 @@ public class TcpSocketToAddressBindingTestCase extends AbstractTcpSocketToAddres
     for (InetAddress inetAddress : localInetAddresses) {
       // Request not using loopback address to endpoint listening at 127.0.0.1 should timeout.
       try {
-        result =
-            client.send(getTransportName() + "://" + inetAddress.getHostAddress() + ":" + dynamicPort1.getNumber(), TEST_MESSAGE, null);
+        result = client.send(getTransportName() + "://" + inetAddress.getHostAddress() + ":" + dynamicPort1.getNumber(),
+            TEST_MESSAGE, null);
         assertNull(result);
       } catch (DispatchException ex) {
         ex.printStackTrace();

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.source.polling.watermark;
@@ -22,25 +22,26 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 
 /**
- * Poll override that provides watermarking functionality: It enriches the event passed to the polling message processor to have a flow
- * variable fetched from the object store defined, ensures the variable is carried over to the flow event if it is going to be executed, and
- * saves the value of the variable back to the object store at the end of the flow.
+ * Poll override that provides watermarking functionality: It enriches the event passed to the polling message processor to have a
+ * flow variable fetched from the object store defined, ensures the variable is carried over to the flow event if it is going to
+ * be executed, and saves the value of the variable back to the object store at the end of the flow.
  * <p>
- * A limitation of this implementation is that the poll must be embedded into a synchronous flow. An exception will be thrown if this is not
- * the case.
+ * A limitation of this implementation is that the poll must be embedded into a synchronous flow. An exception will be thrown if
+ * this is not the case.
  * </p>
  *
  * @since 3.5.0
  */
 public abstract class Watermark extends MessageProcessorPollingOverride {
+
   /**
    * Logger to notify errors.
    */
   private static final Logger logger = LoggerFactory.getLogger(Watermark.class);
 
   /**
-   * The watermark variable that will end up being the object store key. This variable is also the name of the flow variable in the flow
-   * construct.
+   * The watermark variable that will end up being the object store key. This variable is also the name of the flow variable in
+   * the flow construct.
    */
   private final String variable;
 
@@ -74,8 +75,8 @@ public abstract class Watermark extends MessageProcessorPollingOverride {
   }
 
   /**
-   * Retrieves the watermark value from the underlying peristent store and enriches the event.If there is no value stored, a default
-   * expression will be used to create a new one.
+   * Retrieves the watermark value from the underlying peristent store and enriches the event.If there is no value stored, a
+   * default expression will be used to create a new one.
    */
   public void putInto(MuleEvent event) throws ObjectStoreException {
     String resolvedVariable = resolveVariable(event);
@@ -87,7 +88,8 @@ public abstract class Watermark extends MessageProcessorPollingOverride {
       try {
         watermarkValue = WatermarkUtils.evaluate(defaultExpression, event);
       } catch (NotSerializableException nse) {
-        logger.warn(String.format("Default watermark expression '%s' returned not serializable value", this.defaultExpression), nse);
+        logger.warn(String.format("Default watermark expression '%s' returned not serializable value", this.defaultExpression),
+            nse);
       }
     }
     if (watermarkValue != null) {
@@ -136,7 +138,8 @@ public abstract class Watermark extends MessageProcessorPollingOverride {
   }
 
   /**
-   * This method is executed once the flow containing the poll has been executed. This method must return the watermark's new value
+   * This method is executed once the flow containing the poll has been executed. This method must return the watermark's new
+   * value
    *
    * @param event the {@link MuleEvent} that was returned by the owning flow
    * @return the new watermark value

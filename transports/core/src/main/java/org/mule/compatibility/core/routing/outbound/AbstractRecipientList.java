@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.routing.outbound;
 
@@ -26,13 +26,14 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * <code>AbstractRecipientList</code> is used to dispatch a single event to multiple recipients over the same transport. The recipient
- * targets can be configured statically or can be obtained from the message payload.
+ * <code>AbstractRecipientList</code> is used to dispatch a single event to multiple recipients over the same transport. The
+ * recipient targets can be configured statically or can be obtained from the message payload.
  *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
 public abstract class AbstractRecipientList extends FilteringOutboundRouter {
+
   private final ConcurrentMap<Object, OutboundEndpoint> recipientCache = new ConcurrentHashMap<>();
 
   private Boolean synchronous;

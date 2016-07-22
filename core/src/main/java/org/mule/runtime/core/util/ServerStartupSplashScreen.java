@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -16,6 +16,7 @@ import java.util.jar.Attributes;
 import java.util.jar.Manifest;
 
 public class ServerStartupSplashScreen extends SplashScreen {
+
   @Override
   protected void doHeader(MuleContext context) {
     String notset = CoreMessages.notSet().getMessage();
@@ -25,7 +26,8 @@ public class ServerStartupSplashScreen extends SplashScreen {
     Attributes att = mf.getMainAttributes();
     if (att.values().size() > 0) {
       header.add(StringUtils.defaultString(MuleManifest.getProductDescription(), notset));
-      header.add(CoreMessages.version().getMessage() + " Build: " + StringUtils.defaultString(MuleManifest.getBuildNumber(), notset));
+      header.add(
+          CoreMessages.version().getMessage() + " Build: " + StringUtils.defaultString(MuleManifest.getBuildNumber(), notset));
 
       header.add(StringUtils.defaultString(MuleManifest.getVendorName(), notset));
       header.add(StringUtils.defaultString(MuleManifest.getProductMoreInfo(), notset));
@@ -40,11 +42,11 @@ public class ServerStartupSplashScreen extends SplashScreen {
 
     // JDK, Encoding, OS, and Host
     header.add("JDK: " + System.getProperty("java.version") + " (" + System.getProperty("java.vm.info") + ")");
-    header
-        .add("OS encoding: " + System.getProperty("file.encoding") + ", Mule encoding: " + context.getConfiguration().getDefaultEncoding());
+    header.add("OS encoding: " + System.getProperty("file.encoding") + ", Mule encoding: "
+        + context.getConfiguration().getDefaultEncoding());
     String patch = System.getProperty("sun.os.patch.level", null);
-    header.add("OS: " + System.getProperty("os.name") + (patch != null && !"unknown".equalsIgnoreCase(patch) ? " - " + patch : "") + " ("
-        + System.getProperty("os.version") + ", " + System.getProperty("os.arch") + ")");
+    header.add("OS: " + System.getProperty("os.name") + (patch != null && !"unknown".equalsIgnoreCase(patch) ? " - " + patch : "")
+        + " (" + System.getProperty("os.version") + ", " + System.getProperty("os.arch") + ")");
     try {
       InetAddress host = NetworkUtils.getLocalHost();
       header.add("Host: " + host.getHostName() + " (" + host.getHostAddress() + ")");

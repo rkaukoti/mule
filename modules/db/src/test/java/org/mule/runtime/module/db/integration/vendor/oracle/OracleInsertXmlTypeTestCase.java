@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.db.integration.vendor.oracle;
 
@@ -50,6 +50,7 @@ public class OracleInsertXmlTypeTestCase extends AbstractOracleXmlTypeTestCase {
   @Test
   public void insertXmlTypeFromXmlType() throws Exception {
     assertAlienWasInserted(doTest(new XmlContentBuilder() {
+
       @Override
       public Object build(Connection connection) throws Exception {
         return OracleXmlType.createXmlType(connection, Alien.ET.getXml());
@@ -60,6 +61,7 @@ public class OracleInsertXmlTypeTestCase extends AbstractOracleXmlTypeTestCase {
   @Test
   public void insertLargeXmlTypeFromInputStream() throws Exception {
     assertAlienWasInserted(doTest(new XmlContentBuilder() {
+
       @Override
       public Object build(Connection connection) throws Exception {
         return IOUtils.getResourceAsStream("integration/vendor/oracle/oracle-insert-xml-type-large-sample.xml", this.getClass());
@@ -70,6 +72,7 @@ public class OracleInsertXmlTypeTestCase extends AbstractOracleXmlTypeTestCase {
   @Test
   public void insertXmlTypeFromString() throws Exception {
     assertAlienWasInserted(doTest(new XmlContentBuilder() {
+
       @Override
       public Object build(Connection connection) throws Exception {
         return Alien.ET.getXml();
@@ -80,6 +83,7 @@ public class OracleInsertXmlTypeTestCase extends AbstractOracleXmlTypeTestCase {
   @Test
   public void insertXmlTypeFromWrongType() throws Exception {
     assertNoAliens(doTest(new XmlContentBuilder() {
+
       @Override
       public Object build(Connection connection) throws Exception {
         return new Integer(1);
@@ -122,6 +126,7 @@ public class OracleInsertXmlTypeTestCase extends AbstractOracleXmlTypeTestCase {
   }
 
   private interface XmlContentBuilder {
+
     Object build(Connection connection) throws Exception;
   }
 }

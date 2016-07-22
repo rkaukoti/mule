@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.validation.internal;
 
@@ -26,12 +26,12 @@ import static org.reflections.ReflectionUtils.withParameters;
 /**
  * Default implementation of {@link ExceptionFactory}.
  * <p/>
- * In order to create the {@link Exception} instances, it scans the requested {@link Class}es for a public {@link Constructor} which
- * receives two arguments assignable from {@link ValidationResult} and {@link MuleEvent}. If it's not found, a new search is done looking
- * for a constructor with a single argument assignable from {@link ValidationResult}. If such {@link Constructor} is not found then it tries
- * with a default one. If it's still not found then an {@link IllegalArgumentException} exception is thrown because the requested
- * {@link Class} does not comply with the rules of this factory. For performance reasons, the {@link Constructor} chosen for each class are
- * cached.
+ * In order to create the {@link Exception} instances, it scans the requested {@link Class}es for a public {@link Constructor}
+ * which receives two arguments assignable from {@link ValidationResult} and {@link MuleEvent}. If it's not found, a new search is
+ * done looking for a constructor with a single argument assignable from {@link ValidationResult}. If such {@link Constructor} is
+ * not found then it tries with a default one. If it's still not found then an {@link IllegalArgumentException} exception is
+ * thrown because the requested {@link Class} does not comply with the rules of this factory. For performance reasons, the
+ * {@link Constructor} chosen for each class are cached.
  *
  * @see ExceptionFactory
  * @since 3.7.0
@@ -40,6 +40,7 @@ public class DefaultExceptionFactory implements ExceptionFactory {
 
   private final LoadingCache<Class<? extends Exception>, ConstructorDelegate<? extends Exception>> constructorCache =
       CacheBuilder.newBuilder().build(new CacheLoader<Class<? extends Exception>, ConstructorDelegate<? extends Exception>>() {
+
         @Override
         public ConstructorDelegate<? extends Exception> load(Class<? extends Exception> exceptionType) throws Exception {
           return selectMostCompleteConstructor(exceptionType);
@@ -48,6 +49,7 @@ public class DefaultExceptionFactory implements ExceptionFactory {
 
   private final LoadingCache<String, Class<? extends Exception>> classCache =
       CacheBuilder.newBuilder().build(new CacheLoader<String, Class<? extends Exception>>() {
+
         @Override
         public Class<? extends Exception> load(String exceptionClassName) throws Exception {
           Class<? extends Exception> exceptionClass;
@@ -72,8 +74,8 @@ public class DefaultExceptionFactory implements ExceptionFactory {
     try {
       return constructorDelegate.createException(result, result.getMessage(), event);
     } catch (Exception e) {
-      throw new MuleRuntimeException(MessageFactory.createStaticMessage(String
-          .format("Could not create exception of type %s. Exception message was:\n%s", exceptionClass.getName(), result.getMessage())));
+      throw new MuleRuntimeException(MessageFactory.createStaticMessage(String.format(
+          "Could not create exception of type %s. Exception message was:\n%s", exceptionClass.getName(), result.getMessage())));
     }
   }
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.endpoint;
 
@@ -38,10 +38,10 @@ import java.util.Map;
 import java.util.Properties;
 
 /**
- * An Outbound endpoint who's URI is a template used to created new non dynamic endpoints based on the current message. This allows for the
- * destination of a message to change based on the contents of the message. Note that this endpoint ONLY substitutes the URI, but other
- * config elements such as the transformers, filters, etc do not change. You cannot change an endpoint scheme dynamically so you can't
- * switch between HTTP and JMS for example using the same dynamic endpoint.
+ * An Outbound endpoint who's URI is a template used to created new non dynamic endpoints based on the current message. This
+ * allows for the destination of a message to change based on the contents of the message. Note that this endpoint ONLY
+ * substitutes the URI, but other config elements such as the transformers, filters, etc do not change. You cannot change an
+ * endpoint scheme dynamically so you can't switch between HTTP and JMS for example using the same dynamic endpoint.
  */
 public class DynamicOutboundEndpoint implements OutboundEndpoint {
 

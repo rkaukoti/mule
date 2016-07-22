@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -56,7 +56,8 @@ public class Jms11Support implements JmsSupport {
   }
 
   @Override
-  public Session createSession(Connection connection, boolean topic, boolean transacted, int ackMode, boolean noLocal) throws JMSException {
+  public Session createSession(Connection connection, boolean topic, boolean transacted, int ackMode, boolean noLocal)
+      throws JMSException {
     return connection.createSession(transacted, (transacted ? Session.SESSION_TRANSACTED : ackMode));
   }
 
@@ -106,7 +107,8 @@ public class Jms11Support implements JmsSupport {
   }
 
   @Override
-  public Destination createDestination(Session session, String name, boolean topic, ImmutableEndpoint endpoint) throws JMSException {
+  public Destination createDestination(Session session, String name, boolean topic, ImmutableEndpoint endpoint)
+      throws JMSException {
     if (connector.isJndiDestinations()) {
       try {
         Destination dest = getJndiDestination(name);
@@ -183,7 +185,8 @@ public class Jms11Support implements JmsSupport {
 
   @Override
   public void send(MessageProducer producer, Message message, boolean topic, ImmutableEndpoint endpoint) throws JMSException {
-    send(producer, message, connector.isPersistentDelivery(), Message.DEFAULT_PRIORITY, Message.DEFAULT_TIME_TO_LIVE, topic, endpoint);
+    send(producer, message, connector.isPersistentDelivery(), Message.DEFAULT_PRIORITY, Message.DEFAULT_TIME_TO_LIVE, topic,
+        endpoint);
   }
 
   @Override
@@ -200,8 +203,8 @@ public class Jms11Support implements JmsSupport {
   }
 
   @Override
-  public void send(MessageProducer producer, Message message, Destination dest, boolean persistent, int priority, long ttl, boolean topic,
-      ImmutableEndpoint endpoint) throws JMSException {
+  public void send(MessageProducer producer, Message message, Destination dest, boolean persistent, int priority, long ttl,
+      boolean topic, ImmutableEndpoint endpoint) throws JMSException {
     producer.send(dest, message, (persistent ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT), priority, ttl);
   }
 

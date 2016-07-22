@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.connector;
 
@@ -62,7 +62,8 @@ public class PetStoreSourceRetryPolicyTestCase extends ExtensionFunctionalTestCa
     try {
       startFlow("source-fail-on-start");
     } catch (Exception e) {
-      new PollingProber(TIMEOUT_MILLIS, POLL_DELAY_MILLIS).check(new JUnitLambdaProbe(() -> PetStoreConnectorWithSource.timesStarted == 2));
+      new PollingProber(TIMEOUT_MILLIS, POLL_DELAY_MILLIS)
+          .check(new JUnitLambdaProbe(() -> PetStoreConnectorWithSource.timesStarted == 2));
       throw e;
     }
   }
@@ -70,7 +71,8 @@ public class PetStoreSourceRetryPolicyTestCase extends ExtensionFunctionalTestCa
   @Test
   public void retryPolicySourceFailOnException() throws Exception {
     startFlow("source-fail-on-exception");
-    new PollingProber(TIMEOUT_MILLIS, POLL_DELAY_MILLIS).check(new JUnitLambdaProbe(() -> PetStoreConnectorWithSource.timesStarted == 3));
+    new PollingProber(TIMEOUT_MILLIS, POLL_DELAY_MILLIS)
+        .check(new JUnitLambdaProbe(() -> PetStoreConnectorWithSource.timesStarted == 3));
   }
 
   private void startFlow(String flowName) throws Exception {

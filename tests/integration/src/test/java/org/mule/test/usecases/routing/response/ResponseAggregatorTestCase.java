@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.usecases.routing.response;
 
@@ -41,8 +41,8 @@ public class ResponseAggregatorTestCase extends FunctionalTestCase {
   public void testSyncResponse() throws Exception {
     MuleClient client = muleContext.getClient();
     final HttpRequestOptions httpRequestOptions = newOptions().method(POST.name()).build();
-    MuleMessage message =
-        client.send(format("http://localhost:%s", port.getNumber()), MuleMessage.builder().payload("request").build(), httpRequestOptions);
+    MuleMessage message = client.send(format("http://localhost:%s", port.getNumber()),
+        MuleMessage.builder().payload("request").build(), httpRequestOptions);
     assertNotNull(message);
     assertThat(new String(getPayloadAsBytes(message)), is("Received: request"));
   }
@@ -74,6 +74,7 @@ public class ResponseAggregatorTestCase extends FunctionalTestCase {
    * This class opens up the access to responseEvents map for testing
    */
   private static final class RelaxedAsyncReplyMP extends AbstractAsyncRequestReplyRequester {
+
     private RelaxedAsyncReplyMP() throws MuleException {
       store = new SimpleMemoryObjectStore<>();
       name = "asyncReply";

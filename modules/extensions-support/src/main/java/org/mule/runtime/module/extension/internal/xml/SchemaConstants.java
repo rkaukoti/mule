@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.extension.internal.xml;
@@ -14,13 +14,15 @@ public final class SchemaConstants {
   public static final String XML_NAMESPACE = "http://www.w3.org/XML/1998/namespace";
   public static final String XSD_NAMESPACE = "http://www.w3.org/2001/XMLSchema";
   public static final String SPRING_FRAMEWORK_NAMESPACE = "http://www.springframework.org/schema/beans";
-  public static final String SPRING_FRAMEWORK_SCHEMA_LOCATION = "http://www.springframework.org/schema/beans/spring-beans-3.0.xsd";
+  public static final String SPRING_FRAMEWORK_SCHEMA_LOCATION =
+      "http://www.springframework.org/schema/beans/spring-beans-3.0.xsd";
   public static final String MULE_SCHEMA_LOCATION = "http://www.mulesoft.org/schema/mule/core/current/mule.xsd";
   public static final String DEFAULT_SCHEMA_LOCATION_MASK = "http://www.mulesoft.org/schema/mule/%s";
 
   public static final String MULE_EXTENSION_NAMESPACE = String.format(DEFAULT_SCHEMA_LOCATION_MASK, "extension");
   public static final String MULE_EXTENSION_PREFIX = "extension";
-  public static final String MULE_EXTENSION_SCHEMA_LOCATION = "http://www.mulesoft.org/schema/mule/extension/current/mule-extension.xsd";
+  public static final String MULE_EXTENSION_SCHEMA_LOCATION =
+      "http://www.mulesoft.org/schema/mule/extension/current/mule-extension.xsd";
 
   public static final String MULE_TLS_NAMESPACE = String.format(DEFAULT_SCHEMA_LOCATION_MASK, "tls");
   public static final String MULE_TLS_SCHEMA_LOCATION = "http://www.mulesoft.org/schema/mule/tls/current/mule-tls.xsd";
@@ -29,14 +31,17 @@ public final class SchemaConstants {
   public static final String MULE_NAMESPACE = String.format(DEFAULT_SCHEMA_LOCATION_MASK, "core");
   public static final String MULE_PREFIX = "mule";
 
-  public static final QName MULE_ABSTRACT_MESSAGE_SOURCE_TYPE = new QName(MULE_NAMESPACE, "abstractMessageSourceType", MULE_PREFIX);
+  public static final QName MULE_ABSTRACT_MESSAGE_SOURCE_TYPE =
+      new QName(MULE_NAMESPACE, "abstractMessageSourceType", MULE_PREFIX);
   public static final QName MULE_ABSTRACT_EXTENSION = new QName(MULE_NAMESPACE, "abstract-extension", MULE_PREFIX);
   public static final QName MULE_PROPERTY_PLACEHOLDER_TYPE = new QName(MULE_NAMESPACE, "propertyPlaceholderType", MULE_PREFIX);
-  public static final QName MULE_ABSTRACT_POOLING_PROFILE_TYPE = new QName(MULE_NAMESPACE, "abstractPoolingProfileType", MULE_PREFIX);
+  public static final QName MULE_ABSTRACT_POOLING_PROFILE_TYPE =
+      new QName(MULE_NAMESPACE, "abstractPoolingProfileType", MULE_PREFIX);
   public static final QName MULE_POOLING_PROFILE_TYPE = new QName(MULE_NAMESPACE, "pooling-profile", MULE_PREFIX);
   public static final QName MULE_ABSTRACT_THREADING_PROFILE_TYPE =
       new QName(MULE_NAMESPACE, "abstractServiceThreadingProfileType", MULE_PREFIX);
-  public static final QName MULE_ABSTRACT_THREADING_PROFILE = new QName(MULE_NAMESPACE, "abstract-service-threading-profile", MULE_PREFIX);
+  public static final QName MULE_ABSTRACT_THREADING_PROFILE =
+      new QName(MULE_NAMESPACE, "abstract-service-threading-profile", MULE_PREFIX);
   public static final QName MULE_EXTENSION_CONNECTION_PROVIDER_ELEMENT =
       new QName(MULE_EXTENSION_NAMESPACE, "abstractConnectionProvider", MULE_EXTENSION_PREFIX);
   public static final QName MULE_EXTENSION_CONNECTION_PROVIDER_TYPE =
@@ -46,10 +51,13 @@ public final class SchemaConstants {
   public static final QName MULE_EXTENSION_OPERATION_TRANSACTIONAL_ACTION_TYPE =
       new QName(MULE_EXTENSION_NAMESPACE, "operationTransactionalActionType", MULE_EXTENSION_PREFIX);
   public static final QName MULE_ABSTRACT_EXTENSION_TYPE = new QName(MULE_NAMESPACE, "abstractExtensionType", MULE_PREFIX);
-  public static final QName MULE_ABSTRACT_MESSAGE_PROCESSOR = new QName(MULE_NAMESPACE, "abstract-message-processor", MULE_PREFIX);
-  public static final QName MULE_ABSTRACT_MESSAGE_PROCESSOR_TYPE = new QName(MULE_NAMESPACE, "abstractMessageProcessorType", MULE_PREFIX);
+  public static final QName MULE_ABSTRACT_MESSAGE_PROCESSOR =
+      new QName(MULE_NAMESPACE, "abstract-message-processor", MULE_PREFIX);
+  public static final QName MULE_ABSTRACT_MESSAGE_PROCESSOR_TYPE =
+      new QName(MULE_NAMESPACE, "abstractMessageProcessorType", MULE_PREFIX);
   public static final QName MULE_ABSTRACT_MESSAGE_SOURCE = new QName(MULE_NAMESPACE, "abstract-message-source", MULE_PREFIX);
-  public static final QName MULE_ABSTRACT_RECONNECTION_STRATEGY = new QName(MULE_NAMESPACE, "abstract-reconnection-strategy", MULE_PREFIX);
+  public static final QName MULE_ABSTRACT_RECONNECTION_STRATEGY =
+      new QName(MULE_NAMESPACE, "abstract-reconnection-strategy", MULE_PREFIX);
   public static final QName MULE_ABSTRACT_RECONNECTION_STRATEGY_TYPE =
       new QName(MULE_NAMESPACE, "abstractReconnectionStrategyType", MULE_PREFIX);
   public static final QName MULE_MESSAGE_PROCESSOR_TYPE =
@@ -94,5 +102,6 @@ public final class SchemaConstants {
   /**
    * Human friendly description for {@link ExtensionProperties#TARGET_ATTRIBUTE}
    */
-  public static final String TARGET_ATTRIBUTE_DESCRIPTION = "The name of a variable on which the operation's output will be placed";
+  public static final String TARGET_ATTRIBUTE_DESCRIPTION =
+      "The name of a variable on which the operation's output will be placed";
 }

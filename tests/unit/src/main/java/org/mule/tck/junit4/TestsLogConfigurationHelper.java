@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.tck.junit4;
 
@@ -25,8 +25,8 @@ public class TestsLogConfigurationHelper {
   private static final String NULL_CONFIG_FILE = "NULL_CONFIG_FILE";
 
   /**
-   * Looks for a logging config file on the directory tree where the binaries for {@code testClass} resides. If found, that logging config
-   * file is used, otherwise Log4j2 is allowed to search for the config file using its own logic.
+   * Looks for a logging config file on the directory tree where the binaries for {@code testClass} resides. If found, that
+   * logging config file is used, otherwise Log4j2 is allowed to search for the config file using its own logic.
    * <p/>
    * A file called {@code log4j2-test.xml} will be searched first. If not found, will try with {@code log4j2.xml}.
    * <p/>

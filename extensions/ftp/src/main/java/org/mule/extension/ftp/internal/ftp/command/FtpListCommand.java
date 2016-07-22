@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.ftp.internal.ftp.command;
 
@@ -76,8 +76,8 @@ public final class FtpListCommand extends ClassicFtpCommand implements ListComma
     return treeNodeBuilder.build();
   }
 
-  private void doList(FileConnectorConfig config, Path path, TreeNode.Builder treeNodeBuilder, boolean recursive, MuleMessage message,
-      Predicate<FileAttributes> matcher) throws IOException {
+  private void doList(FileConnectorConfig config, Path path, TreeNode.Builder treeNodeBuilder, boolean recursive,
+      MuleMessage message, Predicate<FileAttributes> matcher) throws IOException {
     LOGGER.debug("Listing directory {}", path);
 
     FTPListParseEngine engine = client.initiateListParsing();
@@ -102,13 +102,14 @@ public final class FtpListCommand extends ClassicFtpCommand implements ListComma
           if (recursive) {
             Path recursionPath = path.resolve(attributes.getName());
             if (!client.changeWorkingDirectory(attributes.getName())) {
-              throw exception(
-                  format("Could not change working directory to '%s' while performing recursion on list operation", recursionPath));
+              throw exception(format("Could not change working directory to '%s' while performing recursion on list operation",
+                  recursionPath));
             }
             doList(config, recursionPath, childNodeBuilder, recursive, message, matcher);
             if (!client.changeToParentDirectory()) {
-              throw exception(format("Could not return to parent working directory '%s' while performing recursion on list operation",
-                  recursionPath.getParent()));
+              throw exception(
+                  format("Could not return to parent working directory '%s' while performing recursion on list operation",
+                      recursionPath.getParent()));
             }
           }
         } else {

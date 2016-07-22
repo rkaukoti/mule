@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.config.dsl;
 
@@ -46,8 +46,8 @@ public abstract class AbstractExtensionObjectFactory<T> implements ObjectFactory
   }
 
   /**
-   * Constructs a {@link ResolverSet} from the output of {@link #getParameters()}, using {@link #toValueResolver(Object)} to process the
-   * values.
+   * Constructs a {@link ResolverSet} from the output of {@link #getParameters()}, using {@link #toValueResolver(Object)} to
+   * process the values.
    *
    * @return a {@link ResolverSet}
    */
@@ -59,8 +59,8 @@ public abstract class AbstractExtensionObjectFactory<T> implements ObjectFactory
   }
 
   /**
-   * Wraps the {@code value} into a {@link ValueResolver} of the proper type. For example, {@link Collection} and {@link Map} instances are
-   * exposed as {@link CollectionValueResolver} and {@link MapValueResolver} respectively.
+   * Wraps the {@code value} into a {@link ValueResolver} of the proper type. For example, {@link Collection} and {@link Map}
+   * instances are exposed as {@link CollectionValueResolver} and {@link MapValueResolver} respectively.
    * <p>
    * If {@code value} is already a {@link ValueResolver} then it's returned as is.
    * <p>

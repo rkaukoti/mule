@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.vm.config;
 
@@ -40,7 +40,8 @@ public class VmTransportComponentBuildingDefinitionProvider extends TransportCom
   @Override
   public List<ComponentBuildingDefinition> getComponentBuildingDefinitions() {
     List<ComponentBuildingDefinition> componentBuildingDefinitions = new ArrayList<>();
-    componentBuildingDefinitions.add(getOutboundEndpointBuildingDefinitionBuilder().withNamespace(VM_TRANSPORT_NAMESPACE).build());
+    componentBuildingDefinitions
+        .add(getOutboundEndpointBuildingDefinitionBuilder().withNamespace(VM_TRANSPORT_NAMESPACE).build());
     componentBuildingDefinitions.add(getInboundEndpointBuildingDefinitionBuilder().withNamespace(VM_TRANSPORT_NAMESPACE).build());
     componentBuildingDefinitions.add(getEndpointBuildingDefinitionBuilder().withNamespace(VM_TRANSPORT_NAMESPACE).build());
     componentBuildingDefinitions.add(getBaseTransactionDefinitionBuilder().withNamespace(VM_TRANSPORT_NAMESPACE)
@@ -50,11 +51,11 @@ public class VmTransportComponentBuildingDefinitionProvider extends TransportCom
             .withSetterParameterDefinition("queueProfile", fromChildConfiguration(QueueProfile.class).build())
             .withSetterParameterDefinition("queueTimeout", fromSimpleParameter("queueTimeout").build()).build());
 
-    ComponentBuildingDefinition.Builder baseQueueProfileBuilder =
-        baseDefinition.copy().withTypeDefinition(fromType(QueueProfile.class)).withObjectFactoryType(QueueProfileFactoryBean.class)
-            .withSetterParameterDefinition("maxOutstandingMessages", fromSimpleParameter("maxOutstandingMessages").build())
-            .withSetterParameterDefinition("muleContext", fromReferenceObject(MuleContext.class).build())
-            .withSetterParameterDefinition("queueStore", fromChildConfiguration(ObjectStore.class).build());
+    ComponentBuildingDefinition.Builder baseQueueProfileBuilder = baseDefinition.copy()
+        .withTypeDefinition(fromType(QueueProfile.class)).withObjectFactoryType(QueueProfileFactoryBean.class)
+        .withSetterParameterDefinition("maxOutstandingMessages", fromSimpleParameter("maxOutstandingMessages").build())
+        .withSetterParameterDefinition("muleContext", fromReferenceObject(MuleContext.class).build())
+        .withSetterParameterDefinition("queueStore", fromChildConfiguration(ObjectStore.class).build());
     componentBuildingDefinitions.add(baseQueueProfileBuilder.copy().withIdentifier("queueProfile").build());
     componentBuildingDefinitions.add(baseQueueProfileBuilder.copy().withIdentifier("queue-profile").build());
 

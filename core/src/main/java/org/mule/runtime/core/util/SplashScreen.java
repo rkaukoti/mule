@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -15,9 +15,9 @@ import static java.lang.Boolean.TRUE;
 import static org.mule.runtime.core.api.config.MuleProperties.SYSTEM_PROPERTY_PREFIX;
 
 /**
- * Implements singleton pattern to allow different splash-screen implementations following the concept of header, body, and footer. Header
- * and footer are reserved internally to Mule but body can be used to customize splash-screen output. External code can e.g. hook into the
- * start-up splash-screen as follows:
+ * Implements singleton pattern to allow different splash-screen implementations following the concept of header, body, and
+ * footer. Header and footer are reserved internally to Mule but body can be used to customize splash-screen output. External code
+ * can e.g. hook into the start-up splash-screen as follows:
  * 
  * <pre>
  * <code>
@@ -27,6 +27,7 @@ import static org.mule.runtime.core.api.config.MuleProperties.SYSTEM_PROPERTY_PR
  * </pre>
  */
 public abstract class SplashScreen {
+
   public static final String RUNTIME_VERBOSE = SYSTEM_PROPERTY_PREFIX + "runtime.verbose";
   protected static final String VALUE_FORMAT = " - %s";
   private static final String KEY_VALUE_FORMAT = VALUE_FORMAT + " = %s";

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.tck.junit4.matcher;
@@ -31,7 +31,8 @@ public class ObjectDebugInfoMatcher extends TypeSafeMatcher<FieldDebugInfo<?>> {
   }
 
   @Factory
-  public static Matcher<FieldDebugInfo<?>> objectLike(String name, Class<?> type, List<Matcher<FieldDebugInfo<?>>> fieldMatchers) {
+  public static Matcher<FieldDebugInfo<?>> objectLike(String name, Class<?> type,
+      List<Matcher<FieldDebugInfo<?>>> fieldMatchers) {
     return new ObjectDebugInfoMatcher(name, type, fieldMatchers);
   }
 
@@ -70,8 +71,8 @@ public class ObjectDebugInfoMatcher extends TypeSafeMatcher<FieldDebugInfo<?>> {
 
   @Override
   public void describeTo(Description description) {
-    description
-        .appendText(format("an %s with name: '%s' type: '%s' and containing [ ", ObjectFieldDebugInfo.class.getSimpleName(), name, type));
+    description.appendText(
+        format("an %s with name: '%s' type: '%s' and containing [ ", ObjectFieldDebugInfo.class.getSimpleName(), name, type));
     boolean firstMatcher = true;
     for (Matcher<FieldDebugInfo<?>> fieldMatcher : fieldMatchers) {
       if (firstMatcher) {

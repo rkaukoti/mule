@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.registry;
 
@@ -8,8 +8,8 @@ import java.util.Collection;
 import java.util.ServiceLoader;
 
 /**
- * Locates and returns all registered instances of a given provider class. Advantages of using this interface instead of hitting something
- * like {@link ServiceLoader} directly are the ability to inject a different lookup mechanism and to facilitate testing.
+ * Locates and returns all registered instances of a given provider class. Advantages of using this interface instead of hitting
+ * something like {@link ServiceLoader} directly are the ability to inject a different lookup mechanism and to facilitate testing.
  *
  * @since 3.7.0
  */

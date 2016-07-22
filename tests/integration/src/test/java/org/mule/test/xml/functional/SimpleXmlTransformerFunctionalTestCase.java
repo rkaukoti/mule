@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.xml.functional;
 
@@ -17,8 +17,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 public class SimpleXmlTransformerFunctionalTestCase extends FunctionalTestCase {
-  public static final String SERIALIZED = "<org.mule.test.xml.functional.SimpleXmlTransformerFunctionalTestCase_-Parent>\n" + "  <child>\n"
-      + "    <name>theChild</name>\n" + "  </child>\n" + "</org.mule.test.xml.functional.SimpleXmlTransformerFunctionalTestCase_-Parent>";
+
+  public static final String SERIALIZED = "<org.mule.test.xml.functional.SimpleXmlTransformerFunctionalTestCase_-Parent>\n"
+      + "  <child>\n" + "    <name>theChild</name>\n" + "  </child>\n"
+      + "</org.mule.test.xml.functional.SimpleXmlTransformerFunctionalTestCase_-Parent>";
 
 
   @Override
@@ -53,6 +55,7 @@ public class SimpleXmlTransformerFunctionalTestCase extends FunctionalTestCase {
   }
 
   public static class Parent {
+
     private Child child;
 
     public Parent() {
@@ -73,6 +76,7 @@ public class SimpleXmlTransformerFunctionalTestCase extends FunctionalTestCase {
   }
 
   public static class Child {
+
     private String name;
 
     public Child() {

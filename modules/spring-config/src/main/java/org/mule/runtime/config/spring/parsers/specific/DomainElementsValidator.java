@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
@@ -28,7 +28,8 @@ public class DomainElementsValidator implements ElementValidator {
         return;
       }
 
-      if (node.getNamespaceURI().contains("mule") && "beans".equals(parent.getLocalName()) && parent.getNamespaceURI().contains("spring")) {
+      if (node.getNamespaceURI().contains("mule") && "beans".equals(parent.getLocalName())
+          && parent.getNamespaceURI().contains("spring")) {
         throw new IllegalStateException("Mule elements are not allowed inside Spring elements when used in a domain");
       }
 

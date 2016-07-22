@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.functional.junit4;
@@ -41,29 +41,32 @@ import static org.mule.runtime.core.config.MuleManifest.getProductVersion;
 /**
  * Discovers and registers the extensions to a {@link org.mule.runtime.extension.api.ExtensionManager}.
  * <p/>
- * Once extensions are registered, a {@link ResourcesGenerator} is used to automatically generate any backing resources needed (XSD schemas,
- * spring bundles, etc).
+ * Once extensions are registered, a {@link ResourcesGenerator} is used to automatically generate any backing resources needed
+ * (XSD schemas, spring bundles, etc).
  * <p/>
- * In this way, the user experience is greatly simplified when running the test either through an IDE or build tool such as maven or gradle.
+ * In this way, the user experience is greatly simplified when running the test either through an IDE or build tool such as maven
+ * or gradle.
  * <p/>
  *
  * @since 4.0
  */
 public class ExtensionsTestInfrastructureDiscoverer {
+
   private final ServiceRegistry serviceRegistry = new SpiServiceRegistry();
   private final ExtensionFactory extensionFactory = new DefaultExtensionFactory(serviceRegistry, getClass().getClassLoader());
   private final ExtensionManagerAdapter extensionManager;
   private final File generatedResourcesDirectory;
 
   /**
-   * Creates a {@link ExtensionsTestInfrastructureDiscoverer} that will use the extensionManager passed here in order to register the
-   * extensions, resources for the extensions will be created in the generatedResourcesDirectory.
+   * Creates a {@link ExtensionsTestInfrastructureDiscoverer} that will use the extensionManager passed here in order to register
+   * the extensions, resources for the extensions will be created in the generatedResourcesDirectory.
    *
    * @param extensionManagerAdapter {@link ExtensionManagerAdapter} to be used for registering the extensions
    * @param generatedResourcesDirectory the {@link File} where the resources for the extensions would be created
    * @throws {@link RuntimeException} if there was an error while creating the MANIFEST.MF file
    */
-  public ExtensionsTestInfrastructureDiscoverer(ExtensionManagerAdapter extensionManagerAdapter, File generatedResourcesDirectory) {
+  public ExtensionsTestInfrastructureDiscoverer(ExtensionManagerAdapter extensionManagerAdapter,
+      File generatedResourcesDirectory) {
     try {
       this.extensionManager = extensionManagerAdapter;
       this.generatedResourcesDirectory = generatedResourcesDirectory;
@@ -126,15 +129,16 @@ public class ExtensionsTestInfrastructureDiscoverer {
   }
 
   /**
-   * Implementation of an {@link AbstractResourcesGenerator} that writes the generated resources to the specified target directory but also
-   * exposes the content to be shared for testing purposes.
+   * Implementation of an {@link AbstractResourcesGenerator} that writes the generated resources to the specified target directory
+   * but also exposes the content to be shared for testing purposes.
    */
   private static class ExtensionsTestInfrastructureResourcesGenerator extends AbstractResourcesGenerator {
 
     private final File targetDirectory;
     private final Map<String, StringBuilder> contents = new HashMap<>();
 
-    private ExtensionsTestInfrastructureResourcesGenerator(Collection<GeneratedResourceFactory> resourceFactories, File targetDirectory) {
+    private ExtensionsTestInfrastructureResourcesGenerator(Collection<GeneratedResourceFactory> resourceFactories,
+        File targetDirectory) {
       super(resourceFactories);
       this.targetDirectory = targetDirectory;
     }

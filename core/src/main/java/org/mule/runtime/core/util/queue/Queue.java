@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.util.queue;
@@ -15,6 +15,7 @@ import java.io.Serializable;
  * Interface for mule queues used for VM.
  */
 public interface Queue extends NamedObject {
+
   /**
    * Returns the number of elements in this queue.
    */
@@ -46,8 +47,8 @@ public interface Queue extends NamedObject {
   public void clear() throws InterruptedException;
 
   /**
-   * Disposes this queue by releasing it's storage and associated memory and storage. If after disposing the queue you try go get it back,
-   * you'll get a fresh new one which maintains none of the original one's data
+   * Disposes this queue by releasing it's storage and associated memory and storage. If after disposing the queue you try go get
+   * it back, you'll get a fresh new one which maintains none of the original one's data
    */
   public void dispose() throws MuleException, InterruptedException;
 

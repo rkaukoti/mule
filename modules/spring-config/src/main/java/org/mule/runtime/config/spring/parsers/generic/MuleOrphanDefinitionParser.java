@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.generic;
 
@@ -13,6 +13,7 @@ import org.w3c.dom.Element;
  * A parser for direct children of the <mule> element.
  */
 public class MuleOrphanDefinitionParser extends OrphanDefinitionParser {
+
   /**
    * This constructor assumes that the class name will be explicitly specified as an attribute on the element.
    */
@@ -32,8 +33,8 @@ public class MuleOrphanDefinitionParser extends OrphanDefinitionParser {
 
   protected void assertMuleParent(Element element) {
     if (!isTopLevel(element)) {
-      throw new IllegalStateException(
-          "This element should be embedded inside the Mule <" + ROOT_ELEMENT + "> element: " + SpringXMLUtils.elementToString(element));
+      throw new IllegalStateException("This element should be embedded inside the Mule <" + ROOT_ELEMENT + "> element: "
+          + SpringXMLUtils.elementToString(element));
     }
   }
 }

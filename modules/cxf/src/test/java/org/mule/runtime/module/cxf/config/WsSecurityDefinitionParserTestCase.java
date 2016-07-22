@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.config;
 
@@ -19,6 +19,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class WsSecurityDefinitionParserTestCase extends FunctionalTestCase {
+
   @Override
   protected String getConfigFile() {
     return "ws-security-config.xml";
@@ -36,7 +37,8 @@ public class WsSecurityDefinitionParserTestCase extends FunctionalTestCase {
     assertEquals(WSHandlerConstants.USERNAME_TOKEN, wsProperties.get(WSHandlerConstants.ACTION));
     assertEquals("joe", wsProperties.get(WSHandlerConstants.USER));
     assertEquals("PasswordText", wsProperties.get(WSHandlerConstants.PASSWORD_TYPE));
-    assertEquals("org.mule.runtime.module.cxf.wssec.ClientPasswordCallback", wsProperties.get(WSHandlerConstants.PW_CALLBACK_CLASS));
+    assertEquals("org.mule.runtime.module.cxf.wssec.ClientPasswordCallback",
+        wsProperties.get(WSHandlerConstants.PW_CALLBACK_CLASS));
 
     assertNotNull(wsSecurity.getCustomValidator());
     assertFalse(wsSecurity.getCustomValidator().isEmpty());

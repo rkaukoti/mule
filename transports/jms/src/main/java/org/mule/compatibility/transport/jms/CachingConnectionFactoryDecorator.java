@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -10,17 +10,19 @@ import org.springframework.jms.connection.CachingConnectionFactory;
 import javax.jms.ConnectionFactory;
 
 /**
- * Decorates the JMS {@link javax.jms.ConnectionFactory} with a {@link org.mule.compatibility.transport.jms.CustomCachingConnectionFactory}
- * in order to ensure JMS session instances are reused if {@link JmsConnector#isCacheJmsSessions()} is 'true' and the supplied connection
- * factory isn't already an instance of {@link org.mule.compatibility.transport.jms.CustomCachingConnectionFactory} NOTE: Currently only
- * Non-XA JMS 1.1 {@link javax.jms.ConnectionFactory}'s will be decorated to provide caching.
+ * Decorates the JMS {@link javax.jms.ConnectionFactory} with a
+ * {@link org.mule.compatibility.transport.jms.CustomCachingConnectionFactory} in order to ensure JMS session instances are reused
+ * if {@link JmsConnector#isCacheJmsSessions()} is 'true' and the supplied connection factory isn't already an instance of
+ * {@link org.mule.compatibility.transport.jms.CustomCachingConnectionFactory} NOTE: Currently only Non-XA JMS 1.1
+ * {@link javax.jms.ConnectionFactory}'s will be decorated to provide caching.
  */
 public class CachingConnectionFactoryDecorator extends AbstractConnectionFactoryDecorator {
 
   protected CustomCachingConnectionFactory cachingConnectionFactory;
 
   @Override
-  protected ConnectionFactory doDecorate(ConnectionFactory connectionFactory, JmsConnector jmsConnector, MuleContext muleContext) {
+  protected ConnectionFactory doDecorate(ConnectionFactory connectionFactory, JmsConnector jmsConnector,
+      MuleContext muleContext) {
     if (resolveReuseSessionsEnabled(jmsConnector)) {
       cachingConnectionFactory =
           new CustomCachingConnectionFactory(connectionFactory, jmsConnector.getUsername(), jmsConnector.getPassword());

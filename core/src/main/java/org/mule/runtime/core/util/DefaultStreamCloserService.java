@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -23,8 +23,8 @@ import javax.xml.transform.stream.StreamSource;
 /**
  * Closes streams of different types by looking up available {@link StreamCloser}'s from the Mule registry.
  * {@link org.mule.runtime.core.api.util.StreamCloser} instances are only fetched from the registry the first time the
- * {@link #closeStream(Object)} method is called with a steam that cannot be closed by {@lnk CoreStreamTypesCloser}. Any other closers added
- * to the registry after that will be ignored
+ * {@link #closeStream(Object)} method is called with a steam that cannot be closed by {@lnk CoreStreamTypesCloser}. Any other
+ * closers added to the registry after that will be ignored
  */
 public class DefaultStreamCloserService implements StreamCloserService {
 
@@ -60,9 +60,10 @@ public class DefaultStreamCloserService implements StreamCloserService {
   }
 
   /**
-   * Lazyly fetches and keeps all the registered {@link org.mule.runtime.core.api.util.StreamCloser} instances from the registry. Because
-   * there're not too many of them, this is the most efficient option to avoid accessing the registry continuosly. If we get to a situation
-   * in which we have many of them, considering using a {@link java.util.Map} guarded by a {@link java.util.concurrent.locks.ReadWriteLock}
+   * Lazyly fetches and keeps all the registered {@link org.mule.runtime.core.api.util.StreamCloser} instances from the registry.
+   * Because there're not too many of them, this is the most efficient option to avoid accessing the registry continuosly. If we
+   * get to a situation in which we have many of them, considering using a {@link java.util.Map} guarded by a
+   * {@link java.util.concurrent.locks.ReadWriteLock}
    *
    * @return all {@link org.mule.runtime.core.api.util.StreamCloser} instances in the registry
    */

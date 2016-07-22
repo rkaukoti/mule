@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -20,14 +20,15 @@ import java.util.Map;
  * <p/>
  * The <code>keySet()</code> method returns all keys in their original case
  * <p/>
- * <strong>Note that CaseInsensitiveMap is not synchronized and is not thread-safe.</strong> If you wish to use this map from multiple
- * threads concurrently, you must use appropriate synchronization. The simplest approach is to wrap this map using
+ * <strong>Note that CaseInsensitiveMap is not synchronized and is not thread-safe.</strong> If you wish to use this map from
+ * multiple threads concurrently, you must use appropriate synchronization. The simplest approach is to wrap this map using
  * {@link java.util.Collections#synchronizedMap(Map)}. This class may throw exceptions when accessed by concurrent threads without
  * synchronization.
  *
  * @since 3.0.0
  */
 public class CaseInsensitiveHashMap extends AbstractHashedMap implements Serializable {
+
   /**
    * Serialisation version
    */
@@ -66,8 +67,8 @@ public class CaseInsensitiveHashMap extends AbstractHashedMap implements Seriali
   /**
    * Constructor copying elements from another map.
    * <p/>
-   * Keys will be converted to lower case strings, which may cause some entries to be removed (if string representation of keys differ only
-   * by character case).
+   * Keys will be converted to lower case strings, which may cause some entries to be removed (if string representation of keys
+   * differ only by character case).
    *
    * @param map the map to copy
    * @throws NullPointerException if the map is null
@@ -77,7 +78,8 @@ public class CaseInsensitiveHashMap extends AbstractHashedMap implements Seriali
   }
 
   /**
-   * Creates a hash value from the lower case value of the key. The same function will be used when querying a value in the map also
+   * Creates a hash value from the lower case value of the key. The same function will be used when querying a value in the map
+   * also
    *
    * @param key the key value to hash
    * @return a hash value for the lower case key

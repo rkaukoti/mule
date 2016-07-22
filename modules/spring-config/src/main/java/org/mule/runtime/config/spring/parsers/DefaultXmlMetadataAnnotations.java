@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers;
 
@@ -13,6 +13,7 @@ import java.util.Map.Entry;
  * Stores the metadata annotations from the XML parser so they are available when building the actual objects of the application.
  */
 public class DefaultXmlMetadataAnnotations implements XmlMetadataAnnotations {
+
   public static final String METADATA_ANNOTATIONS_KEY = "metadataAnnotations";
 
   private StringBuilder xmlContent = new StringBuilder();
@@ -56,11 +57,13 @@ public class DefaultXmlMetadataAnnotations implements XmlMetadataAnnotations {
   /**
    * @return the reconstruction of the declaration of the element in its source xml file.
    *         <p/>
-   *         Note that the order of the elements may be different, and any implicit attributes with default values will be included.
+   *         Note that the order of the elements may be different, and any implicit attributes with default values will be
+   *         included.
    */
   @Override
   public String getElementString() {
-    return xmlContent.toString().replaceAll(">\\s+<+", ">" + SystemUtils.LINE_SEPARATOR + "<") /* compact whitespaces and line breaks */
+    return xmlContent.toString()
+        .replaceAll(">\\s+<+", ">" + SystemUtils.LINE_SEPARATOR + "<") /* compact whitespaces and line breaks */
         .trim();
   }
 

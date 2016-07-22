@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.connector;
 
@@ -29,6 +29,7 @@ import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_PROP
  */
 
 public class DefaultReplyToHandler implements ReplyToHandler, Serializable, DeserializationPostInitialisable {
+
   /**
    * Serial version
    */
@@ -60,7 +61,8 @@ public class DefaultReplyToHandler implements ReplyToHandler, Serializable, Dese
     // anyway as it should never be true from a replyTo dispatch
     event.removeFlowVariable(MULE_REMOTE_SYNC_PROPERTY);
 
-    event.setMessage(MuleMessage.builder(event.getMessage()).replyTo(null).removeOutboundProperty(MULE_REMOTE_SYNC_PROPERTY).build());
+    event.setMessage(
+        MuleMessage.builder(event.getMessage()).replyTo(null).removeOutboundProperty(MULE_REMOTE_SYNC_PROPERTY).build());
 
     // TODO See MULE-9307 - re-add behaviour to process reply to destination dispatching with new connectors
   }

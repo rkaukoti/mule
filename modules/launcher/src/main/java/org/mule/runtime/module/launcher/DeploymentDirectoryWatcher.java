@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher;
 
@@ -48,15 +48,16 @@ import static org.mule.runtime.module.launcher.DefaultArchiveDeployer.ZIP_FILE_S
 /**
  * It's in charge of the whole deployment process.
  * <p/>
- * It will deploy the applications at the container startup process. It will periodically scan the artifact directories in order to process
- * new deployments, remove artifacts that were previously deployed but the anchor file was removed and redeploy those applications which
- * configuration has changed.
+ * It will deploy the applications at the container startup process. It will periodically scan the artifact directories in order
+ * to process new deployments, remove artifacts that were previously deployed but the anchor file was removed and redeploy those
+ * applications which configuration has changed.
  */
 public class DeploymentDirectoryWatcher implements Runnable {
 
   public static final String ARTIFACT_ANCHOR_SUFFIX = "-anchor.txt";
   public static final String CHANGE_CHECK_INTERVAL_PROPERTY = "mule.launcher.changeCheckInterval";
-  public static final IOFileFilter ZIP_ARTIFACT_FILTER = new AndFileFilter(new SuffixFileFilter(ZIP_FILE_SUFFIX), FileFileFilter.FILE);
+  public static final IOFileFilter ZIP_ARTIFACT_FILTER =
+      new AndFileFilter(new SuffixFileFilter(ZIP_FILE_SUFFIX), FileFileFilter.FILE);
   protected static final int DEFAULT_CHANGES_CHECK_INTERVAL_MS = 5000;
 
   protected transient final Logger logger = LoggerFactory.getLogger(getClass());
@@ -84,6 +85,7 @@ public class DeploymentDirectoryWatcher implements Runnable {
     this.applications = applications;
     this.domains = domains;
     applications.addPropertyChangeListener(new PropertyChangeListener() {
+
       public void propertyChange(PropertyChangeEvent e) {
         if (e instanceof ElementAddedEvent || e instanceof ElementRemovedEvent) {
           if (logger.isDebugEnabled()) {
@@ -94,6 +96,7 @@ public class DeploymentDirectoryWatcher implements Runnable {
       }
     });
     domains.addPropertyChangeListener(new PropertyChangeListener() {
+
       public void propertyChange(PropertyChangeEvent e) {
         if (e instanceof ElementAddedEvent || e instanceof ElementRemovedEvent) {
           if (logger.isDebugEnabled()) {
@@ -333,7 +336,8 @@ public class DeploymentDirectoryWatcher implements Runnable {
 
     String[] artifactAnchors = findExpectedAnchorFiles(artifacts);
     @SuppressWarnings("unchecked")
-    final Collection<String> deletedAnchors = CollectionUtils.subtract(Arrays.asList(artifactAnchors), Arrays.asList(currentAnchors));
+    final Collection<String> deletedAnchors =
+        CollectionUtils.subtract(Arrays.asList(artifactAnchors), Arrays.asList(currentAnchors));
     if (logger.isDebugEnabled()) {
       StringBuilder sb = new StringBuilder();
       sb.append(String.format("Deleted anchors:%n"));
@@ -479,7 +483,8 @@ public class DeploymentDirectoryWatcher implements Runnable {
     }
 
     public boolean isArtifactResourceUpdated(T artifact) {
-      ArtifactResourcesTimestamp<T> applicationResourcesTimestamp = artifactConfigResourcesTimestaps.get(artifact.getArtifactName());
+      ArtifactResourcesTimestamp<T> applicationResourcesTimestamp =
+          artifactConfigResourcesTimestaps.get(artifact.getArtifactName());
       return !applicationResourcesTimestamp.resourcesHaveSameTimestamp(artifact);
     }
   }

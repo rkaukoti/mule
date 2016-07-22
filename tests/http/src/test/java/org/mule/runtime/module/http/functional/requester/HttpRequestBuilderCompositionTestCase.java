@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.requester;
 
@@ -22,7 +22,8 @@ public class HttpRequestBuilderCompositionTestCase extends AbstractHttpRequestTe
   public void parameterOverrideInRequestBuilderComposition() throws Exception {
     flowRunner("testFlow").withPayload(TEST_MESSAGE).run();
 
-    assertThat(uri, equalTo("/testPath?queryParam1=testValue1&queryParam2=testValue2&queryParam2=newTestValue2&queryParam3=testValue3"));
+    assertThat(uri,
+        equalTo("/testPath?queryParam1=testValue1&queryParam2=testValue2&queryParam2=newTestValue2&queryParam3=testValue3"));
     assertThat(getFirstReceivedHeader("testHeader1"), equalTo("headerValue1"));
     assertThat(getFirstReceivedHeader("testHeader2"), equalTo("headerValue2"));
   }

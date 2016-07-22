@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer.simple;
 
@@ -39,6 +39,7 @@ import static org.mule.tck.junit4.matcher.DataTypeMatcher.like;
 
 @SmallTest
 public abstract class AbstractAddVariablePropertyTransformerTestCase extends AbstractMuleContextTestCase {
+
   public static final Charset ENCODING = US_ASCII;
   public static final String PLAIN_STRING_KEY = "someText";
   public static final String PLAIN_STRING_VALUE = "someValue";
@@ -82,7 +83,8 @@ public abstract class AbstractAddVariablePropertyTransformerTestCase extends Abs
     addVariableTransformer.transform(event, ENCODING);
 
     verifyAdded(event, PLAIN_STRING_KEY, PLAIN_STRING_VALUE);
-    assertThat(getVariableDataType(event, PLAIN_STRING_KEY), like(String.class, MediaType.ANY, getDefaultEncoding(mockMuleContext)));
+    assertThat(getVariableDataType(event, PLAIN_STRING_KEY),
+        like(String.class, MediaType.ANY, getDefaultEncoding(mockMuleContext)));
   }
 
   @Test
@@ -93,7 +95,8 @@ public abstract class AbstractAddVariablePropertyTransformerTestCase extends Abs
     addVariableTransformer.transform(event, ENCODING);
 
     verifyAdded(event, PLAIN_STRING_KEY, EXPRESSION_VALUE);
-    assertThat(getVariableDataType(event, PLAIN_STRING_KEY), like(String.class, MediaType.ANY, getDefaultEncoding(mockMuleContext)));
+    assertThat(getVariableDataType(event, PLAIN_STRING_KEY),
+        like(String.class, MediaType.ANY, getDefaultEncoding(mockMuleContext)));
   }
 
   @Test
@@ -104,7 +107,8 @@ public abstract class AbstractAddVariablePropertyTransformerTestCase extends Abs
     addVariableTransformer.transform(event, ENCODING);
 
     verifyAdded(event, EXPRESSION_VALUE, PLAIN_STRING_VALUE);
-    assertThat(getVariableDataType(event, EXPRESSION_VALUE), like(String.class, MediaType.ANY, getDefaultEncoding(mockMuleContext)));
+    assertThat(getVariableDataType(event, EXPRESSION_VALUE),
+        like(String.class, MediaType.ANY, getDefaultEncoding(mockMuleContext)));
   }
 
   @Test
@@ -128,7 +132,8 @@ public abstract class AbstractAddVariablePropertyTransformerTestCase extends Abs
     addVariableTransformer.transform(event, ENCODING);
 
     verifyAdded(event, PLAIN_STRING_KEY, PLAIN_STRING_VALUE);
-    assertThat(getVariableDataType(event, PLAIN_STRING_KEY), like(String.class, APPLICATION_XML, getDefaultEncoding(mockMuleContext)));
+    assertThat(getVariableDataType(event, PLAIN_STRING_KEY),
+        like(String.class, APPLICATION_XML, getDefaultEncoding(mockMuleContext)));
   }
 
   protected abstract DataType getVariableDataType(MuleEvent event, String key);

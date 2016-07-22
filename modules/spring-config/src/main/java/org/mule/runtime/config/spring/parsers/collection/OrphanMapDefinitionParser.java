@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.collection;
 
@@ -19,6 +19,7 @@ import java.util.Map;
  * Creates a single, stand-alone map object and processes standard Spring sub elements
  */
 public class OrphanMapDefinitionParser extends AbstractMuleBeanDefinitionParser {
+
   protected Class mapClass;
   protected String name;
   protected boolean attributeName;
@@ -50,8 +51,8 @@ public class OrphanMapDefinitionParser extends AbstractMuleBeanDefinitionParser 
    *
    * @param mapClass the type of map to create
    * @param name the name of the map property
-   * @param attributeName whether the name specified is actually an attribute name on the element. The map name will be retrieved from the
-   *        element attribute.
+   * @param attributeName whether the name specified is actually an attribute name on the element. The map name will be retrieved
+   *        from the element attribute.
    */
   public OrphanMapDefinitionParser(Class mapClass, String name, boolean attributeName) {
     this.mapClass = mapClass;

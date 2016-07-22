@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.i18n;
 
@@ -12,6 +12,7 @@ import java.util.List;
 import javax.xml.namespace.QName;
 
 public class CxfMessages extends MessageFactory {
+
   private static final CxfMessages factory = new CxfMessages();
 
   private static final String BUNDLE_PATH = getBundlePath("cxf");
@@ -95,7 +96,8 @@ public class CxfMessages extends MessageFactory {
   }
 
   public static Message couldNotFindEndpoint(QName endpointNameThatCannotBeFound, List<QName> availableEndpoingNames) {
-    return factory.createMessage(BUNDLE_PATH, 27, String.valueOf(endpointNameThatCannotBeFound), String.valueOf(availableEndpoingNames));
+    return factory.createMessage(BUNDLE_PATH, 27, String.valueOf(endpointNameThatCannotBeFound),
+        String.valueOf(availableEndpoingNames));
   }
 }
 

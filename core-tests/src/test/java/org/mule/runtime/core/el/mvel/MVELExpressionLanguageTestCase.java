@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.el.mvel;
 
@@ -95,7 +95,8 @@ public class MVELExpressionLanguageTestCase extends AbstractMuleContextTestCase 
   @Parameters
   public static List<Object[]> parameters() {
     return Arrays.asList(new Object[][] {{Variant.EXPRESSION_WITH_DELIMITER, OptimizerFactory.SAFE_REFLECTIVE},
-        {Variant.EXPRESSION_WITH_DELIMITER, OptimizerFactory.DYNAMIC}, {Variant.EXPRESSION_STRAIGHT_UP, OptimizerFactory.SAFE_REFLECTIVE},
+        {Variant.EXPRESSION_WITH_DELIMITER, OptimizerFactory.DYNAMIC},
+        {Variant.EXPRESSION_STRAIGHT_UP, OptimizerFactory.SAFE_REFLECTIVE},
         {Variant.EXPRESSION_STRAIGHT_UP, OptimizerFactory.DYNAMIC}});
   }
 
@@ -287,7 +288,8 @@ public class MVELExpressionLanguageTestCase extends AbstractMuleContextTestCase 
     mvel.setAliases(Collections.singletonMap("app", "'other1'"));
     MuleEvent event = getTestEvent("");
     event.setFlowVariable("app", "otherb");
-    muleContext.getRegistry().registerObject("foo", (ExpressionLanguageExtension) context -> context.addVariable("app", "otherc"));
+    muleContext.getRegistry().registerObject("foo",
+        (ExpressionLanguageExtension) context -> context.addVariable("app", "otherc"));
     mvel.initialise();
     assertEquals(AppContext.class, evaluate("app", event).getClass());
   }
@@ -297,7 +299,8 @@ public class MVELExpressionLanguageTestCase extends AbstractMuleContextTestCase 
     mvel.setAliases(Collections.singletonMap("message", "'other1'"));
     MuleEvent event = getTestEvent("");
     event.setFlowVariable("message", "other2");
-    muleContext.getRegistry().registerObject("foo", (ExpressionLanguageExtension) context -> context.addVariable("message", "other3"));
+    muleContext.getRegistry().registerObject("foo",
+        (ExpressionLanguageExtension) context -> context.addVariable("message", "other3"));
     mvel.initialise();
     assertEquals(MessageContext.class, evaluate("message", event).getClass());
   }
@@ -530,6 +533,7 @@ public class MVELExpressionLanguageTestCase extends AbstractMuleContextTestCase 
   }
 
   static class DummyExpressionLanguageExtension implements ExpressionLanguageExtension {
+
     @Override
     public void configureContext(ExpressionLanguageContext context) {
       for (int i = 0; i < 20; i++) {
@@ -539,6 +543,7 @@ public class MVELExpressionLanguageTestCase extends AbstractMuleContextTestCase 
   }
 
   private static class HelloWorldFunction extends Function {
+
     public HelloWorldFunction(ParserContext parserContext) {
       super("hello", new char[] {}, 0, 0, 0, 0, 0, parserContext);
     }

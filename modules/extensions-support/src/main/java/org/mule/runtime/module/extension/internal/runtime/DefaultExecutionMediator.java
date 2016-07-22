@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime;
 
@@ -42,18 +42,20 @@ import static org.mule.runtime.core.execution.TransactionalExecutionTemplate.cre
 /**
  * Default implementation of {@link ExecutionMediator}.
  * <p>
- * If the given {@code context} implements the {@link Interceptable}, then its defined {@link Interceptor}s are properly executed as well.
+ * If the given {@code context} implements the {@link Interceptable}, then its defined {@link Interceptor}s are properly executed
+ * as well.
  * <p>
- * It also inspects the {@link ConfigurationStats} obtained from the {@link ConfigurationDeclaration} in the {@code context}. If the stats
- * class implements the {@link MutableConfigurationStats} interface, then {@link MutableConfigurationStats#addInflightOperation()} and
- * {@link MutableConfigurationStats#discountInflightOperation()} are guaranteed to be called, whatever the operation's outcome.
+ * It also inspects the {@link ConfigurationStats} obtained from the {@link ConfigurationDeclaration} in the {@code context}. If
+ * the stats class implements the {@link MutableConfigurationStats} interface, then
+ * {@link MutableConfigurationStats#addInflightOperation()} and {@link MutableConfigurationStats#discountInflightOperation()} are
+ * guaranteed to be called, whatever the operation's outcome.
  * <p>
- * In case of operation failure, it will execute the {@link Interceptor#onError(OperationContext, RetryRequest, Throwable)} method of all
- * the available interceptors, even if any of them request for a retry. When a retry request is granted, the entire cycle of interception
- * (before, onSuccess/onError, after) will be fired again, but no interceptor which required a retry on the first execution will be allowed
- * to request it again. If an interceptor makes such a requirement after it already did on the first attempt, an
- * {@link IllegalStateException} will be thrown. This is to prevent badly written {@link Interceptor interceptors} from generating and
- * endless loop by requesting the same retry over and over again.
+ * In case of operation failure, it will execute the {@link Interceptor#onError(OperationContext, RetryRequest, Throwable)} method
+ * of all the available interceptors, even if any of them request for a retry. When a retry request is granted, the entire cycle
+ * of interception (before, onSuccess/onError, after) will be fired again, but no interceptor which required a retry on the first
+ * execution will be allowed to request it again. If an interceptor makes such a requirement after it already did on the first
+ * attempt, an {@link IllegalStateException} will be thrown. This is to prevent badly written {@link Interceptor interceptors}
+ * from generating and endless loop by requesting the same retry over and over again.
  *
  * @since 4.0
  */
@@ -94,8 +96,8 @@ public final class DefaultExecutionMediator implements ExecutionMediator {
     }
   }
 
-  private Object executeWithRetryPolicy(OperationExecutor executor, OperationContextAdapter context, List<Interceptor> interceptors)
-      throws Throwable {
+  private Object executeWithRetryPolicy(OperationExecutor executor, OperationContextAdapter context,
+      List<Interceptor> interceptors) throws Throwable {
     RetryPolicyTemplate retryPolicyTemplate = getRetryPolicyTemplate(context.getConfiguration().getConnectionProvider());
 
     ExecutionTemplate<RetryContext> executionTemplate = getExecutionTemplate(context);
@@ -162,8 +164,8 @@ public final class DefaultExecutionMediator implements ExecutionMediator {
             interceptor));
   }
 
-  private Throwable onError(OperationContext operationContext, ValueHolder<InterceptorsRetryRequest> retryRequestHolder, Throwable e,
-      List<Interceptor> interceptors) {
+  private Throwable onError(OperationContext operationContext, ValueHolder<InterceptorsRetryRequest> retryRequestHolder,
+      Throwable e, List<Interceptor> interceptors) {
     ValueHolder<Throwable> exceptionHolder = new ValueHolder<>(e);
 
     intercept(interceptors, interceptor -> {
@@ -258,7 +260,8 @@ public final class DefaultExecutionMediator implements ExecutionMediator {
           .execute(() -> executeWithInterceptors(operationExecutor, context, interceptorList, new ValueHolder<>()));
 
       if (!operationExecutionResult.isOk()) {
-        if (operationExecutionResult.getRetryRequest().isPresent() && operationExecutionResult.getRetryRequest().get().isRetryRequested()) {
+        if (operationExecutionResult.getRetryRequest().isPresent()
+            && operationExecutionResult.getRetryRequest().get().isRetryRequested()) {
           Throwable throwable = operationExecutionResult.getException();
           if (throwable instanceof Exception) {
             throw (Exception) throwable;
@@ -273,8 +276,8 @@ public final class DefaultExecutionMediator implements ExecutionMediator {
 
     @Override
     public String getWorkDescription() {
-      return String.format("Extension [%s] with configuration [%s]", context.getConfiguration().getModel().getExtensionModel().getName(),
-          context.getConfiguration().getName());
+      return String.format("Extension [%s] with configuration [%s]",
+          context.getConfiguration().getModel().getExtensionModel().getName(), context.getConfiguration().getName());
     }
 
     @Override

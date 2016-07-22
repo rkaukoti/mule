@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.api.connection.tcp.protocol;
 
@@ -15,26 +15,27 @@ import static org.mule.extension.socket.internal.SocketUtils.getByteArray;
 
 /**
  * <p>
- * The XmlMessageProtocol is an application level tcp protocol that can be used to read streaming xml documents. The only requirement is
- * that each document include an xml declaration at the beginning of the document of the form "<?xml...". In section 2.8, the xml 1.0
- * standard contains "Definition: XML documents <strong>SHOULD</strong> begin with an XML declaration which specifies the version of XML
- * being used" while the xml 1.1 standard contains "Definition: XML 1.1 documents <strong>MUST</strong> begin with an XML declaration which
- * specifies the version of XML being used". The SHOULD indicates a recommendation that, if not followed, needs to be carefully checked for
- * unintended consequences. MUST indicates a mandatory requirement for a well-formed document. Please make sure that the xml documents being
- * streamed begin with an xml declaration when using this class.
+ * The XmlMessageProtocol is an application level tcp protocol that can be used to read streaming xml documents. The only
+ * requirement is that each document include an xml declaration at the beginning of the document of the form "<?xml...". In
+ * section 2.8, the xml 1.0 standard contains "Definition: XML documents <strong>SHOULD</strong> begin with an XML declaration
+ * which specifies the version of XML being used" while the xml 1.1 standard contains "Definition: XML 1.1 documents
+ * <strong>MUST</strong> begin with an XML declaration which specifies the version of XML being used". The SHOULD indicates a
+ * recommendation that, if not followed, needs to be carefully checked for unintended consequences. MUST indicates a mandatory
+ * requirement for a well-formed document. Please make sure that the xml documents being streamed begin with an xml declaration
+ * when using this class.
  * </p>
  * <p>
- * Data are read until a new document is found or there are no more data (momentarily). For slower networks, {@link XmlMessageEOFProtocol}
- * may be more reliable.
+ * Data are read until a new document is found or there are no more data (momentarily). For slower networks,
+ * {@link XmlMessageEOFProtocol} may be more reliable.
  * </p>
  * <p>
- * Also, the default character encoding for the platform is used to decode the message bytes when looking for the XML declaration. Some
- * caution with message character encodings is warranted.
+ * Also, the default character encoding for the platform is used to decode the message bytes when looking for the XML declaration.
+ * Some caution with message character encodings is warranted.
  * </p>
  * <p>
- * Finally, this class uses a PushbackInputStream to enable parsing of individual messages. The stream stores any pushed-back bytes into
- * it's own internal buffer and not the original stream. Therefore, the read buffer size is intentionally limited to insure that unread
- * characters remain on the stream so that all data may be read later.
+ * Finally, this class uses a PushbackInputStream to enable parsing of individual messages. The stream stores any pushed-back
+ * bytes into it's own internal buffer and not the original stream. Therefore, the read buffer size is intentionally limited to
+ * insure that unread characters remain on the stream so that all data may be read later.
  * </p>
  */
 public class XmlMessageProtocol extends AbstractByteProtocol {

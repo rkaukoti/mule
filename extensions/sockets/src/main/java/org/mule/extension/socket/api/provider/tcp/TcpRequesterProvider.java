@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.api.provider.tcp;
 
@@ -35,7 +35,8 @@ import javax.net.ssl.SSLSocket;
 import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNeeded;
 
 /**
- * A {@link ConnectionProvider} which provides instances of {@link TcpRequesterConnection} to be used by the {@link SocketOperations}
+ * A {@link ConnectionProvider} which provides instances of {@link TcpRequesterConnection} to be used by the
+ * {@link SocketOperations}
  *
  * @since 4.0
  */
@@ -49,7 +50,8 @@ public final class TcpRequesterProvider implements ConnectionProvider<TcpRequest
   @Optional
   ConnectionSettings localAddressSettings = new ConnectionSettings();
   /**
-   * Its presence will imply the use of {@link SSLSocket} instead of plain TCP {@link Socket} for establishing a connection over SSL.
+   * Its presence will imply the use of {@link SSLSocket} instead of plain TCP {@link Socket} for establishing a connection over
+   * SSL.
    */
   @Parameter
   @Optional
@@ -65,7 +67,8 @@ public final class TcpRequesterProvider implements ConnectionProvider<TcpRequest
   @ParameterGroup
   private TcpClientSocketProperties tcpClientSocketProperties;
   /**
-   * {@link TcpProtocol} that knows how the data is going to be read and written. If not specified, the {@link SafeProtocol} will be used.
+   * {@link TcpProtocol} that knows how the data is going to be read and written. If not specified, the {@link SafeProtocol} will
+   * be used.
    */
   @Parameter
   @Optional
@@ -85,8 +88,8 @@ public final class TcpRequesterProvider implements ConnectionProvider<TcpRequest
       throw new MuleRuntimeException(e);
     }
 
-    TcpRequesterConnection connection =
-        new TcpRequesterConnection(connectionSettings, localAddressSettings, protocol, tcpClientSocketProperties, simpleSocketFactory);
+    TcpRequesterConnection connection = new TcpRequesterConnection(connectionSettings, localAddressSettings, protocol,
+        tcpClientSocketProperties, simpleSocketFactory);
     connection.connect();
     return connection;
   }

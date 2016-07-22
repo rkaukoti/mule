@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.proxy;
 
@@ -72,8 +72,8 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase {
     this.responeThreadNameSubString = responeThreadNameSubString;
     this.nonBlocking = nonBlocking;
     if (nonBlocking) {
-      systemProperty =
-          new SystemProperty(MuleProperties.MULE_DEFAULT_PROCESSING_STRATEGY, ProcessingStrategyUtils.NON_BLOCKING_PROCESSING_STRATEGY);
+      systemProperty = new SystemProperty(MuleProperties.MULE_DEFAULT_PROCESSING_STRATEGY,
+          ProcessingStrategyUtils.NON_BLOCKING_PROCESSING_STRATEGY);
     }
   }
 
@@ -108,6 +108,7 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase {
   @Test
   public void proxyMethod() throws Exception {
     handlerExtender = new EchoRequestHandlerExtender() {
+
       @Override
       protected String selectRequestPartToReturn(org.eclipse.jetty.server.Request baseRequest) {
         return baseRequest.getMethod();
@@ -115,8 +116,8 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase {
     };
     assertRequestOk(getProxyUrl("test?parameterName=parameterValue"), "GET");
 
-    Response response = Request.Post(getProxyUrl("test?parameterName=parameterValue")).bodyString("Some Text", ContentType.DEFAULT_TEXT)
-        .connectTimeout(RECEIVE_TIMEOUT).execute();
+    Response response = Request.Post(getProxyUrl("test?parameterName=parameterValue"))
+        .bodyString("Some Text", ContentType.DEFAULT_TEXT).connectTimeout(RECEIVE_TIMEOUT).execute();
     HttpResponse httpResponse = response.returnResponse();
     assertThat(httpResponse.getStatusLine().getStatusCode(), is(200));
     assertThat(IOUtils.toString(httpResponse.getEntity().getContent()), is("POST"));
@@ -126,6 +127,7 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase {
   @Test
   public void proxyProtocolHttp1_0() throws Exception {
     handlerExtender = new EchoRequestHandlerExtender() {
+
       @Override
       protected String selectRequestPartToReturn(org.eclipse.jetty.server.Request baseRequest) {
         return baseRequest.getProtocol();
@@ -142,6 +144,7 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase {
   @Test
   public void proxyProtocolHttp1_1() throws Exception {
     handlerExtender = new EchoRequestHandlerExtender() {
+
       @Override
       protected String selectRequestPartToReturn(org.eclipse.jetty.server.Request baseRequest) {
         return baseRequest.getProtocol();
@@ -155,9 +158,10 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase {
     final Latch latch = new Latch();
     consumeAllRequest = false;
     handlerExtender = new RequestHandlerExtender() {
+
       @Override
-      public void handleRequest(org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request, HttpServletResponse response)
-          throws IOException {
+      public void handleRequest(org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request,
+          HttpServletResponse response) throws IOException {
         extractHeadersFromBaseRequest(baseRequest);
 
         latch.release();
@@ -173,7 +177,8 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase {
     AsyncHttpClientConfig config = configBuilder.build();
     AsyncHttpClient asyncHttpClient = new AsyncHttpClient(new GrizzlyAsyncHttpProvider(config), config);
 
-    AsyncHttpClient.BoundRequestBuilder boundRequestBuilder = asyncHttpClient.preparePost(getProxyUrl("test?parameterName=parameterValue"));
+    AsyncHttpClient.BoundRequestBuilder boundRequestBuilder =
+        asyncHttpClient.preparePost(getProxyUrl("test?parameterName=parameterValue"));
     boundRequestBuilder.setBody(new InputStreamBodyGenerator(new TestInputStream(latch)));
     ListenableFuture<com.ning.http.client.Response> future = boundRequestBuilder.execute();
 
@@ -190,6 +195,7 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase {
   @Test
   public void proxyPath() throws Exception {
     handlerExtender = new EchoRequestHandlerExtender() {
+
       @Override
       protected String selectRequestPartToReturn(org.eclipse.jetty.server.Request baseRequest) {
         return baseRequest.getPathInfo();
@@ -201,6 +207,7 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase {
   @Test
   public void proxyQueryString() throws Exception {
     handlerExtender = new EchoRequestHandlerExtender() {
+
       @Override
       protected String selectRequestPartToReturn(org.eclipse.jetty.server.Request baseRequest) {
         return baseRequest.getQueryString();
@@ -212,14 +219,15 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase {
   @Test
   public void proxyBody() throws Exception {
     handlerExtender = new EchoRequestHandlerExtender() {
+
       @Override
       protected String selectRequestPartToReturn(org.eclipse.jetty.server.Request baseRequest) {
         return body;
       }
     };
 
-    Response response =
-        Request.Post(getProxyUrl("test")).bodyString("Some Text", ContentType.DEFAULT_TEXT).connectTimeout(RECEIVE_TIMEOUT).execute();
+    Response response = Request.Post(getProxyUrl("test")).bodyString("Some Text", ContentType.DEFAULT_TEXT)
+        .connectTimeout(RECEIVE_TIMEOUT).execute();
     HttpResponse httpResponse = response.returnResponse();
     assertThat(httpResponse.getStatusLine().getStatusCode(), is(200));
     assertThat(IOUtils.toString(httpResponse.getEntity().getContent()), is("Some Text"));
@@ -299,8 +307,8 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase {
     return String.format("http://localhost:%s/%s", httpPort.getNumber(), path);
   }
 
-  protected void handleRequest(org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request, HttpServletResponse response)
-      throws IOException {
+  protected void handleRequest(org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request,
+      HttpServletResponse response) throws IOException {
     if (consumeAllRequest) {
       extractBaseRequestParts(baseRequest);
     }
@@ -313,14 +321,16 @@ public class HttpProxyTemplateTestCase extends AbstractHttpRequestTestCase {
   }
 
   private static interface RequestHandlerExtender {
+
     void handleRequest(org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request, HttpServletResponse response)
         throws IOException;
   }
 
   private static abstract class EchoRequestHandlerExtender implements RequestHandlerExtender {
+
     @Override
-    public void handleRequest(org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request, HttpServletResponse response)
-        throws IOException {
+    public void handleRequest(org.eclipse.jetty.server.Request baseRequest, HttpServletRequest request,
+        HttpServletResponse response) throws IOException {
       response.setContentType(request.getContentType());
       response.setStatus(HttpServletResponse.SC_OK);
       response.getWriter().print(selectRequestPartToReturn(baseRequest));

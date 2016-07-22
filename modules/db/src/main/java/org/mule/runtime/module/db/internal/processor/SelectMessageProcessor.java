@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.processor;
@@ -32,8 +32,8 @@ public class SelectMessageProcessor extends AbstractSingleQueryDbMessageProcesso
   private final boolean streaming;
   private final List<QueryType> validQueryTypes;
 
-  public SelectMessageProcessor(DbConfigResolver dbConfigResolver, QueryResolver queryResolver, QueryExecutorFactory queryExecutorFactory,
-      TransactionalAction transactionalAction, boolean streaming) {
+  public SelectMessageProcessor(DbConfigResolver dbConfigResolver, QueryResolver queryResolver,
+      QueryExecutorFactory queryExecutorFactory, TransactionalAction transactionalAction, boolean streaming) {
     super(dbConfigResolver, queryResolver, transactionalAction);
     this.queryExecutorFactory = queryExecutorFactory;
     this.streaming = streaming;

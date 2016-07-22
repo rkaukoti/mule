@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.spring.security.config;
 
@@ -17,13 +17,14 @@ import org.w3c.dom.Element;
 /**
  * This security manager delegates its parsing into two different definition parsers based on the name of the element.
  *
- * If the name of the element matches "_muleSecurityManager", then the parser will invoke ParentDefinitionParser which in turn will modify
- * the existing _muleSecurityManager bean instead of creating a new one.
+ * If the name of the element matches "_muleSecurityManager", then the parser will invoke ParentDefinitionParser which in turn
+ * will modify the existing _muleSecurityManager bean instead of creating a new one.
  *
- * Now if the name is something different, then this parser will invoke the OrphanDefinitionParser which instead of modifying an existing
- * bean it will create a new one altogether.
+ * Now if the name is something different, then this parser will invoke the OrphanDefinitionParser which instead of modifying an
+ * existing bean it will create a new one altogether.
  */
 public class SecurityManagerDefinitionParser implements BeanDefinitionParser {
+
   NamedDefinitionParser namedDefinitionParser;
   OrphanDefinitionParser orphanDefinitionParser;
 

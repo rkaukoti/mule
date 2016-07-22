@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection.describer;
 
@@ -50,8 +50,8 @@ public class InfrastructureFieldDescriber implements FieldDescriber {
   }
 
   /**
-   * Generates a {@link ParameterDeclarer} which represents the desired class in a canonical way. It will not accept expressions and it will
-   * have the provided name regardless of how the field was defined
+   * Generates a {@link ParameterDeclarer} which represents the desired class in a canonical way. It will not accept expressions
+   * and it will have the provided name regardless of how the field was defined
    *
    * @param field the {@link Field} being processed
    * @param declarer a {@link ParameterizedDeclarer} object used to create the descriptor

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.registry;
 
@@ -36,16 +36,17 @@ public interface Registry extends Initialisable, Disposable {
   <T> Collection<T> lookupObjects(Class<T> type);
 
   /**
-   * Look up all objects of a given type within the local registry. local means that no parent registry will be search for local objects.
+   * Look up all objects of a given type within the local registry. local means that no parent registry will be search for local
+   * objects.
    *
    * @return collection of objects or empty collection if none found
    */
   <T> Collection<T> lookupLocalObjects(Class<T> type);
 
   /**
-   * Look up all objects of a given type that lifecycle should be applied to. This method differs from {@link #lookupObjects(Class)} in that
-   * it allows implementations to provide an alternative implementation of lookup for lifecycle. For example only returning pre-existing
-   * objects and not creating new ones on the fly.
+   * Look up all objects of a given type that lifecycle should be applied to. This method differs from
+   * {@link #lookupObjects(Class)} in that it allows implementations to provide an alternative implementation of lookup for
+   * lifecycle. For example only returning pre-existing objects and not creating new ones on the fly.
    *
    * @return collection of objects or empty collection if none found
    */
@@ -98,26 +99,26 @@ public interface Registry extends Initialisable, Disposable {
   void registerObjects(Map<String, Object> objects) throws RegistrationException;
 
   /**
-   * Will remove an object by name from the registry. By default the registry must apply all remaining lifecycle phases to the object when
-   * it is removed.
+   * Will remove an object by name from the registry. By default the registry must apply all remaining lifecycle phases to the
+   * object when it is removed.
    *
    * @param key the name or key of the object to remove from the registry
    * @return the unregistered object or {@code null} if no object was registered under that key
-   * @throws RegistrationException if there is a problem unregistering the object. Typically this will be because the object's lifecycle
-   *         threw an exception
+   * @throws RegistrationException if there is a problem unregistering the object. Typically this will be because the object's
+   *         lifecycle threw an exception
    */
   Object unregisterObject(String key) throws RegistrationException;
 
   /**
-   * Will remove an object by name from the registry. By default the registry must apply all remaining lifecycle phases to the object when
-   * it is removed.
+   * Will remove an object by name from the registry. By default the registry must apply all remaining lifecycle phases to the
+   * object when it is removed.
    *
    * @param key the name or key of the object to remove from the registry
    * @param metadata an implementation specific argument that can be passed into the method
-   * @throws RegistrationException if there is a problem unregistering the object. Typically this will be because the object's lifecycle
-   *         threw an exception
-   * @throws RegistrationException if there is a problem unregistering the object. Typically this will be because the object's lifecycle
-   *         threw an exception
+   * @throws RegistrationException if there is a problem unregistering the object. Typically this will be because the object's
+   *         lifecycle threw an exception
+   * @throws RegistrationException if there is a problem unregistering the object. Typically this will be because the object's
+   *         lifecycle threw an exception
    * @deprecated as of 3.7.0. Use {@link #unregisterObject(String)} instead
    */
   @Deprecated

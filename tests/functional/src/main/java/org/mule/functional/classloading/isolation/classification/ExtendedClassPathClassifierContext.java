@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.functional.classloading.isolation.classification;
@@ -18,14 +18,17 @@ import java.io.File;
  * @since 4.0
  */
 public class ExtendedClassPathClassifierContext {
+
   private final ClassPathClassifierContext classificationContext;
   private final MavenArtifactToClassPathUrlsResolver artifactToClassPathURLResolver;
   private final File targetTestClassesFolder;
 
   /**
-   * Creates a {@link ExtendedClassPathClassifierContext} used internally in {@link MuleClassPathClassifier} to do the classification.
+   * Creates a {@link ExtendedClassPathClassifierContext} used internally in {@link MuleClassPathClassifier} to do the
+   * classification.
    *
-   * @param classificationContext the initial {@link ClassPathClassifierContext} context passed by {@link ArtifactClassLoaderRunner}
+   * @param classificationContext the initial {@link ClassPathClassifierContext} context passed by
+   *        {@link ArtifactClassLoaderRunner}
    * @param artifactToClassPathURLResolver resolves the {@link java.net.URL} from the class path for a given artifactId
    * @param targetTestClassesFolder the target/test-classes folder of the current artifact being tested
    */

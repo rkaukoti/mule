@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.api.provider.tcp;
 
@@ -45,7 +45,8 @@ import static org.mule.runtime.core.api.lifecycle.LifecycleUtils.initialiseIfNee
 public final class TcpListenerProvider implements ConnectionProvider<TcpListenerConnection>, Initialisable {
 
   /**
-   * Its presence will imply the use of {@link SSLServerSocket} instead of plain TCP {@link ServerSocket} for accepting new SSL connections.
+   * Its presence will imply the use of {@link SSLServerSocket} instead of plain TCP {@link ServerSocket} for accepting new SSL
+   * connections.
    */
   @Parameter
   @Optional
@@ -64,7 +65,8 @@ public final class TcpListenerProvider implements ConnectionProvider<TcpListener
   private TcpServerSocketProperties tcpServerSocketProperties;
 
   /**
-   * {@link TcpProtocol} that knows how the data is going to be read and written. If not specified, the {@link SafeProtocol} will be used.
+   * {@link TcpProtocol} that knows how the data is going to be read and written. If not specified, the {@link SafeProtocol} will
+   * be used.
    */
   @Parameter
   @Optional
@@ -114,7 +116,8 @@ public final class TcpListenerProvider implements ConnectionProvider<TcpListener
   @Override
   public void initialise() throws InitialisationException {
     if (tlsContext != null && !tlsContext.isKeyStoreConfigured()) {
-      throw new InitialisationException(CoreMessages.createStaticMessage("KeyStore must be configured for server side SSL"), this);
+      throw new InitialisationException(CoreMessages.createStaticMessage("KeyStore must be configured for server side SSL"),
+          this);
     }
 
     initialiseIfNeeded(tlsContext);

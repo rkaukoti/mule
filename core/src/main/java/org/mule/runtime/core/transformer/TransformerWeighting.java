@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer;
 
@@ -12,11 +12,12 @@ import org.mule.runtime.core.api.transformer.Transformer;
 import java.util.List;
 
 /**
- * Given a {@link org.mule.runtime.core.api.transformer.Transformer} instance, an input class and output class this object will create a
- * weighting for a transformer. This weighthing can be used compare one transformer with another, which can be useful for choosing a
- * transformer to use given the input class and required output class.
+ * Given a {@link org.mule.runtime.core.api.transformer.Transformer} instance, an input class and output class this object will
+ * create a weighting for a transformer. This weighthing can be used compare one transformer with another, which can be useful for
+ * choosing a transformer to use given the input class and required output class.
  */
 public class TransformerWeighting implements Comparable {
+
   private Transformer transformer;
   private int inputWeighting;
   private int outputWeighting;
@@ -49,16 +50,18 @@ public class TransformerWeighting implements Comparable {
   }
 
   /**
-   * This is a very basic algorithm for creating a match rating for two classes. An offset weighting can also be passed in. Where w is
-   * weighting, if the classes are not assignable but the src is a primitive type, the w for the corresponding object type will be returned,
-   * otherwise return -1 if the classes match exactly and dest is Object then w+3 is returned if the classes match exactly and dest is not
-   * Object then w+1 is returned if the classes are assignable and there is a direct equality to an interface on the class, w+2 is returned,
-   * If there a super class, that will get matched using the above criteria but using w = w + 1 If there is no match -1 is returned
+   * This is a very basic algorithm for creating a match rating for two classes. An offset weighting can also be passed in. Where
+   * w is weighting, if the classes are not assignable but the src is a primitive type, the w for the corresponding object type
+   * will be returned, otherwise return -1 if the classes match exactly and dest is Object then w+3 is returned if the classes
+   * match exactly and dest is not Object then w+1 is returned if the classes are assignable and there is a direct equality to an
+   * interface on the class, w+2 is returned, If there a super class, that will get matched using the above criteria but using w =
+   * w + 1 If there is no match -1 is returned
    *
    * @param weighting an offset weighting, by default -1 should be used
    * @param src the src class being matched
    * @param dest the destination class to match to
-   * @return a weighting where 0 would be an exact match, -1 would be no match and a positive integer that defines how close the match is
+   * @return a weighting where 0 would be an exact match, -1 would be no match and a positive integer that defines how close the
+   *         match is
    */
   protected int getWeighting(int weighting, Class src, Class dest) {
     if (!dest.isAssignableFrom(src)) {

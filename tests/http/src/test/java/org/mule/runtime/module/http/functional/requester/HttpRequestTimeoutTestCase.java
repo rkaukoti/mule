@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.requester;
 
@@ -48,14 +48,17 @@ public class HttpRequestTimeoutTestCase extends AbstractHttpRequestTestCase {
     assertTimeout("requestFlow", 1, TEST_TIMEOUT * 2);
   }
 
-  private void assertTimeout(final String flowName, final int responseTimeoutRequester, final int responseTimeoutEvent) throws Exception {
+  private void assertTimeout(final String flowName, final int responseTimeoutRequester, final int responseTimeoutEvent)
+      throws Exception {
     final Latch requestTimeoutLatch = new Latch();
 
     Thread thread = new Thread() {
+
       @Override
       public void run() {
         try {
-          FlowRunner runner = flowRunner(flowName).withPayload(TEST_MESSAGE).withFlowVariable("timeout", responseTimeoutRequester);
+          FlowRunner runner =
+              flowRunner(flowName).withPayload(TEST_MESSAGE).withFlowVariable("timeout", responseTimeoutRequester);
           runner.buildEvent().setTimeout(responseTimeoutEvent);
 
           MessagingException e = runner.runExpectingException();

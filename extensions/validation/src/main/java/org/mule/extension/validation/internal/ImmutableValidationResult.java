@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.validation.internal;
 
@@ -10,8 +10,9 @@ import org.mule.runtime.core.config.i18n.Message;
 import static org.mule.runtime.core.util.StringUtils.EMPTY;
 
 /**
- * An immutable implementation of {@link ValidationResult}. It provides a series of static factory methods for creating a result in which
- * the validation succeeded ({@link #ok()}), and other two for validations that failed ({@link #error(Message)} and {@link #error(String)}).
+ * An immutable implementation of {@link ValidationResult}. It provides a series of static factory methods for creating a result
+ * in which the validation succeeded ({@link #ok()}), and other two for validations that failed ({@link #error(Message)} and
+ * {@link #error(String)}).
  *
  * @since 3.7.0
  */
@@ -51,8 +52,8 @@ public class ImmutableValidationResult implements ValidationResult {
   }
 
   /**
-   * returns a {@link ImmutableValidationResult} without message and which {@link #isError()} method returns {@code false}. Since this class
-   * is immutable, the same instance is always returned
+   * returns a {@link ImmutableValidationResult} without message and which {@link #isError()} method returns {@code false}. Since
+   * this class is immutable, the same instance is always returned
    *
    * @return {@link #OK}
    */

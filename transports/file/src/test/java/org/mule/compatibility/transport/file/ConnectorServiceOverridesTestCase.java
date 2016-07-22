@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.file;
 
@@ -25,6 +25,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
 public class ConnectorServiceOverridesTestCase extends FunctionalTestCase {
+
   @Override
   protected String getConfigFile() {
     return "test-connector-config.xml";
@@ -35,14 +36,19 @@ public class ConnectorServiceOverridesTestCase extends FunctionalTestCase {
     FileConnector c = (FileConnector) muleContext.getRegistry().lookupObject("fileConnector2");
     assertNotNull(c);
     assertNotNull(c.getServiceOverrides());
-    assertEquals("org.mule.runtime.core.transformer.simple.ByteArrayToSerializable", c.getServiceOverrides().get("inbound.transformer"));
+    assertEquals("org.mule.runtime.core.transformer.simple.ByteArrayToSerializable",
+        c.getServiceOverrides().get("inbound.transformer"));
     assertNotNull(TransformerUtils.firstOrNull(c.getDefaultInboundTransformers(null)));
     assertNotNull(TransformerUtils.firstOrNull(c.getDefaultOutboundTransformers(null)));
-    assertThat(TransformerUtils.firstOrNull(c.getDefaultInboundTransformers(null)), instanceOf(DefaultEndpointAwareTransformer.class));
-    assertThat(((DefaultEndpointAwareTransformer) TransformerUtils.firstOrNull(c.getDefaultInboundTransformers(null))).getTransformer(),
+    assertThat(TransformerUtils.firstOrNull(c.getDefaultInboundTransformers(null)),
+        instanceOf(DefaultEndpointAwareTransformer.class));
+    assertThat(
+        ((DefaultEndpointAwareTransformer) TransformerUtils.firstOrNull(c.getDefaultInboundTransformers(null))).getTransformer(),
         instanceOf(ByteArrayToSerializable.class));
-    assertThat(TransformerUtils.firstOrNull(c.getDefaultOutboundTransformers(null)), instanceOf(DefaultEndpointAwareTransformer.class));
-    assertThat(((DefaultEndpointAwareTransformer) TransformerUtils.firstOrNull(c.getDefaultOutboundTransformers(null))).getTransformer(),
+    assertThat(TransformerUtils.firstOrNull(c.getDefaultOutboundTransformers(null)),
+        instanceOf(DefaultEndpointAwareTransformer.class));
+    assertThat(
+        ((DefaultEndpointAwareTransformer) TransformerUtils.firstOrNull(c.getDefaultOutboundTransformers(null))).getTransformer(),
         instanceOf(SerializableToByteArray.class));
   }
 

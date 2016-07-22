@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.management.agent;
 
@@ -10,13 +10,14 @@ import java.net.Socket;
 import java.rmi.server.RMIClientSocketFactory;
 
 /**
- * This implementation will enforce specific overrideHost/ip for RMI calls on multi-NIC servers. TODO MULE-1440 this should probably be
- * moved into the RMI transport.
+ * This implementation will enforce specific overrideHost/ip for RMI calls on multi-NIC servers. TODO MULE-1440 this should
+ * probably be moved into the RMI transport.
  *
  * @deprecated For multi-homed hosts support set the Java system property java.rmi.server.hostname
  */
 @Deprecated
 public class FixedHostRmiClientSocketFactory implements RMIClientSocketFactory, Serializable {
+
   /**
    * Host to use instead of the default one.
    */
@@ -46,8 +47,8 @@ public class FixedHostRmiClientSocketFactory implements RMIClientSocketFactory, 
    */
   public Socket createSocket(String host, int port) throws IOException {
     /*
-     * NOTE this is StringUtils.defaultIfEmpty(overrideHost, host) This socket factory is required on the client, minimize the dependency
-     * graph
+     * NOTE this is StringUtils.defaultIfEmpty(overrideHost, host) This socket factory is required on the client, minimize the
+     * dependency graph
      */
     final String hostToUse = (overrideHost == null || overrideHost.trim().length() == 0) ? host : overrideHost;
 

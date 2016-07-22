@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.requester;
 
@@ -21,6 +21,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.Assert.assertThat;
 
 public class HttpRequestConnectionsPersistenceTestCase extends AbstractHttpRequestTestCase {
+
   private static final int GRIZZLY_IDLE_CHECK_TIMEOUT_MILLIS = 6000;
   private static final int POLL_DELAY_MILLIS = 200;
   private int remotePort;
@@ -36,6 +37,7 @@ public class HttpRequestConnectionsPersistenceTestCase extends AbstractHttpReque
     ensureConnectionIsOpen();
 
     new PollingProber(GRIZZLY_IDLE_CHECK_TIMEOUT_MILLIS, POLL_DELAY_MILLIS).check(new JUnitProbe() {
+
       @Override
       public boolean test() throws Exception {
         return isConnectionClosed();

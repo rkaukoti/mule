@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer;
 
@@ -82,8 +82,8 @@ public abstract class AbstractTransformer extends AbstractAnnotatedObject implem
   }
 
   /**
-   * Register a supported data type with this transformer. The will allow objects that match this data type to be transformed by this
-   * transformer.
+   * Register a supported data type with this transformer. The will allow objects that match this data type to be transformed by
+   * this transformer.
    *
    * @param dataType the source type to allow
    */
@@ -92,8 +92,8 @@ public abstract class AbstractTransformer extends AbstractAnnotatedObject implem
       sourceTypes.add(dataType);
 
       if (dataType.getType().equals(Object.class)) {
-        logger
-            .debug("java.lang.Object has been added as source type for this transformer, there will be no source type checking performed");
+        logger.debug(
+            "java.lang.Object has been added as source type for this transformer, there will be no source type checking performed");
       }
     }
   }
@@ -167,8 +167,8 @@ public abstract class AbstractTransformer extends AbstractAnnotatedObject implem
    * Determines whether that data type passed in is supported by this transformer
    *
    * @param dataType the type to check against
-   * @param exactMatch if set to true, this method will look for an exact match to the data type, if false it will look for a compatible
-   *        data type.
+   * @param exactMatch if set to true, this method will look for an exact match to the data type, if false it will look for a
+   *        compatible data type.
    * @return true if the source type is supported by this transformer, false otherwise
    */
   public boolean isSourceDataTypeSupported(DataType dataType, boolean exactMatch) {

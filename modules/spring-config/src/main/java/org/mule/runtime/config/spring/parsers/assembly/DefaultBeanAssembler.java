@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.assembly;
 
@@ -153,9 +153,9 @@ public class DefaultBeanAssembler implements BeanAssembler {
    * Add a property defined by an attribute to the bean we are constructing.
    *
    * <p>
-   * Since an attribute value is always a string, we don't have to deal with complex types here - the only issue is whether or not we have a
-   * reference. References are detected by explicit annotation or by the "-ref" at the end of an attribute name. We do not check the Spring
-   * repo to see if a name already exists since that could lead to unpredictable behaviour. (see
+   * Since an attribute value is always a string, we don't have to deal with complex types here - the only issue is whether or not
+   * we have a reference. References are detected by explicit annotation or by the "-ref" at the end of an attribute name. We do
+   * not check the Spring repo to see if a name already exists since that could lead to unpredictable behaviour. (see
    * {@link org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration})
    *
    * @param attribute The attribute to add
@@ -230,7 +230,8 @@ public class DefaultBeanAssembler implements BeanAssembler {
    */
   @Override
   public void extendBean(String newName, Object newValue, boolean isReference) {
-    addPropertyWithReference(bean.getBeanDefinition().getPropertyValues(), new SinglePropertyLiteral(isReference), newName, newValue);
+    addPropertyWithReference(bean.getBeanDefinition().getPropertyValues(), new SinglePropertyLiteral(isReference), newName,
+        newValue);
   }
 
   /**
@@ -268,7 +269,8 @@ public class DefaultBeanAssembler implements BeanAssembler {
   @Override
   public void extendTarget(String oldName, String newName, Object newValue) {
     assertTargetPresent();
-    addPropertyWithReference(target.getPropertyValues(), new SinglePropertyWrapper(oldName, getTargetConfig()), newName, newValue);
+    addPropertyWithReference(target.getPropertyValues(), new SinglePropertyWrapper(oldName, getTargetConfig()), newName,
+        newValue);
   }
 
   /**
@@ -317,7 +319,8 @@ public class DefaultBeanAssembler implements BeanAssembler {
         List list = retrieveList(oldValue);
         if (ChildMapEntryDefinitionParser.KeyValuePair.class.getName().equals(beanClass)) {
           list.add(new ManagedMap());
-          retrieveMap(list.get(list.size() - 1)).put(sourceProperties.getPropertyValue(ChildMapEntryDefinitionParser.KEY).getValue(),
+          retrieveMap(list.get(list.size() - 1)).put(
+              sourceProperties.getPropertyValue(ChildMapEntryDefinitionParser.KEY).getValue(),
               sourceProperties.getPropertyValue(ChildMapEntryDefinitionParser.VALUE).getValue());
         } else if (beanClass.equals(ChildListEntryDefinitionParser.ListEntry.class.getName())) {
           list.add(sourceProperties.getPropertyValue(ChildListEntryDefinitionParser.VALUE).getValue());
@@ -376,12 +379,12 @@ public class DefaultBeanAssembler implements BeanAssembler {
   }
 
   /**
-   * Copy the properties from the bean we have been building into the target (typically the parent bean). In other words, the bean is a
-   * facade for the target.
+   * Copy the properties from the bean we have been building into the target (typically the parent bean). In other words, the bean
+   * is a facade for the target.
    *
    * <p>
-   * This assumes that the source bean has been constructed correctly (ie the decisions about what is ignored, a map, a list, etc) have
-   * already been made. All it does (apart from a direct copy) is merge collections with those on the target when necessary.
+   * This assumes that the source bean has been constructed correctly (ie the decisions about what is ignored, a map, a list, etc)
+   * have already been made. All it does (apart from a direct copy) is merge collections with those on the target when necessary.
    */
   @Override
   public void copyBeanToTarget() {
@@ -395,7 +398,8 @@ public class DefaultBeanAssembler implements BeanAssembler {
     MutablePropertyValues beanProperties = bean.getBeanDefinition().getPropertyValues();
     for (int i = 0; i < beanProperties.size(); i++) {
       PropertyValue propertyValue = beanProperties.getPropertyValues()[i];
-      addPropertyWithoutReference(targetProperties, new SinglePropertyLiteral(), propertyValue.getName(), propertyValue.getValue());
+      addPropertyWithoutReference(targetProperties, new SinglePropertyLiteral(), propertyValue.getName(),
+          propertyValue.getValue());
     }
   }
 

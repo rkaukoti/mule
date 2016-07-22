@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.api.source;
 
@@ -37,8 +37,8 @@ import static org.mule.runtime.core.util.concurrent.ThreadNameHelper.getPrefix;
 /**
  * Listens for socket connections of the given protocol in the configured host and port.
  * <p>
- * Whenever a new connection is received, this {@link Source} will schedule a a {@link SocketWorker} that will handle the communication for
- * that particular connection.
+ * Whenever a new connection is received, this {@link Source} will schedule a a {@link SocketWorker} that will handle the
+ * communication for that particular connection.
  *
  * @since 4.0
  */
@@ -70,11 +70,12 @@ public final class SocketListener extends Source<InputStream, SocketAttributes> 
     // TODO MULE-9898
     ThreadingProfile threadingProfile =
         config.getThreadingProfile() == null ? muleContext.getDefaultThreadingProfile() : config.getThreadingProfile();
-    workManager = threadingProfile.createWorkManager("SocketListenerWorkManager", muleContext.getConfiguration().getShutdownTimeout());
+    workManager =
+        threadingProfile.createWorkManager("SocketListenerWorkManager", muleContext.getConfiguration().getShutdownTimeout());
     workManager.start();
 
-    executorService =
-        newSingleThreadExecutor(r -> new Thread(r, format("%s%s.socket.listener", getPrefix(muleContext), flowConstruct.getName())));
+    executorService = newSingleThreadExecutor(
+        r -> new Thread(r, format("%s%s.socket.listener", getPrefix(muleContext), flowConstruct.getName())));
     stopRequested.set(false);
     executorService.execute(this::listen);
   }
@@ -115,7 +116,8 @@ public final class SocketListener extends Source<InputStream, SocketAttributes> 
       }
     } catch (InterruptedException e) {
       if (LOGGER.isWarnEnabled()) {
-        LOGGER.warn("Got interrupted while trying to terminate pending events for socket listener on flow " + flowConstruct.getName());
+        LOGGER.warn(
+            "Got interrupted while trying to terminate pending events for socket listener on flow " + flowConstruct.getName());
       }
     }
   }

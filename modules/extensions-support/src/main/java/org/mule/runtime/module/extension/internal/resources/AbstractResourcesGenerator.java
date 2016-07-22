@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.resources;
 
@@ -18,9 +18,9 @@ import java.util.Optional;
 
 
 /**
- * Base implementation of {@link ResourcesGenerator} that takes care of the basic contract except for actually writing the resources to a
- * persistent store. Implementations are only required to provide that piece of logic by using the {@link #write(GeneratedResource)}
- * template method
+ * Base implementation of {@link ResourcesGenerator} that takes care of the basic contract except for actually writing the
+ * resources to a persistent store. Implementations are only required to provide that piece of logic by using the
+ * {@link #write(GeneratedResource)} template method
  *
  * @since 3.7.0
  */

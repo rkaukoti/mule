@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.el.mvel;
 
@@ -35,19 +35,19 @@ public class MessageVariableResolverFactory extends MuleBaseVariableResolverFact
   }
 
   /**
-   * Convenience constructor to allow for more concise creation of VariableResolverFactory chains without and performance overhead incurred
-   * by using a builder.
+   * Convenience constructor to allow for more concise creation of VariableResolverFactory chains without and performance overhead
+   * incurred by using a builder.
    */
-  public MessageVariableResolverFactory(final ParserConfiguration parserConfiguration, final MuleContext muleContext, final MuleEvent event,
-      final VariableResolverFactory next) {
+  public MessageVariableResolverFactory(final ParserConfiguration parserConfiguration, final MuleContext muleContext,
+      final MuleEvent event, final VariableResolverFactory next) {
     this(parserConfiguration, muleContext, event);
     setNextFactory(next);
   }
 
   @Override
   public boolean isTarget(String name) {
-    return MESSAGE.equals(name) || PAYLOAD.equals(name) || FLOW_VARS.equals(name) || EXCEPTION.equals(name) || SESSION_VARS.equals(name)
-        || MVELExpressionLanguageContext.MULE_MESSAGE_INTERNAL_VARIABLE.equals(name);
+    return MESSAGE.equals(name) || PAYLOAD.equals(name) || FLOW_VARS.equals(name) || EXCEPTION.equals(name)
+        || SESSION_VARS.equals(name) || MVELExpressionLanguageContext.MULE_MESSAGE_INTERNAL_VARIABLE.equals(name);
   }
 
   @Override
@@ -67,10 +67,11 @@ public class MessageVariableResolverFactory extends MuleBaseVariableResolverFact
           return new MuleImmutableVariableResolver<MuleMessage>(EXCEPTION, null, null);
         }
       } else if (SESSION_VARS.equals(name)) {
-        return new MuleImmutableVariableResolver<Map<String, Object>>(SESSION_VARS, new SessionVariableMapContext(event.getSession()),
-            null);
+        return new MuleImmutableVariableResolver<Map<String, Object>>(SESSION_VARS,
+            new SessionVariableMapContext(event.getSession()), null);
       } else if (MVELExpressionLanguageContext.MULE_MESSAGE_INTERNAL_VARIABLE.equals(name)) {
-        return new MuleImmutableVariableResolver<>(MVELExpressionLanguageContext.MULE_MESSAGE_INTERNAL_VARIABLE, event.getMessage(), null);
+        return new MuleImmutableVariableResolver<>(MVELExpressionLanguageContext.MULE_MESSAGE_INTERNAL_VARIABLE,
+            event.getMessage(), null);
       }
     }
     return super.getNextFactoryVariableResolver(name);

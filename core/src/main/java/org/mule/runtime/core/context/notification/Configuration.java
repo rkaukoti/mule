@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.context.notification;
 
@@ -30,15 +30,18 @@ class Configuration {
       new HashMap<Class<? extends ServerNotificationListener>, Set<Class<? extends ServerNotification>>>();
   // map from interface to collection of events
   private Set<ListenerSubscriptionPair> listenerSubscriptionPairs = new HashSet<ListenerSubscriptionPair>();
-  private Set<Class<? extends ServerNotificationListener>> disabledInterfaces = new HashSet<Class<? extends ServerNotificationListener>>();
+  private Set<Class<? extends ServerNotificationListener>> disabledInterfaces =
+      new HashSet<Class<? extends ServerNotificationListener>>();
   private Set<Class<? extends ServerNotification>> disabledNotificationTypes = new HashSet<Class<? extends ServerNotification>>();
   private volatile boolean dirty = true;
   private Policy policy;
 
-  synchronized void addInterfaceToType(Class<? extends ServerNotificationListener> iface, Class<? extends ServerNotification> type) {
+  synchronized void addInterfaceToType(Class<? extends ServerNotificationListener> iface,
+      Class<? extends ServerNotification> type) {
     dirty = true;
     if (!ServerNotification.class.isAssignableFrom(type)) {
-      throw new IllegalArgumentException(CoreMessages.propertyIsNotSupportedType("type", ServerNotification.class, type).getMessage());
+      throw new IllegalArgumentException(
+          CoreMessages.propertyIsNotSupportedType("type", ServerNotification.class, type).getMessage());
     }
     if (!interfaceToTypes.containsKey(iface)) {
       interfaceToTypes.put(iface, new HashSet<Class<? extends ServerNotification>>());

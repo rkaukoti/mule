@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.jndi;
 
@@ -23,6 +23,7 @@ import javax.naming.NamingException;
 import javax.naming.OperationNotSupportedException;
 
 public class SimpleContext implements Context {
+
   /**
    * What holds the bindings.
    */
@@ -137,6 +138,7 @@ public class SimpleContext implements Context {
 
     final Iterator<Map.Entry<String, Object>> i = bindings.entrySet().iterator();
     return new NamingEnumeration<NameClassPair>() {
+
       @Override
       public NameClassPair next() {
         Map.Entry<String, Object> e = i.next();
@@ -178,6 +180,7 @@ public class SimpleContext implements Context {
 
     final Iterator<Map.Entry<String, Object>> i = bindings.entrySet().iterator();
     return new NamingEnumeration<Binding>() {
+
       @Override
       public Binding next() {
         Map.Entry<String, Object> e = i.next();

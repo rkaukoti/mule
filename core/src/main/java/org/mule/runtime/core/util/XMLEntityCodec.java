@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -17,6 +17,7 @@ import java.util.Map;
  */
 // @ThreadSafe
 public final class XMLEntityCodec {
+
   private static final Entities MuleEntities = new Entities();
 
   static {
@@ -78,15 +79,16 @@ public final class XMLEntityCodec {
   //
 
   /*
-   * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file distributed with
-   * this work for additional information regarding copyright ownership. The ASF licenses this file to You under the Apache License, Version
-   * 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+   * Licensed to the Apache Software Foundation (ASF) under one or more contributor license agreements. See the NOTICE file
+   * distributed with this work for additional information regarding copyright ownership. The ASF licenses this file to You under
+   * the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may
+   * obtain a copy of the License at
    * 
    * http://www.apache.org/licenses/LICENSE-2.0
    * 
-   * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS,
-   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing
-   * permissions and limitations under the License.
+   * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an
+   * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific
+   * language governing permissions and limitations under the License.
    */
 
   /**
@@ -465,7 +467,8 @@ public final class XMLEntityCodec {
      * Escapes the characters in a <code>String</code>.
      * </p>
      * <p>
-     * For example, if you have called addEntity(&quot;foo&quot;, 0xA1), escape(&quot;\u00A1&quot;) will return &quot;&amp;foo;&quot;
+     * For example, if you have called addEntity(&quot;foo&quot;, 0xA1), escape(&quot;\u00A1&quot;) will return
+     * &quot;&amp;foo;&quot;
      * </p>
      *
      * @param str The <code>String</code> to escape.
@@ -502,7 +505,8 @@ public final class XMLEntityCodec {
      *
      * @param writer The <code>Writer</code> to write the results of the escaping to. Assumed to be a non-null value.
      * @param str The <code>String</code> to escape. Assumed to be a non-null value.
-     * @throws IOException when <code>Writer</code> passed throws the exception from calls to the {@link Writer#write(int)} methods.
+     * @throws IOException when <code>Writer</code> passed throws the exception from calls to the {@link Writer#write(int)}
+     *         methods.
      * @see #escape(String)
      * @see Writer
      */
@@ -532,7 +536,8 @@ public final class XMLEntityCodec {
      * Unescapes the entities in a <code>String</code>.
      * </p>
      * <p>
-     * For example, if you have called addEntity(&quot;foo&quot;, 0xA1), unescape(&quot;&amp;foo;&quot;) will return &quot;\u00A1&quot;
+     * For example, if you have called addEntity(&quot;foo&quot;, 0xA1), unescape(&quot;&amp;foo;&quot;) will return
+     * &quot;\u00A1&quot;
      * </p>
      *
      * @param str The <code>String</code> to escape.
@@ -607,7 +612,8 @@ public final class XMLEntityCodec {
      *
      * @param writer The <code>Writer</code> to write the results to; assumed to be non-null.
      * @param string The <code>String</code> to write the results to; assumed to be non-null.
-     * @throws IOException when <code>Writer</code> passed throws the exception from calls to the {@link Writer#write(int)} methods.
+     * @throws IOException when <code>Writer</code> passed throws the exception from calls to the {@link Writer#write(int)}
+     *         methods.
      * @see #escape(String)
      * @see Writer
      */
@@ -679,6 +685,7 @@ public final class XMLEntityCodec {
     }
 
     private static interface EntityMap {
+
       /**
        * <p>
        * Add an entry to this entity map.
@@ -711,6 +718,7 @@ public final class XMLEntityCodec {
     }
 
     private static class PrimitiveEntityMap implements EntityMap {
+
       private Map mapNameToValue = new HashMap();
       private IntHashMap mapValueToName = new IntHashMap();
 
@@ -742,6 +750,7 @@ public final class XMLEntityCodec {
     }
 
     private static class LookupEntityMap extends PrimitiveEntityMap {
+
       private static final int LOOKUP_TABLE_SIZE = 256;
       private String[] lookupTable;
 
@@ -787,8 +796,8 @@ public final class XMLEntityCodec {
      * A hash map that uses primitive ints for the key rather than objects.
      * </p>
      * <p>
-     * Note that this class is for internal optimization purposes only, and may not be supported in future releases of Jakarta Commons Lang.
-     * Utilities of this sort may be included in future releases of Jakarta Commons Collections.
+     * Note that this class is for internal optimization purposes only, and may not be supported in future releases of Jakarta
+     * Commons Lang. Utilities of this sort may be included in future releases of Jakarta Commons Collections.
      * </p>
      *
      * @author Justin Couch
@@ -836,7 +845,8 @@ public final class XMLEntityCodec {
 
       /**
        * <p>
-       * Constructs a new, empty hashtable with the specified initial capacity and default load factor, which is <code>0.75</code>.
+       * Constructs a new, empty hashtable with the specified initial capacity and default load factor, which is
+       * <code>0.75</code>.
        * </p>
        *
        * @param initialCapacity the initial capacity of the hashtable.
@@ -900,13 +910,13 @@ public final class XMLEntityCodec {
        * <code>containsKey</code> method.
        * </p>
        * <p>
-       * Note that this method is identical in functionality to containsValue, (which is part of the Map interface in the collections
-       * framework).
+       * Note that this method is identical in functionality to containsValue, (which is part of the Map interface in the
+       * collections framework).
        * </p>
        *
        * @param value a value to search for.
-       * @return <code>true</code> if and only if some key maps to the <code>value</code> argument in this hashtable as determined by the
-       *         <tt>equals</tt> method; <code>false</code> otherwise.
+       * @return <code>true</code> if and only if some key maps to the <code>value</code> argument in this hashtable as determined
+       *         by the <tt>equals</tt> method; <code>false</code> otherwise.
        * @throws NullPointerException if the value is <code>null</code>.
        * @see #containsKey(int)
        * @see #containsValue(Object)
@@ -951,8 +961,8 @@ public final class XMLEntityCodec {
        * </p>
        *
        * @param key possible key.
-       * @return <code>true</code> if and only if the specified object is a key in this hashtable, as determined by the <tt>equals</tt>
-       *         method; <code>false</code> otherwise.
+       * @return <code>true</code> if and only if the specified object is a key in this hashtable, as determined by the
+       *         <tt>equals</tt> method; <code>false</code> otherwise.
        * @see #contains(Object)
        */
       public boolean containsKey(int key) {
@@ -973,8 +983,8 @@ public final class XMLEntityCodec {
        * </p>
        *
        * @param key a key in the hashtable.
-       * @return the value to which the key is mapped in this hashtable; <code>null</code> if the key is not mapped to any value in this
-       *         hashtable.
+       * @return the value to which the key is mapped in this hashtable; <code>null</code> if the key is not mapped to any value
+       *         in this hashtable.
        * @see #put(int, Object)
        */
       public Object get(int key) {
@@ -995,7 +1005,8 @@ public final class XMLEntityCodec {
        * efficiently.
        * </p>
        * <p>
-       * This method is called automatically when the number of keys in the hashtable exceeds this hashtable's capacity and load factor.
+       * This method is called automatically when the number of keys in the hashtable exceeds this hashtable's capacity and load
+       * factor.
        * </p>
        */
       protected void rehash() {
@@ -1022,7 +1033,8 @@ public final class XMLEntityCodec {
 
       /**
        * <p>
-       * Maps the specified <code>key</code> to the specified <code>value</code> in this hashtable. The key cannot be <code>null</code>.
+       * Maps the specified <code>key</code> to the specified <code>value</code> in this hashtable. The key cannot be
+       * <code>null</code>.
        * </p>
        * <p>
        * The value can be retrieved by calling the <code>get</code> method with a key that is equal to the original key.
@@ -1071,7 +1083,8 @@ public final class XMLEntityCodec {
        * </p>
        *
        * @param key the key that needs to be removed.
-       * @return the value to which the key had been mapped in this hashtable, or <code>null</code> if the key did not have a mapping.
+       * @return the value to which the key had been mapped in this hashtable, or <code>null</code> if the key did not have a
+       *         mapping.
        */
       public Object remove(int key) {
         Entry tab[] = table;
@@ -1112,6 +1125,7 @@ public final class XMLEntityCodec {
        * </p>
        */
       private static class Entry {
+
         int hash;
         int key;
         Object value;

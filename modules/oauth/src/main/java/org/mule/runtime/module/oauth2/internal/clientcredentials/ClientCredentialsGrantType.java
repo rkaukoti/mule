@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.oauth2.internal.clientcredentials;
 
@@ -97,8 +97,8 @@ public class ClientCredentialsGrantType extends AbstractGrantType implements Ini
     final String accessToken = tokenManager.getConfigOAuthContext()
         .getContextForResourceOwner(ResourceOwnerOAuthContext.DEFAULT_RESOURCE_OWNER_ID).getAccessToken();
     if (accessToken == null) {
-      throw new RequestAuthenticationException(createStaticMessage(
-          String.format("No access token found. Verify that you have authenticated before trying to execute an operation to the API.")));
+      throw new RequestAuthenticationException(createStaticMessage(String.format(
+          "No access token found. Verify that you have authenticated before trying to execute an operation to the API.")));
     }
     builder.addHeader(HttpHeaders.Names.AUTHORIZATION, buildAuthorizationHeaderContent(accessToken));
   }

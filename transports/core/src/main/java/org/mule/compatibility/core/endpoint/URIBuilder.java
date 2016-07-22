@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.endpoint;
 
@@ -27,19 +27,20 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.apache.commons.collections.TransformerUtils.nopTransformer;
 
 /**
- * This has the following logic: - if an address is specified, it is used verbatim (except for parameters); this is consistent with the
- * generic case - otherwise, we construct from components, omitting things that aren't specified as much as possible (use required
- * attributes to guarantee entries)
+ * This has the following logic: - if an address is specified, it is used verbatim (except for parameters); this is consistent
+ * with the generic case - otherwise, we construct from components, omitting things that aren't specified as much as possible (use
+ * required attributes to guarantee entries)
  *
- * In addition, parameters are handled as follows: - parameters can be given in the uri, the queryMap, or both - queryMap values override
- * uri values - the order of parameters in the uri remains the same (even if values change) - queryMap parameters are appended after uri
- * parameters
+ * In addition, parameters are handled as follows: - parameters can be given in the uri, the queryMap, or both - queryMap values
+ * override uri values - the order of parameters in the uri remains the same (even if values change) - queryMap parameters are
+ * appended after uri parameters
  *
  * TODO - check that we have sufficient control via XML (what about empty strings?)
  *
  * Not called EndpointURIBuilder because of {@link org.mule.compatibility.core.api.endpoint.EndpointURIBuilder}
  */
 public class URIBuilder extends AbstractAnnotatedObject {
+
   public static final String META = "meta";
   public static final String PROTOCOL = "protocol";
   public static final String USER = "user";
@@ -57,6 +58,7 @@ public class URIBuilder extends AbstractAnnotatedObject {
   // this doesn't include address, since that is handled separately (and is exclusive with these)
   public static final String[] ALL_TRANSPORT_ATTRIBUTES = new String[] {USER, PASSWORD, HOST, PORT, PATH};
   protected static final Transformer URL_ENCODER = new Transformer() {
+
     @Override
     public Object transform(Object input) {
       try {
@@ -295,9 +297,9 @@ public class URIBuilder extends AbstractAnnotatedObject {
       return true;
 
     URIBuilder builder = (URIBuilder) other;
-    return equal(address, builder.address) && equal(meta, builder.meta) && equal(protocol, builder.protocol) && equal(user, builder.user)
-        && equal(password, builder.password) && equal(host, builder.host) && equal(port, builder.port) && equal(path, builder.path)
-        && equal(queryMap, builder.queryMap);
+    return equal(address, builder.address) && equal(meta, builder.meta) && equal(protocol, builder.protocol)
+        && equal(user, builder.user) && equal(password, builder.password) && equal(host, builder.host)
+        && equal(port, builder.port) && equal(path, builder.path) && equal(queryMap, builder.queryMap);
   }
 
   @Override
@@ -405,6 +407,7 @@ public class URIBuilder extends AbstractAnnotatedObject {
   }
 
   private static class OrderedQueryParameters {
+
     private List<String> names = new ArrayList<String>();
     private List<String> values = new ArrayList<String>();
 
@@ -414,8 +417,8 @@ public class URIBuilder extends AbstractAnnotatedObject {
     }
 
     /**
-     * Replace the first instance of the given parameter. This method does not make sense under the assumption that a given parameter name
-     * can have multiple values, so here we simply preserve the existing semantics.
+     * Replace the first instance of the given parameter. This method does not make sense under the assumption that a given
+     * parameter name can have multiple values, so here we simply preserve the existing semantics.
      *
      * @param map A map off the name/value pairs to add/replace in the query string
      */

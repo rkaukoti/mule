@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.endpoint;
 
@@ -37,9 +37,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.withSettings;
 
 public class EndpointTestCase extends AbstractMuleTestCase {
+
   /**
-   * Tests that endpoint configuration is done before setting the endpoint in the passed transformers to avoid a race condition when the
-   * transformer asks for endpoint's information that has not ben set yet. Related to these issues: EE-1937, MULE-3983
+   * Tests that endpoint configuration is done before setting the endpoint in the passed transformers to avoid a race condition
+   * when the transformer asks for endpoint's information that has not ben set yet. Related to these issues: EE-1937, MULE-3983
    */
   @Test
   @SuppressWarnings("serial")
@@ -105,9 +106,11 @@ public class EndpointTestCase extends AbstractMuleTestCase {
 
     // Creates the endpoint using the transformers which will validate the
     // configuration
-    new AbstractEndpoint(mockConnector, uri, name, properties, mockTransactionConfig, deleteUnacceptedMessages, messageExchangePattern,
-        responseTimeout, initialState, endpointEncoding, endpointBuilderName, muleContext, retryPolicyTemplate, redeliveryPolicy,
-        messageProcessorsFactory, messageProcessors, responseMessageProcessors, disableTransportTransformer, mimeType) {
+    new AbstractEndpoint(mockConnector, uri, name, properties, mockTransactionConfig, deleteUnacceptedMessages,
+        messageExchangePattern, responseTimeout, initialState, endpointEncoding, endpointBuilderName, muleContext,
+        retryPolicyTemplate, redeliveryPolicy, messageProcessorsFactory, messageProcessors, responseMessageProcessors,
+        disableTransportTransformer, mimeType) {
+
       @Override
       protected MessageProcessor createMessageProcessorChain(FlowConstruct flowConstruct) throws MuleException {
         return null;

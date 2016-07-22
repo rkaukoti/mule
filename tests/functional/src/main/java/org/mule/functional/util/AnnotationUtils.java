@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.functional.util;
@@ -20,8 +20,8 @@ public class AnnotationUtils {
   private AnnotationUtils() {}
 
   /**
-   * Looks for the {@link Annotation} in the {@link Class} and invokes the {@link Method}. It will return the result of the invocation. If
-   * there {@link Class} is not annotated it will return the default value from the {@link Annotation}.
+   * Looks for the {@link Annotation} in the {@link Class} and invokes the {@link Method}. It will return the result of the
+   * invocation. If there {@link Class} is not annotated it will return the default value from the {@link Annotation}.
    *
    * @param klass the {@link Class} where to look for the annotation
    * @param annotationClass the {@link Annotation} class to look for
@@ -52,8 +52,8 @@ public class AnnotationUtils {
 
   /**
    * Looks for the {@link Annotation} in the {@link Class} and invokes the {@link Method} in the whole hierarhcy until it reaches
-   * {@link Object}. It will return a {@link List<T>} with the results of each invocation. If there {@link Class} is not annotated it will
-   * return the default value from the {@link Annotation}.
+   * {@link Object}. It will return a {@link List<T>} with the results of each invocation. If there {@link Class} is not annotated
+   * it will return the default value from the {@link Annotation}.
    *
    * @param klass the {@link Class} where to look for the annotation
    * @param annotationClass the {@link Annotation} class to look for

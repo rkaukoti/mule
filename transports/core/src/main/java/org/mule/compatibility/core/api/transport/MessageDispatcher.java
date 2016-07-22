@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.api.transport;
 
@@ -21,6 +21,7 @@ import java.nio.charset.Charset;
  */
 @Deprecated
 public interface MessageDispatcher extends Connectable, MessageProcessor, LifecycleStateEnabled {
+
   long RECEIVE_WAIT_INDEFINITELY = 0;
   long RECEIVE_NO_WAIT = -1;
 
@@ -32,8 +33,8 @@ public interface MessageDispatcher extends Connectable, MessageProcessor, Lifecy
   void activate();
 
   /**
-   * After sending a message, the dispatcher can use this method e.g. to clean up its internal state (if it has any) or return pooled
-   * resources to whereever it got them during {@link #activate()}.
+   * After sending a message, the dispatcher can use this method e.g. to clean up its internal state (if it has any) or return
+   * pooled resources to whereever it got them during {@link #activate()}.
    *
    * @see MessageDispatcherFactory#passivate(OutboundEndpoint, MessageDispatcher)
    */
@@ -42,8 +43,8 @@ public interface MessageDispatcher extends Connectable, MessageProcessor, Lifecy
   /**
    * Determines whether this dispatcher can be reused after message sending.
    *
-   * @return <code>true</code> if this dispatcher can be reused, <code>false</code> otherwise (for example when {@link Disposable#dispose()}
-   *         has been called because an Exception was raised)
+   * @return <code>true</code> if this dispatcher can be reused, <code>false</code> otherwise (for example when
+   *         {@link Disposable#dispose()} has been called because an Exception was raised)
    */
   boolean validate();
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.expression.transformers;
 
@@ -13,8 +13,8 @@ import java.nio.charset.Charset;
 import java.util.Iterator;
 
 /**
- * This transformer will evaluate one or more expressions on the current message and return the results as an Array. If only one expression
- * is defined it will return the object returned from the expression.
+ * This transformer will evaluate one or more expressions on the current message and return the results as an Array. If only one
+ * expression is defined it will return the object returned from the expression.
  * <p/>
  * You can use expressions to extract
  * <ul>
@@ -27,9 +27,11 @@ import java.util.Iterator;
  * </ul>
  * and more.
  * <p/>
- * This transformer provides a very powerful way to pull different bits of information from the message and pass them to the service.
+ * This transformer provides a very powerful way to pull different bits of information from the message and pass them to the
+ * service.
  */
 public class ExpressionTransformer extends AbstractExpressionTransformer {
+
   private boolean returnSourceIfNull = false;
 
   @Override

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.email.internal.retriever;
 
@@ -52,7 +52,8 @@ public class RetrieverOperations {
   /**
    * Stores the specified email of id {@code emailId} into the configured {@code localDirectory}.
    * <p>
-   * if no emailId is specified, the operation will try to find an email or {@link List} of emails in the incoming {@link MuleMessage}.
+   * if no emailId is specified, the operation will try to find an email or {@link List} of emails in the incoming
+   * {@link MuleMessage}.
    * <p>
    * If no email(s) are found in the {@link MuleMessage} and no {@code emailId} is specified. the operation will fail.
    * <p>
@@ -64,7 +65,8 @@ public class RetrieverOperations {
    * @param muleMessage The incoming {@link MuleMessage}.
    * @param mailboxFolder Name of the folder where the email(s) is going to be stored.
    * @param localDirectory Local directory where the emails are going to be stored.
-   * @param fileName Name of the file that is going to be stored. The operation will append the email number and received date in the end.
+   * @param fileName Name of the file that is going to be stored. The operation will append the email number and received date in
+   *        the end.
    * @param emailId Email ID Number of the email to store. By default the email is taken from the incoming {@link MuleMessage}.
    * @param overwrite Whether to overwrite a file that already exist
    */
@@ -82,14 +84,14 @@ public class RetrieverOperations {
   }
 
   /**
-   * Eliminates from the mailbox the email with id {@code emailId}, if no {@code emailId} is specified will look for incoming emails in the
-   * {@link MuleMessage} it could be a single or multiple emails.
+   * Eliminates from the mailbox the email with id {@code emailId}, if no {@code emailId} is specified will look for incoming
+   * emails in the {@link MuleMessage} it could be a single or multiple emails.
    * <p>
-   * For IMAP mailboxes all the messages scheduled for deletion (marked as DELETED) will also be erased from the folder if the operation
-   * succeed.
+   * For IMAP mailboxes all the messages scheduled for deletion (marked as DELETED) will also be erased from the folder if the
+   * operation succeed.
    * <p>
-   * If no {@code emailId} is provided and no emails are found in the incoming {@link MuleMessage} this operation will fail and no email is
-   * going to be erased from the folder, not even the ones marked as DELETED previously.
+   * If no {@code emailId} is provided and no emails are found in the incoming {@link MuleMessage} this operation will fail and no
+   * email is going to be erased from the folder, not even the ones marked as DELETED previously.
    *
    * @param message The incoming {@link MuleMessage}.
    * @param connection The corresponding {@link RetrieverConnection} instance.

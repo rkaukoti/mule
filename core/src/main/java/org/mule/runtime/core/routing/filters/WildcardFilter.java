@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing.filters;
 
@@ -19,12 +19,14 @@ import static org.mule.runtime.core.util.ClassUtils.equal;
 import static org.mule.runtime.core.util.ClassUtils.hash;
 
 /**
- * <code>WildcardFilter</code> is used to match Strings against wildcards. It performs matches with "*", i.e. "jms.events.*" would catch
- * "jms.events.customer" and "jms.events.receipts". This filter accepts a comma-separated list of patterns, so more than one filter pattern
- * can be matched for a given argument: "jms.events.*, jms.actions.*" will match "jms.events.system" and "jms.actions" but not "jms.queue".
+ * <code>WildcardFilter</code> is used to match Strings against wildcards. It performs matches with "*", i.e. "jms.events.*" would
+ * catch "jms.events.customer" and "jms.events.receipts". This filter accepts a comma-separated list of patterns, so more than one
+ * filter pattern can be matched for a given argument: "jms.events.*, jms.actions.*" will match "jms.events.system" and
+ * "jms.actions" but not "jms.queue".
  */
 
 public class WildcardFilter implements Filter, ObjectFilter, MuleContextAware {
+
   protected final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   protected volatile String pattern;
@@ -94,8 +96,8 @@ public class WildcardFilter implements Filter, ObjectFilter, MuleContextAware {
         if (foundMatch) {
           return true;
         } else if (pattern.endsWith("+") && pattern.length() > 1) {
-          logger
-              .warn("wildcard-filter for payload based filtering is deprecated. Use expression" + "-filter or payload-type-filter instead");
+          logger.warn("wildcard-filter for payload based filtering is deprecated. Use expression"
+              + "-filter or payload-type-filter instead");
           return filterByClassName(object, pattern);
         }
       }

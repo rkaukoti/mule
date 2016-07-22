@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -16,10 +16,11 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * This allows a collection (list) of maps to be defined in Spring, via the "list" property, and then presents all the maps as a single
- * combine map at run time. For efficiency the combination of maps is done once and then cached.
+ * This allows a collection (list) of maps to be defined in Spring, via the "list" property, and then presents all the maps as a
+ * single combine map at run time. For efficiency the combination of maps is done once and then cached.
  */
 public class MapCombiner implements Map<Object, Object>, Serializable {
+
   public static final String LIST = "list"; // the setter/getter
   public static final int UNLIMITED_DEPTH = -1;
   private static final long serialVersionUID = -6291404712112000383L;
@@ -84,10 +85,13 @@ public class MapCombiner implements Map<Object, Object>, Serializable {
   @Override
   public int hashCode() {
     // MULE-6607
-    // This was changed from cachedMerge.hashCode() to getCachedMerge().hashCode() since the mutation of MapCombiner (when the list
-    // of maps was merged into cachedMerge) altered the hash code. Now hashCode() method and, consequently, equals() method, trigger
+    // This was changed from cachedMerge.hashCode() to getCachedMerge().hashCode() since the mutation of MapCombiner (when the
+    // list
+    // of maps was merged into cachedMerge) altered the hash code. Now hashCode() method and, consequently, equals() method,
+    // trigger
     // the merge in order not to alter equality of MapCombiner instances.
-    // This had impact on instances of classes such as AbstractEndpoint (which are stored on hash based collections) whose hashCode()
+    // This had impact on instances of classes such as AbstractEndpoint (which are stored on hash based collections) whose
+    // hashCode()
     // method is defined based on its properties, and this, in turn, defined based on MapCombiner instances.
     return getCachedMerge().hashCode();
   }

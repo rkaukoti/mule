@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.file;
 
@@ -184,7 +184,8 @@ public class FileCopyTestCase extends FileConnectorTestCase {
     doExecute(flowName, sourcePath, target, overwrite, createParentFolder);
   }
 
-  private void doExecute(String flowName, String source, String target, boolean overwrite, boolean createParentFolder) throws Exception {
+  private void doExecute(String flowName, String source, String target, boolean overwrite, boolean createParentFolder)
+      throws Exception {
     flowRunner(flowName).withFlowVariable(SOURCE_DIRECTORY_NAME, source).withFlowVariable("target", target)
         .withFlowVariable("overwrite", overwrite).withFlowVariable("createParent", createParentFolder).run();
 

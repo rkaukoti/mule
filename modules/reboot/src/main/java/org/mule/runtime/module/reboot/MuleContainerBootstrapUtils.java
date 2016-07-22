@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.reboot;
 
@@ -17,6 +17,7 @@ import java.security.AccessController;
 import java.security.PrivilegedAction;
 
 public final class MuleContainerBootstrapUtils {
+
   public static final String MULE_DOMAIN_FOLDER = "domains";
   public static final String MULE_LOCAL_JAR_FILENAME = "mule-local-install.jar";
   private static final String MULE_APPS_FILENAME = "apps";
@@ -103,6 +104,7 @@ public final class MuleContainerBootstrapUtils {
    */
   public static URL getResource(final String resourceName, final Class<?> callingClass) {
     URL url = AccessController.doPrivileged(new PrivilegedAction<URL>() {
+
       public URL run() {
         final ClassLoader cl = Thread.currentThread().getContextClassLoader();
         return cl != null ? cl.getResource(resourceName) : null;
@@ -111,6 +113,7 @@ public final class MuleContainerBootstrapUtils {
 
     if (url == null) {
       url = AccessController.doPrivileged(new PrivilegedAction<URL>() {
+
         public URL run() {
           return MuleContainerBootstrap.class.getClassLoader().getResource(resourceName);
         }
@@ -119,6 +122,7 @@ public final class MuleContainerBootstrapUtils {
 
     if (url == null) {
       url = AccessController.doPrivileged(new PrivilegedAction<URL>() {
+
         public URL run() {
           return callingClass.getClassLoader().getResource(resourceName);
         }
@@ -211,6 +215,7 @@ public final class MuleContainerBootstrapUtils {
   }
 
   public static class ProxyInfo {
+
     String host;
     String port;
     String username;

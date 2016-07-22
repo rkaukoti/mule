@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.component;
 
@@ -37,21 +37,24 @@ import javax.annotation.PreDestroy;
 import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
- * <code>DefaultComponentLifecycleAdapter</code> is a default implementation of {@link LifecycleAdapter} for use with {@link JavaComponent}
- * that expects component instances to implement Mule lifecycle interfaces in order to receive lifecycle. Lifecycle interfaces supported are
- * -
+ * <code>DefaultComponentLifecycleAdapter</code> is a default implementation of {@link LifecycleAdapter} for use with
+ * {@link JavaComponent} that expects component instances to implement Mule lifecycle interfaces in order to receive lifecycle.
+ * Lifecycle interfaces supported are -
  * <ul>
  * <li>{@link org.mule.runtime.core.api.lifecycle.Initialisable}</li>
  * <li>{@link org.mule.runtime.core.api.lifecycle.Startable}</li>
  * <li>{@link org.mule.runtime.core.api.lifecycle.Stoppable}</li>
  * <li>{@link org.mule.runtime.core.api.lifecycle.Disposable}</li>
  * </ul>
- * This implementation also supports JSR-250 lifecycle annotations {@link javax.annotation.PostConstruct} (for initialisation) and/or
- * {@link javax.annotation.PreDestroy} (for disposal of the object). Only one of each annotation can be used per component object.
+ * This implementation also supports JSR-250 lifecycle annotations {@link javax.annotation.PostConstruct} (for initialisation)
+ * and/or {@link javax.annotation.PreDestroy} (for disposal of the object). Only one of each annotation can be used per component
+ * object.
  *
- * @see org.mule.runtime.core.registry.JSR250ValidatorProcessor for details about the rules for using JSR-250 lifecycle annotations
+ * @see org.mule.runtime.core.registry.JSR250ValidatorProcessor for details about the rules for using JSR-250 lifecycle
+ *      annotations
  */
 public class DefaultComponentLifecycleAdapter implements LifecycleAdapter {
+
   /**
    * logger used by this class
    */
@@ -125,7 +128,8 @@ public class DefaultComponentLifecycleAdapter implements LifecycleAdapter {
     if (metaData.size() == 0) {
       return null;
     } else if (metaData.size() > 1) {
-      throw new IllegalArgumentException(CoreMessages.objectHasMoreThanOnePostConstructAnnotation(object.getClass()).getMessage());
+      throw new IllegalArgumentException(
+          CoreMessages.objectHasMoreThanOnePostConstructAnnotation(object.getClass()).getMessage());
     } else {
       Method m = (Method) metaData.get(0).getMember();
       new JSR250ValidatorProcessor().validateLifecycleMethod(m);
@@ -155,9 +159,11 @@ public class DefaultComponentLifecycleAdapter implements LifecycleAdapter {
   }
 
   /**
-   * Propagates initialise() life-cycle to component object implementations if they implement the mule {@link Initialisable} interface.
+   * Propagates initialise() life-cycle to component object implementations if they implement the mule {@link Initialisable}
+   * interface.
    * <p/>
-   * <b>NOTE:</b> It is up to component implementations to ensure their implementation of <code>initialise()</code> is thread-safe.
+   * <b>NOTE:</b> It is up to component implementations to ensure their implementation of <code>initialise()</code> is
+   * thread-safe.
    */
   @Override
   public void initialise() throws InitialisationException {
@@ -173,8 +179,8 @@ public class DefaultComponentLifecycleAdapter implements LifecycleAdapter {
   }
 
   /**
-   * Propagates start() life-cycle to component object implementations if they implement the mule {@link Startable} interface. NOT: It is up
-   * to component implementations to ensure their implementation of start() is thread-safe.
+   * Propagates start() life-cycle to component object implementations if they implement the mule {@link Startable} interface.
+   * NOT: It is up to component implementations to ensure their implementation of start() is thread-safe.
    */
   @Override
   public void start() throws MuleException {
@@ -191,8 +197,8 @@ public class DefaultComponentLifecycleAdapter implements LifecycleAdapter {
   }
 
   /**
-   * Propagates stop() life-cycle to component object implementations if they implement the mule {@link Stoppable} interface. NOT: It is up
-   * to component implementations to ensure their implementation of stop() is thread-safe.
+   * Propagates stop() life-cycle to component object implementations if they implement the mule {@link Stoppable} interface. NOT:
+   * It is up to component implementations to ensure their implementation of stop() is thread-safe.
    */
   @Override
   public void stop() throws MuleException {
@@ -209,8 +215,8 @@ public class DefaultComponentLifecycleAdapter implements LifecycleAdapter {
   }
 
   /**
-   * Propagates dispose() life-cycle to component object implementations if they implement the mule {@link Disposable} interface. NOT: It is
-   * up to component implementations to ensure their implementation of dispose() is thread-safe.
+   * Propagates dispose() life-cycle to component object implementations if they implement the mule {@link Disposable} interface.
+   * NOT: It is up to component implementations to ensure their implementation of dispose() is thread-safe.
    */
   @Override
   public void dispose() {

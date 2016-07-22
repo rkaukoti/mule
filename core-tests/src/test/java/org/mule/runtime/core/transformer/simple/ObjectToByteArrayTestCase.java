@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer.simple;
 
@@ -13,8 +13,8 @@ import static org.junit.Assert.assertThat;
 import static org.mule.runtime.core.api.transformer.Converter.DEFAULT_PRIORITY_WEIGHTING;
 
 /**
- * This unit test only tests the default priority of the {@link org.mule.runtime.core.transformer.simple.ObjectToByteArray} transformer.
- * Actual transformation logic is tested in the
+ * This unit test only tests the default priority of the {@link org.mule.runtime.core.transformer.simple.ObjectToByteArray}
+ * transformer. Actual transformation logic is tested in the
  * {@link org.mule.runtime.core.transformer.simple.ObjectByteArrayTransformersWithObjectsTestCase} test and its subclasses.
  */
 @SmallTest

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.util.ftp;
 
@@ -18,10 +18,11 @@ import java.net.URL;
 import java.util.Map;
 
 /**
- * A wrapper for the Apache ftpServer. This will progress into a provider of its own, but for now is necessary to avoid duplicating code in
- * FTP tests using FTPClient.
+ * A wrapper for the Apache ftpServer. This will progress into a provider of its own, but for now is necessary to avoid
+ * duplicating code in FTP tests using FTPClient.
  */
 public class Server {
+
   public static final int DEFAULT_PORT = 60196; // default for most/all tests
 
   private FtpServer server;
@@ -29,8 +30,8 @@ public class Server {
   /**
    * Initialize the ftp server on a given port
    *
-   * @param port The port to start the server on. Note, you need special permissions on *nux to open port 22, so we usually choose a very
-   *        high port number.
+   * @param port The port to start the server on. Note, you need special permissions on *nux to open port 22, so we usually choose
+   *        a very high port number.
    */
   public Server(int port) throws Exception {
     this(port, null);
@@ -82,8 +83,8 @@ public class Server {
   }
 
   /**
-   * Stop the ftp server TODO DZ: we may want to put a port check + wait time in here to make sure that the port is released before we
-   * continue. Windows tends to hold on to ports longer than it should.
+   * Stop the ftp server TODO DZ: we may want to put a port check + wait time in here to make sure that the port is released
+   * before we continue. Windows tends to hold on to ports longer than it should.
    */
   public void stop() {
     server.stop();

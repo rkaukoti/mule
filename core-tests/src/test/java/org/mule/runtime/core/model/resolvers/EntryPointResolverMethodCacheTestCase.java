@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.model.resolvers;
 
@@ -46,12 +46,14 @@ public class EntryPointResolverMethodCacheTestCase extends AbstractMuleTestCase 
   }
 
   private static class MockEntryPointResolver extends AbstractEntryPointResolver {
+
     public InvocationResult invoke(Object component, MuleEventContext context) throws Exception {
       throw new AssertionFailedError("do not invoke this method");
     }
   }
 
   private static class AnotherClass {
+
     public void aMethod(String payload) {
       // this method exists only for being cached in the test
     }

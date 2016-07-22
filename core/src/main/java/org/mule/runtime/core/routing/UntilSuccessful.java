@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -27,19 +27,22 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * UntilSuccessful attempts to route a message to the message processor it contains. Routing is considered successful if no exception has
- * been raised and, optionally, if the response matches an expression.
+ * UntilSuccessful attempts to route a message to the message processor it contains. Routing is considered successful if no
+ * exception has been raised and, optionally, if the response matches an expression.
  *
- * UntilSuccessful internal route can be executed synchronously or asynchronously depending on the threading profile defined on it. By
- * default, if no threading profile is defined, then it will use the default threading profile configuration for the application. This means
- * that the default behavior is to process asynchronously.
+ * UntilSuccessful internal route can be executed synchronously or asynchronously depending on the threading profile defined on
+ * it. By default, if no threading profile is defined, then it will use the default threading profile configuration for the
+ * application. This means that the default behavior is to process asynchronously.
  *
- * UntilSuccessful can optionally be configured to synchronously return an acknowledgment message when it has scheduled the event for
- * processing. UntilSuccessful is backed by a {@link ListableObjectStore} for storing the events that are pending (re)processing.
+ * UntilSuccessful can optionally be configured to synchronously return an acknowledgment message when it has scheduled the event
+ * for processing. UntilSuccessful is backed by a {@link ListableObjectStore} for storing the events that are pending
+ * (re)processing.
  *
- * To execute until-successful asynchronously the threading profile defined on it must have doThreading attribute set with true value.
+ * To execute until-successful asynchronously the threading profile defined on it must have doThreading attribute set with true
+ * value.
  *
- * To execute until-successful synchronously the threading profile defined on it must have doThreading attribute set with false value.
+ * To execute until-successful synchronously the threading profile defined on it must have doThreading attribute set with false
+ * value.
  */
 public class UntilSuccessful extends AbstractOutboundRouter implements UntilSuccessfulConfiguration {
 
@@ -68,8 +71,10 @@ public class UntilSuccessful extends AbstractOutboundRouter implements UntilSucc
     }
 
     if (routes.size() > 1) {
-      throw new InitialisationException(MessageFactory.createStaticMessage("Only one message processor is allowed within UntilSuccessful."
-          + " Use a Processor Chain to group several message processors into one."), this);
+      throw new InitialisationException(
+          MessageFactory.createStaticMessage("Only one message processor is allowed within UntilSuccessful."
+              + " Use a Processor Chain to group several message processors into one."),
+          this);
     }
 
     setWaitTime();
@@ -118,7 +123,8 @@ public class UntilSuccessful extends AbstractOutboundRouter implements UntilSucc
       dlqMP = (MessageProcessor) deadLetterQueue;
     } else {
       throw new InitialisationException(
-          MessageFactory.createStaticMessage("deadLetterQueue-ref is not a valid mesage processor: " + deadLetterQueue), null, this);
+          MessageFactory.createStaticMessage("deadLetterQueue-ref is not a valid mesage processor: " + deadLetterQueue), null,
+          this);
     }
   }
 

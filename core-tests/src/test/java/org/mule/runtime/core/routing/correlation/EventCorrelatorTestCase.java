@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing.correlation;
 
@@ -136,6 +136,7 @@ public class EventCorrelatorTestCase extends AbstractMuleTestCase {
     try {
       Prober prober = new PollingProber(1000, 50);
       prober.check(new Probe() {
+
         @Override
         public boolean isSatisfied() {
           try {
@@ -171,8 +172,8 @@ public class EventCorrelatorTestCase extends AbstractMuleTestCase {
     when(mockEventGroup.getGroupId()).thenReturn(TEST_GROUP_ID);
     when(mockEventGroup.getMessageCollectionEvent()).thenReturn(mock(MuleEvent.class));
     when(mockFlowConstruct.getName()).thenReturn("flowName");
-    return new EventCorrelator(mockEventCorrelatorCallback, mockTimeoutMessageProcessor, mockMessagingInfoMapping, mockMuleContext,
-        mockFlowConstruct, memoryObjectStore, "prefix", mockProcessedGroups);
+    return new EventCorrelator(mockEventCorrelatorCallback, mockTimeoutMessageProcessor, mockMessagingInfoMapping,
+        mockMuleContext, mockFlowConstruct, memoryObjectStore, "prefix", mockProcessedGroups);
   }
 
   public interface DisposableListableObjectStore extends ListableObjectStore, Disposable {

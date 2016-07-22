@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.api.requester.proxy;
 
@@ -41,7 +41,8 @@ public class ProxyConfigBuilder {
 
   public ProxyConfig build() {
     Preconditions.checkArgument(proxyConfig.getHost() != null, "Host must be not null");
-    Preconditions.checkArgument(proxyConfig.getPort() <= MAXIMUM_PORT_NUMBER, "Port must be under 65535. Check that you set the port.");
+    Preconditions.checkArgument(proxyConfig.getPort() <= MAXIMUM_PORT_NUMBER,
+        "Port must be under 65535. Check that you set the port.");
     return proxyConfig;
   }
 

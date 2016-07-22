@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.jaas.loginmodule;
 
@@ -105,7 +105,8 @@ public class DefaultLoginModule implements LoginModule {
   /**
    * This method attempts to login the user by checking his credentials against those of the authorised users.
    *
-   * @throws LoginException This is thrown either when there is no callback Handler or else when the user fails to be authenticated
+   * @throws LoginException This is thrown either when there is no callback Handler or else when the user fails to be
+   *         authenticated
    */
   public final boolean login() throws LoginException {
     if (callbackHandler == null) {
@@ -184,8 +185,8 @@ public class DefaultLoginModule implements LoginModule {
   }
 
   /**
-   * This method parses the credentials string and populates the credentials list against which the username and password submitted with the
-   * request will be checked
+   * This method parses the credentials string and populates the credentials list against which the username and password
+   * submitted with the request will be checked
    *
    * @return outputList
    */

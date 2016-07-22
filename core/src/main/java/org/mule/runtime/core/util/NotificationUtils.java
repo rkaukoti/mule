@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -25,9 +25,11 @@ import static java.util.Collections.synchronizedSet;
  * Contains useful methods for the generation of message processor identifiers used by the notification system
  */
 public class NotificationUtils {
+
   private NotificationUtils() {}
 
-  public static void addMessageProcessorPathElements(List<MessageProcessor> processors, MessageProcessorPathElement parentElement) {
+  public static void addMessageProcessorPathElements(List<MessageProcessor> processors,
+      MessageProcessorPathElement parentElement) {
     if (processors == null) {
       return;
     }
@@ -62,7 +64,8 @@ public class NotificationUtils {
     return buildPaths(element, new LinkedHashMap<MessageProcessor, String>());
   }
 
-  private static Map<MessageProcessor, String> buildPaths(MessageProcessorPathElement element, Map<MessageProcessor, String> elements) {
+  private static Map<MessageProcessor, String> buildPaths(MessageProcessorPathElement element,
+      Map<MessageProcessor, String> elements) {
     if (element.getMessageProcessor() != null) {
       elements.put(element.getMessageProcessor(), element.getPath());
     }
@@ -74,12 +77,15 @@ public class NotificationUtils {
   }
 
   public interface PathResolver {
+
     String resolvePath(MessageProcessor processor);
   }
 
   public static class FlowMap implements PathResolver {
+
     private Map<MessageProcessor, String> flowMap = new ConcurrentHashMap<MessageProcessor, String>();
-    // This set allows for dynamic containers to not be analyzed more than once. Dynamic containers cannot be removed because as a container
+    // This set allows for dynamic containers to not be analyzed more than once. Dynamic containers cannot be removed because as a
+    // container
     // it also must have a path.
     private Set<MessageProcessor> resolvedDynamicContainers = synchronizedSet(new HashSet<MessageProcessor>());
 

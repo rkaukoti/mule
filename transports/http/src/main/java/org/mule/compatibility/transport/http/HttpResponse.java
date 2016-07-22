@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -238,7 +238,8 @@ public class HttpResponse {
     } else if (payload instanceof byte[]) {
       setBody((byte[]) payload);
     } else {
-      setBody((OutputHandler) muleContext.getTransformationService().transform(msg, DataType.fromType(OutputHandler.class)).getPayload());
+      setBody((OutputHandler) muleContext.getTransformationService().transform(msg, DataType.fromType(OutputHandler.class))
+          .getPayload());
     }
   }
 
@@ -270,8 +271,8 @@ public class HttpResponse {
   }
 
   /**
-   * The HTTTP spec suggests that for HTTP 1.1 persistent connections should be used, for HTTP 1.0 the connection should not be kept alive.
-   * This method sets up the keepAlive flag according to the <code>version</code> that was passed in.
+   * The HTTTP spec suggests that for HTTP 1.1 persistent connections should be used, for HTTP 1.0 the connection should not be
+   * kept alive. This method sets up the keepAlive flag according to the <code>version</code> that was passed in.
    */
   protected void setupKeepAliveFromRequestVersion(HttpVersion version) {
     setKeepAlive(version.equals(HttpVersion.HTTP_1_1));

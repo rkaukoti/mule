@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api;
 
@@ -207,7 +207,8 @@ public class MessagingExceptionTestCase extends AbstractMuleContextTestCase {
     when(mockProcessor.toString()).thenReturn("Mock@1");
     MessagingException exception = new MessagingException(CoreMessages.createStaticMessage(""), mockEvent, mockProcessor);
     exception.getInfo().putAll(locationProvider.getContextInfo(mockEvent, mockProcessor));
-    assertThat(exception.getInfo().get(LocatedMuleException.INFO_LOCATION_KEY).toString(), is("Mock@1 @ MessagingExceptionTestCase"));
+    assertThat(exception.getInfo().get(LocatedMuleException.INFO_LOCATION_KEY).toString(),
+        is("Mock@1 @ MessagingExceptionTestCase"));
   }
 
   @Test
@@ -232,7 +233,8 @@ public class MessagingExceptionTestCase extends AbstractMuleContextTestCase {
 
     MessagingException exception = new MessagingException(CoreMessages.createStaticMessage(""), mockEvent, mockProcessor);
     exception.getInfo().putAll(locationProvider.getContextInfo(mockEvent, mockProcessor));
-    assertThat(exception.getInfo().get(LocatedMuleException.INFO_LOCATION_KEY).toString(), is("Mock@1 @ MessagingExceptionTestCase"));
+    assertThat(exception.getInfo().get(LocatedMuleException.INFO_LOCATION_KEY).toString(),
+        is("Mock@1 @ MessagingExceptionTestCase"));
   }
 
   @Test
@@ -359,7 +361,8 @@ public class MessagingExceptionTestCase extends AbstractMuleContextTestCase {
     when(testEvent.getMuleContext()).thenReturn(mockContext);
     MessagingException e = new MessagingException(MessageFactory.createStaticMessage(message), testEvent);
 
-    assertThat(e.getInfo().get(PAYLOAD_INFO_KEY), is(TransformerException.class.getName() + " while getting payload: exception thrown"));
+    assertThat(e.getInfo().get(PAYLOAD_INFO_KEY),
+        is(TransformerException.class.getName() + " while getting payload: exception thrown"));
   }
 
   @Test
@@ -378,6 +381,7 @@ public class MessagingExceptionTestCase extends AbstractMuleContextTestCase {
   }
 
   private static final class FailAnswer implements Answer<String> {
+
     private final String failMessage;
 
     private FailAnswer(String failMessage) {

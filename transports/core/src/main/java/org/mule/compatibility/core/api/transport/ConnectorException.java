@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.api.transport;
 
@@ -9,14 +9,15 @@ import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.config.i18n.Message;
 
 /**
- * <code>ConnectorException</code> Is thrown in the context of a Connector, usually some sort of transport level error where the connection
- * has failed. This exception maintains a reference to the connector.
+ * <code>ConnectorException</code> Is thrown in the context of a Connector, usually some sort of transport level error where the
+ * connection has failed. This exception maintains a reference to the connector.
  *
  * @see Connector
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
 public class ConnectorException extends MuleException {
+
   /**
    * Serial version
    */

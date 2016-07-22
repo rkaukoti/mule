@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.core.context.notification;
 
@@ -15,10 +15,10 @@ import java.util.LinkedList;
 import java.util.Set;
 
 /**
- * We test notifications by defining a "tree" of expected responses (this is needed because the system is multithreaded and only some
- * ordering is guaranteed serial; other actions happen in parallel) Each node can test for a notification and then has a set of parallel
- * nodes, which describe which notifications happen next in any order. Finally, after all parallel nodes are matched, a node has a set of
- * serial nodes, which are matched in order.
+ * We test notifications by defining a "tree" of expected responses (this is needed because the system is multithreaded and only
+ * some ordering is guaranteed serial; other actions happen in parallel) Each node can test for a notification and then has a set
+ * of parallel nodes, which describe which notifications happen next in any order. Finally, after all parallel nodes are matched,
+ * a node has a set of serial nodes, which are matched in order.
  *
  * <p>
  * Note that nested nodes may themselves have structure and that empty nodes are available, which can help group dependencies.
@@ -151,8 +151,9 @@ public class Node implements RestrictedNode {
   }
 
   private boolean testLocal(ServerNotification notification) {
-    return clazz.equals(notification.getClass()) && action == notification.getAction() && (!isIdDefined
-        || (null == id && null == notification.getResourceIdentifier()) || (null != id && id.equals(notification.getResourceIdentifier())));
+    return clazz.equals(notification.getClass()) && action == notification.getAction()
+        && (!isIdDefined || (null == id && null == notification.getResourceIdentifier())
+            || (null != id && id.equals(notification.getResourceIdentifier())));
   }
 
   public boolean contains(Class clazz, int action) {

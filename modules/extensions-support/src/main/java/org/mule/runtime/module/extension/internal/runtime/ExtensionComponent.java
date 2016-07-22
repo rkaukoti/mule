@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime;
 
@@ -76,8 +76,8 @@ public abstract class ExtensionComponent implements MuleContextAware, MetadataAw
   @Inject
   private MuleMetadataManager metadataManager;
 
-  protected ExtensionComponent(RuntimeExtensionModel extensionModel, RuntimeComponentModel componentModel, String configurationProviderName,
-      ExtensionManagerAdapter extensionManager) {
+  protected ExtensionComponent(RuntimeExtensionModel extensionModel, RuntimeComponentModel componentModel,
+      String configurationProviderName, ExtensionManagerAdapter extensionManager) {
     this.extensionModel = extensionModel;
     this.componentModel = componentModel;
     this.configurationProviderName = configurationProviderName;
@@ -86,8 +86,8 @@ public abstract class ExtensionComponent implements MuleContextAware, MetadataAw
   }
 
   /**
-   * Makes sure that the operation is valid by invoking {@link #validateOperationConfiguration(ConfigurationProvider)} and then delegates on
-   * {@link #doInitialise()} for custom initialisation
+   * Makes sure that the operation is valid by invoking {@link #validateOperationConfiguration(ConfigurationProvider)} and then
+   * delegates on {@link #doInitialise()} for custom initialisation
    *
    * @throws InitialisationException if a fatal error occurs causing the Mule instance to shutdown
    */
@@ -229,7 +229,8 @@ public abstract class ExtensionComponent implements MuleContextAware, MetadataAw
             FailureCode.INVALID_CONFIGURATION));
 
     if (configurationProvider instanceof DynamicConfigurationProvider) {
-      throw new MetadataResolvingException("Configuration used for Metadata fetch cannot be dynamic", FailureCode.INVALID_CONFIGURATION);
+      throw new MetadataResolvingException("Configuration used for Metadata fetch cannot be dynamic",
+          FailureCode.INVALID_CONFIGURATION);
     }
 
     String cacheId = configuration.getName();

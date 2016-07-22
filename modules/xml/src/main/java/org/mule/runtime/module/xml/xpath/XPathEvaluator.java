@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.xpath;
 
@@ -11,11 +11,12 @@ import org.w3c.dom.Node;
 import java.util.Map;
 
 /**
- * A simple component of evaluation XPath expressions in full conformance of the XPath 2.0 spec and basic conformance of the XPath 3.0
- * (everything except features which require schema awareness and high order functions).
+ * A simple component of evaluation XPath expressions in full conformance of the XPath 2.0 spec and basic conformance of the XPath
+ * 3.0 (everything except features which require schema awareness and high order functions).
  * <p/>
- * All implementations are require to support the ability to pass parameters into the query. For that reason, all the evaluation methods
- * will require the current {@link MuleEvent} to be passed on, in order to resolve those parameters against the flow variables.
+ * All implementations are require to support the ability to pass parameters into the query. For that reason, all the evaluation
+ * methods will require the current {@link MuleEvent} to be passed on, in order to resolve those parameters against the flow
+ * variables.
  * <p/>
  * All implementations are required to be thread-safe
  *
@@ -64,8 +65,8 @@ public interface XPathEvaluator {
   void registerNamespaces(NamespaceManager namespaceManager);
 
   /**
-   * Returns a {@link Map} with the registered namespaces. The key of the map is the namespace prefix and the value is its URI as a
-   * {@link String}
+   * Returns a {@link Map} with the registered namespaces. The key of the map is the namespace prefix and the value is its URI as
+   * a {@link String}
    *
    * @return a {@link Map}
    */

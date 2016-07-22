@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.vm.functional.transactions;
 
@@ -30,6 +30,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 public class VmExceptionStrategyRequestResponseTestCase extends FunctionalTestCase {
+
   public static final int TIMEOUT = 3000;
   public static final int TINY_TIMEOUT = 300;
   public static final String ORIGINAL_MESSAGE = "some message";
@@ -68,7 +69,8 @@ public class VmExceptionStrategyRequestResponseTestCase extends FunctionalTestCa
   public void testDeadLetterQueueWithInboundEndpointResponseException() throws Exception {
     MuleClient muleClient = muleContext.getClient();
     MuleMessage response = muleClient.send("vm://in2", ORIGINAL_MESSAGE, null);
-    // TODO PLG - ES - fix this, dlq is failing because transaction was already commited by next flow despite is called using one-way with
+    // TODO PLG - ES - fix this, dlq is failing because transaction was already commited by next flow despite is called using
+    // one-way with
     // vm
     /*
      * if (!deadLetterQueueLatch.await(TIMEOUT, MILLISECONDS)) { fail("dead letter queue must be reached"); }
@@ -117,7 +119,8 @@ public class VmExceptionStrategyRequestResponseTestCase extends FunctionalTestCa
   public void testDeadLetterQueueWithOutboundEndpointResponseException() throws Exception {
     MuleClient muleClient = muleContext.getClient();
     MuleMessage response = muleClient.send("vm://in5", ORIGINAL_MESSAGE, null);
-    // TODO PLG - ES - fix this issue, the response must have an exception since there was a failire in the flow. It seems that response
+    // TODO PLG - ES - fix this issue, the response must have an exception since there was a failire in the flow. It seems that
+    // response
     // chain was not executed
     /*
      * assertThat(response, IsNull.<Object>notNullValue()); assertThat(response.getPayload(), is(nullValue()));
@@ -135,6 +138,7 @@ public class VmExceptionStrategyRequestResponseTestCase extends FunctionalTestCa
   }
 
   public static class FailingTransformer extends AbstractTransformer {
+
     @Override
     protected Object doTransform(Object src, Charset enc) throws TransformerException {
       throw new TransformerException(CoreMessages.failedToBuildMessage(), this);
@@ -142,6 +146,7 @@ public class VmExceptionStrategyRequestResponseTestCase extends FunctionalTestCa
   }
 
   public static class DeadLetterQueueComponent implements Callable {
+
     @Override
     public Object onCall(MuleEventContext eventContext) throws Exception {
       deadLetterQueueLatch.release();
@@ -154,6 +159,7 @@ public class VmExceptionStrategyRequestResponseTestCase extends FunctionalTestCa
   }
 
   public static class OutboundComponent implements Callable {
+
     @Override
     public Object onCall(MuleEventContext eventContext) throws Exception {
       outboundComponentLatch.release();

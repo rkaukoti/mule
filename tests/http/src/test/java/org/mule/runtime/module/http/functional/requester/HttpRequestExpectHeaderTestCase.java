@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.requester;
 
@@ -45,6 +45,7 @@ public class HttpRequestExpectHeaderTestCase extends AbstractHttpExpectHeaderSer
     // Set a payload that will fail when consumed. As the server rejects the request after processing
     // the header, the client should not send the body.
     MuleEvent response = flowRunner(REQUEST_FLOW_NAME).withPayload(new InputStream() {
+
       @Override
       public int read() throws IOException {
         throw new IOException("Payload should not be consumed");

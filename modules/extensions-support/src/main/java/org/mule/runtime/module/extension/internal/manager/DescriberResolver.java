@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.manager;
 
@@ -22,8 +22,8 @@ import static org.mule.runtime.module.extension.internal.introspection.describer
 import static org.mule.runtime.module.extension.internal.introspection.describer.AnnotationsBasedDescriber.TYPE_PROPERTY_NAME;
 
 /**
- * Utility class used to obtain the {@link Describer} instance which should be used to obtain the {@link ExtensionDeclarer} of a given
- * {@link ExtensionManifest}.
+ * Utility class used to obtain the {@link Describer} instance which should be used to obtain the {@link ExtensionDeclarer} of a
+ * given {@link ExtensionManifest}.
  * <p>
  * This class is thread-safe and reusable.
  *
@@ -34,7 +34,8 @@ final class DescriberResolver {
   private final Map<String, DescriberResolverDelegate> delegates;
 
   DescriberResolver() {
-    delegates = ImmutableMap.<String, DescriberResolverDelegate>builder().put(DESCRIBER_ID, createAnnotationDescriberDelegate()).build();
+    delegates =
+        ImmutableMap.<String, DescriberResolverDelegate>builder().put(DESCRIBER_ID, createAnnotationDescriberDelegate()).build();
   }
 
   /**

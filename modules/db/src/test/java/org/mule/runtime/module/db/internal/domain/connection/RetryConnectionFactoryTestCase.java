@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.domain.connection;
@@ -37,13 +37,15 @@ public class RetryConnectionFactoryTestCase extends AbstractMuleTestCase {
   public void createsConnection() throws Exception {
     final ArgumentCaptor<RetryCallback> retryCallbackArgumentCaptor = ArgumentCaptor.forClass(RetryCallback.class);
 
-    when(retryPolicyTemplate.execute(retryCallbackArgumentCaptor.capture(), Matchers.<WorkManager>any())).then(new Answer<Object>() {
-      public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
-        RetryCallback retryCallback = retryCallbackArgumentCaptor.getValue();
-        retryCallback.doWork(null);
-        return null;
-      }
-    });
+    when(retryPolicyTemplate.execute(retryCallbackArgumentCaptor.capture(), Matchers.<WorkManager>any()))
+        .then(new Answer<Object>() {
+
+          public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
+            RetryCallback retryCallback = retryCallbackArgumentCaptor.getValue();
+            retryCallback.doWork(null);
+            return null;
+          }
+        });
 
     Connection expectedConnection = mock(Connection.class);
     when(delegate.create(dataSource)).thenReturn(expectedConnection);
@@ -56,11 +58,13 @@ public class RetryConnectionFactoryTestCase extends AbstractMuleTestCase {
   public void failsOnConnectionError() throws Exception {
     final ArgumentCaptor<RetryCallback> retryCallbackArgumentCaptor = ArgumentCaptor.forClass(RetryCallback.class);
 
-    when(retryPolicyTemplate.execute(retryCallbackArgumentCaptor.capture(), Matchers.<WorkManager>any())).then(new Answer<Object>() {
-      public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
-        throw new RuntimeException();
-      }
-    });
+    when(retryPolicyTemplate.execute(retryCallbackArgumentCaptor.capture(), Matchers.<WorkManager>any()))
+        .then(new Answer<Object>() {
+
+          public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
+            throw new RuntimeException();
+          }
+        });
 
     connectionFactory.create(dataSource);
   }

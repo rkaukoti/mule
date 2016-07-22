@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -39,6 +39,7 @@ import java.util.StringTokenizer;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class HttpMuleMessageFactory extends AbstractMuleMessageFactory {
+
   private static final Charset DEFAULT_ENCODING = UTF_8;
   private static Logger log = LoggerFactory.getLogger(HttpMuleMessageFactory.class);
   private boolean enableCookies = false;
@@ -174,7 +175,8 @@ public class HttpMuleMessageFactory extends AbstractMuleMessageFactory {
     for (final Header header : headersArray) {
       // Cookies are a special case because there may be more than one
       // cookie.
-      if (HttpConnector.HTTP_COOKIES_PROPERTY.equals(header.getName()) || HttpConstants.HEADER_COOKIE.equalsIgnoreCase(header.getName())) {
+      if (HttpConnector.HTTP_COOKIES_PROPERTY.equals(header.getName())
+          || HttpConstants.HEADER_COOKIE.equalsIgnoreCase(header.getName())) {
         putCookieHeaderInMapAsAServer(headersMap, header, uri);
       } else if (HttpConstants.HEADER_COOKIE_SET.equalsIgnoreCase(header.getName())) {
         putCookieHeaderInMapAsAClient(headersMap, header, uri);
@@ -275,7 +277,8 @@ public class HttpMuleMessageFactory extends AbstractMuleMessageFactory {
         if (idx < 0) {
           addQueryParamToMap(httpParams, unescape(token, encoding), null);
         } else if (idx > 0) {
-          addQueryParamToMap(httpParams, unescape(token.substring(0, idx), encoding), unescape(token.substring(idx + 1), encoding));
+          addQueryParamToMap(httpParams, unescape(token.substring(0, idx), encoding),
+              unescape(token.substring(idx + 1), encoding));
         }
       }
     }

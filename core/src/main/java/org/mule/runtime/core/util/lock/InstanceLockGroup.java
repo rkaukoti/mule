@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.lock;
 
@@ -14,6 +14,7 @@ import java.util.concurrent.locks.Lock;
  * {@link LockGroup} implementation for holding references to created locks inside a mule instance.
  */
 public class InstanceLockGroup implements LockGroup {
+
   private Map<String, LockEntry> locks;
   private Object lockAccessMonitor = new Object();
   private LockProvider lockProvider;
@@ -128,6 +129,7 @@ public class InstanceLockGroup implements LockGroup {
   }
 
   public static class LockEntry {
+
     private AtomicInteger lockCount = new AtomicInteger(0);
     private Lock lock;
 

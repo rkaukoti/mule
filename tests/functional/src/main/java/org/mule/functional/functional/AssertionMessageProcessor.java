@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.functional;
 
@@ -19,6 +19,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
 public class AssertionMessageProcessor implements MessageProcessor, FlowConstructAware, Startable {
+
   protected String expression = "#[true]";
   protected String message = "?";
   protected boolean needToMatchCount = false;
@@ -63,8 +64,8 @@ public class AssertionMessageProcessor implements MessageProcessor, FlowConstruc
    */
   public void verify() throws InterruptedException {
     if (countFailOrNullEvent()) {
-      Assert
-          .fail("Flow assertion '" + message + "' failed. No message received or if count attribute was " + "set then it was no matched.");
+      Assert.fail("Flow assertion '" + message + "' failed. No message received or if count attribute was "
+          + "set then it was no matched.");
     } else if (expressionFailed()) {
       Assert.fail("Flow assertion '" + message + "' failed. Expression " + expression + " evaluated false.");
     }
@@ -103,8 +104,8 @@ public class AssertionMessageProcessor implements MessageProcessor, FlowConstruc
   }
 
   /**
-   * The semantics of the count are as follows: - count was set & count processes were done => ok - count was set & count processes were not
-   * done => fail - count was not set & at least one processing were done => ok
+   * The semantics of the count are as follows: - count was set & count processes were done => ok - count was set & count
+   * processes were not done => fail - count was not set & at least one processing were done => ok
    */
   synchronized private boolean isProcessesCountCorrect() throws InterruptedException {
     boolean countReached = latch.await(timeout, TimeUnit.MILLISECONDS);

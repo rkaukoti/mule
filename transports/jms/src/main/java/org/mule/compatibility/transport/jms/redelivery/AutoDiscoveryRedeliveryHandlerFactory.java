@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.redelivery;
 
@@ -17,14 +17,15 @@ import javax.jms.ConnectionMetaData;
 import javax.jms.JMSException;
 
 /**
- * This factory will consult JMS connection metadata for supported optional properties and use those, if available, otherwise falling back
- * to the manual counting of redeliveries.
+ * This factory will consult JMS connection metadata for supported optional properties and use those, if available, otherwise
+ * falling back to the manual counting of redeliveries.
  *
  * @see CountingRedeliveryHandlerFactory
  * @see org.mule.compatibility.transport.jms.redelivery.JmsXRedeliveryHandlerFactory
  * @see javax.jms.ConnectionMetaData
  */
 public class AutoDiscoveryRedeliveryHandlerFactory implements RedeliveryHandlerFactory {
+
   protected final Logger logger = LoggerFactory.getLogger(getClass());
 
   protected AtomicReference<RedeliveryHandler> delegateHandler = new AtomicReference<RedeliveryHandler>(null);

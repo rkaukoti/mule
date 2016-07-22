@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -14,10 +14,12 @@ import java.util.List;
 
 /**
  * <code>Multicaster</code> is a utility that can call a given method on a collection of objects that implement one or more common
- * interfaces. The create method returns a proxy that can be cast to any of the the interfaces passed and be used like a single object.
+ * interfaces. The create method returns a proxy that can be cast to any of the the interfaces passed and be used like a single
+ * object.
  */
 // @ThreadSafe
 public final class Multicaster {
+
   /**
    * Do not instanciate.
    */
@@ -38,16 +40,19 @@ public final class Multicaster {
   }
 
   public static Object create(Class<?>[] interfaces, Collection<?> objects, InvokeListener listener) {
-    return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), interfaces, new CastingHandler(objects, listener));
+    return Proxy.newProxyInstance(Thread.currentThread().getContextClassLoader(), interfaces,
+        new CastingHandler(objects, listener));
   }
 
   public static interface InvokeListener {
+
     void afterExecute(Object object, Method method, Object[] args);
 
     Throwable onException(Object object, Method method, Object[] args, Throwable t);
   }
 
   private static class CastingHandler implements InvocationHandler {
+
     private final Collection<?> objects;
     private final InvokeListener listener;
 

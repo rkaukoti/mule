@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.infrastructure.process.rules;
 
@@ -30,6 +30,7 @@ import static org.apache.commons.io.FilenameUtils.removeExtension;
  * 
  * <pre>
  * public class MuleApplicationTestCase {
+ * 
  *   &#064;ClassRule
  *   public static MuleDeployment deployment =
  *       builder().withApplications(&quot;/path/to/application.zip&quot;).withProperty("-M-Dproperty", "value").timeout(120).deploy();
@@ -73,6 +74,7 @@ public class MuleDeployment extends MuleInstallation {
   public Statement apply(final Statement base, final Description description) {
     testname = description.getTestClass().getSimpleName();
     return new Statement() {
+
       @Override
       public void evaluate() throws Throwable {
         try {
@@ -105,6 +107,7 @@ public class MuleDeployment extends MuleInstallation {
 
   private void checkAppIsDeployed(String appName) {
     prober.check(new JUnitProbe() {
+
       @Override
       protected boolean test() throws Exception {
         return mule.isDeployed(appName);
@@ -119,6 +122,7 @@ public class MuleDeployment extends MuleInstallation {
 
   private void checkDomainIsDeployed(String domainName) {
     prober.check(new JUnitProbe() {
+
       @Override
       protected boolean test() throws Exception {
         return mule.isDomainDeployed(domainName);

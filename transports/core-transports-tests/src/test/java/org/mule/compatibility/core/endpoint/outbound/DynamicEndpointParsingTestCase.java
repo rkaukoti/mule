@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.endpoint.outbound;
 
@@ -54,21 +54,21 @@ public class DynamicEndpointParsingTestCase extends AbstractMuleContextEndpointT
 
   @Test(expected = MalformedEndpointException.class)
   public void testDynamicInboundEndpointNotAllowed() throws Exception {
-    EndpointURIEndpointBuilder endpointBuilder =
-        new EndpointURIEndpointBuilder("test://#[message.outboundProperties.host]:#[message.outboundProperties.port]", muleContext);
+    EndpointURIEndpointBuilder endpointBuilder = new EndpointURIEndpointBuilder(
+        "test://#[message.outboundProperties.host]:#[message.outboundProperties.port]", muleContext);
     endpointBuilder.buildInboundEndpoint();
   }
 
   @Test
   public void testMEPOverridingInUri() throws Exception {
-    OutboundEndpoint endpoint =
-        createEndpoint("test://#[message.outboundProperties.host]:#[message.outboundProperties.port]", MessageExchangePattern.ONE_WAY);
+    OutboundEndpoint endpoint = createEndpoint("test://#[message.outboundProperties.host]:#[message.outboundProperties.port]",
+        MessageExchangePattern.ONE_WAY);
 
     assertTrue(endpoint instanceof DynamicOutboundEndpoint);
 
     MuleEvent event = getTestEvent("test", getTestInboundEndpoint("test1"));
-    event.setMessage(
-        MuleMessage.builder(event.getMessage()).addOutboundProperty("port", 12345).addOutboundProperty("host", "localhost").build());
+    event.setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty("port", 12345)
+        .addOutboundProperty("host", "localhost").build());
 
     MuleEvent response = endpoint.process(event);
     assertSame(VoidMuleEvent.getInstance(), response);
@@ -80,8 +80,8 @@ public class DynamicEndpointParsingTestCase extends AbstractMuleContextEndpointT
     assertTrue(endpoint instanceof DynamicOutboundEndpoint);
 
     event = getTestEvent("test", getTestInboundEndpoint("test1"));
-    event.setMessage(
-        MuleMessage.builder(event.getMessage()).addOutboundProperty("port", 12345).addOutboundProperty("host", "localhost").build());
+    event.setMessage(MuleMessage.builder(event.getMessage()).addOutboundProperty("port", 12345)
+        .addOutboundProperty("host", "localhost").build());
 
     response = endpoint.process(event);
     assertNotNull(response);

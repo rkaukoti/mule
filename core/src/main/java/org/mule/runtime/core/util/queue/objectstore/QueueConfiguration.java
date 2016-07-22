@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.queue.objectstore;
 
@@ -14,6 +14,7 @@ import java.io.Serializable;
  */
 @Deprecated
 public class QueueConfiguration implements org.mule.runtime.core.util.queue.QueueConfiguration {
+
   public final static int INFINITY_CAPACTY = 0;
   protected final int capacity;
   protected final QueueStore<Serializable> objectStore;

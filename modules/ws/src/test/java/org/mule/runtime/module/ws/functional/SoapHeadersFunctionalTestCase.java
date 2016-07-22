@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.ws.functional;
 
@@ -28,7 +28,8 @@ public class SoapHeadersFunctionalTestCase extends AbstractWSConsumerFunctionalT
   private static final String HTTP_HEADER = "testHttpHeader";
 
   private static final String ECHO_HEADERS_REQUEST =
-      "<tns:echoWithHeaders xmlns:tns=\"http://consumer.ws.module.runtime.mule.org/\">" + "<text>Hello</text></tns:echoWithHeaders>";
+      "<tns:echoWithHeaders xmlns:tns=\"http://consumer.ws.module.runtime.mule.org/\">"
+          + "<text>Hello</text></tns:echoWithHeaders>";
 
   private static final String REQUEST_HEADER_IN =
       "<headerIn xmlns=\"http://consumer.ws.module.runtime.mule.org/\">TEST_HEADER_1</headerIn>";
@@ -54,8 +55,9 @@ public class SoapHeadersFunctionalTestCase extends AbstractWSConsumerFunctionalT
 
   @Test
   public void messagePropertiesAreMappedToSoapHeaders() throws Exception {
-    MuleEvent event = flowRunner("testFlow").withPayload(ECHO_HEADERS_REQUEST).withOutboundProperty(SOAP_HEADER_IN, REQUEST_HEADER_IN)
-        .withOutboundProperty(SOAP_HEADER_INOUT, REQUEST_HEADER_INOUT).run();
+    MuleEvent event =
+        flowRunner("testFlow").withPayload(ECHO_HEADERS_REQUEST).withOutboundProperty(SOAP_HEADER_IN, REQUEST_HEADER_IN)
+            .withOutboundProperty(SOAP_HEADER_INOUT, REQUEST_HEADER_INOUT).run();
 
     assertThat(event.getMessage().getInboundProperty(SOAP_HEADER_OUT), is(RESPONSE_HEADER_OUT));
     assertThat(event.getMessage().getInboundProperty(SOAP_HEADER_INOUT), is(RESPONSE_HEADER_INOUT));
@@ -67,6 +69,7 @@ public class SoapHeadersFunctionalTestCase extends AbstractWSConsumerFunctionalT
     // A test component is used on the server side to check HTTP headers that are received (inbound properties).
 
     getFunctionalTestComponent("server").setEventCallback(new EventCallback() {
+
       @Override
       public void eventReceived(MuleEventContext context, Object component) throws Exception {
         errorCollector.checkThat(context.getMessage().getInboundProperty(HTTP_HEADER), notNullValue());
@@ -82,8 +85,8 @@ public class SoapHeadersFunctionalTestCase extends AbstractWSConsumerFunctionalT
 
   @Test
   public void invalidXmlInSoapHeaderOutboundProperty() throws Exception {
-    MessagingException e = flowRunner("testFlow").withPayload(ECHO_HEADERS_REQUEST).withOutboundProperty(SOAP_HEADER_IN, "invalid xml")
-        .runExpectingException();
+    MessagingException e = flowRunner("testFlow").withPayload(ECHO_HEADERS_REQUEST)
+        .withOutboundProperty(SOAP_HEADER_IN, "invalid xml").runExpectingException();
 
     assertThat("Expected as header can't be converted to XML", e, instanceOf(TransformerMessagingException.class));
     assertThat(e.getMessage(), containsString(SOAP_HEADER_IN));
@@ -91,8 +94,8 @@ public class SoapHeadersFunctionalTestCase extends AbstractWSConsumerFunctionalT
 
   @Test
   public void invalidSoapHeaderOutboundPropertyType() throws Exception {
-    MessagingException e =
-        flowRunner("testFlow").withPayload(ECHO_HEADERS_REQUEST).withOutboundProperty(SOAP_HEADER_IN, new String()).runExpectingException();
+    MessagingException e = flowRunner("testFlow").withPayload(ECHO_HEADERS_REQUEST)
+        .withOutboundProperty(SOAP_HEADER_IN, new String()).runExpectingException();
 
     assertThat("Expected as header can't be converted to XML", e, instanceOf(TransformerMessagingException.class));
   }

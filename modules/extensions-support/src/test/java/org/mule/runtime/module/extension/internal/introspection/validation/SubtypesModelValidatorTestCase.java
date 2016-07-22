@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
@@ -42,7 +42,8 @@ public class SubtypesModelValidatorTestCase extends AbstractMuleTestCase {
     subtypes.put(toMetadataType(BaseAbstractPojo.class), asList(toMetadataType(Pojo.class)));
     subtypes.put(toMetadataType(BaseCustomInterface.class), asList(toMetadataType(Pojo.class)));
 
-    when(extensionModel.getModelProperty(SubTypesModelProperty.class)).thenReturn(Optional.of(new SubTypesModelProperty(subtypes)));
+    when(extensionModel.getModelProperty(SubTypesModelProperty.class))
+        .thenReturn(Optional.of(new SubTypesModelProperty(subtypes)));
     when(extensionModel.getModelProperty(ImportedTypesModelProperty.class)).thenReturn(Optional.empty());
 
     validator.validate(extensionModel);
@@ -54,7 +55,8 @@ public class SubtypesModelValidatorTestCase extends AbstractMuleTestCase {
     subtypes.put(toMetadataType(BaseAbstractPojo.class), asList(toMetadataType(AbstractPojo.class)));
     subtypes.put(toMetadataType(BaseCustomInterface.class), asList(toMetadataType(CustomInterface.class)));
 
-    when(extensionModel.getModelProperty(SubTypesModelProperty.class)).thenReturn(Optional.of(new SubTypesModelProperty(subtypes)));
+    when(extensionModel.getModelProperty(SubTypesModelProperty.class))
+        .thenReturn(Optional.of(new SubTypesModelProperty(subtypes)));
     when(extensionModel.getModelProperty(ImportedTypesModelProperty.class)).thenReturn(Optional.empty());
 
     validator.validate(extensionModel);
@@ -66,7 +68,8 @@ public class SubtypesModelValidatorTestCase extends AbstractMuleTestCase {
     subtypes.put(toMetadataType(BaseCustomInterface.class),
         asList(toMetadataType(AbstractPojo.class), toMetadataType(CustomInterface.class)));
 
-    when(extensionModel.getModelProperty(SubTypesModelProperty.class)).thenReturn(Optional.of(new SubTypesModelProperty(subtypes)));
+    when(extensionModel.getModelProperty(SubTypesModelProperty.class))
+        .thenReturn(Optional.of(new SubTypesModelProperty(subtypes)));
     when(extensionModel.getModelProperty(ImportedTypesModelProperty.class)).thenReturn(Optional.empty());
 
     validator.validate(extensionModel);

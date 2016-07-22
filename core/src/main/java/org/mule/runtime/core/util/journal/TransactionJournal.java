@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.journal;
 
@@ -20,8 +20,8 @@ import java.util.Collections;
  *
  * Uses two files for keeping track of the transactions and empties a file once all the entries in such file are resolved.
  *
- * Keeps a memory cache of the log entries for performance reasons. Once a transaction finishes the client of this class must manually
- * remove the entries related to such transaction to clear the cache.
+ * Keeps a memory cache of the log entries for performance reasons. Once a transaction finishes the client of this class must
+ * manually remove the entries related to such transaction to clear the cache.
  */
 public class TransactionJournal<T, K extends JournalEntry<T>> {
 
@@ -58,7 +58,8 @@ public class TransactionJournal<T, K extends JournalEntry<T>> {
       JournalEntrySerializer journalEntrySerializer, Integer maximumFileSizeInMegabytes) {
     File logFileDirectory = new File(logFilesDirectory);
     if (!logFileDirectory.exists()) {
-      Preconditions.checkState(logFileDirectory.mkdirs(), "Could not create directory for queue transaction logger " + logFileDirectory);
+      Preconditions.checkState(logFileDirectory.mkdirs(),
+          "Could not create directory for queue transaction logger " + logFileDirectory);
     }
     calculateJournalFileSize(maximumFileSizeInMegabytes);
     File logFile1 = new File(logFileDirectory, TX1_LOG_FILE_NAME);
@@ -165,8 +166,8 @@ public class TransactionJournal<T, K extends JournalEntry<T>> {
 
   private void debugLogFilesSwap() {
     if (logger.isDebugEnabled()) {
-      logger.debug(
-          "Changing files, current file size: " + currentLogFile.fileLength() + " other file size: " + notCurrentLogFile.fileLength());
+      logger.debug("Changing files, current file size: " + currentLogFile.fileLength() + " other file size: "
+          + notCurrentLogFile.fileLength());
     }
   }
 

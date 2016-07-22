@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher;
 
@@ -31,8 +31,8 @@ import java.util.concurrent.locks.ReentrantLock;
 import static org.mule.runtime.core.util.SplashScreen.miniSplash;
 
 /**
- * Deployer of an artifact within mule container. - Keeps track of deployed artifacts - Avoid already deployed artifacts to be redeployed -
- * Deploys, undeploys, redeploys packaged and exploded artifacts
+ * Deployer of an artifact within mule container. - Keeps track of deployed artifacts - Avoid already deployed artifacts to be
+ * redeployed - Deploys, undeploys, redeploys packaged and exploded artifacts
  */
 public class DefaultArchiveDeployer<T extends DeployableArtifact> implements ArchiveDeployer<T> {
 
@@ -53,8 +53,8 @@ public class DefaultArchiveDeployer<T extends DeployableArtifact> implements Arc
   private DeploymentListener deploymentListener = new NullDeploymentListener();
 
 
-  public DefaultArchiveDeployer(final ArtifactDeployer deployer, final ArtifactFactory artifactFactory, final ObservableList<T> artifacts,
-      final ReentrantLock lock, ArtifactDeploymentTemplate deploymentTemplate) {
+  public DefaultArchiveDeployer(final ArtifactDeployer deployer, final ArtifactFactory artifactFactory,
+      final ObservableList<T> artifacts, final ReentrantLock lock, ArtifactDeploymentTemplate deploymentTemplate) {
     this.deployer = deployer;
     this.artifactFactory = artifactFactory;
     this.artifacts = artifacts;
@@ -84,7 +84,8 @@ public class DefaultArchiveDeployer<T extends DeployableArtifact> implements Arc
   public T deployExplodedArtifact(String artifactDir) throws DeploymentException {
     String artifactName = artifactDir;
     @SuppressWarnings("rawtypes")
-    Collection<String> deployedAppNames = CollectionUtils.collect(artifacts, new BeanToPropertyValueTransformer(ARTIFACT_NAME_PROPERTY));
+    Collection<String> deployedAppNames =
+        CollectionUtils.collect(artifacts, new BeanToPropertyValueTransformer(ARTIFACT_NAME_PROPERTY));
 
     if (deployedAppNames.contains(artifactName) && (!artifactZombieMap.containsKey(artifactName))) {
       return null;

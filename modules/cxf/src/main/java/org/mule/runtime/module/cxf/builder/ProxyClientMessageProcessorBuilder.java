@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.builder;
 
@@ -29,13 +29,14 @@ import org.mule.runtime.module.cxf.support.StreamClosingInterceptor;
 import org.mule.runtime.module.cxf.transport.MuleUniversalConduit;
 
 /**
- * Creates an outbound proxy based on a specially configure CXF Client. This allows you to send raw XML to your MessageProcessor and have it
- * sent through CXF for SOAP processing, WS-Security, etc.
+ * Creates an outbound proxy based on a specially configure CXF Client. This allows you to send raw XML to your MessageProcessor
+ * and have it sent through CXF for SOAP processing, WS-Security, etc.
  * <p>
- * The input to the resulting MessageProcessor can be either a SOAP Body or a SOAP Envelope depending on how the payload attribute is
- * configured. Valid values are "body" or "envelope".
+ * The input to the resulting MessageProcessor can be either a SOAP Body or a SOAP Envelope depending on how the payload attribute
+ * is configured. Valid values are "body" or "envelope".
  */
 public class ProxyClientMessageProcessorBuilder extends AbstractOutboundMessageProcessorBuilder {
+
   private String payload;
 
   @Override

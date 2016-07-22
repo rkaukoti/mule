@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.functional.classloading.isolation.classpath;
@@ -49,14 +49,14 @@ public class MavenArtifactToClassPathUrlsResolverTestCase extends AbstractMuleTe
     mapping = mock(MavenMultiModuleArtifactMapping.class);
     urlsResolver = new MavenArtifactToClassPathUrlsResolver(mapping);
 
-    commonCliArtifact = MavenArtifact.builder().withGroupId("commons-cli").withArtifactId("commons-cli").withType("jar").withVersion("1.2")
-        .withScope("provided").build();
+    commonCliArtifact = MavenArtifact.builder().withGroupId("commons-cli").withArtifactId("commons-cli").withType("jar")
+        .withVersion("1.2").withScope("provided").build();
     coreArtifact = MavenArtifact.builder().withGroupId("org.my.company").withArtifactId("core-artifact").withType("jar")
         .withVersion("1.0.0").withScope("compile").build();
     coreArtifactMavenRepoURL = buildArtifactUrlMock(coreArtifact);
 
-    utilsCoreArtifact = MavenArtifact.builder().withGroupId("org.my.company").withArtifactId("utils").withType("jar").withVersion("1.0.0")
-        .withScope("compile").build();
+    utilsCoreArtifact = MavenArtifact.builder().withGroupId("org.my.company").withArtifactId("utils").withType("jar")
+        .withVersion("1.0.0").withScope("compile").build();
     utilsCoreArtifactMultiModuleURL = buildMultiModuleUrlMock(UTILS_CORE_MODULE_FOLDER);
   }
 
@@ -93,8 +93,9 @@ public class MavenArtifactToClassPathUrlsResolverTestCase extends AbstractMuleTe
     String s = File.separator;
     StringBuilder filePath = new StringBuilder();
     filePath.append(s).append("home").append(s).append("user").append(s).append(".m2").append(s).append("repository").append(s)
-        .append(artifact.getGroupIdAsPath()).append(s).append(artifact.getArtifactId()).append(s).append(artifact.getVersion()).append(s)
-        .append(artifact.getArtifactId()).append("-").append(artifact.getVersion()).append(".").append(artifact.getType());
+        .append(artifact.getGroupIdAsPath()).append(s).append(artifact.getArtifactId()).append(s).append(artifact.getVersion())
+        .append(s).append(artifact.getArtifactId()).append("-").append(artifact.getVersion()).append(".")
+        .append(artifact.getType());
 
     URL artifactURL = new URL("file", "", -1, filePath.toString());
 
@@ -104,8 +105,8 @@ public class MavenArtifactToClassPathUrlsResolverTestCase extends AbstractMuleTe
   private URL buildMultiModuleUrlMock(String multiModuleFolder) throws MalformedURLException {
     String s = File.separator;
     StringBuilder filePath = new StringBuilder();
-    filePath.append(s).append("home").append(s).append("user").append(s).append("workspace").append(multiModuleFolder).append("target")
-        .append(s).append("classes").append(s);
+    filePath.append(s).append("home").append(s).append("user").append(s).append("workspace").append(multiModuleFolder)
+        .append("target").append(s).append("classes").append(s);
 
     URL artifactURL = new URL("file", "", -1, filePath.toString());
 

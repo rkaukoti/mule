@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -114,8 +114,8 @@ public class PropertiesUtilsTestCase extends AbstractMuleTestCase {
 
   @Test
   public void testLoadAllPropertiesEmptyFile() {
-    Properties properties = PropertiesUtils.loadAllProperties("META-INF/services/org/mule/runtime/core/config/mule-empty.properties",
-        this.getClass().getClassLoader());
+    Properties properties = PropertiesUtils.loadAllProperties(
+        "META-INF/services/org/mule/runtime/core/config/mule-empty.properties", this.getClass().getClassLoader());
     assertThat(properties, IsNull.notNullValue());
     assertThat(properties.isEmpty(), is(true));
   }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.file.api;
 
@@ -94,7 +94,8 @@ public abstract class AbstractFileSystem implements FileSystem {
    * {@inheritDoc}
    */
   @Override
-  public OperationResult<InputStream, FileAttributes> read(FileConnectorConfig config, MuleMessage message, String filePath, boolean lock) {
+  public OperationResult<InputStream, FileAttributes> read(FileConnectorConfig config, MuleMessage message, String filePath,
+      boolean lock) {
     return getReadCommand().read(config, message, filePath, lock);
   }
 
@@ -102,8 +103,8 @@ public abstract class AbstractFileSystem implements FileSystem {
    * {@inheritDoc}
    */
   @Override
-  public void write(FileConnectorConfig config, String filePath, Object content, FileWriteMode mode, MuleEvent event, boolean lock,
-      boolean createParentDirectories, String encoding) {
+  public void write(FileConnectorConfig config, String filePath, Object content, FileWriteMode mode, MuleEvent event,
+      boolean lock, boolean createParentDirectories, String encoding) {
     getWriteCommand().write(config, filePath, content, mode, event, lock, createParentDirectories, encoding);
   }
 
@@ -173,8 +174,8 @@ public abstract class AbstractFileSystem implements FileSystem {
   }
 
   /**
-   * Try to acquire a lock on a file and release it immediately. Usually used as a quick check to see if another process is still holding
-   * onto the file, e.g. a large file (more than 100MB) is still being written to.
+   * Try to acquire a lock on a file and release it immediately. Usually used as a quick check to see if another process is still
+   * holding onto the file, e.g. a large file (more than 100MB) is still being written to.
    */
   protected boolean isLocked(Path path) {
     PathLock lock = createLock(path);

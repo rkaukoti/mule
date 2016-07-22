@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -62,6 +62,7 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
   public void delegatesDoWork() throws WorkException {
     final Work work = mock(Work.class);
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         work.run();
@@ -145,6 +146,7 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
   public void startsWork() throws WorkException {
     final Work work = mock(Work.class);
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         work.run();
@@ -163,6 +165,7 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
 
     final ArgumentCaptor<Work> argument = ArgumentCaptor.forClass(Work.class);
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         argument.getValue().run();
@@ -223,10 +226,12 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
 
     final ArgumentCaptor<Work> argument = ArgumentCaptor.forClass(Work.class);
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         // Fakes delegation to avoid work exception to leak through the test method
         Thread schedulerThread = new Thread(new Runnable() {
+
           @Override
           public void run() {
             argument.getValue().run();
@@ -256,6 +261,7 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
     WorkListener workListener = mock(WorkListener.class);
 
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         work.run();
@@ -295,6 +301,7 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
 
     final ArgumentCaptor<Work> argument = ArgumentCaptor.forClass(Work.class);
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         argument.getValue().run();
@@ -306,7 +313,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
 
     InOrder inOrder = inOrder(workTracker, delegateWorkManager);
     inOrder.verify(workTracker).addWork(work);
-    inOrder.verify(delegateWorkManager).startWork(argument.capture(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+    inOrder.verify(delegateWorkManager).startWork(argument.capture(), eq(startTimeout), eq(execContext),
+        Matchers.<WorkListener>any());
     inOrder.verify(workTracker).removeWork(work);
   }
 
@@ -329,7 +337,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
 
     InOrder inOrder = inOrder(workTracker, delegateWorkManager);
     inOrder.verify(workTracker).addWork(work);
-    inOrder.verify(delegateWorkManager).startWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+    inOrder.verify(delegateWorkManager).startWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext),
+        Matchers.<WorkListener>any());
     inOrder.verify(workTracker).removeWork(work);
   }
 
@@ -352,7 +361,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
 
     InOrder inOrder = inOrder(workTracker, delegateWorkManager);
     inOrder.verify(workTracker).addWork(work);
-    inOrder.verify(delegateWorkManager).startWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+    inOrder.verify(delegateWorkManager).startWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext),
+        Matchers.<WorkListener>any());
     inOrder.verify(workTracker).removeWork(work);
   }
 
@@ -367,10 +377,12 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
 
     final ArgumentCaptor<Work> argument = ArgumentCaptor.forClass(Work.class);
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         // Fakes delegation to avoid work exception to leak through the test method
         Thread schedulerThread = new Thread(new Runnable() {
+
           @Override
           public void run() {
             argument.getValue().run();
@@ -388,7 +400,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
 
     InOrder inOrder = inOrder(workTracker, delegateWorkManager);
     inOrder.verify(workTracker).addWork(work);
-    inOrder.verify(delegateWorkManager).startWork(argument.capture(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+    inOrder.verify(delegateWorkManager).startWork(argument.capture(), eq(startTimeout), eq(execContext),
+        Matchers.<WorkListener>any());
     inOrder.verify(workTracker).removeWork(work);
   }
 
@@ -397,6 +410,7 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
     final Work work = mock(Work.class);
 
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         work.run();
@@ -415,6 +429,7 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
 
     final ArgumentCaptor<Work> argument = ArgumentCaptor.forClass(Work.class);
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         argument.getValue().run();
@@ -475,10 +490,12 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
 
     final ArgumentCaptor<Work> argument = ArgumentCaptor.forClass(Work.class);
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         // Fakes delegation to avoid work exception to leak through the test method
         Thread schedulerThread = new Thread(new Runnable() {
+
           @Override
           public void run() {
             argument.getValue().run();
@@ -510,12 +527,14 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
     final ArgumentCaptor<Work> argument = ArgumentCaptor.forClass(Work.class);
 
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         argument.getValue().run();
         return null;
       }
-    }).when(delegateWorkManager).scheduleWork(argument.capture(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+    }).when(delegateWorkManager).scheduleWork(argument.capture(), eq(startTimeout), eq(execContext),
+        Matchers.<WorkListener>any());
 
     trackingWorkManager.scheduleWork(work, startTimeout, execContext, workListener);
 
@@ -550,18 +569,21 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
     final ArgumentCaptor<Work> argument = ArgumentCaptor.forClass(Work.class);
 
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         argument.getValue().run();
         return null;
       }
-    }).when(delegateWorkManager).scheduleWork(argument.capture(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+    }).when(delegateWorkManager).scheduleWork(argument.capture(), eq(startTimeout), eq(execContext),
+        Matchers.<WorkListener>any());
 
     trackingWorkManager.scheduleWork(work, startTimeout, execContext, workListener);
 
     InOrder inOrder = inOrder(workTracker, delegateWorkManager);
     inOrder.verify(workTracker).addWork(work);
-    inOrder.verify(delegateWorkManager).scheduleWork(argument.capture(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+    inOrder.verify(delegateWorkManager).scheduleWork(argument.capture(), eq(startTimeout), eq(execContext),
+        Matchers.<WorkListener>any());
     inOrder.verify(workTracker).removeWork(work);
   }
 
@@ -584,7 +606,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
 
     InOrder inOrder = inOrder(workTracker, delegateWorkManager);
     inOrder.verify(workTracker).addWork(work);
-    inOrder.verify(delegateWorkManager).scheduleWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+    inOrder.verify(delegateWorkManager).scheduleWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext),
+        Matchers.<WorkListener>any());
     inOrder.verify(workTracker).removeWork(work);
   }
 
@@ -595,8 +618,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
     ExecutionContext execContext = mock(ExecutionContext.class);
     WorkListener workListener = mock(WorkListener.class);
 
-    doThrow(new RuntimeException()).when(delegateWorkManager).scheduleWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext),
-        Matchers.<WorkListener>any());
+    doThrow(new RuntimeException()).when(delegateWorkManager).scheduleWork(Matchers.<Work>any(), eq(startTimeout),
+        eq(execContext), Matchers.<WorkListener>any());
 
     try {
       trackingWorkManager.scheduleWork(work, startTimeout, execContext, workListener);
@@ -607,7 +630,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
 
     InOrder inOrder = inOrder(workTracker, delegateWorkManager);
     inOrder.verify(workTracker).addWork(work);
-    inOrder.verify(delegateWorkManager).scheduleWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+    inOrder.verify(delegateWorkManager).scheduleWork(Matchers.<Work>any(), eq(startTimeout), eq(execContext),
+        Matchers.<WorkListener>any());
     inOrder.verify(workTracker).removeWork(work);
   }
 
@@ -622,10 +646,12 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
     final ArgumentCaptor<Work> argument = ArgumentCaptor.forClass(Work.class);
 
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         // Fakes delegation to avoid work exception to leak through the test method
         Thread schedulerThread = new Thread(new Runnable() {
+
           @Override
           public void run() {
             argument.getValue().run();
@@ -635,7 +661,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
         schedulerThread.start();
         return null;
       }
-    }).when(delegateWorkManager).scheduleWork(argument.capture(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+    }).when(delegateWorkManager).scheduleWork(argument.capture(), eq(startTimeout), eq(execContext),
+        Matchers.<WorkListener>any());
 
     trackingWorkManager.scheduleWork(work, startTimeout, execContext, workListener);
 
@@ -643,7 +670,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
 
     InOrder inOrder = inOrder(workTracker, delegateWorkManager);
     inOrder.verify(workTracker).addWork(work);
-    inOrder.verify(delegateWorkManager).scheduleWork(argument.capture(), eq(startTimeout), eq(execContext), Matchers.<WorkListener>any());
+    inOrder.verify(delegateWorkManager).scheduleWork(argument.capture(), eq(startTimeout), eq(execContext),
+        Matchers.<WorkListener>any());
     inOrder.verify(workTracker).removeWork(work);
   }
 
@@ -653,6 +681,7 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
 
     final ArgumentCaptor<Runnable> argument = ArgumentCaptor.forClass(Runnable.class);
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         argument.getValue().run();
@@ -671,6 +700,7 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
 
     final ArgumentCaptor<Runnable> argument = ArgumentCaptor.forClass(Runnable.class);
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         argument.getValue().run();
@@ -712,10 +742,12 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
 
     final ArgumentCaptor<Runnable> argument = ArgumentCaptor.forClass(Runnable.class);
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         // Fakes delegation to avoid work exception to leak through the test method
         Thread schedulerThread = new Thread(new Runnable() {
+
           @Override
           public void run() {
             argument.getValue().run();
@@ -742,7 +774,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
     Work work = mock(Work.class);
     trackingWorkManager.scheduleWork(work);
     List<Runnable> pendingWorks = Collections.<Runnable>singletonList(work);
-    when(workTracker.pendingWorks()).thenReturn(pendingWorks).thenReturn(pendingWorks).thenReturn(Collections.<Runnable>emptyList());
+    when(workTracker.pendingWorks()).thenReturn(pendingWorks).thenReturn(pendingWorks)
+        .thenReturn(Collections.<Runnable>emptyList());
 
     trackingWorkManager.dispose();
 
@@ -766,8 +799,8 @@ public class TrackingWorkManagerTestCase extends AbstractMuleTestCase {
     inOrder.verify(workTracker).removeWork(work);
   }
 
-  private void assertParameterizedWorkWasTracked(Work work, int startTimeout, ExecutionContext execContext, WorkListener workListener)
-      throws WorkException {
+  private void assertParameterizedWorkWasTracked(Work work, int startTimeout, ExecutionContext execContext,
+      WorkListener workListener) throws WorkException {
     InOrder inOrder = inOrder(workTracker, delegateWorkManager);
     inOrder.verify(workTracker).addWork(work);
     inOrder.verify(delegateWorkManager).doWork(work, startTimeout, execContext, workListener);

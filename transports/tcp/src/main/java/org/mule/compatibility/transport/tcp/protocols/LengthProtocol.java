@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.tcp.protocols;
 
@@ -14,8 +14,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- * The LengthProtocol is an application level tcp protocol that can be used to transfer large amounts of data without risking some data to
- * be loss. The protocol is defined by sending / reading an integer (the packet length) and then the data to be transferred.
+ * The LengthProtocol is an application level tcp protocol that can be used to transfer large amounts of data without risking some
+ * data to be loss. The protocol is defined by sending / reading an integer (the packet length) and then the data to be
+ * transferred.
  *
  * <p>
  * Note that use of this protocol must be symmetric - both the sending and receiving connectors must use the same protocol.

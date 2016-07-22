@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.ssl;
 
@@ -24,8 +24,9 @@ import static org.mockito.Mockito.when;
 import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 /**
- * Whitebox test for the SSL latch in SslMessageReceiver. The use of reflection here is hacky but the alternative would be stubbing large
- * parts of the JSSE classes in order to influence timing while establishing the SSL handshake (wich sounds even hackier than this test).
+ * Whitebox test for the SSL latch in SslMessageReceiver. The use of reflection here is hacky but the alternative would be
+ * stubbing large parts of the JSSE classes in order to influence timing while establishing the SSL handshake (wich sounds even
+ * hackier than this test).
  */
 public class SslHandshakeTimingTestCase extends AbstractMuleContextEndpointTestCase {
 

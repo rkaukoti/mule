@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.container.internal;
@@ -19,8 +19,8 @@ import static org.apache.commons.lang3.builder.ToStringStyle.MULTI_LINE_STYLE;
 /**
  * Creates a {@link ClassLoaderFilter} for the container filter what is exposed to Mule artifacts.
  * <p/>
- * Filter is constructed searching for {code}mule-module.properties{code} files in the classpath and then merging the corresponding packages
- * and resources in a new filter.
+ * Filter is constructed searching for {code}mule-module.properties{code} files in the classpath and then merging the
+ * corresponding packages and resources in a new filter.
  */
 public class ContainerClassLoaderFilterFactory {
 

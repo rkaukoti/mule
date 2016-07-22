@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional;
 
@@ -44,7 +44,8 @@ public class TestConnectorMessageNotificationListener implements ServerNotificat
     final Map<Class<? extends ServerNotificationListener>, Set<Class<? extends ServerNotification>>> mapping =
         serverNotificationManager.getInterfaceToTypes();
     if (!mapping.containsKey(ConnectorMessageNotificationListener.class)) {
-      serverNotificationManager.addInterfaceToType(TestConnectorMessageNotificationListener.class, ConnectorMessageNotification.class);
+      serverNotificationManager.addInterfaceToType(TestConnectorMessageNotificationListener.class,
+          ConnectorMessageNotification.class);
       serverNotificationManager.addListener(new TestConnectorMessageNotificationListener());
     }
     return serverNotificationManager;
@@ -61,6 +62,7 @@ public class TestConnectorMessageNotificationListener implements ServerNotificat
 
   public List<String> getNotificationActionNames() {
     return (List<String>) CollectionUtils.collect(notifications, new Transformer() {
+
       @Override
       public Object transform(Object input) {
         return ((ConnectorMessageNotification) input).getActionName();
@@ -75,6 +77,7 @@ public class TestConnectorMessageNotificationListener implements ServerNotificat
    */
   public List<ConnectorMessageNotification> getNotifications(final String actionName) {
     return (List<ConnectorMessageNotification>) CollectionUtils.select(notifications, new Predicate() {
+
       @Override
       public boolean evaluate(Object object) {
         return ((ConnectorMessageNotification) object).getActionName().equals(actionName);

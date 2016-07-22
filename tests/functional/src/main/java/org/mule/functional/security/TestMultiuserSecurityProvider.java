@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.security;
 
@@ -16,6 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * A security provider which holds authentications for multiple users concurrently.
  */
 public class TestMultiuserSecurityProvider extends TestSingleUserSecurityProvider {
+
   private Map<String, Authentication> authentications;
 
   public TestMultiuserSecurityProvider() {
@@ -42,7 +43,8 @@ public class TestMultiuserSecurityProvider extends TestSingleUserSecurityProvide
       props.put(PROPERTY_NUMBER_LOGINS, numberLogins + 1);
       authentication.setProperties(props);
       authentications.put(user, authentication);
-      logger.info("Welcome back " + user + " (" + numberLogins + 1 + " logins), we remembered your favorite color: " + favoriteColor);
+      logger.info(
+          "Welcome back " + user + " (" + numberLogins + 1 + " logins), we remembered your favorite color: " + favoriteColor);
     } else {
       String favoriteColor = getFavoriteColor(user);
       logger.info("First login for user: " + user + ", favorite color is " + favoriteColor);

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.file.api;
 
@@ -23,8 +23,8 @@ import javax.activation.MimetypesFileTypeMap;
 /**
  * Represents an abstract file system and the operations which can be performed on it.
  * <p>
- * This interface acts as a facade which allows performing common files operations regardless of those files being in a local disk, an FTP
- * server, a cloud storage service, etc.
+ * This interface acts as a facade which allows performing common files operations regardless of those files being in a local
+ * disk, an FTP server, a cloud storage service, etc.
  *
  * @since 4.0
  */
@@ -33,11 +33,11 @@ public interface FileSystem {
   /**
    * Lists all the files in the {@code directoryPath} which match the given {@code matcher}.
    * <p>
-   * If the listing encounters a directory, the output list will include its contents depending on the value of the {@code recursive}
-   * argument.
+   * If the listing encounters a directory, the output list will include its contents depending on the value of the
+   * {@code recursive} argument.
    * <p>
-   * If {@code recursive} is set to {@code true} but a found directory is rejected by the {@code matcher}, then there won't be any recursion
-   * into such directory.
+   * If {@code recursive} is set to {@code true} but a found directory is rejected by the {@code matcher}, then there won't be any
+   * recursion into such directory.
    *
    * @param config the config that is parameterizing this operation
    * @param directoryPath the path to the directory to be listed
@@ -53,24 +53,26 @@ public interface FileSystem {
   /**
    * Obtains the content and metadata of a file at a given path.
    * <p>
-   * Locking can be actually enabled through the {@code lock} argument, however, the extent of such lock will depend on the implementation.
-   * What is guaranteed by passing {@code true} on the {@code lock} argument is that {@code this} instance will not attempt to modify this
-   * file until the {@link InputStream} returned by {@link OperationResult#getOutput()} this method returns is closed or fully consumed.
-   * Some implementation might actually perform a file system level locking which goes beyond the extend of {@code this} instance or even
-   * mule. For some other file systems that might be simply not possible and no extra assumptions are to be taken.
+   * Locking can be actually enabled through the {@code lock} argument, however, the extent of such lock will depend on the
+   * implementation. What is guaranteed by passing {@code true} on the {@code lock} argument is that {@code this} instance will
+   * not attempt to modify this file until the {@link InputStream} returned by {@link OperationResult#getOutput()} this method
+   * returns is closed or fully consumed. Some implementation might actually perform a file system level locking which goes beyond
+   * the extend of {@code this} instance or even mule. For some other file systems that might be simply not possible and no extra
+   * assumptions are to be taken.
    * <p>
-   * This method also makes a best effort to determine the mime type of the file being read. a {@link MimetypesFileTypeMap} will be used to
-   * make an educated guess on the file's mime type
+   * This method also makes a best effort to determine the mime type of the file being read. a {@link MimetypesFileTypeMap} will
+   * be used to make an educated guess on the file's mime type
    *
    * @param config the config that is parameterizing this operation
    * @param message the incoming {@link MuleMessage}
    * @param filePath the path of the file you want to read
    * @param lock whether or not to lock the file
-   * @return An {@link OperationResult} with an {@link InputStream} with the file's content as payload and a {@link FileAttributes} object
-   *         as {@link MuleMessage#getAttributes()}
+   * @return An {@link OperationResult} with an {@link InputStream} with the file's content as payload and a
+   *         {@link FileAttributes} object as {@link MuleMessage#getAttributes()}
    * @throws IllegalArgumentException if the file at the given path doesn't exists
    */
-  OperationResult<InputStream, FileAttributes> read(FileConnectorConfig config, MuleMessage message, String filePath, boolean lock);
+  OperationResult<InputStream, FileAttributes> read(FileConnectorConfig config, MuleMessage message, String filePath,
+      boolean lock);
 
   /**
    * Writes the {@code content} into the file pointed by {@code filePath}.
@@ -93,8 +95,8 @@ public interface FileSystem {
    * <p>
    * If the file itself already exists, then the behavior depends on the supplied {@code mode}.
    * <p>
-   * This method also supports locking support depending on the value of the {@code lock} argument, but following the same rules and
-   * considerations as described in the {@link #read(FileConnectorConfig, MuleMessage, String, boolean)} method
+   * This method also supports locking support depending on the value of the {@code lock} argument, but following the same rules
+   * and considerations as described in the {@link #read(FileConnectorConfig, MuleMessage, String, boolean)} method
    *
    * @param config the config on which is parameterizing this operation
    * @param filePath the path of the file to be written
@@ -103,8 +105,8 @@ public interface FileSystem {
    * @param event the {@link MuleEvent} which processing triggers this operation
    * @param lock whether or not to lock the file
    * @param createParentDirectories whether or not to attempt creating any parent directories which don't exists.
-   * @param encoding when {@@code content} is a {@link String}, this attribute specifies the encoding to be used when writing. If not set,
-   *        then it defaults to {@link FileConnectorConfig#getDefaultWriteEncoding()}
+   * @param encoding when {@@code content} is a {@link String}, this attribute specifies the encoding to be used when writing. If
+   *        not set, then it defaults to {@link FileConnectorConfig#getDefaultWriteEncoding()}
    * @throws IllegalArgumentException if an illegal combination of arguments is supplied
    */
   void write(FileConnectorConfig config, String filePath, Object content, FileWriteMode mode, MuleEvent event, boolean lock,
@@ -113,17 +115,19 @@ public interface FileSystem {
   /**
    * Copies the file at the {@code sourcePath} into the {@code targetPath}.
    * <p>
-   * If {@code targetPath} doesn't exists, and neither does its parent, then an attempt will be made to create depending on the value of the
-   * {@code createParentDirectory} argument. If such argument is {@false}, then an {@link IllegalArgumentException} will be thrown.
+   * If {@code targetPath} doesn't exists, and neither does its parent, then an attempt will be made to create depending on the
+   * value of the {@code createParentDirectory} argument. If such argument is {@false}, then an {@link IllegalArgumentException}
+   * will be thrown.
    * <p>
    * It is also possible to use the {@code targetPath} to specify that the copied file should also be renamed. For example, if
-   * {@code sourcePath} has the value <i>a/b/test.txt</i> and {@code targetPath} is assigned to <i>a/c/test.json</i>, then the file will
-   * indeed be copied to the <i>a/c/</i> directory but renamed as <i>test.json</i>
+   * {@code sourcePath} has the value <i>a/b/test.txt</i> and {@code targetPath} is assigned to <i>a/c/test.json</i>, then the
+   * file will indeed be copied to the <i>a/c/</i> directory but renamed as <i>test.json</i>
    * <p>
    * If the target file already exists, then it will be overwritten if the {@code overwrite} argument is {@code true}. Otherwise,
    * {@link IllegalArgumentException} will be thrown
    * <p>
-   * As for the {@code sourcePath}, it can either be a file or a directory. If it points to a directory, then it will be copied recursively
+   * As for the {@code sourcePath}, it can either be a file or a directory. If it points to a directory, then it will be copied
+   * recursively
    *
    * @param config the config that is parameterizing this operation
    * @param sourcePath the path to the file to be copied
@@ -139,17 +143,19 @@ public interface FileSystem {
   /**
    * Moves the file at the {@code sourcePath} into the {@code targetPath}.
    * <p>
-   * If {@code targetPath} doesn't exists, and neither does its parent, then an attempt will be made to create depending on the value of the
-   * {@code createParentDirectory} argument. If such argument is {@false}, then an {@link IllegalArgumentException} will be thrown.
+   * If {@code targetPath} doesn't exists, and neither does its parent, then an attempt will be made to create depending on the
+   * value of the {@code createParentDirectory} argument. If such argument is {@false}, then an {@link IllegalArgumentException}
+   * will be thrown.
    * <p>
    * It is also possible to use the {@code targetPath} to specify that the moved file should also be renamed. For example, if
-   * {@code sourcePath} has the value <i>a/b/test.txt</i> and {@code targetPath} is assigned to <i>a/c/test.json</i>, then the file will
-   * indeed be moved to the <i>a/c/</i> directory but renamed as <i>test.json</i>
+   * {@code sourcePath} has the value <i>a/b/test.txt</i> and {@code targetPath} is assigned to <i>a/c/test.json</i>, then the
+   * file will indeed be moved to the <i>a/c/</i> directory but renamed as <i>test.json</i>
    * <p>
    * If the target file already exists, then it will be overwritten if the {@code overwrite} argument is {@code true}. Otherwise,
    * {@link IllegalArgumentException} will be thrown
    * <p>
-   * As for the {@code sourcePath}, it can either be a file or a directory. If it points to a directory, then it will be moved recursively
+   * As for the {@code sourcePath}, it can either be a file or a directory. If it points to a directory, then it will be moved
+   * recursively
    *
    * @param config the config that is parameterizing this operation
    * @param sourcePath the path to the file to be copied
@@ -190,8 +196,8 @@ public interface FileSystem {
   /**
    * Acquires and returns lock over the given {@code path}.
    * <p>
-   * Depending on the underlying filesystem, the extent of the lock will depend on the implementation. If a lock can not be acquired, then
-   * an {@link IllegalStateException} is thrown.
+   * Depending on the underlying filesystem, the extent of the lock will depend on the implementation. If a lock can not be
+   * acquired, then an {@link IllegalStateException} is thrown.
    * <p>
    * Whoever request the lock <b>MUST</b> release it as soon as possible.
    *
@@ -205,11 +211,11 @@ public interface FileSystem {
   Lock createMuleLock(String id);
 
   /**
-   * Creates a new {@link DataType} to be associated with a {@link MuleMessage} which payload is a {@link InputStream} and the attributes an
-   * instance of {@link FileAttributes}
+   * Creates a new {@link DataType} to be associated with a {@link MuleMessage} which payload is a {@link InputStream} and the
+   * attributes an instance of {@link FileAttributes}
    * <p>
-   * It will try to update the {@link DataType#getMediaType()} with a best guess derived from the given {@code attributes}. If no best-guess
-   * is possible, then the {@code originalDataType}'s mimeType is honoured.
+   * It will try to update the {@link DataType#getMediaType()} with a best guess derived from the given {@code attributes}. If no
+   * best-guess is possible, then the {@code originalDataType}'s mimeType is honoured.
    * <p>
    * As for the {@link MediaType#getCharset()}, the {@code dataType} one is respected
    *

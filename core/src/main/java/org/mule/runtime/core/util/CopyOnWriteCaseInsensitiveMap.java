@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -19,7 +19,8 @@ import java.util.Set;
 /**
  * Implementation of {@link Map} that provides copy on write semantics while providing the case-insensitivity of
  * {@link CaseInsensitiveHashMap}. <br>
- * <b>Note:</b> In this {@link Map} implementation {@link #values()} and {@link #entrySet()} return unmodifiable {@link Collection}'s.<br>
+ * <b>Note:</b> In this {@link Map} implementation {@link #values()} and {@link #entrySet()} return unmodifiable
+ * {@link Collection}'s.<br>
  * This implementation is not thread-safe.
  */
 public class CopyOnWriteCaseInsensitiveMap<K, V> implements Map<K, V>, Serializable {
@@ -119,8 +120,8 @@ public class CopyOnWriteCaseInsensitiveMap<K, V> implements Map<K, V>, Serializa
   /**
    * Returns a copy of {@code this} map which is case insensitive but doesn't have the copy-on-write functionality.
    * <p/>
-   * This method is useful in which you need a copy of this map in which the assumption of reads vastly outnumbering writes is no longer
-   * true
+   * This method is useful in which you need a copy of this map in which the assumption of reads vastly outnumbering writes is no
+   * longer true
    *
    * @return a case insensitive {@link Map} with a copy of {@code this} map's entries
    */
@@ -158,6 +159,7 @@ public class CopyOnWriteCaseInsensitiveMap<K, V> implements Map<K, V>, Serializa
   }
 
   private final class KeySet extends AbstractSet<K> {
+
     public Iterator<K> iterator() {
       return new KeyIterator();
     }
@@ -180,6 +182,7 @@ public class CopyOnWriteCaseInsensitiveMap<K, V> implements Map<K, V>, Serializa
   }
 
   private final class KeyIterator implements Iterator<K> {
+
     private int current = -1;
     private int lastRemovalIndex = current;
     private K[] keyArray;

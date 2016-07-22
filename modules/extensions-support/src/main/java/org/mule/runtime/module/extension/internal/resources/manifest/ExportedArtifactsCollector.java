@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.resources.manifest;
 
@@ -34,8 +34,8 @@ import static org.mule.metadata.utils.MetadataTypeUtils.getSingleAnnotation;
 import static org.mule.runtime.module.extension.internal.ExtensionProperties.EXTENSION_MANIFEST_FILE_NAME;
 
 /**
- * Utility class which calculates the default set of java package names and resources that a given extension should export in order to
- * properly function
+ * Utility class which calculates the default set of java package names and resources that a given extension should export in
+ * order to properly function
  *
  * @since 4.0
  */
@@ -105,7 +105,8 @@ final class ExportedArtifactsCollector {
 
   private Set<String> filterExportedPackages(Set<String> exportedPackages) {
     return exportedPackages.stream()
-        .filter(packageName -> filteredPackages.stream().noneMatch(filtered -> packageName.startsWith(filtered))).collect(toSet());
+        .filter(packageName -> filteredPackages.stream().noneMatch(filtered -> packageName.startsWith(filtered)))
+        .collect(toSet());
   }
 
   private void collectManuallyExportedPackages() {
@@ -119,6 +120,7 @@ final class ExportedArtifactsCollector {
 
   private void collectDefault() {
     new ExtensionWalker() {
+
       @Override
       public void onParameter(ParameterizedModel owner, ParameterModel model) {
         getParameterClass(model).ifPresent(exportedClasses::add);
@@ -146,6 +148,7 @@ final class ExportedArtifactsCollector {
     ValueHolder<Class<?>> clazz = new ValueHolder<>(null);
 
     parameter.getType().accept(new MetadataTypeVisitor() {
+
       @Override
       public void visitDictionary(DictionaryType dictionaryType) {
         dictionaryType.getKeyType().accept(this);

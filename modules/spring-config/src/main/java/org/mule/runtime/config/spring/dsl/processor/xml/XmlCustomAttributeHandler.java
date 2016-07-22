@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.dsl.processor.xml;
 
@@ -14,12 +14,14 @@ import org.w3c.dom.Node;
  * @since 4.0
  */
 public class XmlCustomAttributeHandler {
+
   public static final String NAMESPACE_URI = "NAMESPACE_URI";
   public static final String XML_NODE = "XML_NODE";
   public static final String CONFIG_FILE_NAME = "CONFIG_FILE_NAME";
 
   /**
-   * @param builder builder which is going to be used to create the {@code org.mule.runtime.config.spring.dsl.processor.ConfigLine}.
+   * @param builder builder which is going to be used to create the
+   *        {@code org.mule.runtime.config.spring.dsl.processor.ConfigLine}.
    * @return handler for adding custom attributes to the builder.
    */
   public static ConfigLineCustomAttributeStore to(ConfigLine.Builder builder) {
@@ -35,7 +37,8 @@ public class XmlCustomAttributeHandler {
   }
 
   /**
-   * @param builder builder which is going to be used to create the {@code org.mule.runtime.config.spring.dsl.processor.ComponentModel}.
+   * @param builder builder which is going to be used to create the
+   *        {@code org.mule.runtime.config.spring.dsl.processor.ComponentModel}.
    * @return handler for adding custom attributes to the builder.
    */
   public static ComponentCustomAttributeStore to(ComponentModel.Builder builder) {
@@ -66,6 +69,7 @@ public class XmlCustomAttributeHandler {
   }
 
   public static class ConfigLineCustomAttributeRetrieve {
+
     private final ConfigLine configLine;
 
     private ConfigLineCustomAttributeRetrieve(ConfigLine configLine) {
@@ -106,6 +110,7 @@ public class XmlCustomAttributeHandler {
   }
 
   public static class ComponentCustomAttributeRetrieve {
+
     private final ComponentModel componentModel;
 
     private ComponentCustomAttributeRetrieve(ComponentModel componentModel) {

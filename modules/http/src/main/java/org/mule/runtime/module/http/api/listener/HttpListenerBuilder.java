@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.api.listener;
 
@@ -105,7 +105,8 @@ public class HttpListenerBuilder {
   }
 
   /**
-   * @param reasonPhrase sets the reason phrase of the response when the request processing was successful. Allows MEL expressions.
+   * @param reasonPhrase sets the reason phrase of the response when the request processing was successful. Allows MEL
+   *        expressions.
    */
   public HttpListenerBuilder setSuccessReasonPhrase(String reasonPhrase) {
     getResponseBuilder().setReasonPhrase(reasonPhrase);
@@ -147,7 +148,8 @@ public class HttpListenerBuilder {
    * @return the builder.
    */
   public HttpListenerBuilder setTlsContextFactory(final TlsContextFactory tlsContextFactory) {
-    Preconditions.checkState(httpListenerConfig == null, "You already set a listener config. You cannot specify a tls context factory");
+    Preconditions.checkState(httpListenerConfig == null,
+        "You already set a listener config. You cannot specify a tls context factory");
     Preconditions.checkState(protocol == null || protocol.equalsIgnoreCase(HTTPS.getScheme()),
         "You cannot set a tls context factory with protocol http");
     this.tlsContextFactory = tlsContextFactory;
@@ -175,8 +177,8 @@ public class HttpListenerBuilder {
               "Protocol is https but there is not listener config provided. A listener config with tls configuration is required."));
         }
         if (!httpListenerConfig.hasTlsConfig()) {
-          throw new DefaultMuleException(
-              CoreMessages.createStaticMessage("Provided listener config must have tls configured since the listening protocol is https"));
+          throw new DefaultMuleException(CoreMessages
+              .createStaticMessage("Provided listener config must have tls configured since the listening protocol is https"));
         }
       }
       httpListener.setFlowConstruct(flow);
@@ -201,7 +203,8 @@ public class HttpListenerBuilder {
   }
 
   public HttpListenerBuilder setListenerConfig(HttpListenerConfig httpListenerConfig) {
-    Preconditions.checkState(tlsContextFactory == null, "You cannot configure a listener config if you provided a tls context factory");
+    Preconditions.checkState(tlsContextFactory == null,
+        "You cannot configure a listener config if you provided a tls context factory");
     this.httpListenerConfig = httpListenerConfig;
     return this;
   }
@@ -214,15 +217,17 @@ public class HttpListenerBuilder {
             && (protocol == null || (protocol.equalsIgnoreCase(HTTPS.getScheme()) && listenerConfig.hasTlsConfig())
                 || (protocol.equalsIgnoreCase(HttpConstants.Protocols.HTTP.getScheme()) && !listenerConfig.hasTlsConfig()))) {
           if (tlsContextFactory != null && !tlsContextFactory.equals(listenerConfig.getTlsContext())) {
-            throw new IllegalStateException(String.format(
-                "There's already a listener configuration with TLS configuration defined for host(%s) and port(%s)", this.host, this.port));
+            throw new IllegalStateException(
+                String.format("There's already a listener configuration with TLS configuration defined for host(%s) and port(%s)",
+                    this.host, this.port));
           }
           this.httpListenerConfig = listenerConfig;
           break;
         }
       }
       if (httpListenerConfig == null) {
-        HttpListenerConfigBuilder httpListenerConfigBuilder = new HttpListenerConfigBuilder(muleContext).setHost(host).setPort(port);
+        HttpListenerConfigBuilder httpListenerConfigBuilder =
+            new HttpListenerConfigBuilder(muleContext).setHost(host).setPort(port);
         if (protocol != null && protocol.equalsIgnoreCase(HTTPS.getScheme())) {
           if (tlsContextFactory == null) {
             throw new IllegalStateException("Cannot create a listener for http without a TLS context provided");

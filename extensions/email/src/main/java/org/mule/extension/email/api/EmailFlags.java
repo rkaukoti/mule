@@ -1,12 +1,12 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.email.api;
 
 /**
- * The {@link EmailFlags} class represents the set of flags on a Message. Flags are composed of predefined system flags that most folder
- * implementations are expected to support.
+ * The {@link EmailFlags} class represents the set of flags on a Message. Flags are composed of predefined system flags that most
+ * folder implementations are expected to support.
  *
  * @since 4.0
  */
@@ -67,16 +67,16 @@ public class EmailFlags {
   }
 
   /**
-   * @return if this message is isRecent. Folder implementations set this flag to indicate that this message is new to this folder, that is,
-   *         it has arrived since the last time this folder was opened.
+   * @return if this message is isRecent. Folder implementations set this flag to indicate that this message is new to this
+   *         folder, that is, it has arrived since the last time this folder was opened.
    */
   public boolean isRecent() {
     return recent;
   }
 
   /**
-   * @return if this message has been isSeen. This flag is implicitly set by the implementation when the the email content is returned to
-   *         the client in some form.
+   * @return if this message has been isSeen. This flag is implicitly set by the implementation when the the email content is
+   *         returned to the client in some form.
    */
   public boolean isSeen() {
     return seen;

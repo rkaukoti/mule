@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.transformer;
 
@@ -21,11 +21,12 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicReference;
 
 /**
- * <code>AbstractXStreamTransformer</code> is a base class for all XStream based transformers. It takes care of creating and configuring the
- * XStream parser.
+ * <code>AbstractXStreamTransformer</code> is a base class for all XStream based transformers. It takes care of creating and
+ * configuring the XStream parser.
  */
 
 public abstract class AbstractXStreamTransformer extends AbstractMessageTransformer {
+
   private final AtomicReference<XStream> xstream = new AtomicReference<>();
   private volatile String driverClass = XStreamFactory.XSTREAM_XPP_DRIVER;
   private volatile Map<String, Class<?>> aliases = new HashMap<>();

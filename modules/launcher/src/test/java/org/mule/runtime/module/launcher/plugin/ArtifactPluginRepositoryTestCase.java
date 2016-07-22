@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.launcher.plugin;
@@ -34,7 +34,8 @@ public class ArtifactPluginRepositoryTestCase extends AbstractMuleTestCase {
   private static final String PLUGIN_PROPERTIES = "plugin.properties";
   private static final String PLUGIN_LIB_FOLDER = "lib";
   private final ArtifactPluginDescriptorFactory artifactPluginDescriptorFactory = mock(ArtifactPluginDescriptorFactory.class);
-  private final ArtifactPluginRepository applicationPluginRepository = new DefaultArtifactPluginRepository(artifactPluginDescriptorFactory);
+  private final ArtifactPluginRepository applicationPluginRepository =
+      new DefaultArtifactPluginRepository(artifactPluginDescriptorFactory);
   @Rule
   public TemporaryFolder muleHomeFolder = new TemporaryFolder();
   private File pluginsLibFolder;

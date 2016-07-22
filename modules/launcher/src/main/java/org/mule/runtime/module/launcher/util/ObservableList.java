@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.util;
 
@@ -13,10 +13,11 @@ import java.util.List;
 import java.util.ListIterator;
 
 /**
- * Adapted version of a groovy.util.ObservableList. List decorator that will trigger PropertyChangeEvents when a value changes.<br>
+ * Adapted version of a groovy.util.ObservableList. List decorator that will trigger PropertyChangeEvents when a value
+ * changes.<br>
  * <p/>
- * The current implementation will trigger specialized events in the following scenarios, you need not register a different listener as
- * those events extend from PropertyChangeEvent
+ * The current implementation will trigger specialized events in the following scenarios, you need not register a different
+ * listener as those events extend from PropertyChangeEvent
  * <ul>
  * <li>ObservableList.ElementAddedEvent - a new element is added to the list</li>
  * <li>ObservableList.ElementRemovedEvent - a element is removed from the list</li>
@@ -28,6 +29,7 @@ import java.util.ListIterator;
  * </p>
  */
 public class ObservableList<E> implements List<E> {
+
   private List<E> delegate;
   private PropertyChangeSupport pcs;
 
@@ -276,6 +278,7 @@ public class ObservableList<E> implements List<E> {
   }
 
   private class ObservableIterator implements Iterator<E> {
+
     protected static final int LAST_RET_NONE = -1;
     protected int cursor = 0;
     protected int lastRet = LAST_RET_NONE;

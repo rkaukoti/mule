@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.internal.metadata;
 
@@ -37,15 +37,16 @@ import static java.lang.String.format;
 import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
- * Default implementation of the {@link MetadataManager}, which provides access to the Metadata of any Component in the application, using
- * it's {@link ComponentId}. Requires the injection of the {@link MuleContext}, to be able to lookup the component inside the Mule App flows
- * using the given {@link ComponentId}
+ * Default implementation of the {@link MetadataManager}, which provides access to the Metadata of any Component in the
+ * application, using it's {@link ComponentId}. Requires the injection of the {@link MuleContext}, to be able to lookup the
+ * component inside the Mule App flows using the given {@link ComponentId}
  *
  * @since 4.0
  */
 public class MuleMetadataManager implements MetadataManager, Initialisable {
 
-  private static final String EXCEPTION_RESOLVING_COMPONENT_METADATA = "An exception occurred while resolving metadata for component '%s'";
+  private static final String EXCEPTION_RESOLVING_COMPONENT_METADATA =
+      "An exception occurred while resolving metadata for component '%s'";
   private static final String COMPONENT_NOT_METADATA_AWARE = "Component is not MetadataAware, no information available";
   private static final String EXCEPTION_RESOLVING_METADATA_KEYS = "An exception occurred while resolving Component MetadataKeys";
   private static final String SOURCE_NOT_FOUND = "Flow doesn't contain a message source";
@@ -56,6 +57,7 @@ public class MuleMetadataManager implements MetadataManager, Initialisable {
 
   public MuleMetadataManager() {
     caches = CacheBuilder.newBuilder().build(new CacheLoader<String, MetadataCache>() {
+
       @Override
       public MetadataCache load(String id) throws Exception {
         return new DefaultMetadataCache();
@@ -152,7 +154,8 @@ public class MuleMetadataManager implements MetadataManager, Initialisable {
         try {
           return ((MetadataAware) flow.getMessageProcessors().get(Integer.parseInt(componentId.getComponentPath())));
         } catch (IndexOutOfBoundsException | NumberFormatException e) {
-          throw new InvalidComponentIdException(createStaticMessage(format(PROCESSOR_NOT_FOUND, componentId.getComponentPath())), e);
+          throw new InvalidComponentIdException(createStaticMessage(format(PROCESSOR_NOT_FOUND, componentId.getComponentPath())),
+              e);
         }
       } else {
         final MessageSource messageSource = flow.getMessageSource();

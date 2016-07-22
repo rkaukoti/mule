@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.ftp.internal.ftp.command;
 
@@ -39,8 +39,8 @@ public final class FtpCopyCommand extends ClassicFtpCommand implements CopyComma
    * {@inheritDoc}
    */
   @Override
-  public void copy(FileConnectorConfig config, String sourcePath, String targetPath, boolean overwrite, boolean createParentDirectories,
-      MuleEvent event) {
+  public void copy(FileConnectorConfig config, String sourcePath, String targetPath, boolean overwrite,
+      boolean createParentDirectories, MuleEvent event) {
     copy(config, sourcePath, targetPath, overwrite, createParentDirectories, event, new RegularFtpCopyDelegate(this, fileSystem));
   }
 

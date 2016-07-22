@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.construct;
 
@@ -19,6 +19,7 @@ import static org.hamcrest.CoreMatchers.nullValue;
 import static org.junit.Assert.assertThat;
 
 public class FlowAsyncBeforeAfterOutboundTestCase extends FunctionalTestCase {
+
   @Override
   protected String getConfigFile() {
     return "org/mule/test/construct/flow-async-before-after-outbound.xml";
@@ -54,12 +55,15 @@ public class FlowAsyncBeforeAfterOutboundTestCase extends FunctionalTestCase {
     assertThat(msgAsync, not(nullValue()));
     assertThat(msgOut, not(nullValue()));
 
-    assertThat(msgOut.getInboundProperty("request-response-thread"), equalTo(msgSync.getInboundProperty("request-response-thread")));
-    assertThat(msgSync.getOutboundProperty("request-response-thread"), not(equalTo(msgAsync.getOutboundProperty("async-thread"))));
+    assertThat(msgOut.getInboundProperty("request-response-thread"),
+        equalTo(msgSync.getInboundProperty("request-response-thread")));
+    assertThat(msgSync.getOutboundProperty("request-response-thread"),
+        not(equalTo(msgAsync.getOutboundProperty("async-thread"))));
     assertThat(msgOut.getOutboundProperty("request-response-thread"), not(equalTo(msgAsync.getOutboundProperty("async-thread"))));
   }
 
   public static class ThreadSensingMessageProcessor implements MessageProcessor {
+
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException {
       event.setMessage(MuleMessage.builder(event.getMessage())

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.expression.transformers;
 
@@ -20,6 +20,7 @@ import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
  * TODO
  */
 public class ExpressionArgument implements MuleContextAware {
+
   protected ClassLoader expressionEvaluationClassLoader = ExpressionArgument.class.getClassLoader();
   private ExpressionConfig expressionConfig = new ExpressionConfig();
   private String name;
@@ -80,8 +81,8 @@ public class ExpressionArgument implements MuleContextAware {
   }
 
   /**
-   * Evaluates this Expression against the passed in Message. If a returnClass is set on this Expression Argument it will be checked to
-   * ensure the Argument returns the correct class type.
+   * Evaluates this Expression against the passed in Message. If a returnClass is set on this Expression Argument it will be
+   * checked to ensure the Argument returns the correct class type.
    *
    * @param event the event to execute the expression on
    * @return the result of the expression
@@ -102,7 +103,8 @@ public class ExpressionArgument implements MuleContextAware {
       if (!getReturnClass().isInstance(result)) {
         // If the return type does not match, lets attempt to transform it before throwing an error
         try {
-          Transformer t = muleContext.getRegistry().lookupTransformer(DataType.fromObject(result), DataType.fromType(getReturnClass()));
+          Transformer t =
+              muleContext.getRegistry().lookupTransformer(DataType.fromObject(result), DataType.fromType(getReturnClass()));
           result = t.transform(result);
         } catch (TransformerException e) {
           throw new ExpressionRuntimeException(CoreMessages.transformUnexpectedType(result.getClass(), getReturnClass()), e);
@@ -111,7 +113,8 @@ public class ExpressionArgument implements MuleContextAware {
       }
       // if(result instanceof Collection && ((Collection)result).size()==0 && !isOptional())
       // {
-      // throw new ExpressionRuntimeException(CoreMessages.expressionEvaluatorReturnedNull(this.getEvaluator(), this.getExpression()));
+      // throw new ExpressionRuntimeException(CoreMessages.expressionEvaluatorReturnedNull(this.getEvaluator(),
+      // this.getExpression()));
       // }
     }
     return result;

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.components;
 
@@ -35,11 +35,12 @@ import static org.mule.compatibility.transport.http.HttpConstants.SC_OK;
 import static org.mule.runtime.module.http.api.HttpConstants.ResponseProperties.HTTP_STATUS_PROPERTY;
 
 /**
- * A MessageProcessor that can be used by HTTP endpoints to serve static files from a directory on the filesystem. This processor allows the
- * user to specify a resourceBase which refers to the local directory from where files will be served from. Additionally, a default file can
- * be specificed for URLs where no file is set
+ * A MessageProcessor that can be used by HTTP endpoints to serve static files from a directory on the filesystem. This processor
+ * allows the user to specify a resourceBase which refers to the local directory from where files will be served from.
+ * Additionally, a default file can be specificed for URLs where no file is set
  */
 public class StaticResourceMessageProcessor implements MessageProcessor, Initialisable {
+
   public static final String DEFAULT_MIME_TYPE = "application/octet-stream";
   public static final String ANY_PATH = "/*";
   public static final String ROOT_PATH = "/";
@@ -62,8 +63,8 @@ public class StaticResourceMessageProcessor implements MessageProcessor, Initial
     }
 
     String path = event.getMessage().getInboundProperty(HttpConnector.HTTP_REQUEST_PATH_PROPERTY);
-    String contextPath =
-        event.getMessage().getInboundProperty(org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_LISTENER_PATH);
+    String contextPath = event.getMessage()
+        .getInboundProperty(org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_LISTENER_PATH);
     if (contextPath == null) {
       // If not found then try the transport property
       contextPath = event.getMessage().getInboundProperty(HttpConnector.HTTP_CONTEXT_PATH_PROPERTY);
@@ -90,8 +91,8 @@ public class StaticResourceMessageProcessor implements MessageProcessor, Initial
     } else if (file.isDirectory()) {
       // Return a 302 with the new location
       // Return a 302 with the new location
-      MuleMessage message = MuleMessage.builder().nullPayload().addOutboundProperty(HTTP_STATUS_PROPERTY, valueOf(SC_MOVED_TEMPORARILY))
-          .addOutboundProperty(HEADER_CONTENT_LENGTH, 0)
+      MuleMessage message = MuleMessage.builder().nullPayload()
+          .addOutboundProperty(HTTP_STATUS_PROPERTY, valueOf(SC_MOVED_TEMPORARILY)).addOutboundProperty(HEADER_CONTENT_LENGTH, 0)
           .addOutboundProperty(HEADER_LOCATION, event.getMessage().getInboundProperty(HTTP_REQUEST_PATH_PROPERTY) + "/").build();
       resultEvent = new DefaultMuleEvent(message, event);
       return resultEvent;
@@ -112,7 +113,8 @@ public class StaticResourceMessageProcessor implements MessageProcessor, Initial
       }
 
       MuleMessage message = MuleMessage.builder().payload(buffer).mediaType(MediaType.parse(mimetype))
-          .addOutboundProperty(HTTP_STATUS_PROPERTY, valueOf(SC_OK)).addOutboundProperty(HEADER_CONTENT_LENGTH, buffer.length).build();
+          .addOutboundProperty(HTTP_STATUS_PROPERTY, valueOf(SC_OK)).addOutboundProperty(HEADER_CONTENT_LENGTH, buffer.length)
+          .build();
       resultEvent = new DefaultMuleEvent(message, event);
     } catch (IOException e) {
       throw new ResourceNotFoundException(HttpMessages.fileNotFound(resourceBase + path), event, this);

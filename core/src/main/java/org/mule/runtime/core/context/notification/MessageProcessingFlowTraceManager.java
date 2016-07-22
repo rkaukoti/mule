@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.context.notification;
 
@@ -31,6 +31,7 @@ import java.util.Map;
  */
 public class MessageProcessingFlowTraceManager extends LocationExecutionContextProvider
     implements FlowTraceManager, MuleContextAware, Initialisable, Disposable {
+
   public static final String FLOW_STACK_INFO_KEY = "FlowStack";
 
   private final FlowNotificationTextDebugger pipelineProcessorDebugger;
@@ -39,6 +40,7 @@ public class MessageProcessingFlowTraceManager extends LocationExecutionContextP
   private MuleContext muleContext;
 
   private PropertyChangeListener logConfigChangeListener = new PropertyChangeListener() {
+
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
       handleNotificationListeners();
@@ -102,10 +104,12 @@ public class MessageProcessingFlowTraceManager extends LocationExecutionContextP
     String resolveProcessorRepresentation = resolveProcessorRepresentation(muleContext.getConfiguration().getId(),
         notification.getProcessorPath(), notification.getProcessor());
     if (notification.getSource().getProcessorsTrace() instanceof DefaultProcessorsTrace) {
-      ((DefaultProcessorsTrace) notification.getSource().getProcessorsTrace()).addExecutedProcessors(resolveProcessorRepresentation);
+      ((DefaultProcessorsTrace) notification.getSource().getProcessorsTrace())
+          .addExecutedProcessors(resolveProcessorRepresentation);
     }
     if (notification.getSource().getFlowCallStack() instanceof DefaultFlowCallStack) {
-      ((DefaultFlowCallStack) notification.getSource().getFlowCallStack()).setCurrentProcessorPath(resolveProcessorRepresentation);
+      ((DefaultFlowCallStack) notification.getSource().getFlowCallStack())
+          .setCurrentProcessorPath(resolveProcessorRepresentation);
     }
   }
 

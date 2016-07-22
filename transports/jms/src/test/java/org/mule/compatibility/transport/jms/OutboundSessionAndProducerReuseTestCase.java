@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -99,12 +99,14 @@ public class OutboundSessionAndProducerReuseTestCase extends AbstractMuleContext
 
   private void setupMockSession() throws JMSException {
     when(connection.createSession(false, 1)).then(new Answer<Object>() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         return createSessionMock();
       }
     });
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         connectionExceptionListener = (ExceptionListener) invocation.getArguments()[0];
@@ -112,12 +114,14 @@ public class OutboundSessionAndProducerReuseTestCase extends AbstractMuleContext
       }
     }).when(connection).setExceptionListener(any(ExceptionListener.class));
     when(connection.getExceptionListener()).thenAnswer(new Answer<Object>() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         return connectionExceptionListener;
       }
     });
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         connectionClientId = (String) invocation.getArguments()[0];
@@ -125,6 +129,7 @@ public class OutboundSessionAndProducerReuseTestCase extends AbstractMuleContext
       }
     }).when(connection).setClientID(any(String.class));
     when(connection.getClientID()).thenAnswer(new Answer<Object>() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         return connectionClientId;
@@ -135,18 +140,21 @@ public class OutboundSessionAndProducerReuseTestCase extends AbstractMuleContext
   private QueueSession createSessionMock() throws JMSException {
     QueueSession mock = mock(QueueSession.class);
     when(mock.createProducer(any(Destination.class))).then(new Answer<Object>() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         return createProducerMock();
       }
     });
     when(mock.createConsumer(any(Destination.class))).then(new Answer<Object>() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         return mock(MessageConsumer.class);
       }
     });
     when(mock.createTextMessage(anyString())).then(new Answer<Object>() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         ActiveMQTextMessage msg = new ActiveMQTextMessage();
@@ -160,6 +168,7 @@ public class OutboundSessionAndProducerReuseTestCase extends AbstractMuleContext
   private MessageProducer createProducerMock() throws JMSException {
     MessageProducer mock = mock(MessageProducer.class);
     doAnswer(new Answer<Object>() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         messageSentLatch.countDown();
@@ -236,6 +245,7 @@ public class OutboundSessionAndProducerReuseTestCase extends AbstractMuleContext
     QueueConnection queueConnection = mock(QueueConnection.class);
     when(connectionFactory.createQueueConnection()).thenReturn(queueConnection);
     when(queueConnection.createQueueSession(false, 1)).then(new Answer<Object>() {
+
       @Override
       public Object answer(InvocationOnMock invocation) throws Throwable {
         return createSessionMock();

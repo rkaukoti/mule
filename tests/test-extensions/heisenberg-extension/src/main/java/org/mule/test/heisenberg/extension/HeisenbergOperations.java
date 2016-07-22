@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.heisenberg.extension;
 
@@ -75,15 +75,16 @@ public class HeisenbergOperations {
     org.mule.runtime.api.metadata.DataType dt =
         DataType.builder().type(String.class).mediaType("dead/dead").charset(lastSupportedEncoding.toString()).build();
 
-    return OperationResult.<String, IntegerAttributes>builder().output(config.getEnemies().get(index)).mediaType(dt.getMediaType())
-        .attributes(new IntegerAttributes(index)).build();
+    return OperationResult.<String, IntegerAttributes>builder().output(config.getEnemies().get(index))
+        .mediaType(dt.getMediaType()).attributes(new IntegerAttributes(index)).build();
   }
 
   public String kill(@Optional(defaultValue = "#[payload]") String victim, String goodbyeMessage) throws Exception {
     return killWithCustomMessage(victim, goodbyeMessage);
   }
 
-  public String killWithCustomMessage(@Optional(defaultValue = "#[payload]") @Placement(group = KILL_WITH_GROUP, order = 1) String victim,
+  public String killWithCustomMessage(
+      @Optional(defaultValue = "#[payload]") @Placement(group = KILL_WITH_GROUP, order = 1) String victim,
       @Placement(group = KILL_WITH_GROUP, order = 2) String goodbyeMessage) {
     return String.format("%s, %s", goodbyeMessage, victim);
   }
@@ -108,7 +109,8 @@ public class HeisenbergOperations {
     return wildCardWeapons.stream().map(Weapon::kill).collect(Collectors.toList());
   }
 
-  public String killMany(@RestrictedTo(HeisenbergExtension.class) List<NestedProcessor> killOperations, String reason) throws Exception {
+  public String killMany(@RestrictedTo(HeisenbergExtension.class) List<NestedProcessor> killOperations, String reason)
+      throws Exception {
     StringBuilder builder = new StringBuilder("Killed the following because " + reason + ":\n");
     for (NestedProcessor processor : killOperations) {
       builder.append(processor.process()).append("\n");

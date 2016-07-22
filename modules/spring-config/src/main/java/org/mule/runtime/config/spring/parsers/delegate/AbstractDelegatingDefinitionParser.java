@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.delegate;
 
@@ -22,9 +22,9 @@ import org.w3c.dom.Element;
 import java.util.Map;
 
 /**
- * This allows a definition parsers to be dynamically represented by different definition parsers, depending on the context. For example, a
- * single model may be defined across file - the first use defines the model and subsequent uses extend it (for this particular case, see
- * {@link InheritDefinitionParser}).
+ * This allows a definition parsers to be dynamically represented by different definition parsers, depending on the context. For
+ * example, a single model may be defined across file - the first use defines the model and subsequent uses extend it (for this
+ * particular case, see {@link InheritDefinitionParser}).
  *
  * <p>
  * Note that the sub-parsers must be consistent. That includes matching the same schema, for example.

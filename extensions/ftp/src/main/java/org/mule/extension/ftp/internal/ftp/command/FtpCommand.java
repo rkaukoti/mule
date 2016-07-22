@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.ftp.internal.ftp.command;
 
@@ -41,8 +41,8 @@ public abstract class FtpCommand<Connection extends FtpFileSystem> extends FileC
   }
 
   /**
-   * Similar to {@link #getFile(FileConnectorConfig, String)} but throwing an {@link IllegalArgumentException} if the {@code filePath}
-   * doesn't exists
+   * Similar to {@link #getFile(FileConnectorConfig, String)} but throwing an {@link IllegalArgumentException} if the
+   * {@code filePath} doesn't exists
    *
    * @param config the config that is parameterizing this operation
    * @param filePath the path to the file you want
@@ -54,7 +54,8 @@ public abstract class FtpCommand<Connection extends FtpFileSystem> extends FileC
   }
 
   /**
-   * Obtains a {@link FtpFileAttributes} for the given {@code filePath} by using the {@link FTPClient#mlistFile(String)} FTP command
+   * Obtains a {@link FtpFileAttributes} for the given {@code filePath} by using the {@link FTPClient#mlistFile(String)} FTP
+   * command
    *
    * @param config the config that is parameterizing this operation
    * @param filePath the path to the file you want
@@ -117,8 +118,8 @@ public abstract class FtpCommand<Connection extends FtpFileSystem> extends FileC
   /**
    * Template method that renames the file at {@code filePath} to {@code newName}.
    * <p>
-   * This method performs path resolution and validation and eventually delegates into {@link #doRename(String, String)}, in which the
-   * actual renaming implementation is.
+   * This method performs path resolution and validation and eventually delegates into {@link #doRename(String, String)}, in which
+   * the actual renaming implementation is.
    *
    * @param config the config that is parameterizing this operation
    * @param filePath the path of the file to be renamed
@@ -173,8 +174,8 @@ public abstract class FtpCommand<Connection extends FtpFileSystem> extends FileC
 
   /**
    * Performs the base logic and delegates into
-   * {@link AbstractFtpCopyDelegate#doCopy(FileConnectorConfig, FileAttributes, Path, boolean, MuleEvent)} to perform the actual copying
-   * logic
+   * {@link AbstractFtpCopyDelegate#doCopy(FileConnectorConfig, FileAttributes, Path, boolean, MuleEvent)} to perform the actual
+   * copying logic
    *
    * @param config the config that is parameterizing this operation
    * @param sourcePath the path to be copied
@@ -183,8 +184,8 @@ public abstract class FtpCommand<Connection extends FtpFileSystem> extends FileC
    * @param createParentDirectory whether to create the target's parent directory if it doesn't exists
    * @param event the {@link MuleEvent} which triggered this operation
    */
-  protected final void copy(FileConnectorConfig config, String sourcePath, String target, boolean overwrite, boolean createParentDirectory,
-      MuleEvent event, FtpCopyDelegate delegate) {
+  protected final void copy(FileConnectorConfig config, String sourcePath, String target, boolean overwrite,
+      boolean createParentDirectory, MuleEvent event, FtpCopyDelegate delegate) {
     FileAttributes sourceFile = getExistingFile(config, sourcePath);
     Path targetPath = resolvePath(config, target);
     FileAttributes targetFile = getFile(config, targetPath.toString());
@@ -204,8 +205,9 @@ public abstract class FtpCommand<Connection extends FtpFileSystem> extends FileC
         mkdirs(config, targetPath);
         targetPath = targetPath.resolve(sourceFile.getName());
       } else {
-        throw new IllegalArgumentException(String.format("Can't copy '%s' to '%s' because the destination path " + "doesn't exists",
-            sourceFile.getPath(), targetPath.toAbsolutePath()));
+        throw new IllegalArgumentException(
+            String.format("Can't copy '%s' to '%s' because the destination path " + "doesn't exists", sourceFile.getPath(),
+                targetPath.toAbsolutePath()));
       }
     }
 

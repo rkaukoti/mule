@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.resolver;
 
@@ -16,8 +16,8 @@ import org.mule.runtime.core.util.ObjectNameHelper;
 import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessage;
 
 /**
- * Base class for a {@link ValueResolver} which needs to create instances of {@link NestedProcessor}, regardless of it being the main return
- * type or not
+ * Base class for a {@link ValueResolver} which needs to create instances of {@link NestedProcessor}, regardless of it being the
+ * main return type or not
  *
  * @param <T> the generic type of the values that {@code this} instance produces
  */

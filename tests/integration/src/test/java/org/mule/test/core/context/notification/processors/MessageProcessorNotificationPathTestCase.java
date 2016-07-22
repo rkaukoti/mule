@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.core.context.notification.processors;
 
@@ -23,6 +23,7 @@ import static org.mule.runtime.core.util.NotificationUtils.buildPathResolver;
  *
  */
 public class MessageProcessorNotificationPathTestCase extends FunctionalTestCase {
+
   @Override
   protected String getConfigFile() {
     return "org/mule/test/integration/notifications/message-processor-notification-test-flow.xml";
@@ -75,7 +76,8 @@ public class MessageProcessorNotificationPathTestCase extends FunctionalTestCase
   public void flowRefs() throws Exception {
     testFlowPaths("subflow", "/0", "/1", "/1/subflow-call/subprocessors/0", "/1/subflow-call/subprocessors/1");
     testFlowPaths("subflow2", "/0", "/1", "/1/subflow-call/subprocessors/0", "/1/subflow-call/subprocessors/1", "/2");
-    testFlowPaths("subflow\\/With\\/Slash", "/0", "/1", "/1/subflow\\/call/subprocessors/0", "/1/subflow\\/call/subprocessors/1", "/2");
+    testFlowPaths("subflow\\/With\\/Slash", "/0", "/1", "/1/subflow\\/call/subprocessors/0", "/1/subflow\\/call/subprocessors/1",
+        "/2");
   }
 
   @Test

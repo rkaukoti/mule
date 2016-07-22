@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.coreextension;
 
@@ -110,6 +110,7 @@ public class ReflectionMuleCoreExtensionDependencyResolver implements MuleCoreEx
 
   private void sortCoreExtensionsByName(List<MuleCoreExtension> coreExtensionAwareExtensions1) {
     Collections.sort(coreExtensionAwareExtensions1, new Comparator<MuleCoreExtension>() {
+
       @Override
       public int compare(MuleCoreExtension coreExtension1, MuleCoreExtension coreExtension2) {
         return coreExtension1.getName().compareTo(coreExtension2.getName());
@@ -142,7 +143,8 @@ public class ReflectionMuleCoreExtensionDependencyResolver implements MuleCoreEx
     throw new IllegalArgumentException("Unable to find an instance for " + dependencyClass);
   }
 
-  private boolean satisfiedDependencies(List<LinkedMuleCoreExtensionDependency> dependencies, List<MuleCoreExtension> resolvedExtensions) {
+  private boolean satisfiedDependencies(List<LinkedMuleCoreExtensionDependency> dependencies,
+      List<MuleCoreExtension> resolvedExtensions) {
     for (LinkedMuleCoreExtensionDependency dependency : dependencies) {
       boolean isResolved = false;
 

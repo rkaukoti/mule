@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher;
 
@@ -48,8 +48,10 @@ public class DefaultArtifactDeployer<T extends DeployableArtifact> implements Ar
     try {
       artifact.dispose();
     } catch (Throwable t) {
-      logger.error(String.format("Unable to cleanly dispose artifact '%s'. Restart Mule if you get errors redeploying this artifact",
-          artifact.getArtifactName()), t);
+      logger.error(
+          String.format("Unable to cleanly dispose artifact '%s'. Restart Mule if you get errors redeploying this artifact",
+              artifact.getArtifactName()),
+          t);
     }
   }
 

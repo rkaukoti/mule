@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.queue.objectstore;
 
@@ -20,6 +20,7 @@ import java.util.Map;
  */
 @Deprecated
 public class QueueInfo {
+
   private static Map<Class<? extends ObjectStore>, QueueInfoDelegateFactory> delegateFactories =
       new HashMap<Class<? extends ObjectStore>, QueueInfoDelegateFactory>();
   private QueueConfiguration config;
@@ -38,7 +39,8 @@ public class QueueInfo {
     this(other.name, other.muleContext, other.config);
   }
 
-  public static synchronized void registerDelegateFactory(Class<? extends ObjectStore> storeType, QueueInfoDelegateFactory factory) {
+  public static synchronized void registerDelegateFactory(Class<? extends ObjectStore> storeType,
+      QueueInfoDelegateFactory factory) {
     delegateFactories.put(storeType, factory);
   }
 
@@ -56,7 +58,8 @@ public class QueueInfo {
       factory = delegateFactories.get(config.objectStore.getClass());
     }
     if (delegate == null || (config != null && !hadConfig)) {
-      QueueInfoDelegate newDelegate = factory != null ? factory.createDelegate(this, muleContext) : new DefaultQueueInfoDelegate(capacity);
+      QueueInfoDelegate newDelegate =
+          factory != null ? factory.createDelegate(this, muleContext) : new DefaultQueueInfoDelegate(capacity);
       delegateCanTake = newDelegate instanceof TakingQueueStoreDelegate;
       if (delegate != null && delegate instanceof DefaultQueueInfoDelegate) {
         newDelegate.addAll(((DefaultQueueInfoDelegate) delegate).list);
@@ -148,6 +151,7 @@ public class QueueInfo {
    * A factory for creating object store-specific queue info delegates
    */
   public static interface QueueInfoDelegateFactory {
+
     /**
      * Create a delegate
      */

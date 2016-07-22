@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.pgp;
 
@@ -50,6 +50,7 @@ public class TransformPerRequestInChunksPolicy extends AbstractTransformPolicy {
   }
 
   private class PerRequestWork extends TransformerWork {
+
     @Override
     protected void execute() throws Exception {
       getTransformer().initialize(getInputStream().getOut());
@@ -59,8 +60,8 @@ public class TransformPerRequestInChunksPolicy extends AbstractTransformPolicy {
         writeSemaphore.acquire();
 
         /**
-         * Assuming one thread is reading the input stream (which is reasonable) and the state of the reading thread which should be delayed
-         * at this point it is safe to manipulate getBytesRequested() as I'm the only thread accessing the object
+         * Assuming one thread is reading the input stream (which is reasonable) and the state of the reading thread which should
+         * be delayed at this point it is safe to manipulate getBytesRequested() as I'm the only thread accessing the object
          */
         long requested = bytesActuallyRequested;
         long updatedRequest = (long) (Math.ceil((double) requested / (double) chunkSize) * chunkSize);

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -79,8 +79,8 @@ public class IOUtils extends org.apache.commons.io.IOUtils {
    * @return an InputStream to the resource or null if resource not found
    * @throws java.io.IOException IO error
    */
-  public static InputStream getResourceAsStream(final String resourceName, final Class callingClass, boolean tryAsFile, boolean tryAsUrl)
-      throws IOException {
+  public static InputStream getResourceAsStream(final String resourceName, final Class callingClass, boolean tryAsFile,
+      boolean tryAsUrl) throws IOException {
 
     URL url = getResourceAsUrl(resourceName, callingClass, tryAsFile, tryAsUrl);
 
@@ -154,8 +154,8 @@ public class IOUtils extends org.apache.commons.io.IOUtils {
   }
 
   /**
-   * This method wraps {@link org.apache.commons.io.IOUtils}' <code>toString(InputStream)</code> method but catches any {@link IOException}
-   * and wraps it into a {@link RuntimeException}.
+   * This method wraps {@link org.apache.commons.io.IOUtils}' <code>toString(InputStream)</code> method but catches any
+   * {@link IOException} and wraps it into a {@link RuntimeException}.
    */
   public static String toString(InputStream input) {
     try {
@@ -178,8 +178,8 @@ public class IOUtils extends org.apache.commons.io.IOUtils {
   }
 
   /**
-   * Re-implement copy method to allow buffer size to be configured. This won't impact all methods because there is no polymorphism for
-   * static methods, but rather just direct use of these two methods.
+   * Re-implement copy method to allow buffer size to be configured. This won't impact all methods because there is no
+   * polymorphism for static methods, but rather just direct use of these two methods.
    */
   public static long copyLarge(InputStream input, OutputStream output) throws IOException {
     byte[] buffer = new byte[bufferSize];
@@ -193,8 +193,8 @@ public class IOUtils extends org.apache.commons.io.IOUtils {
   }
 
   /**
-   * Re-implement copy method to allow buffer size to be configured. This won't impact all methods because there is no polymorphism for
-   * static methods, but rather just direct use of these two methods.
+   * Re-implement copy method to allow buffer size to be configured. This won't impact all methods because there is no
+   * polymorphism for static methods, but rather just direct use of these two methods.
    */
   public static long copyLarge(Reader input, Writer output) throws IOException {
     char[] buffer = new char[bufferSize];

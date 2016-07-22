@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.context.notification;
 
@@ -8,13 +8,14 @@ import org.mule.runtime.core.api.context.notification.ServerNotification;
 import org.mule.runtime.core.api.registry.Registry;
 
 /**
- * <code>RegistryNotification</code> is fired when an event such as a Registry being started occurs. The payload of this event will always
- * be a reference to the Registry ID.
+ * <code>RegistryNotification</code> is fired when an event such as a Registry being started occurs. The payload of this event
+ * will always be a reference to the Registry ID.
  *
  * @see org.mule.runtime.core.api.registry.Registry
  * @see org.mule.runtime.core.api.MuleContext
  */
 public class RegistryNotification extends ServerNotification {
+
   public static final int REGISTRY_INITIALISING = REGISTRY_EVENT_ACTION_START_RANGE + 1;
   public static final int REGISTRY_INITIALISED = REGISTRY_EVENT_ACTION_START_RANGE + 2;
   public static final int REGISTRY_DISPOSING = REGISTRY_EVENT_ACTION_START_RANGE + 3;
@@ -43,6 +44,7 @@ public class RegistryNotification extends ServerNotification {
 
   @Override
   public String toString() {
-    return EVENT_NAME + "{" + "action=" + getActionName(action) + ", resourceId=" + resourceIdentifier + ", timestamp=" + timestamp + "}";
+    return EVENT_NAME + "{" + "action=" + getActionName(action) + ", resourceId=" + resourceIdentifier + ", timestamp="
+        + timestamp + "}";
   }
 }

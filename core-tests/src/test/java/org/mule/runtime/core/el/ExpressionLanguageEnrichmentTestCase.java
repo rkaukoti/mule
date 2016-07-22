@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.el;
 
@@ -72,6 +72,7 @@ public class ExpressionLanguageEnrichmentTestCase extends AbstractELTestCase {
   public void enrichObjectPayload() throws Exception {
     Apple apple = new Apple();
     FruitCleaner fruitCleaner = new FruitCleaner() {
+
       @Override
       public void wash(Fruit fruit) {}
 
@@ -101,8 +102,8 @@ public class ExpressionLanguageEnrichmentTestCase extends AbstractELTestCase {
 
   @Test
   public void enrichFlowVariable() throws Exception {
-    MuleEvent event =
-        new DefaultMuleEvent(MuleMessage.builder().payload("").build(), MessageExchangePattern.ONE_WAY, new Flow("flow", muleContext));
+    MuleEvent event = new DefaultMuleEvent(MuleMessage.builder().payload("").build(), MessageExchangePattern.ONE_WAY,
+        new Flow("flow", muleContext));
     expressionManager.enrich("flowVars['foo']", event, "bar");
     Assert.assertEquals("bar", event.getFlowVariable("foo"));
     Assert.assertNull(event.getSession().getProperty("foo"));
@@ -110,8 +111,8 @@ public class ExpressionLanguageEnrichmentTestCase extends AbstractELTestCase {
 
   @Test
   public void enrichSessionVariable() throws Exception {
-    MuleEvent event =
-        new DefaultMuleEvent(MuleMessage.builder().payload("").build(), MessageExchangePattern.ONE_WAY, new Flow("flow", muleContext));
+    MuleEvent event = new DefaultMuleEvent(MuleMessage.builder().payload("").build(), MessageExchangePattern.ONE_WAY,
+        new Flow("flow", muleContext));
     expressionManager.enrich("sessionVars['foo']", event, "bar");
     Assert.assertEquals("bar", event.getSession().getProperty("foo"));
     Assert.assertNull(event.getFlowVariable("foo"));

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing.outbound;
 
@@ -20,9 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Defines a router that sequentially routes a given message to the list of registered endpoints and returns the aggregate responses as the
- * result. Aggregate response is built using the partial responses obtained from synchronous endpoints. The routing process can be stopped
- * after receiving a partial response.
+ * Defines a router that sequentially routes a given message to the list of registered endpoints and returns the aggregate
+ * responses as the result. Aggregate response is built using the partial responses obtained from synchronous endpoints. The
+ * routing process can be stopped after receiving a partial response.
  */
 public abstract class AbstractSequenceRouter extends FilteringOutboundRouter {
 
@@ -80,12 +80,13 @@ public abstract class AbstractSequenceRouter extends FilteringOutboundRouter {
 
 
   /**
-   * Lets subclasses decide if the routing of a given message should continue or not after receiving a given response from a synchronous
-   * endpoint.
+   * Lets subclasses decide if the routing of a given message should continue or not after receiving a given response from a
+   * synchronous endpoint.
    *
    * @param response the last received response
    * @return true if must continue and false otherwise.
-   * @throws MuleException when the router should stop processing throwing an exception without returning any results to the caller.
+   * @throws MuleException when the router should stop processing throwing an exception without returning any results to the
+   *         caller.
    */
   protected abstract boolean continueRoutingMessageAfter(MuleEvent response) throws MuleException;
 }

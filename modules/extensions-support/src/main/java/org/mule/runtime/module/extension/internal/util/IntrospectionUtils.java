@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.util;
 
@@ -96,8 +96,8 @@ public final class IntrospectionUtils {
 
   /**
    * Returns a {@link MetadataType} representing the given {@link Method}'s return type. If the {@code method} returns an
-   * {@link OperationResult}, then it returns the type of the {@code Output} generic. If the {@link OperationResult} type is being used in
-   * its raw form, then an {@link AnyType} will be returned.
+   * {@link OperationResult}, then it returns the type of the {@code Output} generic. If the {@link OperationResult} type is being
+   * used in its raw form, then an {@link AnyType} will be returned.
    *
    * @param method the {@link Method} being introspected
    * @param typeLoader a {@link ClassTypeLoader} used to create the {@link MetadataType}
@@ -113,11 +113,11 @@ public final class IntrospectionUtils {
   }
 
   /**
-   * Returns a {@link MetadataType} representing the {@link OperationResult#getAttributes()} that will be set after executing the given
-   * {@code method}.
+   * Returns a {@link MetadataType} representing the {@link OperationResult#getAttributes()} that will be set after executing the
+   * given {@code method}.
    * <p>
-   * If the {@code method} returns a {@link OperationResult}, then it returns the type of the {@code Attributes} generic. In any other case
-   * (including raw uses of {@link OperationResult}) it will return a {@link NullType}
+   * If the {@code method} returns a {@link OperationResult}, then it returns the type of the {@code Attributes} generic. In any
+   * other case (including raw uses of {@link OperationResult}) it will return a {@link NullType}
    *
    * @param method the {@link Method} being introspected
    * @param typeLoader a {@link ClassTypeLoader} used to create the {@link MetadataType}
@@ -156,7 +156,8 @@ public final class IntrospectionUtils {
    *
    * @param method a not {@code null} {@link Method}
    * @param typeLoader a {@link ClassTypeLoader} to be used to create the returned {@link MetadataType}s
-   * @return an array of {@link MetadataType} matching the method's arguments. If the method doesn't take any, then the array will be empty
+   * @return an array of {@link MetadataType} matching the method's arguments. If the method doesn't take any, then the array will
+   *         be empty
    * @throws IllegalArgumentException is method is {@code null}
    */
   public static MetadataType[] getMethodArgumentTypes(Method method, ClassTypeLoader typeLoader) {
@@ -301,8 +302,8 @@ public final class IntrospectionUtils {
   }
 
   public static boolean isInstantiable(Class<?> declaringClass, boolean requireDefaultConstructor) {
-    return declaringClass != null && (!requireDefaultConstructor || hasDefaultConstructor(declaringClass)) && !declaringClass.isInterface()
-        && !Modifier.isAbstract(declaringClass.getModifiers());
+    return declaringClass != null && (!requireDefaultConstructor || hasDefaultConstructor(declaringClass))
+        && !declaringClass.isInterface() && !Modifier.isAbstract(declaringClass.getModifiers());
   }
 
   public static boolean isRequired(AccessibleObject object) {
@@ -359,7 +360,8 @@ public final class IntrospectionUtils {
     }
     try {
       PropertyDescriptor[] propertyDescriptors = Introspector.getBeanInfo(extensionType).getPropertyDescriptors();
-      return stream(propertyDescriptors).map(p -> getField(extensionType, p.getName())).filter(field -> field != null).collect(toSet());
+      return stream(propertyDescriptors).map(p -> getField(extensionType, p.getName())).filter(field -> field != null)
+          .collect(toSet());
     } catch (IntrospectionException e) {
       throw new IllegalModelDefinitionException("Could not introspect POJO: " + extensionType.getName(), e);
     }
@@ -408,8 +410,8 @@ public final class IntrospectionUtils {
   }
 
   /**
-   * Looks for the annotation in the given class. If the annotation is not found, it keeps looking recursively for it in the superClass
-   * until it finds it or there is no superClass to analyze.
+   * Looks for the annotation in the given class. If the annotation is not found, it keeps looking recursively for it in the
+   * superClass until it finds it or there is no superClass to analyze.
    */
   public static <T extends Annotation> T getAnnotation(Class<?> annotatedClass, Class<T> annotationClass) {
     T annotation = annotatedClass.getAnnotation(annotationClass);
@@ -422,8 +424,8 @@ public final class IntrospectionUtils {
   }
 
   /**
-   * Traverses through all the {@link ParameterModel}s of the {@code extensionModel} and returns the {@link Class classes} that are modeled
-   * by each parameter's {@link ParameterModel#getType()}.
+   * Traverses through all the {@link ParameterModel}s of the {@code extensionModel} and returns the {@link Class classes} that
+   * are modeled by each parameter's {@link ParameterModel#getType()}.
    * <p>
    * This includes every single {@link ParameterModel} in the model, including configs, providers, operations, etc.
    *
@@ -433,6 +435,7 @@ public final class IntrospectionUtils {
   public static Set<Class<?>> getParameterClasses(ExtensionModel extensionModel) {
     ImmutableSet.Builder<Class<?>> parameterClasses = ImmutableSet.builder();
     new ExtensionWalker() {
+
       @Override
       public void onParameter(ParameterizedModel owner, ParameterModel model) {
         parameterClasses.add(getType(model.getType()));
@@ -443,8 +446,8 @@ public final class IntrospectionUtils {
   }
 
   /**
-   * Given a {@link Set} of Annotation classes and a {@link MetadataType} that describes a component parameter, indicates if the parameter
-   * is considered as a multilevel {@link MetadataKeyId}
+   * Given a {@link Set} of Annotation classes and a {@link MetadataType} that describes a component parameter, indicates if the
+   * parameter is considered as a multilevel {@link MetadataKeyId}
    *
    * @param annotations of the parameter
    * @param parameterType of the parameter
@@ -455,8 +458,9 @@ public final class IntrospectionUtils {
   }
 
   /**
-   * Given an {@link AnnotatedElement} (class {@link Field} or method {@link java.lang.reflect.Parameter}), the {@link Type} of it, and a
-   * {@link ClassTypeLoader}, indicates if the given {@link AnnotatedElement} is considered as a multilevel {@link MetadataKeyId}
+   * Given an {@link AnnotatedElement} (class {@link Field} or method {@link java.lang.reflect.Parameter}), the {@link Type} of
+   * it, and a {@link ClassTypeLoader}, indicates if the given {@link AnnotatedElement} is considered as a multilevel
+   * {@link MetadataKeyId}
    *
    * @param annotatedElement that represent a component parameter
    * @param type of the component parameter
@@ -471,8 +475,8 @@ public final class IntrospectionUtils {
   }
 
   /**
-   * Given a {@link Set} of annotation classes and a {@link MetadataType} of a component parameter, indicates if the parameter is a
-   * parameter container.
+   * Given a {@link Set} of annotation classes and a {@link MetadataType} of a component parameter, indicates if the parameter is
+   * a parameter container.
    * <p>
    * To be a parameter container means that the parameter is a {@link ParameterGroup} or a multilevel {@link MetadataKeyId}.
    *
@@ -506,7 +510,7 @@ public final class IntrospectionUtils {
    * @see IntrospectionUtils#isMultiLevelMetadataKeyId(Set, MetadataType)
    */
   public static Collection<Field> getMultilevelMetadataKeys(Class<?> annotatedType, ClassTypeLoader typeLoader) {
-    return stream(annotatedType.getDeclaredFields()).filter(field -> isMultiLevelMetadataKeyId(field, field.getType(), typeLoader))
-        .collect(new ImmutableListCollector<>());
+    return stream(annotatedType.getDeclaredFields())
+        .filter(field -> isMultiLevelMetadataKeyId(field, field.getType(), typeLoader)).collect(new ImmutableListCollector<>());
   }
 }

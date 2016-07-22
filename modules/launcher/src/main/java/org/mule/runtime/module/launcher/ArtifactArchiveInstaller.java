@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher;
 
@@ -21,7 +21,8 @@ import java.net.URL;
  */
 public class ArtifactArchiveInstaller {
 
-  protected static final String ANCHOR_FILE_BLURB = "Delete this file while Mule is running to remove the artifact in a clean way.";
+  protected static final String ANCHOR_FILE_BLURB =
+      "Delete this file while Mule is running to remove the artifact in a clean way.";
 
   protected transient final Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -47,7 +48,8 @@ public class ArtifactArchiveInstaller {
 
     final String baseName = FilenameUtils.getBaseName(artifactUrl.toString());
     if (baseName.contains("%20")) {
-      throw new DeploymentInitException(MessageFactory.createStaticMessage("Mule artifact name may not contain spaces: " + baseName));
+      throw new DeploymentInitException(
+          MessageFactory.createStaticMessage("Mule artifact name may not contain spaces: " + baseName));
     }
 
     File artifactDir = null;

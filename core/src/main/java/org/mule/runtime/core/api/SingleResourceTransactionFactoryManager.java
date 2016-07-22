@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api;
 
@@ -14,6 +14,7 @@ import java.util.Map;
  *
  */
 public class SingleResourceTransactionFactoryManager {
+
   private Map<Class, TransactionFactory> transactionFactories = new HashMap<>();
   private Map<Class, TransactionFactory> transactionFactoriesCache = new HashMap<>();
 
@@ -37,8 +38,8 @@ public class SingleResourceTransactionFactoryManager {
       }
     }
     if (transactionFactory == null) {
-      throw new MuleRuntimeException(CoreMessages
-          .createStaticMessage(String.format("No %s for transactional resource %s", TransactionFactory.class.getName(), type.getName())));
+      throw new MuleRuntimeException(CoreMessages.createStaticMessage(
+          String.format("No %s for transactional resource %s", TransactionFactory.class.getName(), type.getName())));
     }
     return transactionFactory;
   }

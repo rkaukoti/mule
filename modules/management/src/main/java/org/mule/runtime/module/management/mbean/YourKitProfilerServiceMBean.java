@@ -1,12 +1,13 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.management.mbean;
 
 import com.yourkit.api.ProfilingModes;
 
 public interface YourKitProfilerServiceMBean {
+
   // YourKit 8.x API merged all & adaptive into a single constant (2L), but we are
   // keeping them different
   // for our interface backwards compatibility with MuleHQ
@@ -44,17 +45,19 @@ public interface YourKitProfilerServiceMBean {
   /**
    * Captures snapshot: write profiling information to file.
    * <p/>
-   * If some profiling is being performed (e.g. started with {@link #startCPUProfiling(long, String)}, {@link #startMonitorProfiling()} or
-   * {@link #startAllocationRecording(long)}, or remotely), it won't stop after the capture. To stop it, explicitly call
-   * {@link #stopCPUProfiling()}, {@link #stopMonitorProfiling()} or {@link #stopAllocationRecording()}.
+   * If some profiling is being performed (e.g. started with {@link #startCPUProfiling(long, String)},
+   * {@link #startMonitorProfiling()} or {@link #startAllocationRecording(long)}, or remotely), it won't stop after the capture.
+   * To stop it, explicitly call {@link #stopCPUProfiling()}, {@link #stopMonitorProfiling()} or
+   * {@link #stopAllocationRecording()}.
    *
    * @param snapshotFlags defines how much information should be stored:
    *        <ul>
-   *        <li>YourKitProfilerServiceMBean.SNAPSHOT_WITHOUT_HEAP - capture snapshot with all the recorded information (CPU profiling,
-   *        monitors, telemetry), but without the heap dump.
-   *        <li>YourKitProfilerServiceMBean.SNAPSHOT_WITH_HEAP - capture snapshot with all the recorded information (CPU profiling,
-   *        monitors, telemetry, allocations), as well as with the heap dump.
-   *        <li>YourKitProfilerServiceMBean.SNAPSHOT_HPROF - capture snapshot in HPROF format (it will including the heap dump only).
+   *        <li>YourKitProfilerServiceMBean.SNAPSHOT_WITHOUT_HEAP - capture snapshot with all the recorded information (CPU
+   *        profiling, monitors, telemetry), but without the heap dump.
+   *        <li>YourKitProfilerServiceMBean.SNAPSHOT_WITH_HEAP - capture snapshot with all the recorded information (CPU
+   *        profiling, monitors, telemetry, allocations), as well as with the heap dump.
+   *        <li>YourKitProfilerServiceMBean.SNAPSHOT_HPROF - capture snapshot in HPROF format (it will including the heap dump
+   *        only).
    *        </ul>
    * @return absolute path to the captured snapshot.
    * @throws Exception if capture failed. The possible reasons are:
@@ -67,9 +70,9 @@ public interface YourKitProfilerServiceMBean {
   String captureSnapshot(long snapshotFlags) throws Exception;
 
   /**
-   * Advance current object generation number. Since that moment, all newly created objects will belong to the new generation. Note that
-   * generations are also automatically advanced on capturing snapshots. Generations are only available if the profiled application runs on
-   * Java 5 or newer.
+   * Advance current object generation number. Since that moment, all newly created objects will belong to the new generation.
+   * Note that generations are also automatically advanced on capturing snapshots. Generations are only available if the profiled
+   * application runs on Java 5 or newer.
    *
    * @param description optional description associated with the generation
    * @throws Exception if generation could not be advanced.
@@ -105,17 +108,18 @@ public interface YourKitProfilerServiceMBean {
    * Start CPU profiling.
    *
    * @param mode YourKitProfilerServiceMBean.CPU_SAMPLING or YourKitProfilerServiceMBean.CPU_TRACING or
-   *        YourKitProfilerServiceMBean.CPU_SAMPLING | YourKitProfilerServiceMBean.CPU_J2EE or YourKitProfilerServiceMBean.CPU_TRACING |
-   *        YourKitProfilerServiceMBean.CPU_J2EE
-   * @param filters string containing '\n'-separated list of classes whose methods should not be profiled. Wildcards are accepted ('*').
-   *        More methods are profiled, bigger the overhead. The filters are used with YourKitProfilerServiceMBean.CPU_TRACING only; with
-   *        YourKitProfilerServiceMBean.CPU_SAMPLING the value is ignored. If null or empty string passed, all methods will be profiled (not
-   *        recommended due to high overhead). For example, you can pass DEFAULT_FILTERS.
+   *        YourKitProfilerServiceMBean.CPU_SAMPLING | YourKitProfilerServiceMBean.CPU_J2EE or
+   *        YourKitProfilerServiceMBean.CPU_TRACING | YourKitProfilerServiceMBean.CPU_J2EE
+   * @param filters string containing '\n'-separated list of classes whose methods should not be profiled. Wildcards are accepted
+   *        ('*'). More methods are profiled, bigger the overhead. The filters are used with
+   *        YourKitProfilerServiceMBean.CPU_TRACING only; with YourKitProfilerServiceMBean.CPU_SAMPLING the value is ignored. If
+   *        null or empty string passed, all methods will be profiled (not recommended due to high overhead). For example, you can
+   *        pass DEFAULT_FILTERS.
    * @throws Exception if capture failed. The possible reasons are:
    *         <ul>
    *         <li>there's no Java application with properly configured profiler agent listening on port at host
-   *         <li>specified profiling mode is not supported by the JVM of the profiled application, e.g. tracing is supported with Java 5 and
-   *         newer and thus is not available with Java 1.4.
+   *         <li>specified profiling mode is not supported by the JVM of the profiled application, e.g. tracing is supported with
+   *         Java 5 and newer and thus is not available with Java 1.4.
    *         <li>profiled application has terminated
    *         <li>agent cannot capture snapshot for some reason
    *         </ul>
@@ -151,8 +155,8 @@ public interface YourKitProfilerServiceMBean {
    * @throws Exception if capture failed. The possible reasons are:
    *         <ul>
    *         <li>there's no Java application with properly configured profiler agent listening on port at host
-   *         <li>specified profiling mode is not supported by the JVM of the profiled application, e.g. tracing is supported with Java 5 and
-   *         newer and thus is not available with Java 1.4.
+   *         <li>specified profiling mode is not supported by the JVM of the profiled application, e.g. tracing is supported with
+   *         Java 5 and newer and thus is not available with Java 1.4.
    *         <li>CPU profiling has already been started
    *         <li>profiled application has terminated
    *         <li>agent cannot capture snapshot for some reason

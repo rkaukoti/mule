@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.assembly;
 
@@ -12,11 +12,12 @@ import java.util.Set;
 
 /**
  * This is used internally by {@link org.mule.runtime.config.spring.parsers.assembly.DefaultBeanAssembler} along with
- * {@link org.mule.runtime.config.spring.parsers.collection.ChildSingletonMapDefinitionParser}. It creates a map with a single key/value
- * pair. This may seem odd, but the result is not manipulated within the assembler - that means that, unlike
- * {@link org.mule.runtime.config.spring.parsers.collection.ChildMapEntryDefinitionParser}, this element can contain nested values. Note
- * that most uses will set {@link org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration#isCollection(String)}
- * so that several entries can be combined.
+ * {@link org.mule.runtime.config.spring.parsers.collection.ChildSingletonMapDefinitionParser}. It creates a map with a single
+ * key/value pair. This may seem odd, but the result is not manipulated within the assembler - that means that, unlike
+ * {@link org.mule.runtime.config.spring.parsers.collection.ChildMapEntryDefinitionParser}, this element can contain nested
+ * values. Note that most uses will set
+ * {@link org.mule.runtime.config.spring.parsers.assembly.configuration.PropertyConfiguration#isCollection(String)} so that
+ * several entries can be combined.
  */
 public class MapEntryCombiner implements Map, Serializable {
 

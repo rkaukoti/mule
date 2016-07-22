@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.endpoint.inbound;
 
@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class InboundLoggingMessageProcessor implements MessageProcessor {
+
   protected final transient Logger logger = LoggerFactory.getLogger(getClass());
   protected InboundEndpoint endpoint;
 
@@ -30,7 +31,8 @@ public class InboundLoggingMessageProcessor implements MessageProcessor {
     }
     if (logger.isTraceEnabled()) {
       try {
-        logger.trace("Message Payload: \n" + StringMessageUtils.truncate(StringMessageUtils.toString(message.getPayload()), 200, false));
+        logger.trace(
+            "Message Payload: \n" + StringMessageUtils.truncate(StringMessageUtils.toString(message.getPayload()), 200, false));
         logger.trace("Message detail: \n" + StringMessageUtils.headersToString(message));
       } catch (Exception e) {
         // ignore

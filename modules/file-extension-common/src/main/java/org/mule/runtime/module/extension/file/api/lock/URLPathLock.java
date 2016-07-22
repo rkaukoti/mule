@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.file.api.lock;
 
@@ -11,8 +11,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.concurrent.locks.Lock;
 
 /**
- * A {@link PathLock} which is based on {@link Lock locks} obtained through a {@link #lockFactory}. The lock's keys are generated through
- * the external form of a {@link URL}
+ * A {@link PathLock} which is based on {@link Lock locks} obtained through a {@link #lockFactory}. The lock's keys are generated
+ * through the external form of a {@link URL}
  *
  * @since 4.0
  */

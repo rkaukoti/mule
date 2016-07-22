@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -58,9 +58,9 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * <code>HttpConnector</code> provides a way of receiving and sending http requests and responses. The Connector itself handles dispatching
- * http requests. The <code>HttpMessageReceiver</code> handles the receiving requests and processing of headers This endpoint recognises the
- * following properties -
+ * <code>HttpConnector</code> provides a way of receiving and sending http requests and responses. The Connector itself handles
+ * dispatching http requests. The <code>HttpMessageReceiver</code> handles the receiving requests and processing of headers This
+ * endpoint recognises the following properties -
  * <p/>
  * <ul>
  * <li>hostname - The hostname to send and receive http requests</li>
@@ -84,8 +84,10 @@ public class HttpConnector extends TcpConnector {
   /**
    * MuleEvent property to pass back the status for the response
    */
-  public static final String HTTP_STATUS_PROPERTY = org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_STATUS_PROPERTY;
-  public static final String HTTP_VERSION_PROPERTY = org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_VERSION_PROPERTY;
+  public static final String HTTP_STATUS_PROPERTY =
+      org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_STATUS_PROPERTY;
+  public static final String HTTP_VERSION_PROPERTY =
+      org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_VERSION_PROPERTY;
 
   /**
    * @deprecated Instead users can now add properties to the outgoing request using the OUTBOUND property scope on the message.
@@ -99,18 +101,23 @@ public class HttpConnector extends TcpConnector {
   public static final String HTTP_HEADERS = HTTP_PREFIX + "headers";
 
   /**
-   * Stores the HTTP query parameters received, supports multiple values per key and both query parameter key and value are unescaped
+   * Stores the HTTP query parameters received, supports multiple values per key and both query parameter key and value are
+   * unescaped
    */
-  public static final String HTTP_QUERY_PARAMS = org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_QUERY_PARAMS;
+  public static final String HTTP_QUERY_PARAMS =
+      org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_QUERY_PARAMS;
 
-  public static final String HTTP_QUERY_STRING = org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_QUERY_STRING;
+  public static final String HTTP_QUERY_STRING =
+      org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_QUERY_STRING;
 
-  public static final String HTTP_METHOD_PROPERTY = org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_METHOD_PROPERTY;
+  public static final String HTTP_METHOD_PROPERTY =
+      org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_METHOD_PROPERTY;
 
   /**
    * The path and query portions of the URL being accessed.
    */
-  public static final String HTTP_REQUEST_PROPERTY = org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_REQUEST_PROPERTY;
+  public static final String HTTP_REQUEST_PROPERTY =
+      org.mule.runtime.module.http.api.HttpConstants.RequestProperties.HTTP_REQUEST_PROPERTY;
 
   /**
    * The path portion of the URL being accessed. No query string is included.
@@ -140,8 +147,8 @@ public class HttpConnector extends TcpConnector {
   public static final String HTTP_SERVLET_RESPONSE_PROPERTY = HTTP_PREFIX + "servlet.response";
 
   /**
-   * Allows the user to set a {@link org.apache.commons.httpclient.params.HttpMethodParams} object in the client request to be set on the
-   * HttpMethod request object
+   * Allows the user to set a {@link org.apache.commons.httpclient.params.HttpMethodParams} object in the client request to be set
+   * on the HttpMethod request object
    */
   public static final String HTTP_PARAMS_PROPERTY = HTTP_PREFIX + "params";
   public static final String HTTP_GET_BODY_PARAM_PROPERTY = HTTP_PREFIX + "get.body.param";
@@ -182,7 +189,8 @@ public class HttpConnector extends TcpConnector {
     AuthPolicy.registerAuthScheme(AuthPolicy.NTLM, NTLMScheme.class);
   }
 
-  protected Map<OutboundEndpoint, MessageDispatcher> endpointDispatchers = new ConcurrentHashMap<OutboundEndpoint, MessageDispatcher>();
+  protected Map<OutboundEndpoint, MessageDispatcher> endpointDispatchers =
+      new ConcurrentHashMap<OutboundEndpoint, MessageDispatcher>();
   protected HttpConnectionManager clientConnectionManager;
   private String proxyHostname = null;
   private int proxyPort = org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP.getDefaultPort();
@@ -260,7 +268,8 @@ public class HttpConnector extends TcpConnector {
   }
 
   private static boolean uriStartsWith(URI requestUri, URI receiverUri) {
-    return uriMatchesReceiverHostAndPort(requestUri, receiverUri) && StringUtils.startsWith(requestUri.getPath(), receiverUri.getPath());
+    return uriMatchesReceiverHostAndPort(requestUri, receiverUri)
+        && StringUtils.startsWith(requestUri.getPath(), receiverUri.getPath());
   }
 
   public static boolean uriMatchesReceiver(URI uri, URI receiverUri) {
@@ -324,7 +333,8 @@ public class HttpConnector extends TcpConnector {
 
       clientConnectionManager.setParams(params);
     }
-    // connection manager must be created during initialization due that devkit requires the connection manager before start phase.
+    // connection manager must be created during initialization due that devkit requires the connection manager before start
+    // phase.
     // That's why it not manager only during stop/start phases and must be created also here.
     if (connectionManager == null) {
       try {
@@ -366,7 +376,8 @@ public class HttpConnector extends TcpConnector {
   }
 
   @Override
-  public void registerListener(InboundEndpoint endpoint, MessageProcessor listener, FlowConstruct flowConstruct) throws Exception {
+  public void registerListener(InboundEndpoint endpoint, MessageProcessor listener, FlowConstruct flowConstruct)
+      throws Exception {
     if (endpoint != null) {
       Map endpointProperties = endpoint.getProperties();
       if (endpointProperties != null) {
@@ -514,8 +525,10 @@ public class HttpConnector extends TcpConnector {
       String authScopeRealm = msg.getOutboundProperty(HTTP_PREFIX + "auth.scope.realm", AuthScope.ANY_REALM);
       String authScopeScheme = msg.getOutboundProperty(HTTP_PREFIX + "auth.scope.scheme", AuthScope.ANY_SCHEME);
       client.getState().setCredentials(new AuthScope(authScopeHost, authScopePort, authScopeRealm, authScopeScheme),
-          new UsernamePasswordCredentials(event.getCredentials().getUsername(), new String(event.getCredentials().getPassword())));
-    } else if (endpoint.getEndpointURI().getUserInfo() != null && endpoint.getProperty(HttpConstants.HEADER_AUTHORIZATION) == null) {
+          new UsernamePasswordCredentials(event.getCredentials().getUsername(),
+              new String(event.getCredentials().getPassword())));
+    } else if (endpoint.getEndpointURI().getUserInfo() != null
+        && endpoint.getProperty(HttpConstants.HEADER_AUTHORIZATION) == null) {
       // Add User Creds
       StringBuilder header = new StringBuilder(128);
       header.append("Basic ");
@@ -685,7 +698,8 @@ public class HttpConnector extends TcpConnector {
   @Override
   public MessageReceiver getReceiver(FlowConstruct flowConstruct, InboundEndpoint endpoint) {
     MessageReceiver receiver = super.getReceiver(flowConstruct, endpoint);
-    // if no receiver was found looking for an exact match, use lookupReceiver to see if there's one with a matching host and same port and
+    // if no receiver was found looking for an exact match, use lookupReceiver to see if there's one with a matching host and same
+    // port and
     // path
     if (receiver == null) {
       String key = (String) getReceiverKey(flowConstruct, endpoint);

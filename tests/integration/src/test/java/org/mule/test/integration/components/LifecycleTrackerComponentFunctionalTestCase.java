@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.components;
 
@@ -23,9 +23,9 @@ public class LifecycleTrackerComponentFunctionalTestCase extends FunctionalTestC
   }
 
   /**
-   * ASSERT: - Mule stop/start lifecycle methods invoked - Mule initialize/dipose lifecycle methods NOT invoked - Spring lifecycle methods
-   * invoked - Service and muleContext injected (Component implements ServiceAware/MuleContextAware) NOTE: muleContext is injected twice,
-   * once by registry and once by lifecycleAdaptor
+   * ASSERT: - Mule stop/start lifecycle methods invoked - Mule initialize/dipose lifecycle methods NOT invoked - Spring lifecycle
+   * methods invoked - Service and muleContext injected (Component implements ServiceAware/MuleContextAware) NOTE: muleContext is
+   * injected twice, once by registry and once by lifecycleAdaptor
    */
   @Test
   public void testSpringBeanServiceLifecycle() throws Exception {
@@ -37,9 +37,9 @@ public class LifecycleTrackerComponentFunctionalTestCase extends FunctionalTestC
   }
 
   /**
-   * ASSERT: - Mule stop/start lifecycle methods invoked - Mule initialize/dipose lifecycle methods NOT invoked - Spring lifecycle methods
-   * NOT invoked - Service and muleContext injected (Component implements ServiceAware/MuleContextAware) NOTE: muleContext is injected
-   * twice, once by registry and once by lifecycleAdaptor
+   * ASSERT: - Mule stop/start lifecycle methods invoked - Mule initialize/dipose lifecycle methods NOT invoked - Spring lifecycle
+   * methods NOT invoked - Service and muleContext injected (Component implements ServiceAware/MuleContextAware) NOTE: muleContext
+   * is injected twice, once by registry and once by lifecycleAdaptor
    */
   @Test
   public void testSpringBeanService2Lifecycle() throws Exception {
@@ -50,7 +50,8 @@ public class LifecycleTrackerComponentFunctionalTestCase extends FunctionalTestC
   }
 
   /**
-   * ASSERT: - Mule lifecycle methods invoked - Service and muleContext injected (Component implements ServiceAware/MuleContextAware)
+   * ASSERT: - Mule lifecycle methods invoked - Service and muleContext injected (Component implements
+   * ServiceAware/MuleContextAware)
    */
   @Test
   public void testSingletonServiceLifecycle() throws Exception {
@@ -60,7 +61,8 @@ public class LifecycleTrackerComponentFunctionalTestCase extends FunctionalTestC
   }
 
   /**
-   * ASSERT: - Mule lifecycle methods invoked - Service and muleContext injected (Component implements ServiceAware/MuleContextAware)
+   * ASSERT: - Mule lifecycle methods invoked - Service and muleContext injected (Component implements
+   * ServiceAware/MuleContextAware)
    */
   @Test
   public void testMulePrototypeServiceLifecycle() throws Exception {
@@ -70,7 +72,8 @@ public class LifecycleTrackerComponentFunctionalTestCase extends FunctionalTestC
   }
 
   /**
-   * ASSERT: - Mule lifecycle methods invoked - Service and muleContext injected (Component implements ServiceAware/MuleContextAware)
+   * ASSERT: - Mule lifecycle methods invoked - Service and muleContext injected (Component implements
+   * ServiceAware/MuleContextAware)
    */
   @Test
   public void testMulePooledPrototypeServiceLifecycle() throws Exception {
@@ -80,8 +83,8 @@ public class LifecycleTrackerComponentFunctionalTestCase extends FunctionalTestC
   }
 
   /**
-   * ASSERT: - Mule lifecycle methods invoked each time singleton is used to create new object in pool - Service and muleContext injected
-   * each time singleton is used to create new object in pool (Component implements ServiceAware/MuleContextAware)
+   * ASSERT: - Mule lifecycle methods invoked each time singleton is used to create new object in pool - Service and muleContext
+   * injected each time singleton is used to create new object in pool (Component implements ServiceAware/MuleContextAware)
    */
   @Test
   public void testMulePooledSingletonServiceLifecycle() throws Exception {

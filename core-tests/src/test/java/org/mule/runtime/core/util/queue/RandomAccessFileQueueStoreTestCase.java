@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.queue;
 
@@ -42,7 +42,8 @@ public class RandomAccessFileQueueStoreTestCase extends AbstractMuleTestCase {
     for (int i = 0; i < numberOfElements; i++) {
       randomAccessFileQueueStore.addLast(data);
     }
-    assertThat(randomAccessFileQueueStore.getLength(), is((dataSize + RandomAccessFileQueueStore.CONTROL_DATA_SIZE) * numberOfElements));
+    assertThat(randomAccessFileQueueStore.getLength(),
+        is((dataSize + RandomAccessFileQueueStore.CONTROL_DATA_SIZE) * numberOfElements));
   }
 
   private RandomAccessFileQueueStore createRandomAccessFileQueueStore() {

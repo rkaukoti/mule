@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -37,6 +37,7 @@ import javax.jms.MessageConsumer;
 import javax.jms.Session;
 
 public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageReceiver {
+
   public static final long DEFAULT_JMS_POLL_FREQUENCY = 100;
   public static final TimeUnit DEFAULT_JMS_POLL_TIMEUNIT = TimeUnit.MILLISECONDS;
 
@@ -50,7 +51,8 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
   protected boolean reuseConsumer;
   protected boolean reuseSession;
 
-  public XaTransactedJmsMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint) throws CreateException {
+  public XaTransactedJmsMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint)
+      throws CreateException {
     super(connector, flowConstruct, endpoint);
     // TODO AP: find appropriate value for polling frequency with the scheduler;
     // see setFrequency/setTimeUnit & VMMessageReceiver for more
@@ -127,6 +129,7 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
 
     ExecutionTemplate<MuleEvent> processingCallback = createExecutionTemplate();
     ExecutionCallback<MuleEvent> cb = new ExecutionCallback<MuleEvent>() {
+
       @Override
       public MuleEvent process() throws Exception {
         try {
@@ -212,7 +215,8 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
     if (logger.isDebugEnabled()) {
       logger.debug("Message received it is of type: " + ClassUtils.getSimpleName(message.getClass()));
       if (message.getJMSDestination() != null) {
-        logger.debug("Message received on " + message.getJMSDestination() + " (" + message.getJMSDestination().getClass().getName() + ")");
+        logger.debug(
+            "Message received on " + message.getJMSDestination() + " (" + message.getJMSDestination().getClass().getName() + ")");
       } else {
         logger.debug("Message received on unknown destination");
       }
@@ -222,7 +226,8 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
 
     if (message.getJMSRedelivered()) {
       if (logger.isDebugEnabled()) {
-        logger.debug("Message with correlationId: " + message.getJMSCorrelationID() + " is redelivered. handing off to Exception Handler");
+        logger.debug(
+            "Message with correlationId: " + message.getJMSCorrelationID() + " is redelivered. handing off to Exception Handler");
       }
       redeliveryHandler.get().handleRedelivery(message, (InboundEndpoint) endpoint, flowConstruct);
     }
@@ -354,11 +359,13 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
       String durableName = (String) endpoint.getProperties().get("durableName");
       if (durableName == null && durable && topic) {
         durableName = "mule." + connector.getName() + "." + endpoint.getEndpointURI().getAddress();
-        logger.debug("Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: " + durableName);
+        logger.debug(
+            "Jms Connector for this receiver is durable but no durable name has been specified. Defaulting to: " + durableName);
       }
 
       // Create consumer
-      MessageConsumer consumer = jmsSupport.createConsumer(session, dest, selector, connector.isNoLocal(), durableName, topic, endpoint);
+      MessageConsumer consumer =
+          jmsSupport.createConsumer(session, dest, selector, connector.isNoLocal(), durableName, topic, endpoint);
       ctx.consumer = consumer;
       return consumer;
     } catch (JMSException e) {
@@ -370,6 +377,7 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
    * Holder receiving the session and consumer for this thread.
    */
   protected static class JmsThreadContext {
+
     public Session session;
     public MessageConsumer consumer;
   }
@@ -378,6 +386,7 @@ public class XaTransactedJmsMessageReceiver extends TransactedPollingMessageRece
    * Strongly typed ThreadLocal for ThreadContext.
    */
   protected static class ThreadContextLocal extends ThreadLocal<JmsThreadContext> {
+
     public JmsThreadContext getContext() {
       return get();
     }

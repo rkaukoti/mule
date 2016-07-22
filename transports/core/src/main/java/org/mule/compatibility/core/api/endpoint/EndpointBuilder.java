@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.api.endpoint;
 
@@ -20,13 +20,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Constructs endpoints. Transport specific endpoints can easily resolve the Endpoint implementation to be uses, for generic endpoints we
- * can either resolve the transport from uri string or use a default implementation.
+ * Constructs endpoints. Transport specific endpoints can easily resolve the Endpoint implementation to be uses, for generic
+ * endpoints we can either resolve the transport from uri string or use a default implementation.
  *
  * @deprecated Transport infrastructure is deprecated.
  */
 @Deprecated
 public interface EndpointBuilder extends MuleContextAware, Cloneable {
+
   /**
    * Constructs inbound endpoints
    */

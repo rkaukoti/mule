@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer.simple;
 
@@ -31,6 +31,7 @@ import static org.mockito.Mockito.when;
 
 @SmallTest
 public abstract class AbstractRemoveVariablePropertyTransformerTestCase extends AbstractMuleContextTestCase {
+
   public static final Charset ENCODING = US_ASCII;
   public static final String PLAIN_STRING_KEY = "someText";
   public static final String PLAIN_STRING_VALUE = "someValue";
@@ -47,7 +48,8 @@ public abstract class AbstractRemoveVariablePropertyTransformerTestCase extends 
   private AbstractRemoveVariablePropertyTransformer removeVariableTransformer;
 
 
-  public AbstractRemoveVariablePropertyTransformerTestCase(AbstractRemoveVariablePropertyTransformer abstractAddVariableTransformer) {
+  public AbstractRemoveVariablePropertyTransformerTestCase(
+      AbstractRemoveVariablePropertyTransformer abstractAddVariableTransformer) {
     removeVariableTransformer = abstractAddVariableTransformer;
   }
 
@@ -55,7 +57,8 @@ public abstract class AbstractRemoveVariablePropertyTransformerTestCase extends 
   public void setUpTest() throws Exception {
     when(mockMuleContext.getConfiguration()).thenReturn(mock(MuleConfiguration.class));
     when(mockMuleContext.getExpressionManager()).thenReturn(mockExpressionManager);
-    when(mockExpressionManager.parse(anyString(), Mockito.any(MuleEvent.class))).thenAnswer(invocation -> invocation.getArguments()[0]);
+    when(mockExpressionManager.parse(anyString(), Mockito.any(MuleEvent.class)))
+        .thenAnswer(invocation -> invocation.getArguments()[0]);
     when(mockExpressionManager.evaluate(EXPRESSION, event)).thenReturn(EXPRESSION_VALUE);
     removeVariableTransformer.setMuleContext(mockMuleContext);
 

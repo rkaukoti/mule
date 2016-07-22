@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.domain.jms;
 
@@ -41,8 +41,8 @@ public class JmsSharedConnectorTestCase extends DomainFunctionalTestCase {
 
   @Parameterized.Parameters
   public static Collection<Object[]> parameters() {
-    return Arrays
-        .asList(new Object[][] {{"domain/jms/jms-activemq-embedded-shared-connector.xml"}, {"domain/jms/jms-custom-shared-connector.xml"},
+    return Arrays.asList(
+        new Object[][] {{"domain/jms/jms-activemq-embedded-shared-connector.xml"}, {"domain/jms/jms-custom-shared-connector.xml"},
             {"domain/jms/jms-shared-connnector.xml"}, {"domain/jms/jms-caching-connection-factory-shared-connnector.xml"}});
   }
 
@@ -71,6 +71,7 @@ public class JmsSharedConnectorTestCase extends DomainFunctionalTestCase {
     getMuleContextForApp(CLIENT_APP).getClient().dispatch(queueAddress(inQueue), MuleMessage.builder().payload("test").build());
     final AtomicReference<MuleMessage> response = new AtomicReference<>();
     new PollingProber(10000, 100).check(new Probe() {
+
       @Override
       public boolean isSatisfied() {
         MuleMessage responseMessage;

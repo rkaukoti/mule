@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.spring.security;
 
@@ -22,6 +22,7 @@ import java.util.Map;
  * <code>SpringProviderAdapter</code> is a wrapper for a Spring Security provider to use with the SecurityManager
  */
 public class SpringProviderAdapter extends AbstractSecurityProvider implements AuthenticationProvider {
+
   private AuthenticationManager delegate;
   private Map securityProperties;
   private SpringAuthenticationProvider authenticationProvider;
@@ -59,8 +60,8 @@ public class SpringProviderAdapter extends AbstractSecurityProvider implements A
     return new SpringAuthenticationAdapter(auth, getSecurityProperties(), authentication.getEvent());
   }
 
-  public org.springframework.security.core.Authentication authenticate(org.springframework.security.core.Authentication authentication)
-      throws AuthenticationException {
+  public org.springframework.security.core.Authentication authenticate(
+      org.springframework.security.core.Authentication authentication) throws AuthenticationException {
     return delegate.authenticate(authentication);
   }
 

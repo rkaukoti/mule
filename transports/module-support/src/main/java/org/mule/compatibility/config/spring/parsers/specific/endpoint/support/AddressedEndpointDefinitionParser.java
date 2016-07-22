@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.config.spring.parsers.specific.endpoint.support;
 
@@ -17,12 +17,13 @@ import org.mule.runtime.config.spring.parsers.processors.CheckRequiredAttributes
 import org.mule.runtime.core.api.config.MuleProperties;
 
 /**
- * Combine a {@link org.mule.compatibility.config.spring.parsers.specific.endpoint.support.ChildAddressDefinitionParser} and either a
- * {@link org.mule.config.spring.parsers.specific.endpoint.support.OrphanEndpointDefinitionParser} or a
- * {@link org.mule.config.spring.parsers.specific.endpoint.support.ChildEndpointDefinitionParser} in one parser. This lets us put the
- * address attributes in the endpoint element.
+ * Combine a {@link org.mule.compatibility.config.spring.parsers.specific.endpoint.support.ChildAddressDefinitionParser} and
+ * either a {@link org.mule.config.spring.parsers.specific.endpoint.support.OrphanEndpointDefinitionParser} or a
+ * {@link org.mule.config.spring.parsers.specific.endpoint.support.ChildEndpointDefinitionParser} in one parser. This lets us put
+ * the address attributes in the endpoint element.
  */
 public class AddressedEndpointDefinitionParser extends AbstractSingleParentFamilyDefinitionParser {
+
   public static final boolean META = ChildAddressDefinitionParser.META;
   public static final boolean PROTOCOL = ChildAddressDefinitionParser.PROTOCOL;
   public static final String PROPERTIES = "properties";
@@ -61,7 +62,8 @@ public class AddressedEndpointDefinitionParser extends AbstractSingleParentFamil
    * @param requiredProperties A list of property names that are required if "address" isn't present
    */
   public AddressedEndpointDefinitionParser(String metaOrProtocol, boolean isMeta, MuleDefinitionParser endpointParser,
-      String[] endpointAttributes, String[] addressAttributes, String[][] requiredAddressAttributes, String[][] requiredProperties) {
+      String[] endpointAttributes, String[] addressAttributes, String[][] requiredAddressAttributes,
+      String[][] requiredProperties) {
     // the first delegate, the parent, is an endpoint; we block everything except the endpoint attributes
     enableAttributes(endpointParser, endpointAttributes);
     enableAttribute(endpointParser, AbstractMuleBeanDefinitionParser.ATTRIBUTE_NAME);
@@ -69,7 +71,8 @@ public class AddressedEndpointDefinitionParser extends AbstractSingleParentFamil
 
     // we handle the address and properties separately, setting the
     // properties directly on the endpoint (rather than as part of the address)
-    MuleChildDefinitionParser addressParser = new AddressParser(metaOrProtocol, isMeta, addressAttributes, requiredAddressAttributes);
+    MuleChildDefinitionParser addressParser =
+        new AddressParser(metaOrProtocol, isMeta, addressAttributes, requiredAddressAttributes);
 
     // this handles the exception thrown if a ref is found in the address parser
     addHandledException(BlockAttribute.BlockAttributeException.class);
@@ -82,7 +85,8 @@ public class AddressedEndpointDefinitionParser extends AbstractSingleParentFamil
 
   private static class AddressParser extends ChildAddressDefinitionParser {
 
-    public AddressParser(String metaOrProtocol, boolean isMeta, String[] addressAttributes, String[][] requiredAddressAttributes) {
+    public AddressParser(String metaOrProtocol, boolean isMeta, String[] addressAttributes,
+        String[][] requiredAddressAttributes) {
       super(metaOrProtocol, isMeta);
 
       // this handles the "ref problem" - we don't want this parsers to be used if a "ref"
@@ -97,7 +101,8 @@ public class AddressedEndpointDefinitionParser extends AbstractSingleParentFamil
 
       // we require either a reference, an address, or the attributes specified
       // (properties can be used in parallel with "address")
-      String[][] addressAttributeSets = new String[(null != requiredAddressAttributes ? requiredAddressAttributes.length : 0) + 2][];
+      String[][] addressAttributeSets =
+          new String[(null != requiredAddressAttributes ? requiredAddressAttributes.length : 0) + 2][];
       addressAttributeSets[0] = new String[] {URIBuilder.ADDRESS};
       addressAttributeSets[1] = new String[] {AbstractMuleBeanDefinitionParser.ATTRIBUTE_REF};
       if (null != requiredAddressAttributes) {

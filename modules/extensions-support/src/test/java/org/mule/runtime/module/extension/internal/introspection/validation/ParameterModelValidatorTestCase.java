@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
@@ -92,7 +92,8 @@ public class ParameterModelValidatorTestCase extends AbstractMuleTestCase {
 
   @Test(expected = IllegalParameterModelDefinitionException.class)
   public void invalidParameterCollectionDueToReservedName() {
-    when(invalidParameterModel.getType()).thenReturn(ExtensionsTestUtils.arrayOf(List.class, objectTypeBuilder(InvalidPojo.class)));
+    when(invalidParameterModel.getType())
+        .thenReturn(ExtensionsTestUtils.arrayOf(List.class, objectTypeBuilder(InvalidPojo.class)));
     when(invalidParameterModel.getType()).thenReturn(arrayOf(List.class, objectTypeBuilder(InvalidPojo.class)));
     when(invalidParameterModel.getName()).thenReturn("pojos");
     when(operationModel.getParameterModels()).thenReturn(asList(invalidParameterModel));
@@ -144,7 +145,8 @@ public class ParameterModelValidatorTestCase extends AbstractMuleTestCase {
 
   @Test(expected = IllegalParameterModelDefinitionException.class)
   public void invalidModelDueToNonInstantiableParameterGroup() {
-    ParameterGroup child = new ParameterGroup(Serializable.class, getField(InvalidPojoParameterGroup.class, "nonInstantiableField"));
+    ParameterGroup child =
+        new ParameterGroup(Serializable.class, getField(InvalidPojoParameterGroup.class, "nonInstantiableField"));
     when(invalidParameterModel.getModelProperty(ParameterGroupModelProperty.class))
         .thenReturn(Optional.of(new ParameterGroupModelProperty(asList(child))));
     when(invalidParameterModel.getType()).thenReturn(toMetadataType(Serializable.class));

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.core.transformers.simple;
 
@@ -26,6 +26,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class ExpressionTransformerELTestCase extends FunctionalTestCase {
+
   @Override
   protected String getConfigFile() {
     return "org/mule/test/transformers/expression-transformers-el-test.xml";
@@ -82,7 +83,8 @@ public class ExpressionTransformerELTestCase extends FunctionalTestCase {
     props.put("foo", "moo");
     props.put("bar", "mar");
 
-    MuleMessage message = MuleMessage.builder().payload(new FruitBowl(new Apple(), new Banana())).outboundProperties(props).build();
+    MuleMessage message =
+        MuleMessage.builder().payload(new FruitBowl(new Apple(), new Banana())).outboundProperties(props).build();
 
     Object result = transformer.transform(message);
     assertNotNull(result);
@@ -104,7 +106,8 @@ public class ExpressionTransformerELTestCase extends FunctionalTestCase {
     Map<String, Serializable> props = new HashMap<>();
     props.put("foo", "moo");
 
-    MuleMessage message = MuleMessage.builder().payload(new FruitBowl(new Apple(), new Banana())).outboundProperties(props).build();
+    MuleMessage message =
+        MuleMessage.builder().payload(new FruitBowl(new Apple(), new Banana())).outboundProperties(props).build();
 
     Object result = transformer.transform(message);
     assertNotNull(result);
@@ -126,7 +129,8 @@ public class ExpressionTransformerELTestCase extends FunctionalTestCase {
     props.put("foo", "moo");
     props.put("bar", "mar");
 
-    MuleMessage message = MuleMessage.builder().payload(new FruitBowl(new Apple(), new Banana())).outboundProperties(props).build();
+    MuleMessage message =
+        MuleMessage.builder().payload(new FruitBowl(new Apple(), new Banana())).outboundProperties(props).build();
 
     Object result = transformer.transform(message);
     assertNotNull(result);
@@ -148,7 +152,8 @@ public class ExpressionTransformerELTestCase extends FunctionalTestCase {
     props.put("foo", "moo");
     props.put("bar", "mar");
 
-    MuleMessage message = MuleMessage.builder().payload(new FruitBowl(new Apple(), new Banana())).outboundProperties(props).build();
+    MuleMessage message =
+        MuleMessage.builder().payload(new FruitBowl(new Apple(), new Banana())).outboundProperties(props).build();
 
     Object result = transformer.transform(message);
     assertNotNull(result);

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.lifecycle;
 
@@ -17,6 +17,7 @@ import org.mule.runtime.core.management.stats.ComponentStatistics;
  * @author David Dossot (david@dossot.net)
  */
 public class LifecycleTrackerProcessor extends AbstractLifecycleTracker implements FlowConstructAware, MessageProcessor {
+
   public static String LIFECYCLE_TRACKER_PROCESSOR_PROPERTY = "lifecycle";
   public static String FLOW_CONSRUCT_PROPERTY = "flowConstruct";
 
@@ -46,8 +47,8 @@ public class LifecycleTrackerProcessor extends AbstractLifecycleTracker implemen
 
   @Override
   public MuleEvent process(MuleEvent event) throws MuleException {
-    event.setMessage(
-        MuleMessage.builder(event.getMessage()).addOutboundProperty(LIFECYCLE_TRACKER_PROCESSOR_PROPERTY, getTracker().toString()).build());
+    event.setMessage(MuleMessage.builder(event.getMessage())
+        .addOutboundProperty(LIFECYCLE_TRACKER_PROCESSOR_PROPERTY, getTracker().toString()).build());
     event.setFlowVariable(FLOW_CONSRUCT_PROPERTY, flowConstruct);
     return event;
   }

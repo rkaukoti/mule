@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -33,6 +33,7 @@ import javax.jms.TopicSession;
  */
 
 public class Jms102bSupport extends Jms11Support {
+
   public Jms102bSupport(JmsConnector connector) {
     super(connector);
   }
@@ -66,7 +67,8 @@ public class Jms102bSupport extends Jms11Support {
   }
 
   @Override
-  public Session createSession(Connection connection, boolean topic, boolean transacted, int ackMode, boolean noLocal) throws JMSException {
+  public Session createSession(Connection connection, boolean topic, boolean transacted, int ackMode, boolean noLocal)
+      throws JMSException {
     if (connection == null) {
       throw new IllegalArgumentException("Connection is null");
     }
@@ -116,7 +118,8 @@ public class Jms102bSupport extends Jms11Support {
   }
 
   @Override
-  public Destination createDestination(Session session, String name, boolean topic, ImmutableEndpoint endpoint) throws JMSException {
+  public Destination createDestination(Session session, String name, boolean topic, ImmutableEndpoint endpoint)
+      throws JMSException {
     if (connector.isJndiDestinations()) {
       try {
         Destination dest = getJndiDestination(name);
@@ -176,7 +179,8 @@ public class Jms102bSupport extends Jms11Support {
   public void send(MessageProducer producer, Message message, boolean persistent, int priority, long ttl, boolean topic,
       ImmutableEndpoint endpoint) throws JMSException {
     if (topic && producer instanceof TopicPublisher) {
-      ((TopicPublisher) producer).publish(message, (persistent ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT), priority, ttl);
+      ((TopicPublisher) producer).publish(message, (persistent ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT), priority,
+          ttl);
     } else if (producer instanceof QueueSender) {
       // DO NOT REMOVE THIS CAST, it breaks Weblogic
       ((QueueSender) producer).send(message, (persistent ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT), priority, ttl);
@@ -186,14 +190,14 @@ public class Jms102bSupport extends Jms11Support {
   }
 
   @Override
-  public void send(MessageProducer producer, Message message, Destination dest, boolean persistent, int priority, long ttl, boolean topic,
-      ImmutableEndpoint endpoint) throws JMSException {
+  public void send(MessageProducer producer, Message message, Destination dest, boolean persistent, int priority, long ttl,
+      boolean topic, ImmutableEndpoint endpoint) throws JMSException {
     if (topic && producer instanceof TopicPublisher) {
-      ((TopicPublisher) producer).publish((Topic) dest, message, (persistent ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT),
-          priority, ttl);
+      ((TopicPublisher) producer).publish((Topic) dest, message,
+          (persistent ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT), priority, ttl);
     } else if (producer instanceof QueueSender) {
-      ((QueueSender) producer).send((Queue) dest, message, (persistent ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT), priority,
-          ttl);
+      ((QueueSender) producer).send((Queue) dest, message, (persistent ? DeliveryMode.PERSISTENT : DeliveryMode.NON_PERSISTENT),
+          priority, ttl);
     } else {
       throw new IllegalArgumentException("Producer and domain type do not match");
     }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.config;
 
@@ -13,6 +13,7 @@ import org.mule.runtime.core.construct.Flow;
  * Configuration info. which can be set when creating the MuleContext but becomes immutable after startup.
  */
 public interface MuleConfiguration {
+
   int getDefaultResponseTimeout();
 
   String getWorkingDirectory();
@@ -48,8 +49,8 @@ public interface MuleConfiguration {
   /**
    * The approximated maximum space in megabytes used by the transaction log files for transactional persistent queues.
    *
-   * Take into account that this number applies both to the set of transaction log files for XA and for local transactions. If both type of
-   * transactions are used then the approximated maximum space used will be twice the configured value.
+   * Take into account that this number applies both to the set of transaction log files for XA and for local transactions. If
+   * both type of transactions are used then the approximated maximum space used will be twice the configured value.
    *
    * @return the approximated maximum space in disk that the transactions logs can use in megabytes.
    */
@@ -70,8 +71,8 @@ public interface MuleConfiguration {
   boolean isContainerMode();
 
   /**
-   * Try to guess if we're embedded. If "mule.home" JVM property has been set, then we've been started via Mule script and can assume we're
-   * running standalone. Otherwise (no property set), Mule has been started via a different mechanism.
+   * Try to guess if we're embedded. If "mule.home" JVM property has been set, then we've been started via Mule script and can
+   * assume we're running standalone. Otherwise (no property set), Mule has been started via a different mechanism.
    * <p/>
    * A standalone Mule is always considered running in 'container' mode.
    *

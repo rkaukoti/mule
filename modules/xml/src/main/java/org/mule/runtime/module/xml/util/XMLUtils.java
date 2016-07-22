@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.util;
 
@@ -61,6 +61,7 @@ import javax.xml.xpath.XPathFactory;
  * General utility methods for working with XML.
  */
 public class XMLUtils extends org.mule.runtime.core.util.XMLUtils {
+
   public static final String TRANSFORMER_FACTORY_JDK5 = "com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl";
 
   public static final String XPATH1_FALLBACK = "mule.xml.xpath10.fallback";
@@ -117,7 +118,8 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils {
    * @return null if object cannot be converted
    * @throws DocumentException if an error occurs while parsing
    */
-  public static org.dom4j.Document toDocument(Object obj, String externalSchemaLocation, MuleContext muleContext) throws Exception {
+  public static org.dom4j.Document toDocument(Object obj, String externalSchemaLocation, MuleContext muleContext)
+      throws Exception {
     org.dom4j.io.SAXReader reader = new org.dom4j.io.SAXReader();
     if (externalSchemaLocation != null) {
       reader.setValidation(true);
@@ -168,8 +170,8 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils {
   /**
    * Converts a payload to a {@link org.w3c.dom.Document} representation.
    * <p>
-   * Reproduces the behavior from {@link org.mule.runtime.module.xml.util.XMLUtils#toDocument(Object, MuleContext)} which works converting
-   * to {@link org.dom4j.Document}.
+   * Reproduces the behavior from {@link org.mule.runtime.module.xml.util.XMLUtils#toDocument(Object, MuleContext)} which works
+   * converting to {@link org.dom4j.Document}.
    *
    * @param payload the payload to convert.
    * @return a document from the payload or null if the payload is not a valid XML document.
@@ -223,7 +225,8 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils {
    * Returns an XMLStreamReader for an object of unknown type if possible.
    *
    * @return null if no XMLStreamReader can be created for the object type
-   * @deprecated As of 3.7.0, use {@link #toXMLStreamReader(javax.xml.stream.XMLInputFactory, org.mule.runtime.core.api.MuleEvent, Object)}
+   * @deprecated As of 3.7.0, use
+   *             {@link #toXMLStreamReader(javax.xml.stream.XMLInputFactory, org.mule.runtime.core.api.MuleEvent, Object)}
    *             instead.
    */
   @Deprecated
@@ -237,8 +240,8 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils {
    *
    * @return null if no XMLStreamReader can be created for the object type
    */
-  public static javax.xml.stream.XMLStreamReader toXMLStreamReader(javax.xml.stream.XMLInputFactory factory, MuleEvent event, Object obj)
-      throws XMLStreamException {
+  public static javax.xml.stream.XMLStreamReader toXMLStreamReader(javax.xml.stream.XMLInputFactory factory, MuleEvent event,
+      Object obj) throws XMLStreamException {
     if (obj instanceof javax.xml.stream.XMLStreamReader) {
       return (javax.xml.stream.XMLStreamReader) obj;
     } else if (obj instanceof org.mule.runtime.module.xml.stax.StaxSource) {
@@ -256,6 +259,7 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils {
 
       XMLStreamReader xsr = factory.createXMLStreamReader(is);
       return new DelegateXMLStreamReader(xsr) {
+
         @Override
         public void close() throws XMLStreamException {
           super.close();
@@ -298,8 +302,8 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils {
   /**
    * Convert our object to a Source type efficiently.
    */
-  public static javax.xml.transform.Source toXmlSource(javax.xml.stream.XMLInputFactory xmlInputFactory, boolean useStaxSource, Object src)
-      throws Exception {
+  public static javax.xml.transform.Source toXmlSource(javax.xml.stream.XMLInputFactory xmlInputFactory, boolean useStaxSource,
+      Object src) throws Exception {
     if (src instanceof javax.xml.transform.Source) {
       return (Source) src;
     } else if (src instanceof byte[]) {
@@ -398,8 +402,8 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils {
 
 
   /**
-   * Copies the reader to the writer. The start and end document methods must be handled on the writer manually. TODO: if the namespace on
-   * the reader has been declared previously to where we are in the stream, this probably won't work.
+   * Copies the reader to the writer. The start and end document methods must be handled on the writer manually. TODO: if the
+   * namespace on the reader has been declared previously to where we are in the stream, this probably won't work.
    */
   public static void copy(XMLStreamReader reader, XMLStreamWriter writer) throws XMLStreamException {
     copy(reader, writer, false);
@@ -579,6 +583,7 @@ public class XMLUtils extends org.mule.runtime.core.util.XMLUtils {
    * The default namespace context that will read namespaces from the current document if the Node being processed is a Document
    */
   private static class XPathNamespaceContext implements NamespaceContext {
+
     private Document document;
 
     public XPathNamespaceContext(Document document) {

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.executor;
 
@@ -32,8 +32,8 @@ import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils
 
 
 /**
- * Resolves the values of an {@link OperationModel}'s {@link ParameterModel parameterModels} by matching them to the arguments in a
- * {@link Method}
+ * Resolves the values of an {@link OperationModel}'s {@link ParameterModel parameterModels} by matching them to the arguments in
+ * a {@link Method}
  *
  * @since 3.7.0
  */

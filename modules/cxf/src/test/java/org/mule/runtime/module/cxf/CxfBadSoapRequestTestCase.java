@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf;
 
@@ -22,8 +22,9 @@ import static org.junit.Assert.assertNotNull;
 import static org.mule.runtime.module.http.api.client.HttpRequestOptionsBuilder.newOptions;
 
 public class CxfBadSoapRequestTestCase extends FunctionalTestCase {
-  private static final HttpRequestOptions HTTP_REQUEST_OPTIONS =
-      newOptions().method(org.mule.runtime.module.http.api.HttpConstants.Methods.POST.name()).disableStatusCodeValidation().build();
+
+  private static final HttpRequestOptions HTTP_REQUEST_OPTIONS = newOptions()
+      .method(org.mule.runtime.module.http.api.HttpConstants.Methods.POST.name()).disableStatusCodeValidation().build();
   @Rule
   public DynamicPort dynamicPort = new DynamicPort("port1");
 
@@ -38,8 +39,8 @@ public class CxfBadSoapRequestTestCase extends FunctionalTestCase {
 
     String soapRequest =
         "<soap:Envelope xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\">"
-            + "<soap:Body>" + "<ssss xmlns=\"http://www.muleumo.org\">" + "<request xmlns=\"http://www.muleumo.org\">Bad Request</request>"
-            + "</ssss>" + "</soap:Body>" + "</soap:Envelope>";
+            + "<soap:Body>" + "<ssss xmlns=\"http://www.muleumo.org\">"
+            + "<request xmlns=\"http://www.muleumo.org\">Bad Request</request>" + "</ssss>" + "</soap:Body>" + "</soap:Envelope>";
 
     MuleMessage reply = client.send("http://localhost:" + dynamicPort.getNumber() + "/services/TestComponent",
         getTestMuleMessage(soapRequest), HTTP_REQUEST_OPTIONS);

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.email.internal;
 
@@ -53,8 +53,9 @@ public abstract class AbstractEmailConnection {
    * @param writeTimeout the socket write timeout
    * @param properties the custom properties added to configure the session.
    */
-  public AbstractEmailConnection(EmailProtocol protocol, String username, String password, String host, String port, long connectionTimeout,
-      long readTimeout, long writeTimeout, Map<String, String> properties) throws EmailConnectionException {
+  public AbstractEmailConnection(EmailProtocol protocol, String username, String password, String host, String port,
+      long connectionTimeout, long readTimeout, long writeTimeout, Map<String, String> properties)
+      throws EmailConnectionException {
     this(protocol, username, password, host, port, connectionTimeout, readTimeout, writeTimeout, properties, null);
   }
 
@@ -73,9 +74,9 @@ public abstract class AbstractEmailConnection {
    * @param properties the custom properties added to configure the session.
    * @param tlsContextFactory the tls context factory for creating the context to secure the connection
    */
-  public AbstractEmailConnection(EmailProtocol protocol, String username, String password, String host, String port, long connectionTimeout,
-      long readTimeout, long writeTimeout, Map<String, String> properties, TlsContextFactory tlsContextFactory)
-      throws EmailConnectionException {
+  public AbstractEmailConnection(EmailProtocol protocol, String username, String password, String host, String port,
+      long connectionTimeout, long readTimeout, long writeTimeout, Map<String, String> properties,
+      TlsContextFactory tlsContextFactory) throws EmailConnectionException {
     this.protocol = protocol;
     Properties sessionProperties = buildBasicSessionProperties(host, port, connectionTimeout, readTimeout, writeTimeout);
 
@@ -100,8 +101,8 @@ public abstract class AbstractEmailConnection {
   /**
    * Creates a new {@link Properties} instance and set all the basic properties required by the specified {@code protocol}.
    */
-  private Properties buildBasicSessionProperties(String host, String port, long connectionTimeout, long readTimeout, long writeTimeout)
-      throws EmailConnectionException {
+  private Properties buildBasicSessionProperties(String host, String port, long connectionTimeout, long readTimeout,
+      long writeTimeout) throws EmailConnectionException {
     Properties props = new Properties();
     props.setProperty(protocol.getPortProperty(), port);
     props.setProperty(protocol.getHostProperty(), host);
@@ -113,7 +114,8 @@ public abstract class AbstractEmailConnection {
   }
 
   /**
-   * Creates a new {@link Properties} instance and set all the secure properties required by the specified secure {@code protocol}.
+   * Creates a new {@link Properties} instance and set all the secure properties required by the specified secure
+   * {@code protocol}.
    */
   private Properties buildSecureProperties(TlsContextFactory tlsContextFactory) throws EmailConnectionException {
     Properties properties = new Properties();
@@ -165,7 +167,8 @@ public abstract class AbstractEmailConnection {
   public abstract ConnectionValidationResult validate();
 
   /**
-   * Checks the consistency of the username and password parameters and returns whether we should authenticate with the server or not.
+   * Checks the consistency of the username and password parameters and returns whether we should authenticate with the server or
+   * not.
    *
    * @param username the specified username.
    * @param password the specified password.

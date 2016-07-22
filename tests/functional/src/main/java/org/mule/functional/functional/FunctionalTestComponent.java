@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.functional;
 
@@ -30,18 +30,20 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
- * <code>FunctionalTestComponent</code> is a service that can be used by functional tests. This service accepts an EventCallback that can be
- * used to assert the state of the current event.
+ * <code>FunctionalTestComponent</code> is a service that can be used by functional tests. This service accepts an EventCallback
+ * that can be used to assert the state of the current event.
  * <p/>
- * Also, this service fires {@link FunctionalTestNotification} via Mule for every message received. Tests can register with Mule to receive
- * these events by implementing {@link FunctionalTestNotificationListener}.
+ * Also, this service fires {@link FunctionalTestNotification} via Mule for every message received. Tests can register with Mule
+ * to receive these events by implementing {@link FunctionalTestNotificationListener}.
  *
  * @see EventCallback
  * @see FunctionalTestNotification
  * @see FunctionalTestNotificationListener
  */
 // TODO This should really extend StaticComponent from mule-core as it is quite similar.
-public class FunctionalTestComponent implements Callable, Initialisable, Disposable, MuleContextAware, Receiveable, Startable, Stoppable {
+public class FunctionalTestComponent
+    implements Callable, Initialisable, Disposable, MuleContextAware, Receiveable, Startable, Stoppable {
+
   public static final int STREAM_SAMPLE_SIZE = 4;
   public static final int STREAM_BUFFER_SIZE = 4096;
   private static List<LifecycleCallback> lifecycleCallbacks = new ArrayList<LifecycleCallback>();
@@ -172,9 +174,9 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
   }
 
   /**
-   * Will append the value of {@link #getAppendString()} to the contents of the message. This has a side affect that the inbound message
-   * will be converted to a string and the return payload will be a string. Note that the value of {@link #getAppendString()} can contain
-   * expressions.
+   * Will append the value of {@link #getAppendString()} to the contents of the message. This has a side affect that the inbound
+   * message will be converted to a string and the return payload will be a string. Note that the value of
+   * {@link #getAppendString()} can contain expressions.
    *
    * @param contents the string vlaue of the current message payload
    * @param event the current event
@@ -236,7 +238,8 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
     }
 
     if (isEnableNotifications()) {
-      muleContext.fireNotification(new FunctionalTestNotification(context, replyMessage, FunctionalTestNotification.EVENT_RECEIVED));
+      muleContext
+          .fireNotification(new FunctionalTestNotification(context, replyMessage, FunctionalTestNotification.EVENT_RECEIVED));
     }
 
     // Time to wait before returning
@@ -251,9 +254,9 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
   }
 
   /**
-   * An event callback is called when a message is received by the service. An MuleEvent callback isn't strictly required but it is usfal
-   * for performing assertions on the current message being received. Note that the FunctionalTestComponent should be made a singleton when
-   * using MuleEvent callbacks
+   * An event callback is called when a message is received by the service. An MuleEvent callback isn't strictly required but it
+   * is usfal for performing assertions on the current message being received. Note that the FunctionalTestComponent should be
+   * made a singleton when using MuleEvent callbacks
    * <p/>
    * Another option is to register a {@link FunctionalTestNotificationListener} with Mule and this will deleiver a
    * {@link FunctionalTestNotification} for every message received by this service
@@ -267,9 +270,9 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
   }
 
   /**
-   * An event callback is called when a message is received by the service. An MuleEvent callback isn't strictly required but it is usfal
-   * for performing assertions on the current message being received. Note that the FunctionalTestComponent should be made a singleton when
-   * using MuleEvent callbacks
+   * An event callback is called when a message is received by the service. An MuleEvent callback isn't strictly required but it
+   * is usfal for performing assertions on the current message being received. Note that the FunctionalTestComponent should be
+   * made a singleton when using MuleEvent callbacks
    * <p/>
    * Another option is to register a {@link FunctionalTestNotificationListener} with Mule and this will deleiver a
    * {@link FunctionalTestNotification} for every message received by this service
@@ -283,8 +286,9 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
   }
 
   /**
-   * Often you will may want to return a fixed message payload to simulate and external system call. This can be done using the 'returnData'
-   * property. Note that you can return complex objects by using the <container-property> element in the Xml configuration.
+   * Often you will may want to return a fixed message payload to simulate and external system call. This can be done using the
+   * 'returnData' property. Note that you can return complex objects by using the <container-property> element in the Xml
+   * configuration.
    *
    * @return the message payload to always return from this service instance
    */
@@ -293,8 +297,9 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
   }
 
   /**
-   * Often you will may want to return a fixed message payload to simulate and external system call. This can be done using the 'returnData'
-   * property. Note that you can return complex objects by using the <container-property> element in the Xml configuration.
+   * Often you will may want to return a fixed message payload to simulate and external system call. This can be done using the
+   * 'returnData' property. Note that you can return complex objects by using the <container-property> element in the Xml
+   * configuration.
    *
    * @param returnData the message payload to always return from this service instance
    */
@@ -303,22 +308,22 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
   }
 
   /**
-   * Sometimes you will want the service to always throw an exception, if this is the case you can set the 'throwException' property to
-   * true.
+   * Sometimes you will want the service to always throw an exception, if this is the case you can set the 'throwException'
+   * property to true.
    *
-   * @return throwException true if an exception should always be thrown from this instance. If the {@link #returnData} property is set and
-   *         is of type java.lang.Exception, that exception will be thrown.
+   * @return throwException true if an exception should always be thrown from this instance. If the {@link #returnData} property
+   *         is set and is of type java.lang.Exception, that exception will be thrown.
    */
   public boolean isThrowException() {
     return throwException;
   }
 
   /**
-   * Sometimes you will want the service to always throw an exception, if this is the case you can set the 'throwException' property to
-   * true.
+   * Sometimes you will want the service to always throw an exception, if this is the case you can set the 'throwException'
+   * property to true.
    *
-   * @param throwException true if an exception should always be thrown from this instance. If the {@link #returnData} property is set and
-   *        is of type java.lang.Exception, that exception will be thrown.
+   * @param throwException true if an exception should always be thrown from this instance. If the {@link #returnData} property is
+   *        set and is of type java.lang.Exception, that exception will be thrown.
    */
   public void setThrowException(boolean throwException) {
     this.throwException = throwException;
@@ -346,8 +351,9 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
   }
 
   /**
-   * If enableMessageHistory = true, returns a message received by the service in chronological order. For example, getReceivedMessage(1)
-   * returns the first message received by the service, getReceivedMessage(2) returns the second message received by the service, etc.
+   * If enableMessageHistory = true, returns a message received by the service in chronological order. For example,
+   * getReceivedMessage(1) returns the first message received by the service, getReceivedMessage(2) returns the second message
+   * received by the service, etc.
    */
   public Object getReceivedMessage(int number) {
     Object message = null;
@@ -431,6 +437,7 @@ public class FunctionalTestComponent implements Callable, Initialisable, Disposa
   }
 
   public interface LifecycleCallback {
+
     void onTransition(String name, String newPhase);
   }
 

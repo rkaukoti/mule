@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.component;
 
@@ -38,7 +38,8 @@ public class PooledJavaComponent extends AbstractJavaComponent {
     this.poolingProfile = poolingProfile;
   }
 
-  public PooledJavaComponent(ObjectFactory objectFactory, PoolingProfile poolingProfile, EntryPointResolverSet entryPointResolverSet) {
+  public PooledJavaComponent(ObjectFactory objectFactory, PoolingProfile poolingProfile,
+      EntryPointResolverSet entryPointResolverSet) {
     super(objectFactory, entryPointResolverSet);
     this.poolingProfile = poolingProfile;
   }
@@ -86,12 +87,13 @@ public class PooledJavaComponent extends AbstractJavaComponent {
 
   /**
    * <code>LifeCycleAdaptorFactory</code> wraps the Component' s {@link ObjectFactory}. The LifeCycleAdaptorFactory
-   * <code>getInstance()</code> method creates a new {@link LifecycleAdapter} wrapping the object instance obtained for the component
-   * instance {@link ObjectFactory} set on the {@link Component}. <br/>
-   * This allows us to keep {@link LifecycleAdapter} creation in the Component and out of the {@link DefaultLifecycleEnabledObjectPool} and
-   * to use the generic {@link ObjectPool} interface.
+   * <code>getInstance()</code> method creates a new {@link LifecycleAdapter} wrapping the object instance obtained for the
+   * component instance {@link ObjectFactory} set on the {@link Component}. <br/>
+   * This allows us to keep {@link LifecycleAdapter} creation in the Component and out of the
+   * {@link DefaultLifecycleEnabledObjectPool} and to use the generic {@link ObjectPool} interface.
    */
   protected class LifeCycleAdapterFactory implements ObjectFactory {
+
     @Override
     public Object getInstance(MuleContext context) throws Exception {
       return createLifecycleAdaptor();

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.source;
 
@@ -129,7 +129,8 @@ public class ExtensionMessageSourceTestCase extends AbstractMuleContextTestCase 
   @Before
   public void before() throws Exception {
     spyInjector(muleContext);
-    when(threadingProfile.createWorkManager(anyString(), eq(muleContext.getConfiguration().getShutdownTimeout()))).thenReturn(workManager);
+    when(threadingProfile.createWorkManager(anyString(), eq(muleContext.getConfiguration().getShutdownTimeout())))
+        .thenReturn(workManager);
     when(sourceFactory.createSource()).thenReturn(source);
     when(sourceModel.getExceptionEnricherFactory()).thenReturn(Optional.empty());
     when(sourceModel.getName()).thenReturn(SOURCE_NAME);
@@ -335,6 +336,7 @@ public class ExtensionMessageSourceTestCase extends AbstractMuleContextTestCase 
     Exception e = new RuntimeException();
     doThrow(e).when((Stoppable) source).stop();
     expectedException.expect(new BaseMatcher<Throwable>() {
+
       @Override
       public boolean matches(Object item) {
         Exception exception = (Exception) item;

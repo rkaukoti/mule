@@ -1,17 +1,18 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transaction.constraints;
 
 import org.mule.runtime.core.api.MuleEvent;
 
 /**
- * <code>BatchConstraint</code> is a filter that counts on every execution and returns true when the batch size value equals the execution
- * count.
+ * <code>BatchConstraint</code> is a filter that counts on every execution and returns true when the batch size value equals the
+ * execution count.
  */
 // @ThreadSafe
 public class BatchConstraint extends ConstraintFilter {
+
   // @GuardedBy(this)
   private int batchSize = 1;
   // @GuardedBy(this)

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.file.api;
 
@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 import java.util.function.Predicate;
 
 /**
- * A specialization of {@link FilePredicateBuilder} used to do assertions on files stored on a local file system. The file's properties are
- * to be represented on an instance of {@link LocalFileAttributes}
+ * A specialization of {@link FilePredicateBuilder} used to do assertions on files stored on a local file system. The file's
+ * properties are to be represented on an instance of {@link LocalFileAttributes}
  * <p>
  * It adds capabilities to consider creation, update and access timestamps.
  *

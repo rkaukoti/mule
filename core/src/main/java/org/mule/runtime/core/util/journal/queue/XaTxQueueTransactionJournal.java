@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.journal.queue;
 
@@ -18,7 +18,8 @@ import javax.transaction.xa.Xid;
 
 public class XaTxQueueTransactionJournal extends AbstractQueueTransactionJournal<Xid, XaQueueTxJournalEntry> {
 
-  public XaTxQueueTransactionJournal(String logFilesDirectory, final MuleContext muleContext, Integer maximumFileSizeInMegabytes) {
+  public XaTxQueueTransactionJournal(String logFilesDirectory, final MuleContext muleContext,
+      Integer maximumFileSizeInMegabytes) {
     super(logFilesDirectory, new JournalEntrySerializer<Xid, XaQueueTxJournalEntry>() {
 
       @Override
@@ -48,8 +49,8 @@ public class XaTxQueueTransactionJournal extends AbstractQueueTransactionJournal
   }
 
   public void logPrepare(Xid xid) {
-    getJournal()
-        .logCheckpointOperation(createCheckpointJournalEntry(xid, AbstractQueueTxJournalEntry.Operation.PREPARE.getByteRepresentation()));
+    getJournal().logCheckpointOperation(
+        createCheckpointJournalEntry(xid, AbstractQueueTxJournalEntry.Operation.PREPARE.getByteRepresentation()));
   }
 
   @Override

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring;
 
@@ -27,6 +27,7 @@ import static org.junit.Assert.fail;
  * Check that all top-level elements (direct children of Mule) are instances of "annotatedType"
  */
 public class CheckAnnotatedTestCase extends AbstractMuleTestCase {
+
   private static final String annotatedType = "annotatedType";
   private static final String annotatedMixedContentType = "annotatedMixedContentType";
   private Document schema;
@@ -141,7 +142,8 @@ public class CheckAnnotatedTestCase extends AbstractMuleTestCase {
         Element elm = (Element) node;
         if ("element".equals(node.getLocalName())) {
           children.add(findElement(elm));
-        } else if ("sequence".equals(node.getLocalName()) || "choice".equals(node.getLocalName()) || "group".equals(node.getLocalName())) {
+        } else if ("sequence".equals(node.getLocalName()) || "choice".equals(node.getLocalName())
+            || "group".equals(node.getLocalName())) {
           Set<Element> elms = collectElementChildren(elm);
           for (Element e : elms) {
             children.add(findElement(e));

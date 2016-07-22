@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.processors;
 
@@ -20,6 +20,7 @@ import java.util.Set;
  * {@link org.mule.runtime.config.spring.parsers.delegate.AbstractSerialDelegatingDefinitionParser#addHandledException(Class)}
  */
 public class BlockAttribute implements PreProcessor {
+
   private Set<String> disallowed;
 
   public BlockAttribute(String disallowed) {
@@ -42,6 +43,7 @@ public class BlockAttribute implements PreProcessor {
   }
 
   public static class BlockAttributeException extends IllegalStateException {
+
     BlockAttributeException(String message) {
       super(message);
     }

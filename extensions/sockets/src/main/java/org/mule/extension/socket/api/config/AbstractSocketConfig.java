@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.api.config;
 
@@ -30,8 +30,8 @@ public class AbstractSocketConfig implements Initialisable {
 
   /**
    * Default encoding used for serializing {@link String}. This encoding is used in
-   * {@link SocketOperations#send(RequesterConnection, RequesterConfig, String, Object, String, MuleMessage)} operation for serializing
-   * {@link String} types if no encoding parameter is specified.
+   * {@link SocketOperations#send(RequesterConnection, RequesterConfig, String, Object, String, MuleMessage)} operation for
+   * serializing {@link String} types if no encoding parameter is specified.
    *
    * It is also used by the {@link SocketWorker} for encoding the replies send by the {@link SocketListener} source.
    */

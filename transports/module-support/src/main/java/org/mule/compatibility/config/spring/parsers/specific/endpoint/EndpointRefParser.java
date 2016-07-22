@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.config.spring.parsers.specific.endpoint;
 
@@ -10,14 +10,16 @@ import org.mule.runtime.core.util.StringUtils;
 import org.w3c.dom.Element;
 
 /**
- * Configures a reference to an endpoint on a parent bean. This is typically used in configuration where a reference to the actual endpoint
- * is not wanted (i.e. Reply-To endpoints should be set as a string on a message).
+ * Configures a reference to an endpoint on a parent bean. This is typically used in configuration where a reference to the actual
+ * endpoint is not wanted (i.e. Reply-To endpoints should be set as a string on a message).
  *
- * Note that endpoint Reference elements should always have an 'address' and 'ref' attributes available. These are mutually exclusive.
+ * Note that endpoint Reference elements should always have an 'address' and 'ref' attributes available. These are mutually
+ * exclusive.
  *
  * Any other attributes on the element processed by this parser will also be set on the parent object.
  */
 public class EndpointRefParser extends ParentDefinitionParser {
+
   public EndpointRefParser(String propertyName) {
     addAlias("address", propertyName);
     addAlias("ref", propertyName);

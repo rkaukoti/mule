@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.source;
 
@@ -57,11 +57,12 @@ import static org.mule.runtime.core.util.concurrent.ThreadNameHelper.getPrefix;
 import static org.mule.runtime.module.extension.internal.util.MuleExtensionUtils.getInitialiserEvent;
 
 /**
- * A {@link MessageSource} which connects the Extensions API with the Mule runtime by connecting a {@link Source} with a flow represented by
- * a {@link #messageProcessor}
+ * A {@link MessageSource} which connects the Extensions API with the Mule runtime by connecting a {@link Source} with a flow
+ * represented by a {@link #messageProcessor}
  * <p>
- * This class implements the {@link Lifecycle} interface and propagates all of its events to the underlying {@link Source}. It will also
- * perform dependency injection on it and will responsible for properly invoking {@link Source#setSourceContext(SourceContext)}
+ * This class implements the {@link Lifecycle} interface and propagates all of its events to the underlying {@link Source}. It
+ * will also perform dependency injection on it and will responsible for properly invoking
+ * {@link Source#setSourceContext(SourceContext)}
  *
  * @since 4.0
  */
@@ -97,15 +98,15 @@ public class ExtensionMessageSource extends ExtensionComponent
   public void handle(MuleMessage message,
       CompletionHandler<org.mule.runtime.api.message.MuleEvent, Exception, org.mule.runtime.api.message.MuleEvent> completionHandler) {
     MuleEvent event = new DefaultMuleEvent((org.mule.runtime.core.api.MuleMessage) message, REQUEST_RESPONSE, flowConstruct);
-    messageProcessingManager.processMessage(new ExtensionFlowProcessingTemplate(event, messageProcessor, downCast(completionHandler)),
-        createProcessingContext());
+    messageProcessingManager.processMessage(
+        new ExtensionFlowProcessingTemplate(event, messageProcessor, downCast(completionHandler)), createProcessingContext());
   }
 
   @Override
   public void handle(MuleMessage message) {
     MuleEvent event = new DefaultMuleEvent((org.mule.runtime.core.api.MuleMessage) message, REQUEST_RESPONSE, flowConstruct);
-    messageProcessingManager.processMessage(new ExtensionFlowProcessingTemplate(event, messageProcessor, new NullCompletionHandler()),
-        createProcessingContext());
+    messageProcessingManager.processMessage(
+        new ExtensionFlowProcessingTemplate(event, messageProcessor, new NullCompletionHandler()), createProcessingContext());
   }
 
   @Override
@@ -114,9 +115,8 @@ public class ExtensionMessageSource extends ExtensionComponent
     Optional<ConnectionException> connectionException = extractConnectionException(exception);
     if (connectionException.isPresent()) {
       try {
-        LOGGER.warn(
-            String.format("Message source '%s' on flow '%s' threw exception. Restarting...", source.getName(), flowConstruct.getName()),
-            exception);
+        LOGGER.warn(String.format("Message source '%s' on flow '%s' threw exception. Restarting...", source.getName(),
+            flowConstruct.getName()), exception);
         stopSource();
         disposeSource();
         startSource();
@@ -229,6 +229,7 @@ public class ExtensionMessageSource extends ExtensionComponent
 
   private MessageProcessContext createProcessingContext() {
     return new MessageProcessContext() {
+
       @Override
       public boolean supportsAsynchronousProcessing() {
         return true;
@@ -273,8 +274,8 @@ public class ExtensionMessageSource extends ExtensionComponent
   }
 
   /**
-   * Validates if the current source is valid for the set configuration. In case that the validation fails, the method will throw a
-   * {@link IllegalSourceException}
+   * Validates if the current source is valid for the set configuration. In case that the validation fails, the method will throw
+   * a {@link IllegalSourceException}
    */
   @Override
   protected void validateOperationConfiguration(ConfigurationProvider<Object> configurationProvider) {

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.http.internal;
 
@@ -31,8 +31,8 @@ import org.mule.runtime.extension.api.annotation.capability.Xml;
 /**
  * HTTP connector used to handle and perform HTTP requests.
  * <p>
- * This class only serves as an extension definition. It's configurations are divided on server ({@link HttpListenerConfig}) and client
- * ({@link HttpRequesterConfig}) capabilities.
+ * This class only serves as an extension definition. It's configurations are divided on server ({@link HttpListenerConfig}) and
+ * client ({@link HttpRequesterConfig}) capabilities.
  *
  * @since 4.0
  */
@@ -42,7 +42,8 @@ import org.mule.runtime.extension.api.annotation.capability.Xml;
 @SubTypeMapping(baseType = HttpAuthentication.class,
     subTypes = {BasicAuthentication.class, DigestAuthentication.class, NtlmAuthentication.class})
 @SubTypeMapping(baseType = ProxyConfig.class, subTypes = {DefaultProxyConfig.class, NtlmProxyConfig.class})
-@SubTypeMapping(baseType = ResponseValidator.class, subTypes = {SuccessStatusCodeValidator.class, FailureStatusCodeValidator.class})
+@SubTypeMapping(baseType = ResponseValidator.class,
+    subTypes = {SuccessStatusCodeValidator.class, FailureStatusCodeValidator.class})
 @Import(type = TcpClientSocketProperties.class, from = SocketsExtension.class)
 @Import(type = TcpServerSocketProperties.class, from = SocketsExtension.class)
 @Xml(namespaceLocation = "http://www.mulesoft.org/schema/mule/httpn", namespace = "httpn")

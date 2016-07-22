@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.connector;
 
@@ -100,6 +100,7 @@ public class PetStoreConnectionPoolingTestCase extends PetStoreConnectionTestCas
     for (Future<PetStoreClient> future : clients) {
       PollingProber prober = new PollingProber(1000, 100);
       prober.check(new JUnitProbe() {
+
         @Override
         protected boolean test() throws Exception {
           PetStoreClient client = future.get(100, MILLISECONDS);
@@ -119,8 +120,9 @@ public class PetStoreConnectionPoolingTestCase extends PetStoreConnectionTestCas
   }
 
   protected Future<PetStoreClient> getClientOnLatch() {
-    return executorService.submit(() -> (PetStoreClient) flowRunner("getClientOnLatch").withPayload("")
-        .withFlowVariable("testLatch", testLatch).withFlowVariable("connectionLatch", connectionLatch).run().getMessage().getPayload());
+    return executorService
+        .submit(() -> (PetStoreClient) flowRunner("getClientOnLatch").withPayload("").withFlowVariable("testLatch", testLatch)
+            .withFlowVariable("connectionLatch", connectionLatch).run().getMessage().getPayload());
   }
 
   @Override

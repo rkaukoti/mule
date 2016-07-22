@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.listener;
 
@@ -27,7 +27,8 @@ public class HttpListenerHeaderSizeTestCase extends AbstractHttpTestCase {
   private static final int SIZE_DELTA = 1000;
 
   @Rule
-  public SystemProperty maxHeaderSectionSizeSystemProperty = new SystemProperty(MAXIMUM_HEADER_SECTION_SIZE_PROPERTY_KEY, "10000");
+  public SystemProperty maxHeaderSectionSizeSystemProperty =
+      new SystemProperty(MAXIMUM_HEADER_SECTION_SIZE_PROPERTY_KEY, "10000");
   @Rule
   public DynamicPort dynamicPort = new DynamicPort("port");
 
@@ -38,7 +39,8 @@ public class HttpListenerHeaderSizeTestCase extends AbstractHttpTestCase {
 
   @Test
   public void maxHeaderSizeExceeded() throws Exception {
-    HttpResponse response = sendRequestWithQueryParam(Integer.valueOf(maxHeaderSectionSizeSystemProperty.getValue()) + SIZE_DELTA);
+    HttpResponse response =
+        sendRequestWithQueryParam(Integer.valueOf(maxHeaderSectionSizeSystemProperty.getValue()) + SIZE_DELTA);
     StatusLine statusLine = response.getStatusLine();
     assertThat(statusLine.getStatusCode(), is(BAD_REQUEST.getStatusCode()));
     assertThat(statusLine.getReasonPhrase(), is(BAD_REQUEST.getReasonPhrase()));

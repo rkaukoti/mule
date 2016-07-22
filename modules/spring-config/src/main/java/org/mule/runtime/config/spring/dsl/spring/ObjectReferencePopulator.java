@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.dsl.spring;
 
@@ -26,8 +26,9 @@ import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_TIME_SUPPLI
 class ObjectReferencePopulator {
 
   // TODO MULE-9682: Load this list dynamically and define the whole set of objects that can be injected.
-  private static ImmutableMap<Class<?>, String> OBJECT_REFERENCES = new ImmutableMap.Builder().put(MuleContext.class, OBJECT_MULE_CONTEXT)
-      .put(TimeSupplier.class, OBJECT_TIME_SUPPLIER).put(ExtensionManager.class, OBJECT_EXTENSION_MANAGER).build();
+  private static ImmutableMap<Class<?>, String> OBJECT_REFERENCES =
+      new ImmutableMap.Builder().put(MuleContext.class, OBJECT_MULE_CONTEXT).put(TimeSupplier.class, OBJECT_TIME_SUPPLIER)
+          .put(ExtensionManager.class, OBJECT_EXTENSION_MANAGER).build();
 
 
   /**
@@ -37,7 +38,8 @@ class ObjectReferencePopulator {
   public void populate(Class<?> type, Consumer<String> typeIdConsumer) {
     String referenceName = OBJECT_REFERENCES.get(type);
     if (referenceName == null) {
-      throw new MuleRuntimeException(CoreMessages.createStaticMessage("Could not determine reference object of type: " + type.getName()));
+      throw new MuleRuntimeException(
+          CoreMessages.createStaticMessage("Could not determine reference object of type: " + type.getName()));
     }
     typeIdConsumer.accept(referenceName);
   }

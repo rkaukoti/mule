@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.listener;
 
@@ -42,7 +42,8 @@ import static java.lang.String.format;
 import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTP;
 import static org.mule.runtime.module.http.api.HttpConstants.Protocols.HTTPS;
 
-public class DefaultHttpListenerConfig extends AbstractAnnotatedObject implements HttpListenerConfig, Initialisable, MuleContextAware {
+public class DefaultHttpListenerConfig extends AbstractAnnotatedObject
+    implements HttpListenerConfig, Initialisable, MuleContextAware {
 
   public static final int DEFAULT_MAX_THREADS = 128;
   public static final int DEFAULT_CONNECTION_IDLE_TIMEOUT = 30 * 1000;
@@ -122,7 +123,8 @@ public class DefaultHttpListenerConfig extends AbstractAnnotatedObject implement
           CoreMessages.createStaticMessage("Configured protocol is HTTPS but there's no TlsContext configured"), this);
     }
     if (tlsContext != null && !tlsContext.isKeyStoreConfigured()) {
-      throw new InitialisationException(CoreMessages.createStaticMessage("KeyStore must be configured for server side SSL"), this);
+      throw new InitialisationException(CoreMessages.createStaticMessage("KeyStore must be configured for server side SSL"),
+          this);
     }
 
     verifyConnectionsParameters();
@@ -137,7 +139,8 @@ public class DefaultHttpListenerConfig extends AbstractAnnotatedObject implement
     }
 
     if (tlsContext == null) {
-      server = connectionManager.createServer(serverAddress, createWorkManagerSource(), usePersistentConnections, connectionIdleTimeout);
+      server = connectionManager.createServer(serverAddress, createWorkManagerSource(), usePersistentConnections,
+          connectionIdleTimeout);
     } else {
       LifecycleUtils.initialiseIfNeeded(tlsContext);
       server = connectionManager.createSslServer(serverAddress, createWorkManagerSource(), tlsContext, usePersistentConnections,
@@ -146,10 +149,12 @@ public class DefaultHttpListenerConfig extends AbstractAnnotatedObject implement
     initialised = true;
   }
 
-  // We use a WorkManagerSource since the workManager instance may be recreated during stop/start and it would leave the server with an
+  // We use a WorkManagerSource since the workManager instance may be recreated during stop/start and it would leave the server
+  // with an
   // invalid work manager instance.
   private WorkManagerSource createWorkManagerSource() {
     return new WorkManagerSource() {
+
       @Override
       public WorkManager getWorkManager() throws MuleException {
         return workManager;
@@ -164,8 +169,9 @@ public class DefaultHttpListenerConfig extends AbstractAnnotatedObject implement
   }
 
   private WorkManager createWorkManager() {
-    final WorkManager workManager = workerThreadingProfile.createWorkManager(
-        format("%s%s.%s", ThreadNameHelper.getPrefix(muleContext), name, "worker"), muleContext.getConfiguration().getShutdownTimeout());
+    final WorkManager workManager =
+        workerThreadingProfile.createWorkManager(format("%s%s.%s", ThreadNameHelper.getPrefix(muleContext), name, "worker"),
+            muleContext.getConfiguration().getShutdownTimeout());
     if (workManager instanceof MuleContextAware) {
       ((MuleContextAware) workManager).setMuleContext(muleContext);
     }
@@ -183,7 +189,8 @@ public class DefaultHttpListenerConfig extends AbstractAnnotatedObject implement
     this.muleContext = muleContext;
   }
 
-  public RequestHandlerManager addRequestHandler(ListenerRequestMatcher requestMatcher, RequestHandler requestHandler) throws IOException {
+  public RequestHandlerManager addRequestHandler(ListenerRequestMatcher requestMatcher, RequestHandler requestHandler)
+      throws IOException {
     return server.addRequestHandler(requestMatcher, requestHandler);
   }
 

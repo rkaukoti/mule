@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.api.transport;
 
@@ -30,24 +30,25 @@ import java.util.List;
  */
 @Deprecated
 public interface Connector extends LegacyConnector {
+
   int INT_VALUE_NOT_SET = -1;
 
   /**
-   * Registers a MessageProcessor listener which will listen to new message received from a specific transport channel and then processed by
-   * the endpoint. Only a single listener can be registered for a given endpoints. Attempts to register a listener when one is already
-   * registered will fail.
+   * Registers a MessageProcessor listener which will listen to new message received from a specific transport channel and then
+   * processed by the endpoint. Only a single listener can be registered for a given endpoints. Attempts to register a listener
+   * when one is already registered will fail.
    *
-   * @param endpoint defines both the transport and channel/resource uri as well the processing (transformation/filtering) that should occur
-   *        when the endpoint processes a new message from the transport receiver.
+   * @param endpoint defines both the transport and channel/resource uri as well the processing (transformation/filtering) that
+   *        should occur when the endpoint processes a new message from the transport receiver.
    * @param listener the listener that will be invoked when messages are received on the endpoint.
-   * @param flowConstruct reference to the flow construct that the listener is part of for use as context for logging, notifications and
-   *        error handling.
+   * @param flowConstruct reference to the flow construct that the listener is part of for use as context for logging,
+   *        notifications and error handling.
    */
   public void registerListener(InboundEndpoint endpoint, MessageProcessor listener, FlowConstruct flowConstruct) throws Exception;
 
   /**
-   * Unregisters the listener for the given endpoints. This will mean that the listener that was registered for this endpoint will no longer
-   * receive any messages.
+   * Unregisters the listener for the given endpoints. This will mean that the listener that was registered for this endpoint will
+   * no longer receive any messages.
    */
   public void unregisterListener(InboundEndpoint endpoint, FlowConstruct flowConstruct) throws Exception;
 
@@ -113,17 +114,17 @@ public interface Connector extends LegacyConnector {
    * Make a specific request to the underlying transport
    *
    * @param endpoint the endpoint to use when connecting to the resource
-   * @param timeout the maximum time the operation should block before returning. The call should return immediately if there is data
-   *        available. If no data becomes available before the timeout elapses, null will be returned
+   * @param timeout the maximum time the operation should block before returning. The call should return immediately if there is
+   *        data available. If no data becomes available before the timeout elapses, null will be returned
    * @return the result of the request wrapped in a MuleMessage object. Null will be returned if no data was avaialable
    * @throws Exception if the call to the underlying protocal cuases an exception
    */
   MuleMessage request(InboundEndpoint endpoint, long timeout) throws Exception;
 
   /**
-   * Will get the output stream for this type of transport. Typically this will be called only when Streaming is being used on an outbound
-   * endpoint. If Streaming is not supported by this transport an {@link UnsupportedOperationException} is thrown. Note that the stream MUST
-   * release resources on close. For help doing so, see {@link CallbackOutputStream}.
+   * Will get the output stream for this type of transport. Typically this will be called only when Streaming is being used on an
+   * outbound endpoint. If Streaming is not supported by this transport an {@link UnsupportedOperationException} is thrown. Note
+   * that the stream MUST release resources on close. For help doing so, see {@link CallbackOutputStream}.
    *
    * @param endpoint the endpoint that releates to this Dispatcher
    * @param event the current event being processed

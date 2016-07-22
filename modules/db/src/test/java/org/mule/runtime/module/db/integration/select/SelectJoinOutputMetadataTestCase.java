@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.select;
@@ -49,7 +49,8 @@ public class SelectJoinOutputMetadataTestCase extends AbstractDbIntegrationTestC
     Flow flowConstruct = (Flow) muleContext.getRegistry().lookupFlowConstruct("joinMetadata");
 
     List<MessageProcessor> messageProcessors = flowConstruct.getMessageProcessors();
-    AbstractSingleQueryDbMessageProcessor queryMessageProcessor = (AbstractSingleQueryDbMessageProcessor) messageProcessors.get(0);
+    AbstractSingleQueryDbMessageProcessor queryMessageProcessor =
+        (AbstractSingleQueryDbMessageProcessor) messageProcessors.get(0);
     Result<MetaData> outputMetaData = queryMessageProcessor.getOutputMetaData(null);
 
     DefaultListMetaDataModel listMetaDataModel = (DefaultListMetaDataModel) outputMetaData.get().getPayload();
@@ -66,7 +67,8 @@ public class SelectJoinOutputMetadataTestCase extends AbstractDbIntegrationTestC
     Flow flowConstruct = (Flow) muleContext.getRegistry().lookupFlowConstruct("joinInvalidMetadata");
 
     List<MessageProcessor> messageProcessors = flowConstruct.getMessageProcessors();
-    AbstractSingleQueryDbMessageProcessor queryMessageProcessor = (AbstractSingleQueryDbMessageProcessor) messageProcessors.get(0);
+    AbstractSingleQueryDbMessageProcessor queryMessageProcessor =
+        (AbstractSingleQueryDbMessageProcessor) messageProcessors.get(0);
 
     Result<MetaData> outputMetaData = queryMessageProcessor.getOutputMetaData(null);
     assertThat(outputMetaData.getStatus(), equalTo(Result.Status.FAILURE));

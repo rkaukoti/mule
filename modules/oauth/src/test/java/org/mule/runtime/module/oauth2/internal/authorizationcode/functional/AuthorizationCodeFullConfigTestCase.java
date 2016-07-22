@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode.functional;
 
@@ -55,8 +55,8 @@ public class AuthorizationCodeFullConfigTestCase extends AbstractOAuthAuthorizat
   public SystemProperty authorizationUrl = new SystemProperty("authorization.url",
       String.format("%s://localhost:%d" + AUTHORIZE_PATH, getProtocol(), oauthHttpsServerPort.getNumber()));
   @Rule
-  public SystemProperty tokenUrl =
-      new SystemProperty("token.url", String.format("%s://localhost:%d" + TOKEN_PATH, getProtocol(), oauthHttpsServerPort.getNumber()));
+  public SystemProperty tokenUrl = new SystemProperty("token.url",
+      String.format("%s://localhost:%d" + TOKEN_PATH, getProtocol(), oauthHttpsServerPort.getNumber()));
   @Rule
   public SystemProperty authenticationRequestParam1 = new SystemProperty("auth.request.param1", "auth-req-param1");
   @Rule
@@ -109,8 +109,8 @@ public class AuthorizationCodeFullConfigTestCase extends AbstractOAuthAuthorizat
   public void hitRedirectUrlAndGetToken() throws Exception {
 
     final ImmutableMap<Object, Object> tokenUrlResponseParameters =
-        ImmutableMap.builder().put(OAuthConstants.ACCESS_TOKEN_PARAMETER, ACCESS_TOKEN).put(OAuthConstants.EXPIRES_IN_PARAMETER, EXPIRES_IN)
-            .put(OAuthConstants.REFRESH_TOKEN_PARAMETER, REFRESH_TOKEN)
+        ImmutableMap.builder().put(OAuthConstants.ACCESS_TOKEN_PARAMETER, ACCESS_TOKEN)
+            .put(OAuthConstants.EXPIRES_IN_PARAMETER, EXPIRES_IN).put(OAuthConstants.REFRESH_TOKEN_PARAMETER, REFRESH_TOKEN)
             .put(customTokenResponseParameter1Name.getValue(), CUSTOM_RESPONSE_PARAMETER1_VALUE)
             .put(customTokenResponseParameter2Name.getValue(), CUSTOM_RESPONSE_PARAMETER2_VALUE).build();
 
@@ -127,8 +127,9 @@ public class AuthorizationCodeFullConfigTestCase extends AbstractOAuthAuthorizat
 
     verifyRequestDoneToTokenUrlForAuthorizationCode();
 
-    OAuthContextFunctionAsserter.createFrom(muleContext.getExpressionLanguage(), "tokenManagerConfig").assertAccessTokenIs(ACCESS_TOKEN)
-        .assertExpiresInIs(EXPIRES_IN).assertRefreshTokenIs(REFRESH_TOKEN).assertState(state.getValue())
+    OAuthContextFunctionAsserter.createFrom(muleContext.getExpressionLanguage(), "tokenManagerConfig")
+        .assertAccessTokenIs(ACCESS_TOKEN).assertExpiresInIs(EXPIRES_IN).assertRefreshTokenIs(REFRESH_TOKEN)
+        .assertState(state.getValue())
         .assertContainsCustomTokenResponseParam(customTokenResponseParameter1Name.getValue(), CUSTOM_RESPONSE_PARAMETER1_VALUE)
         .assertContainsCustomTokenResponseParam(customTokenResponseParameter2Name.getValue(), CUSTOM_RESPONSE_PARAMETER2_VALUE);
   }

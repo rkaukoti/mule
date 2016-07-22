@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -155,8 +155,8 @@ public class HttpMessageProcessTemplate extends AbstractTransportMessageProcessT
   public void sendFailureResponseToClient(MessagingException messagingException) throws MuleException {
     MuleEvent response = messagingException.getEvent();
     MessagingException e = getExceptionForCreatingFailureResponse(messagingException, response);
-    String temp =
-        ExceptionHelper.getErrorMapping(getInboundEndpoint().getConnector().getProtocol(), messagingException.getClass(), getMuleContext());
+    String temp = ExceptionHelper.getErrorMapping(getInboundEndpoint().getConnector().getProtocol(),
+        messagingException.getClass(), getMuleContext());
     int httpStatus = Integer.valueOf(temp);
     try {
       sendFailureResponseToClient(e, httpStatus);
@@ -217,7 +217,8 @@ public class HttpMessageProcessTemplate extends AbstractTransportMessageProcessT
         if (HEADER_EXPECT_CONTINUE_REQUEST_VALUE.equals(expectHeaderValue)) {
           HttpResponse expected = new HttpResponse();
           expected.setStatusLine(requestLine.getHttpVersion(), SC_CONTINUE);
-          final DefaultMuleEvent event = new DefaultMuleEvent(MuleMessage.builder().payload(expected).build(), getFlowConstruct());
+          final DefaultMuleEvent event =
+              new DefaultMuleEvent(MuleMessage.builder().payload(expected).build(), getFlowConstruct());
           DefaultMuleEventEndpointUtils.populateFieldsFromInboundEndpoint(event, getInboundEndpoint());
 
           RequestContext.setEvent(event);
@@ -288,8 +289,8 @@ public class HttpMessageProcessTemplate extends AbstractTransportMessageProcessT
   /**
    * For a given MuleMessage will set the <code>MULE_REMOTE_CLIENT_ADDRESS</code> property taking into consideration if the header
    * <code>X-Forwarded-For</code> is present in the request or not. In case it is, this method will also set the
-   * <code>MULE_PROXY_ADDRESS</code> property. If a proxy address is not passed in <code>X-Forwarded-For</code>, the connection address will
-   * be set as <code>MULE_PROXY_ADDRESS</code>.
+   * <code>MULE_PROXY_ADDRESS</code> property. If a proxy address is not passed in <code>X-Forwarded-For</code>, the connection
+   * address will be set as <code>MULE_PROXY_ADDRESS</code>.
    *
    * @param muleMessageBuilder MuleMessageBuilder to be enriched
    * @param original original message
@@ -349,8 +350,8 @@ public class HttpMessageProcessTemplate extends AbstractTransportMessageProcessT
       String method = requestLine.getMethod();
 
       if (!(method.equals(METHOD_GET) || method.equals(METHOD_HEAD) || method.equals(METHOD_POST) || method.equals(METHOD_OPTIONS)
-          || method.equals(METHOD_PUT) || method.equals(METHOD_DELETE) || method.equals(METHOD_TRACE) || method.equals(METHOD_CONNECT)
-          || method.equals(METHOD_PATCH))) {
+          || method.equals(METHOD_PUT) || method.equals(METHOD_DELETE) || method.equals(METHOD_TRACE)
+          || method.equals(METHOD_CONNECT) || method.equals(METHOD_PATCH))) {
         badRequest = true;
         return false;
       }

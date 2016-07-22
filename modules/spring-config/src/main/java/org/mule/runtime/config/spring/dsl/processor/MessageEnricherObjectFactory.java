@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.config.spring.dsl.processor;
@@ -22,9 +22,11 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 
 /**
- * {@link org.mule.runtime.config.spring.dsl.api.ObjectFactory} to create a {@link org.mule.runtime.core.enricher.MessageEnricher}.
+ * {@link org.mule.runtime.config.spring.dsl.api.ObjectFactory} to create a
+ * {@link org.mule.runtime.core.enricher.MessageEnricher}.
  */
-public class MessageEnricherObjectFactory implements ObjectFactory<MessageEnricher>, MuleContextAware, FlowConstructAware, AnnotatedObject {
+public class MessageEnricherObjectFactory
+    implements ObjectFactory<MessageEnricher>, MuleContextAware, FlowConstructAware, AnnotatedObject {
 
   private MessageProcessor messageProcessor;
   private String source;

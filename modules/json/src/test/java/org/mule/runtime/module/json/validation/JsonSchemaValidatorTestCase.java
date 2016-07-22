@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.json.validation;
 
@@ -51,39 +51,47 @@ public class JsonSchemaValidatorTestCase extends AbstractMuleContextTestCase {
 
   @Parameters(name = "{0}")
   public static Iterable<Object[]> data() throws Exception {
-    return Arrays.asList(new Object[][] {{"SimpleV4Schema as String", getFstabValidator(), getGoodFstab(), getBadFstab(), getBadFstab2()},
-        {"SimpleV4Schema as bytes", getFstabValidator(), getGoodFstab().getBytes(), getBadFstab().getBytes(), getBadFstab2().getBytes()},
-        {"SimpleV4Schema as JsonNode", getFstabValidator(), fromString(getGoodFstab()), fromString(getBadFstab()),
-            fromString(getBadFstab2())},
-        {"SimpleV4Schema as JsonData", getFstabValidator(), getGoodFstabAsJsonData(), getBadFstabAsJsonData(), getBadFstabAsJsonData()},
-        {"SimpleV4Schema as Stream", getFstabValidator(), toStream(getGoodFstab()), toStream(getBadFstab()), toStream(getBadFstab2())},
+    return Arrays
+        .asList(new Object[][] {{"SimpleV4Schema as String", getFstabValidator(), getGoodFstab(), getBadFstab(), getBadFstab2()},
+            {"SimpleV4Schema as bytes", getFstabValidator(), getGoodFstab().getBytes(), getBadFstab().getBytes(),
+                getBadFstab2().getBytes()},
+            {"SimpleV4Schema as JsonNode", getFstabValidator(), fromString(getGoodFstab()), fromString(getBadFstab()),
+                fromString(getBadFstab2())},
+            {"SimpleV4Schema as JsonData", getFstabValidator(), getGoodFstabAsJsonData(), getBadFstabAsJsonData(),
+                getBadFstabAsJsonData()},
+            {"SimpleV4Schema as Stream", getFstabValidator(), toStream(getGoodFstab()), toStream(getBadFstab()),
+                toStream(getBadFstab2())},
 
-        {"Inline schema as String", getInlineFstabValidator(), getGoodFstabInline(), getBadFstab(), getBadFstab2()},
-        {"Inline schema as bytes", getInlineFstabValidator(), getGoodFstabInline().getBytes(), getBadFstab().getBytes(),
-            getBadFstab2().getBytes()},
-        {"Inline schema as JsonNode", getInlineFstabValidator(), fromString(getGoodFstabInline()), fromString(getBadFstab()),
-            fromString(getBadFstab2())},
-        {"Inline schema as JsonData", getInlineFstabValidator(), getGoodFstabInlineAsJsonData(), getBadFstabAsJsonData(),
-            getBadFstab2AsJsonData()},
-        {"Inline schema as Stream", getInlineFstabValidator(), toStream(getGoodFstabInline()), toStream(getBadFstab()),
-            toStream(getBadFstab2())},
+            {"Inline schema as String", getInlineFstabValidator(), getGoodFstabInline(), getBadFstab(), getBadFstab2()},
+            {"Inline schema as bytes", getInlineFstabValidator(), getGoodFstabInline().getBytes(), getBadFstab().getBytes(),
+                getBadFstab2().getBytes()},
+            {"Inline schema as JsonNode", getInlineFstabValidator(), fromString(getGoodFstabInline()), fromString(getBadFstab()),
+                fromString(getBadFstab2())},
+            {"Inline schema as JsonData", getInlineFstabValidator(), getGoodFstabInlineAsJsonData(), getBadFstabAsJsonData(),
+                getBadFstab2AsJsonData()},
+            {"Inline schema as Stream", getInlineFstabValidator(), toStream(getGoodFstabInline()), toStream(getBadFstab()),
+                toStream(getBadFstab2())},
 
-        {"Draft3 as String", getDraft3Validator(), getGoodFstab(), getBadFstab(), getBadFstab2()},
-        {"Draft3 as bytes", getDraft3Validator(), getGoodFstab().getBytes(), getBadFstab().getBytes(), getBadFstab2().getBytes()},
-        {"Draft3 as JsonNode", getDraft3Validator(), fromString(getGoodFstab()), fromString(getBadFstab()), fromString(getBadFstab2())},
-        {"Draft3 as JsonData", getDraft3Validator(), getGoodFstabAsJsonData(), getBadFstabAsJsonData(), getBadFstab2AsJsonData()},
-        {"Draft3 as Stream", getDraft3Validator(), toStream(getGoodFstab()), toStream(getBadFstab()), toStream(getBadFstab2())},
+            {"Draft3 as String", getDraft3Validator(), getGoodFstab(), getBadFstab(), getBadFstab2()},
+            {"Draft3 as bytes", getDraft3Validator(), getGoodFstab().getBytes(), getBadFstab().getBytes(),
+                getBadFstab2().getBytes()},
+            {"Draft3 as JsonNode", getDraft3Validator(), fromString(getGoodFstab()), fromString(getBadFstab()),
+                fromString(getBadFstab2())},
+            {"Draft3 as JsonData", getDraft3Validator(), getGoodFstabAsJsonData(), getBadFstabAsJsonData(),
+                getBadFstab2AsJsonData()},
+            {"Draft3 as Stream", getDraft3Validator(), toStream(getGoodFstab()), toStream(getBadFstab()),
+                toStream(getBadFstab2())},
 
 
-        {"Schema with redirects as String", getFstabValidatorWithRedirects(), getGoodFstab(), getBadFstab(), getBadFstab2()},
-        {"Schema with redirects as bytes", getFstabValidatorWithRedirects(), getGoodFstab().getBytes(), getBadFstab().getBytes(),
-            getBadFstab2().getBytes()},
-        {"Schema with redirects as JsonNode", getFstabValidatorWithRedirects(), fromString(getGoodFstab()), fromString(getBadFstab()),
-            fromString(getBadFstab2())},
-        {"Schema with redirects as JsonData", getFstabValidatorWithRedirects(), getGoodFstabAsJsonData(), getBadFstabAsJsonData(),
-            getBadFstab2AsJsonData()},
-        {"Schema with redirects as Stream", getFstabValidatorWithRedirects(), toStream(getGoodFstab()), toStream(getBadFstab()),
-            toStream(getBadFstab2())},});
+            {"Schema with redirects as String", getFstabValidatorWithRedirects(), getGoodFstab(), getBadFstab(), getBadFstab2()},
+            {"Schema with redirects as bytes", getFstabValidatorWithRedirects(), getGoodFstab().getBytes(),
+                getBadFstab().getBytes(), getBadFstab2().getBytes()},
+            {"Schema with redirects as JsonNode", getFstabValidatorWithRedirects(), fromString(getGoodFstab()),
+                fromString(getBadFstab()), fromString(getBadFstab2())},
+            {"Schema with redirects as JsonData", getFstabValidatorWithRedirects(), getGoodFstabAsJsonData(),
+                getBadFstabAsJsonData(), getBadFstab2AsJsonData()},
+            {"Schema with redirects as Stream", getFstabValidatorWithRedirects(), toStream(getGoodFstab()),
+                toStream(getBadFstab()), toStream(getBadFstab2())},});
   }
 
   private static JsonSchemaValidator getFstabValidator() {
@@ -91,7 +99,8 @@ public class JsonSchemaValidatorTestCase extends AbstractMuleContextTestCase {
   }
 
   private static JsonSchemaValidator getFstabValidatorWithRedirects() {
-    return JsonSchemaValidator.builder().setSchemaLocation(FAKE_SCHEMA_URI).addSchemaRedirect(FAKE_SCHEMA_URI, SCHEMA_FSTAB_JSON).build();
+    return JsonSchemaValidator.builder().setSchemaLocation(FAKE_SCHEMA_URI).addSchemaRedirect(FAKE_SCHEMA_URI, SCHEMA_FSTAB_JSON)
+        .build();
   }
 
   private static JsonSchemaValidator getDraft3Validator() {
@@ -99,7 +108,8 @@ public class JsonSchemaValidatorTestCase extends AbstractMuleContextTestCase {
   }
 
   private static JsonSchemaValidator getInlineFstabValidator() {
-    return JsonSchemaValidator.builder().setSchemaLocation(SCHEMA_FSTAB_INLINE).setDereferencing(JsonSchemaDereferencing.INLINE).build();
+    return JsonSchemaValidator.builder().setSchemaLocation(SCHEMA_FSTAB_INLINE).setDereferencing(JsonSchemaDereferencing.INLINE)
+        .build();
   }
 
   private static JsonSchemaValidator getSimpleValidator(String schemaLocation) {

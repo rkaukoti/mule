@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -27,6 +27,7 @@ import static org.mule.runtime.core.api.config.MuleProperties.MULE_ENCODING_SYST
 // @ThreadSafe
 
 public class SystemUtils extends org.apache.commons.lang.SystemUtils {
+
   public static final boolean IS_JAVA_1_7 = (JAVA_VERSION_TRIMMED != null) && JAVA_VERSION_TRIMMED.startsWith("1.7");
   // class logger
   protected static final Logger logger = LoggerFactory.getLogger(SystemUtils.class);
@@ -153,8 +154,8 @@ public class SystemUtils extends org.apache.commons.lang.SystemUtils {
   }
 
   /**
-   * Returns the value corresponding to the given option from the command line, for example if the options are "-config mule-config.xml"
-   * getCommandLineOption("config") would return "mule-config.xml"
+   * Returns the value corresponding to the given option from the command line, for example if the options are "-config
+   * mule-config.xml" getCommandLineOption("config") would return "mule-config.xml"
    */
   // TODO MULE-1947 Command-line arguments should be handled exclusively by the bootloader
   public static String getCommandLineOption(String option, String args[], String opts[][]) throws DefaultMuleException {
@@ -163,8 +164,8 @@ public class SystemUtils extends org.apache.commons.lang.SystemUtils {
   }
 
   /**
-   * Checks whether a command line option is set. This is useful for command line options that don't have an argument, like "-cluster",
-   * which means that this Mule instance is part of a cluster.
+   * Checks whether a command line option is set. This is useful for command line options that don't have an argument, like
+   * "-cluster", which means that this Mule instance is part of a cluster.
    */
   // TODO MULE-1947 Command-line arguments should be handled exclusively by the bootloader
   public static boolean hasCommandLineOption(String option, String args[], String opts[][]) throws DefaultMuleException {
@@ -173,8 +174,8 @@ public class SystemUtils extends org.apache.commons.lang.SystemUtils {
   }
 
   /**
-   * Returns a Map of all options in the command line. The Map is keyed off the option name. The value will be whatever is present on the
-   * command line. Options that don't have an argument will have the String "true".
+   * Returns a Map of all options in the command line. The Map is keyed off the option name. The value will be whatever is present
+   * on the command line. Options that don't have an argument will have the String "true".
    */
   // TODO MULE-1947 Command-line arguments should be handled exclusively by the bootloader
   public static Map<String, Object> getCommandLineOptions(String args[], String opts[][]) throws DefaultMuleException {
@@ -191,12 +192,12 @@ public class SystemUtils extends org.apache.commons.lang.SystemUtils {
 
   /**
    * Returns a Map of all valid property definitions in <code>-Dkey=value</code> format. <code>-Dkey</code> is interpreted as
-   * <code>-Dkey=true</code>, everything else is ignored. Whitespace in values is properly handled but needs to be quoted properly:
-   * <code>-Dkey="some value"</code>.
+   * <code>-Dkey=true</code>, everything else is ignored. Whitespace in values is properly handled but needs to be quoted
+   * properly: <code>-Dkey="some value"</code>.
    *
    * @param input String with property definitionn
-   * @return a {@link Map} of property String keys with their defined values (Strings). If no valid key-value pairs can be parsed, the map
-   *         is empty.
+   * @return a {@link Map} of property String keys with their defined values (Strings). If no valid key-value pairs can be parsed,
+   *         the map is empty.
    */
   public static Map<String, String> parsePropertyDefinitions(String input) {
     if (StringUtils.isEmpty(input)) {

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.api.connection.tcp;
 
@@ -32,8 +32,9 @@ public class TcpRequesterConnection extends AbstractTcpConnection implements Req
   private final SimpleSocketFactory socketFactory;
   private Socket socket;
 
-  public TcpRequesterConnection(ConnectionSettings connectionSettings, ConnectionSettings localAddressSettings, TcpProtocol protocol,
-      TcpClientSocketProperties socketProperties, SimpleSocketFactory socketFactory) throws ConnectionException {
+  public TcpRequesterConnection(ConnectionSettings connectionSettings, ConnectionSettings localAddressSettings,
+      TcpProtocol protocol, TcpClientSocketProperties socketProperties, SimpleSocketFactory socketFactory)
+      throws ConnectionException {
     super(connectionSettings, protocol);
     this.socketProperties = socketProperties;
     this.socketFactory = socketFactory;
@@ -69,8 +70,8 @@ public class TcpRequesterConnection extends AbstractTcpConnection implements Req
       socket.connect(getSocketAddress(connectionSettings, socketProperties.getFailOnUnresolvedHost()),
           socketProperties.getConnectionTimeout());
     } catch (Exception e) {
-      throw new ConnectionException(format("Could not connect TCP requester socket to host '%s' on port '%d'", connectionSettings.getHost(),
-          connectionSettings.getPort()), e);
+      throw new ConnectionException(format("Could not connect TCP requester socket to host '%s' on port '%d'",
+          connectionSettings.getHost(), connectionSettings.getPort()), e);
     }
 
   }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.processors;
 
@@ -22,6 +22,7 @@ import java.util.Set;
  * All attributes from at least one set must be provided
  */
 public class CheckRequiredAttributes implements PreProcessor {
+
   Collection<List<String>> attributeSets;
 
   public CheckRequiredAttributes(String[][] attributeNames) {
@@ -73,6 +74,7 @@ public class CheckRequiredAttributes implements PreProcessor {
   }
 
   public static class CheckRequiredAttributesException extends IllegalStateException {
+
     private CheckRequiredAttributesException(Element element, Collection<List<String>> attributeSets) {
       super("Element " + SpringXMLUtils.elementToString(element) + " must have all attributes for one of the sets: "
           + summary(attributeSets) + ".");

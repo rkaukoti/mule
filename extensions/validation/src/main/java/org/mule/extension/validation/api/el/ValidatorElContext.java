@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.validation.api.el;
 
@@ -29,11 +29,11 @@ import java.util.Locale;
 import static org.mule.extension.validation.api.ValidationExtension.DEFAULT_LOCALE;
 
 /**
- * A class which allows executing instances of {@link org.mule.extension.validation.internal.validator.AbstractValidator}'s from a MEL
- * context.
+ * A class which allows executing instances of {@link org.mule.extension.validation.internal.validator.AbstractValidator}'s from a
+ * MEL context.
  * <p/>
- * Unlike regular validations which throw an exception upon failure, the methods in this class will only return boolean values to indicate
- * if the validation was successful or not. Also, no message is returned in either case.
+ * Unlike regular validations which throw an exception upon failure, the methods in this class will only return boolean values to
+ * indicate if the validation was successful or not. Also, no message is returned in either case.
  * <p/>
  * Since in this case we only care about the boolean result of the validation, all validations will be executed with the same
  * {@link ValidationContext}
@@ -92,8 +92,8 @@ public final class ValidatorElContext {
   }
 
   /**
-   * Validates that {@code time} represents a time according to the given {@code pattern} an the given locale {@code locale} using a
-   * {@link TimeValidator
+   * Validates that {@code time} represents a time according to the given {@code pattern} an the given locale {@code locale} using
+   * a {@link TimeValidator
    * <p/>
    * {@code locale} is expected to be a valid key as defined in {@link Locale}
    *

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.source;
 
@@ -23,8 +23,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Wraps a {@link ClusterizableMessageSource} in order to manage the lifecycle of the wrapped instance differently depending if the node is
- * primary or not inside a cluster. Non clustered nodes are always primary.
+ * Wraps a {@link ClusterizableMessageSource} in order to manage the lifecycle of the wrapped instance differently depending if
+ * the node is primary or not inside a cluster. Non clustered nodes are always primary.
  */
 public class ClusterizableMessageSourceWrapper implements MessageSource, Lifecycle, MuleContextAware, FlowConstructAware {
 
@@ -41,7 +41,8 @@ public class ClusterizableMessageSourceWrapper implements MessageSource, Lifecyc
     this.messageSource = messageSource;
   }
 
-  public ClusterizableMessageSourceWrapper(MuleContext muleContext, ClusterizableMessageSource messageSource, FlowConstruct flowConstruct) {
+  public ClusterizableMessageSourceWrapper(MuleContext muleContext, ClusterizableMessageSource messageSource,
+      FlowConstruct flowConstruct) {
     this.messageSource = messageSource;
     setMuleContext(muleContext);
     setFlowConstruct(flowConstruct);
@@ -55,6 +56,7 @@ public class ClusterizableMessageSourceWrapper implements MessageSource, Lifecyc
   @Override
   public void initialise() throws InitialisationException {
     primaryNodeLifecycleNotificationListener = new PrimaryNodeLifecycleNotificationListener(new Startable() {
+
       @Override
       public void start() throws MuleException {
         if (ClusterizableMessageSourceWrapper.this.isStarted()) {

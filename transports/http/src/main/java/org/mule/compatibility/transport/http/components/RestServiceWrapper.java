@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.components;
 
@@ -35,10 +35,11 @@ import static org.mule.compatibility.transport.http.HttpConstants.FORM_URLENCODE
 import static org.mule.runtime.core.MessageExchangePattern.REQUEST_RESPONSE;
 
 /**
- * This service can used to proxy REST style services as local Mule Components. It can be configured with a service URL plus a number of
- * properties that allow you to configure the parameters and error conditions on the service.
+ * This service can used to proxy REST style services as local Mule Components. It can be configured with a service URL plus a
+ * number of properties that allow you to configure the parameters and error conditions on the service.
  */
 public class RestServiceWrapper extends AbstractComponent {
+
   public static final String DELETE = HttpConstants.METHOD_DELETE;
   public static final String GET = HttpConstants.METHOD_GET;
   public static final String CONTENT_TYPE_VALUE = FORM_URLENCODED_CONTENT_TYPE;
@@ -173,11 +174,13 @@ public class RestServiceWrapper extends AbstractComponent {
     OutboundEndpoint outboundEndpoint = endpointBuilder.buildOutboundEndpoint();
 
     MuleEventContext eventContext = new DefaultMuleEventContext(event);
-    MuleEvent result = new DefaultMuleEvent(eventContext.sendEvent(MuleMessage.builder(event.getMessage()).payload(requestBody).build(),
-        outboundEndpoint.getEndpointURI().toString()), flowConstruct);
+    MuleEvent result =
+        new DefaultMuleEvent(eventContext.sendEvent(MuleMessage.builder(event.getMessage()).payload(requestBody).build(),
+            outboundEndpoint.getEndpointURI().toString()), flowConstruct);
 
     if (isErrorPayload(result)) {
-      handleException(new RestServiceException(CoreMessages.failedToInvokeRestService(tempUrl), event, this), result.getMessage());
+      handleException(new RestServiceException(CoreMessages.failedToInvokeRestService(tempUrl), event, this),
+          result.getMessage());
     }
 
     return result.getMessage();
@@ -207,7 +210,8 @@ public class RestServiceWrapper extends AbstractComponent {
   // is a POST and
   // requestBodyBuffer must contain the body of the http method at the end of this
   // function call
-  private void setRESTParams(StringBuilder url, MuleEvent event, Object body, Map args, boolean optional, StringBuilder requestBodyBuffer) {
+  private void setRESTParams(StringBuilder url, MuleEvent event, Object body, Map args, boolean optional,
+      StringBuilder requestBodyBuffer) {
     String sep;
 
     if (requestBodyBuffer == null) {

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor;
 
@@ -21,8 +21,8 @@ import java.util.List;
 
 /**
  * This {@link org.mule.runtime.core.api.processor.ProcessorExecutor} implementation executes each
- * {@link org.mule.runtime.core.api.processor.MessageProcessor} in sucession in the same thread until or processors have been invoked or one
- * of the following is returned by a processor:
+ * {@link org.mule.runtime.core.api.processor.MessageProcessor} in sucession in the same thread until or processors have been
+ * invoked or one of the following is returned by a processor:
  * <li>{@link org.mule.runtime.core.VoidMuleEvent}</li>
  * <li><code>null</code></li>
  */
@@ -69,8 +69,9 @@ public class BlockingProcessorExecutor implements ProcessorExecutor {
 
     preProcess(processor);
 
-    if (copyOnVoidEvent && !(processor instanceof Transformer || processor instanceof MessageFilter || processor instanceof Component
-        || (processor instanceof LegacyOutboundEndpoint && !((LegacyOutboundEndpoint) processor).mayReturnVoidEvent()))) {
+    if (copyOnVoidEvent
+        && !(processor instanceof Transformer || processor instanceof MessageFilter || processor instanceof Component
+            || (processor instanceof LegacyOutboundEndpoint && !((LegacyOutboundEndpoint) processor).mayReturnVoidEvent()))) {
       MuleEvent copy = new DefaultMuleEvent(event.getMessage(), event);
       MuleEvent result = messageProcessorExecutionTemplate.execute(processor, event);
       if (isUseEventCopy(result)) {

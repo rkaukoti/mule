@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.functional;
 
@@ -30,6 +30,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 public class HttpEncodingFunctionalTestCase extends HttpFunctionalTestCase {
+
   protected static String TEST_MESSAGE = "Test Http Request (R�dgr�d), 57 = \u06f7\u06f5 in Arabic";
   private static String TEST_JAPANESE_MESSAGE = "\u3042";
 
@@ -46,8 +47,8 @@ public class HttpEncodingFunctionalTestCase extends HttpFunctionalTestCase {
   public void testSend() throws Exception {
     MuleClient client = muleContext.getClient();
 
-    MuleMessage reply =
-        client.send("clientEndpoint", MuleMessage.builder().payload(TEST_MESSAGE).mediaType(MediaType.parse(getSendEncoding())).build());
+    MuleMessage reply = client.send("clientEndpoint",
+        MuleMessage.builder().payload(TEST_MESSAGE).mediaType(MediaType.parse(getSendEncoding())).build());
     assertNotNull(reply);
     assertEquals("200", reply.getInboundProperty(HttpConnector.HTTP_STATUS_PROPERTY));
     assertEquals("text/baz; charset=UTF-16BE", reply.getDataType().getMediaType().toRfcString());
@@ -130,8 +131,8 @@ public class HttpEncodingFunctionalTestCase extends HttpFunctionalTestCase {
   private MuleMessage runEncodingTest(Charset encoding, String payload, String httpMethod) throws Exception {
     MuleClient client = muleContext.getClient();
     String endpointUri = "clientEndpoint." + encoding.name();
-    MuleMessage reply =
-        client.send(endpointUri, MuleMessage.builder().payload(payload).mediaType(MediaType.parse("text/plain; charset=" + encoding.name()))
+    MuleMessage reply = client.send(endpointUri,
+        MuleMessage.builder().payload(payload).mediaType(MediaType.parse("text/plain; charset=" + encoding.name()))
             .outboundProperties(createMessageProperties(httpMethod)).build());
 
     assertNotNull(reply);
@@ -156,15 +157,18 @@ public class HttpEncodingFunctionalTestCase extends HttpFunctionalTestCase {
   }
 
   public static class SetMediaTypeBazUtf16BE extends AbstractMessageTransformer {
+
     @Override
     public Object transformMessage(MuleEvent event, Charset outputEncoding) throws TransformerException {
-      final MuleMessage message = MuleMessage.builder(event.getMessage()).mediaType(MediaType.parse("text/baz; charset=UTF-16BE")).build();
+      final MuleMessage message =
+          MuleMessage.builder(event.getMessage()).mediaType(MediaType.parse("text/baz; charset=UTF-16BE")).build();
       event.setMessage(message);
       return message;
     }
   }
 
   public static class SetMediaTypePlainAscii extends AbstractMessageTransformer {
+
     @Override
     public Object transformMessage(MuleEvent event, Charset outputEncoding) throws TransformerException {
       final MuleMessage message =
@@ -175,15 +179,18 @@ public class HttpEncodingFunctionalTestCase extends HttpFunctionalTestCase {
   }
 
   public static class SetMediaTypePlainUtf8 extends AbstractMessageTransformer {
+
     @Override
     public Object transformMessage(MuleEvent event, Charset outputEncoding) throws TransformerException {
-      final MuleMessage message = MuleMessage.builder(event.getMessage()).mediaType(MediaType.parse("text/plain; charset=UTF-8")).build();
+      final MuleMessage message =
+          MuleMessage.builder(event.getMessage()).mediaType(MediaType.parse("text/plain; charset=UTF-8")).build();
       event.setMessage(message);
       return message;
     }
   }
 
   public static class SetMediaTypePlainShiftJis extends AbstractMessageTransformer {
+
     @Override
     public Object transformMessage(MuleEvent event, Charset outputEncoding) throws TransformerException {
       final MuleMessage message =
@@ -194,6 +201,7 @@ public class HttpEncodingFunctionalTestCase extends HttpFunctionalTestCase {
   }
 
   public static class SetMediaTypePlainWindows31J extends AbstractMessageTransformer {
+
     @Override
     public Object transformMessage(MuleEvent event, Charset outputEncoding) throws TransformerException {
       final MuleMessage message =
@@ -204,9 +212,11 @@ public class HttpEncodingFunctionalTestCase extends HttpFunctionalTestCase {
   }
 
   public static class SetMediaTypePlainEucJp extends AbstractMessageTransformer {
+
     @Override
     public Object transformMessage(MuleEvent event, Charset outputEncoding) throws TransformerException {
-      final MuleMessage message = MuleMessage.builder(event.getMessage()).mediaType(MediaType.parse("text/plain; charset=EUC-JP")).build();
+      final MuleMessage message =
+          MuleMessage.builder(event.getMessage()).mediaType(MediaType.parse("text/plain; charset=EUC-JP")).build();
       event.setMessage(message);
       return message;
     }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.file.api.stream;
 
@@ -19,14 +19,14 @@ import java.util.function.Predicate;
 /**
  * Base class for {@link InputStream} instances returned by connectors which operate over a {@link FileSystem}.
  * <p>
- * It's an {@link AutoCloseInputStream} which also contains the concept of a {@link PathLock} which is released when the stream is closed or
- * fully consumed.
+ * It's an {@link AutoCloseInputStream} which also contains the concept of a {@link PathLock} which is released when the stream is
+ * closed or fully consumed.
  * <p>
- * Because in most implementations the actual reading of the stream requires initialising/maintaining a connection, instances are created
- * through a {@link LazyStreamSupplier}. This allows such connection/resource to be provisioned lazily. This is very useful in cases such as
- * {@link FileSystem#list(String, boolean, MuleMessage, Predicate)}. Being able to only lazily establish the connections, prevents the
- * connector from opening many connections at the same time, at the risk that many of them might end up not being necessary at the same
- * place.
+ * Because in most implementations the actual reading of the stream requires initialising/maintaining a connection, instances are
+ * created through a {@link LazyStreamSupplier}. This allows such connection/resource to be provisioned lazily. This is very
+ * useful in cases such as {@link FileSystem#list(String, boolean, MuleMessage, Predicate)}. Being able to only lazily establish
+ * the connections, prevents the connector from opening many connections at the same time, at the risk that many of them might end
+ * up not being necessary at the same place.
  *
  * @since 4.0
  */
@@ -50,8 +50,8 @@ public abstract class AbstractFileInputStream extends AutoCloseInputStream {
   /**
    * Closes the stream and invokes {@link PathLock#release()} on the {@link #lock}.
    * <p>
-   * Because the actual stream is lazily opened, the possibility exists for this method being invoked before the {@link #streamSupplier} is
-   * used. In such case, this method will not fail.
+   * Because the actual stream is lazily opened, the possibility exists for this method being invoked before the
+   * {@link #streamSupplier} is used. In such case, this method will not fail.
    *
    * @throws IOException in case of error
    */

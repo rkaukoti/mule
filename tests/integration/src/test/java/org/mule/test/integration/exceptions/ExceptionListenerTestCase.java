@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.exceptions;
 
@@ -46,6 +46,7 @@ public class ExceptionListenerTestCase extends FunctionalTestCase {
     exceptionStrategyStartNotification = null;
     exceptionStrategyEndNotification = null;
     muleContext.getNotificationManager().addListener(new ExceptionStrategyNotificationListener<ExceptionStrategyNotification>() {
+
       @Override
       public void onNotification(ExceptionStrategyNotification notification) {
         if (notification.getAction() == ExceptionStrategyNotification.PROCESS_START) {
@@ -77,12 +78,14 @@ public class ExceptionListenerTestCase extends FunctionalTestCase {
   private void assertNotificationsHaveMatchingResourceIds() {
     assertThat(exceptionStrategyStartNotification.getResourceIdentifier(), is(not(nullValue())));
     assertThat(exceptionStrategyStartNotification.getResourceIdentifier(), is("mycomponent"));
-    assertThat(exceptionStrategyStartNotification.getResourceIdentifier(), is(exceptionStrategyEndNotification.getResourceIdentifier()));
+    assertThat(exceptionStrategyStartNotification.getResourceIdentifier(),
+        is(exceptionStrategyEndNotification.getResourceIdentifier()));
   }
 
   private void assertNotificationsArrived() {
     PollingProber prober = new PollingProber(TIMEOUT_MILLIS, POLL_DELAY_MILLIS);
     prober.check(new JUnitProbe() {
+
       @Override
       protected boolean test() throws Exception {
         assertThat(exceptionStrategyStartNotification, is(not(nullValue())));

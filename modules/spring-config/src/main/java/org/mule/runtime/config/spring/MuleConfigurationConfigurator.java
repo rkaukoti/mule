@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring;
 
@@ -30,12 +30,13 @@ import org.springframework.beans.factory.SmartFactoryBean;
 import java.util.List;
 
 /**
- * This class is a "SmartFactoryBean" which allows a few XML attributes to be set on the otherwise read-only MuleConfiguration. It looks up
- * the MuleConfiguration from the MuleContext and does some class-casting to be able to modify it. Note that this will only work if the
- * MuleContext has not yet been started, otherwise the modifications will be ignored (and warnings logged).
+ * This class is a "SmartFactoryBean" which allows a few XML attributes to be set on the otherwise read-only MuleConfiguration. It
+ * looks up the MuleConfiguration from the MuleContext and does some class-casting to be able to modify it. Note that this will
+ * only work if the MuleContext has not yet been started, otherwise the modifications will be ignored (and warnings logged).
  */
 // TODO MULE-9638 remove usage of SmartFactoryBean
 public class MuleConfigurationConfigurator implements MuleContextAware, SmartFactoryBean, ObjectFactory {
+
   protected transient Logger logger = LoggerFactory.getLogger(MuleConfigurationConfigurator.class);
   private MuleContext muleContext;
   // We instantiate DefaultMuleConfiguration to make sure we get the default values for
@@ -70,8 +71,8 @@ public class MuleConfigurationConfigurator implements MuleContextAware, SmartFac
 
       return configuration;
     } else {
-      throw new ConfigurationException(
-          MessageFactory.createStaticMessage("Unable to set properties on read-only MuleConfiguration: " + configuration.getClass()));
+      throw new ConfigurationException(MessageFactory
+          .createStaticMessage("Unable to set properties on read-only MuleConfiguration: " + configuration.getClass()));
     }
   }
 
@@ -81,7 +82,8 @@ public class MuleConfigurationConfigurator implements MuleContextAware, SmartFac
     } else {
       String processingStrategyFromSystemProperty = System.getProperty(MuleProperties.MULE_DEFAULT_PROCESSING_STRATEGY);
       if (!StringUtils.isBlank(processingStrategyFromSystemProperty)) {
-        defaultConfig.setDefaultProcessingStrategy(ProcessingStrategyUtils.parseProcessingStrategy(processingStrategyFromSystemProperty));
+        defaultConfig
+            .setDefaultProcessingStrategy(ProcessingStrategyUtils.parseProcessingStrategy(processingStrategyFromSystemProperty));
       }
     }
   }
@@ -91,11 +93,12 @@ public class MuleConfigurationConfigurator implements MuleContextAware, SmartFac
     if (defaultExceptionStrategyName != null) {
       MessagingExceptionHandler messagingExceptionHandler = muleContext.getRegistry().lookupObject(defaultExceptionStrategyName);
       if (messagingExceptionHandler == null) {
-        throw new MuleRuntimeException(CoreMessages
-            .createStaticMessage(String.format("No global exception strategy defined with name %s.", defaultExceptionStrategyName)));
+        throw new MuleRuntimeException(CoreMessages.createStaticMessage(
+            String.format("No global exception strategy defined with name %s.", defaultExceptionStrategyName)));
       }
       if (messagingExceptionHandler instanceof MessagingExceptionHandlerAcceptor) {
-        MessagingExceptionHandlerAcceptor messagingExceptionHandlerAcceptor = (MessagingExceptionHandlerAcceptor) messagingExceptionHandler;
+        MessagingExceptionHandlerAcceptor messagingExceptionHandlerAcceptor =
+            (MessagingExceptionHandlerAcceptor) messagingExceptionHandler;
         if (!messagingExceptionHandlerAcceptor.acceptsAll()) {
           throw new MuleRuntimeException(CoreMessages
               .createStaticMessage("Default exception strategy must not have expression attribute. It must accept any message."));

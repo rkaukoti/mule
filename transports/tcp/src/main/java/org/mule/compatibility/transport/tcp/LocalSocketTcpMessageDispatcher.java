@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.tcp;
 
@@ -16,12 +16,13 @@ import java.net.Socket;
 import java.net.SocketTimeoutException;
 
 /**
- * <code>LocalSocketTcpMessageDispatcher</code> will send transformed Mule events over TCP. It contains a local socket that reuses on each
- * message dispatch
+ * <code>LocalSocketTcpMessageDispatcher</code> will send transformed Mule events over TCP. It contains a local socket that reuses
+ * on each message dispatch
  *
  * @since 2.2.6
  */
 public class LocalSocketTcpMessageDispatcher extends TcpMessageDispatcher {
+
   private AbstractTcpSocketFactory socketFactory;
 
   private Socket socket;

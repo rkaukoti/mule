@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.support;
 
@@ -95,9 +95,9 @@ public class OutputPayloadInterceptor extends AbstractOutDatabindingInterceptor 
   /**
    * Ensures that each part's content is in the right place in the content list.
    * <p/>
-   * This is required because in some scenarios there are parts that were removed from the part list. In that cases, the content list
-   * contains only the values for the remaining parts, but the part's indexes could be wrong. This method fixes that adding null values into
-   * the content list so the part's index matches the contentList index. (Related to: MULE-5113.)
+   * This is required because in some scenarios there are parts that were removed from the part list. In that cases, the content
+   * list contains only the values for the remaining parts, but the part's indexes could be wrong. This method fixes that adding
+   * null values into the content list so the part's index matches the contentList index. (Related to: MULE-5113.)
    */
   protected void ensurePartIndexMatchListIndex(MessageContentsList contentList, List<MessagePartInfo> parts) {
 

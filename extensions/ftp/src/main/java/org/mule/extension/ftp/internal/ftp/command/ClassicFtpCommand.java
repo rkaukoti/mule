@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.ftp.internal.ftp.command;
 
@@ -97,8 +97,8 @@ abstract class ClassicFtpCommand extends FtpCommand<ClassicFtpFileSystem> {
   }
 
   /**
-   * Attempts to change the current working directory of the FTP {@link #client}. If it was not possible (for example, because it doesn't
-   * exists), it returns {@code false}
+   * Attempts to change the current working directory of the FTP {@link #client}. If it was not possible (for example, because it
+   * doesn't exists), it returns {@code false}
    *
    * @param path the path to which you wish to move
    * @return {@code true} if the CWD was changed. {@code false} otherwise

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -23,7 +23,8 @@ public class StringUtils extends org.apache.commons.lang.StringUtils {
   private static final String HEX_CHARACTERS_UC = HEX_CHARACTERS.toUpperCase();
 
   /**
-   * Like {@link org.mule.runtime.core.util.StringUtils#split(String, String)}, but additionally trims whitespace from the result tokens.
+   * Like {@link org.mule.runtime.core.util.StringUtils#split(String, String)}, but additionally trims whitespace from the result
+   * tokens.
    */
   public static String[] splitAndTrim(String string, String delim) {
     if (string == null) {

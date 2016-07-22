@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.lifecycle;
 
@@ -88,6 +88,7 @@ public class JSR250ObjectLifcycleTestCase extends AbstractMuleContextTestCase {
   }
 
   public static class BadStaticMethodPostConstructLifecycleMethodObject {
+
     @PostConstruct
     public static void init() {
 
@@ -95,6 +96,7 @@ public class JSR250ObjectLifcycleTestCase extends AbstractMuleContextTestCase {
   }
 
   public class DupePostConstructJSR250ObjectLifecycleTracker extends JSR250ObjectLifecycleTracker {
+
     // You cannot have an object with two {@link PostConstruct} annotated methods
     @PostConstruct
     public void init2() {
@@ -103,6 +105,7 @@ public class JSR250ObjectLifcycleTestCase extends AbstractMuleContextTestCase {
   }
 
   public class DupePreDestroyJSR250ObjectLifecycleTracker extends JSR250ObjectLifecycleTracker {
+
     // You cannot have an object with two {@link PostConstruct} annotated methods
     @PreDestroy
     public void dispose2() {
@@ -111,6 +114,7 @@ public class JSR250ObjectLifcycleTestCase extends AbstractMuleContextTestCase {
   }
 
   public class BadReturnTypePostConstructLifecycleMethodObject {
+
     @PostConstruct
     public boolean init() {
       return true;
@@ -118,6 +122,7 @@ public class JSR250ObjectLifcycleTestCase extends AbstractMuleContextTestCase {
   }
 
   public class BadParamPreDestroyLifecycleMethodObject {
+
     @PreDestroy
     public void destroy(boolean foo) {
 
@@ -125,6 +130,7 @@ public class JSR250ObjectLifcycleTestCase extends AbstractMuleContextTestCase {
   }
 
   public class BadCheckedExceptionPreDestroyLifecycleMethodObject {
+
     @PreDestroy
     public void destroy() throws Exception {
 

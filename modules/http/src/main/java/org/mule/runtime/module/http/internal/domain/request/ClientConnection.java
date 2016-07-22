@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.domain.request;
 
@@ -47,8 +47,8 @@ public class ClientConnection {
   }
 
   /**
-   * @return the client certificate provided during the TLS client authentication, returns null if the TLS connection didn't require client
-   *         authentication or if the connection is not using TLS.
+   * @return the client certificate provided during the TLS client authentication, returns null if the TLS connection didn't
+   *         require client authentication or if the connection is not using TLS.
    */
   public Certificate getClientCertificate() {
     try {

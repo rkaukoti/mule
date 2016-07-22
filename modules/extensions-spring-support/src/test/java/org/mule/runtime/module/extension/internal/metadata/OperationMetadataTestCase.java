@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.metadata;
 
@@ -281,7 +281,8 @@ public class OperationMetadataTestCase extends MetadataExtensionFunctionalTestCa
     MetadataType shapeType = metadataDescriptor.getOutputMetadata().get().getPayloadMetadata().get().getType();
     assertThat(shapeType, is(instanceOf(DefaultUnionType.class)));
     assertThat(((DefaultUnionType) shapeType).getTypes(), hasSize(2));
-    assertThat(((DefaultUnionType) shapeType).getTypes(), hasItems(toMetadataType(Circle.class), toMetadataType(Rectangle.class)));
+    assertThat(((DefaultUnionType) shapeType).getTypes(),
+        hasItems(toMetadataType(Circle.class), toMetadataType(Rectangle.class)));
 
     MetadataType attributesType = metadataDescriptor.getOutputMetadata().get().getAttributesMetadata().get().getType();
     assertThat(attributesType, is(instanceOf(DefaultUnionType.class)));
@@ -379,12 +380,14 @@ public class OperationMetadataTestCase extends MetadataExtensionFunctionalTestCa
 
   @Test
   public void resolverContentWithContextClassLoader() throws Exception {
-    doResolverTestWithContextClassLoader(RESOLVER_CONTENT_WITH_CONTEXT_CLASSLOADER, source -> source.getComponentDynamicMetadata());
+    doResolverTestWithContextClassLoader(RESOLVER_CONTENT_WITH_CONTEXT_CLASSLOADER,
+        source -> source.getComponentDynamicMetadata());
   }
 
   @Test
   public void resolverOutputWithContextClassLoader() throws Exception {
-    doResolverTestWithContextClassLoader(RESOLVER_OUTPUT_WITH_CONTEXT_CLASSLOADER, source -> source.getComponentDynamicMetadata());
+    doResolverTestWithContextClassLoader(RESOLVER_OUTPUT_WITH_CONTEXT_CLASSLOADER,
+        source -> source.getComponentDynamicMetadata());
   }
 
   @Test
@@ -452,7 +455,8 @@ public class OperationMetadataTestCase extends MetadataExtensionFunctionalTestCa
     assertThat(configCache.get(NAME).get(), is(NAME_VALUE));
     assertThat(configCache.get(BRAND).get(), is(BRAND_VALUE));
 
-    DefaultMetadataCache alternativeConfigCache = (DefaultMetadataCache) metadataManager.getMetadataCaches().get(ALTERNATIVE_CONFIG);
+    DefaultMetadataCache alternativeConfigCache =
+        (DefaultMetadataCache) metadataManager.getMetadataCaches().get(ALTERNATIVE_CONFIG);
     assertThat(alternativeConfigCache.asMap().keySet(), hasItems(BRAND));
     assertThat(alternativeConfigCache.get(BRAND).get(), is(BRAND_VALUE));
   }
@@ -469,7 +473,8 @@ public class OperationMetadataTestCase extends MetadataExtensionFunctionalTestCa
     MetadataType shapeType = shapeMetadata.get().getType();
     assertThat(shapeType, is(instanceOf(DefaultUnionType.class)));
     assertThat(((DefaultUnionType) shapeType).getTypes(), hasSize(2));
-    assertThat(((DefaultUnionType) shapeType).getTypes(), hasItems(toMetadataType(Circle.class), toMetadataType(Rectangle.class)));
+    assertThat(((DefaultUnionType) shapeType).getTypes(),
+        hasItems(toMetadataType(Circle.class), toMetadataType(Rectangle.class)));
   }
 
   @Test
@@ -484,7 +489,8 @@ public class OperationMetadataTestCase extends MetadataExtensionFunctionalTestCa
     MetadataType shapeType = rectangleMetadata.getType();
     assertThat(shapeType, is(instanceOf(DefaultUnionType.class)));
     assertThat(((DefaultUnionType) shapeType).getTypes(), hasSize(2));
-    assertThat(((DefaultUnionType) shapeType).getTypes(), hasItems(toMetadataType(Rectangle.class), toMetadataType(Square.class)));
+    assertThat(((DefaultUnionType) shapeType).getTypes(),
+        hasItems(toMetadataType(Rectangle.class), toMetadataType(Square.class)));
   }
 
   @Test
@@ -499,11 +505,12 @@ public class OperationMetadataTestCase extends MetadataExtensionFunctionalTestCa
   }
 
   /**
-   * Test template that sets an "invalid" classloader in TCCL different from the one that was used to register the extension and asserts
-   * that, it sets back the original classloader to TCCL. Done in this way due to it is not possible to change extension model classloader
-   * property once it is registered.
+   * Test template that sets an "invalid" classloader in TCCL different from the one that was used to register the extension and
+   * asserts that, it sets back the original classloader to TCCL. Done in this way due to it is not possible to change extension
+   * model classloader property once it is registered.
    */
-  private void doResolverTestWithContextClassLoader(String flowName, Callback<OperationMetadataTestCase> doAction) throws Exception {
+  private void doResolverTestWithContextClassLoader(String flowName, Callback<OperationMetadataTestCase> doAction)
+      throws Exception {
     componentId = new ProcessorId(flowName, FIRST_PROCESSOR_INDEX);
     TestThreadContextClassLoaderResolver.reset();
     final ClassLoader originalClassLoader = Thread.currentThread().getContextClassLoader();

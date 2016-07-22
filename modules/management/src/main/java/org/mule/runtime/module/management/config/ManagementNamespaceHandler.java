@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.management.config;
 
@@ -29,10 +29,11 @@ public class ManagementNamespaceHandler extends AbstractMuleNamespaceHandler {
     registerBeanDefinitionParser("credentials", new ChildMapDefinitionParser("credentials"));
     registerBeanDefinitionParser("jmx-log4j", new DefaultNameMuleOrphanDefinitionParser(Log4jAgent.class));
     registerBeanDefinitionParser("jmx-mx4j-adaptor", new DefaultNameMuleOrphanDefinitionParser(Mx4jAgent.class));
-    registerBeanDefinitionParser("jmx-notifications", new DefaultNameMuleOrphanDefinitionParser(JmxServerNotificationAgent.class));
+    registerBeanDefinitionParser("jmx-notifications",
+        new DefaultNameMuleOrphanDefinitionParser(JmxServerNotificationAgent.class));
 
-    MuleDefinitionParserConfiguration defaultJmxParser =
-        registerMuleBeanDefinitionParser("jmx-default-config", new DefaultNameMuleOrphanDefinitionParser(DefaultJmxSupportAgent.class));
+    MuleDefinitionParserConfiguration defaultJmxParser = registerMuleBeanDefinitionParser("jmx-default-config",
+        new DefaultNameMuleOrphanDefinitionParser(DefaultJmxSupportAgent.class));
     defaultJmxParser.addAlias("registerMx4jAdapter", "loadMx4jAgent");
     defaultJmxParser.addAlias("registerLog4j", "loadLog4jAgent");
 

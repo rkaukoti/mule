@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.ftp.internal.ftp.connection;
 
@@ -90,10 +90,11 @@ public final class ClassicFtpFileSystem extends AbstractFileSystem implements Ft
   }
 
   /**
-   * Severs the connection by invoking {@link FTPClient#logout()} and {@link FTPClient#disconnect()} on the provided {@link #client}.
+   * Severs the connection by invoking {@link FTPClient#logout()} and {@link FTPClient#disconnect()} on the provided
+   * {@link #client}.
    * <p>
-   * Notice that {@link FTPClient#disconnect()} will be invoked even if {@link FTPClient#logout()} fails. This method will never throw
-   * exception. Any errors will be logged.
+   * Notice that {@link FTPClient#disconnect()} will be invoked even if {@link FTPClient#logout()} fails. This method will never
+   * throw exception. Any errors will be logged.
    */
   @Override
   public void disconnect() {
@@ -126,7 +127,8 @@ public final class ClassicFtpFileSystem extends AbstractFileSystem implements Ft
         return ConnectionValidationResult.failure("NoOp did not complete", ConnectionExceptionCode.UNKNOWN, null);
       }
     } catch (IOException e) {
-      return ConnectionValidationResult.failure("Found exception trying to perform validation", ConnectionExceptionCode.UNKNOWN, e);
+      return ConnectionValidationResult.failure("Found exception trying to perform validation", ConnectionExceptionCode.UNKNOWN,
+          e);
     }
   }
 
@@ -142,8 +144,8 @@ public final class ClassicFtpFileSystem extends AbstractFileSystem implements Ft
             String.format("Failed to set %s transfer type. FTP reply code is: ", mode.getDescription(), client.getReplyCode()));
       }
     } catch (Exception e) {
-      throw new MuleRuntimeException(createStaticMessage(String
-          .format("Found exception trying to change transfer mode to %s. FTP reply code is: ", mode.getClass(), client.getReplyCode())));
+      throw new MuleRuntimeException(createStaticMessage(String.format(
+          "Found exception trying to change transfer mode to %s. FTP reply code is: ", mode.getClass(), client.getReplyCode())));
     }
   }
 
@@ -194,8 +196,8 @@ public final class ClassicFtpFileSystem extends AbstractFileSystem implements Ft
   }
 
   /**
-   * Awaits for the underlying {@link #client} to complete any pending commands. This is necessary for certain operations such as write.
-   * Using the {@link #client} before tnhat can result in unexpected behavior
+   * Awaits for the underlying {@link #client} to complete any pending commands. This is necessary for certain operations such as
+   * write. Using the {@link #client} before tnhat can result in unexpected behavior
    */
   public void awaitCommandCompletion() {
     try {
@@ -203,8 +205,8 @@ public final class ClassicFtpFileSystem extends AbstractFileSystem implements Ft
         throw new IllegalStateException("Pending command did not complete");
       }
     } catch (IOException e) {
-      throw new MuleRuntimeException(createStaticMessage("Failed to complete pending command. Ftp reply code: " + client.getReplyCode()),
-          e);
+      throw new MuleRuntimeException(
+          createStaticMessage("Failed to complete pending command. Ftp reply code: " + client.getReplyCode()), e);
     }
   }
 
@@ -220,7 +222,8 @@ public final class ClassicFtpFileSystem extends AbstractFileSystem implements Ft
 
   private URL toURL(Path path) {
     try {
-      return new URL(FTP_PROTOCOL, client.getRemoteAddress().toString(), client.getRemotePort(), path != null ? path.toString() : EMPTY);
+      return new URL(FTP_PROTOCOL, client.getRemoteAddress().toString(), client.getRemotePort(),
+          path != null ? path.toString() : EMPTY);
     } catch (MalformedURLException e) {
       throw new MuleRuntimeException(createStaticMessage("Could not get URL for FTP server"), e);
     }
@@ -235,8 +238,8 @@ public final class ClassicFtpFileSystem extends AbstractFileSystem implements Ft
       try {
         client.changeWorkingDirectory(Paths.get(config.getBaseDir()).toString());
       } catch (IOException e) {
-        throw new MuleRuntimeException(createStaticMessage(format("Failed to perform CWD to the base directory '%s'", config.getBaseDir())),
-            e);
+        throw new MuleRuntimeException(
+            createStaticMessage(format("Failed to perform CWD to the base directory '%s'", config.getBaseDir())), e);
       }
     }
   }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.capability.xml.schema.builder;
 
@@ -289,8 +289,8 @@ public final class SchemaBuilder {
   }
 
   /**
-   * Sorts the given {@code parameterModels} so that infrastructure ones are firsts and the rest maintain their relative order. If more than
-   * one infrastructure parameter is found, the subgroup is sorted alphabetically.
+   * Sorts the given {@code parameterModels} so that infrastructure ones are firsts and the rest maintain their relative order. If
+   * more than one infrastructure parameter is found, the subgroup is sorted alphabetically.
    * <p>
    * The {@link InfrastructureParameterModelProperty} is used to identify those parameters which are infrastructure
    *
@@ -325,8 +325,8 @@ public final class SchemaBuilder {
   }
 
   /**
-   * Registers a pojo type creating a base complex type and a substitutable top level type while assigning it a name. This method will not
-   * register the same type twice even if requested to
+   * Registers a pojo type creating a base complex type and a substitutable top level type while assigning it a name. This method
+   * will not register the same type twice even if requested to
    *
    * @param metadataType a {@link MetadataType} describing a pojo type
    * @param metadataType a {@link MetadataType} describing a pojo's base type
@@ -470,17 +470,20 @@ public final class SchemaBuilder {
 
     schema.getSimpleTypeOrComplexTypeOrGroup().add(abstractElement);
 
-    QName typeQName = new QName(schema.getTargetNamespace(), registerPojoType(metadataType, description), xmlProperties.getNamespace());
+    QName typeQName =
+        new QName(schema.getTargetNamespace(), registerPojoType(metadataType, description), xmlProperties.getNamespace());
     if (!isInstantiableWithParameters(getType(metadataType))) {
       abstractElement.setType(typeQName);
     } else {
       TopLevelElement objectElement = new TopLevelElement();
       objectElement.setName(getTopLevelTypeName(metadataType));
-      objectElement.setSubstitutionGroup(new QName(xmlProperties.getNamespaceUri(), abstractElementName, xmlProperties.getNamespace()));
+      objectElement
+          .setSubstitutionGroup(new QName(xmlProperties.getNamespaceUri(), abstractElementName, xmlProperties.getNamespace()));
       objectElement.setAnnotation(createDocAnnotation(description));
 
       objectElement.setComplexType(createLocalComplexTypeExtension(typeQName));
-      objectElement.getComplexType().getComplexContent().getExtension().getAttributeOrAttributeGroup().add(createNameAttribute(false));
+      objectElement.getComplexType().getComplexContent().getExtension().getAttributeOrAttributeGroup()
+          .add(createNameAttribute(false));
       schema.getSimpleTypeOrComplexTypeOrGroup().add(objectElement);
     }
   }
@@ -493,8 +496,8 @@ public final class SchemaBuilder {
     return createAttribute(name, EMPTY, type, null, required, expressionSupport);
   }
 
-  private Attribute createAttribute(final String name, String description, final MetadataType type, Object defaultValue, boolean required,
-      final ExpressionSupport expressionSupport) {
+  private Attribute createAttribute(final String name, String description, final MetadataType type, Object defaultValue,
+      boolean required, final ExpressionSupport expressionSupport) {
     final Attribute attribute = new Attribute();
     attribute.setUse(required ? SchemaConstants.USE_REQUIRED : SchemaConstants.USE_OPTIONAL);
     attribute.setAnnotation(createDocAnnotation(description));
@@ -504,6 +507,7 @@ public final class SchemaBuilder {
     }
 
     type.accept(new MetadataTypeVisitor() {
+
       @Override
       public void visitString(StringType stringType) {
         Optional<EnumAnnotation> enumAnnotation = getSingleAnnotation(stringType, EnumAnnotation.class);
@@ -529,7 +533,8 @@ public final class SchemaBuilder {
         if (OperationTransactionalAction.class.equals(enumType)) {
           attribute.setType(MULE_EXTENSION_OPERATION_TRANSACTIONAL_ACTION_TYPE);
         } else {
-          attribute.setType(new QName(schema.getTargetNamespace(), sanitizeName(enumType.getName()) + SchemaConstants.ENUM_TYPE_SUFFIX));
+          attribute.setType(
+              new QName(schema.getTargetNamespace(), sanitizeName(enumType.getName()) + SchemaConstants.ENUM_TYPE_SUFFIX));
           registeredEnums.add(enumType);
         }
       }
@@ -544,7 +549,8 @@ public final class SchemaBuilder {
     return attribute;
   }
 
-  private void generateCollectionElement(ExplicitGroup all, String name, String description, ArrayType metadataType, boolean required) {
+  private void generateCollectionElement(ExplicitGroup all, String name, String description, ArrayType metadataType,
+      boolean required) {
     name = hyphenize(name);
 
     BigInteger minOccurs = required ? ONE : ZERO;
@@ -566,6 +572,7 @@ public final class SchemaBuilder {
     final MetadataType genericType = metadataType.getType();
 
     genericType.accept(new MetadataTypeVisitor() {
+
       @Override
       public void visitObject(ObjectType objectType) {
 
@@ -600,7 +607,8 @@ public final class SchemaBuilder {
     return createRefElement(refQName, isRequired);
   }
 
-  private void generateMapElement(ExplicitGroup all, String name, String description, DictionaryType metadataType, boolean required) {
+  private void generateMapElement(ExplicitGroup all, String name, String description, DictionaryType metadataType,
+      boolean required) {
     BigInteger minOccurs = required ? ONE : ZERO;
     String mapName = hyphenize(pluralize(name));
     LocalComplexType mapComplexType = generateMapComplexType(mapName, metadataType);
@@ -629,6 +637,7 @@ public final class SchemaBuilder {
     entryComplexType.getAttributeOrAttributeGroup().add(keyAttribute);
 
     valueType.accept(new MetadataTypeVisitor() {
+
       @Override
       public void visitObject(ObjectType objectType) {
         final boolean shouldGenerateChildElement = shouldGenerateChildElement(objectType, SUPPORTED);
@@ -765,9 +774,10 @@ public final class SchemaBuilder {
     return getParameterDeclarationVisitor(extensionType, all, name, EMPTY, expressionSupport, field.isRequired(), defaultValue);
   }
 
-  private MetadataTypeVisitor getParameterDeclarationVisitor(final ExtensionType extensionType, final ExplicitGroup all, final String name,
-      final String description, ExpressionSupport expressionSupport, boolean required, Object defaultValue) {
+  private MetadataTypeVisitor getParameterDeclarationVisitor(final ExtensionType extensionType, final ExplicitGroup all,
+      final String name, final String description, ExpressionSupport expressionSupport, boolean required, Object defaultValue) {
     return new MetadataTypeVisitor() {
+
       private boolean forceOptional = false;
 
       @Override
@@ -775,7 +785,8 @@ public final class SchemaBuilder {
         MetadataType genericType = arrayType.getType();
         final boolean supportsChildElement = shouldGenerateChildElement(genericType, expressionSupport);
 
-        forceOptional = !genericType.equals(typeLoader.load(Object.class)) && (supportsChildElement || shouldForceOptional(genericType));
+        forceOptional =
+            !genericType.equals(typeLoader.load(Object.class)) && (supportsChildElement || shouldForceOptional(genericType));
         defaultVisit(arrayType);
         if (supportsChildElement) {
           generateCollectionElement(all, name, description, arrayType, isRequired(true, required));
@@ -837,8 +848,8 @@ public final class SchemaBuilder {
 
       @Override
       protected void defaultVisit(MetadataType metadataType) {
-        extensionType.getAttributeOrAttributeGroup()
-            .add(createAttribute(name, description, metadataType, defaultValue, isRequired(forceOptional, required), expressionSupport));
+        extensionType.getAttributeOrAttributeGroup().add(createAttribute(name, description, metadataType, defaultValue,
+            isRequired(forceOptional, required), expressionSupport));
       }
 
       private boolean shouldForceOptional(MetadataType type) {
@@ -880,8 +891,10 @@ public final class SchemaBuilder {
         parseRepeatableAnnotation(extensionType, SubTypeMapping.class, c -> ((SubTypesMapping) c).value());
 
     String typeId = getId(metadataType);
-    if (isExtensible(metadataType) || ownerExtensionMappings.stream().anyMatch(m -> getId(typeLoader.load(m.baseType())).equals(typeId))) {
-      QName refQName = new QName(baseTypeXml.getNamespaceUri(), getTopLevelAbstractTypeName(metadataType), baseTypeXml.getNamespace());
+    if (isExtensible(metadataType)
+        || ownerExtensionMappings.stream().anyMatch(m -> getId(typeLoader.load(m.baseType())).equals(typeId))) {
+      QName refQName =
+          new QName(baseTypeXml.getNamespaceUri(), getTopLevelAbstractTypeName(metadataType), baseTypeXml.getNamespace());
 
       TopLevelElement objectElement = createTopLevelElement(hyphenize(name), ZERO, "1");
       objectElement.setComplexType(new LocalComplexType());
@@ -967,6 +980,7 @@ public final class SchemaBuilder {
   private boolean isOperation(MetadataType type) {
     ValueHolder<Boolean> isOperation = new ValueHolder<>(false);
     type.accept(new MetadataTypeVisitor() {
+
       @Override
       public void visitObject(ObjectType objectType) {
         if (NestedProcessor.class.isAssignableFrom(getType(objectType))) {
@@ -1029,7 +1043,8 @@ public final class SchemaBuilder {
 
   private GroupRef generateNestedProcessorGroup(ParameterModel parameterModel, String maxOccurs) {
     QName ref = MULE_MESSAGE_PROCESSOR_TYPE;
-    TypeRestrictionModelProperty restrictionCapability = parameterModel.getModelProperty(TypeRestrictionModelProperty.class).orElse(null);
+    TypeRestrictionModelProperty restrictionCapability =
+        parameterModel.getModelProperty(TypeRestrictionModelProperty.class).orElse(null);
     if (restrictionCapability != null) {
       ref = getSubstitutionGroup(restrictionCapability.getType());
       ref = new QName(ref.getNamespaceURI(), getGroupName(ref.getLocalPart()), ref.getPrefix());

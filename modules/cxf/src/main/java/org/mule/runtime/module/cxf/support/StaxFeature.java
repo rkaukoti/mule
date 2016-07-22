@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.support;
 
@@ -21,6 +21,7 @@ import javax.xml.stream.XMLOutputFactory;
  * Configures the StAX XMLInputFactory and XMLOutputFactory which CXF uses.
  */
 public class StaxFeature extends AbstractFeature {
+
   private String xmlInputFactory;
   private String xmlOutputFactory;
 
@@ -51,6 +52,7 @@ public class StaxFeature extends AbstractFeature {
   @Override
   public void initialize(Bus bus) {
     AbstractPhaseInterceptor<Message> in = new AbstractPhaseInterceptor<Message>(Phase.RECEIVE) {
+
       public void handleMessage(Message message) throws Fault {
         if (xmlInputFactory != null) {
           message.put(XMLInputFactory.class.getName(), xmlInputFactory);
@@ -62,6 +64,7 @@ public class StaxFeature extends AbstractFeature {
     bus.getInFaultInterceptors().add(in);
 
     AbstractPhaseInterceptor<Message> out = new AbstractPhaseInterceptor<Message>(Phase.SETUP) {
+
       public void handleMessage(Message message) throws Fault {
         if (xmlOutputFactory != null) {
           message.put(XMLOutputFactory.class.getName(), xmlOutputFactory);

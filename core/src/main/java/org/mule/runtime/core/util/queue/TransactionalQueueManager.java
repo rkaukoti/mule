@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.util.queue;
@@ -20,8 +20,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The Transactional Queue Manager is responsible for creating and Managing transactional Queues. Queues can also be persistent by setting a
- * persistence configuration for the queue.
+ * The Transactional Queue Manager is responsible for creating and Managing transactional Queues. Queues can also be persistent by
+ * setting a persistence configuration for the queue.
  */
 public class TransactionalQueueManager extends AbstractQueueManager {
 
@@ -60,11 +60,11 @@ public class TransactionalQueueManager extends AbstractQueueManager {
   public void initialise() throws InitialisationException {
     String workingDirectory = getMuleContext().getConfiguration().getWorkingDirectory();
     int queueTransactionFilesSizeInMegabytes = getMuleContext().getConfiguration().getMaxQueueTransactionFilesSizeInMegabytes();
-    localTxTransactionJournal = new LocalTxQueueTransactionJournal(workingDirectory + File.separator + "queue-tx-log", getMuleContext(),
-        queueTransactionFilesSizeInMegabytes);
+    localTxTransactionJournal = new LocalTxQueueTransactionJournal(workingDirectory + File.separator + "queue-tx-log",
+        getMuleContext(), queueTransactionFilesSizeInMegabytes);
     localTxQueueTransactionRecoverer = new LocalTxQueueTransactionRecoverer(localTxTransactionJournal, this);
-    xaTransactionJournal = new XaTxQueueTransactionJournal(workingDirectory + File.separator + "queue-xa-tx-log", getMuleContext(),
-        queueTransactionFilesSizeInMegabytes);
+    xaTransactionJournal = new XaTxQueueTransactionJournal(workingDirectory + File.separator + "queue-xa-tx-log",
+        getMuleContext(), queueTransactionFilesSizeInMegabytes);
     xaTransactionRecoverer = new XaTransactionRecoverer(xaTransactionJournal, this);
   }
 

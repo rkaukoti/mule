@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.issues;
 
@@ -35,6 +35,7 @@ import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
 import static org.mule.runtime.core.routing.AsynchronousUntilSuccessfulProcessingStrategy.buildQueueKey;
 
 public class PersistentStore6007TestCase extends FunctionalTestCase {
+
   private static final Logger log = LoggerFactory.getLogger(PersistentStore6007TestCase.class);
 
   private Latch latch;
@@ -66,6 +67,7 @@ public class PersistentStore6007TestCase extends FunctionalTestCase {
    * A store that "persists" events using keys that are not QueueEntry's
    */
   public static class PersistentObjectStore implements ListableObjectStore<Serializable> {
+
     private static Map<Serializable, Serializable> events = new HashMap<>();
 
     static void addEvents() throws Exception {
@@ -123,6 +125,7 @@ public class PersistentStore6007TestCase extends FunctionalTestCase {
   }
 
   public static class Component implements Callable {
+
     private static Set<String> payloads = new HashSet<>();
     private static Latch latch;
     private static Object lock = new Object();

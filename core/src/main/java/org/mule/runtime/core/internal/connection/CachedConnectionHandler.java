@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.internal.connection;
 
@@ -52,8 +52,8 @@ final class CachedConnectionHandler<Connection> implements ConnectionHandlerAdap
   }
 
   /**
-   * On the first invocation to this method, a connection is established using the provided {@link #connectionProvider}. That connection is
-   * cached and returned.
+   * On the first invocation to this method, a connection is established using the provided {@link #connectionProvider}. That
+   * connection is cached and returned.
    * <p/>
    * Following invocations simply return the same connection.
    *
@@ -134,8 +134,8 @@ final class CachedConnectionHandler<Connection> implements ConnectionHandlerAdap
     if (validationResult == null) {
       String errorMessage =
           "Error validating connection. validate() method from the connection provider can not return a null ConnectionValidationResult";
-      validationResult =
-          ConnectionValidationResult.failure(errorMessage, ConnectionExceptionCode.UNKNOWN, new ConnectionException(errorMessage));
+      validationResult = ConnectionValidationResult.failure(errorMessage, ConnectionExceptionCode.UNKNOWN,
+          new ConnectionException(errorMessage));
     }
 
     return validationResult;

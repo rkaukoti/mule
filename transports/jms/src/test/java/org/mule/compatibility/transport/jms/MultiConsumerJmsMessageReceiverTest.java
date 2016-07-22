@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -68,8 +68,8 @@ public class MultiConsumerJmsMessageReceiverTest extends AbstractMuleTestCase {
     when(mockJmsConnector.getNumberOfConsumers()).thenReturn(1);
 
     MessageConsumer mockMessageConsumer = mock(TestMessageConsumer.class, CALLS_REAL_METHODS);
-    when(mockJmsConnector.getJmsSupport().createConsumer(any(Session.class), any(Destination.class), anyString(), anyBoolean(), anyString(),
-        anyBoolean(), any(InboundEndpoint.class))).thenReturn(mockMessageConsumer);
+    when(mockJmsConnector.getJmsSupport().createConsumer(any(Session.class), any(Destination.class), anyString(), anyBoolean(),
+        anyString(), anyBoolean(), any(InboundEndpoint.class))).thenReturn(mockMessageConsumer);
     when(mockInboundEndpoint.getConnector()).thenReturn(mockJmsConnector);
     when(mockInboundEndpoint.getMuleContext().getRegistry().get(MuleProperties.OBJECT_DEFAULT_MESSAGE_PROCESSING_MANAGER))
         .thenReturn(mock(MessageProcessingManager.class));

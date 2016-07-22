@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.executor;
 
@@ -132,7 +132,8 @@ public class ReflectiveMethodOperationExecutorTestCase extends AbstractMuleTestC
     when(parameters.asMap()).thenReturn(parametersMap);
     init();
 
-    Method method = ClassUtils.getMethod(HeisenbergOperations.class, "getEnemy", new Class<?>[] {HeisenbergExtension.class, int.class});
+    Method method =
+        ClassUtils.getMethod(HeisenbergOperations.class, "getEnemy", new Class<?>[] {HeisenbergExtension.class, int.class});
     executor = new ReflectiveMethodOperationExecutor(method, operations);
 
     assertResult(((OperationResult) executor.execute(operationContext)).getOutput(), "Hank");
@@ -147,9 +148,9 @@ public class ReflectiveMethodOperationExecutorTestCase extends AbstractMuleTestC
 
   @Test
   public void withPrimitiveTypeArgumentsWithoutValue() throws Exception {
-    Object[][] primitiveOperations = {{"charOperation", char.class}, {"byteOperation", byte.class}, {"shortOperation", short.class},
-        {"intOperation", int.class}, {"longOperation", long.class}, {"floatOperation", float.class}, {"doubleOperation", double.class},
-        {"booleanOperation", boolean.class}};
+    Object[][] primitiveOperations = {{"charOperation", char.class}, {"byteOperation", byte.class},
+        {"shortOperation", short.class}, {"intOperation", int.class}, {"longOperation", long.class},
+        {"floatOperation", float.class}, {"doubleOperation", double.class}, {"booleanOperation", boolean.class}};
     for (Object[] primitiveOperation : primitiveOperations) {
       Method method = ClassUtils.getMethod(PrimitiveTypesTestOperations.class, (String) primitiveOperation[0],
           new Class<?>[] {(Class<?>) primitiveOperation[1]});
@@ -160,7 +161,8 @@ public class ReflectiveMethodOperationExecutorTestCase extends AbstractMuleTestC
 
   @Test
   public void withAllPrimitiveTypeArgumentsWithoutValue() throws Exception {
-    Class<?>[] parameterTypes = {char.class, byte.class, short.class, int.class, long.class, float.class, double.class, boolean.class};
+    Class<?>[] parameterTypes =
+        {char.class, byte.class, short.class, int.class, long.class, float.class, double.class, boolean.class};
     Method method = ClassUtils.getMethod(PrimitiveTypesTestOperations.class, "allCombined", parameterTypes);
     executor = new ReflectiveMethodOperationExecutor(method, primitiveTypesTestOperations);
     executor.execute(operationContext);

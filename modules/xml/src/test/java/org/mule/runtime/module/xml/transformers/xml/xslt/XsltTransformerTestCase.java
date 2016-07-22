@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.transformers.xml.xslt;
 
@@ -134,8 +134,8 @@ public class XsltTransformerTestCase extends AbstractXmlTransformerTestCase {
   @Test
   public void testTransformWithStaticParam() throws TransformerException, InitialisationException {
 
-    String xml =
-        "<node1>" + "<subnode1>sub node 1 original value</subnode1>" + "<subnode2>sub node 2 original value</subnode2>" + "</node1>";
+    String xml = "<node1>" + "<subnode1>sub node 1 original value</subnode1>" + "<subnode2>sub node 2 original value</subnode2>"
+        + "</node1>";
 
     String param = "sub node 2 cool new value";
 
@@ -181,8 +181,8 @@ public class XsltTransformerTestCase extends AbstractXmlTransformerTestCase {
   @Test
   public void testTransformWithDynamicParam() throws Exception {
 
-    String xml =
-        "<node1>" + "<subnode1>sub node 1 original value</subnode1>" + "<subnode2>sub node 2 original value</subnode2>" + "</node1>";
+    String xml = "<node1>" + "<subnode1>sub node 1 original value</subnode1>" + "<subnode2>sub node 2 original value</subnode2>"
+        + "</node1>";
 
     String param = "sub node 2 cool new value";
 

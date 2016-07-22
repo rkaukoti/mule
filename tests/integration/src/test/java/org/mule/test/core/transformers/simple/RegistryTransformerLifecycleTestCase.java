@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.core.transformers.simple;
 
@@ -22,10 +22,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
- * Highlights the issue: MULE-4599 where dispose cannot be called on a transformer since it is a prototype in Spring, so spring does not
- * manage the object.
+ * Highlights the issue: MULE-4599 where dispose cannot be called on a transformer since it is a prototype in Spring, so spring
+ * does not manage the object.
  */
 public class RegistryTransformerLifecycleTestCase extends FunctionalTestCase {
+
   @Override
   protected String getConfigFile() {
     return "simple-transformer-config.xml";
@@ -33,7 +34,8 @@ public class RegistryTransformerLifecycleTestCase extends FunctionalTestCase {
 
   @Test
   public void testLifecycleInSpring() throws Exception {
-    TransformerLifecycleTracker transformer = (TransformerLifecycleTracker) muleContext.getRegistry().lookupTransformer("lifecycle");
+    TransformerLifecycleTracker transformer =
+        (TransformerLifecycleTracker) muleContext.getRegistry().lookupTransformer("lifecycle");
     assertNotNull(transformer);
     muleContext.dispose();
     assertInitialise(transformer);
@@ -81,6 +83,7 @@ public class RegistryTransformerLifecycleTestCase extends FunctionalTestCase {
   }
 
   public static class TransformerLifecycleTracker extends AbstractTransformer implements Disposable {
+
     private final List<String> tracker = new ArrayList<>();
 
     private String property;

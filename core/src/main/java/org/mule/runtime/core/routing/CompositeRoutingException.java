@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.routing;
@@ -39,8 +39,8 @@ public class CompositeRoutingException extends MessagingException {
    *
    * @param message message describing the failure
    * @param event the current {@link MuleEvent}
-   * @param exceptions a {@link Map} in which the key is an {@link Integer} describing the index of the route that generated the error and
-   *        the value is the {@link Throwable} itself
+   * @param exceptions a {@link Map} in which the key is an {@link Integer} describing the index of the route that generated the
+   *        error and the value is the {@link Throwable} itself
    */
   public CompositeRoutingException(Message message, MuleEvent event, Map<Integer, Throwable> exceptions) {
     super(message, event);
@@ -79,8 +79,8 @@ public class CompositeRoutingException extends MessagingException {
   }
 
   /**
-   * @return a {@link Map} in which the key is an {@link Integer} describing the number of the route that generated the error and the value
-   *         is the {@link Exception} itself
+   * @return a {@link Map} in which the key is an {@link Integer} describing the number of the route that generated the error and
+   *         the value is the {@link Exception} itself
    */
   public Map<Integer, Throwable> getExceptions() {
     return this.exceptions;

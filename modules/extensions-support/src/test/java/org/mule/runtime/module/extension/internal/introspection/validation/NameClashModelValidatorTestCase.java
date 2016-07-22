@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
@@ -80,7 +80,8 @@ public class NameClashModelValidatorTestCase extends AbstractMuleTestCase {
     when(operationModel.getName()).thenReturn(OPERATION_NAME);
     when(operationModel.getParameterModels()).thenReturn(asList(simpleOperationParam, topLevelOperationParam));
     when(connectionProviderModel.getName()).thenReturn(CONNECTION_PROVIDER_NAME);
-    when(connectionProviderModel.getParameterModels()).thenReturn(asList(simpleConnectionProviderParam, topLevelConnectionProviderParam));
+    when(connectionProviderModel.getParameterModels())
+        .thenReturn(asList(simpleConnectionProviderParam, topLevelConnectionProviderParam));
   }
 
   @Test

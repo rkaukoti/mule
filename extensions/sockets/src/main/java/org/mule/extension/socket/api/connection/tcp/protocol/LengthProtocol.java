@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket.api.connection.tcp.protocol;
 
@@ -21,8 +21,9 @@ import java.io.OutputStream;
 import static java.lang.String.format;
 
 /**
- * This protocol is an application level {@link TcpProtocol} that can be used to transfer large amounts of data without risking some data to
- * be loss. The protocol is defined by sending / reading an integer (the packet length) and then the data to be transferred.
+ * This protocol is an application level {@link TcpProtocol} that can be used to transfer large amounts of data without risking
+ * some data to be loss. The protocol is defined by sending / reading an integer (the packet length) and then the data to be
+ * transferred.
  * <p>
  * <p>
  * Note that use of this protocol must be symmetric - both the sending and receiving connectors must use the same protocol.
@@ -52,7 +53,8 @@ public class LengthProtocol extends DirectProtocol {
    * It consumes the socket {@link InputStream} according to {@link this#consume(InputStream)} and then wraps the result into a
    * {@link ByteArrayInputStream}.
    *
-   * @return {@code null} if {@link this#consume(InputStream)} throws an {@link IOException} and {@code rethrowExceptionOnRead} is not set
+   * @return {@code null} if {@link this#consume(InputStream)} throws an {@link IOException} and {@code rethrowExceptionOnRead} is
+   *         not set
    * @throws IOException is thrown if {@code rethrowExceptionOnRead} is set
    */
   public InputStream read(InputStream socketIs) throws IOException {
@@ -60,7 +62,8 @@ public class LengthProtocol extends DirectProtocol {
   }
 
   /**
-   * It first reads the size of an int in bytes from the {@link InputStream} that represents the total length of the data to be read.
+   * It first reads the size of an int in bytes from the {@link InputStream} that represents the total length of the data to be
+   * read.
    *
    * @param inputStream to be read
    * @return a byte array with the data read from the {@code inputStream}
@@ -98,7 +101,8 @@ public class LengthProtocol extends DirectProtocol {
   @Override
   protected void writeByteArray(OutputStream outputStream, byte[] data) throws IOException {
     if (maxMessageLength > 0 && data.length > maxMessageLength) {
-      throw new LengthExceededException(format("Message length is '%d' and exceeds the limit '%d", data.length, maxMessageLength));
+      throw new LengthExceededException(
+          format("Message length is '%d' and exceeds the limit '%d", data.length, maxMessageLength));
     }
 
     DataOutputStream dataOutputStream = new DataOutputStream(outputStream);

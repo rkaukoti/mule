@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.json.transformers;
 
@@ -26,10 +26,11 @@ import java.util.Map;
 
 /**
  * A transformer that will convert a JSON encoded object graph to a java object. The object type is determined by the 'returnType'
- * attribute. Note that this transformers supports Arrays and Lists. For example, to convert a JSON string to an array of org.foo.Person,
- * set the the returnClass=[Lorg.foo.Person;.
+ * attribute. Note that this transformers supports Arrays and Lists. For example, to convert a JSON string to an array of
+ * org.foo.Person, set the the returnClass=[Lorg.foo.Person;.
  */
 public class JsonToObject extends AbstractJsonTransformer {
+
   private static final DataType JSON_TYPE = DataType.builder().type(JsonData.class).mediaType(MediaType.APPLICATION_JSON).build();
 
   private Map<Class<?>, Class<?>> deserializationMixins = new HashMap<>();

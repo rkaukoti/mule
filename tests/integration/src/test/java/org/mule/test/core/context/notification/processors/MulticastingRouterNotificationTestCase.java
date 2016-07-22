@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.core.context.notification.processors;
 
@@ -36,8 +36,8 @@ public class MulticastingRouterNotificationTestCase extends AbstractMessageProce
 
         /* All */.serial(pre()) // Two routes with chain with two first one is interceptiong elements
         /* CollectionSplitter */.serial(pre())/* Logger */.serial(prePost())/* CollectionSplitter */.serial(post())
-        /* CollectionSplitter */.serial(pre())/* Logger */.serial(prePost())/* CollectionSplitter */.serial(post())/* All */.serial(post())
-        /* Logger */.serial(prePost()) // MP after the Scope;
+        /* CollectionSplitter */.serial(pre())/* Logger */.serial(prePost())/* CollectionSplitter */.serial(post())
+        /* All */.serial(post())/* Logger */.serial(prePost()) // MP after the Scope;
 
         .serial(pre()) // Two routes with no chain with one element
         .serial(prePost()).serial(prePost()).serial(post()).serial(prePost()) // MP after the Scope;

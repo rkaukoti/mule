@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.executor;
 
@@ -25,8 +25,9 @@ import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 import static org.springframework.util.ReflectionUtils.invokeMethod;
 
 /**
- * Implementation of {@link OperationExecutor} which relies on a {@link #executorDelegate} and a reference to one of its {@link Method}s.
- * When {@link #execute(OperationContext)} is invoked, the {@link #operationMethod} is invoked over the {@link #executorDelegate}.
+ * Implementation of {@link OperationExecutor} which relies on a {@link #executorDelegate} and a reference to one of its
+ * {@link Method}s. When {@link #execute(OperationContext)} is invoked, the {@link #operationMethod} is invoked over the
+ * {@link #executorDelegate}.
  * <p/>
  * All the {@link Lifecycle} events that {@code this} instance receives are propagated to the {@link #executorDelegate}
  *
@@ -55,8 +56,8 @@ public final class ReflectiveMethodOperationExecutor implements OperationExecuto
    */
   @Override
   public Object execute(OperationContext operationContext) throws Exception {
-    return withContextClassLoader(extensionClassLoader,
-        () -> invokeMethod(operationMethod, executorDelegate, getParameterValues(operationContext, operationMethod.getParameterTypes())));
+    return withContextClassLoader(extensionClassLoader, () -> invokeMethod(operationMethod, executorDelegate,
+        getParameterValues(operationContext, operationMethod.getParameterTypes())));
   }
 
   private Object[] getParameterValues(OperationContext operationContext, Class<?>[] parameterTypes) {

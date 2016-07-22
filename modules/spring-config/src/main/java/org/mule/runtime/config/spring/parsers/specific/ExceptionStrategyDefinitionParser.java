@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.specific;
 
@@ -15,6 +15,7 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
 import org.w3c.dom.Element;
 
 public class ExceptionStrategyDefinitionParser extends ParentContextDefinitionParser {
+
   public ExceptionStrategyDefinitionParser(Class exceptionStrategyClass) {
     super(MuleOrphanDefinitionParser.ROOT_ELEMENT, createRootDefinitionParser(exceptionStrategyClass));
     otherwise(createInFlowServiceDefinitionParser(exceptionStrategyClass));
@@ -22,11 +23,12 @@ public class ExceptionStrategyDefinitionParser extends ParentContextDefinitionPa
 
   static PreProcessor createNoNameAttributePreProcessor() {
     return new PreProcessor() {
+
       @Override
       public void preProcess(PropertyConfiguration config, Element element) {
         if (element.hasAttribute("name")) {
-          throw new MuleRuntimeException(
-              CoreMessages.createStaticMessage("name attribute on exception strategy is only allowed on global exception strategies"));
+          throw new MuleRuntimeException(CoreMessages
+              .createStaticMessage("name attribute on exception strategy is only allowed on global exception strategies"));
         }
       }
     };
@@ -44,7 +46,8 @@ public class ExceptionStrategyDefinitionParser extends ParentContextDefinitionPa
   }
 
   private ChildDefinitionParser createInFlowServiceDefinitionParser(Class exceptionStrategyClass) {
-    ChildDefinitionParser exceptionListenerDefinitionParser = new ChildDefinitionParser("exceptionListener", exceptionStrategyClass, false);
+    ChildDefinitionParser exceptionListenerDefinitionParser =
+        new ChildDefinitionParser("exceptionListener", exceptionStrategyClass, false);
     exceptionListenerDefinitionParser.registerPreProcessor(createNoNameAttributePreProcessor());
     return exceptionListenerDefinitionParser;
   }

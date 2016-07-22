@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor;
 
@@ -56,6 +56,7 @@ public class AsyncInterceptingMessageProcessor extends AbstractInterceptingMessa
     this.threadTimeout = threadingProfile.getThreadWaitTimeout();
     workManager = threadingProfile.createWorkManager(name, shutdownTimeout);
     workManagerSource = new WorkManagerSource() {
+
       public WorkManager getWorkManager() throws MuleException {
         return workManager;
       }
@@ -143,12 +144,13 @@ public class AsyncInterceptingMessageProcessor extends AbstractInterceptingMessa
   protected void firePipelineNotification(MuleEvent event, MessagingException exception) {
     // Async completed notification uses same event instance as async listener
     if (event.getFlowConstruct() instanceof MessageProcessorPathResolver) {
-      muleContext.getNotificationManager().fireNotification(
-          new AsyncMessageNotification(event.getFlowConstruct(), event, next, AsyncMessageNotification.PROCESS_ASYNC_COMPLETE, exception));
+      muleContext.getNotificationManager().fireNotification(new AsyncMessageNotification(event.getFlowConstruct(), event, next,
+          AsyncMessageNotification.PROCESS_ASYNC_COMPLETE, exception));
     }
   }
 
   class AsyncMessageProcessorWorker extends AbstractMuleEventWork {
+
     public AsyncMessageProcessorWorker(MuleEvent event) {
       super(event, true);
     }
@@ -160,11 +162,12 @@ public class AsyncInterceptingMessageProcessor extends AbstractInterceptingMessa
     @Override
     protected void doRun() {
       MessagingExceptionHandler exceptionHandler = messagingExceptionHandler;
-      ExecutionTemplate<MuleEvent> executionTemplate = TransactionalErrorHandlingExecutionTemplate.createMainExecutionTemplate(muleContext,
-          new MuleTransactionConfig(), exceptionHandler);
+      ExecutionTemplate<MuleEvent> executionTemplate = TransactionalErrorHandlingExecutionTemplate
+          .createMainExecutionTemplate(muleContext, new MuleTransactionConfig(), exceptionHandler);
 
       try {
         executionTemplate.execute(new ExecutionCallback<MuleEvent>() {
+
           @Override
           public MuleEvent process() throws Exception {
             MessagingException exceptionThrown = null;

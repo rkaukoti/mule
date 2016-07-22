@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.mule.model;
 
@@ -37,7 +37,8 @@ public class NoArgsEntryPointResolverTestCase extends AbstractMuleContextTestCas
   public void testDynamicMethodMatchFail() throws Exception {
     AbstractArgumentEntryPointResolver resolver = new NoArgumentsEntryPointResolver();
     InvocationResult result = resolver.invoke(new Apple(), getTestEventContext("blah"));
-    assertEquals("Apple service has a number of matching method, so should have failed", result.getState(), InvocationResult.State.FAILED);
+    assertEquals("Apple service has a number of matching method, so should have failed", result.getState(),
+        InvocationResult.State.FAILED);
   }
 
   @Test

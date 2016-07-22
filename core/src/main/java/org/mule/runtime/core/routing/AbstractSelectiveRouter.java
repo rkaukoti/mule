@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -37,8 +37,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public abstract class AbstractSelectiveRouter extends AbstractAnnotatedObject
-    implements SelectiveRouter, RouterStatisticsRecorder, Lifecycle, FlowConstructAware, MuleContextAware, MessageProcessorContainer {
+public abstract class AbstractSelectiveRouter extends AbstractAnnotatedObject implements SelectiveRouter,
+    RouterStatisticsRecorder, Lifecycle, FlowConstructAware, MuleContextAware, MessageProcessorContainer {
 
   final AtomicBoolean initialised = new AtomicBoolean(false);
   final AtomicBoolean starting = new AtomicBoolean(false);
@@ -171,8 +171,10 @@ public abstract class AbstractSelectiveRouter extends AbstractAnnotatedObject
       getRouterStatistics().incrementNoRoutedMessage();
     }
 
-    throw new RoutePathNotFoundException(MessageFactory.createStaticMessage(
-        "Can't process message because no route has been found matching any filter and no default route is defined"), event, this);
+    throw new RoutePathNotFoundException(
+        MessageFactory.createStaticMessage(
+            "Can't process message because no route has been found matching any filter and no default route is defined"),
+        event, this);
   }
 
   /**
@@ -242,7 +244,8 @@ public abstract class AbstractSelectiveRouter extends AbstractAnnotatedObject
     return resultsHandler.aggregateResults(results, event);
   }
 
-  private void processEventWithProcessor(MuleEvent event, MessageProcessor processor, List<MuleEvent> results) throws MuleException {
+  private void processEventWithProcessor(MuleEvent event, MessageProcessor processor, List<MuleEvent> results)
+      throws MuleException {
     results.add(processor.process(event));
 
     if (getRouterStatistics() != null && getRouterStatistics().isEnabled()) {

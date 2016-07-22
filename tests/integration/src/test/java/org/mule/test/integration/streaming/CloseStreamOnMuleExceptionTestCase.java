@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.streaming;
 
@@ -28,6 +28,7 @@ import javax.xml.transform.stream.StreamSource;
 import static org.junit.Assert.assertTrue;
 
 public class CloseStreamOnMuleExceptionTestCase extends FunctionalTestCase {
+
   private static Latch inputStreamLatch = new Latch();
   private static Latch streamReaderLatch;
   private final int timeoutMs = 3000;
@@ -112,6 +113,7 @@ public class CloseStreamOnMuleExceptionTestCase extends FunctionalTestCase {
   private void verifyInputStreamIsClosed(final ClosableInputStream is) {
     final PollingProber pollingProber = new PollingProber(timeoutMs, 100);
     pollingProber.check(new Probe() {
+
       @Override
       public boolean isSatisfied() {
         return is.isClosed();
@@ -125,10 +127,12 @@ public class CloseStreamOnMuleExceptionTestCase extends FunctionalTestCase {
   }
 
   interface ClosableInputStream {
+
     boolean isClosed();
   }
 
   static class TestByteArrayInputStream extends ByteArrayInputStream implements ClosableInputStream {
+
     private boolean closed;
 
     public TestByteArrayInputStream(byte[] arg0) {
@@ -153,6 +157,7 @@ public class CloseStreamOnMuleExceptionTestCase extends FunctionalTestCase {
   }
 
   static class TestXMLStreamReader extends DelegateXMLStreamReader implements ClosableInputStream {
+
     private boolean closed;
 
     public TestXMLStreamReader(XMLStreamReader reader) {

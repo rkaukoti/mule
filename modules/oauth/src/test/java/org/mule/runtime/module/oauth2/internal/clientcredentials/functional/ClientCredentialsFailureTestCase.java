@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.oauth2.internal.clientcredentials.functional;
 
@@ -44,6 +44,7 @@ public class ClientCredentialsFailureTestCase extends AbstractMuleTestCase {
   @Test
   public void tokenUrlFailsDuringAppStartup() throws Exception {
     testWithSystemProperty(TOKEN_PATH_PROPERTY_NAME, "http://unkownhost:9999" + TOKEN_PATH, new MuleTestUtils.TestCallback() {
+
       @Override
       public void run() throws Exception {
         ApplicationContextBuilder applicationContextBuilder = new ApplicationContextBuilder()
@@ -59,6 +60,7 @@ public class ClientCredentialsFailureTestCase extends AbstractMuleTestCase {
     wireMockRule.stubFor(post(urlEqualTo(TOKEN_PATH)).willReturn(aResponse().withBody(EMPTY)));
     testWithSystemProperty(TOKEN_PATH_PROPERTY_NAME, format("http://localhost:%s%s", wireMockRule.port(), TOKEN_PATH),
         new MuleTestUtils.TestCallback() {
+
           @Override
           public void run() throws Exception {
             ApplicationContextBuilder applicationContextBuilder = new ApplicationContextBuilder()

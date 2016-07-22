@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -43,6 +43,7 @@ import java.util.zip.ZipFile;
  */
 // @ThreadSafe
 public class FileUtils extends org.apache.commons.io.FileUtils {
+
   private static final Logger logger = LoggerFactory.getLogger(FileUtils.class);
   public static String DEFAULT_ENCODING = "UTF-8";
 
@@ -198,9 +199,9 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
   }
 
   /**
-   * Delete a file tree recursively. This method additionally tries to be gentle with specified top-level dirs. E.g. this is the case when a
-   * transaction manager asynchronously handles the recovery log, and the test wipes out everything, leaving the transaction manager
-   * puzzled.
+   * Delete a file tree recursively. This method additionally tries to be gentle with specified top-level dirs. E.g. this is the
+   * case when a transaction manager asynchronously handles the recovery log, and the test wipes out everything, leaving the
+   * transaction manager puzzled.
    *
    * @param dir dir to wipe out
    * @param topLevelDirsToIgnore which top-level directories to ignore, if null or empty then ignored
@@ -280,8 +281,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
   }
 
   /**
-   * Workaround for JDK bug <a href="http://bugs.sun.com/bugdatabase/view_bug.do;:YfiG?bug_id=4117557"> 4117557</a>. More in-context
-   * information at <a href="http://mule.mulesoft.org/jira/browse/MULE-1112">MULE-1112</a>
+   * Workaround for JDK bug <a href="http://bugs.sun.com/bugdatabase/view_bug.do;:YfiG?bug_id=4117557"> 4117557</a>. More
+   * in-context information at <a href="http://mule.mulesoft.org/jira/browse/MULE-1112">MULE-1112</a>
    * <p/>
    * Factory methods correspond to constructors of the <code>java.io.File class</code>. No physical file created in this method.
    *
@@ -296,8 +297,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
   }
 
   /**
-   * Workaround for JDK bug <a href="http://bugs.sun.com/bugdatabase/view_bug.do;:YfiG?bug_id=4117557"> 4117557</a>. More in-context
-   * information at <a href="http://mule.mulesoft.org/jira/browse/MULE-1112">MULE-1112</a>
+   * Workaround for JDK bug <a href="http://bugs.sun.com/bugdatabase/view_bug.do;:YfiG?bug_id=4117557"> 4117557</a>. More
+   * in-context information at <a href="http://mule.mulesoft.org/jira/browse/MULE-1112">MULE-1112</a>
    * <p/>
    * Factory methods correspond to constructors of the <code>java.io.File class</code>. No physical file created in this method.
    *
@@ -312,8 +313,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
   }
 
   /**
-   * Workaround for JDK bug <a href="http://bugs.sun.com/bugdatabase/view_bug.do;:YfiG?bug_id=4117557"> 4117557</a>. More in-context
-   * information at <a href="http://mule.mulesoft.org/jira/browse/MULE-1112">MULE-1112</a>
+   * Workaround for JDK bug <a href="http://bugs.sun.com/bugdatabase/view_bug.do;:YfiG?bug_id=4117557"> 4117557</a>. More
+   * in-context information at <a href="http://mule.mulesoft.org/jira/browse/MULE-1112">MULE-1112</a>
    * <p/>
    * Factory methods correspond to constructors of the <code>java.io.File class</code>. No physical file created in this method.
    *
@@ -324,13 +325,14 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
       return new File(parent, child).getCanonicalFile();
     } catch (IOException e) {
       throw new MuleRuntimeException(
-          MessageFactory.createStaticMessage("Unable to create a canonical file for parent: " + parent + " and child: " + child), e);
+          MessageFactory.createStaticMessage("Unable to create a canonical file for parent: " + parent + " and child: " + child),
+          e);
     }
   }
 
   /**
-   * Workaround for JDK bug <a href="http://bugs.sun.com/bugdatabase/view_bug.do;:YfiG?bug_id=4117557"> 4117557</a>. More in-context
-   * information at <a href="http://mule.mulesoft.org/jira/browse/MULE-1112">MULE-1112</a>
+   * Workaround for JDK bug <a href="http://bugs.sun.com/bugdatabase/view_bug.do;:YfiG?bug_id=4117557"> 4117557</a>. More
+   * in-context information at <a href="http://mule.mulesoft.org/jira/browse/MULE-1112">MULE-1112</a>
    * <p/>
    * Factory methods correspond to constructors of the <code>java.io.File class</code>. No physical file created in this method.
    *
@@ -341,7 +343,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
       return new File(parent, child).getCanonicalFile();
     } catch (IOException e) {
       throw new MuleRuntimeException(
-          MessageFactory.createStaticMessage("Unable to create a canonical file for parent: " + parent + " and child: " + child), e);
+          MessageFactory.createStaticMessage("Unable to create a canonical file for parent: " + parent + " and child: " + child),
+          e);
     }
   }
 
@@ -351,8 +354,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
    * @param resourceName - full resource name
    * @param callingClass - classloader for this class is used
    * @param outputDir - extract to this directory
-   * @param keepParentDirectory true - full structure of directories is kept; false - file - removed all directories, directory - started
-   *        from resource point
+   * @param keepParentDirectory true - full structure of directories is kept; false - file - removed all directories, directory -
+   *        started from resource point
    * @throws IOException if any errors
    */
   public static void extractResources(String resourceName, Class callingClass, File outputDir, boolean keepParentDirectory)
@@ -371,8 +374,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
    *
    * @param path - path to file
    * @param outputDir Directory for unpack recources
-   * @param keepParentDirectory true - full structure of directories is kept; false - file - removed all directories, directory - started
-   *        from resource point
+   * @param keepParentDirectory true - full structure of directories is kept; false - file - removed all directories, directory -
+   *        started from resource point
    * @throws IOException if any error
    */
   private static void extractFileResources(String path, File outputDir, String resourceName, boolean keepParentDirectory)
@@ -407,11 +410,12 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
    *
    * @param connection JarURLConnection to jar library
    * @param outputDir Directory for unpack recources
-   * @param keepParentDirectory true - full structure of directories is kept; false - file - removed all directories, directory - started
-   *        from resource point
+   * @param keepParentDirectory true - full structure of directories is kept; false - file - removed all directories, directory -
+   *        started from resource point
    * @throws IOException if any error
    */
-  private static void extractJarResources(JarURLConnection connection, File outputDir, boolean keepParentDirectory) throws IOException {
+  private static void extractJarResources(JarURLConnection connection, File outputDir, boolean keepParentDirectory)
+      throws IOException {
     JarFile jarFile = connection.getJarFile();
     JarEntry jarResource = connection.getJarEntry();
     Enumeration entries = jarFile.entries();
@@ -430,10 +434,12 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
             if (entry.getName().equals(jarResource.getName())) {
               continue;
             }
-            path = outputDir.getPath() + File.separator + entry.getName().substring(jarResourceNameLenght, entry.getName().length());
+            path =
+                outputDir.getPath() + File.separator + entry.getName().substring(jarResourceNameLenght, entry.getName().length());
           } else {
             if (entry.getName().length() > jarResourceNameLenght) {
-              path = outputDir.getPath() + File.separator + entry.getName().substring(jarResourceNameLenght, entry.getName().length());
+              path = outputDir.getPath() + File.separator
+                  + entry.getName().substring(jarResourceNameLenght, entry.getName().length());
             } else {
               path = outputDir.getPath() + File.separator
                   + entry.getName().substring(entry.getName().lastIndexOf("/"), entry.getName().length());
@@ -521,8 +527,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
           logger.debug("Error renaming file from " + srcFile.getAbsolutePath() + " to " + destFile.getAbsolutePath());
         }
       } else {
-        logger.debug(
-            "Error renaming file " + srcFile.getAbsolutePath() + ". Destination file " + destFile.getAbsolutePath() + " already exists.");
+        logger.debug("Error renaming file " + srcFile.getAbsolutePath() + ". Destination file " + destFile.getAbsolutePath()
+            + " already exists.");
       }
     }
     return isRenamed;
@@ -557,8 +563,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
           logger.debug("Error moving file from " + srcFile.getAbsolutePath() + " to " + destFile.getAbsolutePath(), e);
         }
       } else {
-        logger.debug(
-            "Error renaming file " + srcFile.getAbsolutePath() + ". Destination file " + destFile.getAbsolutePath() + " already exists.");
+        logger.debug("Error renaming file " + srcFile.getAbsolutePath() + ". Destination file " + destFile.getAbsolutePath()
+            + " already exists.");
       }
     } else {
       logger.debug("Error renaming file. Source or destination file is null.");
@@ -642,8 +648,8 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
   /**
    * Copies a file to a new location.
    * <p>
-   * This method copies the contents of the specified source file to the specified destination file. The directory holding the destination
-   * file is created if it does not exist. If the destination file exists, then this method will overwrite it.
+   * This method copies the contents of the specified source file to the specified destination file. The directory holding the
+   * destination file is created if it does not exist. If the destination file exists, then this method will overwrite it.
    *
    * @param srcFile an existing file to copy, must not be <code>null</code>
    * @param destFile the new file, must not be <code>null</code>
@@ -761,6 +767,7 @@ public class FileUtils extends org.apache.commons.io.FileUtils {
 
   public static File findFileByName(File folder, final String filename, boolean recursive) {
     Collection<File> files = FileUtils.findFiles(folder, new IOFileFilter() {
+
       @Override
       public boolean accept(File file) {
         return filename.equals(file.getName());

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -11,8 +11,8 @@ import org.mule.runtime.core.api.MuleException;
 import org.mule.runtime.core.util.ClassUtils;
 
 /**
- * A base implementation of the {@link org.mule.compatibility.core.api.transport.MessageRequesterFactory} interface for managing the
- * lifecycle of message requesters.
+ * A base implementation of the {@link org.mule.compatibility.core.api.transport.MessageRequesterFactory} interface for managing
+ * the lifecycle of message requesters.
  *
  * @see org.mule.compatibility.core.api.transport.MessageDispatcherFactory
  */
@@ -24,8 +24,8 @@ public abstract class AbstractMessageRequesterFactory implements MessageRequeste
 
   /**
    * This default implementation of
-   * {@link org.mule.compatibility.core.api.transport.MessageDispatcherFactory#isCreateDispatcherPerRequest()} returns <code>false</code>,
-   * which means that dispatchers are pooled according to their lifecycle as described in
+   * {@link org.mule.compatibility.core.api.transport.MessageDispatcherFactory#isCreateDispatcherPerRequest()} returns
+   * <code>false</code>, which means that dispatchers are pooled according to their lifecycle as described in
    * {@link org.mule.compatibility.core.api.transport.MessageRequester}.
    *
    * @return <code>false</code> by default, unless overwritten by a subclass.

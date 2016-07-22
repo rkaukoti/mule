@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.schedule;
 
@@ -17,11 +17,12 @@ import static org.mule.runtime.core.config.i18n.CoreMessages.objectIsNull;
 
 /**
  * <p>
- * Factory of schedulers. Every Scheduler should be created by a SchedulerFactory if the creation process allows post creation hooking.
+ * Factory of schedulers. Every Scheduler should be created by a SchedulerFactory if the creation process allows post creation
+ * hooking.
  * </p>
  * <p>
- * Once the Factory creates a scheduler it calls a set of {@link SchedulerFactoryPostProcessor} that might affect the instance of the
- * scheduler.
+ * Once the Factory creates a scheduler it calls a set of {@link SchedulerFactoryPostProcessor} that might affect the instance of
+ * the scheduler.
  * </p>
  * <p>
  * <p>
@@ -69,8 +70,8 @@ public abstract class SchedulerFactory<T extends Runnable> implements MuleContex
 
   /**
    * <p>
-   * Template method to delegate the creation of the {@link Scheduler}. This method is thought to create an instance of a {@link Scheduler}.
-   * It should not Start/Stop it.
+   * Template method to delegate the creation of the {@link Scheduler}. This method is thought to create an instance of a
+   * {@link Scheduler}. It should not Start/Stop it.
    * </p>
    *
    * @param job The Job the {@link org.mule.runtime.core.api.schedule.Scheduler} is going to execute
@@ -83,7 +84,8 @@ public abstract class SchedulerFactory<T extends Runnable> implements MuleContex
       return scheduler;
     }
 
-    Map<String, SchedulerFactoryPostProcessor> postProcessors = context.getRegistry().lookupByType(SchedulerFactoryPostProcessor.class);
+    Map<String, SchedulerFactoryPostProcessor> postProcessors =
+        context.getRegistry().lookupByType(SchedulerFactoryPostProcessor.class);
     for (SchedulerFactoryPostProcessor postProcessor : postProcessors.values()) {
       scheduler = postProcessor.process(job, scheduler);
       checkNull(scheduler);

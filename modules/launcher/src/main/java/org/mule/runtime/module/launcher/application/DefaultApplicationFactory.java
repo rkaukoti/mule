@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.application;
 
@@ -76,14 +76,14 @@ public class DefaultApplicationFactory implements ArtifactFactory<Application> {
     Domain domain = domainRepository.getDomain(descriptor.getDomain());
 
     if (domain == null) {
-      throw new DeploymentException(createStaticMessage(
-          format("Domain '%s' has to be deployed in order to deploy Application '%s'", descriptor.getDomain(), descriptor.getName())));
+      throw new DeploymentException(createStaticMessage(format(
+          "Domain '%s' has to be deployed in order to deploy Application '%s'", descriptor.getDomain(), descriptor.getName())));
     }
 
     MuleApplicationClassLoader applicationClassLoader = applicationClassLoaderBuilderFactory.createArtifactClassLoaderBuilder()
         .setDomain(domain).setPluginsSharedLibFolder(descriptor.getSharedPluginFolder())
-        .addArtifactPluginDescriptors(descriptor.getPlugins().toArray(new ArtifactPluginDescriptor[0])).setArtifactId(descriptor.getName())
-        .setArtifactDescriptor(descriptor).build();
+        .addArtifactPluginDescriptors(descriptor.getPlugins().toArray(new ArtifactPluginDescriptor[0]))
+        .setArtifactId(descriptor.getName()).setArtifactDescriptor(descriptor).build();
 
     List<ArtifactPluginDescriptor> applicationPluginDescriptors =
         concat(artifactPluginRepository.getContainerArtifactPluginDescriptors().stream(), descriptor.getPlugins().stream())
@@ -91,7 +91,8 @@ public class DefaultApplicationFactory implements ArtifactFactory<Application> {
 
     List<ArtifactPlugin> artifactPlugins = createArtifactPluginList(applicationClassLoader, applicationPluginDescriptors);
 
-    DefaultMuleApplication delegate = new DefaultMuleApplication(descriptor, applicationClassLoader, artifactPlugins, domainRepository);
+    DefaultMuleApplication delegate =
+        new DefaultMuleApplication(descriptor, applicationClassLoader, artifactPlugins, domainRepository);
 
     if (deploymentListener != null) {
       delegate.setDeploymentListener(deploymentListener);

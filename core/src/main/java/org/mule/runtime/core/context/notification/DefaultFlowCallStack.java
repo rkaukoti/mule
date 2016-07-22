@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.context.notification;
 
@@ -13,10 +13,11 @@ import java.util.List;
 import java.util.Stack;
 
 /**
- * Keeps context information about the executing flows and its callers in order to provide augmented troubleshooting information for an
- * application developer.
+ * Keeps context information about the executing flows and its callers in order to provide augmented troubleshooting information
+ * for an application developer.
  */
 public class DefaultFlowCallStack implements FlowCallStack {
+
   private static final long serialVersionUID = -8683711977929802819L;
 
   private Stack<FlowStackElement> innerStack = new Stack<>();

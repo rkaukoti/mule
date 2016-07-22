@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.store;
 
@@ -37,8 +37,8 @@ public interface ObjectStoreManager {
    * @param expirationInterval how frequently should the expiration thread run
    * @return an {@link org.mule.runtime.core.api.store.ObjectStore}
    */
-  <T extends ObjectStore<? extends Serializable>> T getObjectStore(String name, boolean isPersistent, int maxEntries, int entryTTL,
-      int expirationInterval);
+  <T extends ObjectStore<? extends Serializable>> T getObjectStore(String name, boolean isPersistent, int maxEntries,
+      int entryTTL, int expirationInterval);
 
   /**
    * Delete all objects from the partition

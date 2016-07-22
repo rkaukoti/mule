@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.socket;
 
@@ -14,9 +14,11 @@ import java.net.SocketException;
 import java.net.SocketTimeoutException;
 
 /**
- * Extends the {@link FunctionalStreamingTestComponent} to wait for data in a non blocking fashion for the {@link StreamingProtocol}.
+ * Extends the {@link FunctionalStreamingTestComponent} to wait for data in a non blocking fashion for the
+ * {@link StreamingProtocol}.
  */
 public class EOFStreamingTestComponent extends FunctionalStreamingTestComponent {
+
   protected int read(InputStream is, byte[] buffer) throws IOException {
     int len;
     try {

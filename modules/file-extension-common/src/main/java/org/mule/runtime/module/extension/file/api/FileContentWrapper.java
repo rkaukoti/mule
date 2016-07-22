@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.file.api;
 
@@ -86,8 +86,8 @@ public final class FileContentWrapper {
     } else {
       throw new IllegalArgumentException(
           format("Content of type '%s' is not supported and no suitable transformer could be found. Supported types are [%s]",
-              content.getClass().getName(),
-              Joiner.on(", ").join(asList(String.class, InputStream.class, OutputHandler.class, byte[].class, byte.class, Byte.class))));
+              content.getClass().getName(), Joiner.on(", ")
+                  .join(asList(String.class, InputStream.class, OutputHandler.class, byte[].class, byte.class, Byte.class))));
     }
   }
 

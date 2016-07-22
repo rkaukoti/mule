@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.security;
 
@@ -9,19 +9,21 @@ import java.io.IOException;
 import javax.net.ssl.KeyManagerFactory;
 
 /**
- * Configure direct key stores. TLS/SSL connections are made on behalf of an entity, which can be anonymous or identified by a certificate -
- * this interface specifies how a keystore can be used to provide the certificates (and associated private keys) necessary for
- * identification.
+ * Configure direct key stores. TLS/SSL connections are made on behalf of an entity, which can be anonymous or identified by a
+ * certificate - this interface specifies how a keystore can be used to provide the certificates (and associated private keys)
+ * necessary for identification.
  *
  * <p>
- * The information specified in this interface is used to configure a key store directly. For more information see the documentation for the
- * connector or protocol in question. The comments in {@link org.mule.runtime.core.api.security.tls.TlsConfiguration} may also be useful.
+ * The information specified in this interface is used to configure a key store directly. For more information see the
+ * documentation for the connector or protocol in question. The comments in
+ * {@link org.mule.runtime.core.api.security.tls.TlsConfiguration} may also be useful.
  * </p>
  */
 public interface TlsDirectKeyStore {
+
   /**
-   * @return The location (resolved relative to the current classpath and file system, if possible) of the keystore that contains public
-   *         certificates and private keys for identification.
+   * @return The location (resolved relative to the current classpath and file system, if possible) of the keystore that contains
+   *         public certificates and private keys for identification.
    */
   String getKeyStore();
 

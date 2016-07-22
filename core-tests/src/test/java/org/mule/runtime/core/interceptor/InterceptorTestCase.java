@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.interceptor;
 
@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class InterceptorTestCase extends AbstractMuleContextTestCase {
+
   private final String BEFORE = "Before";
   private final String AFTER = "After";
   private final String COMPONENT = "component";
@@ -30,8 +31,8 @@ public class InterceptorTestCase extends AbstractMuleContextTestCase {
   private final String INTERCEPTOR_THREE = "inteceptor3";
 
   private final String SINGLE_INTERCEPTOR_RESULT = INTERCEPTOR_ONE + BEFORE + COMPONENT + INTERCEPTOR_ONE + AFTER;
-  private final String MULTIPLE_INTERCEPTOR_RESULT = INTERCEPTOR_ONE + BEFORE + INTERCEPTOR_TWO + BEFORE + INTERCEPTOR_THREE + BEFORE
-      + COMPONENT + INTERCEPTOR_THREE + AFTER + INTERCEPTOR_TWO + AFTER + INTERCEPTOR_ONE + AFTER;
+  private final String MULTIPLE_INTERCEPTOR_RESULT = INTERCEPTOR_ONE + BEFORE + INTERCEPTOR_TWO + BEFORE + INTERCEPTOR_THREE
+      + BEFORE + COMPONENT + INTERCEPTOR_THREE + AFTER + INTERCEPTOR_TWO + AFTER + INTERCEPTOR_ONE + AFTER;
 
   @Test
   public void testSingleInterceptor() throws Exception {
@@ -125,9 +126,10 @@ public class InterceptorTestCase extends AbstractMuleContextTestCase {
 
     MuleEvent result = component.process(getTestEvent(""));
 
-    assertEquals(INTERCEPTOR_ONE + BEFORE + INTERCEPTOR_TWO + BEFORE + INTERCEPTOR_THREE + BEFORE + INTERCEPTOR_ONE + BEFORE
-        + INTERCEPTOR_TWO + BEFORE + INTERCEPTOR_THREE + BEFORE + COMPONENT + INTERCEPTOR_THREE + AFTER + INTERCEPTOR_TWO + AFTER
-        + INTERCEPTOR_ONE + AFTER + INTERCEPTOR_THREE + AFTER + INTERCEPTOR_TWO + AFTER + INTERCEPTOR_ONE + AFTER,
+    assertEquals(
+        INTERCEPTOR_ONE + BEFORE + INTERCEPTOR_TWO + BEFORE + INTERCEPTOR_THREE + BEFORE + INTERCEPTOR_ONE + BEFORE
+            + INTERCEPTOR_TWO + BEFORE + INTERCEPTOR_THREE + BEFORE + COMPONENT + INTERCEPTOR_THREE + AFTER + INTERCEPTOR_TWO
+            + AFTER + INTERCEPTOR_ONE + AFTER + INTERCEPTOR_THREE + AFTER + INTERCEPTOR_TWO + AFTER + INTERCEPTOR_ONE + AFTER,
         result.getMessageAsString());
   }
 
@@ -140,6 +142,7 @@ public class InterceptorTestCase extends AbstractMuleContextTestCase {
   }
 
   class TestInterceptor extends AbstractEnvelopeInterceptor {
+
     private String name;
 
     public TestInterceptor(String name) {
@@ -149,7 +152,8 @@ public class InterceptorTestCase extends AbstractMuleContextTestCase {
     @Override
     public MuleEvent after(MuleEvent event) {
       try {
-        event.setMessage(MuleMessage.builder(event.getMessage()).payload(getPayloadAsString(event.getMessage()) + name + AFTER).build());
+        event.setMessage(
+            MuleMessage.builder(event.getMessage()).payload(getPayloadAsString(event.getMessage()) + name + AFTER).build());
       } catch (Exception e) {
         fail(e.getMessage());
       }
@@ -159,7 +163,8 @@ public class InterceptorTestCase extends AbstractMuleContextTestCase {
     @Override
     public MuleEvent before(MuleEvent event) {
       try {
-        event.setMessage(MuleMessage.builder(event.getMessage()).payload(getPayloadAsString(event.getMessage()) + name + BEFORE).build());
+        event.setMessage(
+            MuleMessage.builder(event.getMessage()).payload(getPayloadAsString(event.getMessage()) + name + BEFORE).build());
       } catch (Exception e) {
         fail(e.getMessage());
       }
@@ -173,6 +178,7 @@ public class InterceptorTestCase extends AbstractMuleContextTestCase {
   }
 
   class TestComponent extends AbstractComponent {
+
     @Override
     protected Object doInvoke(MuleEvent event) throws Exception {
       return event.getMessageAsString() + COMPONENT;

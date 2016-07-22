@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.validation.internal;
 
@@ -25,7 +25,8 @@ import java.util.Locale;
 public class NumberValidationOperation extends ValidationSupport {
 
   /**
-   * Receives a numeric {@code value} as a {@link String} and validates that it can be parsed per the rules of a {@code numberType}
+   * Receives a numeric {@code value} as a {@link String} and validates that it can be parsed per the rules of a
+   * {@code numberType}
    *
    * @param value the value to be tested
    * @param locale The locale to use for the format. If not provided it defaults to the system {@link Locale}

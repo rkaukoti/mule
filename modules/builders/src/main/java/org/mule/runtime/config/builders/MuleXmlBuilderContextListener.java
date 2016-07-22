@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.builders;
 
@@ -31,17 +31,19 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 /**
- * <code>MuleXmlBuilderContextListener</code> is a bootstrap listener used to construct a {@link org.mule.runtime.core.api.MuleContext}
- * instance. This listener delegates to the <i>MuleXmlConfigurationBuilder</i>.
+ * <code>MuleXmlBuilderContextListener</code> is a bootstrap listener used to construct a
+ * {@link org.mule.runtime.core.api.MuleContext} instance. This listener delegates to the <i>MuleXmlConfigurationBuilder</i>.
  * <p>
- * The location of the configuration file can be specified in a init parameter called <i>org.mule.config</i>, the value can be a path on the
- * local file system or on the classpath. If a config parameter is not specified a default <i>mule-config.xml</i> will be used.
+ * The location of the configuration file can be specified in a init parameter called <i>org.mule.config</i>, the value can be a
+ * path on the local file system or on the classpath. If a config parameter is not specified a default <i>mule-config.xml</i> will
+ * be used.
  * </p>
  *
  * @see SpringXmlConfigurationBuilder
  */
 
 public class MuleXmlBuilderContextListener implements ServletContextListener {
+
   /**
    * One or more Mule config files.
    */
@@ -119,8 +121,8 @@ public class MuleXmlBuilderContextListener implements ServletContextListener {
     DefaultMuleConfiguration muleConfiguration = new PropertiesMuleConfigurationFactory(muleAppConfig).createConfiguration();
 
     /*
-     * We deliberately enable container mode here to allow for multi-tenant environment (multiple WARs embedding Mule instance each). See
-     * property javadocs for more info.
+     * We deliberately enable container mode here to allow for multi-tenant environment (multiple WARs embedding Mule instance
+     * each). See property javadocs for more info.
      */
     muleConfiguration.setContainerMode(true);
 
@@ -140,8 +142,8 @@ public class MuleXmlBuilderContextListener implements ServletContextListener {
   }
 
   /**
-   * If no config location resource is configured on the servlet context, the value returned from this method will be used to initialise the
-   * MuleManager.
+   * If no config location resource is configured on the servlet context, the value returned from this method will be used to
+   * initialise the MuleManager.
    *
    * @return the default config resource location
    */

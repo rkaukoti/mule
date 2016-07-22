@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.redelivery;
 
@@ -17,10 +17,12 @@ import javax.jms.Message;
 import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 public abstract class AbstractRedeliveryHandler implements RedeliveryHandler {
+
   protected JmsConnector connector;
 
   @Override
-  public abstract void handleRedelivery(Message message, InboundEndpoint endpoint, FlowConstruct flow) throws JMSException, MuleException;
+  public abstract void handleRedelivery(Message message, InboundEndpoint endpoint, FlowConstruct flow)
+      throws JMSException, MuleException;
 
   /**
    * The connector associated with this handler is set before <code>handleRedelivery()</code> is called

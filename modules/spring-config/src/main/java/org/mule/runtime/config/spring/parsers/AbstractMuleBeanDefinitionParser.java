@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers;
 
@@ -48,21 +48,22 @@ import static org.mule.runtime.config.spring.parsers.XmlMetadataAnnotations.META
 import static org.mule.runtime.core.api.execution.LocationExecutionContextProvider.addMetadataAnnotationsFromXml;
 
 /**
- * This parser extends the Spring provided {@link AbstractBeanDefinitionParser} to provide additional features for consistently customizing
- * bean representations for Mule bean definition parsers. Most custom bean definition parsers in Mule will use this base class. The
- * following enhancements are made -
+ * This parser extends the Spring provided {@link AbstractBeanDefinitionParser} to provide additional features for consistently
+ * customizing bean representations for Mule bean definition parsers. Most custom bean definition parsers in Mule will use this
+ * base class. The following enhancements are made -
  *
  * <ol>
- * <li>A property name which ends with the suffix "-ref" is assumed to be a reference to another bean. Alternatively, a property can be
- * explicitly registered as a bean reference via registerBeanReference()
+ * <li>A property name which ends with the suffix "-ref" is assumed to be a reference to another bean. Alternatively, a property
+ * can be explicitly registered as a bean reference via registerBeanReference()
  *
  * <p>
- * For example, <code> &lt;bpm:connector bpms-ref=&quot;testBpms&quot;/&gt;</code> will automatically set a property "bpms" on the connector
- * to reference a bean named "testBpms"
+ * For example, <code> &lt;bpm:connector bpms-ref=&quot;testBpms&quot;/&gt;</code> will automatically set a property "bpms" on the
+ * connector to reference a bean named "testBpms"
  * </p>
  * </li>
  *
- * <li>Attribute mappings can be registered to control how an attribute name in Mule Xml maps to the bean name in the object being created.
+ * <li>Attribute mappings can be registered to control how an attribute name in Mule Xml maps to the bean name in the object being
+ * created.
  *
  * <p>
  * For example - <code>addAlias("poolExhaustedAction", "poolExhaustedActionString");</code> Maps the 'poolExhaustedAction' to the
@@ -70,17 +71,17 @@ import static org.mule.runtime.core.api.execution.LocationExecutionContextProvid
  * </p>
  * </li>
  *
- * <li>Value Mappings can be used to map key value pairs from selection lists in the XML schema to property values on the bean being
- * created. These are a comma-separated list of key=value pairs.
+ * <li>Value Mappings can be used to map key value pairs from selection lists in the XML schema to property values on the bean
+ * being created. These are a comma-separated list of key=value pairs.
  *
  * <p>
- * For example - <code>addMapping("action", "NONE=0,ALWAYS_BEGIN=1,BEGIN_OR_JOIN=2,JOIN_IF_POSSIBLE=3");</code> The first argument is the
- * bean name to set, the second argument is the set of possible key=value pairs
+ * For example - <code>addMapping("action", "NONE=0,ALWAYS_BEGIN=1,BEGIN_OR_JOIN=2,JOIN_IF_POSSIBLE=3");</code> The first argument
+ * is the bean name to set, the second argument is the set of possible key=value pairs
  * </p>
  * </li>
  *
- * <li>Provides an automatic way of setting the 'init-method' and 'destroy-method' for this object. This will then automatically wire the
- * bean into the lifecycle of the Application context.</li>
+ * <li>Provides an automatic way of setting the 'init-method' and 'destroy-method' for this object. This will then automatically
+ * wire the bean into the lifecycle of the Application context.</li>
  *
  * <li>The 'singleton' property provides a fixed way to make sure the bean is always a singleton or not.</li>
  *
@@ -88,13 +89,14 @@ import static org.mule.runtime.core.api.execution.LocationExecutionContextProvid
  * </ol>
  *
  * <p>
- * Note that this class is not multi-thread safe. The internal state is reset before each "use" by {@link #preProcess(org.w3c.dom.Element)}
- * which assumes sequential access.
+ * Note that this class is not multi-thread safe. The internal state is reset before each "use" by
+ * {@link #preProcess(org.w3c.dom.Element)} which assumes sequential access.
  * </p>
  *
  * @see AbstractBeanDefinitionParser
  */
 public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefinitionParser implements MuleDefinitionParser {
+
   public static final String ROOT_ELEMENT = "mule";
   public static final String DOMAIN_ROOT_ELEMENT = "mule-domain";
   public static final String ATTRIBUTE_ID = "id";
@@ -141,7 +143,8 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
     if (AnnotatedObject.class.isAssignableFrom(builder.getBeanDefinition().getBeanClass())) {
 
       XmlMetadataAnnotations elementMetadata = (XmlMetadataAnnotations) element.getUserData(METADATA_ANNOTATIONS_KEY);
-      addMetadataAnnotationsFromXml(annotations, configFileIdentifier, elementMetadata.getLineNumber(), elementMetadata.getElementString());
+      addMetadataAnnotationsFromXml(annotations, configFileIdentifier, elementMetadata.getLineNumber(),
+          elementMetadata.getElementString());
 
       builder.getBeanDefinition().getPropertyValues().addPropertyValue(AnnotatedObject.PROPERTY_NAME, annotations);
     }
@@ -238,8 +241,8 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
   /**
    * Hook method that derived classes can implement to modify internal state before processing.
    *
-   * Here we make sure that the internal property configuration state is reset to the initial configuration for each element (it may be
-   * modified by the BeanAssembler) and that other mutable instance variables are cleared.
+   * Here we make sure that the internal property configuration state is reset to the initial configuration for each element (it
+   * may be modified by the BeanAssembler) and that other mutable instance variables are cleared.
    */
   protected void preProcess(Element element) {
     parserContext = null;
@@ -251,13 +254,14 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
   }
 
   /**
-   * Creates a {@link BeanDefinitionBuilder} instance for the {@link #getBeanClass bean Class} and passes it to the {@link #doParse}
-   * strategy method.
+   * Creates a {@link BeanDefinitionBuilder} instance for the {@link #getBeanClass bean Class} and passes it to the
+   * {@link #doParse} strategy method.
    *
    * @param element the element that is to be parsed into a single BeanDefinition
    * @param context the object encapsulating the current state of the parsing process
    * @return the BeanDefinition resulting from the parsing of the supplied {@link Element}
-   * @throws IllegalStateException if the bean {@link Class} returned from {@link #getBeanClass(org.w3c.dom.Element)} is <code>null</code>
+   * @throws IllegalStateException if the bean {@link Class} returned from {@link #getBeanClass(org.w3c.dom.Element)} is
+   *         <code>null</code>
    * @see #doParse
    */
   @Override
@@ -283,8 +287,8 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
 
     if (context.isNested()) {
       // Inner bean definition must receive same singleton status as containing bean.
-      builder
-          .setScope(context.getContainingBeanDefinition().isSingleton() ? BeanDefinition.SCOPE_SINGLETON : BeanDefinition.SCOPE_PROTOTYPE);
+      builder.setScope(
+          context.getContainingBeanDefinition().isSingleton() ? BeanDefinition.SCOPE_SINGLETON : BeanDefinition.SCOPE_PROTOTYPE);
     }
 
     doParse(element, context, builder);
@@ -324,7 +328,8 @@ public abstract class AbstractMuleBeanDefinitionParser extends AbstractBeanDefin
       beanClass = getBeanClass(element);
     }
     if (null != beanClass && null != classConstraint && !classConstraint.isAssignableFrom(beanClass)) {
-      throw new IllegalStateException(beanClass + " not a subclass of " + classConstraint + " for " + XMLUtils.elementToString(element));
+      throw new IllegalStateException(
+          beanClass + " not a subclass of " + classConstraint + " for " + XMLUtils.elementToString(element));
     }
     if (null == beanClass) {
       throw new IllegalStateException("No class for element " + XMLUtils.elementToString(element));

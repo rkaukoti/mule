@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.transformers.xml.xstream;
 
@@ -21,8 +21,8 @@ public class XmlObjectTransformersUTF8TestCase extends AbstractTransformerTestCa
   public XmlObjectTransformersUTF8TestCase() throws UnsupportedEncodingException {
     super();
 
-    testXml =
-        ArrayUtils.addAll("<string>".getBytes("ASCII"), ArrayUtils.addAll(TEST_STRING.getBytes("UTF-8"), "</string>".getBytes("ASCII")));
+    testXml = ArrayUtils.addAll("<string>".getBytes("ASCII"),
+        ArrayUtils.addAll(TEST_STRING.getBytes("UTF-8"), "</string>".getBytes("ASCII")));
   }
 
   public Transformer getTransformer() throws Exception {

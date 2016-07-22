@@ -1,14 +1,14 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring;
 
 import java.util.Collection;
 
 /**
- * Keeps track of keys that have been marked as optional on a registry-bootstrap file. It also tracks the optional keys that couldn't in
- * fact be instantiated and are discarded
+ * Keeps track of keys that have been marked as optional on a registry-bootstrap file. It also tracks the optional keys that
+ * couldn't in fact be instantiated and are discarded
  *
  * @since 3.7.0
  */
@@ -41,8 +41,8 @@ public interface OptionalObjectsController {
   boolean isDiscarded(String key);
 
   /**
-   * A placeholder for Spring to temporarily work with. This is because Spring can't handle {@code null} entries. This object will be
-   * removed from the registry when {@link MuleArtifactContext} is fully started
+   * A placeholder for Spring to temporarily work with. This is because Spring can't handle {@code null} entries. This object will
+   * be removed from the registry when {@link MuleArtifactContext} is fully started
    *
    * @return a generic object
    */

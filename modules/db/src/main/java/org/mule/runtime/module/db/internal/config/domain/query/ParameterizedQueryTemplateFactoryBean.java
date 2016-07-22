@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.config.domain.query;
@@ -80,6 +80,7 @@ public class ParameterizedQueryTemplateFactoryBean implements FactoryBean<QueryT
   private QueryParam findOverriddenParam(final String name, List<QueryParam> queryParams) {
     if (name != null) {
       return (QueryParam) find(queryParams, new Predicate() {
+
         @Override
         public boolean evaluate(Object object) {
           return name.equals(((QueryParam) object).getName());

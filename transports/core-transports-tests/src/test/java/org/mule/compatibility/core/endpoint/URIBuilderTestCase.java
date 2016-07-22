@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.endpoint;
 
@@ -162,7 +162,8 @@ public class URIBuilderTestCase extends AbstractMuleTestCase {
    */
   @Test
   public void testSetAddressWithSpecialURIChars() throws UnsupportedEncodingException {
-    String address = String.format("smtp://user%%40my-domain.com:%s@smtp.my-domain.com:25", encode(PWD_WITH_SPECIAL_CHARS, UTF_8.name()));
+    String address =
+        String.format("smtp://user%%40my-domain.com:%s@smtp.my-domain.com:25", encode(PWD_WITH_SPECIAL_CHARS, UTF_8.name()));
     URIBuilder uri = new URIBuilder();
     uri.setAddress(address);
     String result = uri.getEncodedConstructor();
@@ -174,7 +175,8 @@ public class URIBuilderTestCase extends AbstractMuleTestCase {
    */
   @Test
   public void testConstructAddressWithSpecialURIChars() throws UnsupportedEncodingException {
-    String address = String.format("smtp://user%%40my-domain.com:%s@smtp.my-domain.com:25", encode(PWD_WITH_SPECIAL_CHARS, UTF_8.name()));
+    String address =
+        String.format("smtp://user%%40my-domain.com:%s@smtp.my-domain.com:25", encode(PWD_WITH_SPECIAL_CHARS, UTF_8.name()));
     URIBuilder uri = new URIBuilder();
     uri.setProtocol("smtp");
     uri.setUser("user@my-domain.com");

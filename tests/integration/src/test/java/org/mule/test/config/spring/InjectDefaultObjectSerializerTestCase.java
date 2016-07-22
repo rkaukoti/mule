@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.config.spring;
 
@@ -47,9 +47,11 @@ public class InjectDefaultObjectSerializerTestCase extends FunctionalTestCase {
 
   @Test
   public void injectObjectSerializer() throws Exception {
-    TestObjectSerializerInjectionTarget injectionTarget = muleContext.getInjector().inject(new TestObjectSerializerInjectionTarget());
+    TestObjectSerializerInjectionTarget injectionTarget =
+        muleContext.getInjector().inject(new TestObjectSerializerInjectionTarget());
     assertThat(muleContext.getObjectSerializer(), is(sameInstance(injectionTarget.getObjectSerializer())));
-    assertThat(injectionTarget.getObjectSerializer(), is(sameInstance(muleContext.getRegistry().get(MuleProperties.OBJECT_SERIALIZER))));
+    assertThat(injectionTarget.getObjectSerializer(),
+        is(sameInstance(muleContext.getRegistry().get(MuleProperties.OBJECT_SERIALIZER))));
   }
 
   public static class TestObjectSerializerInjectionTarget {

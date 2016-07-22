@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.email.internal.commands;
 
@@ -31,8 +31,8 @@ public final class ListCommand {
   /**
    * Retrieves all the emails in the specified {@code folderName}.
    * <p>
-   * A new {@link MuleMessage} is created for each fetched email from the folder, where the payload is the text body of the email and the
-   * other metadata is carried by an {@link EmailAttributes} instance.
+   * A new {@link MuleMessage} is created for each fetched email from the folder, where the payload is the text body of the email
+   * and the other metadata is carried by an {@link EmailAttributes} instance.
    * <p>
    * For folder implementations (like IMAP) that support fetching without reading the content, if the content should NOT be read
    * ({@code readContent} = false) the SEEN flag is not going to be set.

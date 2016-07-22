@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.api.transport;
 
@@ -17,6 +17,7 @@ import org.mule.runtime.core.api.connector.DispatchException;
  */
 @Deprecated
 public interface MessageDispatching {
+
   long RECEIVE_WAIT_INDEFINITELY = 0;
   long RECEIVE_NO_WAIT = -1;
 

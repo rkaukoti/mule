@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.config.spring.parsers;
 
@@ -34,20 +34,22 @@ public class ParsersTestNamespaceHandler extends AbstractMuleNamespaceHandler {
     registerMuleBeanDefinitionParser("mapped-child",
         new MapDefinitionParserMutator("map", new ChildDefinitionParser("child", ChildBean.class))).addAlias("bar", "foo")
             .addIgnored("ignored").addCollection("offspring");
-    registerMuleBeanDefinitionParser("kid", new ChildDefinitionParser("kid", ChildBean.class)).addAlias("bar", "foo").addIgnored("ignored");
+    registerMuleBeanDefinitionParser("kid", new ChildDefinitionParser("kid", ChildBean.class)).addAlias("bar", "foo")
+        .addIgnored("ignored");
     registerMuleBeanDefinitionParser("parent", new ParentDefinitionParser()).addAlias("bar", "foo").addIgnored("ignored")
         .addCollection("offspring");
     registerMuleBeanDefinitionParser("orphan1", new NamedDefinitionParser("orphan1")).addAlias("bar", "foo").addIgnored("ignored")
         .addCollection("offspring");
-    registerMuleBeanDefinitionParser("orphan2", new NamedDefinitionParser("orphan2")).addAlias("bar", "foo").addIgnored("ignored");
+    registerMuleBeanDefinitionParser("orphan2", new NamedDefinitionParser("orphan2")).addAlias("bar", "foo")
+        .addIgnored("ignored");
     registerMuleBeanDefinitionParser("map-entry", new ChildMapEntryDefinitionParser("map", "key", "value")).addCollection("map");
     registerMuleBeanDefinitionParser("map-entry-combiner", new ChildSingletonMapDefinitionParser("map")).addCollection("map");
     registerMuleBeanDefinitionParser("properties", new ChildMapDefinitionParser("map")).addCollection("map");
     registerBeanDefinitionParser("list-entry", new ChildListEntryDefinitionParser("list"));
     registerMuleBeanDefinitionParser("named", new NamedDefinitionParser()).addAlias("bar", "foo").addIgnored("ignored");
     registerMuleBeanDefinitionParser("inherit",
-        new InheritDefinitionParser(new OrphanDefinitionParser(OrphanBean.class, true), new NamedDefinitionParser())).addAlias("bar", "foo")
-            .addIgnored("ignored").addCollection("offspring");
+        new InheritDefinitionParser(new OrphanDefinitionParser(OrphanBean.class, true), new NamedDefinitionParser()))
+            .addAlias("bar", "foo").addIgnored("ignored").addCollection("offspring");
 
     registerBeanDefinitionParser("list-element-test-1", new ChildListEntryDefinitionParser("kids", "listAttribute"));
     registerBeanDefinitionParser("list-element-test-2",

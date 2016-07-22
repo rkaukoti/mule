@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.processor;
@@ -157,7 +157,8 @@ public abstract class AbstractDbMessageProcessor extends AbstractInterceptingMes
   protected void validateQueryType(QueryTemplate queryTemplate) {
     List<QueryType> validTypes = getValidQueryTypes();
     if (validTypes == null || !validTypes.contains(queryTemplate.getType())) {
-      throw new IllegalArgumentException(String.format("Query type must be one of '%s' but was '%s'", validTypes, queryTemplate.getType()));
+      throw new IllegalArgumentException(
+          String.format("Query type must be one of '%s' but was '%s'", validTypes, queryTemplate.getType()));
     }
   }
 

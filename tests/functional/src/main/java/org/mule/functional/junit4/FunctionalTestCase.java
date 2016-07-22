@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.functional.junit4;
 
@@ -38,9 +38,9 @@ import static org.mule.runtime.core.config.bootstrap.ArtifactType.APP;
 
 /**
  * A base test case for tests that initialize Mule using a configuration file. The default configuration builder used is
- * SpringXmlConfigurationBuilder. To use this test case, ensure you have the mule-modules-builders JAR file on your classpath. To use a
- * different builder, just overload the <code>getBuilder()</code> method of this class to return the type of builder you want to use with
- * your test.
+ * SpringXmlConfigurationBuilder. To use this test case, ensure you have the mule-modules-builders JAR file on your classpath. To
+ * use a different builder, just overload the <code>getBuilder()</code> method of this class to return the type of builder you
+ * want to use with your test.
  */
 public abstract class FunctionalTestCase extends AbstractMuleContextTestCase {
 
@@ -98,9 +98,9 @@ public abstract class FunctionalTestCase extends AbstractMuleContextTestCase {
   }
 
   /**
-   * Returns an instance of the service's component object. Note that depending on the type of ObjectFactory used for the component, this
-   * may create a new instance of the object. If you plan to set properties on the returned object, make sure your component is declared as
-   * a singleton, otherwise this will not work.
+   * Returns an instance of the service's component object. Note that depending on the type of ObjectFactory used for the
+   * component, this may create a new instance of the object. If you plan to set properties on the returned object, make sure your
+   * component is declared as a singleton, otherwise this will not work.
    */
   protected Object getComponent(String serviceName) throws Exception {
     final FlowConstruct flowConstruct = muleContext.getRegistry().lookupObject(serviceName);
@@ -113,9 +113,9 @@ public abstract class FunctionalTestCase extends AbstractMuleContextTestCase {
   }
 
   /**
-   * Returns an instance of the service's component object. Note that depending on the type of ObjectFactory used for the component, this
-   * may create a new instance of the object. If you plan to set properties on the returned object, make sure your component is declared as
-   * a singleton, otherwise this will not work.
+   * Returns an instance of the service's component object. Note that depending on the type of ObjectFactory used for the
+   * component, this may create a new instance of the object. If you plan to set properties on the returned object, make sure your
+   * component is declared as a singleton, otherwise this will not work.
    */
   protected Object getComponent(FlowConstruct flowConstruct) throws Exception {
     if (flowConstruct instanceof AbstractPipeline) {
@@ -220,7 +220,8 @@ public abstract class FunctionalTestCase extends AbstractMuleContextTestCase {
   }
 
   protected void stopFlowSchedulers(String flowName) throws MuleException {
-    final Collection<Scheduler> schedulers = muleContext.getRegistry().lookupScheduler(Schedulers.flowConstructPollingSchedulers(flowName));
+    final Collection<Scheduler> schedulers =
+        muleContext.getRegistry().lookupScheduler(Schedulers.flowConstructPollingSchedulers(flowName));
     for (final Scheduler scheduler : schedulers) {
       scheduler.stop();
     }

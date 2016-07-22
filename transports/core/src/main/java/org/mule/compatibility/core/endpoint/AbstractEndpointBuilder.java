@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.endpoint;
 
@@ -70,9 +70,10 @@ import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.r
 import static org.mule.compatibility.core.util.TransportObjectNameHelper.getEndpointNameFor;
 
 /**
- * Abstract endpoint builder used for externalizing the complex creation logic of endpoints out of the endpoint instance itself. <br/>
- * The use of a builder allows i) Endpoints to be configured once and created in a repeatable fashion (global endpoints), ii) Allow for much
- * more extensibility in endpoint creation for transport specific endpoints, streaming endpoints etc.<br/>
+ * Abstract endpoint builder used for externalizing the complex creation logic of endpoints out of the endpoint instance itself.
+ * <br/>
+ * The use of a builder allows i) Endpoints to be configured once and created in a repeatable fashion (global endpoints), ii)
+ * Allow for much more extensibility in endpoint creation for transport specific endpoints, streaming endpoints etc.<br/>
  */
 public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject implements EndpointBuilder {
 
@@ -143,9 +144,8 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
     final Boolean tempSync = getBooleanProperty(properties, MuleProperties.SYNCHRONOUS_PROPERTY, synchronous);
     if (tempSync != null) {
       if (uriBuilder != null) {
-        logger.warn(String.format(
-            "Deprecated 'synchronous' flag found on endpoint '%s', please replace with " + "e.g. 'exchangePattern=request-response",
-            uriBuilder.getEndpoint()));
+        logger.warn(String.format("Deprecated 'synchronous' flag found on endpoint '%s', please replace with "
+            + "e.g. 'exchangePattern=request-response", uriBuilder.getEndpoint()));
       } else {
         logger.warn("Deprecated 'synchronous' flag found on endpoint)");
       }
@@ -201,10 +201,10 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
   protected InboundEndpoint createInboundEndpoint(EndpointURI endpointURI, List<MessageProcessor> mergedProcessors,
       List<MessageProcessor> mergedResponseProcessors, Connector connector) throws EndpointException {
     return new DefaultInboundEndpoint(connector, endpointURI, getName(endpointURI), getProperties(), getTransactionConfig(),
-        getDefaultDeleteUnacceptedMessages(connector), messageExchangePattern, getResponseTimeout(connector), getInitialState(connector),
-        getEndpointEncoding(connector), name, muleContext, getRetryPolicyTemplate(connector), getRedeliveryPolicy(),
-        getMessageProcessorsFactory(), mergedProcessors, mergedResponseProcessors, isDisableTransportTransformer(),
-        mimeType != null ? DataType.builder().mediaType(mimeType).build().getMediaType() : null);
+        getDefaultDeleteUnacceptedMessages(connector), messageExchangePattern, getResponseTimeout(connector),
+        getInitialState(connector), getEndpointEncoding(connector), name, muleContext, getRetryPolicyTemplate(connector),
+        getRedeliveryPolicy(), getMessageProcessorsFactory(), mergedProcessors, mergedResponseProcessors,
+        isDisableTransportTransformer(), mimeType != null ? DataType.builder().mediaType(mimeType).build().getMediaType() : null);
   }
 
   protected OutboundEndpoint doBuildOutboundEndpoint() throws InitialisationException, EndpointException {
@@ -238,7 +238,8 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
 
     checkOutboundExchangePattern();
 
-    OutboundEndpoint outboundEndpoint = createOutboundEndpoint(endpointURI, mergedProcessors, mergedResponseProcessors, connector);
+    OutboundEndpoint outboundEndpoint =
+        createOutboundEndpoint(endpointURI, mergedProcessors, mergedResponseProcessors, connector);
     if (outboundEndpoint instanceof DefaultOutboundEndpoint) {
       ((DefaultOutboundEndpoint) outboundEndpoint).setAnnotations(getAnnotations());
     }
@@ -250,9 +251,10 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
       List<MessageProcessor> responseMessageProcessors, Connector connector) {
 
     return new DefaultOutboundEndpoint(connector, endpointURI, getName(endpointURI), getProperties(), getTransactionConfig(),
-        getDefaultDeleteUnacceptedMessages(connector), messageExchangePattern, getResponseTimeout(connector), getInitialState(connector),
-        getEndpointEncoding(connector), name, muleContext, getRetryPolicyTemplate(connector), getRedeliveryPolicy(), responsePropertiesList,
-        getMessageProcessorsFactory(), messageProcessors, responseMessageProcessors, isDisableTransportTransformer(),
+        getDefaultDeleteUnacceptedMessages(connector), messageExchangePattern, getResponseTimeout(connector),
+        getInitialState(connector), getEndpointEncoding(connector), name, muleContext, getRetryPolicyTemplate(connector),
+        getRedeliveryPolicy(), responsePropertiesList, getMessageProcessorsFactory(), messageProcessors,
+        responseMessageProcessors, isDisableTransportTransformer(),
         mimeType != null ? DataType.builder().mediaType(mimeType).build().getMediaType() : null);
   }
 
@@ -275,7 +277,8 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
     return tempProcessors;
   }
 
-  private void registerMessageProcessors(EndpointURI endpointURI, List<MessageProcessor> tempProcessors) throws TransportFactoryException {
+  private void registerMessageProcessors(EndpointURI endpointURI, List<MessageProcessor> tempProcessors)
+      throws TransportFactoryException {
     for (MessageProcessor messageProcessor : tempProcessors) {
       registerMessageProcessor(messageProcessor, endpointURI);
     }
@@ -321,8 +324,8 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
     initExchangePatternFromConnectorDefault(serviceDescriptor);
 
     if (!serviceDescriptor.getInboundExchangePatterns().contains(messageExchangePattern)) {
-      throw new EndpointException(
-          TransportCoreMessages.exchangePatternForEndpointNotSupported(messageExchangePattern, "inbound", uriBuilder.getEndpoint()));
+      throw new EndpointException(TransportCoreMessages.exchangePatternForEndpointNotSupported(messageExchangePattern, "inbound",
+          uriBuilder.getEndpoint()));
     }
   }
 
@@ -331,8 +334,8 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
     initExchangePatternFromConnectorDefault(serviceDescriptor);
 
     if (!serviceDescriptor.getOutboundExchangePatterns().contains(messageExchangePattern)) {
-      throw new EndpointException(
-          TransportCoreMessages.exchangePatternForEndpointNotSupported(messageExchangePattern, "outbound", uriBuilder.getEndpoint()));
+      throw new EndpointException(TransportCoreMessages.exchangePatternForEndpointNotSupported(messageExchangePattern, "outbound",
+          uriBuilder.getEndpoint()));
     }
   }
 
@@ -370,8 +373,8 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
   private TransportServiceDescriptor getNonNullServiceDescriptor(Connector conn) throws ServiceException {
     String scheme = uriBuilder.getEndpoint().getSchemeMetaInfo();
     Properties overrides = getOverrides(conn);
-    TransportServiceDescriptor sd =
-        (TransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(), LegacyServiceType.TRANSPORT, scheme, overrides);
+    TransportServiceDescriptor sd = (TransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(),
+        LegacyServiceType.TRANSPORT, scheme, overrides);
     if (null != sd) {
       return sd;
     } else {
@@ -465,7 +468,8 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
   }
 
   protected boolean getDeleteUnacceptedMessages(Connector connector) {
-    return deleteUnacceptedMessages != null ? deleteUnacceptedMessages.booleanValue() : getDefaultDeleteUnacceptedMessages(connector);
+    return deleteUnacceptedMessages != null ? deleteUnacceptedMessages.booleanValue()
+        : getDefaultDeleteUnacceptedMessages(connector);
   }
 
   protected boolean getDefaultDeleteUnacceptedMessages(Connector connector) {
@@ -548,7 +552,8 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
       if (uriBuilder.getEndpoint().getConnectorName() != null) {
         connector = lookupConnector(muleContext.getRegistry(), uriBuilder.getEndpoint().getConnectorName());
         if (connector == null) {
-          throw new TransportFactoryException(CoreMessages.objectNotRegistered("Connector", uriBuilder.getEndpoint().getConnectorName()));
+          throw new TransportFactoryException(
+              CoreMessages.objectNotRegistered("Connector", uriBuilder.getEndpoint().getConnectorName()));
         }
       } else if (isAlwaysCreateConnector()) {
         connector = factory.createConnector(endpointURI);
@@ -648,7 +653,8 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
   }
 
   protected boolean isDisableTransportTransformer() {
-    return disableTransportTransformer != null ? disableTransportTransformer.booleanValue() : getDefaultDisableTransportTransformer();
+    return disableTransportTransformer != null ? disableTransportTransformer.booleanValue()
+        : getDefaultDisableTransportTransformer();
   }
 
   @Override
@@ -732,9 +738,9 @@ public abstract class AbstractEndpointBuilder extends AbstractAnnotatedObject im
 
   @Override
   public int hashCode() {
-    return ClassUtils.hash(new Object[] {retryPolicyTemplate, connector, createConnector, deleteUnacceptedMessages, encoding, uriBuilder,
-        initialState, name, properties, responseTimeout, responseMessageProcessors, synchronous, messageExchangePattern, transactionConfig,
-        messageProcessors, disableTransportTransformer, mimeType});
+    return ClassUtils.hash(new Object[] {retryPolicyTemplate, connector, createConnector, deleteUnacceptedMessages, encoding,
+        uriBuilder, initialState, name, properties, responseTimeout, responseMessageProcessors, synchronous,
+        messageExchangePattern, transactionConfig, messageProcessors, disableTransportTransformer, mimeType});
   }
 
   @Override

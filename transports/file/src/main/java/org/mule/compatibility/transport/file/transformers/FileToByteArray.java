@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.file.transformers;
 
@@ -22,6 +22,7 @@ import java.nio.charset.Charset;
  * <code>FileToByteArray</code> reads the contents of a file as a byte array.
  */
 public class FileToByteArray extends AbstractTransformer implements DiscoverableTransformer {
+
   private int priorityWeighting = DiscoverableTransformer.DEFAULT_PRIORITY_WEIGHTING;
 
   public FileToByteArray() {
@@ -61,7 +62,8 @@ public class FileToByteArray extends AbstractTransformer implements Discoverable
       }
 
     } else {
-      throw new TransformerException(MessageFactory.createStaticMessage("Cannot handle source type %s", src.getClass().getName()), this);
+      throw new TransformerException(MessageFactory.createStaticMessage("Cannot handle source type %s", src.getClass().getName()),
+          this);
     }
 
     try {

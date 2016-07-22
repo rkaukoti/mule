@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.artifact;
 
@@ -41,7 +41,8 @@ import static org.mule.runtime.core.util.UUID.getUUID;
 public class ArtifactMuleContextBuilder {
 
   protected static final String EXECUTION_CLASSLOADER_WAS_NOT_SET = "Execution classloader was not set";
-  protected static final String MULE_CONTEXT_ARTIFACT_PROPERTIES_CANNOT_BE_NULL = "MuleContext artifact properties cannot be null";
+  protected static final String MULE_CONTEXT_ARTIFACT_PROPERTIES_CANNOT_BE_NULL =
+      "MuleContext artifact properties cannot be null";
   protected static final String INSTALLATION_DIRECTORY_MUST_BE_A_DIRECTORY = "installation directory must be a directory";
   protected static final String ONLY_APPLICATIONS_ARE_ALLOWED_TO_HAVE_A_PARENT_CONTEXT =
       "Only applications are allowed to have a parent context";
@@ -82,8 +83,8 @@ public class ArtifactMuleContextBuilder {
   }
 
   /**
-   * Allows to define a {@code MuleContext} which resources will be available to the context to be created. This is the mechanism using for
-   * {@link org.mule.runtime.module.launcher.domain.Domain}s to define shared resources.
+   * Allows to define a {@code MuleContext} which resources will be available to the context to be created. This is the mechanism
+   * using for {@link org.mule.runtime.module.launcher.domain.Domain}s to define shared resources.
    *
    * @param parentContext {@code MuleContext} that is parent of the one to be created.
    * @return the builder
@@ -140,7 +141,8 @@ public class ArtifactMuleContextBuilder {
   }
 
   /**
-   * Sets the classloader that must be used to execute all {@code MuleContext} tasks such as running flows, doing connection retries, etc.
+   * Sets the classloader that must be used to execute all {@code MuleContext} tasks such as running flows, doing connection
+   * retries, etc.
    *
    * @param classloader classloader to use for executing logic within the {@code MuleContext}
    * @return the builder
@@ -162,10 +164,11 @@ public class ArtifactMuleContextBuilder {
   }
 
   /**
-   * Provides a list of {@link ArtifactPlugin} that describe all the extensions that need to be accessible by the {@code MuleContext} to be
-   * created. It may also be that the configuration files make use of this extensions.
+   * Provides a list of {@link ArtifactPlugin} that describe all the extensions that need to be accessible by the
+   * {@code MuleContext} to be created. It may also be that the configuration files make use of this extensions.
    *
-   * @param artifactPlugins collection of artifact extensions that define resources as part of the {@code MuleContext} to be created.
+   * @param artifactPlugins collection of artifact extensions that define resources as part of the {@code MuleContext} to be
+   *        created.
    */
   public ArtifactMuleContextBuilder setArtifactPlugins(List<ArtifactPlugin> artifactPlugins) {
     this.artifactPlugins = artifactPlugins;
@@ -182,7 +185,8 @@ public class ArtifactMuleContextBuilder {
     List<ConfigurationBuilder> builders = new LinkedList<>();
     builders.add(new ApplicationExtensionsManagerConfigurationBuilder(artifactPlugins));
     builders.add(createConfigurationBuilderFromApplicationProperties());
-    SpringXmlConfigurationBuilder mainBuilder = new SpringXmlConfigurationBuilder(configurationFiles, artifactProperties, artifactType);
+    SpringXmlConfigurationBuilder mainBuilder =
+        new SpringXmlConfigurationBuilder(configurationFiles, artifactProperties, artifactType);
     if (parentContext != null) {
       mainBuilder.setParentContext(parentContext);
     }

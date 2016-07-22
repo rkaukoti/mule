@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.internal.connection;
 
@@ -66,8 +66,8 @@ public class LifecycleAwareConnectionProviderWrapper<Connection> extends Connect
   }
 
   /**
-   * Disconnects the {@code connection} and then applies all the necessary {@link Lifecycle} phases until the {@link Disposable#PHASE_NAME}
-   * transition is reached
+   * Disconnects the {@code connection} and then applies all the necessary {@link Lifecycle} phases until the
+   * {@link Disposable#PHASE_NAME} transition is reached
    *
    * @param connection the {@code Connection} to be destroyed
    */
@@ -101,6 +101,7 @@ public class LifecycleAwareConnectionProviderWrapper<Connection> extends Connect
   @Override
   public Optional<PoolingProfile> getPoolingProfile() {
     ConnectionProvider<Connection> delegate = getDelegate();
-    return delegate instanceof ConnectionProviderWrapper ? ((ConnectionProviderWrapper) delegate).getPoolingProfile() : Optional.empty();
+    return delegate instanceof ConnectionProviderWrapper ? ((ConnectionProviderWrapper) delegate).getPoolingProfile()
+        : Optional.empty();
   }
 }

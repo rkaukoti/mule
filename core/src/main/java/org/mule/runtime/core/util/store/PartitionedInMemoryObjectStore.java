@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.store;
 
@@ -23,6 +23,7 @@ import static org.mule.runtime.core.api.store.ObjectStoreManager.UNBOUNDED;
 
 public class PartitionedInMemoryObjectStore<T extends Serializable> extends AbstractPartitionedObjectStore<T>
     implements PartitionableExpirableObjectStore<T> {
+
   private ConcurrentMap<String, ConcurrentMap<Serializable, T>> partitions =
       new ConcurrentHashMap<String, ConcurrentMap<Serializable, T>>();
   private ConcurrentMap<String, ConcurrentLinkedQueue<ExpiryEntry>> expiryInfoPartition =
@@ -200,6 +201,7 @@ public class PartitionedInMemoryObjectStore<T extends Serializable> extends Abst
   }
 
   private static class ExpiryEntry {
+
     private final long time;
     private final Serializable key;
 

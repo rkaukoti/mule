@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.el.mvel;
 
@@ -22,8 +22,9 @@ import java.util.Random;
 import static org.mule.runtime.core.MessageExchangePattern.ONE_WAY;
 
 public class MVELDeepAssignPerformanceTestCase extends AbstractMuleContextTestCase {
-  final protected String mel = "payload.firstName = 'Tom';" + "payload.lastName = 'Fennelly';" + "payload.contact.address = 'Male';"
-      + "payload.contact.telnum = '4';" + "payload.sin = 'Ireland';" + "payload;";
+
+  final protected String mel = "payload.firstName = 'Tom';" + "payload.lastName = 'Fennelly';"
+      + "payload.contact.address = 'Male';" + "payload.contact.telnum = '4';" + "payload.sin = 'Ireland';" + "payload;";
   final protected Payload payload = new Payload();
   @Rule
   public ContiPerfRule rule = new ContiPerfRule();
@@ -94,6 +95,7 @@ public class MVELDeepAssignPerformanceTestCase extends AbstractMuleContextTestCa
   }
 
   public static class Payload {
+
     public String firstName;
     public String lastName;
     public Contact contact = new Contact();
@@ -101,6 +103,7 @@ public class MVELDeepAssignPerformanceTestCase extends AbstractMuleContextTestCa
   }
 
   public static class Contact {
+
     public String address;
     public String telnum;
   }

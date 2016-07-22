@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.requester;
 
@@ -43,6 +43,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assume.assumeThat;
 
 public class HttpsRequesterSniTestCase extends AbstractHttpTestCase {
+
   private static final String FQDN = "localhost.localdomain";
 
   private static final String SERVER_PROTOCOL_ENABLED = "SSLv3,TLSv1,TLSv1.1,TLSv1.2";
@@ -96,9 +97,9 @@ public class HttpsRequesterSniTestCase extends AbstractHttpTestCase {
   }
 
   /*
-   * SNI requires a fully qualified domain name. "localhost.localdomain" is used but it is not commonly present on MacOSX hosts. An
-   * assumption will prevent its execution unless the domain exists. Although is recommended to add the aforementioned domain to the /etc/
-   * file if it's not present.
+   * SNI requires a fully qualified domain name. "localhost.localdomain" is used but it is not commonly present on MacOSX hosts.
+   * An assumption will prevent its execution unless the domain exists. Although is recommended to add the aforementioned domain
+   * to the /etc/ file if it's not present.
    */
   @Test
   public void testClientSNISentOnFQDN() throws Exception {
@@ -118,6 +119,7 @@ public class HttpsRequesterSniTestCase extends AbstractHttpTestCase {
    * Embedded HTTPS server that fails to serve if SNI extension is not honored
    */
   public class Server {
+
     final AtomicReference<String> sniHostname;
     HttpServer webServer;
     int port;
@@ -152,6 +154,7 @@ public class HttpsRequesterSniTestCase extends AbstractHttpTestCase {
 
       SNIFilter sniFilter = new SNIFilter();
       sniFilter.setServerSSLConfigResolver(new SNIServerConfigResolver() {
+
         @Override
         public SNIConfig resolve(Connection connection, String hostname) {
           sniHostAttr.set(connection, hostname);
@@ -190,6 +193,7 @@ public class HttpsRequesterSniTestCase extends AbstractHttpTestCase {
     }
 
     private class SniAddOn implements AddOn {
+
       @Override
       public void setup(NetworkListener networkListener, FilterChainBuilder builder) {
         // replace SSLFilter (if any) with SNIFilter

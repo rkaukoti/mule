@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.config.spring;
 
@@ -23,6 +23,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class GlobalInterceptingMessageProcessorsTestCase extends FunctionalTestCase {
+
   @Override
   protected String getConfigFile() {
     return "global-intercepting-mps-config.xml";
@@ -59,8 +60,8 @@ public class GlobalInterceptingMessageProcessorsTestCase extends FunctionalTestC
   }
 
   /**
-   * Check that the list of message processors contains a duplicate of the MP looked up in the registry (ie. that the MP is a prototype, not
-   * a singleton)
+   * Check that the list of message processors contains a duplicate of the MP looked up in the registry (ie. that the MP is a
+   * prototype, not a singleton)
    */
   private void assertMpPresent(List<MessageProcessor> mpList, MessageProcessor mp, Class<?> clazz) {
     assertFalse(mpList.contains(mp));

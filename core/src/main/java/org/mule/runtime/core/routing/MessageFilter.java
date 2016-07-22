@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -30,13 +30,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of {@link InterceptingMessageProcessor} that filters message flow using a {@link Filter}. Is the filter accepts the
- * message then message flow continues to the next message processor. If the filter does not accept the message processor and a message
- * processor is configured for handling unaccepted message then this will be invoked, otherwise <code>null</code> will be returned.
+ * Implementation of {@link InterceptingMessageProcessor} that filters message flow using a {@link Filter}. Is the filter accepts
+ * the message then message flow continues to the next message processor. If the filter does not accept the message processor and
+ * a message processor is configured for handling unaccepted message then this will be invoked, otherwise <code>null</code> will
+ * be returned.
  * <p/>
  * <b>EIP Reference:</b> <a href="http://www.eaipatterns.com/Filter.html">http://www.eaipatterns .com/Filter.html<a/>
  */
 public class MessageFilter extends AbstractFilteringMessageProcessor implements FlowConstructAware, Lifecycle {
+
   private static final Logger LOGGER = LoggerFactory.getLogger(MessageFilter.class);
 
   protected Filter filter;
@@ -84,7 +86,8 @@ public class MessageFilter extends AbstractFilteringMessageProcessor implements 
   protected MessagingException filterFailureException(MuleEvent event, Exception ex) {
     MessagingException messagingException = new MessagingException(event, ex, this);
     String docName = LocationExecutionContextProvider.getDocName(filter);
-    messagingException.getInfo().put("Filter", docName != null ? String.format("%s (%s)", filter.toString(), docName) : filter.toString());
+    messagingException.getInfo().put("Filter",
+        docName != null ? String.format("%s (%s)", filter.toString(), docName) : filter.toString());
     return messagingException;
   }
 
@@ -103,7 +106,8 @@ public class MessageFilter extends AbstractFilteringMessageProcessor implements 
 
   @Override
   public String toString() {
-    return (filter == null ? "null filter" : filter.getClass().getName()) + " (wrapped by " + this.getClass().getSimpleName() + ")";
+    return (filter == null ? "null filter" : filter.getClass().getName()) + " (wrapped by " + this.getClass().getSimpleName()
+        + ")";
   }
 
   @Override

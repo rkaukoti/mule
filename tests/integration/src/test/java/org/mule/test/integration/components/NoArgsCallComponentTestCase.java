@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.components;
 
@@ -14,10 +14,11 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 /**
- * This test re-written to use entry point resolvers. As a consequence, some tests, which verified implementation details rather than
- * functionality, were dropped.
+ * This test re-written to use entry point resolvers. As a consequence, some tests, which verified implementation details rather
+ * than functionality, were dropped.
  */
 public class NoArgsCallComponentTestCase extends FunctionalTestCase {
+
   public static final String INPUT_DC_FLOW_NAME = "WORMS";
   public static final String OUTPUT_DC_QUEUE_NAME = "test://out";
   public static final String INPUT_DI_FLOW_NAME = "TIRANA";

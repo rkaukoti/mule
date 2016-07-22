@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.transport;
 
@@ -11,15 +11,16 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class LifecycleTrackerConnectorFunctionalTestCase extends FunctionalTestCase {
+
   @Override
   protected String getConfigFile() {
     return "org/mule/test/integration/transport/connector-lifecycle-config.xml";
   }
 
   /**
-   * ASSERT: - Mule stop/start lifecycle methods invoked - Mule initialize/dipose lifecycle methods NOT invoked - Spring lifecycle methods
-   * invoked - Service and muleContext injected (Component implements ServiceAware/MuleContextAware) NOTE: muleContext is injected twice,
-   * once by registry and once by lifecycleAdaptor
+   * ASSERT: - Mule stop/start lifecycle methods invoked - Mule initialize/dipose lifecycle methods NOT invoked - Spring lifecycle
+   * methods invoked - Service and muleContext injected (Component implements ServiceAware/MuleContextAware) NOTE: muleContext is
+   * injected twice, once by registry and once by lifecycleAdaptor
    */
   @Test
   public void testConnectorLifecycle() throws Exception {

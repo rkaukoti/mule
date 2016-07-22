@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf.builder;
 
@@ -30,10 +30,10 @@ import javax.xml.ws.WebServiceClient;
 /**
  * Builds a JAX-WS client based {@link CxfOutboundMessageProcessor}. There are two ways to configure the client:
  * <ol>
- * <li>WSDL generated client: using the CXF wsdl2java tool, you can configure this biulder using the clientClass, port and wsdlLocation
- * property. The MessageProcessor will then use the generated client proxy to make service invocations.
- * <li>JAX-WS service class: if the serviceClass attribute is specified, this builder will use the {@link JaxWsClientFactoryBean} from CXF
- * to biuld a CXF Client. The MessageProcessor will then use this client instnace to make invocations.
+ * <li>WSDL generated client: using the CXF wsdl2java tool, you can configure this biulder using the clientClass, port and
+ * wsdlLocation property. The MessageProcessor will then use the generated client proxy to make service invocations.
+ * <li>JAX-WS service class: if the serviceClass attribute is specified, this builder will use the {@link JaxWsClientFactoryBean}
+ * from CXF to biuld a CXF Client. The MessageProcessor will then use this client instnace to make invocations.
  * </ol>
  * The serviceClass and clientClass attributes are mutually exclusive.
  *

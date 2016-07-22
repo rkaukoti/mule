@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.listener;
 
@@ -127,8 +127,8 @@ public class HttpListenerExpectHeaderStreamingNeverTestCase extends AbstractHttp
    * Sends the request line and headers of an HTTP request over an output stream.
    */
   private void sendHeaders(OutputStream outputStream, String httpVersion, String expectHeaderValue) throws IOException {
-    String request = String.format("%s / %s\n" + "%s: %s\n" + "%s: %d\n", POST.name(), httpVersion, HOST, LISTEN_HOST, CONTENT_LENGTH,
-        TEST_MESSAGE.length());
+    String request = String.format("%s / %s\n" + "%s: %s\n" + "%s: %d\n", POST.name(), httpVersion, HOST, LISTEN_HOST,
+        CONTENT_LENGTH, TEST_MESSAGE.length());
 
     if (expectHeaderValue != null) {
       request += String.format("%s: %s\n", EXPECT, expectHeaderValue);

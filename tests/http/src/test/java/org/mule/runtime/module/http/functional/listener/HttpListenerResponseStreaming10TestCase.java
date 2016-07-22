@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.listener;
 
@@ -97,8 +97,8 @@ public class HttpListenerResponseStreaming10TestCase extends HttpListenerRespons
   // ALWAYS - String
 
   /**
-   * Last paragraph of <a href="http://tools.ietf.org/html/rfc2068#section-3.6">rfc2068#section-3.6</a> states: A server MUST NOT send
-   * transfer-codings to an HTTP/1.0 client.
+   * Last paragraph of <a href="http://tools.ietf.org/html/rfc2068#section-3.6">rfc2068#section-3.6</a> states: A server MUST NOT
+   * send transfer-codings to an HTTP/1.0 client.
    */
   @Test
   public void alwaysString() throws Exception {

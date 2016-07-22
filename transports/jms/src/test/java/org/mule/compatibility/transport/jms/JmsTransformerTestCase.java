@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -21,6 +21,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class JmsTransformerTestCase extends AbstractMuleContextTestCase {
+
   @Test
   public void testCustomJMSProperty() throws Exception {
     // Warning: this test is REALLY complicated :)
@@ -43,7 +44,8 @@ public class JmsTransformerTestCase extends AbstractMuleContextTestCase {
     when(textMessage.getJMSType()).thenReturn(null);
     when(textMessage.getObjectProperty("JMS_CUSTOM_PROPERTY")).thenReturn("customValue");
 
-    MuleMessage msg = MuleMessage.builder().payload(textMessage).addOutboundProperty("JMS_CUSTOM_PROPERTY", "customValue").build();
+    MuleMessage msg =
+        MuleMessage.builder().payload(textMessage).addOutboundProperty("JMS_CUSTOM_PROPERTY", "customValue").build();
 
     // The AbstractJMSTransformer will only apply JMS properties to the
     // underlying message when a "current event" is available, so we need to set

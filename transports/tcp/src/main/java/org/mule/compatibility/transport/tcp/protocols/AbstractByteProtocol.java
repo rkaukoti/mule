@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.compatibility.transport.tcp.protocols;
@@ -26,18 +26,19 @@ import java.net.SocketTimeoutException;
 import javax.inject.Inject;
 
 /**
- * This Abstract class has been introduced so as to have the byte protocols (i.e. the protocols that had only a single write method taking
- * just an array of bytes as a parameter) to inherit from since they will all behave the same, i.e. if the object is serializable, serialize
- * it into an array of bytes and send it.
+ * This Abstract class has been introduced so as to have the byte protocols (i.e. the protocols that had only a single write
+ * method taking just an array of bytes as a parameter) to inherit from since they will all behave the same, i.e. if the object is
+ * serializable, serialize it into an array of bytes and send it.
  * <p/>
  * <p>
- * Note that the raw write method has changed name from <code>write</code> to <code>writeByteArray</code>. This is to remove ambiguity from
- * the code. In almost all cases it is possible to call {@link #write(java.io.OutputStream, Object)} which will, via
- * {@link #write(java.io.OutputStream, Object)}, dispatch to {@link #writeByteArray(java.io.OutputStream, byte[])}.
+ * Note that the raw write method has changed name from <code>write</code> to <code>writeByteArray</code>. This is to remove
+ * ambiguity from the code. In almost all cases it is possible to call {@link #write(java.io.OutputStream, Object)} which will,
+ * via {@link #write(java.io.OutputStream, Object)}, dispatch to {@link #writeByteArray(java.io.OutputStream, byte[])}.
  * </p>
  * .
  */
 public abstract class AbstractByteProtocol implements TcpProtocol {
+
   public static final int EOF = -1;
   // make this really clear in subclasses, because otherwise people will forget
   public static final boolean STREAM_OK = true;

@@ -1,6 +1,6 @@
 /*
- * /* Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * /* Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under
+ * the terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.descriptor;
 
@@ -56,8 +56,8 @@ public class ApplicationDescriptor extends DeployableArtifactDescriptor {
   }
 
   /**
-   * Config builder name. If the name not found among available builder shortcuts (e.g. 'spring' for default xml-based Mule config), then a
-   * FQN of the class to use.
+   * Config builder name. If the name not found among available builder shortcuts (e.g. 'spring' for default xml-based Mule
+   * config), then a FQN of the class to use.
    *
    * @return null for defaults
    */

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.api.client;
@@ -24,7 +24,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Base class for implementing {@link ConnectorOperationProvider}
  */
-public abstract class AbstractConnectorMessageProcessorProvider implements ConnectorOperationProvider, MuleContextAware, Disposable {
+public abstract class AbstractConnectorMessageProcessorProvider
+    implements ConnectorOperationProvider, MuleContextAware, Disposable {
 
   protected static final int CACHE_SIZE = 1000;
   protected static final int EXPIRATION_TIME_IN_MINUTES = 10;
@@ -37,13 +38,15 @@ public abstract class AbstractConnectorMessageProcessorProvider implements Conne
    * Creates a new instance with a default message processors cache.
    */
   public AbstractConnectorMessageProcessorProvider() {
-    cachedMessageProcessors = CacheBuilder.newBuilder().maximumSize(CACHE_SIZE)
-        .expireAfterWrite(EXPIRATION_TIME_IN_MINUTES, TimeUnit.MINUTES).build(new CacheLoader<RequestCacheKey, MessageProcessor>() {
-          @Override
-          public MessageProcessor load(RequestCacheKey cacheKey) throws MuleException {
-            return buildMessageProcessor(cacheKey);
-          }
-        });
+    cachedMessageProcessors =
+        CacheBuilder.newBuilder().maximumSize(CACHE_SIZE).expireAfterWrite(EXPIRATION_TIME_IN_MINUTES, TimeUnit.MINUTES)
+            .build(new CacheLoader<RequestCacheKey, MessageProcessor>() {
+
+              @Override
+              public MessageProcessor load(RequestCacheKey cacheKey) throws MuleException {
+                return buildMessageProcessor(cacheKey);
+              }
+            });
   }
 
   /**
@@ -56,8 +59,8 @@ public abstract class AbstractConnectorMessageProcessorProvider implements Conne
 
 
   @Override
-  public MessageProcessor getMessageProcessor(String url, OperationOptions operationOptions, MessageExchangePattern exchangePattern)
-      throws MuleException {
+  public MessageProcessor getMessageProcessor(String url, OperationOptions operationOptions,
+      MessageExchangePattern exchangePattern) throws MuleException {
     try {
       return cachedMessageProcessors.get(new RequestCacheKey(url, operationOptions, exchangePattern));
     } catch (ExecutionException e) {

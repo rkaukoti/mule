@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.email.internal.retriever;
 
@@ -50,9 +50,9 @@ public class RetrieverConnection extends AbstractEmailConnection {
    * @param properties additional custom properties.
    * @param tlsContextFactory the tls context factory for creating the context to secure the connection
    */
-  public RetrieverConnection(EmailProtocol protocol, String username, String password, String host, String port, long connectionTimeout,
-      long readTimeout, long writeTimeout, Map<String, String> properties, TlsContextFactory tlsContextFactory)
-      throws EmailConnectionException {
+  public RetrieverConnection(EmailProtocol protocol, String username, String password, String host, String port,
+      long connectionTimeout, long readTimeout, long writeTimeout, Map<String, String> properties,
+      TlsContextFactory tlsContextFactory) throws EmailConnectionException {
     super(protocol, username, password, host, port, connectionTimeout, readTimeout, writeTimeout, properties, tlsContextFactory);
     try {
       this.store = session.getStore(protocol.getName());
@@ -80,16 +80,19 @@ public class RetrieverConnection extends AbstractEmailConnection {
    * @param writeTimeout the socket write timeout
    * @param properties additional custom properties.
    */
-  public RetrieverConnection(EmailProtocol protocol, String username, String password, String host, String port, long connectionTimeout,
-      long readTimeout, long writeTimeout, Map<String, String> properties) throws EmailConnectionException {
+  public RetrieverConnection(EmailProtocol protocol, String username, String password, String host, String port,
+      long connectionTimeout, long readTimeout, long writeTimeout, Map<String, String> properties)
+      throws EmailConnectionException {
     this(protocol, username, password, host, port, connectionTimeout, readTimeout, writeTimeout, properties, null);
   }
 
 
   /**
-   * Opens and return the email {@link Folder} of name {@code mailBoxFolder}. The folder can contain Messages, other Folders or both.
+   * Opens and return the email {@link Folder} of name {@code mailBoxFolder}. The folder can contain Messages, other Folders or
+   * both.
    * <p>
-   * If there was an already opened folder and a different one is requested the opened folder will be closed and the new one will be opened.
+   * If there was an already opened folder and a different one is requested the opened folder will be closed and the new one will
+   * be opened.
    *
    * @param mailBoxFolder the name of the folder to be opened.
    * @param openMode open the folder in READ_ONLY or READ_WRITE mode

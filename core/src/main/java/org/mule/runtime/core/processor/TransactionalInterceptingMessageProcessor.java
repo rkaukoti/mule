@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor;
 
@@ -30,6 +30,7 @@ import org.mule.runtime.core.transaction.MuleTransactionConfig;
  */
 public class TransactionalInterceptingMessageProcessor extends AbstractInterceptingMessageProcessor
     implements Lifecycle, MuleContextAware, FlowConstructAware {
+
   protected MessagingExceptionHandler exceptionListener;
   protected MuleTransactionConfig transactionConfig;
   protected FlowConstruct flowConstruct;
@@ -38,9 +39,10 @@ public class TransactionalInterceptingMessageProcessor extends AbstractIntercept
     if (next == null) {
       return event;
     } else {
-      ExecutionTemplate<MuleEvent> executionTemplate =
-          TransactionalErrorHandlingExecutionTemplate.createScopeExecutionTemplate(muleContext, transactionConfig, exceptionListener);
+      ExecutionTemplate<MuleEvent> executionTemplate = TransactionalErrorHandlingExecutionTemplate
+          .createScopeExecutionTemplate(muleContext, transactionConfig, exceptionListener);
       ExecutionCallback<MuleEvent> processingCallback = new ExecutionCallback<MuleEvent>() {
+
         public MuleEvent process() throws Exception {
           return processNext(event);
         }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.tls.internal;
 
@@ -25,7 +25,8 @@ public class MuleTlsContextFactoryBuilder implements TlsContextFactoryBuilder, I
   private MuleContext muleContext;
 
   /**
-   * Creates a default {@link TlsContextFactory} and registers it under key {@link MuleProperties#DEFAULT_TLS_CONTEXT_FACTORY_REGISTRY_KEY}
+   * Creates a default {@link TlsContextFactory} and registers it under key
+   * {@link MuleProperties#DEFAULT_TLS_CONTEXT_FACTORY_REGISTRY_KEY}
    *
    * @throws InitialisationException if the {@link #defaultTlsContextFactory} could not be created or registered
    */
@@ -39,8 +40,8 @@ public class MuleTlsContextFactoryBuilder implements TlsContextFactoryBuilder, I
       defaultTlsContextFactory = new DefaultTlsContextFactory();
       muleContext.getRegistry().registerObject(MuleProperties.DEFAULT_TLS_CONTEXT_FACTORY_REGISTRY_KEY, defaultTlsContextFactory);
     } catch (Exception e) {
-      throw new InitialisationException(createStaticMessage("Failed to create default " + TlsContextFactory.class.getSimpleName()), e,
-          this);
+      throw new InitialisationException(
+          createStaticMessage("Failed to create default " + TlsContextFactory.class.getSimpleName()), e, this);
     }
   }
 

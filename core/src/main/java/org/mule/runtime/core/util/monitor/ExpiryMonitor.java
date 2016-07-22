@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.monitor;
 
@@ -18,10 +18,11 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 /**
- * <code>ExpiryMonitor</code> can monitor objects beased on an expiry time and can invoke a callback method once the object time has
- * expired. If the object does expire it is removed from this monitor.
+ * <code>ExpiryMonitor</code> can monitor objects beased on an expiry time and can invoke a callback method once the object time
+ * has expired. If the object does expire it is removed from this monitor.
  */
 public class ExpiryMonitor implements Runnable, Disposable {
+
   /**
    * logger used by this class
    */
@@ -89,8 +90,8 @@ public class ExpiryMonitor implements Runnable, Disposable {
   }
 
   /**
-   * Adds an expirable object to monitor. If the Object is already being monitored it will be reset and the millisecond timeout will be
-   * ignored
+   * Adds an expirable object to monitor. If the Object is already being monitored it will be reset and the millisecond timeout
+   * will be ignored
    *
    * @param value the expiry value
    * @param timeUnit The time unit of the Expiry value

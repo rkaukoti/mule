@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.transport.file;
 
@@ -30,6 +30,7 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public class FileFunctionalTestCase extends FunctionalTestCase implements FunctionalTestNotificationListener {
+
   @ClassRule
   public static SystemProperty filePollOnlyOnPrimaryNode =
       new SystemProperty(FileMessageReceiver.MULE_TRANSPORT_FILE_SINGLEPOLLINSTANCE, "true");
@@ -71,6 +72,7 @@ public class FileFunctionalTestCase extends FunctionalTestCase implements Functi
     shouldPoll = false;
 
     ((DefaultMuleContext) muleContext).setPollingController(new PollingController() {
+
       @Override
       public boolean isPrimaryPollingInstance() {
         return shouldPoll;
@@ -109,6 +111,7 @@ public class FileFunctionalTestCase extends FunctionalTestCase implements Functi
   }
 
   public static class FileTestComponent extends FunctionalTestComponent {
+
     @Override
     public Object onCall(MuleEventContext context) throws Exception {
       // there should not be any transformers configured by default, so the

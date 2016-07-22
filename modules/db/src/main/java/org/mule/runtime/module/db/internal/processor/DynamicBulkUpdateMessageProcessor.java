@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.processor;
@@ -34,15 +34,16 @@ import static org.mule.runtime.module.db.internal.processor.DbDebugInfoUtils.cre
 /**
  * Executes an update dynamic query in bulk mode on a database *
  * <p/>
- * A dynamic update query can be update, insert or delete query or a stored procedure taking input parameters only and returning an update
- * count.
+ * A dynamic update query can be update, insert or delete query or a stored procedure taking input parameters only and returning
+ * an update count.
  * <p/>
  * Both database and queries are resolved, if required, using the {@link org.mule.runtime.core.api.MuleEvent} being processed.
  */
 public class DynamicBulkUpdateMessageProcessor extends AbstractBulkUpdateMessageProcessor {
 
   public DynamicBulkUpdateMessageProcessor(DbConfigResolver dbConfigResolver, QueryResolver queryResolver,
-      BulkQueryExecutorFactory bulkUpdateExecutorFactory, TransactionalAction transactionalAction, List<QueryType> validQueryTypes) {
+      BulkQueryExecutorFactory bulkUpdateExecutorFactory, TransactionalAction transactionalAction,
+      List<QueryType> validQueryTypes) {
     super(dbConfigResolver, transactionalAction, validQueryTypes, queryResolver, bulkUpdateExecutorFactory);
   }
 

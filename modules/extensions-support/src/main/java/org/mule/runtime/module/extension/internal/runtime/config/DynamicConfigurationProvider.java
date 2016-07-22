@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.runtime.config;
 
@@ -38,9 +38,10 @@ import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
  * A {@link ConfigurationProvider} which continuously evaluates the same {@link ResolverSet} and then uses the resulting
  * {@link ResolverSetResult} to build an instance of type {@code T}
  * <p>
- * Although each invocation to {@link #get(Object)} is guaranteed to end up in an invocation to {@link #resolverSet#resolve(MuleEvent)}, the
- * resulting {@link ResolverSetResult} might not end up generating a new instance. This is so because {@link ResolverSetResult} instances
- * are put in a cache to guarantee that equivalent evaluations of the {@code resolverSet} return the same instance.
+ * Although each invocation to {@link #get(Object)} is guaranteed to end up in an invocation to
+ * {@link #resolverSet#resolve(MuleEvent)}, the resulting {@link ResolverSetResult} might not end up generating a new instance.
+ * This is so because {@link ResolverSetResult} instances are put in a cache to guarantee that equivalent evaluations of the
+ * {@code resolverSet} return the same instance.
  *
  * @param <T> the generic type of the provided {@link ConfigurationInstance}
  * @since 4.0.0
@@ -77,8 +78,8 @@ public final class DynamicConfigurationProvider<T> extends LifecycleAwareConfigu
   }
 
   /**
-   * Evaluates {@link #resolverSet} using the given {@code muleEvent} and returns an instance produced with the result. For equivalent
-   * {@link ResolverSetResult}s it will return the same instance.
+   * Evaluates {@link #resolverSet} using the given {@code muleEvent} and returns an instance produced with the result. For
+   * equivalent {@link ResolverSetResult}s it will return the same instance.
    *
    * @param muleEvent the current {@link MuleEvent}
    * @return the resolved {@link ConfigurationInstance}
@@ -128,8 +129,8 @@ public final class DynamicConfigurationProvider<T> extends LifecycleAwareConfigu
   }
 
   private ConfigurationInstance<T> createConfiguration(ResolverSetResult result, MuleEvent event) throws MuleException {
-    ConfigurationInstance<T> configuration =
-        configurationInstanceFactory.createConfiguration(getName(), result, Optional.ofNullable(connectionProviderResolver.resolve(event)));
+    ConfigurationInstance<T> configuration = configurationInstanceFactory.createConfiguration(getName(), result,
+        Optional.ofNullable(connectionProviderResolver.resolve(event)));
 
     registerConfiguration(configuration);
 

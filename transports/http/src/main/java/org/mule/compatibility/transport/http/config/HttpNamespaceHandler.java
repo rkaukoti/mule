@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.config;
 
@@ -43,10 +43,11 @@ import org.springframework.beans.factory.xml.BeanDefinitionParser;
 /**
  * Reigsters a Bean Definition Parser for handling <code><http:connector></code> elements.
  *
- * This namespace handler now extends HttpNamespaceHandler from mule-module-http so that both projects can register bean definition parsers
- * for the same namespace (http).
+ * This namespace handler now extends HttpNamespaceHandler from mule-module-http so that both projects can register bean
+ * definition parsers for the same namespace (http).
  */
 public class HttpNamespaceHandler extends AbstractMuleTransportsNamespaceHandler {
+
   public static final String HTTP_TRANSPORT_DEPRECATION_MESSAGE =
       "HTTP transport is deprecated and will be removed in Mule 4.0. Use HTTP module instead.";
 
@@ -76,7 +77,8 @@ public class HttpNamespaceHandler extends AbstractMuleTransportsNamespaceHandler
         new TransformerMessageProcessorDefinitionParser(HttpRequestBodyToParamMap.class));
 
     registerDeprecatedBeanDefinitionParser("error-filter", new ParentDefinitionParser());
-    registerDeprecatedBeanDefinitionParser("request-wildcard-filter", new FilterDefinitionParser(HttpRequestWildcardFilter.class));
+    registerDeprecatedBeanDefinitionParser("request-wildcard-filter",
+        new FilterDefinitionParser(HttpRequestWildcardFilter.class));
     registerDeprecatedBeanDefinitionParser("basic-security-filter",
         new SecurityFilterDefinitionParser(HttpBasicAuthenticationFilter.class));
 
@@ -84,14 +86,17 @@ public class HttpNamespaceHandler extends AbstractMuleTransportsNamespaceHandler
         new MessageProcessorDefinitionParser(StaticResourceMessageProcessor.class));
 
     registerDeprecatedBeanDefinitionParser("response-builder", new HttpResponseBuilderDefinitionParser("responseBuilder"));
-    registerDeprecatedBeanDefinitionParser("error-response-builder", new HttpResponseBuilderDefinitionParser("errorResponseBuilder"));
+    registerDeprecatedBeanDefinitionParser("error-response-builder",
+        new HttpResponseBuilderDefinitionParser("errorResponseBuilder"));
 
     registerDeprecatedMuleBeanDefinitionParser("header", new HttpHeaderDefinitionParser()).addCollection("headers");
     registerDeprecatedMuleBeanDefinitionParser("set-cookie", new HttpCookiesDefinitionParser("cookie", CookieWrapper.class))
-        .registerPreProcessor(new CheckExclusiveAttributes(new String[][] {new String[] {"maxAge"}, new String[] {"expiryDate"}}));
+        .registerPreProcessor(
+            new CheckExclusiveAttributes(new String[][] {new String[] {"maxAge"}, new String[] {"expiryDate"}}));
     registerDeprecatedMuleBeanDefinitionParser("body", new TextDefinitionParser("body"));
     registerDeprecatedMuleBeanDefinitionParser("location", new HttpResponseDefinitionParser("header"));
-    registerDeprecatedMuleBeanDefinitionParser("cache-control", new ChildDefinitionParser("cacheControl", CacheControlHeader.class));
+    registerDeprecatedMuleBeanDefinitionParser("cache-control",
+        new ChildDefinitionParser("cacheControl", CacheControlHeader.class));
     registerDeprecatedMuleBeanDefinitionParser("expires", new HttpResponseDefinitionParser("header"));
   }
 
@@ -99,7 +104,8 @@ public class HttpNamespaceHandler extends AbstractMuleTransportsNamespaceHandler
     registerDeprecatedBeanDefinitionParser(elementName, parser, HTTP_TRANSPORT_DEPRECATION_MESSAGE);
   }
 
-  protected MuleDefinitionParserConfiguration registerDeprecatedMuleBeanDefinitionParser(String elementName, MuleDefinitionParser parser) {
+  protected MuleDefinitionParserConfiguration registerDeprecatedMuleBeanDefinitionParser(String elementName,
+      MuleDefinitionParser parser) {
     return registerDeprecatedMuleBeanDefinitionParser(elementName, parser, HTTP_TRANSPORT_DEPRECATION_MESSAGE);
   }
 

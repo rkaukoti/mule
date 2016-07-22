@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.file.internal.command;
 
@@ -38,7 +38,8 @@ abstract class AbstractLocalCopyCommand extends LocalFileCommand {
   }
 
   /**
-   * Performs the base logic and delegates into {@link #doExecute(Path, Path, boolean, CopyOption[])} to perform the actual copying logic
+   * Performs the base logic and delegates into {@link #doExecute(Path, Path, boolean, CopyOption[])} to perform the actual
+   * copying logic
    *
    * @param config the config that is parameterizing this operation
    * @param sourcePath the path to be copied
@@ -80,7 +81,8 @@ abstract class AbstractLocalCopyCommand extends LocalFileCommand {
       doExecute(source, targetPath, overwrite, copyOption != null ? new CopyOption[] {copyOption} : new CopyOption[] {});
     } catch (FileAlreadyExistsException e) {
       throw new IllegalArgumentException(format(
-          "Can't copy '%s' to '%s' because the destination path " + "already exists. Consider setting the 'overwrite' parameter to 'true'",
+          "Can't copy '%s' to '%s' because the destination path "
+              + "already exists. Consider setting the 'overwrite' parameter to 'true'",
           source.toAbsolutePath(), targetPath.toAbsolutePath()));
     } catch (Exception e) {
       throw exception(format("Found exception %s file '%s' to '%s': %s", getAction(), source, targetPath, e.getMessage()), e);

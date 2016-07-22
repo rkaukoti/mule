@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection.describer;
 
@@ -13,8 +13,8 @@ import static org.mule.runtime.core.util.Preconditions.checkArgument;
 import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.checkInstantiable;
 
 /**
- * Implementation of {@link ConfigurationFactory} which creates instances based on a given {@link Class} which is assumed to have a default
- * and public constructor.
+ * Implementation of {@link ConfigurationFactory} which creates instances based on a given {@link Class} which is assumed to have
+ * a default and public constructor.
  *
  * @since 3.7.0
  */
@@ -46,7 +46,8 @@ final class TypeAwareConfigurationFactory implements ConfigurationFactory {
     try {
       return withContextClassLoader(extensionClassLoader, configurationType::newInstance);
     } catch (Exception e) {
-      throw new MuleRuntimeException(createStaticMessage("Could not instantiate configuration of type " + configurationType.getName()), e);
+      throw new MuleRuntimeException(
+          createStaticMessage("Could not instantiate configuration of type " + configurationType.getName()), e);
     }
   }
 

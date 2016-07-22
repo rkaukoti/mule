@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.registry;
 
@@ -41,6 +41,7 @@ public abstract class AbstractRegistryBroker implements RegistryBroker, Registry
   @Override
   public void initialise() throws InitialisationException {
     lifecycleManager.fireInitialisePhase(new LifecycleCallback<AbstractRegistryBroker>() {
+
       public void onTransition(String phaseName, AbstractRegistryBroker broker) throws MuleException {
         for (Registry registry : broker.getRegistries()) {
           registry.initialise();
@@ -52,6 +53,7 @@ public abstract class AbstractRegistryBroker implements RegistryBroker, Registry
   @Override
   public void dispose() {
     lifecycleManager.fireDisposePhase(new LifecycleCallback<AbstractRegistryBroker>() {
+
       public void onTransition(String phaseName, AbstractRegistryBroker broker) throws MuleException {
         for (Registry registry : broker.getRegistries()) {
           registry.dispose();
@@ -116,8 +118,8 @@ public abstract class AbstractRegistryBroker implements RegistryBroker, Registry
   }
 
   /**
-   * Iterates through {@link #getRegistries()} trying to find the first one which is an instance of {@link LifecycleRegistry}. When found,
-   * it returns the result of {@link LifecycleRegistry#lookupObject(String, boolean)}.
+   * Iterates through {@link #getRegistries()} trying to find the first one which is an instance of {@link LifecycleRegistry}.
+   * When found, it returns the result of {@link LifecycleRegistry#lookupObject(String, boolean)}.
    * <p/>
    * If none of the available registries is of that type, then it fallbacks to {@link #lookupObject(String)}
    *

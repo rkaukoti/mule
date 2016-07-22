@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.api.transport;
 
@@ -10,9 +10,9 @@ import org.mule.compatibility.core.api.endpoint.OutboundEndpoint;
 import org.mule.runtime.core.api.MuleException;
 
 /**
- * <code>MessageDispatcherFactory</code> is a factory interface for managing the lifecycles of a transport's message dispatchers. The
- * methods basically implement the {@link KeyedPoolableObjectFactory} lifecycle, with a {@link ImmutableEndpoint} as the key and the
- * dispatcher as pooled object.
+ * <code>MessageDispatcherFactory</code> is a factory interface for managing the lifecycles of a transport's message dispatchers.
+ * The methods basically implement the {@link KeyedPoolableObjectFactory} lifecycle, with a {@link ImmutableEndpoint} as the key
+ * and the dispatcher as pooled object.
  *
  * @deprecated Transport infrastructure is deprecated.
  */
@@ -20,17 +20,18 @@ import org.mule.runtime.core.api.MuleException;
 public interface MessageDispatcherFactory {
 
   /**
-   * Controls whether dispatchers are cached or created per request. Note that if an exception occurs in the dispatcher, it is automatically
-   * disposed of and a new one is created for the next request. This allows dispatchers to recover from loss of connection and other faults.
-   * When invoked by {@link #validate(OutboundEndpoint, MessageDispatcher)} it takes precedence over the dispatcher's own return value of
-   * {@link MessageDispatcher#validate()}.
+   * Controls whether dispatchers are cached or created per request. Note that if an exception occurs in the dispatcher, it is
+   * automatically disposed of and a new one is created for the next request. This allows dispatchers to recover from loss of
+   * connection and other faults. When invoked by {@link #validate(OutboundEndpoint, MessageDispatcher)} it takes precedence over
+   * the dispatcher's own return value of {@link MessageDispatcher#validate()}.
    *
    * @return true if created per request
    */
   boolean isCreateDispatcherPerRequest();
 
   /**
-   * Creates a new message dispatcher instance, initialised with the passed endpoint. The returned instance should be immediately useable.
+   * Creates a new message dispatcher instance, initialised with the passed endpoint. The returned instance should be immediately
+   * useable.
    *
    * @param endpoint the endoint for which this dispatcher should be created
    * @return a properly created <code>MessageDispatcher</code> for this transport
@@ -49,8 +50,8 @@ public interface MessageDispatcherFactory {
   void activate(OutboundEndpoint endpoint, MessageDispatcher dispatcher) throws MuleException;
 
   /**
-   * Invoked <strong>after</strong> the dispatcher is returned from a client but <strong>before</strong> it is prepared for return to its
-   * pool via {@link #passivate(OutboundEndpoint, MessageDispatcher)}.
+   * Invoked <strong>after</strong> the dispatcher is returned from a client but <strong>before</strong> it is prepared for return
+   * to its pool via {@link #passivate(OutboundEndpoint, MessageDispatcher)}.
    *
    * @param endpoint the endpoint of the dispatcher
    * @param dispatcher the dispatcher to be validated

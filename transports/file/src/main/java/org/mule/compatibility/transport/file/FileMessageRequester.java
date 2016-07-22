@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.file;
 
@@ -27,6 +27,7 @@ import java.nio.charset.Charset;
  * <code>FileMessageRequester</code> is used to read/write files to the filesystem
  */
 public class FileMessageRequester extends AbstractMessageRequester {
+
   private final FileConnector fileConnector;
 
   private String workDir = null;
@@ -59,8 +60,8 @@ public class FileMessageRequester extends AbstractMessageRequester {
   }
 
   /**
-   * Will attempt to do a receive from a directory, if the endpointUri resolves to a file name the file will be returned, otherwise the
-   * first file in the directory according to the filename filter configured on the connector.
+   * Will attempt to do a receive from a directory, if the endpointUri resolves to a file name the file will be returned,
+   * otherwise the first file in the directory according to the filename filter configured on the connector.
    *
    * @param timeout this is ignored when doing a receive on this dispatcher
    * @return a message containing file contents or null if there was notthing to receive
@@ -130,7 +131,8 @@ public class FileMessageRequester extends AbstractMessageRequester {
         Charset encoding = endpoint.getEncoding();
         try {
           if (fileConnector.isStreaming()) {
-            ReceiverFileInputStream receiverStream = new ReceiverFileInputStream(result, fileConnector.isAutoDelete(), destinationFile);
+            ReceiverFileInputStream receiverStream =
+                new ReceiverFileInputStream(result, fileConnector.isAutoDelete(), destinationFile);
             returnMessage = createMuleMessage(receiverStream, encoding);
           } else {
             returnMessage = createMuleMessage(result, encoding);
@@ -142,9 +144,9 @@ public class FileMessageRequester extends AbstractMessageRequester {
           return null;
         }
 
-        returnMessage =
-            MuleMessage.builder(returnMessage).addInboundProperty(FileConnector.PROPERTY_ORIGINAL_FILENAME, originalSourceFileName)
-                .addInboundProperty(FileConnector.PROPERTY_ORIGINAL_DIRECTORY, originalSourceDirectory).build();
+        returnMessage = MuleMessage.builder(returnMessage)
+            .addInboundProperty(FileConnector.PROPERTY_ORIGINAL_FILENAME, originalSourceFileName)
+            .addInboundProperty(FileConnector.PROPERTY_ORIGINAL_DIRECTORY, originalSourceDirectory).build();
 
         if (!fileConnector.isStreaming()) {
           moveOrDelete(result, destinationFile);
@@ -177,7 +179,8 @@ public class FileMessageRequester extends AbstractMessageRequester {
       try {
         FileUtils.moveFile(sourceFile, destinationFile);
       } catch (IOException e) {
-        throw new DefaultMuleException(FileMessages.failedToMoveFile(sourceFile.getAbsolutePath(), destinationFile.getAbsolutePath()));
+        throw new DefaultMuleException(
+            FileMessages.failedToMoveFile(sourceFile.getAbsolutePath(), destinationFile.getAbsolutePath()));
       }
     }
     if (fileConnector.isAutoDelete()) {

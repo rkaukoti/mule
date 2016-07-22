@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.exception;
 
@@ -17,6 +17,7 @@ import java.util.List;
 
 // TODO: MULE-9307 re-write junits for rollback exception strategy
 public class RollbackMessagingExceptionStrategy extends TemplateMessagingExceptionStrategy {
+
   private RedeliveryExceeded redeliveryExceeded;
   private Integer maxRedeliveryAttempts;
 
@@ -53,8 +54,8 @@ public class RollbackMessagingExceptionStrategy extends TemplateMessagingExcepti
 
   @Override
   protected List<MessageProcessor> getOwnedMessageProcessors() {
-    List<MessageProcessor> messageProcessors = new ArrayList<MessageProcessor>(
-        super.getMessageProcessors().size() + (redeliveryExceeded == null ? 0 : redeliveryExceeded.getMessageProcessors().size()));
+    List<MessageProcessor> messageProcessors = new ArrayList<MessageProcessor>(super.getMessageProcessors().size()
+        + (redeliveryExceeded == null ? 0 : redeliveryExceeded.getMessageProcessors().size()));
     messageProcessors.addAll(super.getMessageProcessors());
     if (redeliveryExceeded != null) {
       messageProcessors.addAll(redeliveryExceeded.getMessageProcessors());

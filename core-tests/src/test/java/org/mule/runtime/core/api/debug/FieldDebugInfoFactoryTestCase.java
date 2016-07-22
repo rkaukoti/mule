@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.api.debug;
@@ -38,7 +38,8 @@ public class FieldDebugInfoFactoryTestCase extends AbstractMuleTestCase {
   public void createsStringFieldWithAttributeEvaluator() throws Exception {
     when(attributeEvaluator.resolveStringValue(event)).thenReturn(STRING_VALUE);
 
-    final FieldDebugInfo<?> debugInfo = FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, String.class, attributeEvaluator, event);
+    final FieldDebugInfo<?> debugInfo =
+        FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, String.class, attributeEvaluator, event);
 
     assertCreatedFieldDebugInfo(debugInfo, String.class, STRING_VALUE, SimpleFieldDebugInfo.class);
   }
@@ -47,7 +48,8 @@ public class FieldDebugInfoFactoryTestCase extends AbstractMuleTestCase {
   public void createsBooleanFieldWithAttributeEvaluator() throws Exception {
     when(attributeEvaluator.resolveBooleanValue(event)).thenReturn(true);
 
-    final FieldDebugInfo<?> debugInfo = FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Boolean.class, attributeEvaluator, event);
+    final FieldDebugInfo<?> debugInfo =
+        FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Boolean.class, attributeEvaluator, event);
 
     assertCreatedFieldDebugInfo(debugInfo, Boolean.class, true, SimpleFieldDebugInfo.class);
   }
@@ -56,7 +58,8 @@ public class FieldDebugInfoFactoryTestCase extends AbstractMuleTestCase {
   public void createsIntegerFieldWithAttributeEvaluator() throws Exception {
     when(attributeEvaluator.resolveIntegerValue(event)).thenReturn(1);
 
-    final FieldDebugInfo<?> debugInfo = FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Integer.class, attributeEvaluator, event);
+    final FieldDebugInfo<?> debugInfo =
+        FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Integer.class, attributeEvaluator, event);
 
     assertCreatedFieldDebugInfo(debugInfo, Integer.class, 1, SimpleFieldDebugInfo.class);
   }
@@ -66,7 +69,8 @@ public class FieldDebugInfoFactoryTestCase extends AbstractMuleTestCase {
     final Object value = new Object();
     when(attributeEvaluator.resolveValue(event)).thenReturn(value);
 
-    final FieldDebugInfo<?> debugInfo = FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Object.class, attributeEvaluator, event);
+    final FieldDebugInfo<?> debugInfo =
+        FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Object.class, attributeEvaluator, event);
 
     assertCreatedFieldDebugInfo(debugInfo, Object.class, value, SimpleFieldDebugInfo.class);
   }
@@ -75,7 +79,8 @@ public class FieldDebugInfoFactoryTestCase extends AbstractMuleTestCase {
   public void createsStringFieldWithAttributeEvaluatorError() throws Exception {
     when(attributeEvaluator.resolveStringValue(event)).thenThrow(EVALUATION_EXCEPTION);
 
-    final FieldDebugInfo<?> debugInfo = FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, String.class, attributeEvaluator, event);
+    final FieldDebugInfo<?> debugInfo =
+        FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, String.class, attributeEvaluator, event);
 
     assertCreatedFieldDebugInfo(debugInfo, String.class, EVALUATION_EXCEPTION, ErrorFieldDebugInfo.class);
   }
@@ -84,7 +89,8 @@ public class FieldDebugInfoFactoryTestCase extends AbstractMuleTestCase {
   public void createsBooleanFieldWithAttributeEvaluatorError() throws Exception {
     when(attributeEvaluator.resolveBooleanValue(event)).thenThrow(EVALUATION_EXCEPTION);
 
-    final FieldDebugInfo<?> debugInfo = FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Boolean.class, attributeEvaluator, event);
+    final FieldDebugInfo<?> debugInfo =
+        FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Boolean.class, attributeEvaluator, event);
 
     assertCreatedFieldDebugInfo(debugInfo, Boolean.class, EVALUATION_EXCEPTION, ErrorFieldDebugInfo.class);
   }
@@ -93,7 +99,8 @@ public class FieldDebugInfoFactoryTestCase extends AbstractMuleTestCase {
   public void createsIntegerFieldWithAttributeEvaluatorError() throws Exception {
     when(attributeEvaluator.resolveIntegerValue(event)).thenThrow(EVALUATION_EXCEPTION);
 
-    final FieldDebugInfo<?> debugInfo = FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Integer.class, attributeEvaluator, event);
+    final FieldDebugInfo<?> debugInfo =
+        FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Integer.class, attributeEvaluator, event);
 
     assertCreatedFieldDebugInfo(debugInfo, Integer.class, EVALUATION_EXCEPTION, ErrorFieldDebugInfo.class);
   }
@@ -102,7 +109,8 @@ public class FieldDebugInfoFactoryTestCase extends AbstractMuleTestCase {
   public void createsObjectFieldWithAttributeEvaluatorError() throws Exception {
     when(attributeEvaluator.resolveValue(event)).thenThrow(EVALUATION_EXCEPTION);
 
-    final FieldDebugInfo<?> debugInfo = FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Object.class, attributeEvaluator, event);
+    final FieldDebugInfo<?> debugInfo =
+        FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Object.class, attributeEvaluator, event);
 
     assertCreatedFieldDebugInfo(debugInfo, Object.class, EVALUATION_EXCEPTION, ErrorFieldDebugInfo.class);
   }
@@ -133,14 +141,16 @@ public class FieldDebugInfoFactoryTestCase extends AbstractMuleTestCase {
 
   @Test
   public void createsFieldWithError() throws Exception {
-    final FieldDebugInfo<?> debugInfo = FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, String.class, EVALUATION_EXCEPTION);
+    final FieldDebugInfo<?> debugInfo =
+        FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, String.class, EVALUATION_EXCEPTION);
 
     assertCreatedFieldDebugInfo(debugInfo, String.class, EVALUATION_EXCEPTION, ErrorFieldDebugInfo.class);
   }
 
   @Test
   public void createsFieldWithObjectDebugInfo() throws Exception {
-    final SimpleFieldDebugInfo fieldDebugInfo = FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, String.class, STRING_VALUE);
+    final SimpleFieldDebugInfo fieldDebugInfo =
+        FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, String.class, STRING_VALUE);
     final List<FieldDebugInfo<?>> value = Collections.<FieldDebugInfo<?>>singletonList(fieldDebugInfo);
 
     final FieldDebugInfo<?> debugInfo = FieldDebugInfoFactory.createFieldDebugInfo(FIELD_NAME, Map.class, value);

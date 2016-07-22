@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.el.context;
 
@@ -11,7 +11,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Session variables wrapper {@link Map} for exposing Session variables via an {@link org.mule.runtime.core.api.el.ExpressionLanguage}
+ * Session variables wrapper {@link Map} for exposing Session variables via an
+ * {@link org.mule.runtime.core.api.el.ExpressionLanguage}
  */
 public class SessionVariableMapContext extends AbstractMapContext<Object> {
 

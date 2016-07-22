@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.transformers;
 
@@ -46,7 +46,8 @@ import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_PROP
  */
 public class MuleMessageToHttpResponse extends AbstractMessageTransformer {
 
-  private static DateTimeFormatter dateFormatter = DateTimeFormat.forPattern(HttpConstants.DATE_FORMAT_RFC822).withLocale(Locale.US);
+  private static DateTimeFormatter dateFormatter =
+      DateTimeFormat.forPattern(HttpConstants.DATE_FORMAT_RFC822).withLocale(Locale.US);
   private String server;
 
   public MuleMessageToHttpResponse() {
@@ -240,8 +241,8 @@ public class MuleMessageToHttpResponse extends AbstractMessageTransformer {
 
     msg.getCorrelation().getId().ifPresent(v -> {
       response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_ID_PROPERTY, v));
-      msg.getCorrelation().getGroupSize()
-          .ifPresent(s -> response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_GROUP_SIZE_PROPERTY, valueOf(s))));
+      msg.getCorrelation().getGroupSize().ifPresent(
+          s -> response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_GROUP_SIZE_PROPERTY, valueOf(s))));
       msg.getCorrelation().getSequence()
           .ifPresent(s -> response.setHeader(new Header(CUSTOM_HEADER_PREFIX + MULE_CORRELATION_SEQUENCE_PROPERTY, valueOf(s))));
     });

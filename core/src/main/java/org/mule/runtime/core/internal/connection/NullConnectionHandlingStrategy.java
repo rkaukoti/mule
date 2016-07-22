@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.internal.connection;
 
@@ -13,8 +13,8 @@ import org.mule.runtime.core.api.MuleException;
 /**
  * A {@link ConnectionHandlerAdapter} which adds no behavior.
  * <p>
- * Each invokation to {@link #getConnectionHandler()} creates a new connection which is closed when {@link ConnectionHandler#release()} is
- * invoked.
+ * Each invokation to {@link #getConnectionHandler()} creates a new connection which is closed when
+ * {@link ConnectionHandler#release()} is invoked.
  *
  * @param <Connection> the generic type of the connection being wrapped
  * @since 4.0

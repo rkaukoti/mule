@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport.service;
 
@@ -28,22 +28,24 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * <code>TransportServiceDescriptor</code> describes the necessary information for creating a connector from a service descriptor. A service
- * descriptor should be located at META-INF/services/org/mule/providers/<protocol> where protocol is the protocol of the connector to be
- * created The service descriptor is in the form of string key value pairs and supports a number of properties, descriptions of which can be
- * found here: http://www.mulesoft.org/documentation/display/MULE3USER/Transport+Service+Descriptors
+ * <code>TransportServiceDescriptor</code> describes the necessary information for creating a connector from a service descriptor.
+ * A service descriptor should be located at META-INF/services/org/mule/providers/<protocol> where protocol is the protocol of the
+ * connector to be created The service descriptor is in the form of string key value pairs and supports a number of properties,
+ * descriptions of which can be found here: http://www.mulesoft.org/documentation/display/MULE3USER/Transport+Service+Descriptors
  */
 public interface TransportServiceDescriptor extends ServiceDescriptor, MuleContextAware {
+
   public static final String OSGI_HEADER_TRANSPORT = "Mule-Transport";
 
   MuleMessageFactory createMuleMessageFactory() throws TransportServiceException;
 
   SessionHandler createSessionHandler() throws TransportServiceException;
 
-  MessageReceiver createMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint) throws MuleException;
-
-  MessageReceiver createMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint, Object... args)
+  MessageReceiver createMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint)
       throws MuleException;
+
+  MessageReceiver createMessageReceiver(Connector connector, FlowConstruct flowConstruct, InboundEndpoint endpoint,
+      Object... args) throws MuleException;
 
   MessageDispatcherFactory createDispatcherFactory() throws TransportServiceException;
 
@@ -83,7 +85,8 @@ public interface TransportServiceDescriptor extends ServiceDescriptor, MuleConte
    * @param muleContext context of the application owning endpoint builder
    * @return a non null endpoint builder for the given builder
    */
-  EndpointBuilder createEndpointBuilder(EndpointURIEndpointBuilder builder, MuleContext muleContext) throws TransportFactoryException;
+  EndpointBuilder createEndpointBuilder(EndpointURIEndpointBuilder builder, MuleContext muleContext)
+      throws TransportFactoryException;
 
   Properties getExceptionMappings();
 

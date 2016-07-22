@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -18,6 +18,7 @@ import java.util.regex.Pattern;
  * <code>TemplateParser</code> is a simple string parser that will substitute tokens in a string with values supplied in a Map.
  */
 public final class TemplateParser {
+
   public static final String ANT_TEMPLATE_STYLE = "ant";
   public static final String SQUARE_TEMPLATE_STYLE = "square";
   public static final String CURLY_TEMPLATE_STYLE = "curly";
@@ -75,8 +76,8 @@ public final class TemplateParser {
   }
 
   /**
-   * Matches one or more templates against a Map of key value pairs. If a value for a template is not found in the map the template is left
-   * as is in the return String
+   * Matches one or more templates against a Map of key value pairs. If a value for a template is not found in the map the
+   * template is left as is in the return String
    *
    * @param props the key/value pairs to match against
    * @param template the string containing the template place holders i.e. My name is ${name}
@@ -87,8 +88,8 @@ public final class TemplateParser {
   }
 
   /**
-   * Matches one or more templates against a Map of key value pairs. If a value for a template is not found in the map the template is left
-   * as is in the return String
+   * Matches one or more templates against a Map of key value pairs. If a value for a template is not found in the map the
+   * template is left as is in the return String
    *
    * @param callback a callback used to resolve the property name
    * @param template the string containing the template place holders i.e. My name is ${name}
@@ -149,8 +150,8 @@ public final class TemplateParser {
   }
 
   /**
-   * Matches one or more templates against a Map of key value pairs. If a value for a template is not found in the map the template is left
-   * as is in the return String
+   * Matches one or more templates against a Map of key value pairs. If a value for a template is not found in the map the
+   * template is left as is in the return String
    *
    * @param props the key/value pairs to match against
    * @param templates A List of templates
@@ -167,8 +168,8 @@ public final class TemplateParser {
   }
 
   /**
-   * Matches one or more templates against a Map of key value pairs. If a value for a template is not found in the map the template is left
-   * as is in the return String
+   * Matches one or more templates against a Map of key value pairs. If a value for a template is not found in the map the
+   * template is left as is in the return String
    *
    * @param props the key/value pairs to match against
    * @param templates A Map of templates. The values for each map entry will be parsed
@@ -218,11 +219,13 @@ public final class TemplateParser {
 
   @FunctionalInterface
   public interface TemplateCallback {
+
     Object match(String token);
   }
 
 
   public static class PatternInfo {
+
     String name;
     String regEx;
     String prefix;

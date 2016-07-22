@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.infrastructure.deployment;
 
@@ -95,6 +95,7 @@ public class FakeMuleServer {
     deploymentService.addDeploymentListener(deploymentListener);
 
     coreExtensionManager = new DefaultMuleCoreExtensionManagerServer(new MuleCoreExtensionDiscoverer() {
+
       @Override
       public List<MuleCoreExtension> discover() throws DefaultMuleException {
         return coreExtensions;
@@ -132,6 +133,7 @@ public class FakeMuleServer {
   private void assertDeploymentFailure(final DeploymentListener listener, final String appName) {
     Prober prober = new PollingProber(DEPLOYMENT_TIMEOUT, 100);
     prober.check(new Probe() {
+
       public boolean isSatisfied() {
         try {
           verify(listener, times(1)).onDeploymentFailure(eq(appName), any(Throwable.class));
@@ -150,6 +152,7 @@ public class FakeMuleServer {
   private void assertDeploymentSuccess(final DeploymentListener listener, final String appName) {
     Prober prober = new PollingProber(DEPLOYMENT_TIMEOUT, 100);
     prober.check(new Probe() {
+
       public boolean isSatisfied() {
         try {
           verify(listener, times(1)).onDeploymentSuccess(appName);
@@ -168,6 +171,7 @@ public class FakeMuleServer {
   public void assertUndeploymentSuccess(final DeploymentListener listener, final String appName) {
     Prober prober = new PollingProber(DEPLOYMENT_TIMEOUT, 100);
     prober.check(new Probe() {
+
       public boolean isSatisfied() {
         try {
           verify(listener, times(1)).onUndeploymentSuccess(appName);
@@ -348,7 +352,8 @@ public class FakeMuleServer {
     copyExplodedArtifactFromClasspathFolderToDeployFolder(appFolder, getAppsDir(), appName);
   }
 
-  private void copyExplodedArtifactFromClasspathFolderToDeployFolder(String artifactFolder, File artifactDirectory, String artifactName) {
+  private void copyExplodedArtifactFromClasspathFolderToDeployFolder(String artifactFolder, File artifactDirectory,
+      String artifactName) {
     ReentrantLock lock = this.deploymentService.getLock();
     lock.lock();
     try {

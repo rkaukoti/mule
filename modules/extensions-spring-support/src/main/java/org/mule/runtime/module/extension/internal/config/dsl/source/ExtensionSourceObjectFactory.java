@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.config.dsl.source;
 
@@ -51,7 +51,8 @@ public class ExtensionSourceObjectFactory extends AbstractExtensionObjectFactory
   @Inject
   private ConnectionManagerAdapter connectionManager;
 
-  public ExtensionSourceObjectFactory(RuntimeExtensionModel extensionModel, RuntimeSourceModel sourceModel, MuleContext muleContext) {
+  public ExtensionSourceObjectFactory(RuntimeExtensionModel extensionModel, RuntimeSourceModel sourceModel,
+      MuleContext muleContext) {
     this.extensionModel = extensionModel;
     this.sourceModel = sourceModel;
     this.muleContext = muleContext;
@@ -90,7 +91,8 @@ public class ExtensionSourceObjectFactory extends AbstractExtensionObjectFactory
       try {
         return new SourceConfigurer(sourceModel, resolverSet, muleContext).configure(source);
       } catch (Exception e) {
-        throw new MuleRuntimeException(createStaticMessage(format("Could not create generator for source '%s'", sourceModel.getName())));
+        throw new MuleRuntimeException(
+            createStaticMessage(format("Could not create generator for source '%s'", sourceModel.getName())));
       }
     };
   }
@@ -107,9 +109,9 @@ public class ExtensionSourceObjectFactory extends AbstractExtensionObjectFactory
     List<String> dynamicParams = resolverSet.getResolvers().entrySet().stream().filter(entry -> entry.getValue().isDynamic())
         .map(entry -> entry.getKey()).collect(toList());
 
-    return new ConfigurationException(createStaticMessage(format(
-        "The '%s' message source is using expressions, which are not allowed on message sources. " + "Offending parameters are: [%s]",
-        model.getName(), Joiner.on(',').join(dynamicParams))));
+    return new ConfigurationException(
+        createStaticMessage(format("The '%s' message source is using expressions, which are not allowed on message sources. "
+            + "Offending parameters are: [%s]", model.getName(), Joiner.on(',').join(dynamicParams))));
   }
 
   public void setConfigurationProviderName(String configurationProviderName) {

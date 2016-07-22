@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.functional;
 
@@ -20,6 +20,7 @@ import static org.junit.Assert.assertEquals;
  * See MULE-6968 "Http endpoint with path="" or path="/" do not attend requests at root level"
  */
 public class HttpRootLevelRequestsTestCase extends FunctionalTestCase {
+
   @Rule
   public DynamicPort httpPort1 = new DynamicPort("port1");
 

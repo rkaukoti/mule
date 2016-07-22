@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.json.validation;
 
@@ -59,13 +59,13 @@ public class JsonSchemaValidator {
   }
 
   /**
-   * Parses the {@code event}'s payload as a Json by the rules of {@link DefaultJsonParser#asJsonNode(Object)}. Then it validates it against
-   * the given schema.
+   * Parses the {@code event}'s payload as a Json by the rules of {@link DefaultJsonParser#asJsonNode(Object)}. Then it validates
+   * it against the given schema.
    * <p/>
    * If the validation fails, a {@link JsonSchemaValidationException} is thrown.
    * <p/>
-   * Notice that if the message payload is a {@link Reader} or {@link InputStream} then it will be consumed in order to perform the
-   * validation. As a result, the message payload will be changed to the {@link String} representation of the json.
+   * Notice that if the message payload is a {@link Reader} or {@link InputStream} then it will be consumed in order to perform
+   * the validation. As a result, the message payload will be changed to the {@link String} representation of the json.
    *
    * @param event the current {@link MuleEvent}
    */
@@ -88,14 +88,15 @@ public class JsonSchemaValidator {
     }
 
     if (!report.isSuccess()) {
-      throw new JsonSchemaValidationException("Json content is not compliant with schema\n" + report.toString(), jsonNode.toString());
+      throw new JsonSchemaValidationException("Json content is not compliant with schema\n" + report.toString(),
+          jsonNode.toString());
     }
   }
 
   /**
-   * An implementation of the builder design pattern to create instances of {@link JsonSchemaValidator}. This builder can be safely reused,
-   * returning a different instance each time {@link #build()} is invoked. It is mandatory to invoke {@link #setSchemaLocation(String)} with
-   * a valid value before attempting to {@link #build()} an instance
+   * An implementation of the builder design pattern to create instances of {@link JsonSchemaValidator}. This builder can be
+   * safely reused, returning a different instance each time {@link #build()} is invoked. It is mandatory to invoke
+   * {@link #setSchemaLocation(String)} with a valid value before attempting to {@link #build()} an instance
    *
    * @since 3.6.0
    */
@@ -109,8 +110,8 @@ public class JsonSchemaValidator {
     private Builder() {}
 
     /**
-     * A location in which the json schema is present. It allows both local and external resources. For example, all of the following are
-     * valid:
+     * A location in which the json schema is present. It allows both local and external resources. For example, all of the
+     * following are valid:
      * <li>
      * <ul>
      * schemas/schema.json
@@ -150,8 +151,8 @@ public class JsonSchemaValidator {
     }
 
     /**
-     * Allows to redirect any given URI in the Schema (or even the schema location itself) to any other specific URI. The most common use
-     * case for this feature is to map external namespace URIs without the need to a local resource
+     * Allows to redirect any given URI in the Schema (or even the schema location itself) to any other specific URI. The most
+     * common use case for this feature is to map external namespace URIs without the need to a local resource
      *
      * @param from the location to redirect. Accepts the same formats as {@link #setSchemaLocation(String)}
      * @param to the location to redirect to. Accepts the same formats as {@link #setSchemaLocation(String)}
@@ -182,7 +183,8 @@ public class JsonSchemaValidator {
     }
 
     /**
-     * Builds a new instance per the given configuration. This method can be safely invoked many times, returning a different instance each.
+     * Builds a new instance per the given configuration. This method can be safely invoked many times, returning a different
+     * instance each.
      *
      * @return a {@link JsonSchemaValidator}
      * @throws IllegalStateException if {@link #setSchemaLocation(String)} was not invoked

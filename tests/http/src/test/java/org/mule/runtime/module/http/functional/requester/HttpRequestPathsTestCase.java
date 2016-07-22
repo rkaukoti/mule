@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.requester;
 
@@ -79,12 +79,13 @@ public class HttpRequestPathsTestCase extends AbstractHttpRequestTestCase {
   @Test
   public void customPathWithSpaceAndEncodedCharacter() throws Exception {
     // Spaces should be replaced by "%20", but any other encoded character must not be modified.
-    assertRequestUri("requestWithBasePath", "base Path%25", "test Path%25?k1=v%25&k2=v2", "/base%20Path%25/test%20Path%25?k1=v%25&k2=v2");
+    assertRequestUri("requestWithBasePath", "base Path%25", "test Path%25?k1=v%25&k2=v2",
+        "/base%20Path%25/test%20Path%25?k1=v%25&k2=v2");
   }
 
   private void assertRequestUri(String flowName, String basePath, String requestPath, String expectedUri) throws Exception {
-    flowRunner(flowName).withPayload(TEST_MESSAGE).withFlowVariable("basePath", basePath).withFlowVariable("requestPath", requestPath)
-        .run();
+    flowRunner(flowName).withPayload(TEST_MESSAGE).withFlowVariable("basePath", basePath)
+        .withFlowVariable("requestPath", requestPath).run();
     assertThat(uri, equalTo(expectedUri));
   }
 }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.reboot;
 
@@ -20,6 +20,7 @@ import java.util.List;
  */
 // TODO this duplicates DefaultMuleClassPathConfig in the boot module. See if this class can be moved to mule-core
 public class DefaultMuleClassPathConfig {
+
   protected static final String MULE_DIR = "/lib/mule";
   protected static final String USER_DIR = "/lib/user";
   protected static final String OPT_DIR = "/lib/opt";
@@ -32,8 +33,8 @@ public class DefaultMuleClassPathConfig {
 
   protected void init(File muleHome, File muleBase) {
     /*
-     * Pick up any local jars, if there are any. Doing this here insures that any local class that override the global classes will in fact
-     * do so.
+     * Pick up any local jars, if there are any. Doing this here insures that any local class that override the global classes
+     * will in fact do so.
      */
     addMuleBaseUserLibs(muleHome, muleBase);
 
@@ -100,6 +101,7 @@ public class DefaultMuleClassPathConfig {
    */
   protected List<File> listJars(File path) {
     File[] jars = path.listFiles(new FileFilter() {
+
       public boolean accept(File pathname) {
         try {
           return pathname.getCanonicalPath().endsWith(".jar");

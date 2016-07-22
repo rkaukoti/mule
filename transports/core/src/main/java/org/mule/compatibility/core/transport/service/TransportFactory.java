@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport.service;
 
@@ -29,10 +29,12 @@ import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.l
 import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.registerConnector;
 
 /**
- * <code>TransportFactory</code> can be used for generically creating endpoints from an url. Note that for some endpoints, the url alone is
- * not enough to create the endpoint if a connector for the endpoint has not already been configured with the Mule Manager.
+ * <code>TransportFactory</code> can be used for generically creating endpoints from an url. Note that for some endpoints, the url
+ * alone is not enough to create the endpoint if a connector for the endpoint has not already been configured with the Mule
+ * Manager.
  */
 public class TransportFactory {
+
   /**
    * logger used by this class
    */
@@ -45,11 +47,11 @@ public class TransportFactory {
   }
 
   /**
-   * Creates an uninitialied connector from the provided MuleEndpointURI. The scheme is used to determine what kind of connector to create.
-   * Any params set on the uri can be used to initialise bean properties on the created connector.
+   * Creates an uninitialied connector from the provided MuleEndpointURI. The scheme is used to determine what kind of connector
+   * to create. Any params set on the uri can be used to initialise bean properties on the created connector.
    * <p/>
-   * Note that the initalise method will need to be called on the connector returned. This is so that developers can control when the
-   * connector initialisation takes place as this is likely to initialse all connecotr resources.
+   * Note that the initalise method will need to be called on the connector returned. This is so that developers can control when
+   * the connector initialisation takes place as this is likely to initialse all connecotr resources.
    *
    * @param url the MuleEndpointURI url to create the connector with
    * @return a new Connector
@@ -60,8 +62,8 @@ public class TransportFactory {
       Connector connector;
       String scheme = url.getFullScheme();
 
-      TransportServiceDescriptor sd =
-          (TransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(), LegacyServiceType.TRANSPORT, scheme, null);
+      TransportServiceDescriptor sd = (TransportServiceDescriptor) lookupServiceDescriptor(muleContext.getRegistry(),
+          LegacyServiceType.TRANSPORT, scheme, null);
       if (sd == null) {
         throw new ServiceException(TransportCoreMessages.noServiceTransportDescriptor(scheme));
       }
@@ -136,7 +138,8 @@ public class TransportFactory {
       for (Connector result : results) {
         buf.append(result.getName()).append(", ");
       }
-      throw new IllegalStateException(TransportCoreMessages.moreThanOneConnectorWithProtocol(protocol, buf.toString()).getMessage());
+      throw new IllegalStateException(
+          TransportCoreMessages.moreThanOneConnectorWithProtocol(protocol, buf.toString()).getMessage());
     } else if (results.size() == 1) {
       return results.get(0);
     } else {
@@ -159,7 +162,8 @@ public class TransportFactory {
       for (Connector result : results) {
         buf.append(result.getName()).append(", ");
       }
-      throw new IllegalStateException(TransportCoreMessages.moreThanOneConnectorWithProtocol(protocol, buf.toString()).getMessage());
+      throw new IllegalStateException(
+          TransportCoreMessages.moreThanOneConnectorWithProtocol(protocol, buf.toString()).getMessage());
     } else if (results.size() == 1) {
       return results.get(0);
     } else {

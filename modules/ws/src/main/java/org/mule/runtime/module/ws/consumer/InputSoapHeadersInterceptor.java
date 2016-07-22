@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.ws.consumer;
 
@@ -26,8 +26,8 @@ import java.util.Map;
 import javax.xml.namespace.QName;
 
 /**
- * CXF interceptor that adds Soap headers to the SoapMessage based on outbound properties from the Mule message that start with the soap
- * prefix.
+ * CXF interceptor that adds Soap headers to the SoapMessage based on outbound properties from the Mule message that start with
+ * the soap prefix.
  */
 public class InputSoapHeadersInterceptor extends AbstractSoapInterceptor {
 
@@ -44,9 +44,9 @@ public class InputSoapHeadersInterceptor extends AbstractSoapInterceptor {
     Map<String, Object> requestContext = (Map<String, Object>) invocationContext.get(Client.REQUEST_CONTEXT);
 
     /*
-     * Outbound properties are copied to the CXF request context by the CxfOutboundMessageProcessor. As CXF generates the message lazily, by
-     * the time this interceptor is executed the outbound SOAP headers are already removed from the Mule message, so we need to read them
-     * from the request context.
+     * Outbound properties are copied to the CXF request context by the CxfOutboundMessageProcessor. As CXF generates the message
+     * lazily, by the time this interceptor is executed the outbound SOAP headers are already removed from the Mule message, so we
+     * need to read them from the request context.
      */
 
     for (String outboundProperty : requestContext.keySet()) {
@@ -55,11 +55,12 @@ public class InputSoapHeadersInterceptor extends AbstractSoapInterceptor {
         Transformer transformer = null;
 
         try {
-          transformer = muleContext.getRegistry().lookupTransformer(DataType.fromObject(value), DataType.fromType(Document.class));
+          transformer =
+              muleContext.getRegistry().lookupTransformer(DataType.fromObject(value), DataType.fromType(Document.class));
         } catch (TransformerException e) {
           MuleEvent event = (MuleEvent) message.getExchange().get(CxfConstants.MULE_EVENT);
-          throw new Fault(new TransformerMessagingException(
-              CoreMessages.createStaticMessage("Cannot find transformer to convert outbound property %s to XML", outboundProperty), event,
+          throw new Fault(new TransformerMessagingException(CoreMessages
+              .createStaticMessage("Cannot find transformer to convert outbound property %s to XML", outboundProperty), event,
               transformer, e.getCause()));
         }
 
@@ -74,8 +75,8 @@ public class InputSoapHeadersInterceptor extends AbstractSoapInterceptor {
           MuleEvent event = (MuleEvent) message.getExchange().get(CxfConstants.MULE_EVENT);
 
           throw new Fault(new TransformerMessagingException(
-              CoreMessages.createStaticMessage("Outbound property %s contains an invalid XML string", outboundProperty), event, transformer,
-              e.getCause()));
+              CoreMessages.createStaticMessage("Outbound property %s contains an invalid XML string", outboundProperty), event,
+              transformer, e.getCause()));
         }
       }
     }

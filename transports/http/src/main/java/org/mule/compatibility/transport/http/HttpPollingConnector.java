@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -10,11 +10,12 @@ import org.mule.runtime.core.api.config.MuleProperties;
 import java.util.Properties;
 
 /**
- * The HttpPollingConnectors allows for inbound Http endpoints to be configured with an address which it shall use to poll for a result. If
- * a result is received it becomes the inbound event for the component. This connector is useful for interacting with services that provide
- * pull-only support for obtaining data. This is typical for many web-based services.
+ * The HttpPollingConnectors allows for inbound Http endpoints to be configured with an address which it shall use to poll for a
+ * result. If a result is received it becomes the inbound event for the component. This connector is useful for interacting with
+ * services that provide pull-only support for obtaining data. This is typical for many web-based services.
  */
 public class HttpPollingConnector extends HttpConnector {
+
   /**
    * How long to wait in milliseconds between make a new request
    */

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.handlers;
 
@@ -38,10 +38,11 @@ import javax.xml.namespace.QName;
 
 
 /**
- * This Namespace handler extends the default Spring {@link org.springframework.beans.factory.xml.NamespaceHandlerSupport} to allow certain
- * elements in document to be ignored by the handler.
+ * This Namespace handler extends the default Spring {@link org.springframework.beans.factory.xml.NamespaceHandlerSupport} to
+ * allow certain elements in document to be ignored by the handler.
  */
 public abstract class AbstractMuleNamespaceHandler extends NamespaceHandlerSupport {
+
   public static final String GLOBAL_ENDPOINT = "endpoint";
   public static final String INBOUND_ENDPOINT = "inbound-endpoint";
   public static final String OUTBOUND_ENDPOINT = "outbound-endpoint";
@@ -127,6 +128,7 @@ public abstract class AbstractMuleNamespaceHandler extends NamespaceHandlerSuppo
   }
 
   public static class IgnoredDefinitionParser implements BeanDefinitionParser {
+
     public IgnoredDefinitionParser() {
       super();
     }
@@ -138,6 +140,7 @@ public abstract class AbstractMuleNamespaceHandler extends NamespaceHandlerSuppo
   }
 
   static class AnnotationsBeanDefintionParser extends AbstractChildDefinitionParser {
+
     AnnotationsBeanDefintionParser() {
       super();
     }
@@ -190,6 +193,7 @@ public abstract class AbstractMuleNamespaceHandler extends NamespaceHandlerSuppo
   }
 
   protected class RegisteredMdps implements MuleDefinitionParserConfiguration {
+
     private Set bdps = new HashSet();
 
     protected MuleDefinitionParser add(MuleDefinitionParser bdp) {

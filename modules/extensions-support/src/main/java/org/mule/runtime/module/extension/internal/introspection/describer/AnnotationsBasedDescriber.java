@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection.describer;
 
@@ -126,8 +126,8 @@ import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils
 import static org.mule.runtime.module.extension.internal.util.IntrospectionUtils.isMultiLevelMetadataKeyId;
 
 /**
- * Implementation of {@link Describer} which generates a {@link ExtensionDeclarer} by scanning annotations on a type provided in the
- * constructor
+ * Implementation of {@link Describer} which generates a {@link ExtensionDeclarer} by scanning annotations on a type provided in
+ * the constructor
  *
  * @since 3.7.0
  */
@@ -180,10 +180,11 @@ public final class AnnotationsBasedDescriber implements Describer {
   @Override
   public final ExtensionDeclarer describe(DescribingContext context) {
     Extension extension = getExtension(extensionType);
-    ExtensionDeclarer declaration = context.getExtensionDeclarer().named(extension.name()).onVersion(getVersion(extension))
-        .fromVendor(extension.vendor()).withCategory(extension.category()).withMinMuleVersion(new MuleVersion(extension.minMuleVersion()))
-        .describedAs(extension.description()).withExceptionEnricherFactory(getExceptionEnricherFactory(extensionType))
-        .withModelProperty(new ImplementingTypeModelProperty(extensionType));
+    ExtensionDeclarer declaration =
+        context.getExtensionDeclarer().named(extension.name()).onVersion(getVersion(extension)).fromVendor(extension.vendor())
+            .withCategory(extension.category()).withMinMuleVersion(new MuleVersion(extension.minMuleVersion()))
+            .describedAs(extension.description()).withExceptionEnricherFactory(getExceptionEnricherFactory(extensionType))
+            .withModelProperty(new ImplementingTypeModelProperty(extensionType));
 
     declareConfigurations(declaration, extensionType);
     declareOperations(declaration, extensionType);
@@ -228,9 +229,11 @@ public final class AnnotationsBasedDescriber implements Describer {
 
     Configuration configurationAnnotation = configurationType.getAnnotation(Configuration.class);
     if (configurationAnnotation != null) {
-      configurationDeclarer = declaration.withConfig(configurationAnnotation.name()).describedAs(configurationAnnotation.description());
+      configurationDeclarer =
+          declaration.withConfig(configurationAnnotation.name()).describedAs(configurationAnnotation.description());
     } else {
-      configurationDeclarer = declaration.withConfig(Extension.DEFAULT_CONFIG_NAME).describedAs(Extension.DEFAULT_CONFIG_DESCRIPTION);
+      configurationDeclarer =
+          declaration.withConfig(Extension.DEFAULT_CONFIG_NAME).describedAs(Extension.DEFAULT_CONFIG_DESCRIPTION);
     }
 
     configurationDeclarer.createdWith(new TypeAwareConfigurationFactory(configurationType, extensionType.getClassLoader()))
@@ -259,8 +262,8 @@ public final class AnnotationsBasedDescriber implements Describer {
   private void checkOperationIsNotAnExtension(Class<?> operationType) {
     if (operationType.isAssignableFrom(extensionType) || extensionType.isAssignableFrom(operationType)) {
       throw new IllegalOperationModelDefinitionException(
-          format("Operation class '%s' cannot be the same class (nor a derivative) of the extension class '%s", operationType.getName(),
-              extensionType.getName()));
+          format("Operation class '%s' cannot be the same class (nor a derivative) of the extension class '%s",
+              operationType.getName(), extensionType.getName()));
     }
   }
 
@@ -287,7 +290,8 @@ public final class AnnotationsBasedDescriber implements Describer {
     MetadataScopeAdapter metadataScope = new MetadataScopeAdapter(getMetadataScope(sourceType));
     MetadataResolverFactory metadataResolverFactory = getMetadataResolverFactory(metadataScope);
 
-    source.sourceCreatedBy(new DefaultSourceFactory(sourceType)).withExceptionEnricherFactory(getExceptionEnricherFactory(sourceType))
+    source.sourceCreatedBy(new DefaultSourceFactory(sourceType))
+        .withExceptionEnricherFactory(getExceptionEnricherFactory(sourceType))
         .withModelProperty(new ImplementingTypeModelProperty(sourceType)).withMetadataResolverFactory(metadataResolverFactory);
 
     declareOutputType(source, metadataScope, typeLoader.load(sourceGenerics.get(0)));
@@ -297,9 +301,10 @@ public final class AnnotationsBasedDescriber implements Describer {
     }
     sourceDeclarers.put(sourceType, source);
     declareMetadataKeyId(sourceType, source);
-    declareSingleParameters(getParameterFields(sourceType).stream()
-        .filter(field -> !isMultiLevelMetadataKeyId(field, field.getType(), typeLoader)).collect(toCollection(LinkedHashSet::new)), source,
-        MuleExtensionAnnotationParser::parseMetadataAnnotations);
+    declareSingleParameters(
+        getParameterFields(sourceType).stream().filter(field -> !isMultiLevelMetadataKeyId(field, field.getType(), typeLoader))
+            .collect(toCollection(LinkedHashSet::new)),
+        source, MuleExtensionAnnotationParser::parseMetadataAnnotations);
 
     declareSourceConnection(sourceType, source);
     declareSourceConfig(sourceType, source);
@@ -323,8 +328,8 @@ public final class AnnotationsBasedDescriber implements Describer {
 
     if (!annotatedFields.isEmpty()) {
       if (annotatedFields.size() > 1) {
-        throw new IllegalModelDefinitionException(
-            String.format("A Source cannot define more than one MetadataKeyId. Affecting Source: [%s]", sourceType.getSimpleName()));
+        throw new IllegalModelDefinitionException(String
+            .format("A Source cannot define more than one MetadataKeyId. Affecting Source: [%s]", sourceType.getSimpleName()));
       }
 
       source.withModelProperty(new MetadataKeyIdModelProperty(typeLoader.load(annotatedFields.get(0).getType())));
@@ -352,15 +357,16 @@ public final class AnnotationsBasedDescriber implements Describer {
     return Optional.empty();
   }
 
-  private List<ParameterGroup> declareConfigurationParametersGroups(Class<?> annotatedType, ParameterizedDeclarer parameterDeclarer,
-      ParameterGroup parent) {
+  private List<ParameterGroup> declareConfigurationParametersGroups(Class<?> annotatedType,
+      ParameterizedDeclarer parameterDeclarer, ParameterGroup parent) {
     List<ParameterGroup> groups = new LinkedList<>();
     for (Field field : getParameterContainers(annotatedType, typeLoader)) {
       // TODO: MULE-9220
       if (field.isAnnotationPresent(org.mule.runtime.extension.api.annotation.param.Optional.class)) {
-        throw new IllegalParameterModelDefinitionException(format("@%s can not be applied along with @%s. Affected field [%s] in [%s].",
-            org.mule.runtime.extension.api.annotation.param.Optional.class.getSimpleName(),
-            org.mule.runtime.extension.api.annotation.ParameterGroup.class.getSimpleName(), field.getName(), annotatedType));
+        throw new IllegalParameterModelDefinitionException(
+            format("@%s can not be applied along with @%s. Affected field [%s] in [%s].",
+                org.mule.runtime.extension.api.annotation.param.Optional.class.getSimpleName(),
+                org.mule.runtime.extension.api.annotation.ParameterGroup.class.getSimpleName(), field.getName(), annotatedType));
       }
 
       Set<ParameterDeclarer> parameters = declareSingleParameters(getExposedFields(field.getType()), parameterDeclarer);
@@ -388,7 +394,8 @@ public final class AnnotationsBasedDescriber implements Describer {
   private ParameterDeclaration inheritGroupParentDisplayProperties(ParameterGroup parent, Field field, ParameterGroup group,
       ParameterDeclarer parameterDeclarer) {
     ParameterDeclaration parameter = parameterDeclarer.getDeclaration();
-    Optional<LayoutModelProperty> parameterDisplayProperty = parameterDeclarer.getDeclaration().getModelProperty(LayoutModelProperty.class);
+    Optional<LayoutModelProperty> parameterDisplayProperty =
+        parameterDeclarer.getDeclaration().getModelProperty(LayoutModelProperty.class);
 
     LayoutModelPropertyBuilder builder = parameterDisplayProperty.isPresent()
         ? LayoutModelPropertyBuilder.create(parameterDisplayProperty.get()) : LayoutModelPropertyBuilder.create();
@@ -412,8 +419,8 @@ public final class AnnotationsBasedDescriber implements Describer {
     return parameter;
   }
 
-  private Set<ParameterDeclarer> declareSingleParameters(Collection<Field> parameterFields, ParameterizedDeclarer parameterizedDeclarer,
-      ModelPropertyContributor... contributors) {
+  private Set<ParameterDeclarer> declareSingleParameters(Collection<Field> parameterFields,
+      ParameterizedDeclarer parameterizedDeclarer, ModelPropertyContributor... contributors) {
     return parameterFields.stream().map(field -> {
       final ParameterDeclarer describe = getFieldDescriber(field).describe(field, parameterizedDeclarer);
       stream(contributors).forEach(contributor -> contributor.contribute(field, describe));
@@ -422,7 +429,8 @@ public final class AnnotationsBasedDescriber implements Describer {
   }
 
   private FieldDescriber getFieldDescriber(Field field) {
-    Optional<FieldDescriber> describer = fieldDescribers.stream().filter(fieldDescriber -> fieldDescriber.accepts(field)).findFirst();
+    Optional<FieldDescriber> describer =
+        fieldDescribers.stream().filter(fieldDescriber -> fieldDescriber.accepts(field)).findFirst();
 
     if (describer.isPresent()) {
       return describer.get();
@@ -459,7 +467,8 @@ public final class AnnotationsBasedDescriber implements Describer {
       final OperationDeclarer operation = declarer.withOperation(operationMethod.getName())
           .withModelProperty(new ImplementingMethodModelProperty(operationMethod))
           .executorsCreatedBy(new ReflectiveOperationExecutorFactory<>(actingClass, operationMethod))
-          .withExceptionEnricherFactory(getExceptionEnricherFactory(operationMethod)).withMetadataResolverFactory(metadataResolverFactory);
+          .withExceptionEnricherFactory(getExceptionEnricherFactory(operationMethod))
+          .withMetadataResolverFactory(metadataResolverFactory);
 
       declareOutputType(operation, metadataScope, getMethodReturnType(operationMethod, typeLoader));
       declareOutputAttributesType(operation, metadataScope, getMethodReturnAttributesType(operationMethod, typeLoader));
@@ -495,8 +504,8 @@ public final class AnnotationsBasedDescriber implements Describer {
   }
 
   /**
-   * Checks if the method is annotated with {@link MetadataScope}, if not looks whether the operation class containing the method is
-   * annotated or not. And lastly, if no annotation was found so far, checks if the extension class is annotated.
+   * Checks if the method is annotated with {@link MetadataScope}, if not looks whether the operation class containing the method
+   * is annotated or not. And lastly, if no annotation was found so far, checks if the extension class is annotated.
    */
   private MetadataScope getMetadataScope(Method method) {
     MetadataScope scope = method.getAnnotation(MetadataScope.class);
@@ -504,8 +513,8 @@ public final class AnnotationsBasedDescriber implements Describer {
   }
 
   /**
-   * Checks if the {@link ComponentModel Component's} type is annotated with {@link MetadataScope}, if it doesn't then looks if the
-   * {@link ExtensionModel Extension's} type is annotated.
+   * Checks if the {@link ComponentModel Component's} type is annotated with {@link MetadataScope}, if it doesn't then looks if
+   * the {@link ExtensionModel Extension's} type is annotated.
    */
   private MetadataScope getMetadataScope(Class<?> componentClass) {
     MetadataScope scope = getAnnotation(componentClass, MetadataScope.class);
@@ -532,9 +541,9 @@ public final class AnnotationsBasedDescriber implements Describer {
 
     if (providerGenerics.size() != 1) {
       // TODO: MULE-9220: Add a syntax validator for this
-      throw new IllegalConnectionProviderModelDefinitionException(
-          format("Connection provider class '%s' was expected to have 1 generic type " + "(for the connection type) but %d were found",
-              providerClass.getName(), providerGenerics.size()));
+      throw new IllegalConnectionProviderModelDefinitionException(format(
+          "Connection provider class '%s' was expected to have 1 generic type " + "(for the connection type) but %d were found",
+          providerClass.getName(), providerGenerics.size()));
     }
 
     providerDeclarer = declarer.withConnectionProvider(name).describedAs(description)
@@ -574,7 +583,8 @@ public final class AnnotationsBasedDescriber implements Describer {
             : operation.withOptionalParameter(parsedParameter.getName()).defaultingTo(parsedParameter.getDefaultValue());
 
         parameter = parsedParameter.isAnnotationPresent(Content.class)
-            ? declareContentType(parameter, metadataScope, parsedParameter.getType()) : parameter.ofType(parsedParameter.getType());
+            ? declareContentType(parameter, metadataScope, parsedParameter.getType())
+            : parameter.ofType(parsedParameter.getType());
 
         parameter.withExpressionSupport(getExpressionSupport(parsedParameter.getAnnotation(Expression.class)));
         parameter.describedAs(EMPTY);
@@ -603,7 +613,8 @@ public final class AnnotationsBasedDescriber implements Describer {
     }
   }
 
-  private ParameterDeclarer declareContentType(ParameterDeclarer parameter, MetadataScopeAdapter metadataScope, MetadataType type) {
+  private ParameterDeclarer declareContentType(ParameterDeclarer parameter, MetadataScopeAdapter metadataScope,
+      MetadataType type) {
     return metadataScope.hasContentResolver() ? parameter.ofDynamicType(type) : parameter.ofType(type);
   }
 
@@ -611,12 +622,14 @@ public final class AnnotationsBasedDescriber implements Describer {
     return metadataScope.hasOutputResolver() ? component.withOutput().ofDynamicType(type) : component.withOutput().ofType(type);
   }
 
-  private OutputDeclarer declareOutputAttributesType(ComponentDeclarer component, MetadataScopeAdapter metadataScope, MetadataType type) {
+  private OutputDeclarer declareOutputAttributesType(ComponentDeclarer component, MetadataScopeAdapter metadataScope,
+      MetadataType type) {
     return metadataScope.hasAttributesResolver() ? component.withOutputAttributes().ofDynamicType(type)
         : component.withOutputAttributes().ofType(type);
   }
 
-  private void checkAnnotationsNotUsedMoreThanOnce(Method method, OperationDeclarer operation, Class<? extends Annotation>... annotations) {
+  private void checkAnnotationsNotUsedMoreThanOnce(Method method, OperationDeclarer operation,
+      Class<? extends Annotation>... annotations) {
     stream(annotations).forEach(annotation -> {
       List<java.lang.reflect.Parameter> annotatedParameters = stream(method.getParameters())
           .filter(parameter -> parameter.isAnnotationPresent(annotation)).collect(new ImmutableListCollector<>());

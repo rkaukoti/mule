@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -29,6 +29,7 @@ import javax.jms.Topic;
 import javax.jms.TopicSubscriber;
 
 public class ReusableSessionWrapper implements Session {
+
   protected transient Logger logger = LoggerFactory.getLogger(getClass());
 
   private Session delegateSession;
@@ -133,7 +134,8 @@ public class ReusableSessionWrapper implements Session {
     return delegateSession.createDurableSubscriber(topic, name);
   }
 
-  public TopicSubscriber createDurableSubscriber(Topic topic, String name, String messageSelector, boolean noLocal) throws JMSException {
+  public TopicSubscriber createDurableSubscriber(Topic topic, String name, String messageSelector, boolean noLocal)
+      throws JMSException {
     return delegateSession.createDurableSubscriber(topic, name, messageSelector, noLocal);
   }
 

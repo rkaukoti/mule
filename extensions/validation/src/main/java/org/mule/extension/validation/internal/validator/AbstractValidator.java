@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.validation.internal.validator;
 
@@ -13,9 +13,9 @@ import org.mule.runtime.core.config.i18n.Message;
 import static org.mule.extension.validation.internal.ImmutableValidationResult.error;
 
 /**
- * Base class for all {@link Validator}s provided out of the box. Because this module provides out of the box validators which contain side
- * functionality which is not directly expressed on the {@link Validator} API (like i18n support), this base classes provides support for
- * such logic
+ * Base class for all {@link Validator}s provided out of the box. Because this module provides out of the box validators which
+ * contain side functionality which is not directly expressed on the {@link Validator} API (like i18n support), this base classes
+ * provides support for such logic
  */
 abstract class AbstractValidator implements Validator {
 
@@ -44,9 +44,9 @@ abstract class AbstractValidator implements Validator {
   protected abstract Message getDefaultErrorMessage();
 
   /**
-   * Generates a {@link ValidationResult} which {@link ValidationResult#isError()} method returns {@code true} and which message is the
-   * return value of {@link #getDefaultErrorMessage()}. If the error messagee is an expression, it will be evaluated before constructing the
-   * result object
+   * Generates a {@link ValidationResult} which {@link ValidationResult#isError()} method returns {@code true} and which message
+   * is the return value of {@link #getDefaultErrorMessage()}. If the error messagee is an expression, it will be evaluated before
+   * constructing the result object
    *
    * @return a {@link ValidationResult}
    */

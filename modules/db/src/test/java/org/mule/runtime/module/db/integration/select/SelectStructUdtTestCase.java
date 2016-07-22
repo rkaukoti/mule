@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration.select;
@@ -24,6 +24,7 @@ import static org.mule.runtime.module.db.integration.model.RegionManager.NORTHWE
 import static org.mule.runtime.module.db.integration.model.RegionManager.SOUTHWEST_MANAGER;
 
 public class SelectStructUdtTestCase extends AbstractDbIntegrationTestCase {
+
   public SelectStructUdtTestCase(String dataSourceConfigResource, AbstractTestDatabase testDatabase) {
     super(dataSourceConfigResource, testDatabase);
   }
@@ -51,9 +52,11 @@ public class SelectStructUdtTestCase extends AbstractDbIntegrationTestCase {
     final MuleMessage response = responseEvent.getMessage();
 
     assertRecords(response.getPayload(),
-        new Record(new Field("REGION_NAME", SOUTHWEST_MANAGER.getRegionName()), new Field("MANAGER_NAME", SOUTHWEST_MANAGER.getName()),
+        new Record(new Field("REGION_NAME", SOUTHWEST_MANAGER.getRegionName()),
+            new Field("MANAGER_NAME", SOUTHWEST_MANAGER.getName()),
             new Field("DETAILS", SOUTHWEST_MANAGER.getContactDetails().asObjectArray())),
-        new Record(new Field("REGION_NAME", NORTHWEST_MANAGER.getRegionName()), new Field("MANAGER_NAME", NORTHWEST_MANAGER.getName()),
+        new Record(new Field("REGION_NAME", NORTHWEST_MANAGER.getRegionName()),
+            new Field("MANAGER_NAME", NORTHWEST_MANAGER.getName()),
             new Field("DETAILS", NORTHWEST_MANAGER.getContactDetails().asObjectArray())));
   }
 }

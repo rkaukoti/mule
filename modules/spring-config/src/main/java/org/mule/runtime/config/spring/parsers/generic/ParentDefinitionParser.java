@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.parsers.generic;
 
@@ -16,8 +16,8 @@ import org.springframework.util.Assert;
 import org.w3c.dom.Element;
 
 /**
- * Processes child property elements in Xml but sets the properties on the parent object. This is useful when an object has lots of
- * properties and it's more readable to break those properties into groups that can be represented as a sub-element in Xml.
+ * Processes child property elements in Xml but sets the properties on the parent object. This is useful when an object has lots
+ * of properties and it's more readable to break those properties into groups that can be represented as a sub-element in Xml.
  */
 public class ParentDefinitionParser extends AbstractHierarchicalDefinitionParser {
 
@@ -42,13 +42,14 @@ public class ParentDefinitionParser extends AbstractHierarchicalDefinitionParser
     setParserContext(parserContext);
     setRegistry(parserContext.getRegistry());
     Class beanClass = getBeanClass(element);
-    Assert.state(beanClass != null, "Class returned from getBeanClass(Element) must not be null, element is: " + element.getNodeName());
+    Assert.state(beanClass != null,
+        "Class returned from getBeanClass(Element) must not be null, element is: " + element.getNodeName());
     BeanDefinitionBuilder builder = createBeanDefinitionBuilder(element, beanClass);
     builder.getRawBeanDefinition().setSource(parserContext.extractSource(element));
     if (parserContext.isNested()) {
       // Inner bean definition must receive same singleton status as containing bean.
-      builder.setScope(
-          parserContext.getContainingBeanDefinition().isSingleton() ? BeanDefinition.SCOPE_SINGLETON : BeanDefinition.SCOPE_PROTOTYPE);
+      builder.setScope(parserContext.getContainingBeanDefinition().isSingleton() ? BeanDefinition.SCOPE_SINGLETON
+          : BeanDefinition.SCOPE_PROTOTYPE);
     }
     doParse(element, parserContext, builder);
     BeanAssembler beanAssembler = getBeanAssembler(element, builder);

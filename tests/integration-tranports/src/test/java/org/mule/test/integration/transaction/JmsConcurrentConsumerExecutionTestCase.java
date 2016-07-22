@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.transaction;
 
@@ -21,11 +21,12 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 /*
- * EE-2430 - Check that JMS SubReceiver executes concurrently. This test that each SubReceiver is using a different Session since if they
- * are using the same Session activeMQ won't execute them concurrently (since it will not do two onMessage invocations concurrently using
- * the same session) One of the latch.await(..) will fail in that case.
+ * EE-2430 - Check that JMS SubReceiver executes concurrently. This test that each SubReceiver is using a different Session since
+ * if they are using the same Session activeMQ won't execute them concurrently (since it will not do two onMessage invocations
+ * concurrently using the same session) One of the latch.await(..) will fail in that case.
  */
 public class JmsConcurrentConsumerExecutionTestCase extends FunctionalTestCase {
+
   public static final String MESSAGE = "some message";
   public static final int TIMEOUT = 10000;
   private static final Latch messageSuccessfulReceived = new Latch();
@@ -57,6 +58,7 @@ public class JmsConcurrentConsumerExecutionTestCase extends FunctionalTestCase {
   }
 
   public static class SuccessComponent implements Callable {
+
     @Override
     public Object onCall(MuleEventContext eventContext) throws Exception {
       messageSuccessfulReceived.release();
@@ -66,6 +68,7 @@ public class JmsConcurrentConsumerExecutionTestCase extends FunctionalTestCase {
   }
 
   public static class FailureComponent implements Callable {
+
     @Override
     public Object onCall(MuleEventContext eventContext) throws Exception {
       try {

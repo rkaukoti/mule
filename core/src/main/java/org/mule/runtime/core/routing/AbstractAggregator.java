@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -64,14 +64,15 @@ public abstract class AbstractAggregator extends AbstractInterceptingMessageProc
       messageInfoMapping = flowConstruct.getMessageInfoMapping();
     }
     if (storePrefix == null) {
-      storePrefix = String.format("%s%s.%s.", ThreadNameHelper.getPrefix(muleContext), flowConstruct.getName(), this.getClass().getName());
+      storePrefix =
+          String.format("%s%s.%s.", ThreadNameHelper.getPrefix(muleContext), flowConstruct.getName(), this.getClass().getName());
     }
 
     initProcessedGroupsObjectStore();
     initEventGroupsObjectStore();
 
-    eventCorrelator = new EventCorrelator(getCorrelatorCallback(muleContext), next, messageInfoMapping, muleContext, flowConstruct,
-        eventGroupsObjectStore, storePrefix, processedGroupsObjectStore);
+    eventCorrelator = new EventCorrelator(getCorrelatorCallback(muleContext), next, messageInfoMapping, muleContext,
+        flowConstruct, eventGroupsObjectStore, storePrefix, processedGroupsObjectStore);
 
     eventCorrelator.setTimeout(timeout);
     eventCorrelator.setFailOnTimeout(isFailOnTimeout());
@@ -85,10 +86,12 @@ public abstract class AbstractAggregator extends AbstractInterceptingMessageProc
 
   protected Factory internalProcessedGroupsObjectStoreFactory() {
     return new Factory() {
+
       @Override
       public Object create() {
         ObjectStoreManager objectStoreManager = muleContext.getRegistry().get(MuleProperties.OBJECT_STORE_MANAGER);
-        return objectStoreManager.getObjectStore(storePrefix + ".processedGroups", persistentStores, MAX_PROCESSED_GROUPS, -1, 1000);
+        return objectStoreManager.getObjectStore(storePrefix + ".processedGroups", persistentStores, MAX_PROCESSED_GROUPS, -1,
+            1000);
       }
     };
   }
@@ -107,14 +110,17 @@ public abstract class AbstractAggregator extends AbstractInterceptingMessageProc
 
   protected Factory internalEventsGroupsObjectStoreFactory() {
     return new Factory() {
+
       @Override
       public Object create() {
         try {
           ObjectStore objectStore;
           if (persistentStores) {
-            objectStore = muleContext.getRegistry().lookupObject(DefaultObjectStoreFactoryBean.class).createDefaultPersistentObjectStore();
+            objectStore =
+                muleContext.getRegistry().lookupObject(DefaultObjectStoreFactoryBean.class).createDefaultPersistentObjectStore();
           } else {
-            objectStore = muleContext.getRegistry().lookupObject(DefaultObjectStoreFactoryBean.class).createDefaultInMemoryObjectStore();
+            objectStore =
+                muleContext.getRegistry().lookupObject(DefaultObjectStoreFactoryBean.class).createDefaultInMemoryObjectStore();
           }
           if (objectStore instanceof MuleContextAware) {
             ((MuleContextAware) objectStore).setMuleContext(muleContext);

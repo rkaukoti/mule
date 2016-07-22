@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.management.agent;
 
@@ -18,11 +18,12 @@ import javax.management.MBeanServer;
 import javax.management.remote.rmi.RMIConnectorServer;
 
 /**
- * Mule now binds to a platform mbeanserver by default and jmx agent is always registered via a bootstrap process. Thus a namespace handler
- * creates this configurer class instead which propagates user settings to a jmx agent in the registry (instead of trying to register a
- * duplicate jmx agent).
+ * Mule now binds to a platform mbeanserver by default and jmx agent is always registered via a bootstrap process. Thus a
+ * namespace handler creates this configurer class instead which propagates user settings to a jmx agent in the registry (instead
+ * of trying to register a duplicate jmx agent).
  */
 public class JmxAgentConfigurer implements MuleContextAware {
+
   // populated with values below in a static initializer
   public static final Map<String, Object> DEFAULT_CONNECTOR_SERVER_PROPERTIES;
 
@@ -103,8 +104,9 @@ public class JmxAgentConfigurer implements MuleContextAware {
   }
 
   /**
-   * Setter for property 'connectorServerProperties'. Set to {@code null} to use defaults ({@link #DEFAULT_CONNECTOR_SERVER_PROPERTIES}).
-   * Pass in an empty map to use no parameters. Passing a non-empty map will replace defaults.
+   * Setter for property 'connectorServerProperties'. Set to {@code null} to use defaults
+   * ({@link #DEFAULT_CONNECTOR_SERVER_PROPERTIES}). Pass in an empty map to use no parameters. Passing a non-empty map will
+   * replace defaults.
    *
    * @param connectorServerProperties Value to set for property 'connectorServerProperties'.
    */

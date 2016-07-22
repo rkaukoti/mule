@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.agent;
 
@@ -29,11 +29,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * <code>AbstractNotificationLoggerAgent</code> Receives Mule server notifications and logs them and can optionally route them to an
- * endpoint. This agent will only receive notifications for notification events that are enabled. The notifications that are enabled are
- * determined by the {@link MuleContextBuilder} that is used or configuration mechanisms that may override these values.
+ * <code>AbstractNotificationLoggerAgent</code> Receives Mule server notifications and logs them and can optionally route them to
+ * an endpoint. This agent will only receive notifications for notification events that are enabled. The notifications that are
+ * enabled are determined by the {@link MuleContextBuilder} that is used or configuration mechanisms that may override these
+ * values.
  */
 public abstract class AbstractNotificationLoggerAgent extends AbstractAgent {
+
   /**
    * The logger used for this class
    */
@@ -148,6 +150,7 @@ public abstract class AbstractNotificationLoggerAgent extends AbstractAgent {
     doInitialise();
     if (!ignoreManagerNotifications) {
       ServerNotificationListener<MuleContextNotification> l = new MuleContextNotificationListener<MuleContextNotification>() {
+
         @Override
         public void onNotification(MuleContextNotification notification) {
           logEvent(notification);
@@ -162,6 +165,7 @@ public abstract class AbstractNotificationLoggerAgent extends AbstractAgent {
     }
     if (!ignoreSecurityNotifications) {
       ServerNotificationListener<SecurityNotification> l = new SecurityNotificationListener<SecurityNotification>() {
+
         @Override
         public void onNotification(SecurityNotification notification) {
           logEvent(notification);
@@ -177,6 +181,7 @@ public abstract class AbstractNotificationLoggerAgent extends AbstractAgent {
 
     if (!ignoreManagementNotifications) {
       ServerNotificationListener<ManagementNotification> l = new ManagementNotificationListener<ManagementNotification>() {
+
         @Override
         public void onNotification(ManagementNotification notification) {
           logEvent(notification);
@@ -192,6 +197,7 @@ public abstract class AbstractNotificationLoggerAgent extends AbstractAgent {
 
     if (!ignoreCustomNotifications) {
       ServerNotificationListener<?> l = new CustomNotificationListener<ServerNotification>() {
+
         @Override
         public void onNotification(ServerNotification notification) {
           logEvent(notification);
@@ -207,6 +213,7 @@ public abstract class AbstractNotificationLoggerAgent extends AbstractAgent {
 
     if (!ignoreConnectionNotifications) {
       ServerNotificationListener<ConnectionNotification> l = new ConnectionNotificationListener<ConnectionNotification>() {
+
         @Override
         public void onNotification(ConnectionNotification notification) {
           logEvent(notification);

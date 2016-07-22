@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.core;
 
@@ -99,15 +99,15 @@ public class NonBlockingFullySupportedFunctionalTestCase extends FunctionalTestC
 
   @Test
   public void filterRejects() throws Exception {
-    MuleEvent result =
-        flowRunner("filterRejects").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern()).nonBlocking().run();
+    MuleEvent result = flowRunner("filterRejects").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern())
+        .nonBlocking().run();
     assertThat(result, is(nullValue()));
   }
 
   @Test
   public void filterAfterNonBlockingAccepts() throws Exception {
-    flowRunner("filterAfterNonBlockingAccepts").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern()).nonBlocking()
-        .run();
+    flowRunner("filterAfterNonBlockingAccepts").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern())
+        .nonBlocking().run();
   }
 
   @Test
@@ -119,8 +119,8 @@ public class NonBlockingFullySupportedFunctionalTestCase extends FunctionalTestC
 
   @Test
   public void filterBeforeNonBlockingAccepts() throws Exception {
-    flowRunner("filterAfterNonBlockingAccepts").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern()).nonBlocking()
-        .run();
+    flowRunner("filterAfterNonBlockingAccepts").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern())
+        .nonBlocking().run();
   }
 
   @Test
@@ -164,29 +164,29 @@ public class NonBlockingFullySupportedFunctionalTestCase extends FunctionalTestC
 
   @Test
   public void responseWithNullEvent() throws Exception {
-    MuleEvent result =
-        flowRunner("responseWithNullEvent").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern()).nonBlocking().run();
+    MuleEvent result = flowRunner("responseWithNullEvent").withPayload(TEST_MESSAGE)
+        .withExchangePattern(getMessageExchnagePattern()).nonBlocking().run();
     assertThat(result, is(nullValue()));
   }
 
   @Test
   public void enricherIssue() throws Exception {
-    MuleEvent result =
-        flowRunner("enricherIssue").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern()).nonBlocking().run();
-    assertThat(result.getMessageAsString(), is(equalTo(TEST_MESSAGE)));
-  }
-
-  @Test
-  public void enricherIssueNonBlocking() throws Exception {
-    MuleEvent result = flowRunner("enricherIssueNonBlocking").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern())
+    MuleEvent result = flowRunner("enricherIssue").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern())
         .nonBlocking().run();
     assertThat(result.getMessageAsString(), is(equalTo(TEST_MESSAGE)));
   }
 
   @Test
+  public void enricherIssueNonBlocking() throws Exception {
+    MuleEvent result = flowRunner("enricherIssueNonBlocking").withPayload(TEST_MESSAGE)
+        .withExchangePattern(getMessageExchnagePattern()).nonBlocking().run();
+    assertThat(result.getMessageAsString(), is(equalTo(TEST_MESSAGE)));
+  }
+
+  @Test
   public void enricherFlowVar() throws Exception {
-    MuleEvent result =
-        flowRunner("enricherFlowVar").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern()).nonBlocking().run();
+    MuleEvent result = flowRunner("enricherFlowVar").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern())
+        .nonBlocking().run();
     assertThat(result.getFlowVariable(FOO), is(equalTo(TEST_MESSAGE)));
   }
 
@@ -197,7 +197,8 @@ public class NonBlockingFullySupportedFunctionalTestCase extends FunctionalTestC
 
   @Test
   public void catchExceptionStrategy() throws Exception {
-    flowRunner("catchExceptionStrategy").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern()).nonBlocking().run();
+    flowRunner("catchExceptionStrategy").withPayload(TEST_MESSAGE).withExchangePattern(getMessageExchnagePattern()).nonBlocking()
+        .run();
     verify("catchExceptionStrategyChild");
   }
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.spring.security;
 
@@ -66,7 +66,8 @@ public class AuthorizationFilterTestCase extends FunctionalTestCase {
     }
   }
 
-  private void doRequest(String realm, String host, String user, String pass, String url, boolean handshake, int result) throws Exception {
+  private void doRequest(String realm, String host, String user, String pass, String url, boolean handshake, int result)
+      throws Exception {
     HttpClient client = new HttpClient();
     client.getParams().setAuthenticationPreemptive(true);
     client.getState().setCredentials(new AuthScope(host, -1, realm), new UsernamePasswordCredentials(user, pass));

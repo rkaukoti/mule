@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.api.execution;
 
@@ -18,7 +18,8 @@ import javax.xml.namespace.QName;
 public abstract class LocationExecutionContextProvider implements ExceptionContextProvider {
 
   private static final QName NAME_ANNOTATION_KEY = new QName("http://www.mulesoft.org/schema/mule/documentation", "name");
-  private static final QName SOURCE_FILE_ANNOTATION_KEY = new QName("http://www.mulesoft.org/schema/mule/documentation", "sourceFileName");
+  private static final QName SOURCE_FILE_ANNOTATION_KEY =
+      new QName("http://www.mulesoft.org/schema/mule/documentation", "sourceFileName");
   private static final QName SOURCE_FILE_LINE_ANNOTATION_KEY =
       new QName("http://www.mulesoft.org/schema/mule/documentation", "sourceFileLine");
   private static final QName SOURCE_ELEMENT_ANNOTATION_KEY =
@@ -32,7 +33,8 @@ public abstract class LocationExecutionContextProvider implements ExceptionConte
    * @param lineNumber the line number where the definition of the element starts in the file.
    * @param xmlContent the xml representation of the element definition.
    */
-  public static void addMetadataAnnotationsFromXml(Map<QName, Object> beanAnnotations, String fileName, int lineNumber, String xmlContent) {
+  public static void addMetadataAnnotationsFromXml(Map<QName, Object> beanAnnotations, String fileName, int lineNumber,
+      String xmlContent) {
     beanAnnotations.put(SOURCE_FILE_ANNOTATION_KEY, fileName);
     beanAnnotations.put(SOURCE_FILE_LINE_ANNOTATION_KEY, lineNumber);
     beanAnnotations.put(SOURCE_ELEMENT_ANNOTATION_KEY, xmlContent);

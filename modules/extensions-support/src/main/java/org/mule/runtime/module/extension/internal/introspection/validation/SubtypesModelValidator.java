@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal.introspection.validation;
 
@@ -31,8 +31,8 @@ import static org.mule.runtime.extension.api.util.NameUtils.getTopLevelTypeName;
 /**
  * {@link ModelValidator} which applies to {@link ExtensionModel}s.
  * <p>
- * This validator checks that all {@link ExtensionModel Extension} global elements declarations like {@link SubTypesModelProperty Subtypes}
- * or {@link ImportedTypesModelProperty Imported types} are valid.
+ * This validator checks that all {@link ExtensionModel Extension} global elements declarations like {@link SubTypesModelProperty
+ * Subtypes} or {@link ImportedTypesModelProperty Imported types} are valid.
  *
  * @since 4.0
  */
@@ -52,8 +52,8 @@ public final class SubtypesModelValidator implements ModelValidator {
 
   private void validateBaseTypeNotFinal(ExtensionModel model, Map<MetadataType, List<MetadataType>> typesMapping) {
     List<String> finalBaseTypes =
-        typesMapping.keySet().stream().filter(MetadataTypeUtils::isFinal).map(base -> base.getAnnotation(TypeIdAnnotation.class).stream()
-            .findFirst().map(TypeIdAnnotation::getValue).orElse(getType(base).getName())).collect(toList());
+        typesMapping.keySet().stream().filter(MetadataTypeUtils::isFinal).map(base -> base.getAnnotation(TypeIdAnnotation.class)
+            .stream().findFirst().map(TypeIdAnnotation::getValue).orElse(getType(base).getName())).collect(toList());
 
     if (!finalBaseTypes.isEmpty()) {
       throw new IllegalModelDefinitionException(
@@ -76,12 +76,13 @@ public final class SubtypesModelValidator implements ModelValidator {
     }
   }
 
-  private void validateSubtypesExtendOrImplementBaseType(ExtensionModel model, Map<MetadataType, List<MetadataType>> typesMapping) {
+  private void validateSubtypesExtendOrImplementBaseType(ExtensionModel model,
+      Map<MetadataType, List<MetadataType>> typesMapping) {
     for (Map.Entry<MetadataType, List<MetadataType>> subtypes : typesMapping.entrySet()) {
       Class<?> baseType = getType(subtypes.getKey());
 
-      List<String> invalidTypes = subtypes.getValue().stream().map(JavaTypeUtils::getType).filter(s -> !baseType.isAssignableFrom(s))
-          .map(Class::getSimpleName).collect(toList());
+      List<String> invalidTypes = subtypes.getValue().stream().map(JavaTypeUtils::getType)
+          .filter(s -> !baseType.isAssignableFrom(s)).map(Class::getSimpleName).collect(toList());
 
       if (!invalidTypes.isEmpty()) {
         throw new IllegalModelDefinitionException(String.format(

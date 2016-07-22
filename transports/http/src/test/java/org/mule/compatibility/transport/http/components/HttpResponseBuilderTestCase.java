@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.components;
 
@@ -49,6 +49,7 @@ import static org.mockito.Mockito.when;
 
 @SmallTest
 public class HttpResponseBuilderTestCase extends AbstractMuleTestCase {
+
   private static final String HTTP_BODY = "<html><head></head><body><p>This is the response body</p></body></html>";
   private static final String HEADER_STATUS = "#[header:status]";
   private static final String HEADER_CONTENT_TYPE = "#[header:contentType]";
@@ -125,7 +126,8 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase {
     httpResponseBuilder.setStatus(HEADER_STATUS);
     httpResponseBuilder.setContentType(HEADER_CONTENT_TYPE);
 
-    when(mockExpressionManager.parse(HEADER_STATUS, mockEvent)).thenReturn(String.valueOf(HttpConstants.SC_INTERNAL_SERVER_ERROR));
+    when(mockExpressionManager.parse(HEADER_STATUS, mockEvent))
+        .thenReturn(String.valueOf(HttpConstants.SC_INTERNAL_SERVER_ERROR));
     when(mockExpressionManager.parse(HEADER_CONTENT_TYPE, mockEvent)).thenReturn("text/html");
 
 
@@ -221,7 +223,8 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase {
     HttpResponseBuilder httpResponseBuilder = createHttpResponseBuilder();
 
     List<CookieWrapper> cookies = new ArrayList<>();
-    cookies.add(createCookie(HEADER_NAME, HEADER_VALUE, HEADER_DOMAIN, HEADER_PATH, HEADER_EXPIRY_DATE, HEADER_SECURE, HEADER_VERSION));
+    cookies.add(
+        createCookie(HEADER_NAME, HEADER_VALUE, HEADER_DOMAIN, HEADER_PATH, HEADER_EXPIRY_DATE, HEADER_SECURE, HEADER_VERSION));
     httpResponseBuilder.setCookies(cookies);
 
     when(mockExpressionManager.parse(HEADER_NAME, mockEvent)).thenReturn("userName");
@@ -367,7 +370,8 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase {
         }
 
       } else if (header.getName().startsWith(HttpConstants.CUSTOM_HEADER_PREFIX)) {
-        assertEquals(outboundProperties.get(header.getName().substring(HttpConstants.CUSTOM_HEADER_PREFIX.length())), header.getValue());
+        assertEquals(outboundProperties.get(header.getName().substring(HttpConstants.CUSTOM_HEADER_PREFIX.length())),
+            header.getValue());
       } else {
         assertEquals(outboundProperties.get(header.getName()), header.getValue());
       }
@@ -517,6 +521,7 @@ public class HttpResponseBuilderTestCase extends AbstractMuleTestCase {
   }
 
   private void mockParse() {
-    when(mockExpressionManager.parse(anyString(), Mockito.any(MuleEvent.class))).thenAnswer(invocation -> invocation.getArguments()[0]);
+    when(mockExpressionManager.parse(anyString(), Mockito.any(MuleEvent.class)))
+        .thenAnswer(invocation -> invocation.getArguments()[0]);
   }
 }

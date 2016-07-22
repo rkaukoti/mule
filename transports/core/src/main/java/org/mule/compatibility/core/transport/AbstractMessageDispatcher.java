@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.transport;
 
@@ -36,8 +36,8 @@ import static org.mule.runtime.core.api.config.MuleProperties.MULE_REMOTE_SYNC_P
 import static org.mule.runtime.core.util.SystemUtils.getDefaultEncoding;
 
 /**
- * Abstract implementation of an outbound channel adaptors. Outbound channel adaptors send messages over over a specific transport.
- * Different implementations may support different Message Exchange Patterns.
+ * Abstract implementation of an outbound channel adaptors. Outbound channel adaptors send messages over over a specific
+ * transport. Different implementations may support different Message Exchange Patterns.
  */
 public abstract class AbstractMessageDispatcher extends AbstractTransportMessageHandler implements MessageDispatcher {
 
@@ -65,7 +65,8 @@ public abstract class AbstractMessageDispatcher extends AbstractTransportMessage
       connect();
 
       String prop = event.getMessage().getOutboundProperty(MULE_DISABLE_TRANSPORT_TRANSFORMER_PROPERTY);
-      boolean disableTransportTransformer = (prop != null && Boolean.parseBoolean(prop)) || endpoint.isDisableTransportTransformer();
+      boolean disableTransportTransformer =
+          (prop != null && Boolean.parseBoolean(prop)) || endpoint.isDisableTransportTransformer();
 
       if (!disableTransportTransformer) {
         applyOutboundTransformers(event);
@@ -76,8 +77,8 @@ public abstract class AbstractMessageDispatcher extends AbstractTransportMessage
 
       if (hasResponse) {
         if (!event.getMuleContext().waitUntilStarted(event.getTimeout())) {
-          throw new MessagingException(MessageFactory.createStaticMessage("Timeout waiting for mule context to be completely started"),
-              event, this);
+          throw new MessagingException(
+              MessageFactory.createStaticMessage("Timeout waiting for mule context to be completely started"), event, this);
         }
 
         if (isNonBlocking(event)) {
@@ -123,9 +124,9 @@ public abstract class AbstractMessageDispatcher extends AbstractTransportMessage
   }
 
   /**
-   * Dispatcher implementations that support non-blocking processing should override this method and return 'true'. To support non-blocking
-   * processing it is also necessary to implment the {@link AbstractMessageDispatcher#doSendNonBlocking(MuleEvent, CompletionHandler)}
-   * method.
+   * Dispatcher implementations that support non-blocking processing should override this method and return 'true'. To support
+   * non-blocking processing it is also necessary to implment the
+   * {@link AbstractMessageDispatcher#doSendNonBlocking(MuleEvent, CompletionHandler)} method.
    *
    * @return true if non-blocking processing is supported by this dispatcher implemnetation.
    */
@@ -144,18 +145,18 @@ public abstract class AbstractMessageDispatcher extends AbstractTransportMessage
   }
 
   /**
-   * Used to determine if the dispatcher implementation should wait for a response to an event on a response channel after it sends the
-   * event. The following rules apply:
+   * Used to determine if the dispatcher implementation should wait for a response to an event on a response channel after it
+   * sends the event. The following rules apply:
    * <ol>
    * <li>The connector has to support "back-channel" response. Some transports do not have the notion of a response channel.
-   * <li>Check if the endpoint is synchronous (outbound synchronicity is not explicit since 2.2 and does not use the remoteSync message
-   * property).
-   * <li>Or, if the send() method on the dispatcher was used. (This is required because the ChainingRouter uses send() with async endpoints.
-   * See MULE-4631).
-   * <li>Finally, if the current service has a response router configured, that the router will handle the response channel event and we
-   * should not try and receive a response in the Message dispatcher If remotesync should not be used we must remove the REMOTE_SYNC header
-   * Note the MuleClient will automatically set the REMOTE_SYNC header when client.send(..) is called so that results are returned from
-   * remote invocations too.
+   * <li>Check if the endpoint is synchronous (outbound synchronicity is not explicit since 2.2 and does not use the remoteSync
+   * message property).
+   * <li>Or, if the send() method on the dispatcher was used. (This is required because the ChainingRouter uses send() with async
+   * endpoints. See MULE-4631).
+   * <li>Finally, if the current service has a response router configured, that the router will handle the response channel event
+   * and we should not try and receive a response in the Message dispatcher If remotesync should not be used we must remove the
+   * REMOTE_SYNC header Note the MuleClient will automatically set the REMOTE_SYNC header when client.send(..) is called so that
+   * results are returned from remote invocations too.
    * </ol>
    *
    * @param event the current event
@@ -212,6 +213,7 @@ public abstract class AbstractMessageDispatcher extends AbstractTransportMessage
   }
 
   private class NonBlockingSendCompletionHandler implements CompletionHandler<MuleMessage, Exception, Void> {
+
     private final MuleEvent event;
     private final WorkManager workManager;
     private final WorkListener workListener;
@@ -227,6 +229,7 @@ public abstract class AbstractMessageDispatcher extends AbstractTransportMessage
     public void onCompletion(final MuleMessage result, ExceptionCallback<Void, Exception> exceptionCallback) {
       try {
         workManager.scheduleWork(new Work() {
+
           @Override
           public void run() {
             try {
@@ -256,6 +259,7 @@ public abstract class AbstractMessageDispatcher extends AbstractTransportMessage
     public void onFailure(final Exception exception) {
       try {
         workManager.scheduleWork(new Work() {
+
           @Override
           public void run() {
             // Set RequestContext ThreadLocal in new thread for backwards compatibility

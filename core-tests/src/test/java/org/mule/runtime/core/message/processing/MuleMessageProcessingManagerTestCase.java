@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.message.processing;
 
@@ -78,7 +78,8 @@ public class MuleMessageProcessingManagerTestCase extends org.mule.tck.junit4.Ab
     when(messageProcessPhase.supportsTemplate(any(MessageProcessTemplate.class))).thenCallRealMethod();
     doCallRealMethod().when(messageProcessPhase).runPhase(any(MessageProcessTemplate.class), any(MessageProcessContext.class),
         any(PhaseResultNotifier.class));
-    MuleMessageProcessingManager manager = createManagerUsingPhasesInRegistry(Arrays.<MessageProcessPhase>asList(messageProcessPhase));
+    MuleMessageProcessingManager manager =
+        createManagerUsingPhasesInRegistry(Arrays.<MessageProcessPhase>asList(messageProcessPhase));
     manager.processMessage(completeMessageProcessTemplateAndContext, completeMessageProcessTemplateAndContext);
     verify(completeMessageProcessTemplateAndContext, times(0)).routeEvent(any(MuleEvent.class));
     verify(completeMessageProcessTemplateAndContext, times(1)).validateMessage();
@@ -99,9 +100,11 @@ public class MuleMessageProcessingManagerTestCase extends org.mule.tck.junit4.Ab
   }
 
   private MessageProcessPhase createFailureMessageProcessPhase() {
-    FailureMessageProcessPhase failureMessageProcessPhase = mock(FailureMessageProcessPhase.class, Answers.RETURNS_DEEP_STUBS.get());
+    FailureMessageProcessPhase failureMessageProcessPhase =
+        mock(FailureMessageProcessPhase.class, Answers.RETURNS_DEEP_STUBS.get());
     when(failureMessageProcessPhase.supportsTemplate(any(MessageProcessTemplate.class))).thenCallRealMethod();
     doAnswer(new Answer() {
+
       @Override
       public Object answer(InvocationOnMock invocationOnMock) throws Throwable {
         PhaseResultNotifier phaseResultNotifier = (PhaseResultNotifier) invocationOnMock.getArguments()[2];
@@ -119,7 +122,8 @@ public class MuleMessageProcessingManagerTestCase extends org.mule.tck.junit4.Ab
     return notSupportedPhase;
   }
 
-  private void processAndVerifyDefaultPhasesUsingRegistryPhases(Collection<MessageProcessPhase> phasesInRegistry) throws Exception {
+  private void processAndVerifyDefaultPhasesUsingRegistryPhases(Collection<MessageProcessPhase> phasesInRegistry)
+      throws Exception {
     MuleMessageProcessingManager manager = createManagerUsingPhasesInRegistry(phasesInRegistry);
     processAndVerifyDefaultPhasesAreExecuted(manager);
   }

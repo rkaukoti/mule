@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor.chain;
 
@@ -68,6 +68,7 @@ public class NonBlockingProcessorExecutorTestCase extends BlockingProcessorExecu
   public void executeRequestResponseWithInterceptingMPBlocking() throws MuleException, InterruptedException {
     processors.clear();
     processors.add(new AbstractInterceptingMessageProcessor() {
+
       @Override
       public MuleEvent process(MuleEvent event) throws MuleException {
         return processNext(event);
@@ -155,13 +156,15 @@ public class NonBlockingProcessorExecutorTestCase extends BlockingProcessorExecu
     assertThat(processor3.thread, not(equalTo(processor2.thread)));
   }
 
-  private void assertNonBlockingExecutionWithReplyTo(List<MessageProcessor> processors) throws MuleException, InterruptedException {
+  private void assertNonBlockingExecutionWithReplyTo(List<MessageProcessor> processors)
+      throws MuleException, InterruptedException {
     assertNonBlockingExecution(processors);
     assertThat(nullReplyToHandler.latch.await(LATCH_TIMEOUT, TimeUnit.MILLISECONDS), is(true));
     assertThat(nullReplyToHandler.event.getMessageAsString(), equalTo(RESULT));
   }
 
-  private void assertNonBlockingExecutionWithoutReplyTo(List<MessageProcessor> processors) throws MuleException, InterruptedException {
+  private void assertNonBlockingExecutionWithoutReplyTo(List<MessageProcessor> processors)
+      throws MuleException, InterruptedException {
     assertNonBlockingExecution(processors);
     assertThat(nullReplyToHandler.latch.await(LATCH_TIMEOUT, TimeUnit.MILLISECONDS), is(false));
   }

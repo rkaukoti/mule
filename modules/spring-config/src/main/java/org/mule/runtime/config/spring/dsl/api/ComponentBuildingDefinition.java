@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.dsl.api;
 
@@ -41,7 +41,8 @@ public class ComponentBuildingDefinition {
   private List<AttributeDefinition> constructorAttributeDefinition = new ArrayList<>();
   private List<SetterAttributeDefinition> setterParameterDefinitions = new ArrayList<>();
   private Set<String> ignoredConfigurationParameters = new HashSet<>();
-  // TODO MULE-9638 Use generics. Generics cannot be used right now because this method colides with the ones defined in FactoryBeans.
+  // TODO MULE-9638 Use generics. Generics cannot be used right now because this method colides with the ones defined in
+  // FactoryBeans.
   private Class<?> objectFactoryType;
   private boolean prototype;
   private ComponentIdentifier componentIdentifier;
@@ -83,8 +84,8 @@ public class ComponentBuildingDefinition {
   }
 
   /**
-   * @return the factory for the domain object. For complex object creations it's possible to define an object builder that will end up
-   *         creating the domain object.
+   * @return the factory for the domain object. For complex object creations it's possible to define an object builder that will
+   *         end up creating the domain object.
    */
   public Class<?> getObjectFactoryType() {
     return objectFactoryType;
@@ -93,9 +94,11 @@ public class ComponentBuildingDefinition {
   /**
    * @return if the object is a prototype or a singleton
    */
-  // TODO MULE-9681: remove for some other semantic. The API should not define something as "prototype" it should declare if it's a reusable
+  // TODO MULE-9681: remove for some other semantic. The API should not define something as "prototype" it should declare if it's
+  // a reusable
   // component or an instance.
-  // Ideally this can be inferred by the language itself. e.g.: Global message processors are always reusable components and do not define
+  // Ideally this can be inferred by the language itself. e.g.: Global message processors are always reusable components and do
+  // not define
   // entities by them self.
   public boolean isPrototype() {
     return prototype;
@@ -157,8 +160,8 @@ public class ComponentBuildingDefinition {
     }
 
     /**
-     * Sets the identifier of the configuration element that this building definition is for. For instance, a config element <http:listener>
-     * has as identifier listener
+     * Sets the identifier of the configuration element that this building definition is for. For instance, a config element
+     * <http:listener> has as identifier listener
      *
      * @param identifier configuration element identifier
      * @return the builder
@@ -169,8 +172,8 @@ public class ComponentBuildingDefinition {
     }
 
     /**
-     * Sets the namespace of the configuration element that this building definition is for. For instance, a config element <http:listener>
-     * has as namespace http
+     * Sets the namespace of the configuration element that this building definition is for. For instance, a config element
+     * <http:listener> has as namespace http
      *
      * @param namespace configuration element namespace
      * @return the builder
@@ -181,9 +184,9 @@ public class ComponentBuildingDefinition {
     }
 
     /**
-     * Sets the {@link TypeDefinition} to discover the object type. It may be created from {@link TypeDefinition#fromType(Class)} which
-     * means the type is predefined. Or it may be created from {@link TypeDefinition#fromConfigurationAttribute(String)} which means that
-     * the object type is declared within the configuration using a config attribute.
+     * Sets the {@link TypeDefinition} to discover the object type. It may be created from {@link TypeDefinition#fromType(Class)}
+     * which means the type is predefined. Or it may be created from {@link TypeDefinition#fromConfigurationAttribute(String)}
+     * which means that the object type is declared within the configuration using a config attribute.
      *
      * @param typeDefinition the type definition to discover the objecvt type
      * @return the builder
@@ -196,7 +199,8 @@ public class ComponentBuildingDefinition {
     /**
      * This method allows to convert a simple type to another type using a converter.
      *
-     * {@code TypeConverter} are only allowed when the produce type by the component is any of java primitive types, its wrapper or string.
+     * {@code TypeConverter} are only allowed when the produce type by the component is any of java primitive types, its wrapper
+     * or string.
      *
      * @param typeConverter converter from the configuration value to a custom type.
      */
@@ -208,7 +212,8 @@ public class ComponentBuildingDefinition {
     /**
      * This method allows to convert a map entry key to another type using a converter.
      *
-     * {@code TypeConverter} are only allowed when the produce type by the component is any of java primitive types, its wrapper or string.
+     * {@code TypeConverter} are only allowed when the produce type by the component is any of java primitive types, its wrapper
+     * or string.
      *
      * @param typeConverter converter from the configuration value to a custom type.
      */
@@ -228,8 +233,8 @@ public class ComponentBuildingDefinition {
     }
 
     /**
-     * Defines a factory class to be used for creating the object. This method can be used when the object to be build required complex
-     * logic.
+     * Defines a factory class to be used for creating the object. This method can be used when the object to be build required
+     * complex logic.
      *
      * @param objectFactoryType {@code Class} for the factory to use to create the object
      * @return the builder
@@ -241,8 +246,8 @@ public class ComponentBuildingDefinition {
 
     /**
      * Mark configuration parameters to be ignored when building the component. This is mostly useful when
-     * {@link org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder#fromUndefinedSimpleAttributes()} is used an there are
-     * certain configuration parameters that we don't want to included them.
+     * {@link org.mule.runtime.config.spring.dsl.api.AttributeDefinition.Builder#fromUndefinedSimpleAttributes()} is used an there
+     * are certain configuration parameters that we don't want to included them.
      *
      * @param parameterName the configuration parameter name.
      * @return the builder.
@@ -300,9 +305,11 @@ public class ComponentBuildingDefinition {
       return Map.class.isAssignableFrom(componentType);
     }
 
-    // TODO MULE-9681: remove for some other semantic. The API should not define something as "prototype" it should declare if it's a
+    // TODO MULE-9681: remove for some other semantic. The API should not define something as "prototype" it should declare if
+    // it's a
     // reusable component or an instance.
-    // Ideally this can be inferred by the language itself. e.g.: Global message processors are always reusable components and do not define
+    // Ideally this can be inferred by the language itself. e.g.: Global message processors are always reusable components and do
+    // not define
     // entities by them self.
     public Builder asPrototype() {
       definition.prototype = true;
@@ -312,6 +319,7 @@ public class ComponentBuildingDefinition {
     private Optional<Class> getType() {
       final AtomicReference<Class> typeReference = new AtomicReference<>();
       definition.typeDefinition.visit(new TypeDefinitionVisitor() {
+
         @Override
         public void onType(Class<?> type) {
           typeReference.set(type);

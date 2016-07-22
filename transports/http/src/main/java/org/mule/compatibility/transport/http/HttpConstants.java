@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -18,6 +18,7 @@ import java.util.Map;
  */
 // @ThreadSafe
 public class HttpConstants {
+
   // HTTP prefix
   public static final String HTTP10 = "HTTP/1.0";
   public static final String HTTP1X = "HTTP/1.x";
@@ -148,7 +149,8 @@ public class HttpConstants {
   public static final int SC_USE_PROXY = 305;
   public static final int SC_TEMPORARY_REDIRECT = 307;
   public static final int SC_BAD_REQUEST = 400;
-  public static final int SC_UNAUTHORIZED = org.mule.runtime.module.http.api.HttpConstants.HttpStatus.UNAUTHORIZED.getStatusCode();
+  public static final int SC_UNAUTHORIZED =
+      org.mule.runtime.module.http.api.HttpConstants.HttpStatus.UNAUTHORIZED.getStatusCode();
   public static final int SC_PAYMENT_REQUIRED = 402;
   public static final int SC_FORBIDDEN = 403;
   public static final int SC_NOT_FOUND = 404;
@@ -182,21 +184,23 @@ public class HttpConstants {
   static {
     String[] strings = new String[] {HEADER_ACCEPT, HEADER_ACCEPT_CHARSET, HEADER_ACCEPT_ENCODING, HEADER_ACCEPT_LANGUAGE,
         HEADER_AUTHORIZATION, HEADER_COOKIE, HEADER_EXPECT, HEADER_FROM, HEADER_HOST, HEADER_IF_MATCH, HEADER_IF_MODIFIED_SINCE,
-        HEADER_IF_NONE_MATCH, HEADER_IF_RANGE, HEADER_IF_UNMODIFIED_SINCE, HEADER_MAX_FORWARDS, HEADER_PROXY_AUTHORIZATION, HEADER_RANGE,
-        HEADER_REFERER, HEADER_TE, HEADER_USER_AGENT, HEADER_SLUG, HEADER_X_FORWARDED_FOR};
+        HEADER_IF_NONE_MATCH, HEADER_IF_RANGE, HEADER_IF_UNMODIFIED_SINCE, HEADER_MAX_FORWARDS, HEADER_PROXY_AUTHORIZATION,
+        HEADER_RANGE, HEADER_REFERER, HEADER_TE, HEADER_USER_AGENT, HEADER_SLUG, HEADER_X_FORWARDED_FOR};
 
     REQUEST_HEADER_NAMES = Collections.unmodifiableMap(MapUtils.mapWithKeysAndValues(CaseInsensitiveMap.class, strings, strings));
 
-    strings = new String[] {HEADER_ACCEPT_RANGES, HEADER_AGE, HEADER_CONTENT_DISPOSITION, HEADER_COOKIE_SET, HEADER_ETAG, HEADER_LOCATION,
-        HEADER_PROXY_AUTHENTICATE, HEADER_RETRY_AFTER, HEADER_SERVER, HEADER_VARY, HEADER_WWW_AUTHENTICATE, HEADER_TRANSFER_ENCODING}; // TODO:
-                                                                                                                                       // remove
-                                                                                                                                       // HEADER_TRANSFER_ENCODING
+    strings = new String[] {HEADER_ACCEPT_RANGES, HEADER_AGE, HEADER_CONTENT_DISPOSITION, HEADER_COOKIE_SET, HEADER_ETAG,
+        HEADER_LOCATION, HEADER_PROXY_AUTHENTICATE, HEADER_RETRY_AFTER, HEADER_SERVER, HEADER_VARY, HEADER_WWW_AUTHENTICATE,
+        HEADER_TRANSFER_ENCODING}; // TODO:
+                                   // remove
+                                   // HEADER_TRANSFER_ENCODING
 
-    RESPONSE_HEADER_NAMES = Collections.unmodifiableMap(MapUtils.mapWithKeysAndValues(CaseInsensitiveMap.class, strings, strings));
+    RESPONSE_HEADER_NAMES =
+        Collections.unmodifiableMap(MapUtils.mapWithKeysAndValues(CaseInsensitiveMap.class, strings, strings));
 
-    strings = new String[] {HEADER_ALLOW, HEADER_CACHE_CONTROL, HEADER_CONNECTION, HEADER_CONTENT_ENCODING, HEADER_CONTENT_LANGUAGE,
-        HEADER_CONTENT_LENGTH, HEADER_CONTENT_LOCATION, HEADER_CONTENT_MD5, HEADER_CONTENT_RANGE, HEADER_CONTENT_TYPE, HEADER_DATE,
-        HEADER_EXPIRES, HEADER_KEEP_ALIVE, HEADER_LAST_MODIFIED, HEADER_PRAGMA, HEADER_TRAILER,
+    strings = new String[] {HEADER_ALLOW, HEADER_CACHE_CONTROL, HEADER_CONNECTION, HEADER_CONTENT_ENCODING,
+        HEADER_CONTENT_LANGUAGE, HEADER_CONTENT_LENGTH, HEADER_CONTENT_LOCATION, HEADER_CONTENT_MD5, HEADER_CONTENT_RANGE,
+        HEADER_CONTENT_TYPE, HEADER_DATE, HEADER_EXPIRES, HEADER_KEEP_ALIVE, HEADER_LAST_MODIFIED, HEADER_PRAGMA, HEADER_TRAILER,
         /* HEADER_TRANSFER_ENCODING, */ HEADER_UPGRADE, HEADER_VIA, HEADER_WARNING};
 
     GENERAL_AND_ENTITY_HEADER_NAMES =

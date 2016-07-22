@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.listener.grizzly;
 
@@ -38,9 +38,10 @@ public class ResponseCompletionHandler extends BaseResponseCompletionHandler {
   private boolean isDone;
   private boolean contentSend;
 
-  public ResponseCompletionHandler(final FilterChainContext ctx, final HttpRequestPacket httpRequestPacket, final HttpResponse httpResponse,
-      ResponseStatusCallback responseStatusCallback) {
-    Preconditions.checkArgument((!(httpResponse.getEntity() instanceof InputStreamHttpEntity)), "response entity cannot be input stream");
+  public ResponseCompletionHandler(final FilterChainContext ctx, final HttpRequestPacket httpRequestPacket,
+      final HttpResponse httpResponse, ResponseStatusCallback responseStatusCallback) {
+    Preconditions.checkArgument((!(httpResponse.getEntity() instanceof InputStreamHttpEntity)),
+        "response entity cannot be input stream");
     this.ctx = ctx;
     this.httpResponsePacket = buildHttpResponsePacket(httpRequestPacket, httpResponse);
     this.httpResponseContent = buildResponseContent(httpResponse);

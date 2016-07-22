@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.xml.transformers.xml;
 
@@ -15,6 +15,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import static org.junit.Assert.fail;
 
 public class XmlDomPrettyPrinterTransformerTestCase extends AbstractTransformerTestCase {
+
   private static final String rawData = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><just><a><test>test</test></a></just>";
 
   // Do not normalize any Strings for this test since we need to test formatting
@@ -23,7 +24,8 @@ public class XmlDomPrettyPrinterTransformerTestCase extends AbstractTransformerT
   }
 
   public Object getResultData() {
-    return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n" + "<just>\n" + "  <a>\n" + "    <test>test</test>\n" + "  </a>\n" + "</just>\n";
+    return "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n" + "<just>\n" + "  <a>\n" + "    <test>test</test>\n" + "  </a>\n"
+        + "</just>\n";
   }
 
   public Transformer getRoundTripTransformer() throws Exception {

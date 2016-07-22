@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.tck;
 
@@ -154,8 +154,8 @@ public final class MuleTestUtils {
   // }
 
 
-  public static MuleEvent getTestEvent(MuleMessage message, FlowConstruct flowConstruct, MessageExchangePattern mep, MuleContext context)
-      throws Exception {
+  public static MuleEvent getTestEvent(MuleMessage message, FlowConstruct flowConstruct, MessageExchangePattern mep,
+      MuleContext context) throws Exception {
     final MuleSession session = getTestSession(flowConstruct, context);
     final DefaultMuleEvent event = new DefaultMuleEvent(message, mep, flowConstruct, session);
     return event;
@@ -178,7 +178,8 @@ public final class MuleTestUtils {
     return event;
   }
 
-  public static MuleEventContext getTestEventContext(Object data, MessageExchangePattern mep, MuleContext context) throws Exception {
+  public static MuleEventContext getTestEventContext(Object data, MessageExchangePattern mep, MuleContext context)
+      throws Exception {
     try {
       final MuleEvent event = getTestEvent(data, mep, context);
       RequestContext.setEvent(event);
@@ -219,7 +220,8 @@ public final class MuleTestUtils {
     return getTestFlow(name, context, true);
   }
 
-  public static Flow getTestFlow(String name, Class<?> clazz, Map props, MuleContext context, boolean initialize) throws Exception {
+  public static Flow getTestFlow(String name, Class<?> clazz, Map props, MuleContext context, boolean initialize)
+      throws Exception {
     final SingletonObjectFactory of = new SingletonObjectFactory(clazz, props);
     of.initialise();
     final JavaComponent component = new DefaultJavaComponent(of);
@@ -259,8 +261,8 @@ public final class MuleTestUtils {
   }
 
   /**
-   * Execute callback with a given system property set and replaces the system property with it's original value once done. Useful for
-   * asserting behaviour that is dependent on the presence of a system property.
+   * Execute callback with a given system property set and replaces the system property with it's original value once done. Useful
+   * for asserting behaviour that is dependent on the presence of a system property.
    *
    * @param propertyName Name of system property to set
    * @param propertyValue Value of system property
@@ -303,6 +305,7 @@ public final class MuleTestUtils {
   }
 
   public static interface TestCallback {
+
     void run() throws Exception;
   }
 }

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.queue;
 
@@ -62,6 +62,7 @@ public abstract class AbstractTransactionQueueManagerTestCase extends AbstractMu
     final Latch latch = new Latch();
 
     Thread t = new Thread() {
+
       @Override
       public void run() {
         try {
@@ -101,6 +102,7 @@ public abstract class AbstractTransactionQueueManagerTestCase extends AbstractMu
     final Latch latch = new Latch();
 
     Thread t = new Thread() {
+
       @Override
       public void run() {
         try {
@@ -200,6 +202,7 @@ public abstract class AbstractTransactionQueueManagerTestCase extends AbstractMu
     final Latch latch = new Latch();
 
     Thread t = new Thread() {
+
       @Override
       public void run() {
         try {
@@ -247,6 +250,7 @@ public abstract class AbstractTransactionQueueManagerTestCase extends AbstractMu
     final Serializable object2 = "string2";
 
     Thread t = new Thread() {
+
       @Override
       public void run() {
         try {
@@ -294,6 +298,7 @@ public abstract class AbstractTransactionQueueManagerTestCase extends AbstractMu
     final Latch latch = new Latch();
 
     Thread t = new Thread() {
+
       @Override
       public void run() {
         try {
@@ -566,6 +571,7 @@ public abstract class AbstractTransactionQueueManagerTestCase extends AbstractMu
 
       final Latch putExecutionLatch = new Latch();
       Thread putExecutionThread = new Thread(new Runnable() {
+
         public void run() {
           try {
             QueueSession s = mgr.getQueueSession();
@@ -640,6 +646,7 @@ public abstract class AbstractTransactionQueueManagerTestCase extends AbstractMu
 
       final Latch takeExecutionLatch = new Latch();
       final Thread takeExecutionThread = new Thread(new Runnable() {
+
         public void run() {
           try {
             takeExecutionLatch.release();

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.source.polling;
 
@@ -40,9 +40,10 @@ import org.slf4j.LoggerFactory;
  * Polling {@link org.mule.runtime.core.api.source.MessageSource}.
  * </p>
  * <p>
- * The {@link PollingMessageSource} is responsible of creating a {@link org.mule.runtime.core.api.schedule.Scheduler} at the initialization
- * phase. This {@link org.mule.runtime.core.api.schedule.Scheduler} can be stopped/started and executed by using the
- * {@link org.mule.runtime.core.api.registry.MuleRegistry} interface, this way users can manipulate poll from outside mule server.
+ * The {@link PollingMessageSource} is responsible of creating a {@link org.mule.runtime.core.api.schedule.Scheduler} at the
+ * initialization phase. This {@link org.mule.runtime.core.api.schedule.Scheduler} can be stopped/started and executed by using
+ * the {@link org.mule.runtime.core.api.registry.MuleRegistry} interface, this way users can manipulate poll from outside mule
+ * server.
  * </p>
  */
 public class PollingMessageSource
@@ -95,8 +96,8 @@ public class PollingMessageSource
    * @param override interceptor for each triggered operation
    * @param schedulerFactory factory for the scheduler
    */
-  public PollingMessageSource(MuleContext muleContext, MessageProcessor sourceMessageProcessor, MessageProcessorPollingOverride override,
-      SchedulerFactory<Runnable> schedulerFactory) {
+  public PollingMessageSource(MuleContext muleContext, MessageProcessor sourceMessageProcessor,
+      MessageProcessorPollingOverride override, SchedulerFactory<Runnable> schedulerFactory) {
     this.muleContext = muleContext;
     this.sourceMessageProcessor = sourceMessageProcessor;
     this.override = override;
@@ -139,6 +140,7 @@ public class PollingMessageSource
 
   protected PollingWorker createWork() {
     return new PollingWorker(new PollingTask() {
+
       @Override
       public boolean isStarted() {
         return PollingMessageSource.this.started;
@@ -187,11 +189,12 @@ public class PollingMessageSource
   }
 
   private void pollWith(final MuleMessage request) throws Exception {
-    ExecutionTemplate<MuleEvent> executionTemplate =
-        TransactionalErrorHandlingExecutionTemplate.createMainExecutionTemplate(muleContext, flowConstruct.getExceptionListener());
+    ExecutionTemplate<MuleEvent> executionTemplate = TransactionalErrorHandlingExecutionTemplate
+        .createMainExecutionTemplate(muleContext, flowConstruct.getExceptionListener());
     try {
       final MessageProcessorPollingInterceptor interceptor = override.interceptor();
       MuleEvent muleEvent = executionTemplate.execute(new ExecutionCallback<MuleEvent>() {
+
         @Override
         public MuleEvent process() throws Exception {
           MuleEvent event = new DefaultMuleEvent(request, MessageExchangePattern.ONE_WAY, flowConstruct);

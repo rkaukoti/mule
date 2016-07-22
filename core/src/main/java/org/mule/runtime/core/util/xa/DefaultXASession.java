@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.xa;
 
@@ -49,8 +49,8 @@ public abstract class DefaultXASession<T extends AbstractXaTransactionContext> i
   public void start(Xid xid, int flags) throws XAException {
     if (logger.isDebugEnabled()) {
       logger.debug(new StringBuilder(128).append("Thread ").append(Thread.currentThread())
-          .append(flags == TMNOFLAGS ? " starts" : flags == TMJOIN ? " joins" : " resumes").append(" work on behalf of transaction branch ")
-          .append(xid).toString());
+          .append(flags == TMNOFLAGS ? " starts" : flags == TMJOIN ? " joins" : " resumes")
+          .append(" work on behalf of transaction branch ").append(xid).toString());
     }
     // A local transaction is already begun
     if (this.localContext != null) {
@@ -90,8 +90,8 @@ public abstract class DefaultXASession<T extends AbstractXaTransactionContext> i
   public void end(Xid xid, int flags) throws XAException {
     if (logger.isDebugEnabled()) {
       logger.debug(new StringBuilder(128).append("Thread ").append(Thread.currentThread())
-          .append(flags == TMSUSPEND ? " suspends" : flags == TMFAIL ? " fails" : " ends").append(" work on behalf of transaction branch ")
-          .append(xid).toString());
+          .append(flags == TMSUSPEND ? " suspends" : flags == TMFAIL ? " fails" : " ends")
+          .append(" work on behalf of transaction branch ").append(xid).toString());
     }
     // No transaction is already begun
     if (localContext == null) {
@@ -235,8 +235,8 @@ public abstract class DefaultXASession<T extends AbstractXaTransactionContext> i
   }
 
   /**
-   * Commits a dangling transaction that can be caused by the failure of one of the XAResource involved in the transaction or a crash of the
-   * transaction manager.
+   * Commits a dangling transaction that can be caused by the failure of one of the XAResource involved in the transaction or a
+   * crash of the transaction manager.
    *
    * @param xid transaction identifier
    * @param onePhase if the commit should be done using only one phase commit
@@ -244,8 +244,8 @@ public abstract class DefaultXASession<T extends AbstractXaTransactionContext> i
   protected abstract void commitDanglingTransaction(Xid xid, boolean onePhase) throws XAException;
 
   /**
-   * Commits a dangling transaction that can be caused by the failure of one of the XAResource involved in the transaction or a crash of the
-   * transaction manager.
+   * Commits a dangling transaction that can be caused by the failure of one of the XAResource involved in the transaction or a
+   * crash of the transaction manager.
    *
    * @param xid transaction identifier
    */

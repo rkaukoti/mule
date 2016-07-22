@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.management.util;
 
@@ -36,15 +36,16 @@ public class ManagementUtils {
   }
 
 
-  protected synchronized static WrapperManagerMBean getProxy()
-      throws MalformedObjectNameException, MBeanRegistrationException, InstanceAlreadyExistsException, NotCompliantMBeanException {
+  protected synchronized static WrapperManagerMBean getProxy() throws MalformedObjectNameException, MBeanRegistrationException,
+      InstanceAlreadyExistsException, NotCompliantMBeanException {
     if (jmxSupport == null) {
       jmxSupportFactory = AutoDiscoveryJmxSupportFactory.getInstance();
       jmxSupport = jmxSupportFactory.getJmxSupport();
     }
 
     MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
-    final String jmxNameForMule = String.format("%s:%s", JmxSupport.DEFAULT_JMX_DOMAIN_PREFIX, WrapperManagerAgent.WRAPPER_JMX_NAME);
+    final String jmxNameForMule =
+        String.format("%s:%s", JmxSupport.DEFAULT_JMX_DOMAIN_PREFIX, WrapperManagerAgent.WRAPPER_JMX_NAME);
     ObjectName on = jmxSupport.getObjectName(jmxNameForMule);
     if (!mBeanServer.isRegistered(on)) {
       mBeanServer.registerMBean(new WrapperManager(), on);

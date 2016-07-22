@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.endpoint;
 
@@ -20,6 +20,7 @@ import java.util.Properties;
  */
 
 public abstract class AbstractEndpointURIBuilder implements EndpointURIBuilder {
+
   protected String address;
   protected String endpointName;
   protected String connectorName;
@@ -44,8 +45,8 @@ public abstract class AbstractEndpointURIBuilder implements EndpointURIBuilder {
       setEndpoint(uri, props);
     }
 
-    EndpointURI ep = new MuleEndpointURI(address, endpointName, connectorName, transformers, responseTransformers, props, this.uri,
-        userInfo, muleContext);
+    EndpointURI ep = new MuleEndpointURI(address, endpointName, connectorName, transformers, responseTransformers, props,
+        this.uri, userInfo, muleContext);
     address = null;
     endpointName = null;
     connectorName = null;

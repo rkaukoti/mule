@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.api.requester.authentication;
 
@@ -43,7 +43,8 @@ public class BasicAuthenticationBuilder {
   }
 
   /**
-   * @param preemptive configures preemptive authentication or not (when true, the authentication header is sent in the first request).
+   * @param preemptive configures preemptive authentication or not (when true, the authentication header is sent in the first
+   *        request).
    * @return this
    */
   public BasicAuthenticationBuilder setPreemptive(boolean preemptive) {
@@ -51,8 +52,8 @@ public class BasicAuthenticationBuilder {
   }
 
   /**
-   * @param preemptive an expression that resolves to a boolean value that defines if preemptive authentication should be used or not (when
-   *        true, the authentication header is sent in the first request).
+   * @param preemptive an expression that resolves to a boolean value that defines if preemptive authentication should be used or
+   *        not (when true, the authentication header is sent in the first request).
    * @return this
    */
   public BasicAuthenticationBuilder setPreemptiveExpression(String preemptive) {

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.extension.ftp.internal;
 
@@ -43,8 +43,8 @@ public abstract class AbstractFtpConnectionProvider<Connection extends FtpFileSy
   private String host;
 
   /**
-   * A scalar value representing the amount of time to wait before a connection attempt times out. This attribute works in tandem with
-   * {@link #connectionTimeoutUnit}.
+   * A scalar value representing the amount of time to wait before a connection attempt times out. This attribute works in tandem
+   * with {@link #connectionTimeoutUnit}.
    * <p>
    * Defaults to {@code 10}
    */
@@ -66,8 +66,8 @@ public abstract class AbstractFtpConnectionProvider<Connection extends FtpFileSy
   private TimeUnit connectionTimeoutUnit;
 
   /**
-   * A scalar value representing the amount of time to wait before a request for data times out. This attribute works in tandem with
-   * {@link #responseTimeoutUnit}.
+   * A scalar value representing the amount of time to wait before a request for data times out. This attribute works in tandem
+   * with {@link #responseTimeoutUnit}.
    * <p>
    * Defaults to {@code 10}
    */

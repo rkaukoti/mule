@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.context;
 
@@ -51,7 +51,8 @@ public class DefaultMuleContextFactory implements MuleContextFactory {
   /**
    * Use default MuleContextBuilder
    */
-  public MuleContext createMuleContext(ConfigurationBuilder configurationBuilder) throws InitialisationException, ConfigurationException {
+  public MuleContext createMuleContext(ConfigurationBuilder configurationBuilder)
+      throws InitialisationException, ConfigurationException {
     // Create MuleContext using default MuleContextBuilder
     return createMuleContext(configurationBuilder, createMuleContextBuilder());
   }
@@ -59,7 +60,8 @@ public class DefaultMuleContextFactory implements MuleContextFactory {
   /**
    * Use default ConfigurationBuilder
    */
-  public MuleContext createMuleContext(MuleContextBuilder muleContextBuilder) throws InitialisationException, ConfigurationException {
+  public MuleContext createMuleContext(MuleContextBuilder muleContextBuilder)
+      throws InitialisationException, ConfigurationException {
     // Configure with defaults needed for a feasible/startable MuleContext
     return createMuleContext(new DefaultsConfigurationBuilder(), muleContextBuilder);
   }
@@ -67,9 +69,10 @@ public class DefaultMuleContextFactory implements MuleContextFactory {
   /**
    * {@inheritDoc}
    */
-  public MuleContext createMuleContext(final List<ConfigurationBuilder> configurationBuilders, MuleContextBuilder muleContextBuilder)
-      throws InitialisationException, ConfigurationException {
+  public MuleContext createMuleContext(final List<ConfigurationBuilder> configurationBuilders,
+      MuleContextBuilder muleContextBuilder) throws InitialisationException, ConfigurationException {
     return doCreateMuleContext(muleContextBuilder, new ContextConfigurator() {
+
       @Override
       public void configure(MuleContext muleContext) throws ConfigurationException {
         // Configure
@@ -87,6 +90,7 @@ public class DefaultMuleContextFactory implements MuleContextFactory {
   public MuleContext createMuleContext(final ConfigurationBuilder configurationBuilder, MuleContextBuilder muleContextBuilder)
       throws InitialisationException, ConfigurationException {
     return doCreateMuleContext(muleContextBuilder, new ContextConfigurator() {
+
       @Override
       public void configure(MuleContext muleContext) throws ConfigurationException {
         configurationBuilder.configure(muleContext);
@@ -99,9 +103,9 @@ public class DefaultMuleContextFactory implements MuleContextFactory {
   // Additional Factory methods provided by this implementation.
 
   /**
-   * Creates a new {@link MuleContext} instance from the resource provided. Implementations of {@link MuleContextFactory} can either use a
-   * default {@link ConfigurationBuilder} to implement this, or do some auto-detection to determine the {@link ConfigurationBuilder} that
-   * should be used.
+   * Creates a new {@link MuleContext} instance from the resource provided. Implementations of {@link MuleContextFactory} can
+   * either use a default {@link ConfigurationBuilder} to implement this, or do some auto-detection to determine the
+   * {@link ConfigurationBuilder} that should be used.
    *
    * @param resource comma seperated list of configuration resources.
    */
@@ -110,13 +114,15 @@ public class DefaultMuleContextFactory implements MuleContextFactory {
   }
 
   /**
-   * Creates a new {@link MuleContext} instance from the resource provided. Implementations of {@link MuleContextFactory} can either use a
-   * default {@link ConfigurationBuilder} to implement this, or do some auto-detection to determine the {@link ConfigurationBuilder} that
-   * should be used. Properties if provided are used to replace "property placeholder" value in configuration files.
+   * Creates a new {@link MuleContext} instance from the resource provided. Implementations of {@link MuleContextFactory} can
+   * either use a default {@link ConfigurationBuilder} to implement this, or do some auto-detection to determine the
+   * {@link ConfigurationBuilder} that should be used. Properties if provided are used to replace "property placeholder" value in
+   * configuration files.
    */
   public MuleContext createMuleContext(final String configResources, final Properties properties)
       throws InitialisationException, ConfigurationException {
     return doCreateMuleContext(createMuleContextBuilder(), new ContextConfigurator() {
+
       @Override
       public void configure(MuleContext muleContext) throws ConfigurationException {
         // Configure with startup properties
@@ -134,8 +140,8 @@ public class DefaultMuleContextFactory implements MuleContextFactory {
   }
 
   /**
-   * Creates a new MuleContext using the given configurationBuilder. Properties if provided are used to replace "property placeholder" value
-   * in configuration files.
+   * Creates a new MuleContext using the given configurationBuilder. Properties if provided are used to replace "property
+   * placeholder" value in configuration files.
    */
   public MuleContext createMuleContext(ConfigurationBuilder configurationBuilder, Properties properties)
       throws InitialisationException, ConfigurationException {
@@ -143,8 +149,8 @@ public class DefaultMuleContextFactory implements MuleContextFactory {
   }
 
   /**
-   * Creates a new MuleContext using the given configurationBuilder and configuration. Properties if provided are used to replace "property
-   * placeholder" value in configuration files.
+   * Creates a new MuleContext using the given configurationBuilder and configuration. Properties if provided are used to replace
+   * "property placeholder" value in configuration files.
    */
   public MuleContext createMuleContext(final ConfigurationBuilder configurationBuilder, final Properties properties,
       MuleConfiguration configuration) throws InitialisationException, ConfigurationException {
@@ -152,6 +158,7 @@ public class DefaultMuleContextFactory implements MuleContextFactory {
     DefaultMuleContextBuilder contextBuilder = createMuleContextBuilder();
     contextBuilder.setMuleConfiguration(configuration);
     return doCreateMuleContext(contextBuilder, new ContextConfigurator() {
+
       @Override
       public void configure(MuleContext muleContext) throws ConfigurationException {
         // Configure with startup properties

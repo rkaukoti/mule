@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.oauth2.internal.clientcredentials.functional;
 
@@ -41,8 +41,8 @@ public class ClientCredentialsFullConfigTestCase extends AbstractOAuthAuthorizat
   private final String CUSTOM_RESPONSE_PARAMETER1_VALUE = "token-resp-value1";
   private final String CUSTOM_RESPONSE_PARAMETER2_VALUE = "token-resp-value2";
   @Rule
-  public SystemProperty tokenUrl =
-      new SystemProperty("token.url", String.format("%s://localhost:%d" + TOKEN_PATH, getProtocol(), oauthHttpsServerPort.getNumber()));
+  public SystemProperty tokenUrl = new SystemProperty("token.url",
+      String.format("%s://localhost:%d" + TOKEN_PATH, getProtocol(), oauthHttpsServerPort.getNumber()));
   @Rule
   public SystemProperty customTokenResponseParameter1Name = new SystemProperty("custom.param.extractor1", "token-resp-param1");
   @Rule

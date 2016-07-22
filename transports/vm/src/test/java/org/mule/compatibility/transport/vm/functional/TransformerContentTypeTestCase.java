@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.vm.functional;
 
@@ -25,6 +25,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 public class TransformerContentTypeTestCase extends FunctionalTestCase {
+
   private MuleClient client;
 
   @Override
@@ -40,7 +41,8 @@ public class TransformerContentTypeTestCase extends FunctionalTestCase {
   @Test
   public void testContentTypesPlainXmlXml() throws Exception {
     EchoComponent.setExpectedMimeType("text/xml");
-    MuleMessage response = client.send("vm://in1?connector=vm-in1", MuleMessage.builder().payload("OK").mediaType(MediaType.TEXT).build());
+    MuleMessage response =
+        client.send("vm://in1?connector=vm-in1", MuleMessage.builder().payload("OK").mediaType(MediaType.TEXT).build());
     assertNotNull(response);
     assertEquals("OK", response.getPayload());
   }
@@ -56,7 +58,8 @@ public class TransformerContentTypeTestCase extends FunctionalTestCase {
   @Test
   public void testContentTypesXmlPlainPlain() throws Exception {
     EchoComponent.setExpectedMimeType("text/plain");
-    MuleMessage response = client.send("vm://in2?connector=vm-in2", MuleMessage.builder().payload("OK").mediaType(MediaType.XML).build());
+    MuleMessage response =
+        client.send("vm://in2?connector=vm-in2", MuleMessage.builder().payload("OK").mediaType(MediaType.XML).build());
     assertNotNull(response);
     assertEquals("OK", response.getPayload());
   }
@@ -70,6 +73,7 @@ public class TransformerContentTypeTestCase extends FunctionalTestCase {
   }
 
   public static class EchoComponent implements Callable {
+
     static String expectedMimeType;
 
     public static void setExpectedMimeType(String expectedContentType) {

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.launcher.coreextension;
 
@@ -21,7 +21,8 @@ import static org.junit.Assert.assertThat;
 @SmallTest
 public class ReflectionMuleCoreExtensionDependencyDiscovererTestCase extends AbstractMuleTestCase {
 
-  private ReflectionMuleCoreExtensionDependencyDiscoverer dependencyDiscoverer = new ReflectionMuleCoreExtensionDependencyDiscoverer();
+  private ReflectionMuleCoreExtensionDependencyDiscoverer dependencyDiscoverer =
+      new ReflectionMuleCoreExtensionDependencyDiscoverer();
 
   @Test
   public void resolvesEmptyDependencies() throws Exception {
@@ -31,7 +32,8 @@ public class ReflectionMuleCoreExtensionDependencyDiscovererTestCase extends Abs
 
   @Test
   public void resolvesSingleDependency() throws Exception {
-    final List<LinkedMuleCoreExtensionDependency> dependencies = dependencyDiscoverer.findDependencies(new DependantTestCoreExtension());
+    final List<LinkedMuleCoreExtensionDependency> dependencies =
+        dependencyDiscoverer.findDependencies(new DependantTestCoreExtension());
     assertThat(dependencies.size(), equalTo(1));
     assertThat((Class<TestCoreExtension>) dependencies.get(0).getDependencyClass(), equalTo(TestCoreExtension.class));
     assertThat(dependencies.get(0).getDependantMethod().getName(), equalTo("setTestCoreExtension"));

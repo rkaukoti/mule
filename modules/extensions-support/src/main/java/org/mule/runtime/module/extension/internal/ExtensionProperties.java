@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal;
 
@@ -35,9 +35,9 @@ public class ExtensionProperties {
   public static final String ENCODING_PARAMETER_NAME = "outputEncoding";
 
   /**
-   * The name of a synthetic parameter that's automatically added to all non void operations. The meaning of it is requesting the runtime to
-   * place the resulting {@link MuleMessage} on a flowVar pointed by this parameter instead of replacing the message carried by the
-   * {@link MuleEvent} that's travelling through the pipeline
+   * The name of a synthetic parameter that's automatically added to all non void operations. The meaning of it is requesting the
+   * runtime to place the resulting {@link MuleMessage} on a flowVar pointed by this parameter instead of replacing the message
+   * carried by the {@link MuleEvent} that's travelling through the pipeline
    */
   public static final String TARGET_ATTRIBUTE = "target";
 

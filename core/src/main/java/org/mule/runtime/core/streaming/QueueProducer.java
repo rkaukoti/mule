@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.streaming;
@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implementation of {@link Producer} to stream the contents of a {@link org.mule.runtime.core.util.queue.Queue} A polling timeout value
- * might be specified, otherwise the default value of 5000 milliseconds will be assumed
+ * Implementation of {@link Producer} to stream the contents of a {@link org.mule.runtime.core.util.queue.Queue} A polling timeout
+ * value might be specified, otherwise the default value of 5000 milliseconds will be assumed
  */
 public class QueueProducer<T> implements Producer<T> {
 
@@ -42,9 +42,9 @@ public class QueueProducer<T> implements Producer<T> {
   }
 
   /**
-   * {@inheritDoc} This implementation will poll from the queue once and will return the obtained item. If the producer is closed or if the
-   * queue times out while polling, then <code>null</code> is returned. If the poll method throws {@link InterruptedException} then
-   * <code>null</code> is returned as well
+   * {@inheritDoc} This implementation will poll from the queue once and will return the obtained item. If the producer is closed
+   * or if the queue times out while polling, then <code>null</code> is returned. If the poll method throws
+   * {@link InterruptedException} then <code>null</code> is returned as well
    */
   @Override
   @SuppressWarnings("unchecked")

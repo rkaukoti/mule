@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.domain.request;
 
@@ -31,8 +31,8 @@ public interface HttpRequest extends HttpMessage {
   String getUri();
 
   /**
-   * @return the raw input stream from the body. if there's not body then returns null. After calling this method #getEntity should not be
-   *         used.
+   * @return the raw input stream from the body. if there's not body then returns null. After calling this method #getEntity
+   *         should not be used.
    */
   InputStreamHttpEntity getInputStreamEntity();
 }

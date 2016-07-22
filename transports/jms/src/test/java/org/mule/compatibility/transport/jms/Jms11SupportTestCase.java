@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms;
 
@@ -19,6 +19,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 public class Jms11SupportTestCase extends AbstractMuleContextEndpointTestCase {
+
   @Test
   public void testNoLocalCalledForDurableTopic() throws Exception {
     Jms11Support jmsSupport = new Jms11Support(new JmsConnector(muleContext));
@@ -65,7 +66,8 @@ public class Jms11SupportTestCase extends AbstractMuleContextEndpointTestCase {
       jmsSupport.createConsumer(session, queue, null, noLocal, durableName, false, getTestInboundEndpoint("test"));
     } catch (JMSException jmsex) {
       // expected
-      assertEquals("Wrong exception text.", "A durable subscriber name was set but the destination was not a Topic", jmsex.getMessage());
+      assertEquals("Wrong exception text.", "A durable subscriber name was set but the destination was not a Topic",
+          jmsex.getMessage());
     }
   }
 }

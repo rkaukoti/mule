@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer.encryption;
 
@@ -22,6 +22,7 @@ import java.nio.charset.Charset;
  * <code>EncryptionTransformer</code> will transform an array of bytes or string into an encrypted array of bytes
  */
 public abstract class AbstractEncryptionTransformer extends AbstractTransformer implements MuleContextAware {
+
   private EncryptionStrategy strategy = null;
   private String strategyName = null;
 
@@ -36,8 +37,8 @@ public abstract class AbstractEncryptionTransformer extends AbstractTransformer 
   public Object clone() throws CloneNotSupportedException {
     AbstractEncryptionTransformer clone = (AbstractEncryptionTransformer) super.clone();
     /*
-     * The actual strategy is *shared* - not sure if this is right? both shallow and deep copy make sense - think about security, passwords,
-     * required external authentication dependencies etc. :(
+     * The actual strategy is *shared* - not sure if this is right? both shallow and deep copy make sense - think about security,
+     * passwords, required external authentication dependencies etc. :(
      */
     clone.setStrategy(strategy);
     clone.setStrategyName(strategyName);

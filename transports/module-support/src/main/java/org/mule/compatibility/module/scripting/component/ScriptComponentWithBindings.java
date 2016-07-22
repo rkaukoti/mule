@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.module.scripting.component;
 
@@ -70,8 +70,8 @@ public class ScriptComponentWithBindings extends ScriptComponent {
           BindingInvocationHandler handler = (BindingInvocationHandler) Proxy.getInvocationHandler(proxy);
           handler.addRouterForInterface(interfaceBinding);
         } else {
-          Object proxy = Proxy.newProxyInstance(muleContext.getExecutionClassLoader(), new Class[] {interfaceBinding.getInterface()},
-              new BindingInvocationHandler(interfaceBinding));
+          Object proxy = Proxy.newProxyInstance(muleContext.getExecutionClassLoader(),
+              new Class[] {interfaceBinding.getInterface()}, new BindingInvocationHandler(interfaceBinding));
           // new BindingInvocationHandler(interfaceBinding, muleContext));
           proxies.put(bindingName, proxy);
         }

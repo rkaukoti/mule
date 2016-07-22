@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.tck.testmodels.mule;
 
@@ -18,10 +18,12 @@ import java.util.List;
 
 /**
  * <code>TestExceptionStrategy</code> is used by the Mule test cases as a direct replacement of the
- * {@link org.mule.runtime.core.exception.AbstractMessagingExceptionStrategy}. This is used to test that overriding the default Exception
- * strategy works.
+ * {@link org.mule.runtime.core.exception.AbstractMessagingExceptionStrategy}. This is used to test that overriding the default
+ * Exception strategy works.
  */
-public class TestExceptionStrategy extends AbstractExceptionListener implements MessagingExceptionHandler, SystemExceptionHandler {
+public class TestExceptionStrategy extends AbstractExceptionListener
+    implements MessagingExceptionHandler, SystemExceptionHandler {
+
   /**
    * logger used by this class
    */
@@ -112,6 +114,7 @@ public class TestExceptionStrategy extends AbstractExceptionListener implements 
   }
 
   public interface ExceptionCallback {
+
     void onException(Throwable t);
   }
 }

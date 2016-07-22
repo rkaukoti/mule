@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.el.mvel;
 
@@ -24,8 +24,8 @@ public class EventVariableResolverFactory extends MessageVariableResolverFactory
   }
 
   /**
-   * Convenience constructor to allow for more concise creation of VariableResolverFactory chains without and performance overhead incurred
-   * by using a builder.
+   * Convenience constructor to allow for more concise creation of VariableResolverFactory chains without and performance overhead
+   * incurred by using a builder.
    */
   public EventVariableResolverFactory(ParserConfiguration parserConfiguration, MuleContext muleContext, MuleEvent event,
       VariableResolverFactory next) {
@@ -39,7 +39,8 @@ public class EventVariableResolverFactory extends MessageVariableResolverFactory
       if (FLOW.equals(name)) {
         return new MuleImmutableVariableResolver<FlowContext>(FLOW, (new FlowContext(event.getFlowConstruct())), null);
       } else if (MVELExpressionLanguageContext.MULE_EVENT_INTERNAL_VARIABLE.equals(name)) {
-        return new MuleImmutableVariableResolver<MuleEvent>(MVELExpressionLanguageContext.MULE_EVENT_INTERNAL_VARIABLE, event, null);
+        return new MuleImmutableVariableResolver<MuleEvent>(MVELExpressionLanguageContext.MULE_EVENT_INTERNAL_VARIABLE, event,
+            null);
       }
     }
     return super.getVariableResolver(name);
@@ -51,6 +52,7 @@ public class EventVariableResolverFactory extends MessageVariableResolverFactory
   }
 
   public static class FlowContext {
+
     private FlowConstruct flowConstruct;
 
     public FlowContext(FlowConstruct flowConstruct) {

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.tck.testmodels.fruit;
 
@@ -8,6 +8,7 @@ package org.mule.tck.testmodels.fruit;
  * A pure bean implementation
  */
 public class GrapeFruit implements Fruit {
+
   private Integer segments = new Integer(10);
   private Double radius = new Double(4.34);
   private String brand = "Pirulo";

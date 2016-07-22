@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.management.agent;
 
@@ -23,6 +23,7 @@ import java.rmi.server.ExportException;
  * Binds to an existing RMI registry or creates a new one on a defined URI. The default is <code>rmi://localhost:1099</code>
  */
 public class RmiRegistryAgent extends AbstractAgent {
+
   public static final String DEFAULT_HOSTNAME = "localhost";
   public static final int DEFAULT_PORT = 1099;
   private static final String PROTOCOL_PREFIX = "rmi://";

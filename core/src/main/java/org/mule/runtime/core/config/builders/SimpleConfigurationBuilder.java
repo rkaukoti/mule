@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.config.builders;
 
@@ -11,9 +11,9 @@ import org.mule.runtime.core.api.registry.Registry;
 import java.util.Map;
 
 /**
- * This simple ConfgurationBuilder implementation. This is useful for registering any Map of objects with the {@link Registry} via the
- * {@link ConfigurationBuilder} interface. This is useful for example for the registration of "startup properties" which are provided at
- * startup and then used to fill "property placeholders" in other configuration mechanisms such as XML.
+ * This simple ConfgurationBuilder implementation. This is useful for registering any Map of objects with the {@link Registry} via
+ * the {@link ConfigurationBuilder} interface. This is useful for example for the registration of "startup properties" which are
+ * provided at startup and then used to fill "property placeholders" in other configuration mechanisms such as XML.
  */
 public class SimpleConfigurationBuilder extends AbstractConfigurationBuilder {
 

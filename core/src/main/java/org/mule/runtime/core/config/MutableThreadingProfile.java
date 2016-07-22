@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.config;
 
@@ -15,8 +15,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadFactory;
 
 /**
- * Partial mutability for a threading profile. A typical use case for this class is to copy an existing immutable threading profile via a
- * copying constructor, modify values and reconfigure a thread pool (if the latter supports it).
+ * Partial mutability for a threading profile. A typical use case for this class is to copy an existing immutable threading
+ * profile via a copying constructor, modify values and reconfigure a thread pool (if the latter supports it).
  * <p/>
  * <p/>
  * The following parameters are copied locally and can be modified directly:
@@ -30,8 +30,8 @@ import java.util.concurrent.ThreadFactory;
  * <li>{@link #doThreading}
  * </ul>
  * <p/>
- * The following parameters re-use the same object reference as the original threading profile and <strong>are not deep clones</strong> of
- * those:
+ * The following parameters re-use the same object reference as the original threading profile and <strong>are not deep
+ * clones</strong> of those:
  * <ul>
  * <li>{@link #poolFactory}
  * <li>{@link #workManagerFactory}

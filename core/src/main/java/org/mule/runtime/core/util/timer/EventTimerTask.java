@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.timer;
 
@@ -10,10 +10,11 @@ import java.util.List;
 import java.util.TimerTask;
 
 /**
- * <code>EventTimerTask</code> is a task that causes TimeEvent to be fired to listening objects when a specific number of milliseconds have
- * passed. This implementation is based on the java.util.TimerTask.
+ * <code>EventTimerTask</code> is a task that causes TimeEvent to be fired to listening objects when a specific number of
+ * milliseconds have passed. This implementation is based on the java.util.TimerTask.
  */
 public class EventTimerTask extends TimerTask {
+
   /**
    * A list of listeners on this task
    */

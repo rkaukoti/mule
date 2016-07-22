@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -22,6 +22,7 @@ import java.util.Iterator;
  * A http request wrapper
  */
 public class HttpRequest {
+
   private RequestLine requestLine = null;
   private HeaderGroup headers = new HeaderGroup();
   private InputStream entity = null;
@@ -65,7 +66,8 @@ public class HttpRequest {
     if (HttpConstants.METHOD_POST.equalsIgnoreCase(methodName) || HttpConstants.METHOD_PUT.equalsIgnoreCase(methodName)
         || HttpConstants.METHOD_PATCH.equalsIgnoreCase(methodName)) {
       return true;
-    } else if (HttpConstants.METHOD_GET.equalsIgnoreCase(methodName) || HttpConstants.METHOD_DELETE.equalsIgnoreCase(methodName)) {
+    } else if (HttpConstants.METHOD_GET.equalsIgnoreCase(methodName)
+        || HttpConstants.METHOD_DELETE.equalsIgnoreCase(methodName)) {
       Header contentLength = headers.getFirstHeader(HttpConstants.HEADER_CONTENT_LENGTH);
       Header transferEncoding = headers.getFirstHeader(HttpConstants.HEADER_TRANSFER_ENCODING);
       return transferEncoding != null || (contentLength != null && Integer.valueOf(contentLength.getValue()) > 0);

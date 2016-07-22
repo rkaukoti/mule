@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.integration;
@@ -35,9 +35,10 @@ public abstract class AbstractQueryTimeoutTestCase extends AbstractDbIntegration
   }
 
   /**
-   * Verifies that queryTimeout is used and query execution is aborted with an error. As different DB drivers thrown different type of
-   * exceptions instead of throwing SQLTimeoutException, the test firsts executes the flow using no timeout, which must pass, and then using
-   * a timeout which must fail. Because the first execution was successful is assumed that the error is because of an aborted execution.
+   * Verifies that queryTimeout is used and query execution is aborted with an error. As different DB drivers thrown different
+   * type of exceptions instead of throwing SQLTimeoutException, the test firsts executes the flow using no timeout, which must
+   * pass, and then using a timeout which must fail. Because the first execution was successful is assumed that the error is
+   * because of an aborted execution.
    */
   @Test
   public void timeoutsQuery() throws Exception {

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.json.transformers;
 
@@ -33,6 +33,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  * Convert Json to Json using XSLT
  */
 public class JsonXsltTransformer extends XsltTransformer {
+
   public JsonXsltTransformer() {
     this.registerSourceType(DataType.STRING);
     this.registerSourceType(DataType.INPUT_STREAM);
@@ -56,7 +57,8 @@ public class JsonXsltTransformer extends XsltTransformer {
     Source source;
     try {
       if (inputs.getInputStream() != null) {
-        source = new StAXSource(inputFactory.createXMLStreamReader(inputs.getInputStream(), enc == null ? UTF_8.name() : enc.name()));
+        source =
+            new StAXSource(inputFactory.createXMLStreamReader(inputs.getInputStream(), enc == null ? UTF_8.name() : enc.name()));
       } else {
         source = new StAXSource(inputFactory.createXMLStreamReader(inputs.getReader()));
       }

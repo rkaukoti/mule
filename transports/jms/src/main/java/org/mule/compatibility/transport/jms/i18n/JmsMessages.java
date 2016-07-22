@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.i18n;
 
@@ -14,6 +14,7 @@ import org.mule.runtime.core.util.ObjectUtils;
 import org.mule.runtime.core.util.StringMessageUtils;
 
 public class JmsMessages extends MessageFactory {
+
   private static final JmsMessages factory = new JmsMessages();
 
   private static final String BUNDLE_PATH = getBundlePath("jms");
@@ -58,7 +59,8 @@ public class JmsMessages extends MessageFactory {
       actualClass = object.getClass();
     }
 
-    return factory.createMessage(BUNDLE_PATH, 12, StringMessageUtils.toString(expectedClass), StringMessageUtils.toString(actualClass));
+    return factory.createMessage(BUNDLE_PATH, 12, StringMessageUtils.toString(expectedClass),
+        StringMessageUtils.toString(actualClass));
   }
 
   public static Message checkTransformer(String string, Class<?> class1, String name) {

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.tcp.issues;
 
@@ -44,6 +44,7 @@ public class MultiStreamMule1692TestCase extends FunctionalTestCase {
 
   private EventCallback newCallback(final CountDownLatch latch, final AtomicReference<String> message) {
     return new EventCallback() {
+
       @Override
       public synchronized void eventReceived(MuleEventContext context, Object component) {
         try {
@@ -70,7 +71,8 @@ public class MultiStreamMule1692TestCase extends FunctionalTestCase {
     final CountDownLatch latch = new CountDownLatch(1);
     final AtomicReference<String> message = new AtomicReference<String>();
     ((FunctionalStreamingTestComponent) ftc).setEventCallback(newCallback(latch, message), TEST_MESSAGE.length());
-    client.dispatch(((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("testComponent")).getMessageSource()).getAddress(),
+    client.dispatch(
+        ((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("testComponent")).getMessageSource()).getAddress(),
         TEST_MESSAGE, new HashMap());
     latch.await(10, TimeUnit.SECONDS);
     assertEquals(RESULT, message.get());
@@ -78,7 +80,8 @@ public class MultiStreamMule1692TestCase extends FunctionalTestCase {
     final CountDownLatch latch2 = new CountDownLatch(1);
     final AtomicReference<String> message2 = new AtomicReference<String>();
     ((FunctionalStreamingTestComponent) ftc).setEventCallback(newCallback(latch2, message2), TEST_MESSAGE_2.length());
-    client.dispatch(((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("testComponent")).getMessageSource()).getAddress(),
+    client.dispatch(
+        ((InboundEndpoint) ((Flow) muleContext.getRegistry().lookupObject("testComponent")).getMessageSource()).getAddress(),
         TEST_MESSAGE_2, new HashMap());
     latch2.await(10, TimeUnit.SECONDS);
     assertEquals(RESULT_2, message2.get());

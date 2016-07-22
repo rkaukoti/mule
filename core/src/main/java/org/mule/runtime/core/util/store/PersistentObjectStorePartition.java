@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.core.util.store;
@@ -168,6 +168,7 @@ public class PersistentObjectStorePartition<T extends Serializable> implements L
     synchronized (realKeyToUUIDIndex) {
       File[] files = listValuesFiles();
       Arrays.sort(files, new Comparator<File>() {
+
         public int compare(File f1, File f2) {
           int result = Long.valueOf(f1.lastModified()).compareTo(f2.lastModified());
           if (result == 0) {
@@ -202,8 +203,8 @@ public class PersistentObjectStorePartition<T extends Serializable> implements L
 
   private synchronized void loadStoredKeysAndFileNames() throws ObjectStoreException {
     /*
-     * by re-checking this condition here we can avoid contention in {@link #assureLoaded}. The amount of times that this condition should
-     * evaluate to {@code true} is really limited, which provides better performance in the long run
+     * by re-checking this condition here we can avoid contention in {@link #assureLoaded}. The amount of times that this
+     * condition should evaluate to {@code true} is really limited, which provides better performance in the long run
      */
     if (loaded) {
       return;
@@ -226,6 +227,7 @@ public class PersistentObjectStorePartition<T extends Serializable> implements L
 
   private File[] listValuesFiles() {
     File[] files = partitionDirectory.listFiles(new FileFilter() {
+
       @Override
       public boolean accept(File file) {
         return !file.isDirectory() && file.getName().endsWith(OBJECT_FILE_EXTENSION);
@@ -360,6 +362,7 @@ public class PersistentObjectStorePartition<T extends Serializable> implements L
   }
 
   public static class StoreValue<T> implements Serializable {
+
     private Serializable key;
     private T value;
 

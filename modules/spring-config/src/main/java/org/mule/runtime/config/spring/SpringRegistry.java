@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring;
 
@@ -70,7 +70,8 @@ public class SpringRegistry extends AbstractRegistry implements LifecycleRegistr
     setApplicationContext(applicationContext);
   }
 
-  public SpringRegistry(ConfigurableApplicationContext applicationContext, ApplicationContext parentContext, MuleContext muleContext) {
+  public SpringRegistry(ConfigurableApplicationContext applicationContext, ApplicationContext parentContext,
+      MuleContext muleContext) {
     super(REGISTRY_ID, muleContext);
     applicationContext.setParent(parentContext);
     setApplicationContext(applicationContext);
@@ -99,7 +100,8 @@ public class SpringRegistry extends AbstractRegistry implements LifecycleRegistr
     ((AbstractApplicationContext) applicationContext)
         .addBeanFactoryPostProcessor(createBeforeInitialisationRegisteredObjectsPostProcessor());
 
-    // This is used to track the Spring context lifecycle since there is no way to confirm the lifecycle phase from the application context
+    // This is used to track the Spring context lifecycle since there is no way to confirm the lifecycle phase from the
+    // application context
     springContextInitialised.set(true);
 
     if (!readOnly) {
@@ -111,6 +113,7 @@ public class SpringRegistry extends AbstractRegistry implements LifecycleRegistr
 
   private BeanDefinitionRegistryPostProcessor createBeforeInitialisationRegisteredObjectsPostProcessor() {
     return new BeanDefinitionRegistryPostProcessor() {
+
       @Override
       public void postProcessBeanDefinitionRegistry(BeanDefinitionRegistry registry) throws BeansException {
         registeredBeanDefinitionsBeforeInitialization.entrySet().stream().forEach(beanDefinitionEntry -> {
@@ -167,12 +170,12 @@ public class SpringRegistry extends AbstractRegistry implements LifecycleRegistr
   }
 
   /**
-   * If looks for the bean registered under {@code key}. If the returned bean is a prototype and {@code applyLifecycle} is {@code true},
-   * then the completed lifecycle phases are applied to the returning bean
+   * If looks for the bean registered under {@code key}. If the returned bean is a prototype and {@code applyLifecycle} is
+   * {@code true}, then the completed lifecycle phases are applied to the returning bean
    *
    * @param key the key of the object you're looking for
-   * @param applyLifecycle if lifecycle should be applied to the returned object. Passing {@code true} doesn't guarantee that the lifecycle
-   *        is applied
+   * @param applyLifecycle if lifecycle should be applied to the returned object. Passing {@code true} doesn't guarantee that the
+   *        lifecycle is applied
    * @return object or {@code null} if not found
    */
   @SuppressWarnings("unchecked")
@@ -253,8 +256,8 @@ public class SpringRegistry extends AbstractRegistry implements LifecycleRegistr
   }
 
   /**
-   * Will fire any lifecycle methods according to the current lifecycle without actually registering the object in the registry. This is
-   * useful for prototype objects that are created per request and would clutter the registry with single use objects.
+   * Will fire any lifecycle methods according to the current lifecycle without actually registering the object in the registry.
+   * This is useful for prototype objects that are created per request and would clutter the registry with single use objects.
    *
    * @param object the object to process
    * @return the same object with lifecycle methods called (if it has any)
@@ -299,7 +302,8 @@ public class SpringRegistry extends AbstractRegistry implements LifecycleRegistr
     }
   }
 
-  private <T> T initialiseObject(ConfigurableApplicationContext applicationContext, String key, T object) throws LifecycleException {
+  private <T> T initialiseObject(ConfigurableApplicationContext applicationContext, String key, T object)
+      throws LifecycleException {
     applicationContext.getBeanFactory().autowireBean(object);
     T initialised = (T) applicationContext.getBeanFactory().initializeBean(object, key);
 
@@ -341,7 +345,8 @@ public class SpringRegistry extends AbstractRegistry implements LifecycleRegistr
   protected Map<String, Object> getDependencies(String key) {
     if (!readOnly) {
       Map<String, Object> dependents = new HashMap<>();
-      for (String dependentKey : ((ConfigurableApplicationContext) applicationContext).getBeanFactory().getDependenciesForBean(key)) {
+      for (String dependentKey : ((ConfigurableApplicationContext) applicationContext).getBeanFactory()
+          .getDependenciesForBean(key)) {
         boolean isBeanDefinition =
             ((ConfigurableApplicationContext) applicationContext).getBeanFactory().containsBeanDefinition(dependentKey);
 
@@ -417,8 +422,8 @@ public class SpringRegistry extends AbstractRegistry implements LifecycleRegistr
       if (springContextInitialised.get()) {
         if (applicationContext.containsBean(key)) {
           if (logger.isWarnEnabled()) {
-            logger.warn(
-                String.format("Spring registry already contains an object named '%s'. The previous object will be overwritten.", key));
+            logger.warn(String
+                .format("Spring registry already contains an object named '%s'. The previous object will be overwritten.", key));
           }
           SpringRegistry.this.unregisterObject(key);
         }

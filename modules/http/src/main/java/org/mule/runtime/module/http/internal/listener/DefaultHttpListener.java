@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.listener;
 
@@ -97,13 +97,14 @@ public class DefaultHttpListener implements HttpListener, Initialisable, MuleCon
 
   private RequestHandler getRequestHandler() {
     return new RequestHandler() {
+
       @Override
       public void handleRequest(HttpRequestContext requestContext, HttpResponseReadyCallback responseCallback) {
         try {
-          final HttpMessageProcessorTemplate httpMessageProcessorTemplate = new HttpMessageProcessorTemplate(createEvent(requestContext),
-              messageProcessor, responseCallback, responseBuilder, errorResponseBuilder);
-          final HttpMessageProcessContext messageProcessContext = new HttpMessageProcessContext(DefaultHttpListener.this, flowConstruct,
-              config.getWorkManager(), muleContext.getExecutionClassLoader());
+          final HttpMessageProcessorTemplate httpMessageProcessorTemplate = new HttpMessageProcessorTemplate(
+              createEvent(requestContext), messageProcessor, responseCallback, responseBuilder, errorResponseBuilder);
+          final HttpMessageProcessContext messageProcessContext = new HttpMessageProcessContext(DefaultHttpListener.this,
+              flowConstruct, config.getWorkManager(), muleContext.getExecutionClassLoader());
           messageProcessingManager.processMessage(httpMessageProcessorTemplate, messageProcessContext);
         } catch (HttpRequestParsingException | IllegalArgumentException e) {
           logger.warn("Exception occurred parsing request:", e);
@@ -121,6 +122,7 @@ public class DefaultHttpListener implements HttpListener, Initialisable, MuleCon
             new org.mule.runtime.module.http.internal.domain.response.HttpResponseBuilder().setStatusCode(status.getStatusCode())
                 .setReasonPhrase(status.getReasonPhrase()).setEntity(new ByteArrayHttpEntity(message.getBytes())).build(),
             new ResponseStatusCallback() {
+
               @Override
               public void responseSendFailure(Throwable exception) {
                 logger.warn("Error while sending {} response {}", status.getStatusCode(), exception.getMessage());
@@ -137,7 +139,8 @@ public class DefaultHttpListener implements HttpListener, Initialisable, MuleCon
   }
 
   private MuleEvent createEvent(HttpRequestContext requestContext) throws HttpRequestParsingException {
-    MuleEvent muleEvent = HttpRequestToMuleEvent.transform(requestContext, muleContext, flowConstruct, parseRequest, listenerPath);
+    MuleEvent muleEvent =
+        HttpRequestToMuleEvent.transform(requestContext, muleContext, flowConstruct, parseRequest, listenerPath);
     // Update RequestContext ThreadLocal for backwards compatibility
     OptimizedRequestContext.unsafeSetEvent(muleEvent);
     return muleEvent;
@@ -169,7 +172,8 @@ public class DefaultHttpListener implements HttpListener, Initialisable, MuleCon
     parseRequest = config.resolveParseRequest(parseRequest);
     try {
       messageProcessingManager = DefaultHttpListener.this.muleContext.getRegistry().lookupObject(MessageProcessingManager.class);
-      requestHandlerManager = this.config.addRequestHandler(new ListenerRequestMatcher(methodRequestMatcher, path), getRequestHandler());
+      requestHandlerManager =
+          this.config.addRequestHandler(new ListenerRequestMatcher(methodRequestMatcher, path), getRequestHandler());
     } catch (Exception e) {
       throw new InitialisationException(e, this);
     }
@@ -182,9 +186,8 @@ public class DefaultHttpListener implements HttpListener, Initialisable, MuleCon
       if (pathPart.startsWith("{") && pathPart.endsWith("}")) {
         String uriParamName = pathPart.substring(1, pathPart.length() - 1);
         if (uriParamNames.contains(uriParamName)) {
-          throw new InitialisationException(
-              CoreMessages.createStaticMessage(String.format("Http Listener with path %s contains duplicated uri param names", this.path)),
-              this);
+          throw new InitialisationException(CoreMessages.createStaticMessage(
+              String.format("Http Listener with path %s contains duplicated uri param names", this.path)), this);
         }
         uriParamNames.add(uriParamName);
       } else {

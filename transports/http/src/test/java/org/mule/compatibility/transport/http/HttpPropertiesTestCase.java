@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http;
 
@@ -18,6 +18,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class HttpPropertiesTestCase extends FunctionalTestCase {
+
   @Rule
   public DynamicPort dynamicPort = new DynamicPort("port1");
 
@@ -38,8 +39,8 @@ public class HttpPropertiesTestCase extends FunctionalTestCase {
   public void testPropertiesPostMethod() throws Exception {
     MuleClient client = muleContext.getClient();
 
-    MuleMessage response = client.send("http://localhost:" + dynamicPort.getNumber() + "/resources/client",
-        MuleMessage.builder().payload("name=John&lastname=Galt").mediaType(HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED).build());
+    MuleMessage response = client.send("http://localhost:" + dynamicPort.getNumber() + "/resources/client", MuleMessage.builder()
+        .payload("name=John&lastname=Galt").mediaType(HttpHeaders.Values.APPLICATION_X_WWW_FORM_URLENCODED).build());
 
     assertNotNull(response);
     assertEquals("client", response.getInboundProperty("http.relative.path"));
@@ -50,8 +51,9 @@ public class HttpPropertiesTestCase extends FunctionalTestCase {
   @Test
   public void testRedirectionWithRelativeProperty() throws Exception {
     MuleClient client = muleContext.getClient();
-    MuleMessage response = client.send("http://localhost:" + dynamicPort.getNumber() + "/redirect/products?retrieve=all&order=desc",
-        getTestMuleMessage(TEST_MESSAGE));
+    MuleMessage response =
+        client.send("http://localhost:" + dynamicPort.getNumber() + "/redirect/products?retrieve=all&order=desc",
+            getTestMuleMessage(TEST_MESSAGE));
     assertEquals("Successfully redirected: products?retrieve=all&order=desc", getPayloadAsString(response));
   }
 }

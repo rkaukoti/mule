@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.store;
 
@@ -31,8 +31,8 @@ import java.util.List;
 
 /**
  * <p>
- * This is an {@link ObjectStore} implementation that is to be used to persist messages on Mule's internal queues. Note that this is a
- * specialized implementation of the {@link ObjectStore} interface which hard-codes the location of the persistence folder to
+ * This is an {@link ObjectStore} implementation that is to be used to persist messages on Mule's internal queues. Note that this
+ * is a specialized implementation of the {@link ObjectStore} interface which hard-codes the location of the persistence folder to
  * <code>$MULE_HOME/.mule/queuestore</code>.
  * </p>
  * <p>
@@ -47,6 +47,7 @@ import java.util.List;
 @Deprecated
 public class QueuePersistenceObjectStore<T extends Serializable> extends AbstractObjectStore<T>
     implements ListableObjectStore<T>, MuleContextAware {
+
   /**
    * The default queueStore directory for persistence
    */

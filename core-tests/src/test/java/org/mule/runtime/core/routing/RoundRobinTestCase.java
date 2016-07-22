@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -28,6 +28,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 public class RoundRobinTestCase extends AbstractMuleContextTestCase {
+
   private final static int NUMBER_OF_ROUTES = 10;
   private final static int NUMBER_OF_MESSAGES = 10;
   private final AtomicInteger messageNumber = new AtomicInteger(0);
@@ -79,6 +80,7 @@ public class RoundRobinTestCase extends AbstractMuleContextTestCase {
   }
 
   static class TestProcessor implements MessageProcessor {
+
     private int count;
     private List<Object> payloads = new ArrayList<>();
 
@@ -98,6 +100,7 @@ public class RoundRobinTestCase extends AbstractMuleContextTestCase {
   }
 
   class TestDriver implements Runnable {
+
     private MessageProcessor target;
     private int numMessages;
     private MuleSession session;

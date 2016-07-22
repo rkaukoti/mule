@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core;
 
@@ -19,6 +19,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.junit.Assert.assertEquals;
 
 public class DefaultExceptionStrategyTestCase extends AbstractMuleContextTestCase {
+
   // MULE-1404
   @Test
   public void testExceptions() throws Exception {
@@ -35,6 +36,7 @@ public class DefaultExceptionStrategyTestCase extends AbstractMuleContextTestCas
     final AtomicInteger notificationCount = new AtomicInteger(0);
 
     muleContext.registerListener(new ExceptionNotificationListener<ExceptionNotification>() {
+
       @Override
       public void onNotification(ExceptionNotification notification) {
         if (notification.getAction() == ExceptionNotification.EXCEPTION_ACTION) {
@@ -58,6 +60,7 @@ public class DefaultExceptionStrategyTestCase extends AbstractMuleContextTestCas
   }
 
   private static class InstrumentedExceptionStrategy extends DefaultSystemExceptionStrategy {
+
     private volatile int count = 0;
 
     public InstrumentedExceptionStrategy(MuleContext muleContext) {

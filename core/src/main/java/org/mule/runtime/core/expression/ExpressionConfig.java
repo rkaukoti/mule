@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.expression;
 
@@ -9,10 +9,11 @@ import org.mule.runtime.core.config.i18n.CoreMessages;
 
 /**
  * A simple configuration object for holding the common Expression evaluator configuration. The
- * {@link #getFullExpression(ExpressionManager)} will return the evaluator and expression information in a format that can be passed into
- * the {@link DefaultExpressionManager}
+ * {@link #getFullExpression(ExpressionManager)} will return the evaluator and expression information in a format that can be
+ * passed into the {@link DefaultExpressionManager}
  */
 public class ExpressionConfig {
+
   private String unParsedExpression;
   private String expression;
 

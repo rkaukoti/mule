@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.extension.internal;
 
@@ -226,12 +226,14 @@ public class AnnotationsBasedDescriberTestCase extends AbstractAnnotationsBasedD
     ExtensionDeclarer declarer = getDescriber().describe(new DefaultDescribingContext(MetadataExtension.class.getClassLoader()));
     ExtensionDeclaration declaration = declarer.getDeclaration();
 
-    SourceDeclaration sourceDynamicAttributes = declaration.getMessageSources().stream().filter(s -> s.getName().equals("MetadataSource"))
-        .findFirst().orElseThrow(() -> new RuntimeException("Missing source declaration MetadataSource"));
+    SourceDeclaration sourceDynamicAttributes =
+        declaration.getMessageSources().stream().filter(s -> s.getName().equals("MetadataSource")).findFirst()
+            .orElseThrow(() -> new RuntimeException("Missing source declaration MetadataSource"));
 
     assertOutputType(sourceDynamicAttributes.getOutput(),
         TYPE_BUILDER.dictionaryType().id(Map.class.getName()).ofKey(TYPE_BUILDER.stringType().id(String.class.getName()))
-            .ofValue(TYPE_BUILDER.objectType().id("java.lang.Object").with(new ClassInformationAnnotation(Object.class, null))).build(),
+            .ofValue(TYPE_BUILDER.objectType().id("java.lang.Object").with(new ClassInformationAnnotation(Object.class, null)))
+            .build(),
         true);
     assertOutputType(sourceDynamicAttributes.getOutputAttributes(), toMetadataType(StringAttributes.class), true);
     assertParameterType(findParameter(sourceDynamicAttributes.getParameters(), "type"), toMetadataType(String.class), false);
@@ -242,7 +244,8 @@ public class AnnotationsBasedDescriberTestCase extends AbstractAnnotationsBasedD
 
     assertOutputType(sourceStaticAttributes.getOutput(),
         TYPE_BUILDER.dictionaryType().id(Map.class.getName()).ofKey(TYPE_BUILDER.stringType().id(String.class.getName()))
-            .ofValue(TYPE_BUILDER.objectType().id("java.lang.Object").with(new ClassInformationAnnotation(Object.class, null))).build(),
+            .ofValue(TYPE_BUILDER.objectType().id("java.lang.Object").with(new ClassInformationAnnotation(Object.class, null)))
+            .build(),
         true);
     assertOutputType(sourceStaticAttributes.getOutputAttributes(), toMetadataType(StringAttributes.class), false);
 
@@ -368,7 +371,8 @@ public class AnnotationsBasedDescriberTestCase extends AbstractAnnotationsBasedD
   }
 
   private <T extends NamedDeclaration> T findDeclarationByName(Collection<T> declarations, String name) {
-    return declarations.stream().filter(decl -> decl.getName().equals(name)).findFirst().orElseThrow(() -> new NoSuchElementException());
+    return declarations.stream().filter(decl -> decl.getName().equals(name)).findFirst()
+        .orElseThrow(() -> new NoSuchElementException());
   }
 
 
@@ -390,9 +394,9 @@ public class AnnotationsBasedDescriberTestCase extends AbstractAnnotationsBasedD
     assertParameter(parameters, "dateOfDeath", "", toMetadataType(Calendar.class), true, SUPPORTED, null);
     assertParameter(parameters, "dateOfConception", "", toMetadataType(LocalDateTime.class), false, SUPPORTED, null);
 
-    assertParameter(
-        parameters, "recipe", "", TYPE_BUILDER.dictionaryType().id(Map.class.getName())
-            .ofKey(TYPE_BUILDER.stringType().id(String.class.getName())).ofValue(TYPE_BUILDER.numberType().id("java.lang.Long")).build(),
+    assertParameter(parameters, "recipe", "",
+        TYPE_BUILDER.dictionaryType().id(Map.class.getName()).ofKey(TYPE_BUILDER.stringType().id(String.class.getName()))
+            .ofValue(TYPE_BUILDER.numberType().id("java.lang.Long")).build(),
         false, SUPPORTED, null);
 
     assertParameter(parameters, "ricinPacks", "", arrayOf(Set.class, objectTypeBuilder(Ricin.class)), false, SUPPORTED, null);
@@ -412,20 +416,22 @@ public class AnnotationsBasedDescriberTestCase extends AbstractAnnotationsBasedD
         TYPE_BUILDER.objectType().id(Function.class.getName())
             .with(new ClassInformationAnnotation(Function.class, asList(MuleEvent.class, WeaponType.class))).build(),
         false, SUPPORTED, null);
-    assertParameter(parameters, "wildCardWeapons", "", arrayOf(List.class, objectTypeBuilder(Weapon.class)), false, SUPPORTED, null);
+    assertParameter(parameters, "wildCardWeapons", "", arrayOf(List.class, objectTypeBuilder(Weapon.class)), false, SUPPORTED,
+        null);
     assertParameter(parameters, "wildCardList", "", arrayOf(List.class, objectTypeBuilder(Object.class)), false, SUPPORTED, null);
     assertParameter(parameters, "wildCardWeaponMap", "", TYPE_BUILDER.dictionaryType().id(Map.class.getName())
         .ofKey(objectTypeBuilder(Weapon.class)).ofValue(objectTypeBuilder(Object.class)).build(), false, SUPPORTED, null);
 
-    assertParameter(parameters, "monthlyIncomes", "", arrayOf(List.class, TYPE_BUILDER.numberType().id(Long.class.getName())), true,
-        SUPPORTED, null);
+    assertParameter(parameters, "monthlyIncomes", "", arrayOf(List.class, TYPE_BUILDER.numberType().id(Long.class.getName())),
+        true, SUPPORTED, null);
     assertParameter(parameters,
         "labeledRicin", "", TYPE_BUILDER.dictionaryType().id(Map.class.getName())
             .ofKey(TYPE_BUILDER.stringType().id(String.class.getName())).ofValue(objectTypeBuilder(Ricin.class)).build(),
         false, SUPPORTED, null);
     assertParameter(parameters, "deathsBySeasons", "",
         TYPE_BUILDER.dictionaryType().id(Map.class.getName()).ofKey(TYPE_BUILDER.stringType().id(String.class.getName()))
-            .ofValue(TYPE_BUILDER.arrayType().id(List.class.getName()).of(TYPE_BUILDER.stringType().id(String.class.getName()))).build(),
+            .ofValue(TYPE_BUILDER.arrayType().id(List.class.getName()).of(TYPE_BUILDER.stringType().id(String.class.getName())))
+            .build(),
         false, SUPPORTED, null);
     assertParameter(parameters,
         "weaponValueMap", "", TYPE_BUILDER.dictionaryType().id(Map.class.getName())
@@ -487,26 +493,26 @@ public class AnnotationsBasedDescriberTestCase extends AbstractAnnotationsBasedD
     assertThat(operation.getParameters(), hasSize(3));
     assertParameter(operation.getParameters(), "weapon", "", toMetadataType(Weapon.class), true, SUPPORTED, null);
     assertParameter(operation.getParameters(), "type", "", toMetadataType(WeaponType.class), true, SUPPORTED, null);
-    assertParameter(operation.getParameters(), "attributesOfWeapon", "", toMetadataType(Weapon.WeaponAttributes.class), true, SUPPORTED,
-        null);
+    assertParameter(operation.getParameters(), "attributesOfWeapon", "", toMetadataType(Weapon.WeaponAttributes.class), true,
+        SUPPORTED, null);
 
     operation = getOperation(extensionDeclaration, KILL_WITH_RICINS);
     assertThat(operation, is(notNullValue()));
     assertThat(operation.getParameters(), hasSize(1));
-    assertParameter(operation.getParameters(), "ricinList", "", arrayOf(List.class, objectTypeBuilder(Ricin.class)), false, SUPPORTED,
-        "#[payload]");
+    assertParameter(operation.getParameters(), "ricinList", "", arrayOf(List.class, objectTypeBuilder(Ricin.class)), false,
+        SUPPORTED, "#[payload]");
 
     operation = getOperation(extensionDeclaration, KILL_WITH_MULTIPLES_WEAPONS);
     assertThat(operation, is(notNullValue()));
     assertThat(operation.getParameters(), hasSize(1));
-    assertParameter(operation.getParameters(), "weaponList", "", arrayOf(List.class, objectTypeBuilder(Weapon.class)), false, SUPPORTED,
-        "#[payload]");
+    assertParameter(operation.getParameters(), "weaponList", "", arrayOf(List.class, objectTypeBuilder(Weapon.class)), false,
+        SUPPORTED, "#[payload]");
 
     operation = getOperation(extensionDeclaration, KILL_WITH_MULTIPLE_WILDCARD_WEAPONS);
     assertThat(operation, is(notNullValue()));
     assertThat(operation.getParameters(), hasSize(1));
-    assertParameter(operation.getParameters(), "wildCardWeapons", "", arrayOf(List.class, objectTypeBuilder(Weapon.class)), true, SUPPORTED,
-        null);
+    assertParameter(operation.getParameters(), "wildCardWeapons", "", arrayOf(List.class, objectTypeBuilder(Weapon.class)), true,
+        SUPPORTED, null);
 
     operation = getOperation(extensionDeclaration, KILL_CUSTOM_OPERATION);
     assertThat(operation, is(notNullValue()));
@@ -540,8 +546,8 @@ public class AnnotationsBasedDescriberTestCase extends AbstractAnnotationsBasedD
     assertParameter(operation.getParameters(), "knockedDoor", "", toMetadataType(KnockeableDoor.class), true, SUPPORTED, null);
 
     operation = getOperation(extensionDeclaration, KNOCK_MANY);
-    assertParameter(operation.getParameters(), "doors", "", arrayOf(List.class, objectTypeBuilder(KnockeableDoor.class)), true, SUPPORTED,
-        null);
+    assertParameter(operation.getParameters(), "doors", "", arrayOf(List.class, objectTypeBuilder(KnockeableDoor.class)), true,
+        SUPPORTED, null);
 
     operation = getOperation(extensionDeclaration, CALL_SAUL);
     assertThat(operation.getParameters(), is(empty()));
@@ -573,7 +579,8 @@ public class AnnotationsBasedDescriberTestCase extends AbstractAnnotationsBasedD
 
     assertParameter(parameters, "saulPhoneNumber", "", toMetadataType(String.class), false, SUPPORTED, SAUL_OFFICE_NUMBER);
     assertParameter(parameters, TLS_ATTRIBUTE_NAME, "", toMetadataType(TlsContextFactory.class), false, NOT_SUPPORTED, null);
-    ImplementingTypeModelProperty typeModelProperty = connectionProvider.getModelProperty(ImplementingTypeModelProperty.class).get();
+    ImplementingTypeModelProperty typeModelProperty =
+        connectionProvider.getModelProperty(ImplementingTypeModelProperty.class).get();
     assertThat(typeModelProperty.getType(), equalTo(HeisenbergConnectionProvider.class));
   }
 

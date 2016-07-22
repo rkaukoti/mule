@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.launcher.application;
@@ -30,6 +30,7 @@ import static java.util.stream.Collectors.toCollection;
  * Composite classloader to use on {@link Artifact}
  */
 public class CompositeArtifactClassLoader extends CompositeClassLoader implements ArtifactClassLoader {
+
   protected static final Logger logger = LoggerFactory.getLogger(CompositeApplicationClassLoader.class);
 
   static {

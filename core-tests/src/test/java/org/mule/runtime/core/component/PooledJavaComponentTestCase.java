@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.component;
 
@@ -27,6 +27,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 public class PooledJavaComponentTestCase extends AbstractPoolingTestCase {
+
   @Test
   public void testComponentCreation() throws Exception {
     PrototypeObjectFactory objectFactory = getDefaultObjectFactory();
@@ -219,7 +220,8 @@ public class PooledJavaComponentTestCase extends AbstractPoolingTestCase {
     PrototypeObjectFactory objectFactory = new PrototypeObjectFactory(WaterMelon.class);
     PooledJavaComponent component = createPooledComponent(objectFactory);
 
-    DefaultComponentLifecycleAdapter lifecycleAdapter = (DefaultComponentLifecycleAdapter) component.borrowComponentLifecycleAdaptor();
+    DefaultComponentLifecycleAdapter lifecycleAdapter =
+        (DefaultComponentLifecycleAdapter) component.borrowComponentLifecycleAdaptor();
     component.returnComponentLifecycleAdaptor(lifecycleAdapter);
     component.stop();
     component.dispose();
@@ -264,7 +266,8 @@ public class PooledJavaComponentTestCase extends AbstractPoolingTestCase {
   }
 
   private String getIdFromObjectCreatedByPool(PooledJavaComponent component) throws Exception {
-    DefaultComponentLifecycleAdapter lifecycleAdapter = (DefaultComponentLifecycleAdapter) component.borrowComponentLifecycleAdaptor();
+    DefaultComponentLifecycleAdapter lifecycleAdapter =
+        (DefaultComponentLifecycleAdapter) component.borrowComponentLifecycleAdaptor();
     Object obj = lifecycleAdapter.componentObject;
 
     // there is a slight chance that GC kicks in before we can get a hard reference to the
@@ -279,6 +282,7 @@ public class PooledJavaComponentTestCase extends AbstractPoolingTestCase {
   }
 
   private static class Borrower implements Runnable {
+
     private PooledJavaComponent component;
     private long time;
 

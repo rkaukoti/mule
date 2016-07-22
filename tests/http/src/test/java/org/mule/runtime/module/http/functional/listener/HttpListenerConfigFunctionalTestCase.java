@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.listener;
 
@@ -43,8 +43,8 @@ public class HttpListenerConfigFunctionalTestCase extends AbstractHttpTestCase {
   private static final Pattern IPADDRESS_PATTERN = Pattern.compile("^([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\."
       + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])\\." + "([01]?\\d\\d?|2[0-4]\\d|25[0-5])$");
   private static final int TIMEOUT = 1000;
-  private static final HttpRequestOptions GET_OPTIONS = HttpRequestOptionsBuilder.newOptions().method(HttpConstants.Methods.GET.name())
-      .responseTimeout(TIMEOUT).disableStatusCodeValidation().build();
+  private static final HttpRequestOptions GET_OPTIONS = HttpRequestOptionsBuilder.newOptions()
+      .method(HttpConstants.Methods.GET.name()).responseTimeout(TIMEOUT).disableStatusCodeValidation().build();
 
   @Rule
   public DynamicPort fullConfigPort = new DynamicPort("fullConfigPort");
@@ -74,20 +74,22 @@ public class HttpListenerConfigFunctionalTestCase extends AbstractHttpTestCase {
 
   @Test
   public void fullConfig() throws Exception {
-    final String url = String.format("http://localhost:%s/%s/%s", fullConfigPort.getNumber(), basePath.getValue(), path.getValue());
+    final String url =
+        String.format("http://localhost:%s/%s/%s", fullConfigPort.getNumber(), basePath.getValue(), path.getValue());
     callAndAssertStatus(url, SC_OK);
   }
 
   @Test
   public void fullConfigWrongPath() throws Exception {
-    final String url = String.format("http://localhost:%s/%s/%s", fullConfigPort.getNumber(), basePath.getValue(), path.getValue() + "2");
+    final String url =
+        String.format("http://localhost:%s/%s/%s", fullConfigPort.getNumber(), basePath.getValue(), path.getValue() + "2");
     callAndAssertStatus(url, SC_NOT_FOUND);
   }
 
   @Test
   public void listenerConfigOverridesListenerConfig() throws Exception {
-    final String url =
-        String.format("http://%s:%s/%s/%s", nonLocalhostIp.getValue(), fullConfigPort.getNumber(), basePath.getValue(), path.getValue());
+    final String url = String.format("http://%s:%s/%s/%s", nonLocalhostIp.getValue(), fullConfigPort.getNumber(),
+        basePath.getValue(), path.getValue());
     callAndAssertStatus(url, SC_OK);
   }
 

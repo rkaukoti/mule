@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 
 package org.mule.runtime.module.db.internal.domain.connection;
@@ -15,7 +15,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import javax.sql.DataSource;
 
 /**
- * Defines a {@link ConnectionFactory} that is configured to retry connection creation in case of errors using a {@link RetryPolicyTemplate}
+ * Defines a {@link ConnectionFactory} that is configured to retry connection creation in case of errors using a
+ * {@link RetryPolicyTemplate}
  */
 public class RetryConnectionFactory extends AbstractConnectionFactory {
 
@@ -33,6 +34,7 @@ public class RetryConnectionFactory extends AbstractConnectionFactory {
 
     try {
       retryPolicyTemplate.execute(new RetryCallback() {
+
         public void doWork(RetryContext context) throws Exception {
           Connection connection = delegate.create(dataSource);
 

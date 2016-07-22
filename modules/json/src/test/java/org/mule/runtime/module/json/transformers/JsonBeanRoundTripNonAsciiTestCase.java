@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.json.transformers;
 
@@ -18,6 +18,7 @@ import static org.junit.Assert.fail;
 
 @Ignore("See MULE-9307")
 public class JsonBeanRoundTripNonAsciiTestCase extends JsonBeanRoundTripTestCase {
+
   private static final String ENCODING = "Windows-31J";
 
   private final String jsonString;
@@ -70,6 +71,7 @@ public class JsonBeanRoundTripNonAsciiTestCase extends JsonBeanRoundTripTestCase
   }
 
   private String getBrandOfOrange(Locale locale) {
-    return LocaleMessageHandler.getString("test-data", locale, "JsonBeanRoundTripNonAsciiTestCase.getBrandOfOrange", new Object[] {});
+    return LocaleMessageHandler.getString("test-data", locale, "JsonBeanRoundTripNonAsciiTestCase.getBrandOfOrange",
+        new Object[] {});
   }
 }

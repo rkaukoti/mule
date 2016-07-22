@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util;
 
@@ -14,6 +14,7 @@ import static org.mule.runtime.core.util.Preconditions.checkArgument;
 
 // @ThreadSafe
 public class MapUtils extends org.apache.commons.collections.MapUtils {
+
   /**
    * Convenience method for CollectionUtil#mapWithKeysAndValues(Class, Iterator, Iterator); keys and values can be null or empty.
    */
@@ -112,9 +113,9 @@ public class MapUtils extends org.apache.commons.collections.MapUtils {
   }
 
   /**
-   * Puts the {@code key}/{@code value} pair into the given {@code map} only as long as the {@code key} is not already present on the
-   * {@code map}. This method is not thread-safe per-se. If the {@code map} is a shared resource then it's up to the caller to handle
-   * concurrency.
+   * Puts the {@code key}/{@code value} pair into the given {@code map} only as long as the {@code key} is not already present on
+   * the {@code map}. This method is not thread-safe per-se. If the {@code map} is a shared resource then it's up to the caller to
+   * handle concurrency.
    *
    * @param map a {@link Map}
    * @param key the key

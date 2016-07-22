@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.functional.requester;
 
@@ -62,14 +62,14 @@ public class HttpRequestProxyTlsTestCase extends AbstractHttpTestCase {
   }
 
   /**
-   * The test will run with two key store / trust store pairs. One has the subject alternative name set to localhost (the default for all
-   * TLS tests), and the other one has the name set to "test". We need this to validate that the hostname verification is performed using
-   * the host of the request, and not the one of the proxy.
+   * The test will run with two key store / trust store pairs. One has the subject alternative name set to localhost (the default
+   * for all TLS tests), and the other one has the name set to "test". We need this to validate that the hostname verification is
+   * performed using the host of the request, and not the one of the proxy.
    */
   @Parameterized.Parameters
   public static Collection<Object[]> parameters() {
-    return Arrays
-        .asList(new Object[][] {{"tls/ssltest-keystore-with-test-hostname.jks", "tls/ssltest-truststore-with-test-hostname.jks", "test"},
+    return Arrays.asList(
+        new Object[][] {{"tls/ssltest-keystore-with-test-hostname.jks", "tls/ssltest-truststore-with-test-hostname.jks", "test"},
             {"tls/ssltest-keystore.jks", "tls/ssltest-cacerts.jks", "localhost"}});
   }
 
@@ -87,8 +87,8 @@ public class HttpRequestProxyTlsTestCase extends AbstractHttpTestCase {
 
     proxyServer.start();
 
-    MuleEvent event =
-        flowRunner("clientFlow").withPayload(TEST_MESSAGE).withFlowVariable("host", requestHost).withFlowVariable("path", PATH).run();
+    MuleEvent event = flowRunner("clientFlow").withPayload(TEST_MESSAGE).withFlowVariable("host", requestHost)
+        .withFlowVariable("path", PATH).run();
 
     assertThat(requestPayload, equalTo(TEST_MESSAGE));
     assertThat(requestURI, equalTo(PATH));
@@ -99,11 +99,12 @@ public class HttpRequestProxyTlsTestCase extends AbstractHttpTestCase {
   }
 
   /**
-   * Implementation of an https proxy server for testing purposes. The server will accept only one connection, which is expected to send a
-   * CONNECT request. The request is consumed, a 200 OK answer is returned, and then it acts as a tunnel between the client and the HTTPS
-   * service.
+   * Implementation of an https proxy server for testing purposes. The server will accept only one connection, which is expected
+   * to send a CONNECT request. The request is consumed, a 200 OK answer is returned, and then it acts as a tunnel between the
+   * client and the HTTPS service.
    */
   private static class MockProxyServer {
+
     private static final String PROXY_RESPONSE = "HTTP/1.1 200 Connection established\r\n\r\n";
 
     private int proxyServerPort;
@@ -153,6 +154,7 @@ public class HttpRequestProxyTlsTestCase extends AbstractHttpTestCase {
       // Make a tunnel between both sockets (HTTPS traffic).
 
       Thread responseThread = new Thread() {
+
         @Override
         public void run() {
           try {

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.transformer.compression;
 
@@ -18,6 +18,7 @@ import static org.junit.Assert.fail;
  * Tests {@link GZipCompressTransformer} and its counterpart, the {@link GZipUncompressTransformer}.
  */
 public class GZipTransformerTestCase extends AbstractTransformerTestCase {
+
   protected static final String TEST_DATA =
       "the quick brown fox jumped over the lazy dog the quick brown fox jumped over the lazy dog the quick brown fox jumped over the lazy dog";
   protected GZipCompression strat;
@@ -75,7 +76,8 @@ public class GZipTransformerTestCase extends AbstractTransformerTestCase {
     // Decompress the test data.
     Object decompressedData = decompressorTransformer.transform(compressedData);
 
-    assertTrue(String.format("Compress and decompress process failed. Expected '%s', but got '%s'", getTestData(), decompressedData),
+    assertTrue(
+        String.format("Compress and decompress process failed. Expected '%s', but got '%s'", getTestData(), decompressedData),
         compareResults(getTestData(), decompressedData));
   }
 }

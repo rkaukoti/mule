@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.execution;
 
@@ -11,12 +11,12 @@ import java.util.List;
 import static org.mule.runtime.core.util.ClassUtils.withContextClassLoader;
 
 /**
- * This class process a message through a set of {@link org.mule.runtime.core.execution.MessageProcessPhase} using the message content and
- * message processing context provided by {@link org.mule.runtime.core.execution.MessageProcessTemplate} and
+ * This class process a message through a set of {@link org.mule.runtime.core.execution.MessageProcessPhase} using the message
+ * content and message processing context provided by {@link org.mule.runtime.core.execution.MessageProcessTemplate} and
  * {@link org.mule.runtime.core.execution.MessageProcessContext}.
  * <p>
- * This class will handle any message processing failure by calling the {@link org.mule.runtime.core.api.exception.SystemExceptionHandler}
- * defined by the application.
+ * This class will handle any message processing failure by calling the
+ * {@link org.mule.runtime.core.api.exception.SystemExceptionHandler} defined by the application.
  * <p>
  * Each {@link org.mule.runtime.core.execution.MessageProcessPhase} can be executed with a different threading mechanism.
  * {@link org.mule.runtime.core.execution.MessageProcessPhase} implementation must guarantee that upon phase completion the method
@@ -50,7 +50,8 @@ public class PhaseExecutionEngine {
     private int currentPhase = 0;
     private boolean endPhaseProcessed;
 
-    public InternalPhaseExecutionEngine(MessageProcessTemplate messageProcessTemplate, MessageProcessContext messageProcessContext) {
+    public InternalPhaseExecutionEngine(MessageProcessTemplate messageProcessTemplate,
+        MessageProcessContext messageProcessContext) {
       this.messageProcessTemplate = messageProcessTemplate;
       this.messageProcessContext = messageProcessContext;
     }

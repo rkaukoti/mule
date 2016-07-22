@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.config;
 
@@ -28,13 +28,15 @@ import org.mule.runtime.config.spring.parsers.specific.tls.TrustStoreDefinitionP
  * Reigsters a Bean Definition Parser for handling <code><https:connector></code> elements.
  */
 public class HttpsNamespaceHandler extends HttpNamespaceHandler {
+
   @Override
   public void init() {
     registerStandardTransportEndpoints(HttpsConnector.HTTPS, URIBuilder.SOCKET_ATTRIBUTES)
         .addAlias("contentType", HttpConstants.HEADER_CONTENT_TYPE).addAlias("method", HttpConnector.HTTP_METHOD_PROPERTY);
 
     registerDeprecatedConnectorDefinitionParser(HttpsConnector.class);
-    registerDeprecatedBeanDefinitionParser("polling-connector", new MuleOrphanDefinitionParser(HttpsPollingConnector.class, true));
+    registerDeprecatedBeanDefinitionParser("polling-connector",
+        new MuleOrphanDefinitionParser(HttpsPollingConnector.class, true));
 
     registerDeprecatedBeanDefinitionParser("tls-key-store", new KeyStoreDefinitionParser());
     registerDeprecatedBeanDefinitionParser("tls-client", new ClientKeyStoreDefinitionParser());
@@ -71,6 +73,7 @@ public class HttpsNamespaceHandler extends HttpNamespaceHandler {
   }
 
   protected class TransportRegisteredMdps extends RegisteredMdps {
+
     public TransportRegisteredMdps(String protocol, boolean isMeta, String[] requiredAttributes) {
       registerBeanDefinitionParser("endpoint", add(new TransportGlobalEndpointDefinitionParser(protocol, isMeta,
           getGlobalEndpointBuilderBeanClass(), requiredAttributes, new String[] {})));

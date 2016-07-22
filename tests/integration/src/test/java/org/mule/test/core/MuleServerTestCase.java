@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.core;
 
@@ -36,6 +36,7 @@ public class MuleServerTestCase extends AbstractMuleTestCase {
   @Test
   public void testMuleServer() throws Exception {
     muleServer = new MuleServer() {
+
       @Override
       public void shutdown() {
         doShutdown();
@@ -49,6 +50,7 @@ public class MuleServerTestCase extends AbstractMuleTestCase {
   @Test
   public void testMuleServerResource() throws Exception {
     muleServer = new MuleServer("org/mule/test/spring/config1/test-xml-mule2-config.xml") {
+
       @Override
       public void shutdown() {
         doShutdown();
@@ -62,6 +64,7 @@ public class MuleServerTestCase extends AbstractMuleTestCase {
   @Test
   public void testMuleServerConfigArg() throws Exception {
     muleServer = new MuleServer(new String[] {"-config", "org/mule/test/spring/config1/test-xml-mule2-config.xml"}) {
+
       @Override
       public void shutdown() {
         doShutdown();
@@ -74,13 +77,16 @@ public class MuleServerTestCase extends AbstractMuleTestCase {
 
   @Test
   public void testMuleServerMultipleSpringConfigArgs() throws Exception {
-    muleServer = new MuleServer(new String[] {"-config", "mule-config.xml,org/mule/test/spring/config1/test-xml-mule2-config.xml"}) {
-      @Override
-      public void shutdown() {
-        doShutdown();
-      }
-    };
-    assertEquals("mule-config.xml,org/mule/test/spring/config1/test-xml-mule2-config.xml", muleServer.getConfigurationResources());
+    muleServer =
+        new MuleServer(new String[] {"-config", "mule-config.xml,org/mule/test/spring/config1/test-xml-mule2-config.xml"}) {
+
+          @Override
+          public void shutdown() {
+            doShutdown();
+          }
+        };
+    assertEquals("mule-config.xml,org/mule/test/spring/config1/test-xml-mule2-config.xml",
+        muleServer.getConfigurationResources());
     assertEquals(MuleServer.CLASSNAME_DEFAULT_CONFIG_BUILDER, MuleServer.getConfigBuilderClassName());
     muleServer.initialize();
   }
@@ -88,6 +94,7 @@ public class MuleServerTestCase extends AbstractMuleTestCase {
   @Test
   public void testMuleServerBuilerArg() throws Exception {
     muleServer = new MuleServer(new String[] {"-builder", "org.mule.runtime.config.spring.SpringXmlConfigurationBuilder"}) {
+
       @Override
       public void shutdown() {
         doShutdown();
@@ -101,6 +108,7 @@ public class MuleServerTestCase extends AbstractMuleTestCase {
   @Test
   public void testMuleServerSpringBuilerArg() throws Exception {
     muleServer = new MuleServer(new String[] {"-builder", "spring"}) {
+
       @Override
       public void shutdown() {
         doShutdown();
@@ -116,6 +124,7 @@ public class MuleServerTestCase extends AbstractMuleTestCase {
   public void testMuleServerAppConfig() throws Exception {
     muleServer = new MuleServer(
         new String[] {"-config", "mule-config.xml", "-appconfig", "org/mule/test/spring/config1/test-app-config.properties"}) {
+
       @Override
       public void shutdown() {
         doShutdown();
@@ -140,6 +149,7 @@ public class MuleServerTestCase extends AbstractMuleTestCase {
       try {
         System.setSecurityManager(new NoExitSecurityManager());
         muleServer = new MuleServer() {
+
           @Override
           public void shutdown() {
             doShutdown();
@@ -155,6 +165,7 @@ public class MuleServerTestCase extends AbstractMuleTestCase {
   }
 
   private static final class NoExitSecurityManager extends SecurityManager {
+
     @Override
     public void checkPermission(Permission perm) {
       // allow everything
@@ -173,6 +184,7 @@ public class MuleServerTestCase extends AbstractMuleTestCase {
   }
 
   private static class ExitException extends SecurityException {
+
     public final int status;
 
     public ExitException(int status) {

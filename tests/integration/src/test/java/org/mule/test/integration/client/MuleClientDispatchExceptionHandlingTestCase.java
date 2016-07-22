@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.integration.client;
 
@@ -26,10 +26,11 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.core.Is.is;
 
 /**
- * Tests to validate that MuleClient can be used from JavaComponent/MessageProcessor in order to dispatch an event to a sub-flow and if the
- * component/processor throws an exception afterwards the main-flow exception strategy handles it.
+ * Tests to validate that MuleClient can be used from JavaComponent/MessageProcessor in order to dispatch an event to a sub-flow
+ * and if the component/processor throws an exception afterwards the main-flow exception strategy handles it.
  */
 public class MuleClientDispatchExceptionHandlingTestCase extends FunctionalTestCase {
+
   @ClassRule
   public static DynamicPort port = new DynamicPort("port");
 
@@ -53,8 +54,8 @@ public class MuleClientDispatchExceptionHandlingTestCase extends FunctionalTestC
 
   /**
    * Validates that a JavaComponent after doing a dispatch to a sub-flow using MuleClient throws an exception and the
-   * catch-exception-strategy defined in main-flow is called. It also validates that original event passed to JavaComponent is later
-   * propagated to the JavaComponent defined in catch-exception-strategy block.
+   * catch-exception-strategy defined in main-flow is called. It also validates that original event passed to JavaComponent is
+   * later propagated to the JavaComponent defined in catch-exception-strategy block.
    */
   @Test
   public void testCatchExceptionThrowFromJavaComponentToJavaComponent() throws Exception {
@@ -104,6 +105,7 @@ public class MuleClientDispatchExceptionHandlingTestCase extends FunctionalTestC
   // Just a simple JavaComponent used in catch-exception-strategy block
   // in order to check that RequestContext has the correct event and message references
   public static class AssertEventComponent implements Callable {
+
     @Override
     public Object onCall(MuleEventContext eventContext) throws Exception {
       // Validates that if another Component access to the RequestContext.getEvent() the one returned
@@ -117,6 +119,7 @@ public class MuleClientDispatchExceptionHandlingTestCase extends FunctionalTestC
   }
 
   public static class AssertEventProcessor implements MessageProcessor {
+
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException {
       // Validates that if another Component access to the RequestContext.getEvent() the one returned
@@ -130,6 +133,7 @@ public class MuleClientDispatchExceptionHandlingTestCase extends FunctionalTestC
   }
 
   public static class DispatchInnerFlowThrowExceptionJavaComponent implements Callable {
+
     @Override
     public Object onCall(MuleEventContext eventContext) throws Exception {
       eventFromMainFlow = RequestContext.getEvent();
@@ -142,6 +146,7 @@ public class MuleClientDispatchExceptionHandlingTestCase extends FunctionalTestC
   }
 
   public static class SendInnerFlowThrowExceptionJavaComponent implements Callable {
+
     @Override
     public Object onCall(MuleEventContext eventContext) throws Exception {
       eventFromMainFlow = RequestContext.getEvent();
@@ -154,6 +159,7 @@ public class MuleClientDispatchExceptionHandlingTestCase extends FunctionalTestC
   }
 
   public static class DispatchInnerFlowThrowExceptionMessageProcessor implements MessageProcessor {
+
     @Override
     public MuleEvent process(MuleEvent event) throws MuleException {
       eventFromMainFlow = RequestContext.getEvent();
@@ -166,6 +172,7 @@ public class MuleClientDispatchExceptionHandlingTestCase extends FunctionalTestC
   }
 
   public static class ExecutionCountDownProcessor implements MessageProcessor {
+
     @Override
     public synchronized MuleEvent process(MuleEvent event) throws MuleException {
       exceptionLatch.countDown();
@@ -174,6 +181,7 @@ public class MuleClientDispatchExceptionHandlingTestCase extends FunctionalTestC
   }
 
   public static class InnerFlowCountDownProcessor implements MessageProcessor {
+
     @Override
     public synchronized MuleEvent process(MuleEvent event) throws MuleException {
       innerFlowLatch.countDown();

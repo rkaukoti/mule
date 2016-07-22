@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.expression;
 
@@ -25,7 +25,8 @@ import java.util.Collections;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
- * Provides universal access for evaluating expressions embedded in Mule configurations, such as Xml, Java, scripting and annotations.
+ * Provides universal access for evaluating expressions embedded in Mule configurations, such as Xml, Java, scripting and
+ * annotations.
  */
 public class DefaultExpressionManager implements ExpressionManager, MuleContextAware, Initialisable {
 
@@ -114,6 +115,7 @@ public class DefaultExpressionManager implements ExpressionManager, MuleContextA
   @Override
   public String parse(String expression, final MuleEvent event, final boolean failIfNull) throws ExpressionRuntimeException {
     return parser.parse(new TemplateParser.TemplateCallback() {
+
       @Override
       public Object match(String token) {
         Object result = evaluate(token, event, failIfNull);

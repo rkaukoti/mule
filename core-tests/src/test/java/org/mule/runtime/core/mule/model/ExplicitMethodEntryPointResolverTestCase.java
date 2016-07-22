@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.mule.model;
 
@@ -16,6 +16,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 public class ExplicitMethodEntryPointResolverTestCase extends AbstractMuleContextTestCase {
+
   @Test
   public void testMethodSetPass() throws Exception {
     ExplicitMethodEntryPointResolver resolver = new ExplicitMethodEntryPointResolver();
@@ -54,8 +55,8 @@ public class ExplicitMethodEntryPointResolverTestCase extends AbstractMuleContex
   }
 
   /**
-   * If a method with correct name is available then it should be used is the parameter type is assignable from the payload type and not
-   * just if there is an exact match. See MULE-3636.
+   * If a method with correct name is available then it should be used is the parameter type is assignable from the payload type
+   * and not just if there is an exact match. See MULE-3636.
    */
   @Test
   public void testMethodPropertyParameterAssignableFromPayload() throws Exception {
@@ -67,8 +68,8 @@ public class ExplicitMethodEntryPointResolverTestCase extends AbstractMuleContex
   }
 
   /**
-   * If a method with correct name is available then it should be used even if one or more parameter types in the payload are null, as long
-   * as the parameter count matches.
+   * If a method with correct name is available then it should be used even if one or more parameter types in the payload are
+   * null, as long as the parameter count matches.
    */
   @Test
   public void testMethodPropertyParameterNull() throws Exception {
@@ -79,6 +80,7 @@ public class ExplicitMethodEntryPointResolverTestCase extends AbstractMuleContex
   }
 
   public static class TestFruitCleaner {
+
     public void wash(Fruit fruit) {
       // dummy
     }

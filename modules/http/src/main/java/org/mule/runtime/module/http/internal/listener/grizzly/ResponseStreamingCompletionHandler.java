@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.http.internal.listener.grizzly;
 
@@ -25,8 +25,8 @@ import java.io.InputStream;
 import static org.glassfish.grizzly.http.HttpServerFilter.RESPONSE_COMPLETE_EVENT;
 
 /**
- * {@link org.glassfish.grizzly.CompletionHandler}, responsible for asynchronous http response transferring when the response body is an
- * input stream.
+ * {@link org.glassfish.grizzly.CompletionHandler}, responsible for asynchronous http response transferring when the response body
+ * is an input stream.
  */
 public class ResponseStreamingCompletionHandler extends BaseResponseCompletionHandler {
 
@@ -38,8 +38,8 @@ public class ResponseStreamingCompletionHandler extends BaseResponseCompletionHa
 
   private volatile boolean isDone;
 
-  public ResponseStreamingCompletionHandler(final FilterChainContext ctx, final HttpRequestPacket request, final HttpResponse httpResponse,
-      ResponseStatusCallback responseStatusCallback) {
+  public ResponseStreamingCompletionHandler(final FilterChainContext ctx, final HttpRequestPacket request,
+      final HttpResponse httpResponse, ResponseStatusCallback responseStatusCallback) {
     Preconditions.checkArgument((httpResponse.getEntity() instanceof InputStreamHttpEntity),
         "http response must have an input stream entity");
     this.ctx = ctx;
@@ -111,8 +111,8 @@ public class ResponseStreamingCompletionHandler extends BaseResponseCompletionHa
   @Override
   public void cancelled() {
     close();
-    responseStatusCallback
-        .responseSendFailure(new DefaultMuleException(CoreMessages.createStaticMessage("Http response sending task was cancelled")));
+    responseStatusCallback.responseSendFailure(
+        new DefaultMuleException(CoreMessages.createStaticMessage("Http response sending task was cancelled")));
     resume();
   }
 

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.processor;
 
@@ -27,8 +27,8 @@ import java.util.List;
 
 /**
  * Specialized {@link org.mule.runtime.core.processor.BlockingProcessorExecutor} that pauses iteration in the case a
- * {@link org .mule.processor.NonBlockingMessageProcessor} is invoked and the flow is executing using non-blocking. Processor execution is
- * then continued when the {@link org.mule.runtime.core.processor.NonBlockingMessageProcessor} invokes the
+ * {@link org .mule.processor.NonBlockingMessageProcessor} is invoked and the flow is executing using non-blocking. Processor
+ * execution is then continued when the {@link org.mule.runtime.core.processor.NonBlockingMessageProcessor} invokes the
  * {@link org.mule.runtime.core.api.connector.ReplyToHandler}.
  */
 public class NonBlockingProcessorExecutor extends BlockingProcessorExecutor {
@@ -55,7 +55,8 @@ public class NonBlockingProcessorExecutor extends BlockingProcessorExecutor {
       if (!processorSupportsNonBlocking(processor)) {
         fallbackWarning.warn(processor.getClass());
         // Make event synchronous so that non-blocking is not used
-        event = new DefaultMuleEvent(event, event.getFlowConstruct(), event.getReplyToHandler(), event.getReplyToDestination(), true);
+        event =
+            new DefaultMuleEvent(event, event.getFlowConstruct(), event.getReplyToHandler(), event.getReplyToDestination(), true);
         // Update RequestContext ThreadLocal for backwards compatibility
         OptimizedRequestContext.unsafeSetEvent(event);
       }

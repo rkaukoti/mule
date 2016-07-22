@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.util.concurrent;
 
@@ -29,6 +29,7 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 
 public class WaitPolicyTestCase extends AbstractMuleTestCase {
+
   ThreadPoolExecutor executor;
   ReentrantLock executorLock;
   private ExceptionCollectingThreadGroup threadGroup;
@@ -77,6 +78,7 @@ public class WaitPolicyTestCase extends AbstractMuleTestCase {
       final Runnable task = i.next();
 
       Runnable submitterAction = new Runnable() {
+
         @Override
         public void run() {
           // the lock is important because otherwise two submitters might
@@ -233,6 +235,7 @@ public class WaitPolicyTestCase extends AbstractMuleTestCase {
 
 
 class LastRejectedWaitPolicy extends WaitPolicy {
+
   // needed to hand the last rejected Runnable back to the TestCase
   private volatile Runnable _rejected;
 
@@ -258,6 +261,7 @@ class LastRejectedWaitPolicy extends WaitPolicy {
 
 // task to execute - just sleeps for the given interval
 class SleepyTask extends Object implements Runnable {
+
   public static final AtomicInteger activeTasks = new AtomicInteger(0);
 
   private final String name;
@@ -295,6 +299,7 @@ class SleepyTask extends Object implements Runnable {
 
 // ThreadGroup wrapper that collects uncaught exceptions
 class ExceptionCollectingThreadGroup extends ThreadGroup {
+
   private final LinkedList<Map<Thread, Throwable>> exceptions = new LinkedList<Map<Thread, Throwable>>();
 
   public ExceptionCollectingThreadGroup() {

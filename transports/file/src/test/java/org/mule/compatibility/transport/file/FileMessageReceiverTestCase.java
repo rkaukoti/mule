@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.file;
 
@@ -16,6 +16,7 @@ import java.io.File;
 import static org.mockito.Mockito.mock;
 
 public class FileMessageReceiverTestCase extends AbstractMessageReceiverTestCase {
+
   File read = FileUtils.newFile("testcasedata/read");
   File move = FileUtils.newFile("testcasedata/move");
 
@@ -33,7 +34,8 @@ public class FileMessageReceiverTestCase extends AbstractMessageReceiverTestCase
     read.deleteOnExit();
     move.deleteOnExit();
 
-    return new FileMessageReceiver(connector, mock(Flow.class), endpoint, read.getAbsolutePath(), move.getAbsolutePath(), null, 1000);
+    return new FileMessageReceiver(connector, mock(Flow.class), endpoint, read.getAbsolutePath(), move.getAbsolutePath(), null,
+        1000);
   }
 
   @Override

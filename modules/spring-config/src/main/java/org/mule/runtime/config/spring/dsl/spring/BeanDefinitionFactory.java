@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.config.spring.dsl.spring;
 
@@ -48,23 +48,24 @@ import static org.mule.runtime.core.config.i18n.MessageFactory.createStaticMessa
 
 /**
  * The {@code BeanDefinitionFactory} is the one that knows how to convert a {@code ComponentModel} to an actual
- * {@link org.springframework.beans.factory.config.BeanDefinition} that can later be converted to a runtime object that will be part of the
- * artifact.
+ * {@link org.springframework.beans.factory.config.BeanDefinition} that can later be converted to a runtime object that will be
+ * part of the artifact.
  * <p>
- * It will recursively process a {@code ComponentModel} to create a {@code BeanDefinition}. For the time being it will collaborate with the
- * old bean definitions parsers for configurations that are partially defined in the new parsing method.
+ * It will recursively process a {@code ComponentModel} to create a {@code BeanDefinition}. For the time being it will collaborate
+ * with the old bean definitions parsers for configurations that are partially defined in the new parsing method.
  *
  * @since 4.0
  */
 public class BeanDefinitionFactory {
 
-  private final ImmutableSet<ComponentIdentifier> ignoredMuleCoreComponentIdentifiers = ImmutableSet.<ComponentIdentifier>builder()
+  private final ImmutableSet<ComponentIdentifier> ignoredMuleCoreComponentIdentifiers = ImmutableSet
+      .<ComponentIdentifier>builder()
       .add(new ComponentIdentifier.Builder().withNamespace(CORE_NAMESPACE_NAME).withName(MULE_ROOT_ELEMENT).build())
       .add(new ComponentIdentifier.Builder().withNamespace(CORE_NAMESPACE_NAME).withName(DESCRIPTION_ELEMENT).build()).build();
 
   /**
-   * These are the set of current language construct that have specific bean definitions parsers since we don't want to include them in the
-   * parsing API.
+   * These are the set of current language construct that have specific bean definitions parsers since we don't want to include
+   * them in the parsing API.
    */
   private final ImmutableSet<ComponentIdentifier> customBuildersComponentIdentifiers = ImmutableSet.<ComponentIdentifier>builder()
       .add(new ComponentIdentifier.Builder().withNamespace(CORE_NAMESPACE_NAME).withName(QUEUE_STORE).build()).build();
@@ -74,7 +75,8 @@ public class BeanDefinitionFactory {
   private BeanDefinitionCreator componentModelProcessor;
 
   /**
-   * @param componentBuildingDefinitionRegistry a registry with all the known {@code ComponentBuildingDefinition}s by the artifact.
+   * @param componentBuildingDefinitionRegistry a registry with all the known {@code ComponentBuildingDefinition}s by the
+   *        artifact.
    */
   public BeanDefinitionFactory(ComponentBuildingDefinitionRegistry componentBuildingDefinitionRegistry) {
     this.componentBuildingDefinitionRegistry = componentBuildingDefinitionRegistry;
@@ -95,8 +97,8 @@ public class BeanDefinitionFactory {
    *
    * @param parentComponentModel the parent component model since the bean definition to be created may depend on the context.
    * @param componentModel the component model from which we want to create the bean definition.
-   * @param registry the bean registry since it may be required to get other bean definitions to create this one or to register the bean
-   *        definition.
+   * @param registry the bean registry since it may be required to get other bean definitions to create this one or to register
+   *        the bean definition.
    * @param componentModelPostProcessor a function to post process the bean definition.
    * @param oldParsingMechanism a function to execute the old parsing mechanism if required by children {@code ComponentModel}s
    * @return the {@code BeanDefinition} of the component model.
@@ -152,8 +154,8 @@ public class BeanDefinitionFactory {
     Optional<ComponentBuildingDefinition> buildingDefinitionOptional =
         componentBuildingDefinitionRegistry.getBuildingDefinition(componentModel.getIdentifier());
     if (buildingDefinitionOptional.isPresent() || customBuildersComponentIdentifiers.contains(componentModel.getIdentifier())) {
-      this.componentModelProcessor
-          .processRequest(new CreateBeanDefinitionRequest(parentComponentModel, componentModel, buildingDefinitionOptional.orElse(null)));
+      this.componentModelProcessor.processRequest(
+          new CreateBeanDefinitionRequest(parentComponentModel, componentModel, buildingDefinitionOptional.orElse(null)));
     } else {
       boolean isWrapperComponent = isWrapperComponent(componentModel.getIdentifier(), of(parentComponentModel.getIdentifier()));
       if (!isWrapperComponent) {
@@ -181,7 +183,8 @@ public class BeanDefinitionFactory {
   }
 
   private BeanDefinitionCreator buildComponentModelProcessorChainOfResponsability() {
-    ExceptionStrategyRefBeanDefinitionCreator exceptionStrategyRefBeanDefinitionCreator = new ExceptionStrategyRefBeanDefinitionCreator();
+    ExceptionStrategyRefBeanDefinitionCreator exceptionStrategyRefBeanDefinitionCreator =
+        new ExceptionStrategyRefBeanDefinitionCreator();
     FilterReferenceBeanDefinitionCreator filterReferenceBeanDefinitionCreator = new FilterReferenceBeanDefinitionCreator();
     ReferenceBeanDefinitionCreator referenceBeanDefinitionCreator = new ReferenceBeanDefinitionCreator();
     SimpleTypeBeanDefinitionCreator simpleTypeBeanDefinitionCreator = new SimpleTypeBeanDefinitionCreator();
@@ -201,14 +204,16 @@ public class BeanDefinitionFactory {
   }
 
   /**
-   * Used to collaborate with the bean definition parsers mechanism. If {@code #hasDefinition} returns false, then the old mechanism must be
-   * used.
+   * Used to collaborate with the bean definition parsers mechanism. If {@code #hasDefinition} returns false, then the old
+   * mechanism must be used.
    *
    * @param componentIdentifier a {@code ComponentModel} identifier.
    * @param parentComponentModelOptional the {@code ComponentModel} parent identifier.
-   * @return true if there's a {@code ComponentBuildingDefinition} for the specified configuration identifier, false if there's not.
+   * @return true if there's a {@code ComponentBuildingDefinition} for the specified configuration identifier, false if there's
+   *         not.
    */
-  public boolean hasDefinition(ComponentIdentifier componentIdentifier, Optional<ComponentIdentifier> parentComponentModelOptional) {
+  public boolean hasDefinition(ComponentIdentifier componentIdentifier,
+      Optional<ComponentIdentifier> parentComponentModelOptional) {
     return ignoredMuleCoreComponentIdentifiers.contains(componentIdentifier)
         || customBuildersComponentIdentifiers.contains(componentIdentifier)
         || componentBuildingDefinitionRegistry.getBuildingDefinition(componentIdentifier).isPresent()
@@ -216,7 +221,8 @@ public class BeanDefinitionFactory {
   }
 
   // TODO MULE-9638 this code will be removed and a cache will be implemented
-  public boolean isWrapperComponent(ComponentIdentifier componentModel, Optional<ComponentIdentifier> parentComponentModelOptional) {
+  public boolean isWrapperComponent(ComponentIdentifier componentModel,
+      Optional<ComponentIdentifier> parentComponentModelOptional) {
     if (!parentComponentModelOptional.isPresent()) {
       return false;
     }
@@ -225,13 +231,15 @@ public class BeanDefinitionFactory {
     if (!buildingDefinitionOptional.isPresent()) {
       return false;
     }
-    final Map<String, WrapperElementType> wrapperIdentifierAndTypeMap = getWrapperIdentifierAndTypeMap(buildingDefinitionOptional.get());
+    final Map<String, WrapperElementType> wrapperIdentifierAndTypeMap =
+        getWrapperIdentifierAndTypeMap(buildingDefinitionOptional.get());
     return wrapperIdentifierAndTypeMap.containsKey(componentModel.getName());
   }
 
   private Map<String, WrapperElementType> getWrapperIdentifierAndTypeMap(ComponentBuildingDefinition buildingDefinition) {
     final Map<String, WrapperElementType> wrapperIdentifierAndTypeMap = new HashMap<>();
     AbstractAttributeDefinitionVisitor wrapperIdentifiersCollector = new AbstractAttributeDefinitionVisitor() {
+
       @Override
       public void onComplexChildCollection(Class<?> type, Optional<String> wrapperIdentifierOptional) {
         wrapperIdentifierOptional.ifPresent(wrapperIdentifier -> {

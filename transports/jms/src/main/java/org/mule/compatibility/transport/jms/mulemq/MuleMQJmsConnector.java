@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.jms.mulemq;
 
@@ -20,6 +20,7 @@ import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
 
 public class MuleMQJmsConnector extends JmsConnector {
+
   public static final String MULEMQ_CONNECTION_FACTORY_CLASS = "com.pcbsys.nirvana.nJMS.ConnectionFactoryImpl";
 
   // The default values for the connection factory properties
@@ -96,8 +97,8 @@ public class MuleMQJmsConnector extends JmsConnector {
   }
 
   /*
-   * We need to default the specification to 1.1, the xsd defaults to 1.0.2b, we wouldn't have to do this here if the default was set in
-   * JmsConnector only, In that case setting the default in the constructor would have been sufficient.
+   * We need to default the specification to 1.1, the xsd defaults to 1.0.2b, we wouldn't have to do this here if the default was
+   * set in JmsConnector only, In that case setting the default in the constructor would have been sufficient.
    */
   @Override
   public void setSpecification(String specification) {

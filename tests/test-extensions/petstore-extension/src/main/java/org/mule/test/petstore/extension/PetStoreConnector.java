@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.test.petstore.extension;
 
@@ -17,7 +17,8 @@ import java.util.List;
 
 @Extension(name = "petstore", description = "PetStore Test connector")
 @Operations(PetStoreOperations.class)
-@Providers({SimplePetStoreConnectionProvider.class, PooledPetStoreConnectionProvider.class, PoolablePetStoreConnectionProvider.class})
+@Providers({SimplePetStoreConnectionProvider.class, PooledPetStoreConnectionProvider.class,
+    PoolablePetStoreConnectionProvider.class})
 @Xml(namespaceLocation = "http://www.mulesoft.org/schema/mule/petstore", namespace = "petstore")
 public class PetStoreConnector {
 

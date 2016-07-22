@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.core.endpoint;
 
@@ -30,13 +30,14 @@ import static org.apache.commons.lang.StringUtils.isNotBlank;
 import static org.mule.compatibility.core.registry.MuleRegistryTransportHelper.lookupServiceDescriptor;
 
 /**
- * <code>MuleEndpointURI</code> is used to determine how a message is sent or received. The url defines the protocol, the endpointUri
- * destination of the message and optionally the endpoint to use when dispatching the event. Mule urls take the form of -
- * protocol://[host]:[port]/[provider]/endpointUri or protocol://[host]:[port]/endpointUri i.e. vm:///my.object <br/>
- * The protocol can be any of any connector registered with Mule. The endpoint name if specified must be the name of a registered global
- * endpoint. The endpointUri can be any endpointUri recognized by the endpoint type.
+ * <code>MuleEndpointURI</code> is used to determine how a message is sent or received. The url defines the protocol, the
+ * endpointUri destination of the message and optionally the endpoint to use when dispatching the event. Mule urls take the form
+ * of - protocol://[host]:[port]/[provider]/endpointUri or protocol://[host]:[port]/endpointUri i.e. vm:///my.object <br/>
+ * The protocol can be any of any connector registered with Mule. The endpoint name if specified must be the name of a registered
+ * global endpoint. The endpointUri can be any endpointUri recognized by the endpoint type.
  */
 public class MuleEndpointURI implements EndpointURI {
+
   /**
    * logger used by this class
    */
@@ -70,8 +71,8 @@ public class MuleEndpointURI implements EndpointURI {
     }
   }
 
-  public MuleEndpointURI(String address, String endpointName, String connectorName, String transformers, String responseTransformers,
-      Properties properties, URI uri, MuleContext muleContext) {
+  public MuleEndpointURI(String address, String endpointName, String connectorName, String transformers,
+      String responseTransformers, Properties properties, URI uri, MuleContext muleContext) {
     this.address = address;
     this.endpointName = endpointName;
     this.connectorName = connectorName;
@@ -418,6 +419,7 @@ public class MuleEndpointURI implements EndpointURI {
   public String getUser() {
     if (user == null) {
       user = getUserInfoDataUsing(new DataExtractor() {
+
         @Override
         public String extract(String source) {
           int i = source.indexOf(':');
@@ -436,6 +438,7 @@ public class MuleEndpointURI implements EndpointURI {
   public String getPassword() {
     if (password == null) {
       password = getUserInfoDataUsing(new DataExtractor() {
+
         @Override
         public String extract(String source) {
           int i = source.indexOf(':');
@@ -488,22 +491,26 @@ public class MuleEndpointURI implements EndpointURI {
     }
     MuleEndpointURI muleEndpointURI = (MuleEndpointURI) o;
     return ClassUtils.equal(address, muleEndpointURI.address) && ClassUtils.equal(connectorName, muleEndpointURI.connectorName)
-        && ClassUtils.equal(endpointName, muleEndpointURI.endpointName) && ClassUtils.equal(filterAddress, muleEndpointURI.filterAddress)
-        && areParamsEquals(muleEndpointURI.params) && ClassUtils.equal(resourceInfo, muleEndpointURI.resourceInfo)
-        && ClassUtils.equal(schemeMetaInfo, muleEndpointURI.schemeMetaInfo) && ClassUtils.equal(transformers, muleEndpointURI.transformers)
-        && ClassUtils.equal(responseTransformers, muleEndpointURI.responseTransformers) && ClassUtils.equal(uri, muleEndpointURI.uri);
+        && ClassUtils.equal(endpointName, muleEndpointURI.endpointName)
+        && ClassUtils.equal(filterAddress, muleEndpointURI.filterAddress) && areParamsEquals(muleEndpointURI.params)
+        && ClassUtils.equal(resourceInfo, muleEndpointURI.resourceInfo)
+        && ClassUtils.equal(schemeMetaInfo, muleEndpointURI.schemeMetaInfo)
+        && ClassUtils.equal(transformers, muleEndpointURI.transformers)
+        && ClassUtils.equal(responseTransformers, muleEndpointURI.responseTransformers)
+        && ClassUtils.equal(uri, muleEndpointURI.uri);
   }
 
   /**
    * Checks whether or not params are equals to another instance's params.
    * <p/>
-   * The reason of this method is because {code}params{code} is a {@link Properties} which extends from {@link java.util.Hashtable}. This
-   * last class has a synchronized {@link java.util.Hashtable#equals(Object)} which calls the synchronized {@link Hashtable#size()} on the
-   * compared object. This implies that doing {@code A.equals(B)} and {@code B.equals(A)} can cause a deadlock depending on the invocation
-   * order.
+   * The reason of this method is because {code}params{code} is a {@link Properties} which extends from
+   * {@link java.util.Hashtable}. This last class has a synchronized {@link java.util.Hashtable#equals(Object)} which calls the
+   * synchronized {@link Hashtable#size()} on the compared object. This implies that doing {@code A.equals(B)} and
+   * {@code B.equals(A)} can cause a deadlock depending on the invocation order.
    * <p/>
-   * As the detected problem occurs when {@link org.mule.endpoint.MuleEndpointURI} instances are compared, the workaround consist in compare
-   * both instances's params using always the same order. The order is determine by the identity hashcode of each {@code params} instance.
+   * As the detected problem occurs when {@link org.mule.endpoint.MuleEndpointURI} instances are compared, the workaround consist
+   * in compare both instances's params using always the same order. The order is determine by the identity hashcode of each
+   * {@code params} instance.
    *
    * @See http://bugs.java.com/bugdatabase/view_bug.do?bug_id=6582568
    */
@@ -529,11 +536,12 @@ public class MuleEndpointURI implements EndpointURI {
 
   @Override
   public int hashCode() {
-    return ClassUtils.hash(new Object[] {address, filterAddress, endpointName, connectorName, transformers, responseTransformers, params,
-        uri, schemeMetaInfo, resourceInfo});
+    return ClassUtils.hash(new Object[] {address, filterAddress, endpointName, connectorName, transformers, responseTransformers,
+        params, uri, schemeMetaInfo, resourceInfo});
   }
 
   private abstract class DataExtractor {
+
     public abstract String extract(String source);
   }
 }

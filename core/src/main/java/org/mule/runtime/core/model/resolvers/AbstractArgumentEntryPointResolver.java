@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.model.resolvers;
 
@@ -16,12 +16,13 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * A base class that allows implementing resolvers to define what parameters it is expecting. Currently there are two implementations of
- * this {@link org.mule.runtime.core.model.resolvers.NoArgumentsEntryPointResolver}, that allows methods with no arguments to be invoked and
- * {@link org.mule.runtime.core.model.resolvers.ArrayEntryPointResolver} that allows for methods that accept an array type to be invoked.
+ * A base class that allows implementing resolvers to define what parameters it is expecting. Currently there are two
+ * implementations of this {@link org.mule.runtime.core.model.resolvers.NoArgumentsEntryPointResolver}, that allows methods with
+ * no arguments to be invoked and {@link org.mule.runtime.core.model.resolvers.ArrayEntryPointResolver} that allows for methods
+ * that accept an array type to be invoked.
  * <p/>
- * Users can set explicit method names on this resolver to control which methods are allowed to be called. Also a set of 'ignored' methods
- * are available (and the use can add others) to tell the resolver to not resolve to these methods. The default ones are:
+ * Users can set explicit method names on this resolver to control which methods are allowed to be called. Also a set of 'ignored'
+ * methods are available (and the use can add others) to tell the resolver to not resolve to these methods. The default ones are:
  * <ul>
  * <li>{@link #toString()}
  * <li>{@link #getClass()}
@@ -36,6 +37,7 @@ import java.util.Set;
  * Note that wildcard expressions can be used.
  */
 public abstract class AbstractArgumentEntryPointResolver extends ReflectionEntryPointResolver {
+
   private Set<String> methods = new HashSet<String>(2);
 
   private boolean enableDiscovery = true;
@@ -45,8 +47,8 @@ public abstract class AbstractArgumentEntryPointResolver extends ReflectionEntry
     setAcceptVoidMethods(true);
     // we don't want to match these methods when looking for a service method
     // If you add to this list please change the javaDoc above too.
-    setIgnoredMethods(
-        new HashSet<String>(Arrays.asList("toString", "getClass", "notify", "notifyAll", "wait", "hashCode", "clone", "is*", "get*")));
+    setIgnoredMethods(new HashSet<String>(
+        Arrays.asList("toString", "getClass", "notify", "notifyAll", "wait", "hashCode", "clone", "is*", "get*")));
   }
 
   public Set<String> getMethods() {
@@ -98,8 +100,8 @@ public abstract class AbstractArgumentEntryPointResolver extends ReflectionEntry
     if (method == null) {
       if (isEnableDiscovery()) {
         Class<?>[] argTypes = getMethodArgumentTypes(payload);
-        List<Method> methods =
-            ClassUtils.getSatisfiableMethods(component.getClass(), argTypes, isAcceptVoidMethods(), false, getIgnoredMethods(), filter);
+        List<Method> methods = ClassUtils.getSatisfiableMethods(component.getClass(), argTypes, isAcceptVoidMethods(), false,
+            getIgnoredMethods(), filter);
 
         if (methods.size() > 1) {
           InvocationResult result = new InvocationResult(this, InvocationResult.State.FAILED);

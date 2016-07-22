@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.client;
 
@@ -36,6 +36,7 @@ import static org.mule.runtime.core.api.config.MuleProperties.MULE_REPLY_TO_PROP
 import static org.mule.runtime.core.api.config.MuleProperties.OBJECT_CONNECTOR_MESSAGE_PROCESSOR_LOCATOR;
 
 public class DefaultLocalMuleClient implements MuleClient {
+
   protected final MuleContext muleContext;
   private ConnectorOperationLocator connectorOperatorLocator;
 
@@ -77,8 +78,8 @@ public class DefaultLocalMuleClient implements MuleClient {
 
   @Override
   public MuleMessage send(String url, MuleMessage message, OperationOptions operationOptions) throws MuleException {
-    final MessageProcessor connectorMessageProcessor =
-        getConnectorMessageProcessLocator().locateConnectorOperation(url, operationOptions, MessageExchangePattern.REQUEST_RESPONSE);
+    final MessageProcessor connectorMessageProcessor = getConnectorMessageProcessLocator().locateConnectorOperation(url,
+        operationOptions, MessageExchangePattern.REQUEST_RESPONSE);
     if (connectorMessageProcessor != null) {
       return returnMessage(connectorMessageProcessor.process(createRequestResponseMuleEvent(message)));
     } else {
@@ -91,7 +92,8 @@ public class DefaultLocalMuleClient implements MuleClient {
   }
 
   @Override
-  public MuleMessage send(String url, Object payload, Map<String, Serializable> messageProperties, long timeout) throws MuleException {
+  public MuleMessage send(String url, Object payload, Map<String, Serializable> messageProperties, long timeout)
+      throws MuleException {
     return send(url, createMessage(payload, messageProperties), timeout);
 
   }
@@ -116,8 +118,8 @@ public class DefaultLocalMuleClient implements MuleClient {
 
   @Override
   public void dispatch(String url, MuleMessage message) throws MuleException {
-    final MessageProcessor connectorMessageProcessor =
-        getConnectorMessageProcessLocator().locateConnectorOperation(url, newOptions().outbound().build(), MessageExchangePattern.ONE_WAY);
+    final MessageProcessor connectorMessageProcessor = getConnectorMessageProcessLocator().locateConnectorOperation(url,
+        newOptions().outbound().build(), MessageExchangePattern.ONE_WAY);
     if (connectorMessageProcessor != null) {
       connectorMessageProcessor.process(createOneWayMuleEvent(message));
     } else {
@@ -142,7 +144,8 @@ public class DefaultLocalMuleClient implements MuleClient {
     final MessageProcessor connectorMessageProcessor =
         getConnectorMessageProcessLocator().locateConnectorOperation(url, operationOptions, MessageExchangePattern.ONE_WAY);
     if (connectorMessageProcessor != null) {
-      final MuleEvent event = connectorMessageProcessor.process(createOneWayMuleEvent(MuleMessage.builder().nullPayload().build()));
+      final MuleEvent event =
+          connectorMessageProcessor.process(createOneWayMuleEvent(MuleMessage.builder().nullPayload().build()));
 
       return event == null || event instanceof VoidMuleEvent ? null : event.getMessage();
     } else {
@@ -170,6 +173,7 @@ public class DefaultLocalMuleClient implements MuleClient {
    * Placeholder class which makes the default exception handler available.
    */
   static public class MuleClientFlowConstruct implements FlowConstruct {
+
     static MessageInfoMapping messageInfoMapping = new MuleMessageInfoMapping();
 
     MuleContext muleContext;

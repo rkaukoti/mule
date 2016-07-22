@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.oauth2.internal.authorizationcode;
 
@@ -96,8 +96,8 @@ public abstract class AbstractAuthorizationCodeTokenRequestHandler extends Abstr
       final String flowName = "OAuthRedirectUrlFlow" + getOauthConfig().getRedirectionUrl();
       final Flow redirectUrlFlow =
           DynamicFlowFactory.createDynamicFlow(getMuleContext(), flowName, Arrays.asList(createRedirectUrlProcessor()));
-      final HttpListenerBuilder httpListenerBuilder =
-          new HttpListenerBuilder(getMuleContext()).setUrl(new URL(getOauthConfig().getRedirectionUrl())).setFlow(redirectUrlFlow);
+      final HttpListenerBuilder httpListenerBuilder = new HttpListenerBuilder(getMuleContext())
+          .setUrl(new URL(getOauthConfig().getRedirectionUrl())).setFlow(redirectUrlFlow);
       if (getOauthConfig().getTlsContext() != null) {
         httpListenerBuilder.setTlsContextFactory(getOauthConfig().getTlsContext());
       }

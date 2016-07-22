@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.message;
 
@@ -144,7 +144,8 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
   @Override
   public CollectionBuilder itemMediaType(MediaType mediaType) {
     if (dataType instanceof DefaultCollectionDataType) {
-      dataType = ((DataTypeBuilder.DataTypeCollectionTypeBuilder) DataType.builder(this.dataType)).itemMediaType(mediaType).build();
+      dataType =
+          ((DataTypeBuilder.DataTypeCollectionTypeBuilder) DataType.builder(this.dataType)).itemMediaType(mediaType).build();
     } else {
       throw new IllegalStateException("Item MediaType cannot be set, because payload is not a collection");
     }
@@ -309,9 +310,9 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
 
   @Override
   public MuleMessage build() {
-    return new MuleMessageImplementation(id != null ? id : UUID.getUUID(), rootId, new TypedValue(payload, resolveDataType()), attributes,
-        inboundProperties, outboundProperties, inboundAttachments, outboundAttachments, correlationId, correlationGroupSize,
-        correlationSequence, replyTo, exceptionPayload);
+    return new MuleMessageImplementation(id != null ? id : UUID.getUUID(), rootId, new TypedValue(payload, resolveDataType()),
+        attributes, inboundProperties, outboundProperties, inboundAttachments, outboundAttachments, correlationId,
+        correlationGroupSize, correlationSequence, replyTo, exceptionPayload);
   }
 
   private DataType resolveDataType() {
@@ -326,6 +327,7 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
    * <code>DefaultMuleMessage</code> is a wrapper that contains a payload and properties associated with the payload.
    */
   public static class MuleMessageImplementation implements MuleMessage, DeserializationPostInitialisable {
+
     private static final String NOT_SET = "<not set>";
 
     private static final long serialVersionUID = 1541720810851984845L;
@@ -547,8 +549,8 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
     }
 
     /**
-     * Invoked after deserialization. This is called when the marker interface {@link DeserializationPostInitialisable} is used. This will
-     * get invoked after the object has been deserialized passing in the current mulecontext when using either
+     * Invoked after deserialization. This is called when the marker interface {@link DeserializationPostInitialisable} is used.
+     * This will get invoked after the object has been deserialized passing in the current mulecontext when using either
      * {@link org.mule.runtime.core.transformer.wire.SerializationWireFormat},
      * {@link org.mule.runtime.core.transformer.wire.SerializedMuleMessageWireFormat} or the
      * {@link org.mule.runtime.core.transformer.simple.ByteArrayToSerializable} transformer.
@@ -664,12 +666,14 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
         else if (defaultValue.getClass().isAssignableFrom(value.getClass())) {
           return value;
         } else {
-          throw new IllegalArgumentException(CoreMessages.objectNotOfCorrectType(value.getClass(), defaultValue.getClass()).getMessage());
+          throw new IllegalArgumentException(
+              CoreMessages.objectNotOfCorrectType(value.getClass(), defaultValue.getClass()).getMessage());
         }
       }
     }
 
     public static class SerializedDataHandler implements Serializable {
+
       private static final long serialVersionUID = 1L;
 
       private DataHandler handler;
@@ -691,8 +695,9 @@ public class DefaultMuleMessageBuilder implements MuleMessage.Builder, MuleMessa
               }
               contents = transformer.transform(theContent);
             } catch (TransformerException ex) {
-              String message = String.format("Unable to serialize the attachment %s, which is of type %s with contents of type %s", name,
-                  handler.getClass(), theContent.getClass());
+              String message =
+                  String.format("Unable to serialize the attachment %s, which is of type %s with contents of type %s", name,
+                      handler.getClass(), theContent.getClass());
               logger.error(message);
               throw new IOException(message);
             }

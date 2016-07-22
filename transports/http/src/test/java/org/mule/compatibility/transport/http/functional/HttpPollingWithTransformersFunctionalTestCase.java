@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.compatibility.transport.http.functional;
 
@@ -23,6 +23,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 public class HttpPollingWithTransformersFunctionalTestCase extends FunctionalTestCase {
+
   @Rule
   public DynamicPort dynamicPort = new DynamicPort("port1");
 
@@ -36,6 +37,7 @@ public class HttpPollingWithTransformersFunctionalTestCase extends FunctionalTes
     final Latch latch = new Latch();
     final AtomicBoolean transformPropagated = new AtomicBoolean(false);
     muleContext.registerListener(new FunctionalTestNotificationListener() {
+
       @Override
       public void onNotification(ServerNotification notification) {
         latch.countDown();

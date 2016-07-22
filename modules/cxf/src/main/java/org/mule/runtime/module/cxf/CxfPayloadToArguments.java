@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.cxf;
 
@@ -18,11 +18,12 @@ public enum CxfPayloadToArguments {
 
   },
   /**
-   * In this strategy, if the payload is {@code null} it will not be send as a parameter. The array of arguments in this case will be empty.
-   * For the rest of the objects it behaves just like {@link #NULL_PAYLOAD_AS_PARAMETER} (it will delegate to
+   * In this strategy, if the payload is {@code null} it will not be send as a parameter. The array of arguments in this case will
+   * be empty. For the rest of the objects it behaves just like {@link #NULL_PAYLOAD_AS_PARAMETER} (it will delegate to
    * {@link CxfPayloadToArguments#payloadToArrayOfArguments(Object)}).
    */
   NULL_PAYLOAD_AS_VOID(CxfConstants.PAYLOAD_TO_ARGUMENTS_NULL_PAYLOAD_AS_VOID) {
+
     @Override
     public Object[] payloadToArrayOfArguments(Object payload) {
       if (payload == null) {
@@ -34,8 +35,8 @@ public enum CxfPayloadToArguments {
   };
 
   /**
-   * This is the value that is needed to be configured in the endpoint under property {@link CxfConstants#PAYLOAD_TO_ARGUMENTS} so this
-   * {@link CxfPayloadToArguments} is selected on method {@link #getPayloadToArgumentsForEndpoint(OutboundEndpoint)}.
+   * This is the value that is needed to be configured in the endpoint under property {@link CxfConstants#PAYLOAD_TO_ARGUMENTS} so
+   * this {@link CxfPayloadToArguments} is selected on method {@link #getPayloadToArgumentsForEndpoint(OutboundEndpoint)}.
    */
   private final String payloadToArgumentsParameterValue;
 
@@ -44,8 +45,9 @@ public enum CxfPayloadToArguments {
   }
 
   /**
-   * This method is the one that converts the payload in an array of arguments. In this default implementation if the payload is already an
-   * array of {@link Object objects} that array will be returned. Otherwise, an array with one element, the payload, will be returned.
+   * This method is the one that converts the payload in an array of arguments. In this default implementation if the payload is
+   * already an array of {@link Object objects} that array will be returned. Otherwise, an array with one element, the payload,
+   * will be returned.
    *
    * @param payload the payload to convert to array of arguments.
    * @return the array of arguments

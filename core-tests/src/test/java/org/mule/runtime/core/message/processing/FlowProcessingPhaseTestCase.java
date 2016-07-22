@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.message.processing;
 
@@ -67,6 +67,7 @@ public class FlowProcessingPhaseTestCase extends AbstractMuleTestCase {
   @Mock(answer = Answers.RETURNS_DEEP_STUBS)
   private NotificationHelper notificationHelper;
   private FlowProcessingPhase phase = new FlowProcessingPhase() {
+
     // We cannot mock this method since its protected
     @Override
     protected NotificationHelper getNotificationHelper(ServerNotificationManager serverNotificationManager) {
@@ -122,7 +123,8 @@ public class FlowProcessingPhaseTestCase extends AbstractMuleTestCase {
   public void successfulPhaseExecutionInOrder() throws Exception {
     when(mockContext.supportsAsynchronousProcessing()).thenReturn(false);
     phase.runPhase(mockRequestResponseTemplate, mockContext, mockNotifier);
-    InOrder inOrderVerify = Mockito.inOrder(mockContext, mockContext.getFlowConstruct(), mockRequestResponseTemplate, mockNotifier);
+    InOrder inOrderVerify =
+        Mockito.inOrder(mockContext, mockContext.getFlowConstruct(), mockRequestResponseTemplate, mockNotifier);
     inOrderVerify.verify(mockContext, atLeastOnce()).getTransactionConfig();
     inOrderVerify.verify(mockContext.getFlowConstruct()).getExceptionListener();
     inOrderVerify.verify(mockRequestResponseTemplate).getMuleEvent();

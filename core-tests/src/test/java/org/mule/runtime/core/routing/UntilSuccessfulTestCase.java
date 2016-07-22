@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.core.routing;
 
@@ -24,6 +24,7 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertThat;
 
 public class UntilSuccessfulTestCase extends AbstractMuleContextTestCase {
+
   private UntilSuccessful untilSuccessful;
   private ListableObjectStore<MuleEvent> objectStore;
   private ConfigurableMessageProcessor targetMessageProcessor;
@@ -191,6 +192,7 @@ public class UntilSuccessfulTestCase extends AbstractMuleContextTestCase {
 
   private void waitDelivery() {
     pollingProber.check(new JUnitProbe() {
+
       @Override
       protected boolean test() throws Exception {
         return targetMessageProcessor.getEventReceived() != null && objectStore.allKeys().isEmpty();
@@ -205,6 +207,7 @@ public class UntilSuccessfulTestCase extends AbstractMuleContextTestCase {
 
   private void ponderUntilEventAborted(final MuleEvent testEvent) throws InterruptedException, MuleException {
     pollingProber.check(new JUnitProbe() {
+
       @Override
       protected boolean test() throws Exception {
         return targetMessageProcessor.getEventCount() > untilSuccessful.getMaxRetries() && objectStore.allKeys().isEmpty();
@@ -227,6 +230,7 @@ public class UntilSuccessfulTestCase extends AbstractMuleContextTestCase {
   }
 
   public static class ConfigurableMessageProcessor implements MessageProcessor {
+
     private volatile int eventCount;
     private volatile MuleEvent event;
     private volatile int numberOfFailuresToSimulate;

@@ -1,6 +1,6 @@
 /*
- * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the terms of
- * the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
+ * Copyright (c) MuleSoft, Inc. All rights reserved. http://www.mulesoft.com The software in this package is published under the
+ * terms of the CPAL v1.0 license, a copy of which has been included with this distribution in the LICENSE.txt file.
  */
 package org.mule.runtime.module.artifact.classloader;
 
@@ -40,8 +40,9 @@ public class DefaultResourceReleaser implements ResourceReleaser {
         doDeregisterDriver(driver);
       } else {
         if (logger.isDebugEnabled()) {
-          logger.debug(format("Skipping deregister driver %s. It wasn't loaded by the classloader of the artifact being released.",
-              driver.getClass()));
+          logger
+              .debug(format("Skipping deregister driver %s. It wasn't loaded by the classloader of the artifact being released.",
+                  driver.getClass()));
         }
       }
     }
@@ -49,7 +50,8 @@ public class DefaultResourceReleaser implements ResourceReleaser {
 
   /**
    * @param driver the JDBC driver to check its {@link ClassLoader} for.
-   * @return {@code true} if the {@link ClassLoader} of the driver is a descendant of the {@link ClassLoader} of this releaser, {@code
+   * @return {@code true} if the {@link ClassLoader} of the driver is a descendant of the {@link ClassLoader} of this releaser,
+   *         {@code
    * false} otherwise.
    */
   private boolean isDriverLoadedByThisClassLoader(Driver driver) {
